@@ -1,0 +1,9 @@
+0 = odottaa
+1 = käynnissä
+2 = valmis
+3 = virhe
+kirjoitus: 1, suoritus: 0, koko: 1
+luku 2.5
+teksti "hei"
+lista, 3 alkiota
+sizeof(Arvo) = 24

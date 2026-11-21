@@ -1,0 +1,4 @@
+NELIO_VAARIN(1 + 2) = 5
+NELIO(1 + 2) = 9
+rivi 47, funktio main: ehto 'x % 2 == 0' ei täyty
+int double merkkijono

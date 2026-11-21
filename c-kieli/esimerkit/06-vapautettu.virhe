@@ -1,0 +1,2 @@
+ERROR: AddressSanitizer: heap-use-after-free
+READ of size 4

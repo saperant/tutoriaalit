@@ -6,6 +6,7 @@ Markdownilla, ja lopullinen versio on PDF-dokumentti.
 | Tutoriaali | Hakemisto | PDF |
 |------------|-----------|-----|
 | Moderni C++ | [`moderni-cpp/`](moderni-cpp/) | [moderni-cpp.pdf](moderni-cpp/moderni-cpp.pdf) |
+| C-kieli | [`c-kieli/`](c-kieli/) | [c-kieli.pdf](c-kieli/c-kieli.pdf) |
 
 ## Periaatteet
 
@@ -32,7 +33,7 @@ yhteiset/                 kaikille tutoriaaleille yhteiset työkalut
   Makefile                make testaa / make pdf / make
   metadata.yaml           otsikko, päiväys yms.
   luvut/NN-nimi.md        luvut järjestyksessä
-  esimerkit/              koodiesimerkit ja niiden odotetut tulosteet
+  esimerkit/              koodiesimerkit, odotetut tulosteet ja syötteet
   <tutoriaali>.pdf        valmis PDF
 ```
 
@@ -79,16 +80,25 @@ Ohjelman tuloste sisällytetään tiedostosta `<nimi>.odotettu`:
 ```
 ````
 
-Testaaja (`yhteiset/testaa_esimerkit.py`) tarkistaa, että
+Ohjelman syöte voidaan antaa tiedostossa `<nimi>.syote` ja
+komentoriviargumentit tiedostossa `<nimi>.argumentit` (yksi per rivi).
+Ohjelma ajetaan tyhjässä väliaikaisessa hakemistossa, joten se saa
+luoda tiedostoja. Monen tiedoston esimerkki on hakemisto
+`esimerkit/<nimi>/`, jonka lähdetiedostot käännetään yhdeksi ohjelmaksi.
 
-- jokainen `cpp`-koodilohko viittaa tiedostoon (käsin kirjoitettua koodia
-  ei sallita),
+Testaaja (`yhteiset/testaa_esimerkit.py --kieli c|cpp`) tarkistaa, että
+
+- jokainen C- ja C++-koodilohko viittaa tiedostoon (käsin kirjoitettua
+  koodia ei sallita),
 - jokainen esimerkki kääntyy GCC:llä ja Clangilla varoitukset virheinä
-  (`-Wall -Wextra -Wpedantic -Werror`),
+  (`-Wall -Wextra -Wpedantic -Werror`, C++23 tai C23),
 - ohjelma toimii AddressSanitizerin ja UndefinedBehaviorSanitizerin
   kanssa, ja rivin `// TSAN` sisältävät myös ThreadSanitizerin kanssa,
 - ohjelman tuloste vastaa tiedostoa `<nimi>.odotettu`,
-- tiedostot `<nimi>.ei-kaanny.cpp` eivät käänny sellaisinaan mutta
-  kääntyvät makrolla `-DKORJATTU`, jolla virheellinen kohta poistetaan,
+- tiedostot `<nimi>.ei-kaanny.cpp` (`.c`) eivät käänny sellaisinaan
+  mutta kääntyvät makrolla `-DKORJATTU`, jolla virheellinen kohta
+  poistetaan,
+- tiedostot `<nimi>.kaatuu.cpp` (`.c`) kaatuvat sanitoijan havaitsemaan
+  virheeseen, ja virheilmoitus sisältää tiedoston `<nimi>.virhe` rivit,
 - rivit ovat enintään 78 merkkiä pitkiä,
 - jokaista esimerkkiä käytetään tekstissä.

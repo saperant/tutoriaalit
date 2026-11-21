@@ -46,6 +46,11 @@ määritellä missä järjestyksessä tahansa.
 ```{.c tiedosto="esimerkit/03-funktiot.c" osa="prototyypit"}
 ```
 
+Parametriton funktio esitellään muodossa `f(void)`. C23:ssa tyhjä
+parametrilista `f()` tarkoittaa samaa, mutta aiemmissa standardeissa se
+tarkoitti, ettei parametreja ole määritelty, jolloin kääntäjä ei
+tarkistanut kutsun argumentteja. Siksi `(void)` on yhä vakiintunut tapa.
+
 Ennen C99:ää esittelemättömän funktion kutsu oli sallittu, ja kääntäjä
 oletti paluutyypiksi `int`. Tämä aiheutti vaikeasti löydettäviä virheitä,
 ja nykyään GCC 14 ja Clang hylkäävät tällaisen koodin:

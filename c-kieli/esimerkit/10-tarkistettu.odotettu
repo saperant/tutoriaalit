@@ -1,0 +1,5 @@
+11! = 39916800
+12! = 479001600
+13! ei mahdu int-tyyppiin
+14! ei mahdu int-tyyppiin
+INT_MAX + 1: ylivuoto 1

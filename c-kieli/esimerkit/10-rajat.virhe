@@ -1,0 +1,2 @@
+ERROR: AddressSanitizer: stack-buffer-overflow
+READ of size 4

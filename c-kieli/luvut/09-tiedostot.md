@@ -1,0 +1,117 @@
+# Syöte, tuloste ja tiedostot
+
+## Komentoriviargumentit
+
+`main`-funktio voi ottaa kaksi parametria: argumenttien määrän `argc` ja
+taulukon `argv`, jonka alkiot ovat argumentteja merkkijonoina.
+`argv[0]` on ohjelman nimi, ja `argv[argc]` on tyhjä osoitin.
+
+```{.c tiedosto="esimerkit/09-argumentit.c" osa="argumentit"}
+```
+
+Ajettuna komennolla
+
+```text
+./summa 1.5 2 kolme --tarkka 4.25
+```
+
+ohjelma tulostaa:
+
+```{.tuloste tiedosto="esimerkit/09-argumentit.odotettu"}
+```
+
+Lisäksi virheviesti `ohitetaan virheellinen luku: kolme` menee
+*virhevirtaan* `stderr`. Ohjelmalla on kolme valmiiksi avattua
+virtaa: `stdin` (syöte), `stdout` (tuloste) ja `stderr` (virheet).
+Virheet kannattaa kirjoittaa `stderr`-virtaan, jotta ne eivät sekoitu
+tulosteeseen, kun tuloste ohjataan tiedostoon tai toiselle ohjelmalle.
+Paluuarvo `EXIT_FAILURE` kertoo kutsujalle, että ohjelma epäonnistui.
+
+Muotoilumääre `%.*f` ottaa tarkkuuden argumenttina.
+
+## Rivien lukeminen
+
+Syöte kannattaa lukea riveittäin funktiolla `fgets`, joka lukee
+enintään puskurin koon verran merkkejä eikä siksi voi ylivuotaa.
+Se jättää rivinvaihdon merkkijonoon, ja se poistetaan usein
+`strcspn`-funktion avulla. Luettu rivi jäsennetään sitten erikseen,
+esimerkiksi `sscanf`-funktiolla, jonka paluuarvo kertoo, montako kenttää
+onnistuttiin lukemaan:
+
+```{.c tiedosto="esimerkit/09-rivit.c" osa="rivit"}
+```
+
+Syötteellä
+
+```{.tuloste tiedosto="esimerkit/09-rivit.syote"}
+```
+
+ohjelma tulostaa:
+
+```{.tuloste tiedosto="esimerkit/09-rivit.odotettu"}
+```
+
+Merkkijonomääreeseen `%s` on aina annettava enimmäispituus (`%63s`),
+muuten pitkä sana ylivuotaa puskurin. `scanf`-funktion käyttöä suoraan
+syötteeseen kannattaa välttää: virheellinen syöte jää lukematta
+puskuriin, ja ohjelma voi juuttua silmukkaan. Lukeminen riveittäin
+ja jäsentäminen erikseen on vankempaa.
+
+## Tekstitiedostot
+
+Tiedosto avataan funktiolla `fopen`, joka palauttaa `FILE *`-osoittimen
+tai tyhjän osoittimen, jos avaaminen epäonnistuu. Toinen argumentti on
+*tila*: `"r"` lukemiseen, `"w"` kirjoittamiseen (vanha sisältö
+poistetaan) ja `"a"` loppuun lisäämiseen. Tiedostoon kirjoitetaan
+samoilla funktioilla kuin päätteelle: `fprintf`, `fputs` ja `fputc`.
+
+```{.c tiedosto="esimerkit/09-tiedostot.c" osa="kirjoita"}
+```
+
+Kun kirjastofunktio epäonnistuu, se asettaa yleensä muuttujan `errno`
+(`<errno.h>`) kertomaan syyn. `perror` tulostaa syyn selväkielisenä
+`stderr`-virtaan, ja `strerror` palauttaa sen merkkijonona.
+
+`fgetc` palauttaa merkin `int`-tyyppisenä, koska sen on voitava
+palauttaa kaikkien merkkien lisäksi erikoisarvo `EOF`. Paluuarvon
+tallentaminen `char`-muuttujaan on klassinen virhe. `EOF` voi tarkoittaa
+tiedoston loppua tai lukuvirhettä; ne erotetaan funktioilla `feof` ja
+`ferror`.
+
+```{.c tiedosto="esimerkit/09-tiedostot.c" osa="lue"}
+```
+
+```{.c tiedosto="esimerkit/09-tiedostot.c" osa="kaytto"}
+```
+
+```{.tuloste tiedosto="esimerkit/09-tiedostot.odotettu"}
+```
+
+Jokainen avattu tiedosto on suljettava `fclose`-funktiolla. Tuloste on
+puskuroitu, joten data kirjoitetaan levylle viimeistään sulkemisen
+yhteydessä, ja kirjoitusvirhe voi paljastua vasta silloin.
+
+## Binääritiedostot
+
+`fwrite` ja `fread` kirjoittavat ja lukevat muistin sisällön
+sellaisenaan. Tila `"b"` (`"wb"`, `"rb"`) estää rivinvaihtojen
+muunnokset alustoilla, joilla tekstitiedostoja käsitellään eri tavoin
+(Windows). `fseek` siirtää lukukohtaa ja `ftell` kertoo sen.
+
+```{.c tiedosto="esimerkit/09-binaari.c" osa="tyyppi"}
+```
+
+```{.c tiedosto="esimerkit/09-binaari.c" osa="kirjoitus"}
+```
+
+```{.c tiedosto="esimerkit/09-binaari.c" osa="luku"}
+```
+
+```{.tuloste tiedosto="esimerkit/09-binaari.odotettu"}
+```
+
+Rakenteiden kirjoittaminen sellaisinaan on nopeaa, mutta tiedosto on
+sidottu alustaan: kenttien koko, täyte ja tavujärjestys voivat olla
+toisella koneella erilaiset. Siirrettävissä tiedostomuodoissa kentät
+kirjoitetaan yksitellen kiinteänkokoisina ja sovitussa
+tavujärjestyksessä.
