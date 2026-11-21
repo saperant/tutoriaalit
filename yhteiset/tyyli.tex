@@ -29,3 +29,17 @@
 
 % Taulukot eivät saa ylittää tekstialuetta.
 \usepackage{booktabs}
+
+% Ohjelmien tulosteet: valkoinen laatikko, harmaa reuna ja otsikko.
+\definecolor{tulostereuna}{HTML}{9A9A94}
+\newtcolorbox{tulostelaatikko}{breakable, enhanced jigsaw,
+  colback=white, colframe=tulostereuna, boxrule=0.4pt, arc=1pt,
+  left=4pt, right=4pt, top=2pt, bottom=2pt,
+  overlay unbroken and first={\node[anchor=north east, inner sep=2pt,
+    font=\scriptsize\sffamily\color{tulostereuna}]
+    at (frame.north east) {tuloste};}}
+\DefineVerbatimEnvironment{tulosteverbatim}{Verbatim}{breaklines,
+  breakanywhere, fontsize=\small}
+\newenvironment{tuloste}{\VerbatimEnvironment
+  \begin{tulostelaatikko}\begin{tulosteverbatim}}%
+  {\end{tulosteverbatim}\end{tulostelaatikko}}

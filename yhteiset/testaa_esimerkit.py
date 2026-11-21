@@ -53,23 +53,46 @@ class Kaantaja:
     tsan: bool
 
 
+def sanitoijat_toimivat(kaantaja: str, liput: list[str]) -> bool:
+    """Tarkistaa, että sanitoijien ajonaikaiset kirjastot löytyvät."""
+    with tempfile.TemporaryDirectory() as tmp:
+        lahde = Path(tmp) / "testi.cpp"
+        lahde.write_text("int main() { return 0; }\n", "utf-8")
+        tulos = subprocess.run(
+            [kaantaja, *liput, str(lahde), "-o", str(Path(tmp) / "a")],
+            capture_output=True)
+        return tulos.returncode == 0
+
+
+# Oletuksena käytetään ensimmäistä löytyvää kääntäjää kustakin ryhmästä.
+OLETUSKAANTAJAT = [["g++-14", "g++"], ["clang++-20", "clang++"]]
+SANITOIJAT = ["-g", "-fsanitize=address,undefined",
+              "-fno-sanitize-recover=all"]
+
+
 def etsi_kaantajat() -> list[Kaantaja]:
     pyydetyt = os.environ.get("ESIMERKIT_KAANTAJAT")
-    ehdokkaat = pyydetyt.split() if pyydetyt else ["g++-14", "clang++"]
+    if pyydetyt:
+        ehdokkaat = []
+        for nimi in pyydetyt.split():
+            if shutil.which(nimi) is None:
+                sys.exit(f"Kääntäjää ei löydy: {nimi}")
+            ehdokkaat.append(nimi)
+    else:
+        ehdokkaat = [next(n for n in ryhma if shutil.which(n))
+                     for ryhma in OLETUSKAANTAJAT
+                     if any(shutil.which(n) for n in ryhma)]
+    if not ehdokkaat:
+        sys.exit("Yhtään C++-kääntäjää ei löytynyt.")
+
     loydetyt = []
     for nimi in ehdokkaat:
-        if shutil.which(nimi) is None:
-            if pyydetyt:
-                sys.exit(f"Kääntäjää ei löydy: {nimi}")
-            continue
-        if Path(nimi).name.startswith("g++"):
-            liput = ["-g", "-fsanitize=address,undefined",
-                     "-fno-sanitize-recover=all"]
-            loydetyt.append(Kaantaja(nimi, liput, tsan=True))
+        if sanitoijat_toimivat(nimi, SANITOIJAT):
+            tsan = sanitoijat_toimivat(nimi, ["-fsanitize=thread"])
+            loydetyt.append(Kaantaja(nimi, SANITOIJAT, tsan))
         else:
+            print(f"Huom: {nimi} ilman sanitoijia (kirjastot puuttuvat)")
             loydetyt.append(Kaantaja(nimi, [], tsan=False))
-    if not loydetyt:
-        sys.exit("Yhtään C++-kääntäjää ei löytynyt.")
     return loydetyt
 
 

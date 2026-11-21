@@ -1,0 +1,5 @@
+nostettu 30, saldo 70
+muu virhe: summan on oltava positiivinen
+tilin virhe: kate ei riitä: saldo 70
+nostettu 70, saldo 0
+indeksi rajojen ulkopuolella, koko 3

@@ -1,0 +1,8 @@
+'42' -> 42
+'-7' -> -7
+'12abc' -> ei luku
+'' -> ei luku
+oletusarvolla: 0
+21: 42
+-3: -1
+abc: -1

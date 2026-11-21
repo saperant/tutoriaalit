@@ -1,0 +1,32 @@
+name: Tutoriaalit
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  testaa-ja-rakenna:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Asenna työkalut
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            make python3 pandoc g++-14 clang-20 libclang-rt-20-dev \
+            texlive-xetex texlive-latex-recommended texlive-latex-extra \
+            texlive-fonts-recommended texlive-lang-european lmodern \
+            fonts-dejavu
+
+      - name: Testaa esimerkit
+        run: make testaa
+
+      - name: Rakenna PDF:t
+        run: make pdf
+
+      - name: Tallenna PDF:t
+        uses: actions/upload-artifact@v4
+        with:
+          name: tutoriaalit-pdf
+          path: "*/*.pdf"

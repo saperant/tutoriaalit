@@ -43,7 +43,7 @@ varaan nykyaikainen C++-koodi rakentuu.
 
 ## Työkalut
 
-Esimerkit on testattu GCC 14- ja Clang 18 -kääntäjillä Linuxissa.
+Esimerkit on testattu GCC 14- ja Clang 20 -kääntäjillä Linuxissa.
 Yksittäinen esimerkki käännetään ja ajetaan näin:
 
 ```text

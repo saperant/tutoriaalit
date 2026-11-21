@@ -107,8 +107,13 @@ function CodeBlock(lohko)
   lohko.attributes["tiedosto"] = nil
   lohko.attributes["osa"] = nil
 
-  -- Tulosteet näytetään ilman syntaksikorostusta.
+  -- Tulosteet näytetään ilman syntaksikorostusta ja PDF:ssä omalla
+  -- tyylillään (ympäristö `tuloste` on määritelty tiedostossa tyyli.tex).
   if lohko.classes:includes("tuloste") then
+    if FORMAT:match("latex") then
+      return pandoc.RawBlock("latex",
+        "\\begin{tuloste}\n" .. lohko.text .. "\n\\end{tuloste}")
+    end
     lohko.classes = pandoc.List({ "text" })
   end
   return lohko
