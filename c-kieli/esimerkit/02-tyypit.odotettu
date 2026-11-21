@@ -1,0 +1,8 @@
+char:      1
+short:     2
+int:       4
+long:      8
+long long: 8
+double:    8
+osoitin:   8
+int-tyypin arvoalue: -2147483648 ... 2147483647

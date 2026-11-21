@@ -1,0 +1,5 @@
+*p = 10, *(p + 2) = 30, p[2] = 30
+alkioita: 5
+11 21 31 41 51
+sizeof(d) = 24, sizeof(dp) = 8
+dp + 1 siirtyy 8 tavua

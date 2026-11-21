@@ -7,14 +7,14 @@
 NIMI     := moderni-cpp
 YHTEISET := ../yhteiset
 LUVUT    := $(sort $(wildcard luvut/*.md))
-ESIMERKIT := $(wildcard esimerkit/*)
+ESIMERKIT := $(shell find esimerkit -type f)
 
 .PHONY: kaikki testaa pdf siivoa
 
 kaikki: testaa pdf
 
 testaa:
-	python3 $(YHTEISET)/testaa_esimerkit.py .
+	python3 $(YHTEISET)/testaa_esimerkit.py --kieli cpp .
 
 pdf: $(NIMI).pdf
 

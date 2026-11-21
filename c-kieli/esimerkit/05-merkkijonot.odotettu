@@ -1,0 +1,10 @@
+strlen = 3, sizeof = 4
+Mei
+vakio, 3. merkki: k
+a == c: 0
+strcmp(a, c) == 0: 1
+"apu" < "auto": 1
+tiedosto: raportti.txt, pääte: txt
+sisältää 'kayttaja': 1
+'tilaus-2024'
+katkaistu: 'vuosiraportti-2'
