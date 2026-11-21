@@ -1,0 +1,15 @@
+Onnistuva kutsu:
+  hankitaan A
+  hankitaan B
+  käsittely valmis
+  vapautetaan B
+  vapautetaan A
+Epäonnistuva kutsu:
+  hankitaan A
+  hankitaan B
+  vapautetaan B
+  vapautetaan A
+  virhe: jokin meni pieleen
+Tiedosto:
+  kirjoitettu
+  tiedosto suljettu

@@ -1,0 +1,32 @@
+# Yhteiset pandoc-asetukset kaikille tutoriaaleille.
+# Käyttö: pandoc --defaults=../yhteiset/pdf.yaml metadata.yaml luvut/*.md
+from: markdown
+pdf-engine: xelatex
+filters:
+  - ${.}/sisallyta.lua
+include-in-header:
+  - ${.}/tyyli.tex
+top-level-division: chapter
+number-sections: true
+table-of-contents: true
+toc-depth: 2
+highlight-style: tango
+variables:
+  documentclass: scrreprt
+  classoption:
+    - a4paper
+    - 11pt
+    - oneside
+    - parskip=half
+  lang: fi
+  geometry:
+    - margin=25mm
+  mainfont: Latin Modern Roman
+  sansfont: Latin Modern Sans
+  monofont: DejaVu Sans Mono
+  monofontoptions:
+    - Scale=0.82
+  colorlinks: true
+  linkcolor: blue!50!black
+  urlcolor: blue!50!black
+  toccolor: black

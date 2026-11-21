@@ -1,0 +1,10 @@
+1. luonti
+2. kopio
+  kopiomuodostin
+3. siirto
+  siirtomuodostin
+  a.koko() = 0, c.koko() = 10
+4. sijoitus väliaikaisesta
+  sijoitus
+5. palautus funktiosta
+  d.koko() = 100

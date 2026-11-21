@@ -1,0 +1,5 @@
+# Väliaikaiset käännöstiedostot
+*.o
+*.out
+*.tmp
+/**/rakennus/
