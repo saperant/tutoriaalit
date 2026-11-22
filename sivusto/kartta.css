@@ -1,0 +1,616 @@
+/* Taitopuukartta.
+   Asettelu: koko näkymän täyttävä kartta ja oikealla taitopaneeli;
+   kapealla näytöllä paneeli on kartan alla. Pimeä teema on piirilevy
+   (juotospisteet ja kuparijohtimet), vaalea teema piirikaavio paperilla. */
+
+:root {
+  --alusta: #0d1b16;
+  --alusta-syva: #09140f;
+  --pinta: #12241e;
+  --pinta-2: #183028;
+  --raja: #29443a;
+  --silkki: #ece8dc;
+  --silkki-2: #a9bdb2;
+  --silkki-3: #6c857a;
+  --johdin: #7c5530;
+  --pad: #b9783a;
+  --pad-tausta: #0f1f19;
+  --tina: #f0c35a;
+  --tina-teksti: #1b1405;
+  --avoin: #5cc8b4;
+  --poisto: #ec7a62;
+  --alue-0: #7fa7d9;
+  --alue-1: #d9a86c;
+  --alue-2: #8cc58a;
+  --alue-3: #b79ad6;
+  --alue-4: #e58c8c;
+  --alue-5: #5fc2b8;
+  --alue-6: #d8c35e;
+  --alue-7: #9fb0bf;
+  --alue-8: #8f9be8;
+  --alue-9: #d98ab5;
+  --varjo: rgba(0, 0, 0, 0.45);
+  --f-otsikko: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --f-teksti: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-data: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --alusta: #eef1ea;
+    --alusta-syva: #e2e7df;
+    --pinta: #ffffff;
+    --pinta-2: #f3f5f0;
+    --raja: #c6d0c7;
+    --silkki: #14231d;
+    --silkki-2: #3e564b;
+    --silkki-3: #6b7f75;
+    --johdin: #9aaba2;
+    --pad: #3e564b;
+    --pad-tausta: #ffffff;
+    --tina: #c2570c;
+    --tina-teksti: #ffffff;
+    --avoin: #0d7a6c;
+    --poisto: #c0392b;
+    --alue-0: #2f5f9a;
+    --alue-1: #9a6524;
+    --alue-2: #3e7f3c;
+    --alue-3: #6d4fa0;
+    --alue-4: #b04848;
+    --alue-5: #1f7f77;
+    --alue-6: #8a7615;
+    --alue-7: #546676;
+    --alue-8: #4552b0;
+    --alue-9: #a14b7c;
+    --varjo: rgba(20, 35, 29, 0.16);
+    color-scheme: light;
+  }
+}
+
+:root[data-theme="light"] {
+  --alusta: #eef1ea;
+  --alusta-syva: #e2e7df;
+  --pinta: #ffffff;
+  --pinta-2: #f3f5f0;
+  --raja: #c6d0c7;
+  --silkki: #14231d;
+  --silkki-2: #3e564b;
+  --silkki-3: #6b7f75;
+  --johdin: #9aaba2;
+  --pad: #3e564b;
+  --pad-tausta: #ffffff;
+  --tina: #c2570c;
+  --tina-teksti: #ffffff;
+  --avoin: #0d7a6c;
+  --poisto: #c0392b;
+  --alue-0: #2f5f9a;
+  --alue-1: #9a6524;
+  --alue-2: #3e7f3c;
+  --alue-3: #6d4fa0;
+  --alue-4: #b04848;
+  --alue-5: #1f7f77;
+  --alue-6: #8a7615;
+  --alue-7: #546676;
+  --alue-8: #4552b0;
+  --alue-9: #a14b7c;
+  --varjo: rgba(20, 35, 29, 0.16);
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--alusta);
+  color: var(--silkki);
+  font: 15px/1.5 var(--f-teksti);
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  z-index: 10;
+  background: var(--pinta);
+}
+
+.nakymaton {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+a { color: inherit; }
+
+button, input { font: inherit; color: inherit; }
+
+:focus-visible { outline: 2px solid var(--avoin); outline-offset: 2px; }
+
+/* ---------------------------------------------------------------- */
+/* Rakenne                                                           */
+
+.sovellus {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100%;
+}
+
+.ylapalkki {
+  min-width: 0;
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 18px;
+  padding-block: 10px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  background: var(--pinta);
+  border-bottom: 1px solid var(--raja);
+}
+
+.tunnus { display: flex; flex-direction: column; line-height: 1.15; }
+
+.tunnus-nimi {
+  font: 600 1.35rem/1.1 var(--f-otsikko);
+  letter-spacing: 0.02em;
+}
+
+.tunnus-ala {
+  font: 0.72rem/1.3 var(--f-data);
+  color: var(--silkki-3);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.roolit {
+  display: flex;
+  gap: 6px;
+  flex: 1 1 420px;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  padding-block: 2px;
+}
+
+.rooli-nappi {
+  flex: 0 0 auto;
+  border: 1px solid var(--raja);
+  background: var(--pinta-2);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font: 500 0.82rem/1.4 var(--f-otsikko);
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.rooli-nappi:hover { border-color: var(--silkki-3); }
+
+.rooli-nappi[aria-pressed="true"] {
+  background: var(--tina);
+  border-color: var(--tina);
+  color: var(--tina-teksti);
+}
+
+.haku { position: relative; flex: 0 1 260px; min-width: 180px; }
+
+.haku input {
+  width: 100%;
+  border: 1px solid var(--raja);
+  background: var(--alusta-syva);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+}
+
+.haku-tulos {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font: 0.72rem var(--f-data);
+  color: var(--silkki-3);
+  pointer-events: none;
+}
+
+.nakyma {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 390px;
+  min-height: 0;
+}
+
+.karttaalue {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 50%, var(--alusta) 0%, var(--alusta-syva) 100%);
+}
+
+#kartta {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#kartta.raahaus { cursor: grabbing; }
+
+/* ---------------------------------------------------------------- */
+/* Kartan grafiikka                                                  */
+
+.kehä { fill: none; stroke: var(--raja); stroke-width: 1; }
+
+.kehä-teksti {
+  fill: var(--silkki-3);
+  font: 500 13px var(--f-data);
+  letter-spacing: 0.14em;
+}
+
+.alue-teksti {
+  font: 600 30px var(--f-otsikko);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.ristikko { fill: var(--raja); }
+
+.reitti {
+  fill: none;
+  stroke: var(--johdin);
+  stroke-width: 2.2;
+  stroke-linejoin: round;
+  transition: stroke 0.15s, opacity 0.15s;
+}
+
+.reitti.valittu { stroke: var(--tina); stroke-width: 3.4; }
+.reitti.lisays { stroke: var(--avoin); stroke-width: 3.4; stroke-dasharray: 9 6; }
+.reitti.poisto { stroke: var(--poisto); stroke-width: 3.4; stroke-dasharray: 9 6; }
+.himmennetty .reitti:not(.valittu) { opacity: 0.25; }
+
+.keskus-ympyra { fill: var(--pad-tausta); stroke: var(--pad); stroke-width: 3; }
+.keskus-teksti {
+  fill: var(--silkki);
+  font: 600 20px var(--f-otsikko);
+  letter-spacing: 0.25em;
+}
+.keskus-ala { fill: var(--silkki-3); font: 12px var(--f-data); letter-spacing: 0.08em; }
+
+.solmu { cursor: pointer; outline: none; }
+
+.solmu .halo { fill: none; stroke: transparent; stroke-width: 6; }
+.solmu .pad {
+  fill: var(--pad-tausta);
+  stroke: var(--pad);
+  stroke-width: 3.5;
+  transition: stroke 0.15s, fill 0.15s;
+}
+.solmu.suunniteltu .pad { stroke-dasharray: 5 4; }
+.solmu .ydin { transition: r 0.15s; }
+.solmu .nimi {
+  fill: var(--silkki);
+  font: 500 15px var(--f-otsikko);
+  paint-order: stroke;
+  stroke: var(--alusta);
+  stroke-width: 5px;
+  stroke-linejoin: round;
+  text-anchor: middle;
+  pointer-events: none;
+}
+.solmu .op {
+  fill: var(--silkki-3);
+  font: 11px var(--f-data);
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+.solmu:hover .pad, .solmu:focus-visible .pad { stroke: var(--silkki); }
+.solmu:focus-visible .halo { stroke: var(--avoin); }
+
+.solmu.valittu .pad { fill: var(--tina); stroke: var(--tina); stroke-dasharray: none; }
+.solmu.valittu .halo { stroke: var(--tina); stroke-opacity: 0.35; stroke-width: 10; }
+.solmu.avoin .halo { stroke: var(--avoin); stroke-opacity: 0.55; stroke-width: 3; stroke-dasharray: 4 4; }
+.solmu.lisays .pad { stroke: var(--avoin); fill: var(--pad-tausta); }
+.solmu.lisays .halo { stroke: var(--avoin); stroke-opacity: 0.6; stroke-width: 8; }
+.solmu.poisto .pad { stroke: var(--poisto); fill: var(--pad-tausta); }
+.solmu.poisto .halo { stroke: var(--poisto); stroke-opacity: 0.6; stroke-width: 8; }
+.solmu.tarkasteltu .halo { stroke: var(--silkki); stroke-opacity: 1; stroke-width: 2.5; stroke-dasharray: none; }
+.solmu.valinnainen .halo { stroke: var(--tina); stroke-opacity: 0.8; stroke-width: 2.5; stroke-dasharray: 2 5; }
+.solmu.osuma .halo { stroke: var(--silkki); stroke-opacity: 0.9; stroke-width: 7; }
+.himmennetty .solmu:not(.osuma) { opacity: 0.28; }
+
+/* ---------------------------------------------------------------- */
+/* Kartan päällä olevat ohjaimet                                     */
+
+.tila {
+  position: absolute;
+  left: max(12px, env(safe-area-inset-left, 0px));
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  max-width: calc(100% - 90px);
+  padding: 8px 12px;
+  background: var(--pinta);
+  border: 1px solid var(--raja);
+  border-radius: 8px;
+  box-shadow: 0 6px 20px var(--varjo);
+}
+
+.laskuri {
+  font: 0.85rem/1.3 var(--f-data);
+  color: var(--silkki-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.laskuri b { color: var(--silkki); font-weight: 500; }
+.laskuri .delta { color: var(--avoin); }
+.laskuri .delta.miinus { color: var(--poisto); }
+
+.toiminnot { display: flex; gap: 6px; }
+
+.nappi {
+  border: 1px solid var(--raja);
+  background: var(--pinta-2);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font: 500 0.82rem/1.3 var(--f-otsikko);
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+
+.nappi:hover { border-color: var(--silkki-3); }
+
+.nappi.ensisijainen {
+  background: var(--tina);
+  border-color: var(--tina);
+  color: var(--tina-teksti);
+}
+
+.nappi.vaarallinen { color: var(--poisto); }
+
+.zoom {
+  position: absolute;
+  right: max(12px, env(safe-area-inset-right, 0px));
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.zoom .nappi {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  font: 500 1.1rem/1 var(--f-data);
+  box-shadow: 0 4px 14px var(--varjo);
+}
+
+.vihje {
+  position: absolute;
+  z-index: 4;
+  max-width: 280px;
+  padding: 8px 10px;
+  background: var(--pinta);
+  border: 1px solid var(--raja);
+  border-radius: 6px;
+  box-shadow: 0 8px 24px var(--varjo);
+  pointer-events: none;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.vihje strong { display: block; font: 600 0.95rem/1.25 var(--f-otsikko); }
+.vihje .pieni { color: var(--silkki-2); font: 0.75rem var(--f-data); }
+
+.selite {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  gap: 4px;
+  padding: 8px 10px;
+  background: var(--pinta);
+  border: 1px solid var(--raja);
+  border-radius: 8px;
+  font: 0.72rem/1.3 var(--f-data);
+  color: var(--silkki-2);
+}
+
+.selite div { display: flex; align-items: center; gap: 8px; }
+.selite svg { flex: 0 0 auto; }
+
+/* ---------------------------------------------------------------- */
+/* Paneeli                                                           */
+
+.paneeli {
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--pinta);
+  border-left: 1px solid var(--raja);
+  padding: 18px 20px 28px;
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+
+.paneeli h2 {
+  margin: 0 0 6px;
+  font: 600 1.45rem/1.15 var(--f-otsikko);
+  text-wrap: balance;
+}
+
+.paneeli h3 {
+  margin: 20px 0 8px;
+  font: 600 0.72rem/1.3 var(--f-data);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--silkki-3);
+}
+
+.paneeli p { margin: 0 0 10px; color: var(--silkki-2); }
+
+.ylarivi {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font: 0.72rem/1.3 var(--f-data);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--silkki-3);
+}
+
+.piste {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
+.takaisin {
+  border: 0;
+  background: none;
+  padding: 0;
+  margin-left: auto;
+  cursor: pointer;
+  font: 0.78rem var(--f-data);
+  color: var(--silkki-2);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.mittarit {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.mittari {
+  padding: 8px 10px;
+  background: var(--pinta-2);
+  border-radius: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+.mittari b { display: block; font: 500 1.15rem/1.2 var(--f-data); }
+.mittari span { font-size: 0.72rem; color: var(--silkki-3); }
+
+.merkki {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font: 500 0.72rem/1.6 var(--f-data);
+  letter-spacing: 0.04em;
+  border: 1px solid var(--raja);
+  color: var(--silkki-2);
+}
+
+.merkki.valmis { border-color: var(--avoin); color: var(--avoin); }
+
+.linkit { display: grid; gap: 6px; }
+
+.linkki {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 12px;
+  border: 1px solid var(--raja);
+  border-radius: 6px;
+  text-decoration: none;
+  background: var(--pinta-2);
+}
+
+.linkki:hover { border-color: var(--avoin); }
+.linkki span { font: 0.72rem var(--f-data); color: var(--silkki-3); }
+
+.lista { margin: 0; padding-left: 1.2em; color: var(--silkki-2); }
+.lista li { margin: 2px 0; }
+
+.sirut { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.siru {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--raja);
+  background: var(--pinta-2);
+  border-radius: 999px;
+  padding: 2px 10px 2px 8px;
+  font: 0.8rem/1.5 var(--f-teksti);
+  cursor: pointer;
+}
+
+.siru:hover { border-color: var(--silkki-3); }
+.siru.valittu { border-color: var(--tina); }
+
+.tasot { display: grid; gap: 10px; }
+
+.taso-ryhma { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 8px; }
+
+.taso-nro {
+  font: 0.72rem/1.9 var(--f-data);
+  color: var(--silkki-3);
+  letter-spacing: 0.06em;
+}
+
+.tieto {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 4px 12px;
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+.tieto dt { color: var(--silkki-3); }
+.tieto dd { margin: 0; color: var(--silkki-2); }
+
+.toimintarivi { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 4px; }
+
+.ohje { font-size: 0.88rem; }
+
+/* ---------------------------------------------------------------- */
+/* Kapea näyttö: paneeli kartan alla                                */
+
+@media (max-width: 860px) {
+  .nakyma {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) minmax(0, 42%);
+  }
+  .paneeli {
+    border-left: 0;
+    border-top: 1px solid var(--raja);
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  }
+  .tila { bottom: 12px; }
+  .zoom { bottom: 12px; }
+  .selite { display: none; }
+  .tunnus-ala { display: none; }
+  .haku { flex: 1 1 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}

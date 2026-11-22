@@ -4,6 +4,9 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   testaa-ja-rakenna:
     runs-on: ubuntu-24.04
@@ -19,14 +22,52 @@ jobs:
             texlive-fonts-recommended texlive-lang-european lmodern \
             fonts-dejavu graphviz
 
-      - name: Testaa esimerkit
+      - name: Asenna Playwright sivuston testeihin
+        run: |
+          npm install --no-save playwright@1.49.1
+          npx playwright install --with-deps chromium
+
+      - name: Testaa esimerkit, taitopuu ja sivusto
         run: make testaa
 
-      - name: Rakenna PDF:t
-        run: make pdf
+      - name: Rakenna PDF:t ja sivusto
+        run: make pdf && make -C sivusto
 
       - name: Tallenna PDF:t
         uses: actions/upload-artifact@v4
         with:
           name: tutoriaalit-pdf
           path: "*/*.pdf"
+
+      - name: Tallenna sivusto GitHub Pagesia varten
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: sivusto/rakennus
+
+  julkaise:
+    needs: testaa-ja-rakenna
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-24.04
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.julkaisu.outputs.page_url }}
+    steps:
+      - id: julkaisu
+        uses: actions/deploy-pages@v4
+
+  kehityskontti:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Rakenna devcontainer-kuva
+        run: docker build -t tutoriaalit-kehitys -f .devcontainer/Dockerfile .devcontainer
+
+      - name: Testaa esimerkit kontissa
+        run: |
+          docker run --rm -v "$PWD":/w -w /w tutoriaalit-kehitys \
+            bash -c 'make -C c-kieli testaa && make -C moderni-cpp testaa'

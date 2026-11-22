@@ -1,0 +1,48 @@
+<title>Taitopuu</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Tutoriaalien taitopuu: valitse taidot, näe esitiedot ja avaa materiaalit.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="kartta.css">
+<!-- runko -->
+<div class="sovellus">
+  <header class="ylapalkki">
+    <div class="tunnus">
+      <span class="tunnus-nimi">Taitopuu</span>
+      <span class="tunnus-ala" id="tunnus-ala">Tutoriaalit</span>
+    </div>
+    <nav class="roolit" id="roolit" aria-label="Roolipolut"></nav>
+    <div class="haku">
+      <label for="haku" class="nakymaton">Hae taitoja</label>
+      <input id="haku" type="search" placeholder="Hae taitoa tai aihetta" autocomplete="off">
+      <span class="haku-tulos" id="haku-tulos" aria-live="polite"></span>
+    </div>
+  </header>
+  <main class="nakyma">
+    <div class="karttaalue" id="karttaalue">
+      <svg id="kartta" role="application" aria-label="Taitopuukartta. Vedä siirtääksesi, rullaa tai nipistä zoomataksesi." tabindex="0"></svg>
+      <div class="selite" aria-hidden="true">
+        <div><svg width="18" height="18" viewBox="-9 -9 18 18"><circle r="6.5" fill="var(--pad-tausta)" stroke="var(--pad)" stroke-width="2.5"/></svg>Materiaali saatavilla</div>
+        <div><svg width="18" height="18" viewBox="-9 -9 18 18"><circle r="6.5" fill="var(--pad-tausta)" stroke="var(--pad)" stroke-width="2.5" stroke-dasharray="3 2.5"/></svg>Suunnitteilla</div>
+        <div><svg width="18" height="18" viewBox="-9 -9 18 18"><circle r="6.5" fill="var(--tina)" stroke="var(--tina)" stroke-width="2.5"/></svg>Polulla</div>
+        <div><svg width="18" height="18" viewBox="-9 -9 18 18"><circle r="7.5" fill="none" stroke="var(--avoin)" stroke-width="1.5" stroke-dasharray="2 2"/><circle r="5" fill="var(--pad-tausta)" stroke="var(--pad)" stroke-width="2"/></svg>Seuraavaksi avautuva</div>
+      </div>
+      <div class="vihje" id="vihje" hidden></div>
+      <div class="tila">
+        <div class="laskuri" id="laskuri" aria-live="polite"></div>
+        <div class="toiminnot">
+          <button class="nappi" id="kopioi" type="button">Kopioi linkki</button>
+          <button class="nappi vaarallinen" id="tyhjenna" type="button">Tyhjennä</button>
+        </div>
+      </div>
+      <div class="zoom">
+        <button class="nappi" id="lahenna" type="button" aria-label="Lähennä">+</button>
+        <button class="nappi" id="loitonna" type="button" aria-label="Loitonna">−</button>
+        <button class="nappi" id="sovita" type="button" aria-label="Näytä koko kartta">⤢</button>
+      </div>
+    </div>
+    <aside class="paneeli" id="paneeli" aria-live="polite"></aside>
+  </main>
+</div>
+<script src="kartta.js"></script>

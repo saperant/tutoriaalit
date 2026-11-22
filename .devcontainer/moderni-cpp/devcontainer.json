@@ -1,0 +1,21 @@
+{
+  "name": "Moderni C++: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {}
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/moderni-cpp/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools-extension-pack"
+      ],
+      "settings": {
+        "C_Cpp.default.cppStandard": "c++23",
+        "C_Cpp.default.compilerPath": "/usr/bin/g++-14"
+      }
+    }
+  },
+  "postCreateCommand": "make -s -j4"
+}

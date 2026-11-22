@@ -27,6 +27,11 @@ roadmap_polut = [
   "server-side-game-developer", "devops", "docker", "kubernetes",
 ]
 
+# Taitopuukartan (sivusto/) linkit lähdekoodiin ja Codespacesiin.
+[sivusto]
+repo = "saperant/tutoriaalit"
+haara = "main"
+
 # ---------------------------------------------------------------------
 # Alueet
 # ---------------------------------------------------------------------

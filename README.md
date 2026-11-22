@@ -10,6 +10,13 @@ polkuja puun läpi. Taitopuu, roolipolut ja tutoriaalien
 tuotantojärjestys ovat hakemistossa [`opintopolut/`](opintopolut/)
 ([opintopolut.pdf](opintopolut/opintopolut.pdf)).
 
+**Taitopuukartta** ([`sivusto/`](sivusto/)) on interaktiivinen
+verkkosivu, jolla taitopuuta voi tutkia: roolipolun voi valita
+yläpalkista, taidon voi lisätä polulle kaikkine esitietoineen, ja
+valmiiden taitojen kohdalta avautuvat tutoriaalin PDF, esimerkit
+kehityskontteineen ja Codespaces. Polun voi jakaa linkkinä. Sivusto
+julkaistaan GitHub Pagesiin `main`-haarasta.
+
 | Tutoriaali | Hakemisto | PDF |
 |------------|-----------|-----|
 | Moderni C++ | [`moderni-cpp/`](moderni-cpp/) | [moderni-cpp.pdf](moderni-cpp/moderni-cpp.pdf) |
@@ -29,6 +36,29 @@ tuotantojärjestys ovat hakemistossa [`opintopolut/`](opintopolut/)
 - **Lisenssi:** kaikki materiaali on lisensoitu
   [CC BY-SA 4.0](LICENSE) -lisenssillä.
 
+## Esimerkit kehityskontissa
+
+Jokaisen tutoriaalin esimerkeille on valmis kehityskontti
+(devcontainer), jossa on kääntäjät (GCC 14, Clang 20), sanitoijat ja
+debuggeri:
+
+- **GitHub Codespaces:** *Code → Codespaces → New with options* ja
+  valitse konfiguraatio, esimerkiksi *C-kieli: esimerkit*.
+- **Visual Studio Code:** avaa repositorio ja valitse
+  *Dev Containers: Reopen in Container*.
+- **Ilman repositoriota:** taitopuukartalta saa kunkin tutoriaalin
+  esimerkit zip-pakettina, jossa on mukana oma kehityskontti.
+
+Kontin sisällä tai ilman konttia esimerkit käännetään esimerkkihakemiston
+Makefilellä: `make` kääntää kaikki, `make aja-01-hei` kääntää ja ajaa
+yhden ja `make virhe-02-etumerkki` näyttää tarkoituksella virheellisen
+esimerkin käännösvirheen.
+
+Konfiguraatiot ovat hakemistossa `.devcontainer/`: yhteinen `Dockerfile`
+sekä tutoriaalikohtaiset `devcontainer.json`-tiedostot. Konfiguraatio
+*Tutoriaalien kirjoittaminen* sisältää lisäksi pandocin, XeLaTeXin ja
+Graphvizin PDF:ien rakentamiseen.
+
 ## Rakenne
 
 ```text
@@ -38,13 +68,18 @@ yhteiset/                 kaikille tutoriaaleille yhteiset työkalut
   sisallyta.lua           pandoc-suodatin koodin sisällyttämiseen
   testaa_esimerkit.py     esimerkkikoodin testaaja
   taitopuu.py             taitopuun tarkistin ja generaattori
+  asettelu.py             taitopuukartan säteittäinen asettelu ja reitit
+  sivusto.py              taitopuukartan rakentaja
 opintopolut/
   taitopuu.toml           taitopuu: alueet, taidot ja roolit
+sivusto/                  taitopuukartta (HTML, CSS, JS ja selaintesti)
+.devcontainer/            kehityskontit esimerkeille ja kirjoittamiselle
 <tutoriaali>/
   Makefile                make testaa / make pdf / make
   metadata.yaml           otsikko, päiväys yms.
   luvut/NN-nimi.md        luvut järjestyksessä
   esimerkit/              koodiesimerkit, odotetut tulosteet ja syötteet
+                          sekä Makefile niiden kääntämiseen
   <tutoriaali>.pdf        valmis PDF
 ```
 
@@ -68,8 +103,15 @@ make pdf      # rakentaa PDF:n
 make          # molemmat
 ```
 
-GitHub Actions ajaa testit ja rakentaa PDF:t jokaisen muutoksen
-yhteydessä (`.github/workflows/tutoriaalit.yml`).
+Taitopuukartan selaintestit tarvitsevat Playwrightin
+(`npm install playwright`); ilman sitä ne ohitetaan. `make -C sivusto
+palvele` käynnistää kartan paikallisesti osoitteeseen
+<http://localhost:8000>.
+
+GitHub Actions ajaa testit, rakentaa PDF:t ja sivuston, testaa
+esimerkit kehityskontissa ja julkaisee sivuston GitHub Pagesiin
+(`.github/workflows/tutoriaalit.yml`). Julkaisua varten repositorion
+asetuksista on valittava *Pages → Source: GitHub Actions*.
 
 ## Koodiesimerkkien kirjoittaminen
 

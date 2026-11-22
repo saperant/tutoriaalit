@@ -1,0 +1,21 @@
+{
+  "name": "C-kieli: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {}
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/c-kieli/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools-extension-pack"
+      ],
+      "settings": {
+        "C_Cpp.default.cStandard": "c23",
+        "C_Cpp.default.compilerPath": "/usr/bin/gcc-14"
+      }
+    }
+  },
+  "postCreateCommand": "make -s -j4"
+}
