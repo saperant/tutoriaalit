@@ -1,0 +1,1181 @@
+# Tutoriaalien taitopuu.
+#
+# Jokainen [[taito]] on yksi tutoriaali. `edellyttaa` luettelee taidot,
+# jotka on hallittava ensin. Luetteloon merkitään vain välittömät
+# esitiedot: jos A edellyttää B:tä ja B edellyttää C:tä, A:han ei
+# merkitä C:tä (tarkistin hylkää tällaiset tarpeettomat kaaret).
+#
+# `laajuus` on arvio opintopisteinä (1 op ≈ 27 tuntia työtä).
+# `roadmap` viittaa roadmap.sh:n polkuihin, joita on käytetty aihepiirin
+# rajauksen tukena. `amk` on tyypillinen vastaava ammattikorkeakoulun
+# opintojakso. `testaus` kertoo, miten tutoriaalin koodi testataan.
+# `tutoriaali` on valmiin tutoriaalin hakemisto repositoriossa.
+#
+# [[rooli]] on ammattiprofiili. Sen polku on tavoitetaitojen ja niiden
+# kaikkien esitietojen joukko.
+
+# roadmap.sh-polut, joiden aihelistat on käyty läpi rajauksen tukena.
+# roadmap.sh:n sisältö on tekijänoikeudella suojattua (kaikki oikeudet
+# pidätetään), joten siitä ei kopioida tekstiä eikä kuvia; viittaukset
+# ovat vain polkujen nimiä.
+[lahteet]
+roadmap_haettu = "2026-11-22"
+roadmap_polut = [
+  "c", "cpp", "rust", "python", "computer-science",
+  "datastructures-and-algorithms", "linux", "shell-bash", "git-github",
+  "cyber-security", "network-engineer", "system-design", "game-developer",
+  "server-side-game-developer", "devops", "docker", "kubernetes",
+]
+
+# ---------------------------------------------------------------------
+# Alueet
+# ---------------------------------------------------------------------
+
+[[alue]]
+id = "perusta"
+nimi = "Perusta"
+kuvaus = "Ohjelmointi, työkalut ja työtavat, joita kaikki muut alueet käyttävät."
+
+[[alue]]
+id = "matematiikka"
+nimi = "Matematiikka"
+kuvaus = "Insinöörimatematiikka siinä laajuudessa kuin algoritmit, signaalinkäsittely ja grafiikka sitä tarvitsevat."
+
+[[alue]]
+id = "algoritmit"
+nimi = "Algoritmit ja tietorakenteet"
+kuvaus = "Tietojenkäsittelytieteen ydin: tehokkaat tietorakenteet, algoritmien suunnittelu ja analyysi."
+
+[[alue]]
+id = "jarjestelmat"
+nimi = "Tietokonejärjestelmät"
+kuvaus = "Miten ohjelma suoritetaan: konekieli, arkkitehtuuri, käyttöjärjestelmä ja rinnakkaisuus."
+
+[[alue]]
+id = "laitteisto"
+nimi = "Laitteistosuunnittelu"
+kuvaus = "Digitaalisen laitteiston suunnittelu korkean tason malleista RTL-tasoon, verifiointiin ja FPGA-toteutukseen."
+
+[[alue]]
+id = "signaalit"
+nimi = "Signaalinkäsittely ja radiot"
+kuvaus = "Signaalien näytteistys, suodatus ja analyysi sekä digitaalinen tiedonsiirto ja ohjelmistoradio."
+
+[[alue]]
+id = "sulautetut"
+nimi = "Sulautetut järjestelmät"
+kuvaus = "Mikrokontrollerit, reaaliaikakäyttöjärjestelmät, sulautettu Linux ja laiteajurit."
+
+[[alue]]
+id = "hajautetut"
+nimi = "Verkot ja hajautetut järjestelmät"
+kuvaus = "Tietoverkot, verkko-ohjelmointi ja useasta koneesta koostuvien järjestelmien suunnittelu."
+
+[[alue]]
+id = "grafiikka"
+nimi = "Tietokonegrafiikka"
+kuvaus = "Renderöinnin matematiikka ja algoritmit sekä grafiikkasuorittimen ohjelmointi."
+
+[[alue]]
+id = "tietoturva"
+nimi = "Tietoturva ja takaisinmallinnus"
+kuvaus = "Ohjelmien toiminnan selvittäminen konekielestä, haavoittuvuudet ja niiltä suojautuminen."
+
+# ---------------------------------------------------------------------
+# Perusta
+# ---------------------------------------------------------------------
+
+[[taito]]
+id = "ohjelmoinnin-perusteet"
+nimi = "Ohjelmoinnin perusteet (Python)"
+alue = "perusta"
+kuvaus = "Ohjelmoinnin peruskäsitteet Pythonilla: arvot, ohjausrakenteet, funktiot, tietorakenteet ja ohjelman jäsentäminen."
+edellyttaa = []
+aiheet = [
+  "muuttujat, tyypit ja lausekkeet",
+  "ohjausrakenteet ja funktiot",
+  "listat, sanakirjat ja joukot",
+  "merkkijonot ja tiedostot",
+  "luokat ja modulit",
+  "virheet ja poikkeukset",
+  "yksikkötestaus pytestillä",
+]
+laajuus = 5
+testaus = "Python, pytest"
+roadmap = ["python"]
+amk = "Ohjelmoinnin perusteet"
+
+[[taito]]
+id = "komentorivi"
+nimi = "Komentorivi ja Linux"
+alue = "perusta"
+kuvaus = "Linux-järjestelmän käyttö komentoriviltä ja tehtävien automatisointi komentotulkin skripteillä."
+edellyttaa = []
+aiheet = [
+  "tiedostojärjestelmä ja oikeudet",
+  "putket, uudelleenohjaukset ja tekstinkäsittely (grep, sed, awk)",
+  "prosessit ja signaalit",
+  "pakettienhallinta ja palvelut",
+  "Bash-skriptit: muuttujat, ehdot, silmukat, funktiot",
+  "ssh ja etäkäyttö",
+]
+laajuus = 3
+testaus = "Bash-skriptit ajetaan säiliössä, tulosteita verrataan"
+roadmap = ["linux", "shell-bash"]
+amk = "Linux-perusteet"
+
+[[taito]]
+id = "versionhallinta"
+nimi = "Versionhallinta (Git)"
+alue = "perusta"
+kuvaus = "Muutosten hallinta Gitillä yksin ja tiimissä."
+edellyttaa = ["komentorivi"]
+aiheet = [
+  "commitit, haarat ja yhdistäminen",
+  "etärepositoriot ja pull requestit",
+  "historian tarkastelu ja muuttaminen",
+  "konfliktien ratkaisu",
+  "tagit, alimodulit ja koukut",
+]
+laajuus = 2
+testaus = "skriptatut Git-esimerkit väliaikaisissa repositorioissa"
+roadmap = ["git-github"]
+amk = "Ohjelmistotuotannon työkalut"
+
+[[taito]]
+id = "c-kieli"
+nimi = "C-kieli"
+alue = "perusta"
+kuvaus = "C-ohjelmointi C17- ja C23-standardien mukaan: osoittimet, muistinhallinta ja määrittelemätön käyttäytyminen."
+edellyttaa = ["ohjelmoinnin-perusteet", "komentorivi"]
+aiheet = [
+  "tyypit ja lausekkeet",
+  "osoittimet, taulukot ja merkkijonot",
+  "dynaaminen muistinhallinta",
+  "rakenteet ja unionit",
+  "esikääntäjä ja monen tiedoston ohjelmat",
+  "tiedostot ja virheenkäsittely",
+  "säikeet ja atomiset operaatiot",
+]
+laajuus = 5
+testaus = "GCC ja Clang, AddressSanitizer ja UndefinedBehaviorSanitizer"
+roadmap = ["c"]
+amk = "C-ohjelmointi"
+tutoriaali = "c-kieli"
+
+[[taito]]
+id = "moderni-cpp"
+nimi = "Moderni C++"
+alue = "perusta"
+kuvaus = "C++11–C++23-ohjelmointi: RAII, siirtosemantiikka, standardikirjasto, mallit ja konseptit."
+edellyttaa = ["c-kieli"]
+aiheet = [
+  "RAII ja älykkäät osoittimet",
+  "siirtosemantiikka",
+  "standardikirjaston sanastotyypit",
+  "algoritmit ja ranges",
+  "mallit ja konseptit",
+  "käännösaikainen laskenta",
+  "virheenkäsittely ja rinnakkaisuus",
+]
+laajuus = 5
+testaus = "GCC ja Clang, sanitoijat"
+roadmap = ["cpp"]
+amk = "Olio-ohjelmointi C++:lla"
+tutoriaali = "moderni-cpp"
+
+[[taito]]
+id = "python-tyokalut"
+nimi = "Python työkaluohjelmointiin"
+alue = "perusta"
+kuvaus = "Komentorivityökalujen, tiedostomuotojen jäsentäjien ja automaation kirjoittaminen Pythonilla."
+edellyttaa = ["ohjelmoinnin-perusteet", "komentorivi"]
+aiheet = [
+  "komentorivityökalut (argparse) ja paketointi",
+  "säännölliset lausekkeet ja tekstimuotojen jäsentäminen",
+  "binäärimuodot (struct) ja tiedostojärjestelmä",
+  "aliprosessit ja ulkoisten työkalujen ohjaus",
+  "NumPy-perusteet ja kuvaajat",
+  "tyyppivihjeet ja testaus",
+]
+laajuus = 5
+testaus = "Python, pytest"
+roadmap = ["python"]
+amk = "Ohjelmointi ja skriptaus"
+
+[[taito]]
+id = "rakennus-ja-testaus"
+nimi = "Käännösjärjestelmät, testaus ja CI"
+alue = "perusta"
+kuvaus = "C- ja C++-projektien rakentaminen, automaattinen testaus ja jatkuva integraatio."
+edellyttaa = ["c-kieli", "versionhallinta"]
+aiheet = [
+  "Make ja CMake",
+  "riippuvuudet ja kirjastot",
+  "yksikkötestauskehykset",
+  "sanitoijat, kattavuus ja staattinen analyysi",
+  "CI-putket (GitHub Actions)",
+  "debuggaus gdb:llä",
+]
+laajuus = 3
+testaus = "esimerkkiprojektit rakennetaan ja testataan CI:ssä"
+roadmap = ["c", "cpp", "devops"]
+amk = "Ohjelmistotuotanto"
+
+# ---------------------------------------------------------------------
+# Matematiikka
+# ---------------------------------------------------------------------
+
+[[taito]]
+id = "diskreetti-matematiikka"
+nimi = "Diskreetti matematiikka"
+alue = "matematiikka"
+kuvaus = "Logiikka, joukot, kombinatoriikka, todistaminen ja graafit ohjelmoijan näkökulmasta."
+edellyttaa = []
+aiheet = [
+  "propositio- ja Boolen logiikka",
+  "joukot, relaatiot ja funktiot",
+  "induktio ja rekursio",
+  "kombinatoriikka",
+  "modulaariaritmetiikka",
+  "graafit ja puut",
+]
+laajuus = 5
+testaus = "Python-esimerkit, pytest"
+roadmap = ["computer-science"]
+amk = "Diskreetti matematiikka"
+
+[[taito]]
+id = "lineaarialgebra"
+nimi = "Lineaarialgebra"
+alue = "matematiikka"
+kuvaus = "Vektorit, matriisit ja lineaarikuvaukset sekä niiden numeerinen laskenta."
+edellyttaa = ["ohjelmoinnin-perusteet"]
+aiheet = [
+  "vektorit, pistetulo ja ristitulo",
+  "matriisit ja lineaarikuvaukset",
+  "yhtälöryhmät ja käänteismatriisi",
+  "kannanvaihto ja ortogonaalisuus",
+  "ominaisarvot",
+  "homogeeniset koordinaatit",
+]
+laajuus = 5
+testaus = "Python ja NumPy, pytest"
+roadmap = ["game-developer"]
+amk = "Insinöörimatematiikka: lineaarialgebra"
+
+[[taito]]
+id = "signaalimatematiikka"
+nimi = "Kompleksiluvut ja Fourier-analyysi"
+alue = "matematiikka"
+kuvaus = "Signaalinkäsittelyn matemaattinen perusta: kompleksiluvut, sinimuotoiset signaalit ja taajuustaso."
+edellyttaa = ["lineaarialgebra"]
+aiheet = [
+  "kompleksiluvut ja Eulerin kaava",
+  "sinimuotoiset signaalit ja osoitinesitys",
+  "summat, sarjat ja integraalit signaaleille",
+  "Fourier-sarja ja Fourier-muunnos",
+  "konvoluutio",
+]
+laajuus = 5
+testaus = "Python ja NumPy, pytest"
+roadmap = []
+amk = "Insinöörimatematiikka: kompleksiluvut ja muunnokset"
+
+[[taito]]
+id = "todennakoisyys"
+nimi = "Todennäköisyys ja tilastot"
+alue = "matematiikka"
+kuvaus = "Satunnaisuuden mallintaminen: jakaumat, odotusarvot, kohina ja estimointi."
+edellyttaa = ["diskreetti-matematiikka"]
+aiheet = [
+  "todennäköisyys ja ehdollinen todennäköisyys",
+  "diskreetit ja jatkuvat jakaumat",
+  "odotusarvo ja varianssi",
+  "normaalijakauma ja kohina",
+  "Monte Carlo -menetelmät",
+  "estimointi ja luottamusvälit",
+]
+laajuus = 3
+testaus = "Python ja NumPy, pytest (kiinteä satunnaissiemen)"
+roadmap = ["computer-science"]
+amk = "Todennäköisyyslaskenta ja tilastot"
+
+# ---------------------------------------------------------------------
+# Algoritmit ja tietorakenteet
+# ---------------------------------------------------------------------
+
+[[taito]]
+id = "tietorakenteet"
+nimi = "Tietorakenteet"
+alue = "algoritmit"
+kuvaus = "Perustietorakenteiden toteutus C:llä ja niiden valinta tehokkuuden perusteella."
+edellyttaa = ["c-kieli", "diskreetti-matematiikka"]
+aiheet = [
+  "dynaamiset taulukot ja linkitetyt listat",
+  "pinot, jonot ja rengaspuskurit",
+  "hajautustaulut",
+  "binäärihakupuut",
+  "keot ja prioriteettijonot",
+  "graafien esitystavat",
+]
+laajuus = 5
+testaus = "C, sanitoijat, satunnaistetut vertailutestit"
+roadmap = ["datastructures-and-algorithms", "computer-science"]
+amk = "Tietorakenteet ja algoritmit"
+
+[[taito]]
+id = "algoritmit"
+nimi = "Algoritmit"
+alue = "algoritmit"
+kuvaus = "Algoritmien suunnittelumenetelmät ja vaativuusanalyysi."
+edellyttaa = ["tietorakenteet"]
+aiheet = [
+  "aika- ja tilavaativuus",
+  "lajittelu ja haku",
+  "rekursio sekä hajota ja hallitse",
+  "ahneet algoritmit",
+  "dynaaminen ohjelmointi",
+  "graafialgoritmit: BFS, DFS, Dijkstra, virittävät puut",
+]
+laajuus = 5
+testaus = "C ja C++, sanitoijat, vertailu tunnettuihin tuloksiin"
+roadmap = ["datastructures-and-algorithms", "computer-science"]
+amk = "Tietorakenteet ja algoritmit"
+
+[[taito]]
+id = "edistyneet-algoritmit"
+nimi = "Edistyneet algoritmit ja tietorakenteet"
+alue = "algoritmit"
+kuvaus = "Tasapainotetut ja erikoistuneet tietorakenteet, merkkijonoalgoritmit ja laskennallinen vaativuus."
+edellyttaa = ["algoritmit"]
+aiheet = [
+  "tasapainotetut puut ja B-puut",
+  "trie, segmenttipuu ja union-find",
+  "merkkijonohaku (KMP, Rabin–Karp, suffiksitaulukot)",
+  "virtausalgoritmit",
+  "NP-täydellisyys ja approksimointi",
+  "satunnaistetut algoritmit",
+]
+laajuus = 5
+testaus = "C++, sanitoijat, satunnaistetut vertailutestit"
+roadmap = ["datastructures-and-algorithms", "computer-science"]
+amk = "Algoritmien syventävä opintojakso"
+
+[[taito]]
+id = "kaantajatekniikka"
+nimi = "Kääntäjätekniikka"
+alue = "algoritmit"
+kuvaus = "Pienen ohjelmointikielen kääntäjän rakentaminen jäsentimestä koodingenerointiin."
+edellyttaa = ["algoritmit", "assembly"]
+aiheet = [
+  "selaus ja jäsennys (rekursiivinen laskeutuminen)",
+  "abstrakti syntaksipuu ja semanttinen analyysi",
+  "välikieli ja SSA-muoto",
+  "optimoinnit",
+  "koodingenerointi RISC-V:lle",
+  "rekisterien varaus",
+]
+laajuus = 5
+testaus = "C++, käännetyt ohjelmat ajetaan QEMU-emulaattorissa"
+roadmap = ["computer-science"]
+amk = "Kääntäjätekniikka"
+
+# ---------------------------------------------------------------------
+# Tietokonejärjestelmät
+# ---------------------------------------------------------------------
+
+[[taito]]
+id = "digitaalitekniikka"
+nimi = "Digitaalitekniikka"
+alue = "jarjestelmat"
+kuvaus = "Lukujärjestelmät, Boolen algebra sekä kombinaatio- ja sekvenssilogiikka."
+edellyttaa = ["diskreetti-matematiikka"]
+aiheet = [
+  "lukujärjestelmät ja kahden komplementti",
+  "logiikkaportit ja Boolen algebran sieventäminen",
+  "kombinaatiologiikka: multiplekserit, dekooderit, summaimet",
+  "kiikut, rekisterit ja laskurit",
+  "tilakoneet",
+  "ajoitus ja kellotus",
+]
+laajuus = 5
+testaus = "Python-mallit ja Verilator-simulaatiot"
+roadmap = ["computer-science"]
+amk = "Digitaalitekniikka"
+
+[[taito]]
+id = "assembly"
+nimi = "Assembly"
+alue = "jarjestelmat"
+kuvaus = "Konekielinen ohjelmointi RISC-V- ja x86-64-arkkitehtuureilla sekä kääntäjän tuottaman koodin lukeminen."
+edellyttaa = ["c-kieli", "digitaalitekniikka"]
+aiheet = [
+  "rekisterit, muisti ja osoitusmuodot",
+  "aritmetiikka, vertailut ja hypyt",
+  "pino ja kutsukonventiot",
+  "C:n rakenteet konekielenä",
+  "x86-64 ja RISC-V rinnakkain",
+  "SIMD-käskyjen perusteet",
+]
+laajuus = 5
+testaus = "GNU as, QEMU (RISC-V), natiivi x86-64"
+roadmap = ["computer-science"]
+amk = "Tietokonetekniikka"
+
+[[taito]]
+id = "tietokonearkkitehtuuri"
+nimi = "Tietokonearkkitehtuuri"
+alue = "jarjestelmat"
+kuvaus = "Suorittimen ja muistijärjestelmän toteutus käskykanta-arkkitehtuurista mikroarkkitehtuuriin."
+edellyttaa = ["assembly"]
+aiheet = [
+  "käskykanta-arkkitehtuuri ja käskyjen koodaus",
+  "datapolku ja ohjausyksikkö",
+  "liukuhihna ja riippuvuudet",
+  "välimuistit ja muistihierarkia",
+  "virtuaalimuisti ja MMU",
+  "keskeytykset, väylät ja oheislaitteet",
+  "moniydinsuorittimet ja koherenssi",
+]
+laajuus = 5
+testaus = "C++-simulaattori RISC-V-osajoukolle, testiohjelmat"
+roadmap = ["computer-science"]
+amk = "Tietokonearkkitehtuuri"
+
+[[taito]]
+id = "binaarit-ja-linkitys"
+nimi = "Objektitiedostot, linkitys ja ABI"
+alue = "jarjestelmat"
+kuvaus = "Miten käännetty ohjelma rakentuu: ELF-tiedostot, linkitys, lataus ja binäärirajapinnat."
+edellyttaa = ["assembly"]
+aiheet = [
+  "ELF-tiedoston rakenne",
+  "symbolit ja relokaatiot",
+  "staattinen ja dynaaminen linkitys",
+  "linkkeriskriptit ja muistikartat",
+  "ohjelman lataus ja käynnistys",
+  "ABI ja debug-tieto (DWARF)",
+]
+laajuus = 3
+testaus = "GNU binutils, readelf- ja objdump-tulosteet"
+roadmap = ["c", "cpp"]
+amk = "Tietokonetekniikka"
+
+[[taito]]
+id = "kayttojarjestelmat"
+nimi = "Käyttöjärjestelmät"
+alue = "jarjestelmat"
+kuvaus = "Käyttöjärjestelmän periaatteet ja POSIX-järjestelmäohjelmointi."
+edellyttaa = ["tietokonearkkitehtuuri"]
+aiheet = [
+  "prosessit ja järjestelmäkutsut",
+  "säikeet ja vuorontaminen",
+  "virtuaalimuisti ja muistinhallinta",
+  "tiedostojärjestelmät ja I/O",
+  "prosessien välinen kommunikaatio",
+  "synkronointi ja lukkiutuminen",
+]
+laajuus = 5
+testaus = "C, POSIX-rajapinnat, sanitoijat"
+roadmap = ["linux", "computer-science"]
+amk = "Käyttöjärjestelmät"
+
+[[taito]]
+id = "rinnakkaisohjelmointi"
+nimi = "Rinnakkaisohjelmointi"
+alue = "jarjestelmat"
+kuvaus = "Moniydinsuorittimien hyödyntäminen turvallisesti ja tehokkaasti."
+edellyttaa = ["kayttojarjestelmat", "moderni-cpp"]
+aiheet = [
+  "säikeet ja tehtävät",
+  "muistimallit ja atomiset operaatiot",
+  "lukot, ehtomuuttujat ja niiden ongelmat",
+  "lukottomat tietorakenteet",
+  "rinnakkaiset algoritmit ja työnjako",
+  "ThreadSanitizer ja rinnakkaisuusvirheiden etsintä",
+]
+laajuus = 5
+testaus = "C++, ThreadSanitizer"
+roadmap = ["cpp", "computer-science"]
+amk = "Rinnakkaisohjelmointi"
+
+[[taito]]
+id = "suorituskyky"
+nimi = "Suorituskyvyn analyysi ja optimointi"
+alue = "jarjestelmat"
+kuvaus = "Ohjelmien suorituskyvyn mittaaminen ja parantaminen laitteiston ehdoilla."
+edellyttaa = ["tietokonearkkitehtuuri", "algoritmit"]
+aiheet = [
+  "mittaaminen ja vertailuajot",
+  "profilointi (perf) ja laitteistolaskurit",
+  "välimuistitietoinen ohjelmointi",
+  "haarautumisen ennustus",
+  "vektorointi ja SIMD",
+  "roofline-malli",
+]
+laajuus = 3
+testaus = "C ja C++, toiminnallisuus testataan, mittaukset raportoidaan suuntaa-antavina"
+roadmap = ["cpp", "computer-science"]
+amk = "Ohjelmien optimointi"
+
+# ---------------------------------------------------------------------
+# Laitteistosuunnittelu
+# ---------------------------------------------------------------------
+
+[[taito]]
+id = "kiintea-pilkku"
+nimi = "Lukujen esitys ja kiinteän pilkun aritmetiikka"
+alue = "laitteisto"
+kuvaus = "Lukujen esitys laitteistossa: kiinteä pilkku, liukuluvut, pyöristys ja bittitarkka mallinnus."
+edellyttaa = ["digitaalitekniikka", "c-kieli"]
+aiheet = [
+  "Q-formaatit ja skaalaus",
+  "pyöristys, katkaisu ja saturaatio",
+  "kvantisointivirhe",
+  "IEEE 754 -liukuluvut",
+  "bittitarkat mallit C:llä ja Pythonilla",
+]
+laajuus = 3
+testaus = "C ja Python, bittitarkat vertailut"
+roadmap = ["computer-science"]
+amk = "Digitaalinen signaalinkäsittely"
+
+[[taito]]
+id = "rtl-suunnittelu"
+nimi = "RTL-suunnittelu SystemVerilogilla"
+alue = "laitteisto"
+kuvaus = "Synteesikelpoisen digitaalilogiikan kuvaaminen rekisterinsiirtotasolla."
+edellyttaa = ["digitaalitekniikka"]
+aiheet = [
+  "moduulit, portit ja parametrit",
+  "kombinaatio- ja sekvenssilogiikka (always_comb, always_ff)",
+  "tilakoneet ja datapolut",
+  "muistit ja FIFOt",
+  "kellot, resetit ja kellotasojen ylitykset",
+  "synteesikelpoisuus ja koodaustyyli",
+  "VHDL-vertailu",
+]
+laajuus = 5
+testaus = "Verilator ja Icarus Verilog, itsetarkistavat testipenkit"
+roadmap = []
+amk = "FPGA-suunnittelu / VHDL"
+
+[[taito]]
+id = "verifiointi"
+nimi = "Laitteiston verifiointi"
+alue = "laitteisto"
+kuvaus = "RTL-suunnitelman oikeellisuuden osoittaminen simuloinnilla, väittämillä ja formaaleilla menetelmillä."
+edellyttaa = ["rtl-suunnittelu", "python-tyokalut"]
+aiheet = [
+  "testipenkin rakenne ja referenssimallit",
+  "rajoitettu satunnaistus ja toiminnallinen kattavuus",
+  "SystemVerilog-väittämät (SVA)",
+  "cocotb: testipenkit Pythonilla",
+  "formaali verifiointi (SymbiYosys)",
+  "UVM:n käsitteet",
+]
+laajuus = 5
+testaus = "Verilator, cocotb, SymbiYosys"
+roadmap = []
+amk = "Digitaalisuunnittelun syventävä opintojakso"
+
+[[taito]]
+id = "fpga-toteutus"
+nimi = "FPGA-toteutus"
+alue = "laitteisto"
+kuvaus = "RTL-suunnitelmasta toimivaksi piiriksi: synteesi, sijoittelu, ajoitusanalyysi ja rajoitteet."
+edellyttaa = ["rtl-suunnittelu"]
+aiheet = [
+  "FPGA:n rakenne: LUTit, DSP-lohkot, muistit",
+  "synteesi ja sijoittelu (Yosys, nextpnr)",
+  "staattinen ajoitusanalyysi ja rajoitteet",
+  "kellotasojen ylitykset käytännössä",
+  "resurssien ja ajoituksen optimointi",
+  "testaus kortilla",
+]
+laajuus = 5
+testaus = "Yosys ja nextpnr: synteesi- ja ajoitusraporttien tarkistus"
+roadmap = []
+amk = "FPGA-suunnittelu"
+
+[[taito]]
+id = "hlm-mallinnus"
+nimi = "Korkean tason mallinnus (SystemC/TLM)"
+alue = "laitteisto"
+kuvaus = "Laitteiston toiminnallinen ja ajoitettu mallintaminen C++:lla ennen RTL-toteutusta."
+edellyttaa = ["moderni-cpp", "tietokonearkkitehtuuri", "kiintea-pilkku"]
+aiheet = [
+  "SystemC: moduulit, prosessit, signaalit ja tapahtumat",
+  "simulaatioydin ja delta-syklit",
+  "TLM-2.0: transaktiot, socketit ja ajoitustyylit",
+  "virtuaaliprototyypit ja ohjelmiston ajaminen mallissa",
+  "bittitarkat tietotyypit",
+  "mallin ja RTL:n vastaavuuden tarkistus",
+]
+laajuus = 5
+testaus = "SystemC-kirjasto, C++-testit"
+roadmap = []
+amk = "Sulautettujen järjestelmien suunnittelu"
+
+[[taito]]
+id = "arkkitehtuurin-tutkiminen"
+nimi = "Arkkitehtuurin mallinnus ja suunnittelutilan tutkiminen"
+alue = "laitteisto"
+kuvaus = "Arkkitehtuurivaihtoehtojen vertailu suorituskyky-, pinta-ala- ja tehomallien avulla."
+edellyttaa = ["hlm-mallinnus", "suorituskyky", "todennakoisyys"]
+aiheet = [
+  "kuormien karakterisointi",
+  "analyyttiset mallit: Amdahl, roofline, jonoteoria",
+  "syklitarkat ja syklilikimääräiset simulaattorit",
+  "laitteisto–ohjelmisto-jako",
+  "pinta-ala- ja tehoarviot",
+  "parametrien tutkiminen ja tulosten raportointi",
+]
+laajuus = 5
+testaus = "C++- ja SystemC-mallit, Python-analyysit"
+roadmap = []
+amk = "Tuotekehitysprojekti"
+
+[[taito]]
+id = "eda-skriptaus"
+nimi = "EDA-työkaluketjujen automatisointi"
+alue = "laitteisto"
+kuvaus = "Laitteistosuunnittelun työkalujen ohjaus ja tulosten käsittely Tcl- ja Python-skripteillä."
+edellyttaa = ["rtl-suunnittelu", "python-tyokalut", "rakennus-ja-testaus"]
+aiheet = [
+  "Tcl-kielen perusteet EDA-työkaluissa",
+  "suunnitteluvuon hallinta (Make, Python)",
+  "raporttien jäsentäminen ja koosteet",
+  "regressioajot ja tulosten seuranta",
+  "rekisterikuvauksista generoitu koodi",
+  "CI laitteistoprojekteille",
+]
+laajuus = 3
+testaus = "Python, Tcl (tclsh), Yosys ja Verilator"
+roadmap = ["python", "devops"]
+amk = "Tuotekehityksen työkalut"
+
+[[taito]]
+id = "hls"
+nimi = "Korkean tason synteesi"
+alue = "laitteisto"
+kuvaus = "Laitteiston tuottaminen C++-kuvauksesta ja mikroarkkitehtuurin ohjaaminen."
+edellyttaa = ["hlm-mallinnus", "fpga-toteutus"]
+aiheet = [
+  "HLS-työkalun toimintaperiaate",
+  "silmukoiden liukuhihnoitus ja avaaminen",
+  "muistirajapinnat ja taulukoiden jako",
+  "rajapintaprotokollat",
+  "C++-mallin ja tuotetun RTL:n verifiointi",
+]
+laajuus = 5
+testaus = "avoimen lähdekoodin HLS-työkalu, Verilator"
+roadmap = []
+amk = "FPGA-suunnittelun syventävä opintojakso"
+
+[[taito]]
+id = "dsp-laitteisto"
+nimi = "DSP-algoritmien laitteistototeutus"
+alue = "laitteisto"
+kuvaus = "Signaalinkäsittelyalgoritmien toteutus tehokkaaksi laitteistoksi bittitarkasta mallista RTL:ään."
+edellyttaa = ["dsp", "kiintea-pilkku", "verifiointi", "fpga-toteutus"]
+aiheet = [
+  "FIR- ja IIR-rakenteet laitteistossa",
+  "CORDIC ja numeerisesti ohjattu oskillaattori",
+  "monitaajuusrakenteet (CIC, polyfaasi)",
+  "liukuhihnoitus ja resurssien jakaminen",
+  "bittitarkka malli referenssinä",
+]
+laajuus = 5
+testaus = "Python-referenssi, cocotb ja Verilator"
+roadmap = []
+amk = "Digitaalinen signaalinkäsittely"
+
+# ---------------------------------------------------------------------
+# Signaalinkäsittely ja radiot
+# ---------------------------------------------------------------------
+
+[[taito]]
+id = "signaalit-ja-jarjestelmat"
+nimi = "Signaalit ja järjestelmät"
+alue = "signaalit"
+kuvaus = "Diskreettiaikaiset signaalit ja lineaariset aikainvariantit järjestelmät."
+edellyttaa = ["signaalimatematiikka", "python-tyokalut"]
+aiheet = [
+  "näytteistys ja aliasointi",
+  "diskreettiaikainen konvoluutio",
+  "LTI-järjestelmät ja impulssivaste",
+  "Z-muunnos, navat ja nollat",
+  "taajuusvaste",
+  "DFT",
+]
+laajuus = 5
+testaus = "Python ja NumPy/SciPy, pytest"
+roadmap = []
+amk = "Signaalit ja järjestelmät"
+
+[[taito]]
+id = "dsp"
+nimi = "Digitaalinen signaalinkäsittely"
+alue = "signaalit"
+kuvaus = "Suodattimien suunnittelu, spektrianalyysi ja reaaliaikainen signaalinkäsittely."
+edellyttaa = ["signaalit-ja-jarjestelmat", "c-kieli"]
+aiheet = [
+  "FIR-suodattimien suunnittelu ja ikkunointi",
+  "IIR-suodattimet ja stabiilisuus",
+  "FFT ja spektrianalyysi",
+  "monitaajuuskäsittely: desimointi ja interpolointi",
+  "adaptiiviset suodattimet (LMS)",
+  "lohkopohjainen reaaliaikakäsittely C:llä",
+]
+laajuus = 5
+testaus = "Python-referenssit ja C-toteutukset, numeeriset toleranssit"
+roadmap = []
+amk = "Digitaalinen signaalinkäsittely"
+
+[[taito]]
+id = "tiedonsiirto"
+nimi = "Digitaalinen tiedonsiirto"
+alue = "signaalit"
+kuvaus = "Miten bitit siirretään kohinaisen kanavan yli: modulaatiot, synkronointi ja virheenkorjaus."
+edellyttaa = ["dsp", "todennakoisyys"]
+aiheet = [
+  "analogiset modulaatiot (AM, FM)",
+  "digitaaliset modulaatiot (PSK, QAM, FSK)",
+  "pulssinmuokkaus ja symbolien välinen häiriö",
+  "kohina, SNR ja bittivirhesuhde",
+  "kantoaallon ja symbolien synkronointi",
+  "kanavakoodauksen perusteet",
+]
+laajuus = 5
+testaus = "Python-simulaatiot, kiinteä satunnaissiemen"
+roadmap = []
+amk = "Tietoliikennetekniikka"
+
+[[taito]]
+id = "sdr"
+nimi = "Ohjelmistoradio"
+alue = "signaalit"
+kuvaus = "Radiovastaanottimien ja -lähettimien toteutus ohjelmistolla IQ-näytteiden avulla."
+edellyttaa = ["tiedonsiirto"]
+aiheet = [
+  "IQ-näytteet ja kompleksinen kantataajuus",
+  "sekoitus, NCO ja kanavan valinta",
+  "FM-radiovastaanotin alusta loppuun",
+  "digitaalisen signaalin vastaanotin",
+  "GNU Radio",
+  "laitteet (RTL-SDR, HackRF, PlutoSDR) ja radiolupasäännöt",
+]
+laajuus = 5
+testaus = "tallennetut ja simuloidut IQ-tiedostot, Python ja C++"
+roadmap = []
+amk = "Radiotekniikka"
+
+# ---------------------------------------------------------------------
+# Sulautetut järjestelmät
+# ---------------------------------------------------------------------
+
+[[taito]]
+id = "mikrokontrollerit"
+nimi = "Mikrokontrollerit ja bare-metal-ohjelmointi"
+alue = "sulautetut"
+kuvaus = "Mikrokontrollerin ohjelmointi ilman käyttöjärjestelmää: rekisterit, keskeytykset ja käynnistyskoodi."
+edellyttaa = ["tietokonearkkitehtuuri", "binaarit-ja-linkitys"]
+aiheet = [
+  "Cortex-M-arkkitehtuuri ja muistikartta",
+  "käynnistyskoodi ja linkkeriskripti",
+  "GPIO ja muistiin kuvatut rekisterit (volatile)",
+  "ajastimet ja keskeytykset",
+  "virransäästötilat",
+  "debuggaus (SWD, gdb, QEMU)",
+]
+laajuus = 5
+testaus = "arm-none-eabi-gcc, QEMU (Cortex-M)"
+roadmap = []
+amk = "Mikrokontrollerit / Sulautettu ohjelmointi"
+
+[[taito]]
+id = "oheislaitevaylat"
+nimi = "Oheislaiteväylät"
+alue = "sulautetut"
+kuvaus = "Sulautettujen järjestelmien sarjaväylät ja niiden ajurit."
+edellyttaa = ["mikrokontrollerit"]
+aiheet = [
+  "UART",
+  "SPI",
+  "I2C",
+  "CAN",
+  "DMA",
+  "ajurikerrosten suunnittelu",
+]
+laajuus = 3
+testaus = "QEMU ja emuloidut oheislaitteet, protokollamallit Pythonilla"
+roadmap = []
+amk = "Sulautetut järjestelmät"
+
+[[taito]]
+id = "rtos"
+nimi = "Reaaliaikakäyttöjärjestelmät"
+alue = "sulautetut"
+kuvaus = "Reaaliaikaisten sulautettujen ohjelmistojen rakentaminen RTOS:n päälle."
+edellyttaa = ["mikrokontrollerit", "kayttojarjestelmat"]
+aiheet = [
+  "tehtävät ja prioriteettipohjainen vuorontaminen",
+  "jonot, semaforit ja mutexit",
+  "prioriteetin inversio",
+  "ajoitusanalyysi (RMS, vasteajat)",
+  "muistinhallinta RTOSissa",
+  "FreeRTOS ja Zephyr",
+]
+laajuus = 5
+testaus = "FreeRTOS: POSIX-portti ja QEMU"
+roadmap = []
+amk = "Reaaliaikajärjestelmät"
+
+[[taito]]
+id = "embedded-linux"
+nimi = "Sulautettu Linux"
+alue = "sulautetut"
+kuvaus = "Linux-järjestelmän rakentaminen ja räätälöinti sulautettuun laitteeseen."
+edellyttaa = ["kayttojarjestelmat", "rakennus-ja-testaus"]
+aiheet = [
+  "ristiinkääntäminen ja työkaluketjut",
+  "käynnistysketju ja U-Boot",
+  "ytimen konfigurointi",
+  "laitepuu (device tree)",
+  "Buildroot ja Yocto",
+  "juuritiedostojärjestelmä ja palvelut",
+]
+laajuus = 5
+testaus = "Buildroot ja QEMU, käynnistystestit"
+roadmap = ["linux"]
+amk = "Sulautettu Linux"
+
+[[taito]]
+id = "linux-ajurit"
+nimi = "Linux-laiteajurit"
+alue = "sulautetut"
+kuvaus = "Linux-ytimen laiteajureiden kirjoittaminen."
+edellyttaa = ["embedded-linux", "oheislaitevaylat"]
+aiheet = [
+  "ytimen moduulit",
+  "merkkilaiteajurit",
+  "platform-ajurit ja laitepuusidonnat",
+  "keskeytykset ja DMA ytimessä",
+  "I2C- ja SPI-ajurit",
+  "sysfs, debugfs ja ytimen debuggaus",
+]
+laajuus = 5
+testaus = "QEMU: ajurit ladataan ja testataan käynnistetyssä järjestelmässä"
+roadmap = ["linux"]
+amk = "Laiteajurit"
+
+# ---------------------------------------------------------------------
+# Verkot ja hajautetut järjestelmät
+# ---------------------------------------------------------------------
+
+[[taito]]
+id = "tietoverkot"
+nimi = "Tietoverkot"
+alue = "hajautetut"
+kuvaus = "Internetin protokollapino ja verkkojen toiminta."
+edellyttaa = ["komentorivi"]
+aiheet = [
+  "kerrosmallit (OSI, TCP/IP)",
+  "Ethernet ja IP-osoitteet",
+  "reititys",
+  "TCP ja UDP",
+  "DNS, HTTP ja TLS",
+  "liikenteen analyysi (Wireshark, tcpdump)",
+]
+laajuus = 5
+testaus = "verkkonimiavaruudet ja paikalliset palvelimet"
+roadmap = ["network-engineer", "computer-science"]
+amk = "Tietoverkot"
+
+[[taito]]
+id = "verkko-ohjelmointi"
+nimi = "Verkko-ohjelmointi"
+alue = "hajautetut"
+kuvaus = "Verkkopalvelujen ja -protokollien toteutus sokettirajapinnalla."
+edellyttaa = ["tietoverkot", "kayttojarjestelmat"]
+aiheet = [
+  "soketit (TCP, UDP)",
+  "protokollan suunnittelu ja sarjallistaminen",
+  "moniasiakaspalvelimet: säikeet ja epoll",
+  "asynkroninen I/O",
+  "RPC",
+  "vikasietoisuus ja aikakatkaisut",
+]
+laajuus = 5
+testaus = "C ja C++, paikalliset asiakas–palvelin-testit"
+roadmap = ["server-side-game-developer"]
+amk = "Verkko-ohjelmointi"
+
+[[taito]]
+id = "hajautetut-jarjestelmat"
+nimi = "Hajautetut järjestelmät"
+alue = "hajautetut"
+kuvaus = "Useasta solmusta koostuvien järjestelmien periaatteet: konsistenssi, replikointi ja konsensus."
+edellyttaa = ["verkko-ohjelmointi", "rinnakkaisohjelmointi", "algoritmit"]
+aiheet = [
+  "vikamallit ja ajan käsite (Lamportin kellot, vektorikellot)",
+  "replikointi ja konsistenssimallit",
+  "konsensus (Raft)",
+  "CAP ja PACELC",
+  "hajautetut transaktiot",
+  "testaus simuloimalla verkkovikoja",
+]
+laajuus = 5
+testaus = "C++-toteutukset deterministisessä verkkosimulaattorissa"
+roadmap = ["system-design", "computer-science"]
+amk = "Hajautetut järjestelmät"
+
+[[taito]]
+id = "jarjestelmasuunnittelu"
+nimi = "Skaalautuvien järjestelmien suunnittelu"
+alue = "hajautetut"
+kuvaus = "Suurten palvelujärjestelmien arkkitehtuuri: skaalautuvuus, välimuistit, jonot ja havaittavuus."
+edellyttaa = ["hajautetut-jarjestelmat"]
+aiheet = [
+  "suorituskyky ja skaalautuvuus",
+  "kuormantasaus ja välimuistit",
+  "tietokannat, replikointi ja osiointi",
+  "viestijonot ja asynkroninen käsittely",
+  "saatavuus- ja luotettavuusmallit",
+  "monitorointi ja havaittavuus",
+]
+laajuus = 5
+testaus = "säiliöissä ajettavat esimerkkijärjestelmät"
+roadmap = ["system-design"]
+amk = "Ohjelmistoarkkitehtuurit"
+
+[[taito]]
+id = "kontit-ja-pilvi"
+nimi = "Säiliöt ja pilvi-infrastruktuuri"
+alue = "hajautetut"
+kuvaus = "Palvelujen paketointi säiliöihin ja niiden ajaminen orkestroidussa ympäristössä."
+edellyttaa = ["tietoverkot"]
+aiheet = [
+  "säiliöt ja Docker",
+  "säiliökuvien rakentaminen",
+  "Kubernetes-perusteet",
+  "infrastruktuuri koodina",
+  "CI/CD-putket palveluille",
+]
+laajuus = 3
+testaus = "säiliöt rakennetaan ja ajetaan CI:ssä"
+roadmap = ["docker", "kubernetes", "devops"]
+amk = "Pilvipalvelut / DevOps"
+
+# ---------------------------------------------------------------------
+# Tietokonegrafiikka
+# ---------------------------------------------------------------------
+
+[[taito]]
+id = "renderoinnin-perusteet"
+nimi = "Renderöinnin perusteet"
+alue = "grafiikka"
+kuvaus = "Kolmiulotteisen kuvan muodostaminen alusta asti: muunnokset, projektio, rasterointi ja varjostus."
+edellyttaa = ["lineaarialgebra", "moderni-cpp"]
+aiheet = [
+  "koordinaatistot ja muunnosmatriisit",
+  "kamera ja perspektiiviprojektio",
+  "kolmioiden rasterointi ja z-puskuri",
+  "valaistusmallit ja varjostus",
+  "tekstuurit ja suodatus",
+  "grafiikkaputken rakenne",
+]
+laajuus = 5
+testaus = "C++-ohjelmistorasteroija, kuvien tarkistussummat"
+roadmap = ["game-developer"]
+amk = "Tietokonegrafiikka"
+
+[[taito]]
+id = "sateenseuranta"
+nimi = "Säteenseuranta ja fysikaalinen valaistus"
+alue = "grafiikka"
+kuvaus = "Valon kulun simulointi: säteenseuranta, kiihdytysrakenteet ja Monte Carlo -renderöinti."
+edellyttaa = ["renderoinnin-perusteet", "todennakoisyys", "algoritmit"]
+aiheet = [
+  "säteen ja kappaleiden leikkaukset",
+  "kiihdytysrakenteet (BVH)",
+  "renderöintiyhtälö",
+  "Monte Carlo -integrointi ja polunseuranta",
+  "materiaalit ja fysikaalinen varjostus (PBR)",
+  "näytteistys ja kohinan vähentäminen",
+]
+laajuus = 5
+testaus = "C++, kiinteä satunnaissiemen, kuvien vertailu toleranssilla"
+roadmap = ["game-developer"]
+amk = "Tietokonegrafiikan syventävä opintojakso"
+
+[[taito]]
+id = "gpu-ohjelmointi"
+nimi = "GPU-ohjelmointi ja grafiikkarajapinnat"
+alue = "grafiikka"
+kuvaus = "Grafiikkasuorittimen ohjelmointi nykyaikaisella grafiikkarajapinnalla ja varjostinkielillä."
+edellyttaa = ["renderoinnin-perusteet", "rinnakkaisohjelmointi"]
+aiheet = [
+  "GPU:n arkkitehtuuri",
+  "Vulkan: laitteet, puskurit ja komentojonot",
+  "varjostimet (GLSL, SPIR-V)",
+  "resurssit ja synkronointi",
+  "renderöintitekniikat: varjokartat, viivästetty varjostus",
+  "suorituskyvyn analyysi",
+]
+laajuus = 5
+testaus = "Vulkan ohjelmistototeutuksella (Mesa lavapipe), kuvien vertailu"
+roadmap = ["game-developer"]
+amk = "Peliohjelmointi / grafiikkaohjelmointi"
+
+[[taito]]
+id = "gpu-laskenta"
+nimi = "GPU-laskenta"
+alue = "grafiikka"
+kuvaus = "Yleiskäyttöinen laskenta grafiikkasuorittimella."
+edellyttaa = ["gpu-ohjelmointi", "suorituskyky"]
+aiheet = [
+  "laskentavarjostimet",
+  "rinnakkaiset primitiivit: reduktio, prefiksisumma, lajittelu",
+  "GPU:n muistihierarkia",
+  "työn jako ja synkronointi",
+  "suorituskyvyn mittaaminen",
+]
+laajuus = 3
+testaus = "Vulkan-laskentavarjostimet (lavapipe), vertailu CPU-toteutukseen"
+roadmap = ["game-developer"]
+amk = "Rinnakkaislaskenta"
+
+# ---------------------------------------------------------------------
+# Tietoturva ja takaisinmallinnus
+# ---------------------------------------------------------------------
+
+[[taito]]
+id = "tietoturvan-perusteet"
+nimi = "Tietoturvan perusteet"
+alue = "tietoturva"
+kuvaus = "Uhkamallinnus, kryptografian perusteet ja turvallinen ohjelmointi."
+edellyttaa = ["tietoverkot", "c-kieli"]
+aiheet = [
+  "uhkamallinnus",
+  "kryptografian perusteet: tiivisteet, symmetrinen ja julkisen avaimen salaus",
+  "todennus ja pääsynhallinta",
+  "yleiset haavoittuvuusluokat",
+  "turvallinen ohjelmointi C:llä",
+  "lainsäädäntö ja etiikka",
+]
+laajuus = 3
+testaus = "C ja Python, sanitoijat"
+roadmap = ["cyber-security"]
+amk = "Tietoturvan perusteet"
+
+[[taito]]
+id = "takaisinmallinnus"
+nimi = "Takaisinmallinnus"
+alue = "tietoturva"
+kuvaus = "Ohjelmien toiminnan selvittäminen konekielestä staattisin ja dynaamisin menetelmin."
+edellyttaa = ["binaarit-ja-linkitys", "kayttojarjestelmat", "tietoturvan-perusteet"]
+aiheet = [
+  "disassemblointi ja dekompilointi (Ghidra, objdump)",
+  "kääntäjän tuottamien rakenteiden tunnistaminen",
+  "C++-ohjelmien takaisinmallinnus",
+  "dynaaminen analyysi (gdb, strace)",
+  "tiedostomuotojen ja protokollien selvittäminen",
+  "obfuskointi ja sen purkaminen",
+]
+laajuus = 5
+testaus = "itse käännetyt kohdeohjelmat, skriptatut analyysit (Ghidra headless, gdb)"
+roadmap = ["cyber-security"]
+amk = "Kyberturvallisuuden syventävä opintojakso"
+
+[[taito]]
+id = "haavoittuvuudet"
+nimi = "Haavoittuvuuksien analyysi ja hyödyntäminen"
+alue = "tietoturva"
+kuvaus = "Muistiturvallisuusvirheiden löytäminen, hyödyntämisen periaatteet ja suojausmekanismit harjoitusympäristössä."
+edellyttaa = ["takaisinmallinnus"]
+aiheet = [
+  "pinon ja keon ylivuodot",
+  "muotoilumerkkijonovirheet",
+  "suojaukset: ASLR, NX, pinokanarit, CFI",
+  "paluuorientoitunut ohjelmointi periaatteena",
+  "fuzzaus (libFuzzer, AFL++)",
+  "vastuullinen haavoittuvuuksien ilmoittaminen",
+]
+laajuus = 5
+testaus = "eristetyt harjoituskohteet, fuzzaus kiinteillä siemenillä"
+roadmap = ["cyber-security"]
+amk = "Kyberturvallisuuden syventävä opintojakso"
+
+[[taito]]
+id = "laiteohjelmiston-takaisinmallinnus"
+nimi = "Laiteohjelmiston takaisinmallinnus"
+alue = "tietoturva"
+kuvaus = "Sulautettujen laitteiden laiteohjelmiston purkaminen, analysointi ja emulointi."
+edellyttaa = ["takaisinmallinnus", "mikrokontrollerit"]
+aiheet = [
+  "laiteohjelmistokuvien rakenne ja purku",
+  "arkkitehtuurin ja muistikartan tunnistaminen",
+  "ARM/Thumb-koodin analyysi",
+  "debug-rajapinnat (UART, JTAG, SWD)",
+  "emulointi (QEMU, Unicorn)",
+]
+laajuus = 5
+testaus = "itse käännetyt laiteohjelmistot, QEMU- ja Unicorn-emulointi"
+roadmap = ["cyber-security"]
+amk = "Sulautettujen järjestelmien tietoturva"
+
+# ---------------------------------------------------------------------
+# Roolit
+# ---------------------------------------------------------------------
+
+[[rooli]]
+id = "laitteistoarkkitehti"
+nimi = "Laitteistoarkkitehti"
+kuvaus = "Työskentelee rautatason arkkitehtuurin parissa: mallintaa järjestelmän korkean tason malleilla (HLM), toteuttaa ja verifioi RTL:n ja automatisoi työkaluketjut skripteillä."
+tavoitteet = ["arkkitehtuurin-tutkiminen", "verifiointi", "fpga-toteutus", "eda-skriptaus"]
+valinnaiset = ["hls", "dsp-laitteisto", "kaantajatekniikka"]
+
+[[rooli]]
+id = "sulautettujen-kehittaja"
+nimi = "Sulautettujen ohjelmistojen kehittäjä"
+kuvaus = "Kehittää ohjelmistoja mikrokontrollereille ja sulautetuille Linux-laitteille: bare-metal-koodia, RTOS-sovelluksia ja laiteajureita."
+tavoitteet = ["rtos", "linux-ajurit"]
+valinnaiset = ["dsp", "laiteohjelmiston-takaisinmallinnus"]
+
+[[rooli]]
+id = "signaalinkasittelija"
+nimi = "Signaalinkäsittelyn ja ohjelmistoradion kehittäjä"
+kuvaus = "Suunnittelee ja toteuttaa signaalinkäsittelyä ja radiojärjestelmiä ohjelmistolla ja tarvittaessa laitteistolla."
+tavoitteet = ["sdr"]
+valinnaiset = ["dsp-laitteisto", "rtos", "suorituskyky"]
+
+[[rooli]]
+id = "grafiikkaohjelmoija"
+nimi = "Grafiikkaohjelmoija"
+kuvaus = "Toteuttaa renderöintiä ja GPU-laskentaa peleihin, visualisointiin ja simulaatioihin."
+tavoitteet = ["sateenseuranta", "gpu-laskenta"]
+valinnaiset = []
+
+[[rooli]]
+id = "hajautettujen-kehittaja"
+nimi = "Hajautettujen järjestelmien kehittäjä"
+kuvaus = "Rakentaa verkossa toimivia, vikasietoisia ja skaalautuvia palveluja ja infrastruktuuria."
+tavoitteet = ["jarjestelmasuunnittelu", "kontit-ja-pilvi"]
+valinnaiset = ["suorituskyky", "tietoturvan-perusteet"]
+
+[[rooli]]
+id = "takaisinmallintaja"
+nimi = "Takaisinmallintaja ja tietoturva-analyytikko"
+kuvaus = "Analysoi ohjelmia ja laiteohjelmistoja konekielen tasolla, etsii haavoittuvuuksia ja arvioi suojauksia."
+tavoitteet = ["haavoittuvuudet", "laiteohjelmiston-takaisinmallinnus"]
+valinnaiset = ["kaantajatekniikka", "verkko-ohjelmointi"]
+
+[[rooli]]
+id = "algoritmiikka"
+nimi = "Algoritmiikan ja ohjelmistokehityksen perusta"
+kuvaus = "Yleinen ohjelmistokehittäjän tietojenkäsittelytieteen perusta: tietorakenteet, algoritmit ja niiden toteutus."
+tavoitteet = ["edistyneet-algoritmit", "rakennus-ja-testaus"]
+valinnaiset = ["kaantajatekniikka", "rinnakkaisohjelmointi"]

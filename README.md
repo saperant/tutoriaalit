@@ -3,10 +3,18 @@
 Suomenkielisiä tutoriaaleja eri aiheista. Tutoriaalit kirjoitetaan
 Markdownilla, ja lopullinen versio on PDF-dokumentti.
 
+Tutoriaalit muodostavat **taitopuun**: jokainen tutoriaali on yksi
+taito, joka rakentuu esitietojensa päälle. Roolit, kuten
+laitteistoarkkitehti tai sulautettujen ohjelmistojen kehittäjä, ovat
+polkuja puun läpi. Taitopuu, roolipolut ja tutoriaalien
+tuotantojärjestys ovat hakemistossa [`opintopolut/`](opintopolut/)
+([opintopolut.pdf](opintopolut/opintopolut.pdf)).
+
 | Tutoriaali | Hakemisto | PDF |
 |------------|-----------|-----|
 | Moderni C++ | [`moderni-cpp/`](moderni-cpp/) | [moderni-cpp.pdf](moderni-cpp/moderni-cpp.pdf) |
 | C-kieli | [`c-kieli/`](c-kieli/) | [c-kieli.pdf](c-kieli/c-kieli.pdf) |
+| Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](opintopolut/opintopolut.pdf) |
 
 ## Periaatteet
 
@@ -29,6 +37,9 @@ yhteiset/                 kaikille tutoriaaleille yhteiset työkalut
   tyyli.tex               PDF:n LaTeX-tyylit
   sisallyta.lua           pandoc-suodatin koodin sisällyttämiseen
   testaa_esimerkit.py     esimerkkikoodin testaaja
+  taitopuu.py             taitopuun tarkistin ja generaattori
+opintopolut/
+  taitopuu.toml           taitopuu: alueet, taidot ja roolit
 <tutoriaali>/
   Makefile                make testaa / make pdf / make
   metadata.yaml           otsikko, päiväys yms.
@@ -44,7 +55,8 @@ Tarvittavat ohjelmat (Ubuntu 24.04):
 ```text
 sudo apt install make python3 pandoc g++-14 clang-20 libclang-rt-20-dev \
     texlive-xetex texlive-latex-recommended texlive-latex-extra \
-    texlive-fonts-recommended texlive-lang-european lmodern fonts-dejavu
+    texlive-fonts-recommended texlive-lang-european lmodern fonts-dejavu \
+    graphviz
 ```
 
 Juurihakemistossa `make` testaa ja rakentaa kaikki tutoriaalit.

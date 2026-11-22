@@ -279,7 +279,7 @@ def testaa(kieli: Kieli, esimerkki: Esimerkki, kaantaja: Kaantaja,
     tsan_merkinta = any("// TSAN" in p.read_text("utf-8")
                         for p in esimerkki.tiedostot)
     if kaantaja.tsan and tsan_merkinta:
-        tsan_kohde = kohde.with_suffix(".tsan")
+        tsan_kohde = kohde.with_name(kohde.name + ".tsan")
         tulos = kaanna(kieli, kaantaja.nimi, ["-g", "-fsanitize=thread"],
                        esimerkki, tsan_kohde, lisa)
         if tulos.returncode != 0:

@@ -17,7 +17,7 @@ jobs:
             make python3 pandoc g++-14 clang-20 libclang-rt-20-dev \
             texlive-xetex texlive-latex-recommended texlive-latex-extra \
             texlive-fonts-recommended texlive-lang-european lmodern \
-            fonts-dejavu
+            fonts-dejavu graphviz
 
       - name: Testaa esimerkit
         run: make testaa
