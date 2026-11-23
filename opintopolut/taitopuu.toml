@@ -1312,7 +1312,7 @@ aiheet = [
   "testaus (node:test)",
 ]
 laajuus = 5
-testaus = "Node.js, node:test ja ESLint"
+testaus = "Node.js, node:test ja tsc --checkJs (JSDoc-tyypit)"
 roadmap = ["javascript"]
 amk = "Web-ohjelmointi"
 

@@ -41,17 +41,17 @@ jobs:
         with:
           node-version: 24.22.3
 
-      - name: Asenna TypeScript ja Kotlin
+      - name: Asenna TypeScript, html-validate ja Kotlin
         run: |
-          npm install -g typescript@7.0.2 @types/node@24
+          npm install -g typescript@7.0.2 @types/node@24 html-validate@11.21.1
           curl -fsSL -o /tmp/kotlin.zip \
             https://github.com/JetBrains/kotlin/releases/download/v2.4.21/kotlin-compiler-2.4.21.zip
           sudo unzip -q /tmp/kotlin.zip -d /opt
           echo /opt/kotlinc/bin >> "$GITHUB_PATH"
 
-      - name: Asenna Playwright sivuston testeihin
+      - name: Asenna Playwright sivuston ja HTML-esimerkkien testeihin
         run: |
-          npm install --no-save playwright@1.49.1
+          npm install --no-save playwright@1.63.0
           npx playwright install --with-deps chromium
 
       - name: Testaa esimerkit, taitopuu ja sivusto

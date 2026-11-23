@@ -4,7 +4,7 @@
 Käyttö:  python3 yhteiset/testaa_esimerkit.py --kieli KIELI <hakemisto>
 
 Kielet: c, cpp, python, python-perus, bash, rust, go, java, kotlin,
-javascript, typescript, tcl, racket, sql, systemverilog, vhdl.
+javascript, typescript, html, tcl, racket, sql, systemverilog, vhdl.
 
 Esimerkki on joko yksittäinen lähdetiedosto `esimerkit/<nimi>.<pääte>`
 tai hakemisto `esimerkit/<nimi>/`, jonka lähdetiedostot muodostavat yhden
@@ -66,7 +66,7 @@ SANITOIJAT = ["-g", "-fsanitize=address,undefined",
 KOODIKIELET = {
     "c", "cpp", "c++", "python", "bash", "sh", "rust", "go", "java",
     "kotlin", "javascript", "js", "typescript", "ts", "tcl", "racket",
-    "scheme", "sql", "verilog", "systemverilog", "vhdl",
+    "scheme", "sql", "verilog", "systemverilog", "vhdl", "html", "css",
 }
 
 LOHKO = re.compile(r"^```\s*\{?([^}\n]*)\}?\s*$")
@@ -201,6 +201,14 @@ def kotlin_tarkistus(ajo: Ajo) -> list[list[str]]:
              "-d", str(ajo.tyohak / "ohjelma.jar"), *map(str, ajo.lahteet)]]
 
 
+YHTEISET = Path(__file__).resolve().parent
+
+
+def html_tarkistus(ajo: Ajo) -> list[list[str]]:
+    return [["html-validate", "--config",
+             str(YHTEISET / "htmlvalidate.json"), *map(str, ajo.lahteet)]]
+
+
 def ghdl_tarkistus(ajo: Ajo) -> list[list[str]]:
     # -i tuo tiedostot kirjastoon, -m analysoi ne riippuvuusjärjestyksessä
     # ja elaboroi ylimmän tason.
@@ -271,6 +279,12 @@ KIELET: dict[str, Kieli] = {
         tsc("--erasableSyntaxOnly", "--allowImportingTsExtensions",
             "--verbatimModuleSyntax", "--noUncheckedIndexedAccess"),
         node_ajo("main.ts")),)),
+    # HTML ja CSS: html-validate (myös saavutettavuussääntöjä) ja sivun
+    # raportti Chromiumista, ks. selain.cjs.
+    "html": Kieli((".html",), (".css",), "index.html", (Toteutus(
+        "chromium", ("node",), html_tarkistus,
+        lambda a: [a.tyokalu, str(YHTEISET / "selain.cjs"),
+                   str(paa(a, "index.html"))]),)),
     "tcl": Kieli((".tcl",), (), "main.tcl", (Toteutus(
         "tcl", ("tclsh8.6", "tclsh"), lambda a: [],
         lambda a: [a.tyokalu, str(paa(a, "main.tcl"))]),)),

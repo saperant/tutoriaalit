@@ -79,9 +79,13 @@ def testaa(tutoriaali: str) -> bool:
                    "-f", str(dockerfile)]
         for avain, arvo in rakennus.get("args", {}).items():
             komento += ["--build-arg", f"{avain}={arvo}"]
-        for avain in VALITYS:
-            if avain in os.environ:
-                komento += ["--build-arg", f"{avain}={os.environ[avain]}"]
+        valitys = [a for a in VALITYS if a in os.environ]
+        for avain in valitys:
+            komento += ["--build-arg", f"{avain}={os.environ[avain]}"]
+        if any("127.0.0.1" in os.environ[a] or "localhost" in os.environ[a]
+               for a in valitys):
+            # Paikallinen välityspalvelin näkyy vain isäntäkoneen verkossa.
+            komento.append("--network=host")
         komento.append(str(konteksti))
         print(f"== {tutoriaali}: rakennetaan kuva {kuva}", flush=True)
         if subprocess.run(komento, stdout=subprocess.DEVNULL).returncode:

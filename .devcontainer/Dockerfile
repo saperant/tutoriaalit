@@ -10,6 +10,8 @@
 #                   ja kaavioiden tuottamiseen
 #   NODEJS          Node.js-versio, esim. "24.22.3" (nodejs.org)
 #   NPM_PAKETIT     globaalit npm-paketit, esim. "typescript@7.0.2"
+#   PLAYWRIGHT      Playwrightin versio; asentaa myös Chromiumin (vaatii
+#                   NODEJS-argumentin)
 #   KOTLIN          Kotlin-kääntäjän versio, esim. "2.4.21" (vaatii
 #                   LISAPAKETIT-listaan JDK:n)
 
@@ -21,6 +23,9 @@ ARG PIP_PAKETIT=""
 ARG NODEJS=""
 ARG NPM_PAKETIT=""
 ARG KOTLIN=""
+ARG PLAYWRIGHT=""
+ENV NODE_PATH=/usr/local/lib/node_modules \
+    PLAYWRIGHT_BROWSERS_PATH=/opt/playwright
 
 RUN apt-get update \
     && export DEBIAN_FRONTEND=noninteractive \
@@ -48,6 +53,11 @@ RUN if [ -n "$NODEJS" ]; then \
             --exclude=CHANGELOG.md --exclude=LICENSE --exclude=README.md \
         && if [ -n "$NPM_PAKETIT" ]; then \
             npm install -g $NPM_PAKETIT && npm cache clean --force; \
+        fi \
+        && if [ -n "$PLAYWRIGHT" ]; then \
+            npm install -g "playwright@$PLAYWRIGHT" \
+            && playwright install --with-deps chromium \
+            && npm cache clean --force && rm -rf /var/lib/apt/lists/*; \
         fi; \
     fi \
     && if [ -n "$KOTLIN" ]; then \

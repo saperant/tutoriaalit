@@ -19,7 +19,8 @@ Attribuutti `osa` valitsee tiedostosta merkintöjen
     // @loppu nimi
 
 väliin jäävät rivit. Kommenttimerkiksi kelpaa kielen mukaan `//`, `#`,
-`--` tai `;` (esim. `# @alku nimi` Pythonissa, `-- @alku nimi` SQL:ssä). Kaikki @alku/@loppu-merkintärivit poistetaan
+`--`, `;`, `/*` tai `<!--` (esim. `# @alku nimi` Pythonissa, `<!-- @alku
+nimi -->` HTML:ssä; nimen jälkeen välilyönti). Merkintärivit poistetaan
 lopullisesta tekstistä. Valitun osan yhteinen sisennys poistetaan.
 
 Lohkon oma sisältö korvataan tiedoston sisällöllä, joten koodia ei
@@ -49,9 +50,10 @@ local function rivit(teksti)
   return tulos
 end
 
--- Merkintärivi: kommenttimerkki (//, #, --, ;) ja @alku tai @loppu.
+-- Merkintärivi: kommenttimerkki (//, #, --, ;, /* tai <!--) ja @alku tai
+-- @loppu.
 local function merkinta(rivi, sana)
-  return rivi:match("^%s*[/#;%-]+%s*" .. sana .. "%s+(%S+)")
+  return rivi:match("^%s*[/#;%-<!*]+%s*" .. sana .. "%s+(%S+)")
 end
 
 local function on_merkinta(rivi)

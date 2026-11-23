@@ -1,0 +1,22 @@
+{
+  "name": "HTML ja CSS: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "fonts-dejavu-core",
+      "NODEJS": "24.22.3",
+      "NPM_PAKETIT": "html-validate@11.21.1",
+      "PLAYWRIGHT": "1.63.0"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/html-css/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "html-validate.vscode-html-validate",
+        "ritwickdey.LiveServer"
+      ]
+    }
+  }
+}
