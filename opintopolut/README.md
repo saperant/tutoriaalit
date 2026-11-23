@@ -108,7 +108,7 @@ flowchart LR
     rust["✓ Rust"]
     go["✓ Go"]
     java["✓ Java"]
-    kotlin["Kotlin"]
+    kotlin["✓ Kotlin"]
     javascript["✓ JavaScript"]
     typescript["✓ TypeScript"]
     tcl["✓ Tcl"]
@@ -361,7 +361,7 @@ flowchart LR
 | Java | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../java/) |
 | JavaScript | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../javascript/) |
 | Tcl | 2 | Ohjelmoinnin perusteet (Python) | [valmis](../tcl/) |
-| Kotlin | 3 | Java | suunniteltu |
+| Kotlin | 3 | Java | [valmis](../kotlin/) |
 | Rust | 5 | C-kieli | [valmis](../rust/) |
 | TypeScript | 3 | JavaScript | [valmis](../typescript/) |
 | C ja assembly yhteen | 2 | Assembly | suunniteltu |

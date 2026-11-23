@@ -1,0 +1,8 @@
+hinta(long)
+hinta(long, int)
+hinta(long, int, int)
+static oletus()
+kenttä VALUUTTA, static=true
+125,50 EUR
+100,40
+[1, 3, 5]

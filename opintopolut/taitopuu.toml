@@ -1296,6 +1296,7 @@ laajuus = 3
 testaus = "kotlinc ja kotlin.test"
 roadmap = ["kotlin"]
 amk = "Mobiiliohjelmointi"
+tutoriaali = "kotlin"
 
 [[taito]]
 id = "javascript"

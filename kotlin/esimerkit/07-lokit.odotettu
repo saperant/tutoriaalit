@@ -1,0 +1,7 @@
+tapahtumia 8
+tasot: {ERROR=4, INFO=3, WARN=1}
+virheet palveluittain:
+  db       2
+  api      1
+  auth     1
+yleisin viesti: pyyntö käsitelty (3)

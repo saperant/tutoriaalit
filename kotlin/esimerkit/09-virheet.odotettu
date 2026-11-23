@@ -1,0 +1,5 @@
+ok.conf -> ok Asetukset(portti=9000, tyontekijat=4)
+rikki.conf -> AsetusVirhe: portti: ei kokonaisluku: 'yhdeksän'
+raja.conf -> IllegalArgumentException: portti: 70000
+puuttuu -> AsetusVirhe: asetuksia ei voi lukea: puuttuu
+poisto onnistui: true

@@ -1,0 +1,8 @@
+Kotlin 2 pieni 6
+0 1 2 [10, 5, 0]
+luettiin '  42 '
+2 42
+1610 [kahvi, pulla] {kahvi=650, pulla=220} 1/1
+0
+ok 42 2 ab 1
+[INFO, VAROITUS, VIRHE] true Tuote(nimi=pulla, hinta=Euro(sentit=220), ale=5)

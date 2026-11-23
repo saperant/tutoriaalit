@@ -1,0 +1,10 @@
+Ilmoitus(otsikko=Levytila vähissä, tarkeys=2, kanava=sähköposti)
+Ilmoitus(otsikko=Palvelin alhaalla, tarkeys=3, kanava=tekstiviesti)
+Ilmoitus(otsikko=Uusi versio, tarkeys=1, kanava=chat)
+2
+[Levytila vähissä, Palvelin alhaalla]
+[Palvelin alhaalla]
+21
+-> sähköposti: Levytila vähissä
+-> tekstiviesti: Palvelin alhaalla
+lähetetty 2

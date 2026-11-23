@@ -1,0 +1,7 @@
+ok  välisumma kertoo määrällä
+ok  ilman alennusta hinta on välisumma
+ok  prosenttialennus pyöristää alaspäin
+ok  kynnysalennus vain rajan ylittyessä
+ok  tyhjä kori maksaa nolla
+ok  virheelliset arvot hylätään
+6/6 testiä läpi

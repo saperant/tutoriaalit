@@ -1,0 +1,9 @@
+merkkejä 15
+lukitaan tili A
+lukitaan tili B
+siirto A -> B
+vapautetaan tili B
+vapautetaan tili A
+lukitaan tili C
+vapautetaan tili C
+virhe: saldo ei riitä

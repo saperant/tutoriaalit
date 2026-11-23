@@ -1,0 +1,23 @@
+List:
+  map 1
+  map 2
+  map 3
+  map 4
+  map 5
+  map 6
+  filter 1
+  filter 4
+  filter 9
+  filter 16
+  filter 25
+  filter 36
+tulos 9
+Sequence:
+  map 1
+  filter 1
+  map 2
+  filter 4
+  map 3
+  filter 9
+tulos 9
+Collatz(27): 112 jäsentä, suurin 9232

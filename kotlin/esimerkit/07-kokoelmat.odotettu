@@ -1,0 +1,13 @@
+näkymä: [a, b]
+kopio: [a, b], näkymä: []
+kehitys: [Aino, Iida] ka 5650.0
+myynti: [Eero, Ukko] ka 4400.0
+tuki: [Oona] ka 3600.0
+Iidan osasto: kehitys
+kehitys/Iida, kehitys/Aino, myynti/Ukko, myynti/Eero, tuki/Oona
+ennen 2020: 3, myöhemmin: 2
+palkkasumma 23700
+suurin: Iida
+[[Aino, Eero], [Iida, Oona], [Ukko]]
+[6, 9, 12, 15]
+{k=[Aino, Iida], m=[Eero, Ukko], t=[Oona]}

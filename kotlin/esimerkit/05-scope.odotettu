@@ -1,0 +1,6 @@
+ennen järjestystä: [b, a]
+jälkeen: [a, b]
+portti 5432
+db.example.org:5432, pahimmillaan 9000 ms
+nimetön
+Yhteys(db.example.org:5432, 3000ms, 2)

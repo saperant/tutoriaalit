@@ -1,0 +1,9 @@
+08:00:01 INFO api pyyntö käsitelty
+08:00:02 ERROR db yhteys katkesi
+08:00:02 WARN api hidas vastaus
+rikkinäinen rivi
+08:00:03 ERROR api aikakatkaisu
+08:00:04 ERROR db yhteys katkesi
+08:00:05 INFO api pyyntö käsitelty
+08:00:06 INFO api pyyntö käsitelty
+08:00:07 ERROR auth virheellinen tunnus
