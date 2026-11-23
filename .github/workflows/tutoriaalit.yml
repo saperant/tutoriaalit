@@ -1,15 +1,24 @@
 name: Tutoriaalit
 
+# Kehitys on trunk-pohjaista: muutokset tehdään suoraan main-haaraan.
 on:
   push:
+    branches: [main]
   pull_request:
 
 permissions:
   contents: read
 
+# Uusi ajo peruu saman haaran keskeneräisen ajon, jotta vanhentunut ajo
+# ei voi julkaista sivustoa uudemman päälle.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   testaa-ja-rakenna:
     runs-on: ubuntu-24.04
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
@@ -49,6 +58,7 @@ jobs:
     needs: testaa-ja-rakenna
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     permissions:
       pages: write
       id-token: write
@@ -61,6 +71,7 @@ jobs:
 
   kehityskontti:
     runs-on: ubuntu-24.04
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
