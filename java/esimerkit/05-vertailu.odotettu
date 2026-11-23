@@ -1,0 +1,7 @@
+a == b:      false
+a.equals(b): true
+127 == 127:  true
+128 == 128:  false
+128 equals:  true
+luokka:      true
+record:      true

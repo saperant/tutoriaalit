@@ -1276,6 +1276,7 @@ laajuus = 5
 testaus = "javac -Xlint ja JUnit"
 roadmap = ["java"]
 amk = "Olio-ohjelmointi Javalla"
+tutoriaali = "java"
 
 [[taito]]
 id = "kotlin"

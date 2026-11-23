@@ -46,6 +46,7 @@ Jokaisessa tutoriaalissa on lisäksi muutaman sivun pikaopas
 | Python | [`python/`](python/) | [python.pdf](python/python.pdf) |
 | Bash-skriptaus | [`bash/`](bash/) | [bash.pdf](bash/bash.pdf) |
 | Rust | [`rust/`](rust/) | [rust.pdf](rust/rust.pdf) |
+| Java | [`java/`](java/) | [java.pdf](java/java.pdf) |
 | JavaScript | [`javascript/`](javascript/) | [javascript.pdf](javascript/javascript.pdf) |
 | TypeScript | [`typescript/`](typescript/) | [typescript.pdf](typescript/typescript.pdf) |
 | Go | [`go/`](go/) | [go.pdf](go/go.pdf) |

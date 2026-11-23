@@ -107,7 +107,7 @@ flowchart LR
   subgraph kielet["Ohjelmointikielet"]
     rust["✓ Rust"]
     go["✓ Go"]
-    java["Java"]
+    java["✓ Java"]
     kotlin["Kotlin"]
     javascript["✓ JavaScript"]
     typescript["✓ TypeScript"]
@@ -358,7 +358,7 @@ flowchart LR
 |-------|---:|------------|------|
 | Funktionaalinen ohjelmointi (Racket) | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../funktionaalinen-ohjelmointi/) |
 | Go | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../go/) |
-| Java | 5 | Ohjelmoinnin perusteet (Python) | suunniteltu |
+| Java | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../java/) |
 | JavaScript | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../javascript/) |
 | Tcl | 2 | Ohjelmoinnin perusteet (Python) | [valmis](../tcl/) |
 | Kotlin | 3 | Java | suunniteltu |

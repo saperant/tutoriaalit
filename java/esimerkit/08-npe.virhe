@@ -1,0 +1,2 @@
+java.lang.NullPointerException
+because the return value of "Main$Asiakas.osoite()" is null

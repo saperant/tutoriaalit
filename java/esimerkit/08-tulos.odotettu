@@ -1,0 +1,3 @@
+ok: Rekisterointi[sahkoposti=maija@example.com, ika=34]
+hylätty: sähköposti on virheellinen; iän on oltava 13–120
+hylätty: ikä ei ole luku

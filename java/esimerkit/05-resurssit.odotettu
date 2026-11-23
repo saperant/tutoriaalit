@@ -1,0 +1,7 @@
+avataan tietokanta
+avataan jono
+tietokanta <- tilaus 42
+suljetaan jono
+suljetaan tietokanta
+virhe: tyhja viesti
+  tukahdutettu: jono: sulkeminen

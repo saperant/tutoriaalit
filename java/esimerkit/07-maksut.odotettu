@@ -1,0 +1,5 @@
+Kortti[senttia=10000, verkko=Visa]     kulu 110 snt
+Kortti[senttia=10000, verkko=Amex]     kulu 300 snt
+Lasku[senttia=25000, maksuaikaPv=14]   kulu 250 snt
+Lasku[senttia=25000, maksuaikaPv=60]   kulu 500 snt
+Lahjakortti[senttia=5000, koodi=LK-77] kulu   0 snt

@@ -1,0 +1,6 @@
+Myymälöittäin: {Oulu=4655, Tampere=2985, Turku=1145}
+Tapahtumia:    {kaakao=1, kahvi=3, tee=2}
+Vähintään 10 €: [Oulu, Tampere]
+Suurin:        Myynti[myymala=Oulu, tuote=kahvi, kpl=5, senttia=3475]
+Kappaleet:     {kaakao=2, kahvi=9, tee=3}
+Silmukalla:    {kaakao=2, kahvi=9, tee=3}

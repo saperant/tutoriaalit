@@ -1,0 +1,11 @@
+[Kahvi, 6,95]
+[Kahvi, 6,95, , ]
+[]
+[1, 2, 3]
+kahvi, tee, kaakao
+kahvi, tee, kaakao
+[kahvi, tee, kaakao]
+strip: [väli], trim: 6 merkkiä
+abcabc 3 true
+Hei Maija,
+tilauksesi 42 on lähetetty.

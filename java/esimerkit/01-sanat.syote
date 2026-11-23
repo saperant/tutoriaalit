@@ -1,0 +1,4 @@
+Java on luokkapohjainen kieli. Java-ohjelma käännetään tavukoodiksi,
+ja tavukoodi ajetaan JVM:ssä. JVM kääntää kuuman koodin konekielelle
+ajon aikana, joten Java on nopea pitkään käynnissä olevissa
+palvelimissa. Lyhyissä ohjelmissa JVM:n käynnistys näkyy.

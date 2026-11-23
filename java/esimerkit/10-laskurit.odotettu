@@ -1,0 +1,3 @@
+synchronized: 400000
+AtomicLong:   400000
+LongAdder:    400000

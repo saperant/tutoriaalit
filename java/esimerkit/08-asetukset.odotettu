@@ -1,0 +1,7 @@
+ok.conf: {portti=8080}
+AsetusVirhe: asetusten lataus: rikki.conf
+  IllegalArgumentException: rivi 1: odotettiin avain=luku
+    NumberFormatException: For input string: "80a"
+AsetusVirhe: asetusten lataus: puuttuu.conf
+  NoSuchFileException: puuttuu.conf
+  -> käytetään oletuksia

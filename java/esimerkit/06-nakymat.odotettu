@@ -1,0 +1,7 @@
+näkymä: [a, b, c], kopio: [a, b]
+nakyma.add:  UnsupportedOperationException
+kopio.add:   UnsupportedOperationException
+asList.set:  ok
+asList.add:  UnsupportedOperationException
+List.of(null): NullPointerException
+[2, 1, 3] 3 2
