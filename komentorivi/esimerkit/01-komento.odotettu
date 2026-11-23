@@ -1,0 +1,6 @@
+cd is a shell builtin
+ls is /usr/bin/ls
+file
+löytyi (paluuarvo 0)
+ei löytynyt (paluuarvo 1)
+ls epäonnistui (paluuarvo 2)

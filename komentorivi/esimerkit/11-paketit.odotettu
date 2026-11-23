@@ -1,0 +1,3 @@
+coreutils: /usr/bin/sort
+coreutils install ok installed
+dpkg-query: no packages found matching olematon-paketti

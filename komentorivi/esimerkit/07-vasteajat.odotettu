@@ -1,0 +1,5 @@
+GET /tilaukset     2    672.5   1250
+GET /tuotteet      3     43.7     51
+POST /tilaukset    2    295.0    310
+4: GET /tilaukset 500 1250
+2

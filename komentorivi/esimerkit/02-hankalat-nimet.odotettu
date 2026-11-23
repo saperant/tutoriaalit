@@ -1,0 +1,7 @@
+-r
+kuukausi.txt
+vuosi raportti.txt
+[kuukausi.txt]
+[vuosi raportti.txt]
+cat: vuosi: No such file or directory
+cat: raportti.txt: No such file or directory

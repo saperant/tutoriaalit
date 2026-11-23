@@ -1,0 +1,6 @@
+2
+3
+2:08:15:07 WARN  [db] hidas kysely 1840 ms
+6:08:18:02 ERROR [db] yhteyspooli taynna
+08:15:07 WARN  [db] hidas kysely 1840 ms
+08:18:05 INFO  [api] GET /tilaukset 500

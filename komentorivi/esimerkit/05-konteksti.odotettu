@@ -1,0 +1,5 @@
+[3/4] kaannetaan paa.c
+paa.c:17: error: 'puskuri' undeclared
+paa.c:17: note: each undeclared identifier is reported only once
+--
+3:apu.c:42: warning: unused variable 'koko'

@@ -1,0 +1,5 @@
+prosessi on käynnissä
+sleep           sleep 300
+sleep 300 
+paluuarvo 143 = 128 + 15 (TERM)
+prosessi on päättynyt

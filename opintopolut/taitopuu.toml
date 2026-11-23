@@ -142,6 +142,7 @@ laajuus = 3
 testaus = "komentosarjat ajetaan säiliössä, tulosteita verrataan"
 roadmap = ["linux", "shell-bash"]
 amk = "Linux-perusteet"
+tutoriaali = "komentorivi"
 
 [[taito]]
 id = "versionhallinta"

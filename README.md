@@ -42,6 +42,7 @@ Jokaisessa tutoriaalissa on lisäksi muutaman sivun pikaopas
 | Ohjelmoinnin perusteet (Python) | [`ohjelmoinnin-perusteet/`](ohjelmoinnin-perusteet/) | [ohjelmoinnin-perusteet.pdf](ohjelmoinnin-perusteet/ohjelmoinnin-perusteet.pdf) |
 | Moderni C++ | [`moderni-cpp/`](moderni-cpp/) | [moderni-cpp.pdf](moderni-cpp/moderni-cpp.pdf) |
 | C-kieli | [`c-kieli/`](c-kieli/) | [c-kieli.pdf](c-kieli/c-kieli.pdf) |
+| Komentorivi ja Linux | [`komentorivi/`](komentorivi/) | [komentorivi.pdf](komentorivi/komentorivi.pdf) |
 | Python | [`python/`](python/) | [python.pdf](python/python.pdf) |
 | Bash-skriptaus | [`bash/`](bash/) | [bash.pdf](bash/bash.pdf) |
 | Rust | [`rust/`](rust/) | [rust.pdf](rust/rust.pdf) |

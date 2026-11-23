@@ -30,7 +30,7 @@ Valmiit tutoriaalit on merkitty merkillä ✓.
 flowchart LR
   subgraph perusta["Perusta"]
     ohjelmoinnin_perusteet["✓ Ohjelmoinnin perusteet (Python)"]
-    komentorivi["Komentorivi ja Linux"]
+    komentorivi["✓ Komentorivi ja Linux"]
     versionhallinta["Versionhallinta (Git)"]
     c_kieli["✓ C-kieli"]
     moderni_cpp["✓ Moderni C++"]
@@ -250,7 +250,7 @@ flowchart LR
 
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
-| Komentorivi ja Linux | 3 | – | suunniteltu |
+| Komentorivi ja Linux | 3 | – | [valmis](../komentorivi/) |
 | Ohjelmoinnin perusteet (Python) | 5 | – | [valmis](../ohjelmoinnin-perusteet/) |
 | Bash-skriptaus | 3 | Komentorivi ja Linux, Ohjelmoinnin perusteet (Python) | [valmis](../bash/) |
 | C-kieli | 5 | Komentorivi ja Linux, Ohjelmoinnin perusteet (Python) | [valmis](../c-kieli/) |

@@ -1,0 +1,7 @@
+644 -rw-r--r-- raportti.txt
+755 drwxr-xr-x julkaisu
+644 -rw-r--r-- julkaise.sh
+600 -rw------- raportti.txt
+750 drwxr-x--- julkaisu
+744 -rwxr--r-- julkaise.sh
+julkaistaan

@@ -1,0 +1,7 @@
+umask 022: 644 tiedosto-022
+umask 022: 755 hakemisto-022
+umask 027: 640 tiedosto-027
+umask 027: 750 hakemisto-027
+umask 077: 600 tiedosto-077
+umask 077: 700 hakemisto-077
+u=rwx,g=rx,o=

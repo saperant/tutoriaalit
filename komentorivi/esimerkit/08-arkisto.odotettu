@@ -1,0 +1,10 @@
+sivusto/
+sivusto/index.html
+sivusto/kuvat/
+sivusto/kuvat/logo.png
+sivusto/tyyli.css
+palautus vastaa alkuperäistä
+./index.html: OK
+./kuvat/logo.png: OK
+./tyyli.css: FAILED
+tarkistus epäonnistui

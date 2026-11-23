@@ -1,0 +1,13 @@
+portti = 8080
+osoite = 0.0.0.0
+loki = /tmp/palvelu.log
+2c2
+< portti = 8080
+---
+> portti = 9090
+maksettu 2026-11-02
+eräpäivä 2027-1-30
+3
+4
+5
+1 3 4 6 7 9 10

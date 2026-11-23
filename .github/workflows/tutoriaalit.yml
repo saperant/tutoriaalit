@@ -32,7 +32,7 @@ jobs:
             texlive-xetex texlive-latex-recommended texlive-latex-extra \
             texlive-fonts-recommended texlive-lang-european lmodern \
             fonts-dejavu graphviz \
-            shellcheck bats verilator sqlite3 tcl8.6 ghdl racket \
+            shellcheck bats openssh-client verilator sqlite3 tcl8.6 ghdl racket \
             rustc-1.80 cargo-1.80 rust-1.80-clippy golang-1.23-go \
             openjdk-21-jdk-headless
           pip install --break-system-packages ruff mypy pytest

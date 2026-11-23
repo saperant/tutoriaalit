@@ -1,0 +1,13 @@
+2 raportit/vuosi.txt
+2 total
+wc: 2026.txt: No such file or directory
+wc: 2026.txt: No such file or directory
+wc: raportit/q1: No such file or directory
+wc: raportit/q2: No such file or directory
+ 3 raportit/q1 2026.txt
+ 5 raportit/q2 2026.txt
+ 2 raportit/vuosi.txt
+10 total
+pakattu: raportit/q1 2026.txt
+pakattu: raportit/q2 2026.txt
+pakattu: raportit/vuosi.txt

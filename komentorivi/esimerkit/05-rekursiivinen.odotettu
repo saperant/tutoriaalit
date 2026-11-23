@@ -1,0 +1,4 @@
+palvelut/api/varmistus.conf:1:varmuuskopio=db1.sisainen
+palvelut/web/asetukset.conf:1:tietokanta=db1.sisainen:5432
+--
+palvelut/api/asetukset.conf

@@ -1,0 +1,5 @@
+hostname rakennus-01.sisainen.example.com
+identityfile ~/.ssh/rakennus_ed25519
+port 22
+proxyjump bastioni
+user ci
