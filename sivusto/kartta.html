@@ -27,6 +27,7 @@
         <div><svg width="18" height="18" viewBox="-9 -9 18 18"><circle r="6.5" fill="var(--pad-tausta)" stroke="var(--pad)" stroke-width="2.5" stroke-dasharray="3 2.5"/></svg>Suunnitteilla</div>
         <div><svg width="18" height="18" viewBox="-9 -9 18 18"><circle r="6.5" fill="var(--tina)" stroke="var(--tina)" stroke-width="2.5"/></svg>Polulla</div>
         <div><svg width="18" height="18" viewBox="-9 -9 18 18"><circle r="7.5" fill="none" stroke="var(--avoin)" stroke-width="1.5" stroke-dasharray="2 2"/><circle r="5" fill="var(--pad-tausta)" stroke="var(--pad)" stroke-width="2"/></svg>Seuraavaksi avautuva</div>
+        <div><svg width="18" height="18" viewBox="-9 -9 18 18"><circle r="7.5" fill="none" stroke="var(--silkki-3)" stroke-width="1.2"/></svg>Nippu: vedä siirtääksesi</div>
       </div>
       <div class="vihje" id="vihje" hidden></div>
       <div class="tila">
@@ -40,9 +41,11 @@
         <button class="nappi" id="lahenna" type="button" aria-label="Lähennä">+</button>
         <button class="nappi" id="loitonna" type="button" aria-label="Loitonna">−</button>
         <button class="nappi" id="sovita" type="button" aria-label="Näytä koko kartta">⤢</button>
+        <button class="nappi" id="jarjesta" type="button" aria-label="Palauta nippujen asettelu" title="Palauta nippujen asettelu">⟲</button>
       </div>
     </div>
     <aside class="paneeli" id="paneeli" aria-live="polite"></aside>
   </main>
 </div>
+<script src="asettelu.js"></script>
 <script src="kartta.js"></script>

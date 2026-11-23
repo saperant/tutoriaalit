@@ -26,6 +26,10 @@ Kun taidolle on kirjoitettu tutoriaali, siihen lisätään kenttä
 `tutoriaali`, jonka arvo on tutoriaalin hakemisto repositoriossa.
 Hakemiston nimi on sama kuin taidon tunniste.
 
+Taitopuukartalla saman alueen taidot muodostavat oletuksena yhden
+nipun. Valinnainen kenttä `nippu` sijoittaa taidon omaan nippuunsa,
+esimerkiksi kun alue kasvaa niin suureksi, että se kannattaa jakaa.
+
 Jokaisen taidon on kuuluttava vähintään yhteen rooliin, joko jonkin
 tavoitteen esitietona tai valinnaisena taitona. Jos taito ei sovi
 mihinkään rooliin, se on merkki siitä, että joko taito on tarpeeton tai

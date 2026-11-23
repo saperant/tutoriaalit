@@ -12,6 +12,7 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 const { chromium } = require("playwright");
+const { TaitopuuAsettelu } = require(path.join(__dirname, "asettelu.js"));
 
 const juuri = path.resolve(process.argv[2] || "rakennus");
 const kuvat = process.argv[3] ? path.resolve(process.argv[3]) : null;
@@ -61,7 +62,78 @@ async function laskuri(sivu) {
   return m ? { taitoja: Number(m[1]), op: Number(m[2]) } : null;
 }
 
+// Asettelun ominaisuudet ilman selainta: niput ja taidot eivät ole
+// päällekkäin, ja sama data tuottaa aina saman asettelun.
+function tarkistaAsettelu(as, otsikko) {
+  const sij = [...as.sijainnit.values()];
+  let pieninSolmu = Infinity;
+  for (let i = 0; i < sij.length; i++) {
+    for (let j = i + 1; j < sij.length; j++) {
+      pieninSolmu = Math.min(pieninSolmu,
+        Math.hypot(sij[i].x - sij[j].x, sij[i].y - sij[j].y));
+    }
+  }
+  const niput = [...as.niput.values()];
+  let pieninVali = Infinity;
+  for (let i = 0; i < niput.length; i++) {
+    for (let j = i + 1; j < niput.length; j++) {
+      const a = niput[i];
+      const b = niput[j];
+      pieninVali = Math.min(pieninVali,
+        Math.hypot(a.x - b.x, a.y - b.y) - a.sade - b.sade);
+    }
+  }
+  tarkista(pieninSolmu > 2 * TaitopuuAsettelu.solmunSade(5) + 60,
+    `${otsikko}: taitojen pienin etäisyys ${pieninSolmu.toFixed(0)} px`);
+  tarkista(pieninVali > 0,
+    `${otsikko}: nippujen pienin väli ${pieninVali.toFixed(0)} px`);
+  // Johdinnippu ei saa kulkea vieraan nipun radan läpi.
+  let lapikulkuja = 0;
+  for (const y of as.nippureitit) {
+    for (const c of niput) {
+      if (c.id === y.a || c.id === y.b) continue;
+      for (let i = 0; i <= 40; i++) {
+        const p = TaitopuuAsettelu.bezier(y.alku, y.ohjaus, y.loppu, i / 40);
+        if (Math.hypot(p.x - c.x, p.y - c.y) < c.radanSade + 30) {
+          lapikulkuja++;
+          break;
+        }
+      }
+    }
+  }
+  tarkista(lapikulkuja === 0,
+    `${otsikko}: johdinniput eivät kulje vieraiden ratojen läpi ` +
+    `(${lapikulkuja})`);
+}
+
 async function main() {
+  console.log("Asettelu:");
+  const as1 = TaitopuuAsettelu.laske(data);
+  const as2 = TaitopuuAsettelu.laske(data);
+  tarkistaAsettelu(as1, "oletusasettelu");
+  tarkista([...as1.sijainnit].every(([id, p]) =>
+    p.x === as2.sijainnit.get(id).x && p.y === as2.sijainnit.get(id).y),
+  "asettelu on deterministinen");
+  const yhteyksiaYht = data.taidot.reduce((a, t) => a + t.edellyttaa.length, 0);
+  tarkista(as1.reitit.length === yhteyksiaYht,
+    `jokaiselle yhteydelle on reitti (${as1.reitit.length})`);
+  // Nipun siirto: kiinnitetty nippu pysyy paikallaan ja muut väistävät.
+  const siirretty = [...as1.niput.values()][3];
+  const aiempi = new Map([...as1.niput].map(([id, n]) => [id, { x: n.x, y: n.y }]));
+  aiempi.set(siirretty.id, { x: 0, y: 0 });
+  const as3 = TaitopuuAsettelu.laske(data, aiempi, new Set([siirretty.id]));
+  tarkistaAsettelu(as3, "nippu siirretty keskelle");
+  // Valinnainen nippu-kenttä jakaa alueen kahteen nippuun.
+  const jaettu = JSON.parse(JSON.stringify(data));
+  const alue = jaettu.taidot[jaettu.taidot.length - 1].alue;
+  jaettu.taidot.filter((t) => t.alue === alue).slice(0, 2)
+    .forEach((t) => { t.nippu = "erillinen"; });
+  const as4 = TaitopuuAsettelu.laske(jaettu);
+  tarkista(as4.niput.size === as1.niput.size + 1,
+    `nippu-kenttä luo oman nipun (${as4.niput.size})`);
+  tarkistaAsettelu(as4, "jaettu alue");
+
+
   const palvelin = http.createServer((pyynto, vastaus) => {
     const osoite = decodeURIComponent(new URL(pyynto.url, "http://x").pathname);
     const tiedosto = path.join(juuri, osoite === "/" ? "index.html" : osoite);
@@ -97,7 +169,9 @@ async function main() {
   tarkista(solmuja === data.taidot.length,
     `kartalla ${solmuja} taitoa (odotettu ${data.taidot.length})`);
   const reitteja = await sivu.locator(".reitti").count();
-  tarkista(reitteja === data.reitit.length, `kartalla ${reitteja} reittiä`);
+  const yhteyksia = data.taidot.reduce((a, t) => a + t.edellyttaa.length, 0);
+  tarkista(reitteja === yhteyksia,
+    `kartalla ${reitteja} yhteyttä (odotettu ${yhteyksia})`);
 
   // Ensimmäisellä käynnillä ensimmäinen rooli on valittuna.
   const eka = data.roolit[0];
@@ -163,6 +237,35 @@ async function main() {
   l = await laskuri(sivu);
   tarkista(l.taitoja === ennen.taitoja && l.op === ennen.op,
     "valinta säilyy uudelleenlatauksessa");
+
+  // Nipun raahaaminen siirtää nippua, eikä nippuja jää päällekkäin.
+  const nippu = sivu.locator(".nippu").nth(4);
+  const ennenX = Number(await nippu.getAttribute("data-x"));
+  const laatikko = await nippu.locator(".nippu-alusta").boundingBox();
+  const lx = laatikko.x + laatikko.width / 2;
+  const ly = laatikko.y + laatikko.height * 0.12;
+  await sivu.mouse.move(lx, ly);
+  await sivu.mouse.down();
+  for (let i = 1; i <= 10; i++) await sivu.mouse.move(lx + 12 * i, ly + 6 * i);
+  await sivu.mouse.up();
+  const jalkeenX = Number(await nippu.getAttribute("data-x"));
+  tarkista(Math.abs(jalkeenX - ennenX) > 20,
+    `nippu siirtyi raahattaessa (${ennenX.toFixed(0)} → ${jalkeenX.toFixed(0)})`);
+  const niputDom = await sivu.$$eval(".nippu", (gs) => gs.map((g) => ({
+    x: Number(g.dataset.x), y: Number(g.dataset.y), r: Number(g.dataset.r),
+  })));
+  let pienin = Infinity;
+  for (let i = 0; i < niputDom.length; i++) {
+    for (let j = i + 1; j < niputDom.length; j++) {
+      const a = niputDom[i];
+      const b = niputDom[j];
+      pienin = Math.min(pienin, Math.hypot(a.x - b.x, a.y - b.y) - a.r - b.r);
+    }
+  }
+  tarkista(pienin > 0, `raahauksen jälkeen niput eivät ole päällekkäin (${pienin.toFixed(0)} px)`);
+  await sivu.click("#jarjesta");
+  const palautettuX = Number(await nippu.getAttribute("data-x"));
+  tarkista(Math.abs(palautettuX - ennenX) < 0.5, "asettelun palautus");
 
   // Haku korostaa osumat.
   await sivu.fill("#haku", "verilator");

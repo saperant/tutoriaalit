@@ -23,6 +23,9 @@
     esikatselu: null,
     haku: "",
     nakyma: { x: 0, y: 0, w: 1, h: 1 },
+    asettelu: null,
+    reitit: [],
+    kiinnitetyt: new Set(),
   };
 
   const $ = (id) => document.getElementById(id);
@@ -233,10 +236,11 @@
   // ------------------------------------------------------------------
   // Piirtäminen
 
+  const Asettelu = window.TaitopuuAsettelu;
+
   function piirra() {
     const svg = $("kartta");
-    const { meta, alueet, taidot, reitit } = tila.data;
-    const ulko = meta.ulkokeha + 300;
+    const { alueet, taidot } = tila.data;
 
     const defs = s("defs");
     const kuvio = s("pattern", {
@@ -245,64 +249,67 @@
     kuvio.append(s("circle", { cx: 20, cy: 20, r: 1.1, class: "ristikko" }));
     defs.append(kuvio);
     svg.append(defs);
-
-    const tausta = s("g", { class: "tausta" });
-    tausta.append(s("rect", {
-      x: -ulko - 600, y: -ulko - 600, width: 2 * ulko + 1200,
-      height: 2 * ulko + 1200, fill: "url(#ristikko)",
+    svg.append(s("rect", {
+      x: -20000, y: -20000, width: 40000, height: 40000,
+      fill: "url(#ristikko)", class: "ruudukko",
     }));
-    meta.kehat.forEach((r, i) => {
-      tausta.append(s("circle", { r, class: "kehä" }));
-      const t = s("text", {
-        x: 0, y: -r - 8, class: "kehä-teksti", "text-anchor": "middle",
-      });
-      t.textContent = `TASO ${i + 1}`;
-      tausta.append(t);
-    });
-    svg.append(tausta);
-    const aluenimet = s("g", { class: "aluenimet", id: "aluenimet" });
-    for (const a of alueet) {
-      if (!a.nimike) continue;
-      // Kartan sivuilla nimi kasvaa poispäin keskustasta.
-      const kosini = a.nimike.x / Math.hypot(a.nimike.x, a.nimike.y);
-      const ankkuri = kosini > 0.4 ? "start" : kosini < -0.4 ? "end" : "middle";
-      const t = s("text", {
-        x: a.nimike.x, y: a.nimike.y, class: "alue-teksti",
-        "text-anchor": ankkuri,
-        "dominant-baseline": "middle", fill: alueVari(a.id),
-      });
-      t.textContent = a.nimi;
-      aluenimet.append(t);
-    }
-    svg.append(aluenimet);
 
-    const reittiryhma = s("g", { class: "reitit" });
-    for (const r of reitit) {
-      const p = s("path", { d: r.d, class: "reitti" });
+    const sisalto = s("g", { id: "sisalto" });
+    const nippuryhma = s("g", { class: "niput" });
+    const johdot = s("g", { class: "nippujohdot" });
+    const reittiryhma = s("g", { class: "reitit", id: "reitit" });
+    const solmuryhma = s("g", { class: "solmut", id: "solmut" });
+    sisalto.append(nippuryhma, johdot, reittiryhma, solmuryhma);
+    svg.append(sisalto);
+
+    tila.asettelu = Asettelu.laske(tila.data);
+    tila.nippuElementit = new Map();
+    for (const nippu of tila.asettelu.niput.values()) {
+      const g = s("g", { class: "nippu" });
+      g.dataset.id = nippu.id;
+      g.append(s("circle", {
+        r: nippu.sade, class: "nippu-alusta",
+        stroke: alueVari(nippu.alue),
+      }));
+      if (nippu.radanSade > 0) {
+        g.append(s("circle", { r: nippu.radanSade, class: "rata" }));
+      }
+      const nimi = s("text", {
+        y: -nippu.sade - 14, class: "alue-teksti", "text-anchor": "middle",
+        fill: alueVari(nippu.alue),
+      });
+      nimi.textContent = alueet.find((a) => a.id === nippu.alue)?.nimi ||
+        nippu.nimi;
+      const ohje = s("title");
+      ohje.textContent = "Vedä siirtääksesi nippua";
+      g.append(nimi, ohje);
+      nippuryhma.append(g);
+      tila.nippuElementit.set(nippu.id, g);
+    }
+
+    tila.johtoElementit = tila.asettelu.nippureitit.map((n) => {
+      const p = s("path", {
+        class: "nippujohto",
+        "stroke-width": (3 + 2.2 * n.maara).toFixed(1),
+      });
+      johdot.append(p);
+      return p;
+    });
+
+    tila.reitit = tila.asettelu.reitit.map((r) => {
+      const p = s("path", {
+        class: "reitti " + (r.sisainen ? "sisainen" : "ulkoinen"),
+      });
       p.dataset.a = r.a;
       p.dataset.b = r.b;
       reittiryhma.append(p);
-      r.elementti = p;
-    }
-    svg.append(reittiryhma);
-
-    const keskus = s("g", { class: "keskus" });
-    keskus.append(s("circle", { r: 58, class: "keskus-ympyra" }));
-    const k1 = s("text", {
-      y: -2, class: "keskus-teksti", "text-anchor": "middle",
+      return { a: r.a, b: r.b, elementti: p };
     });
-    k1.textContent = "ALKU";
-    const k2 = s("text", { y: 20, class: "keskus-ala", "text-anchor": "middle" });
-    k2.textContent = `${taidot.length} taitoa`;
-    keskus.append(k1, k2);
-    svg.append(keskus);
 
-    const solmuryhma = s("g", { class: "solmut", id: "solmut" });
     for (const t of taidot) {
-      const r = 9 + t.laajuus * 2.4;
+      const r = Asettelu.solmunSade(t.laajuus);
       const g = s("g", {
         class: "solmu " + (t.materiaalit ? "valmis" : "suunniteltu"),
-        transform: `translate(${t.x} ${t.y})`,
         tabindex: 0,
         role: "button",
         "aria-label": `${t.nimi}, ${t.laajuus} op, taso ${t.taso}` +
@@ -326,7 +333,7 @@
       solmuryhma.append(g);
       t.elementti = g;
     }
-    svg.append(solmuryhma);
+    sovellaAsettelu();
 
     solmuryhma.addEventListener("click", (e) => {
       const g = e.target.closest(".solmu");
@@ -364,6 +371,77 @@
       if (g) asetaEsikatselu(g.dataset.id);
     });
     solmuryhma.addEventListener("focusout", () => asetaEsikatselu(null));
+
+    kytkeNippujenSiirto(nippuryhma);
+  }
+
+  // Päivittää nippujen, taitojen ja reittien sijainnit asettelusta.
+  function sovellaAsettelu() {
+    const as = tila.asettelu;
+    for (const [id, nippu] of as.niput) {
+      const g = tila.nippuElementit.get(id);
+      g.setAttribute("transform",
+        `translate(${nippu.x.toFixed(1)} ${nippu.y.toFixed(1)})`);
+      g.dataset.x = nippu.x.toFixed(1);
+      g.dataset.y = nippu.y.toFixed(1);
+      g.dataset.r = nippu.sade.toFixed(1);
+    }
+    for (const t of tila.data.taidot) {
+      const p = as.sijainnit.get(t.id);
+      t.x = p.x;
+      t.y = p.y;
+      t.elementti.setAttribute("transform",
+        `translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})`);
+    }
+    as.nippureitit.forEach((n, i) => {
+      tila.johtoElementit[i].setAttribute("d", n.d);
+    });
+    as.reitit.forEach((r, i) => {
+      tila.reitit[i].elementti.setAttribute("d", r.d);
+    });
+  }
+
+  // Nippua voi raahata. Raahattu nippu jää paikalleen, ja muut niput
+  // asettuvat sen ympärille simulaation avulla.
+  function kytkeNippujenSiirto(nippuryhma) {
+    let raahattava = null;
+    nippuryhma.addEventListener("pointerdown", (e) => {
+      const g = e.target.closest(".nippu");
+      if (!g || e.button > 0) return;
+      e.stopPropagation();
+      const p = karttaPiste(e.clientX, e.clientY);
+      const nippu = tila.asettelu.niput.get(g.dataset.id);
+      raahattava = { id: g.dataset.id, dx: nippu.x - p.x, dy: nippu.y - p.y,
+        osoitin: e.pointerId };
+      g.setPointerCapture(e.pointerId);
+      g.classList.add("raahattava");
+      piilotaVihje();
+    });
+    nippuryhma.addEventListener("pointermove", (e) => {
+      if (!raahattava || e.pointerId !== raahattava.osoitin) return;
+      const p = karttaPiste(e.clientX, e.clientY);
+      tila.kiinnitetyt.add(raahattava.id);
+      const aiempi = new Map([...tila.asettelu.niput].map(
+        ([id, n]) => [id, { x: n.x, y: n.y }]));
+      aiempi.set(raahattava.id,
+        { x: p.x + raahattava.dx, y: p.y + raahattava.dy });
+      tila.asettelu = Asettelu.laske(tila.data, aiempi, tila.kiinnitetyt);
+      sovellaAsettelu();
+    });
+    const lopeta = (e) => {
+      if (!raahattava || e.pointerId !== raahattava.osoitin) return;
+      tila.nippuElementit.get(raahattava.id).classList.remove("raahattava");
+      raahattava = null;
+    };
+    nippuryhma.addEventListener("pointerup", lopeta);
+    nippuryhma.addEventListener("pointercancel", lopeta);
+  }
+
+  function palautaAsettelu() {
+    tila.kiinnitetyt.clear();
+    tila.asettelu = Asettelu.laske(tila.data);
+    sovellaAsettelu();
+    sovita();
   }
 
   function paivitaKartta() {
@@ -403,13 +481,24 @@
       c.toggle("osuma", osumat.has(t.id));
       t.elementti.setAttribute("aria-pressed", valitut.has(t.id));
     }
-    for (const r of tila.data.reitit) {
-      const a = r.a === "alku" || valitut.has(r.a);
+    // Korostetut reitit piirretään muiden päälle.
+    const korostetut = [];
+    for (const r of tila.reitit) {
+      const a = valitut.has(r.a);
       const c = r.elementti.classList;
       c.toggle("valittu", a && valitut.has(r.b));
       c.toggle("lisays", lisays.has(r.b) && (a || lisays.has(r.a)));
       c.toggle("poisto", poisto.has(r.b));
+      if (c.contains("valittu")) korostetut.push(r.elementti);
     }
+    const reittiryhma = $("reitit");
+    for (const r of tila.reitit) {
+      if (r.elementti.classList.contains("lisays") ||
+          r.elementti.classList.contains("poisto")) {
+        korostetut.push(r.elementti);
+      }
+    }
+    for (const e of korostetut) reittiryhma.append(e);
     for (const nappi of $("roolit").children) {
       nappi.setAttribute("aria-pressed", nappi.dataset.id === tila.rooli);
     }
@@ -675,18 +764,18 @@
   }
 
   function sovita() {
-    // Näytetään kaikki taidot ja aluenimet pienellä marginaalilla.
+    // Näytetään kaikki niput pienellä marginaalilla.
     const svg = $("kartta");
     const koko = svg.getBoundingClientRect();
-    const laatikot = [$("solmut").getBBox(), $("aluenimet").getBBox()];
-    const reuna = 40;
-    const x0 = Math.min(...laatikot.map((l) => l.x)) - reuna;
-    const y0 = Math.min(...laatikot.map((l) => l.y)) - reuna;
-    let w = Math.max(...laatikot.map((l) => l.x + l.width)) + reuna - x0;
-    let korkeus = Math.max(...laatikot.map((l) => l.y + l.height)) + reuna - y0;
+    const l = $("sisalto").getBBox();
+    // Alareunaan jätetään tilaa laskurille ja zoomausnapeille.
+    const reuna = 50;
+    const ala = 160;
+    let w = l.width + 2 * reuna;
+    let korkeus = l.height + reuna + ala;
+    const cx = l.x + l.width / 2;
+    const cy = l.y - reuna + korkeus / 2;
     const suhde = koko.width / Math.max(1, koko.height);
-    const cx = x0 + w / 2;
-    const cy = y0 + korkeus / 2;
     if (w / korkeus < suhde) w = korkeus * suhde;
     else korkeus = w / suhde;
     tila.nakyma = { x: cx - w / 2, y: cy - korkeus / 2, w, h: korkeus };
@@ -808,6 +897,7 @@
     $("lahenna").addEventListener("click", () => zoomaa(0.75));
     $("loitonna").addEventListener("click", () => zoomaa(1.33));
     $("sovita").addEventListener("click", sovita);
+    $("jarjesta").addEventListener("click", palautaAsettelu);
     window.addEventListener("resize", sovita);
   }
 

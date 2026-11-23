@@ -51,6 +51,7 @@ class Taito:
     roadmap: list[str]
     amk: str
     tutoriaali: str | None = None
+    nippu: str | None = None
     taso: int = 0
     seuraajat: list[str] = field(default_factory=list)
 
@@ -139,7 +140,7 @@ def lataa(polku: Path) -> tuple[Puu, list[str]]:
               "laajuus", "testaus", "roadmap", "amk"]
     for t in data.get("taito", []):
         vaadi(t, kentat, f"taito {t.get('id')}")
-        tuntemattomat = set(t) - set(kentat) - {"tutoriaali"}
+        tuntemattomat = set(t) - set(kentat) - {"tutoriaali", "nippu"}
         if tuntemattomat:
             virheet.append(f"taito {t.get('id')}: tuntemattomat kentät "
                            f"{sorted(tuntemattomat)}")
@@ -148,7 +149,8 @@ def lataa(polku: Path) -> tuple[Puu, list[str]]:
         if t["id"] in taidot:
             virheet.append(f"taito {t['id']}: tunniste toistuu")
         taidot[t["id"]] = Taito(**{k: t[k] for k in kentat},
-                                tutoriaali=t.get("tutoriaali"))
+                                tutoriaali=t.get("tutoriaali"),
+                                nippu=t.get("nippu"))
 
     roolit: dict[str, Rooli] = {}
     for r in data.get("rooli", []):
