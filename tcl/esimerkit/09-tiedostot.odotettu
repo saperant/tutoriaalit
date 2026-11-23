@@ -1,0 +1,10 @@
+ajoitus.rpt: 25 tavua, # ajoitus
+pinta-ala.rpt: 27 tavua, # pinta-ala
+teho.rpt: 22 tavua, # teho
+.sv alu
+regs
+fifo
+alu
+paluuarvo 3: synteesi epäonnistui
+varoitus
+valmis

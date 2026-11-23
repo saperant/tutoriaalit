@@ -46,6 +46,7 @@ Jokaisessa tutoriaalissa on lisäksi muutaman sivun pikaopas
 | Python | [`python/`](python/) | [python.pdf](python/python.pdf) |
 | Bash-skriptaus | [`bash/`](bash/) | [bash.pdf](bash/bash.pdf) |
 | Rust | [`rust/`](rust/) | [rust.pdf](rust/rust.pdf) |
+| Tcl | [`tcl/`](tcl/) | [tcl.pdf](tcl/tcl.pdf) |
 | SQL ja relaatiotietokannat | [`sql/`](sql/) | [sql.pdf](sql/sql.pdf) |
 | Funktionaalinen ohjelmointi (Racket) | [`funktionaalinen-ohjelmointi/`](funktionaalinen-ohjelmointi/) | [funktionaalinen-ohjelmointi.pdf](funktionaalinen-ohjelmointi/funktionaalinen-ohjelmointi.pdf) |
 | RTL-suunnittelu (SystemVerilog) | [`rtl-suunnittelu/`](rtl-suunnittelu/) | [rtl-suunnittelu.pdf](rtl-suunnittelu/rtl-suunnittelu.pdf) |

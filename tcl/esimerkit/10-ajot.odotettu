@@ -1,0 +1,5 @@
+alu: slack -0.25
+dsp: slack 0.00; VIRHE: paluuarvo 2
+fifo: slack 0.25
+regs: slack -0.12
+rinnakkain: kyllä

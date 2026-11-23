@@ -1,0 +1,10 @@
+module top (clk, a, b, q);
+  NAND2_X1 u_alu/g1 (.A1(a[0]), .A2(b[0]), .ZN(n1));
+  NAND2_X1 u_alu/g2 (.A1(a[1]), .A2(b[1]), .ZN(n2));
+  INV_X1 u_alu/g3 (.A(n1), .ZN(n3));
+  MUX2_X1 u_alu/g4 (.A(n2), .B(n3), .S(sel), .Z(n4));
+  DFF_X1 u_regs/q_reg_0 (.D(n4), .CK(clk), .Q(q[0]));
+  DFF_X1 u_regs/q_reg_1 (.D(n3), .CK(clk), .Q(q[1]));
+  XOR2_X1 u_regs/g9 (.A(q[0]), .B(q[1]), .Z(p));
+  INV_X1 u_regs/g10 (.A(p), .ZN(pn));
+endmodule

@@ -1,0 +1,8 @@
+solu u_alu, leveys 16 bittiä
+solu $solu, leveys [expr {$leveys * 2}] bittiä
+hinta $5, väylä u_alu/data[3]
+2
+2
+ilman rivinvaihtoa: ok
+huono: set_pins data[3] valid (3 sanaa)
+hyvä:  set_pins {data[3] valid} (2 sanaa)

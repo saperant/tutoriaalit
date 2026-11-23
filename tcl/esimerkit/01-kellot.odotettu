@@ -1,0 +1,3 @@
+clk_core    2.500 ns   400.00 MHz
+clk_axi     4.000 ns   250.00 MHz
+clk_ddr     1.250 ns   800.00 MHz

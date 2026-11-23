@@ -1,0 +1,16 @@
+Timing report: design alu, clock clk_core (period 2.500 ns)
+------------------------------------------------------------
+Path 1
+  Startpoint: u_regs/q_reg[3]/CK
+  Endpoint:   u_alu/acc_reg[7]/D
+  Slack:      -0.214 ns (VIOLATED)
+Path 2
+  Startpoint: u_fifo/rptr_reg[0]/CK
+  Endpoint:   u_fifo/mem_reg[5]/D
+  Slack:      0.310 ns (MET)
+Path 3
+  Startpoint: u_regs/q_reg[1]/CK
+  Endpoint:   u_alu/flag_reg/D
+  Slack:      -0.086 ns (VIOLATED)
+
+Summary: WNS -0.214 TNS -0.300 failing 2

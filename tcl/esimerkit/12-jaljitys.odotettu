@@ -1,0 +1,8 @@
+  -> kerroin 1
+  <- kerroin = 2 (koodi 0)
+  -> kerroin 2
+  <- kerroin = 4 (koodi 0)
+summa 6
+  jakso = 5.0 (päätaso)
+  ::jakso = 2.5 (nopeuta)
+laske: alle ms / kutsu (1000 toistoa)

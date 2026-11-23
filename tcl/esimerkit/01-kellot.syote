@@ -1,0 +1,5 @@
+# kello      jakso (ns)
+clk_core     2.5
+clk_axi      4.0
+clk_uart     abc
+clk_ddr      1.25

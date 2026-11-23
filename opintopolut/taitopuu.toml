@@ -1351,6 +1351,7 @@ laajuus = 2
 testaus = "tclsh ja tcltest"
 roadmap = []
 amk = "Tuotekehityksen työkalut"
+tutoriaali = "tcl"
 
 [[taito]]
 id = "funktionaalinen-ohjelmointi"

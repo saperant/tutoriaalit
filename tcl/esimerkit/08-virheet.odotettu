@@ -1,0 +1,7 @@
+ohitetaan: raporttia ei ole: puuttuva.rpt
+tarkistus epäonnistui: tyhja.rpt: ei ajoitustietoja
+koodi: RAPORTTI MUOTO
+(tarkistettiin tyhja.rpt)
+1:ARITH DIVZERO {divide by zero}
+1:NONE
+3

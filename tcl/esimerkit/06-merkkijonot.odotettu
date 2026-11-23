@@ -1,0 +1,13 @@
+27
+top
+ALU.SV
+1
+1
+0
+taso 5, lohko add_0
+top.u_core.u_alu.add_0
+module fifo #(parameter W = 32) (...);
+data_3
+VIOLATED -0.214
+0.214 2.000 2.214
+a_1 b_22

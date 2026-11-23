@@ -1,0 +1,6 @@
+-top
+alu
+-clock
+2.5
+-strategy
+perf

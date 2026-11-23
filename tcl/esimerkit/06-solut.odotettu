@@ -1,0 +1,8 @@
+u_alu        3.99 um2
+    INV_X1       1
+    MUX2_X1      1
+    NAND2_X1     2
+u_regs       9.57 um2
+    DFF_X1       2
+    INV_X1       1
+tuntemattomat solut: XOR2_X1

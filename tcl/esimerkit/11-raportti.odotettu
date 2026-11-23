@@ -1,0 +1,4 @@
+ -0.214  u_regs/q_reg[3]/CK     -> u_alu/acc_reg[7]/D
+ -0.086  u_regs/q_reg[1]/CK     -> u_alu/flag_reg/D
+  0.310  u_fifo/rptr_reg[0]/CK  -> u_fifo/mem_reg[5]/D
+WNS -0.214 ns, TNS -0.300 ns

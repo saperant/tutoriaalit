@@ -1,0 +1,11 @@
+clk {data[0]} {data[10]} {data[1]} {data[2]} ready valid
+clk {data[0]} {data[1]} {data[2]} {data[10]} ready valid
+{data[10]} {data[2]} {data[0]} {data[1]}
+2
+1
+u_alu/add/S[7]    -0.12  14
+u_fifo/wptr[2]    -0.03   9
+u_regs/q[3]        0.45   3
+huonoin: u_alu/add/S[7]
+rikkojat: u_alu/add/S[7], u_fifo/wptr[2]
+14 9

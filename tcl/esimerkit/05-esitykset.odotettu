@@ -1,0 +1,7 @@
+list:          list, viitteitä 1
+kopion jälkeen: list, viitteitä 2
+string length: string, viitteitä 2
+llength:       list, viitteitä 2
+lreplace:      sama olio 0
+K-yhdistelmä:  sama olio 1
+lset:          sama olio 1

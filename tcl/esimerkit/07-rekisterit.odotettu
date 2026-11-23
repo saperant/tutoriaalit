@@ -1,0 +1,6 @@
+  kirjoitus LOAD  0x40001004 <- 0x3E8
+  kirjoitus CTRL  0x40001000 <- 0x1
+LOAD = 1000, COUNT = 0
+virhe: tuntematon rekisteri: STATUS
+::Ajastin
+destroy kaynnista kirjoita lisaa lue osoite

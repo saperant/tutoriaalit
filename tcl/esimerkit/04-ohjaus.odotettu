@@ -1,0 +1,9 @@
+clk    in     1 kello
+rst_n  in     1 nollaus
+data   in    32 data
+valid  out    1 data
+work ieee
+yritys 1 epäonnistui: lisenssipalvelin varattu
+yritys 2 epäonnistui: lisenssipalvelin varattu
+lisenssi saatu yrityksellä 3
+1 4 9 16
