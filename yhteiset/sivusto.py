@@ -3,13 +3,13 @@
 
 Käyttö:  sivusto.py <repositorion juuri> <lähdehakemisto> <kohdehakemisto>
 
-Lukee taitopuun (opintopolut/taitopuu.toml), laskee kartan asettelun ja
-kirjoittaa kohdehakemistoon:
+Lukee taitopuun (opintopolut/taitopuu.toml) ja kirjoittaa
+kohdehakemistoon (kartan asettelu lasketaan selaimessa, asettelu.js):
 
   index.html          kokonainen sivu (GitHub Pages)
   artefakti.html      sama sivu ilman HTML-runkoa (esikatselu)
-  taitopuu.json       kartan data: taidot, sijainnit, reitit, materiaalit
-  kartta.css, kartta.js
+  taitopuu.json       kartan data: taidot, alueet, roolit, materiaalit
+  kartta.css, kartta.js, asettelu.js
   materiaalit/        tutoriaalien PDF:t ja esimerkkipaketit (zip), joissa
                       on mukana devcontainer-konfiguraatio
 """
@@ -18,14 +18,12 @@ from __future__ import annotations
 
 import datetime
 import json
-import math
 import shutil
 import sys
 import tomllib
 import zipfile
 from pathlib import Path
 
-import asettelu
 import taitopuu as tp
 
 ZIP_AIKA = (2026, 1, 1, 0, 0, 0)
@@ -104,8 +102,6 @@ def rakenna_data(juuri: Path, kohde: Path) -> dict:
     repo = asetukset["repo"]
     haara = asetukset.get("haara", "main")
 
-    sijainnit, keskukset = asettelu.aseta(puu)
-    reitit = asettelu.reitit(puu, sijainnit)
     materiaalit = kohde / "materiaalit"
     materiaalit.mkdir(parents=True, exist_ok=True)
 
@@ -128,42 +124,27 @@ def rakenna_data(juuri: Path, kohde: Path) -> dict:
                 aineisto["codespaces"] = (
                     f"https://codespaces.new/{repo}?devcontainer_path="
                     f".devcontainer/{d}/devcontainer.json")
-        x, y = sijainnit[t.id]
         taidot.append({
             "id": t.id, "nimi": t.nimi, "alue": t.alue,
             "kuvaus": t.kuvaus, "edellyttaa": t.edellyttaa,
             "seuraajat": sorted(t.seuraajat), "aiheet": t.aiheet,
             "laajuus": t.laajuus, "taso": t.taso, "testaus": t.testaus,
-            "roadmap": t.roadmap, "amk": t.amk, "x": x, "y": y,
+            "roadmap": t.roadmap, "amk": t.amk,
             "materiaalit": aineisto,
+            **({"nippu": t.nippu} if t.nippu else {}),
         })
 
     opintopolut_pdf = juuri / "opintopolut" / "opintopolut.pdf"
     if opintopolut_pdf.exists():
         shutil.copy(opintopolut_pdf, materiaalit / opintopolut_pdf.name)
 
-    alueet = []
-    ulkokeha = asettelu.sade(max(t.taso for t in puu.taidot.values()))
-    for i, (aid, a) in enumerate(puu.alueet.items()):
-        nimike = None
-        if aid in keskukset:
-            # Aluenimi alueen taitojen suuntaan, uloimman taidon taakse.
-            omat = [t for t in puu.taidot.values() if t.alue == aid]
-            kulma = asettelu.keskikulma(
-                [(math.atan2(sijainnit[t.id][1], sijainnit[t.id][0]), 1.0)
-                 for t in omat])
-            r = max(asettelu.sade(t.taso) for t in omat) + 125
-            nimike = {"x": round(r * math.cos(kulma), 1),
-                      "y": round(r * math.sin(kulma), 1)}
-        alueet.append({"id": aid, "nimi": a["nimi"], "kuvaus": a["kuvaus"],
-                       "indeksi": i, "nimike": nimike})
+    alueet = [{"id": aid, "nimi": a["nimi"], "kuvaus": a["kuvaus"],
+               "indeksi": i}
+              for i, (aid, a) in enumerate(puu.alueet.items())]
     return {
         "meta": {
             "repo": f"https://github.com/{repo}",
             "generoitu": datetime.date.today().isoformat(),
-            "kehat": [asettelu.sade(k) for k in
-                      range(1, max(t.taso for t in puu.taidot.values()) + 1)],
-            "ulkokeha": ulkokeha,
             "opintopolut_pdf": ("materiaalit/opintopolut.pdf"
                                 if opintopolut_pdf.exists() else None),
             "roadmap_haettu": puu.lahteet.get("roadmap_haettu"),
@@ -174,7 +155,6 @@ def rakenna_data(juuri: Path, kohde: Path) -> dict:
                     "tavoitteet": r.tavoitteet,
                     "valinnaiset": r.valinnaiset}
                    for r in puu.roolit.values()],
-        "reitit": reitit,
     }
 
 
@@ -190,7 +170,7 @@ def main() -> int:
     data = rakenna_data(juuri, kohde)
     (kohde / "taitopuu.json").write_text(
         json.dumps(data, ensure_ascii=False, separators=(",", ":")), "utf-8")
-    for nimi in ("kartta.css", "kartta.js"):
+    for nimi in ("kartta.css", "kartta.js", "asettelu.js"):
         shutil.copy(lahde / nimi, kohde / nimi)
 
     sivu = (lahde / "kartta.html").read_text("utf-8")

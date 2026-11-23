@@ -14,7 +14,7 @@ RAKENNUS := rakennus
 
 kaikki: $(RAKENNUS)/index.html
 
-$(RAKENNUS)/index.html: kartta.html kartta.css kartta.js \
+$(RAKENNUS)/index.html: kartta.html kartta.css kartta.js asettelu.js \
                         $(wildcard $(YHTEISET)/*.py) \
                         ../opintopolut/taitopuu.toml \
                         $(wildcard ../*/*.pdf) \

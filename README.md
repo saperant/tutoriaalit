@@ -17,6 +17,14 @@ valmiiden taitojen kohdalta avautuvat tutoriaalin PDF, esimerkit
 kehityskontteineen ja Codespaces. Polun voi jakaa linkkinä. Sivusto
 julkaistaan GitHub Pagesiin `main`-haarasta.
 
+Kartalla kunkin alueen taidot muodostavat *nipun*: ne ovat kiertoradalla
+nipun keskipisteen ympärillä, ja toisiaan edellyttävät taidot ovat
+radalla vierekkäin. Nippujen paikat lasketaan selaimessa
+voimasimulaatiolla (`sivusto/asettelu.js`), ja nippuja voi raahata.
+Nippujen väliset yhteydet kulkevat yhteisinä johdinnippuina, jotka
+kiertävät muut niput. Taidolle voi antaa taitopuussa kentän `nippu`,
+jos alue halutaan jakaa useampaan nippuun.
+
 | Tutoriaali | Hakemisto | PDF |
 |------------|-----------|-----|
 | Moderni C++ | [`moderni-cpp/`](moderni-cpp/) | [moderni-cpp.pdf](moderni-cpp/moderni-cpp.pdf) |
@@ -68,11 +76,10 @@ yhteiset/                 kaikille tutoriaaleille yhteiset työkalut
   sisallyta.lua           pandoc-suodatin koodin sisällyttämiseen
   testaa_esimerkit.py     esimerkkikoodin testaaja
   taitopuu.py             taitopuun tarkistin ja generaattori
-  asettelu.py             taitopuukartan säteittäinen asettelu ja reitit
   sivusto.py              taitopuukartan rakentaja
 opintopolut/
   taitopuu.toml           taitopuu: alueet, taidot ja roolit
-sivusto/                  taitopuukartta (HTML, CSS, JS ja selaintesti)
+sivusto/                  taitopuukartta (HTML, CSS, JS, asettelu ja selaintesti)
 .devcontainer/            kehityskontit esimerkeille ja kirjoittamiselle
 <tutoriaali>/
   Makefile                make testaa / make pdf / make
