@@ -1,0 +1,6 @@
+[leveys 1024 px]
+[konsoli]
+nimi: valueMissing
+sposti: typeMismatch
+postinro: patternMismatch
+ika: rangeUnderflow

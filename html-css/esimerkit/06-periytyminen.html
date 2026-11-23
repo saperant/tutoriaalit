@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:saavutettavuus" content="ei">
+    <title>Periytyminen – Tyyliopas</title>
+    <style>
+      /* @alku saannot */
+      .kortti {
+        color: #1d4f91;
+        font-size: 20px;
+        border: 2px solid #1d4f91;
+      }
+      .korjattu button { font: inherit; }
+      .nollattu { color: initial; }
+      /* @loppu saannot */
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Periytyminen</h1>
+      <!-- @alku rakenne -->
+      <div class="kortti">
+        <p data-nimi="kappale"
+           data-tyyli="color font-size border-top-width">Teksti</p>
+        <button type="button" data-nimi="painike"
+                data-tyyli="color font-size">Valitse</button>
+        <p class="nollattu" data-nimi="nollattu"
+           data-tyyli="color">Nollattu</p>
+      </div>
+      <div class="kortti korjattu">
+        <button type="button" data-nimi="korjattu painike"
+                data-tyyli="font-size">Valitse</button>
+      </div>
+      <!-- @loppu rakenne -->
+    </main>
+  </body>
+</html>

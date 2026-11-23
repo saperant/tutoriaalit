@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <title>Virhe: Ilmoittautuminen – Kansalaisopisto</title>
+  </head>
+  <body>
+    <main>
+      <h1>Ilmoittaudu kurssille</h1>
+      <!-- @alku virheet -->
+      <section aria-labelledby="virheet-otsikko" tabindex="-1" autofocus>
+        <h2 id="virheet-otsikko">Lomakkeessa on 1 virhe</h2>
+        <ul>
+          <li><a href="#sposti">Sähköpostista puuttuu verkkotunnus</a></li>
+        </ul>
+      </section>
+      <form action="/ilmoittaudu" method="post" novalidate>
+        <label for="sposti">Sähköposti</label>
+        <input id="sposti" name="sposti" type="email" value="aino@"
+               aria-invalid="true" aria-describedby="sposti-virhe">
+        <p id="sposti-virhe">Virhe: lisää verkkotunnus, esimerkiksi
+          @esimerkki.fi.</p>
+        <button type="submit">Ilmoittaudu</button>
+      </form>
+      <!-- @loppu virheet -->
+    </main>
+  </body>
+</html>

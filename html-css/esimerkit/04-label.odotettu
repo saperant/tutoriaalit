@@ -1,0 +1,8 @@
+[leveys 1024 px]
+[saavutettavuuspuu]
+- main:
+  - heading "Hae aineistoa" [level=1]
+  - search:
+    - text: Hakusana
+    - searchbox "Hakusana"
+    - button "Hae"

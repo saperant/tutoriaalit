@@ -1,0 +1,8 @@
+[leveys 360 px]
+logo: x=16 y=8 l=85 k=30
+valikko: x=16 y=46 l=241 k=24
+kirjaudu: x=278 y=78 l=66 k=24
+[leveys 1024 px]
+logo: x=16 y=8 l=85 k=30
+valikko: x=125 y=11 l=241 k=24
+kirjaudu: x=942 y=11 l=66 k=24

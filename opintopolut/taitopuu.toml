@@ -1478,6 +1478,7 @@ laajuus = 3
 testaus = "Playwright: rakenne-, saavutettavuus- ja asettelutarkistukset"
 roadmap = ["html", "css"]
 amk = "Web-suunnittelu"
+tutoriaali = "html-css"
 
 [[taito]]
 id = "web-sovellukset"

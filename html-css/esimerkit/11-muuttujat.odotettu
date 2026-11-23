@@ -1,0 +1,4 @@
+[leveys 1024 px]
+perus: color=rgb(29, 79, 145); background-color=color(srgb 0.867059 0.896471 0.935294)
+varoitus: color=rgb(176, 0, 32); border-top-color=rgb(176, 0, 32)
+rikki: color=rgb(0, 0, 0)

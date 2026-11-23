@@ -1,0 +1,9 @@
+[leveys 1024 px]
+[saavutettavuuspuu]
+- main:
+  - heading "Pääkirjaston aukioloajat" [level=1]
+  - paragraph: Kirjasto on avoinna myös arkipyhinä, ellei toisin mainita.
+  - list:
+    - listitem: Maanantai–perjantai 8–20
+    - listitem: Lauantai 10–16
+    - listitem: Sunnuntai suljettu

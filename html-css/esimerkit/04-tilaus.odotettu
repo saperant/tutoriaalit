@@ -1,0 +1,22 @@
+[leveys 1024 px]
+[saavutettavuuspuu]
+- main:
+  - heading "Tilaa uutiskirje" [level=1]
+  - text: Nimi
+  - textbox "Nimi"
+  - text: Sähköposti
+  - textbox "Sähköposti"
+  - paragraph: Emme luovuta osoitetta eteenpäin.
+  - group "Kuinka usein?":
+    - text: Kuinka usein?
+    - radio "Kerran viikossa" [checked]
+    - text: Kerran viikossa
+    - radio "Kerran kuukaudessa"
+    - text: Kerran kuukaudessa
+  - text: Kiinnostavin aihe
+  - combobox "Kiinnostavin aihe":
+    - option "Paikallisuutiset" [selected]
+    - option "Urheilu"
+  - checkbox "Hyväksyn tilausehdot"
+  - text: Hyväksyn tilausehdot
+  - button "Tilaa"

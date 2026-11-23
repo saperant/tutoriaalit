@@ -1,0 +1,34 @@
+/* @alku primitiivit */
+:root {
+  /* Primitiivit: paletti ja mitat, eivät kerro käyttötarkoitusta. */
+  --sininen-700: #1d4f91;
+  --sininen-200: #a9c4ec;
+  --harmaa-050: #f6f7f9;
+  --harmaa-900: #16191d;
+  --tila-2: 8px;
+  --tila-4: 16px;
+  --sade: 6px;
+}
+/* @loppu primitiivit */
+/* @alku semanttiset */
+:root {
+  /* Semanttiset tokenit: mitä varten väri on. */
+  color-scheme: light dark;
+  --pinta: var(--harmaa-050);
+  --teksti: var(--harmaa-900);
+  --korostus: var(--sininen-700);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-teema="vaalea"]) {
+    --pinta: var(--harmaa-900);
+    --teksti: var(--harmaa-050);
+    --korostus: var(--sininen-200);
+  }
+}
+[data-teema="tumma"] {
+  color-scheme: dark;
+  --pinta: var(--harmaa-900);
+  --teksti: var(--harmaa-050);
+  --korostus: var(--sininen-200);
+}
+/* @loppu semanttiset */

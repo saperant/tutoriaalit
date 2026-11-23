@@ -1,0 +1,5 @@
+[leveys 1024 px]
+content-box: x=0 y=0 l=250 k=74
+border-box: x=0 y=74 l=200 k=74
+ylempi: x=0 y=164 l=1024 k=40
+alempi: x=0 y=228 l=1024 k=40

@@ -1,0 +1,8 @@
+[leveys 1024 px]
+[saavutettavuuspuu]
+- text: Kylälehti
+- link "Etusivu":
+  - /url: /
+- link "Uutiset":
+  - /url: /uutiset
+- text: Kirjasto auki sunnuntaisin Uudet ajat tammikuussa. © Kylälehti

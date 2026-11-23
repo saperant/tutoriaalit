@@ -1,0 +1,5 @@
+[leveys 1024 px]
+ltr-viesti: x=0 y=16 l=336 k=24
+ltr-merkki: x=20 y=16 l=20 k=24
+rtl-viesti: x=0 y=56 l=336 k=24
+rtl-merkki: x=296 y=56 l=20 k=24

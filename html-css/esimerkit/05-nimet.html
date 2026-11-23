@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <title>Ostoskori – Verkkokauppa</title>
+    <style>
+      /* @alku piilotus */
+      .vain-ruudunlukijalle {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+      /* @loppu piilotus */
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Ostoskori</h1>
+      <!-- @alku nimet -->
+      <h2 id="tuote-1">Kahvinkeitin K-200</h2>
+      <button type="button" aria-describedby="tuote-1">
+        <svg aria-hidden="true" width="16" height="16"></svg>
+        <span class="vain-ruudunlukijalle">Poista</span>
+      </button>
+      <label for="maara-1">Määrä</label>
+      <input id="maara-1" type="number" value="1" min="1">
+      <a href="/tuotteet/k-200">Lue lisää
+        <span class="vain-ruudunlukijalle">tuotteesta K-200</span></a>
+      <nav aria-label="Sivutus">
+        <a href="/kori?sivu=2" aria-label="Seuraava sivu">→</a>
+      </nav>
+      <!-- @loppu nimet -->
+    </main>
+  </body>
+</html>

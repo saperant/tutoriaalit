@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:saavutettavuus" content="ei">
+    <title>Ylivuoto – Tyyliopas</title>
+    <style>
+      body { margin: 0; font: 16px/1.5 "DejaVu Sans", sans-serif; }
+      /* @alku ylivuoto */
+      .media { display: flex; gap: 16px; inline-size: 400px; }
+      .media img { flex: none; }
+      .teksti { flex: 1; }
+      .korjattu .teksti {
+        min-inline-size: 0;        /* oletus auto = sisällön minimi */
+        overflow-wrap: anywhere;
+      }
+      /* @loppu ylivuoto */
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Viestit</h1>
+      <!-- @alku rakenne -->
+      <div class="media">
+        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
+             width="48" height="48" alt="">
+        <p class="teksti" data-mitta="teksti">Ammattinimike:
+          lentokonesuihkuturbiinimoottoriapumekaanikkoaliupseerioppilas</p>
+      </div>
+      <div class="media korjattu">
+        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
+             width="48" height="48" alt="">
+        <p class="teksti" data-mitta="korjattu">Ammattinimike:
+          lentokonesuihkuturbiinimoottoriapumekaanikkoaliupseerioppilas</p>
+      </div>
+      <!-- @loppu rakenne -->
+    </main>
+  </body>
+</html>

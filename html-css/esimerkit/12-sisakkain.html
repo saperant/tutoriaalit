@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:saavutettavuus" content="ei">
+    <title>Sisäkkäiset säännöt – Tyyliopas</title>
+    <style>
+      /* @alku sisakkain */
+      .ilmoitus {
+        color: #16191d;
+        border-inline-start: 4px solid #1d4f91;
+
+        & h2 { margin: 0; font-size: 18px; }
+
+        &.virhe { border-inline-start-color: #b00020; }
+
+        @media (min-width: 60rem) {
+          padding-inline: 24px;
+        }
+      }
+      /* @loppu sisakkain */
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Ilmoitukset</h1>
+      <!-- @alku rakenne -->
+      <section class="ilmoitus" aria-labelledby="i1" data-nimi="ilmoitus"
+               data-tyyli="border-inline-start-color padding-left">
+        <h2 id="i1" data-nimi="otsikko" data-tyyli="font-size">Huolto</h2>
+      </section>
+      <section class="ilmoitus virhe" aria-labelledby="i2"
+               data-nimi="virhe" data-tyyli="border-inline-start-color">
+        <h2 id="i2">Katkos</h2>
+      </section>
+      <!-- @loppu rakenne -->
+    </main>
+  </body>
+</html>

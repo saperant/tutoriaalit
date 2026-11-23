@@ -1,0 +1,4 @@
+[leveys 1024 px]
+ilmoitus: border-inline-start-color=rgb(29, 79, 145); padding-left=24px
+otsikko: font-size=18px
+virhe: border-inline-start-color=rgb(176, 0, 32)

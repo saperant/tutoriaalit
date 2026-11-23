@@ -1,0 +1,19 @@
+body {
+  margin: 0;
+  font: 16px/1.5 "DejaVu Sans", sans-serif;
+}
+/* @alku komponentit */
+.paneeli {
+  padding: var(--tila-4);
+  background: var(--pinta);
+  color: var(--teksti);
+}
+.painike {
+  padding: var(--tila-2) var(--tila-4);
+  border: 2px solid var(--korostus);
+  border-radius: var(--sade);
+  background: transparent;
+  color: var(--korostus);
+  font: inherit;
+}
+/* @loppu komponentit */

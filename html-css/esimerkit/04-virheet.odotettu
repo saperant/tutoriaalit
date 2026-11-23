@@ -1,0 +1,14 @@
+[leveys 1024 px]
+[saavutettavuuspuu]
+- main:
+  - heading "Ilmoittaudu kurssille" [level=1]
+  - region "Lomakkeessa on 1 virhe":
+    - heading "Lomakkeessa on 1 virhe" [level=2]
+    - list:
+      - listitem:
+        - link "Sähköpostista puuttuu verkkotunnus":
+          - /url: "#sposti"
+  - text: Sähköposti
+  - textbox "Sähköposti" [invalid]: aino@
+  - paragraph: "Virhe: lisää verkkotunnus, esimerkiksi @esimerkki.fi."
+  - button "Ilmoittaudu"

@@ -1,0 +1,5 @@
+[leveys 1024 px]
+a: color=rgb(0, 0, 128)
+b: color=rgb(139, 0, 0)
+c: color=rgb(0, 128, 0)
+d: color=rgb(0, 0, 128); font-size=12px

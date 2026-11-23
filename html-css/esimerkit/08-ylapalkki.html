@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="testi:leveydet" content="360 1024">
+    <meta name="testi:saavutettavuus" content="ei">
+    <title>Yläpalkki – Verkkokauppa</title>
+    <style>
+      body { margin: 0; font: 16px/1.5 "DejaVu Sans", sans-serif; }
+      a { color: inherit; }
+      /* @alku palkki */
+      .palkki {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px 24px;
+        padding: 8px 16px;
+        background: #1d4f91;
+        color: white;
+      }
+      .palkki ul {
+        display: flex;
+        gap: 16px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .palkki .kirjaudu { margin-inline-start: auto; }
+      /* @loppu palkki */
+      .logo { font-weight: bold; font-size: 20px; }
+    </style>
+  </head>
+  <body>
+    <!-- @alku rakenne -->
+    <header class="palkki">
+      <a class="logo" href="/" data-mitta="logo">Kauppa</a>
+      <nav aria-label="Päävalikko" data-mitta="valikko">
+        <ul>
+          <li><a href="/uutuudet">Uutuudet</a></li>
+          <li><a href="/tarjoukset">Tarjoukset</a></li>
+          <li><a href="/ohjeet">Ohjeet</a></li>
+        </ul>
+      </nav>
+      <a class="kirjaudu" href="/kirjaudu" data-mitta="kirjaudu">
+        Kirjaudu</a>
+    </header>
+    <!-- @loppu rakenne -->
+  </body>
+</html>

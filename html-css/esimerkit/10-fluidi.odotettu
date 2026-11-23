@@ -1,0 +1,9 @@
+[leveys 360 px]
+main: x=0 y=17 l=360 k=95
+h1: font-size=25px
+[leveys 1024 px]
+main: x=165 y=28 l=694 k=102
+h1: font-size=41.6px
+[leveys 1600 px]
+main: x=453 y=32 l=694 k=114
+h1: font-size=48px

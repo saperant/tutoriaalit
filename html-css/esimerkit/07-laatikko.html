@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:saavutettavuus" content="ei">
+    <title>Laatikkomalli – Tyyliopas</title>
+    <style>
+      body { margin: 0; font: 16px/1.5 "DejaVu Sans", sans-serif; }
+      /* @alku laatikot */
+      .laatikko {
+        inline-size: 200px;
+        padding: 20px;
+        border: 5px solid #1d4f91;
+      }
+      .sisalto { box-sizing: content-box; }   /* oletus */
+      .reunat { box-sizing: border-box; }
+      /* @loppu laatikot */
+      /* @alku marginaalit */
+      .ylempi { margin-block-end: 24px; block-size: 40px; }
+      .alempi { margin-block-start: 16px; block-size: 40px; }
+      /* @loppu marginaalit */
+    </style>
+  </head>
+  <body>
+    <!-- @alku rakenne -->
+    <div class="laatikko sisalto" data-mitta="content-box">A</div>
+    <div class="laatikko reunat" data-mitta="border-box">B</div>
+    <p class="ylempi" data-mitta="ylempi">Ylempi</p>
+    <p class="alempi" data-mitta="alempi">Alempi</p>
+    <!-- @loppu rakenne -->
+  </body>
+</html>

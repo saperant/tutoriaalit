@@ -1,0 +1,27 @@
+[leveys 1024 px]
+[saavutettavuuspuu]
+- main:
+  - article:
+    - heading "Kaurapuuro" [level=1]
+    - paragraph:
+      - text: Julkaistu
+      - time: 2.11.2026
+      - text: . Valmistusaika
+      - time: 10 min
+      - text: .
+    - heading "Ainekset" [level=2]
+    - list:
+      - listitem: 2 dl kaurahiutaleita
+      - listitem: 4 dl vettä
+    - heading "Valmistus" [level=2]
+    - list:
+      - listitem: Kiehauta vesi.
+      - listitem:
+        - text: Lisää hiutaleet ja keitä
+        - strong: sekoittaen
+        - text: .
+    - heading "Ravintoarvot annosta kohden" [level=2]
+    - term: Energia
+    - definition: 270 kcal
+    - term: Proteiini
+    - definition: 9 g

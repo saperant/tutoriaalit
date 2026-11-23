@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:saavutettavuus" content="ei">
+    <title>Kontrasti – Tyyliopas</title>
+    <style>
+      body { background: #ffffff; color: #1a1a1a; }
+      .himmea { color: #999999; }
+      .linkki { color: #1d4f91; }
+      .huomio { background: #ffcc00; color: #ffffff; }
+      .huomio-korjattu { background: #ffcc00; color: #1a1a1a; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Tekstivärien kontrastit</h1>
+      <p data-kontrasti="leipäteksti">Leipäteksti</p>
+      <p class="himmea" data-kontrasti="himmeä">Lisätieto</p>
+      <p class="linkki" data-kontrasti="linkki">Linkki</p>
+      <p class="huomio" data-kontrasti="huomio">Tarjous!</p>
+      <p class="huomio-korjattu" data-kontrasti="huomio, korjattu">
+        Tarjous!</p>
+    </main>
+    <!-- @alku laskenta -->
+    <script type="module">
+      // WCAG 2.2: suhteellinen luminanssi ja kontrastisuhde.
+      const kanava = (c) => {
+        const s = c / 255;
+        return s <= 0.04045 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+      };
+      const luminanssi = (rgb) => {
+        const [r, g, b] = rgb.match(/\d+/g).map(Number).map(kanava);
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+      };
+      const tausta = (e) => {
+        for (; e; e = e.parentElement) {
+          const t = getComputedStyle(e).backgroundColor;
+          if (t !== "rgba(0, 0, 0, 0)") return t;
+        }
+        return "rgb(255, 255, 255)";
+      };
+      for (const e of document.querySelectorAll("[data-kontrasti]")) {
+        const [a, b] = [luminanssi(getComputedStyle(e).color),
+                        luminanssi(tausta(e))].sort((x, y) => y - x);
+        const suhde = (a + 0.05) / (b + 0.05);
+        const tulos = suhde >= 4.5 ? "AA"
+          : suhde >= 3 ? "vain iso teksti" : "hylätty";
+        console.log(`${e.dataset.kontrasti}: ${suhde.toFixed(2)}:1 ${tulos}`);
+      }
+    </script>
+    <!-- @loppu laskenta -->
+  </body>
+</html>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:saavutettavuus" content="ei">
+    <title>Joustavuus – Tyyliopas</title>
+    <style>
+      body { margin: 0; font: 16px/1.5 "DejaVu Sans", sans-serif; }
+      /* @alku jousto */
+      .rivi { display: flex; inline-size: 600px; }
+      .a { flex: 1; }            /* 1 1 0%: tila jaetaan suhteessa */
+      .b { flex: 2; }
+      .c { flex: none;           /* 0 0 auto: oma koko */
+           inline-size: 120px; }
+      .d { flex: auto; }         /* 1 1 auto: sisältö + jako */
+      /* @loppu jousto */
+    </style>
+  </head>
+  <body>
+    <!-- @alku rakenne -->
+    <div class="rivi">
+      <div class="a" data-mitta="a (flex: 1)">A</div>
+      <div class="b" data-mitta="b (flex: 2)">B</div>
+      <div class="c" data-mitta="c (flex: none)">C</div>
+    </div>
+    <div class="rivi">
+      <div class="d" data-mitta="lyhyt (flex: auto)">X</div>
+      <div class="d" data-mitta="pitkä (flex: auto)">Pidempi teksti</div>
+    </div>
+    <!-- @loppu rakenne -->
+  </body>
+</html>

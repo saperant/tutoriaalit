@@ -1,0 +1,7 @@
+[leveys 1024 px]
+kuvallinen: x=0 y=91 l=1024 k=96
+kuvallisen teksti: x=112 y=107 l=912 k=64
+kuvaton: x=0 y=203 l=1024 k=24
+kuvattoman teksti: x=0 y=203 l=1024 k=24
+nouto: font-weight=700
+kuljetus: font-weight=400

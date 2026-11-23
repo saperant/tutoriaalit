@@ -1,0 +1,9 @@
+[leveys 1024 px]
+[saavutettavuuspuu]
+- main:
+  - heading "Kahvinkeitin K-200" [level=1]
+  - heading "Tekniset tiedot" [level=2]
+  - paragraph: Teho 1 000 W, vesisäiliö 1,25 l.
+  - heading "Huolto" [level=2]
+  - heading "Kalkinpoisto" [level=3]
+  - paragraph: Poista kalkki kuukauden välein.

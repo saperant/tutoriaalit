@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:saavutettavuus" content="ei">
+    <title>Liike – Tyyliopas</title>
+    <style>
+      /* @alku liike */
+      .paneeli {
+        transition: transform 300ms ease-out;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .paneeli { transition: none; }
+      }
+      /* @loppu liike */
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Asetukset</h1>
+      <div class="paneeli" data-nimi="paneeli"
+           data-tyyli="transition-property">Sisältö</div>
+    </main>
+  </body>
+</html>

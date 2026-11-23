@@ -1,0 +1,6 @@
+[leveys 1024 px]
+[saavutettavuuspuu]
+- main:
+  - heading "Kahvinkeitin K-200" [level=1]
+  - paragraph: Hinta 89,00 €
+  - button "Lisää ostoskoriin"

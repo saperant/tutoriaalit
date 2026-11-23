@@ -51,6 +51,7 @@ Jokaisessa tutoriaalissa on lisäksi muutaman sivun pikaopas
 | TypeScript | [`typescript/`](typescript/) | [typescript.pdf](typescript/typescript.pdf) |
 | Go | [`go/`](go/) | [go.pdf](go/go.pdf) |
 | Tcl | [`tcl/`](tcl/) | [tcl.pdf](tcl/tcl.pdf) |
+| HTML ja CSS | [`html-css/`](html-css/) | [html-css.pdf](html-css/html-css.pdf) |
 | SQL ja relaatiotietokannat | [`sql/`](sql/) | [sql.pdf](sql/sql.pdf) |
 | Funktionaalinen ohjelmointi (Racket) | [`funktionaalinen-ohjelmointi/`](funktionaalinen-ohjelmointi/) | [funktionaalinen-ohjelmointi.pdf](funktionaalinen-ohjelmointi/funktionaalinen-ohjelmointi.pdf) |
 | RTL-suunnittelu (SystemVerilog) | [`rtl-suunnittelu/`](rtl-suunnittelu/) | [rtl-suunnittelu.pdf](rtl-suunnittelu/rtl-suunnittelu.pdf) |

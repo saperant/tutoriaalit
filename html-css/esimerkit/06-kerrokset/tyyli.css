@@ -1,0 +1,15 @@
+/* @alku kerrokset */
+@layer nollaus, perusta, komponentit, apuluokat;
+
+@layer perusta {
+  main#sisalto a.linkki { color: navy; }       /* (1,2,1) */
+}
+@layer komponentit {
+  .painike { color: white; background: navy; } /* (0,1,0) */
+}
+@layer apuluokat {
+  .vari-varoitus { color: darkred; }           /* (0,1,0) */
+}
+/* Kerroksen ulkopuolinen sääntö voittaa kaikki kerrokset. */
+a:hover { text-decoration: none; }
+/* @loppu kerrokset */

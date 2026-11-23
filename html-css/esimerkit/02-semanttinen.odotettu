@@ -1,0 +1,18 @@
+[leveys 1024 px]
+[saavutettavuuspuu]
+- banner:
+  - paragraph: Kylälehti
+  - navigation "Päävalikko":
+    - list:
+      - listitem:
+        - link "Etusivu":
+          - /url: /
+      - listitem:
+        - link "Uutiset":
+          - /url: /uutiset
+- main:
+  - article:
+    - heading "Kirjasto auki sunnuntaisin" [level=1]
+    - paragraph: Uudet ajat tammikuussa.
+- contentinfo:
+  - paragraph: © Kylälehti

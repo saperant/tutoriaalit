@@ -1,0 +1,34 @@
+body {
+  margin: 0;
+  font: 16px/1.5 "DejaVu Sans", sans-serif;
+}
+/* @alku alueet */
+.sivu {
+  display: grid;
+  grid-template-areas:
+    "ylaosa"
+    "sisalto"
+    "sivupalkki"
+    "alaosa";
+  grid-template-rows: auto 1fr auto auto;
+  gap: 16px;
+  min-block-size: 100vh;
+}
+.sivu > header { grid-area: ylaosa; }
+.sivu > main { grid-area: sisalto; }
+.sivu > aside { grid-area: sivupalkki; }
+.sivu > footer { grid-area: alaosa; }
+
+@media (min-width: 48rem) {
+  .sivu {
+    grid-template-columns: minmax(0, 1fr) 16rem;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "ylaosa  ylaosa"
+      "sisalto sivupalkki"
+      "alaosa  alaosa";
+  }
+}
+/* @loppu alueet */
+.sivu > * { padding: 16px; background: #e8eef7; }
+.sivu > header, .sivu > footer { background: #1d4f91; color: white; }

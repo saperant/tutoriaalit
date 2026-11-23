@@ -1,0 +1,19 @@
+[leveys 360 px]
+runko: x=0 y=69 l=360 k=133
+kohde 1: x=56 y=139 l=288 k=24
+kohde 2: x=56 y=179 l=288 k=24
+[leveys 1024 px]
+runko: x=0 y=69 l=1024 k=93
+kohde 1: x=56 y=139 l=468 k=24
+kohde 2: x=540 y=139 l=468 k=24
+[saavutettavuuspuu]
+- link "Siirry sisältöön":
+  - /url: "#sisalto"
+- banner:
+  - navigation "Päävalikko": …
+- main:
+  - heading "Otsikko" [level=1]
+  - list:
+    - listitem: Yksi
+    - listitem: Kaksi
+- contentinfo: …

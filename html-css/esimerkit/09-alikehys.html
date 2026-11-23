@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:saavutettavuus" content="ei">
+    <title>Alikehys – Verkkokauppa</title>
+    <style>
+      body { margin: 0; font: 16px/1.5 "DejaVu Sans", sans-serif; }
+      h2, p { margin: 0; }
+      /* @alku alikehys */
+      .kortit {
+        display: grid;
+        grid-template-columns: repeat(3, 200px);
+        gap: 16px;
+      }
+      .kortti {
+        display: grid;
+        grid-row: span 3;
+        grid-template-rows: subgrid;  /* rivit isäntäruudukolta */
+      }
+      /* @loppu alikehys */
+      .ilman .kortti { display: block; grid-row: auto; }
+    </style>
+  </head>
+  <body>
+    <h1>Valitse tilaus</h1>
+    <!-- @alku rakenne -->
+    <div class="kortit">
+      <article class="kortti">
+        <h2>Perus</h2>
+        <p>Lyhyt kuvaus.</p>
+        <a href="/perus" data-mitta="linkki 1">Valitse</a>
+      </article>
+      <article class="kortti">
+        <h2>Laaja</h2>
+        <p>Pidempi kuvaus, joka jatkuu usealle riville kortissa.</p>
+        <a href="/laaja" data-mitta="linkki 2">Valitse</a>
+      </article>
+      <article class="kortti">
+        <h2>Yritys</h2>
+        <p>Keskipitkä kuvaus kahdelle riville.</p>
+        <a href="/yritys" data-mitta="linkki 3">Valitse</a>
+      </article>
+    </div>
+    <!-- @loppu rakenne -->
+    <div class="kortit ilman">
+      <article class="kortti">
+        <h2>Perus</h2>
+        <p>Lyhyt kuvaus.</p>
+        <a href="/perus" data-mitta="ilman 1">Valitse</a>
+      </article>
+      <article class="kortti">
+        <h2>Laaja</h2>
+        <p>Pidempi kuvaus, joka jatkuu usealle riville kortissa.</p>
+        <a href="/laaja" data-mitta="ilman 2">Valitse</a>
+      </article>
+      <article class="kortti">
+        <h2>Yritys</h2>
+        <p>Keskipitkä kuvaus kahdelle riville.</p>
+        <a href="/yritys" data-mitta="ilman 3">Valitse</a>
+      </article>
+    </div>
+  </body>
+</html>

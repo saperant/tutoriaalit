@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:saavutettavuus" content="ei">
+    <title>Ilmoittautuminen – Kansalaisopisto</title>
+    <style>
+      /* @alku tyyli */
+      input:user-invalid { border-color: #b00020; }
+      input:user-valid { border-color: #1b5e20; }
+      /* @loppu tyyli */
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Ilmoittaudu kurssille</h1>
+      <!-- @alku kentat -->
+      <form action="/ilmoittaudu" method="post">
+        <label for="nimi">Nimi</label>
+        <input id="nimi" name="nimi" type="text" required value="">
+
+        <label for="sposti">Sähköposti</label>
+        <input id="sposti" name="sposti" type="email" value="aino@">
+
+        <label for="postinro">Postinumero</label>
+        <input id="postinro" name="postinro" type="text"
+               inputmode="numeric"
+               pattern="[0-9]{5}" value="0010">
+
+        <label for="ika">Ikä</label>
+        <input id="ika" name="ika" type="number" min="16" max="120"
+               value="15">
+
+        <button type="submit">Ilmoittaudu</button>
+      </form>
+      <!-- @loppu kentat -->
+    </main>
+    <!-- @alku tarkistus -->
+    <script type="module">
+      // Tulostetaan selaimen oma tarkistustulos kentittäin.
+      for (const kentta of document.querySelectorAll("input")) {
+        const v = kentta.validity;
+        const syyt = ["valueMissing", "typeMismatch", "patternMismatch",
+                      "rangeUnderflow", "rangeOverflow"]
+          .filter((s) => v[s]);
+        console.log(`${kentta.name}: ${syyt.join(", ") || "kelpaa"}`);
+      }
+    </script>
+    <!-- @loppu tarkistus -->
+  </body>
+</html>

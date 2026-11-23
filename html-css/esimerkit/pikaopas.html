@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <!-- @alku pohja -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sivu – Sivusto</title>
+    <!-- @loppu pohja -->
+    <meta name="testi:leveydet" content="360 1024">
+    <style>
+      /* @alku nollaus */
+      @layer nollaus, perusta, komponentit, apuluokat;
+      @layer nollaus {
+        *, *::before, *::after { box-sizing: border-box; }
+        body { margin: 0; line-height: 1.5; }
+        img, svg { display: block; max-inline-size: 100%; }
+        button, input, select, textarea { font: inherit; }
+      }
+      /* @loppu nollaus */
+      /* @alku asettelu */
+      @layer perusta {
+        :root {
+          --tila: 1rem;
+          font-family: "DejaVu Sans", system-ui, sans-serif;
+        }
+        .runko {
+          max-inline-size: 70rem;
+          margin-inline: auto;
+          padding-inline: var(--tila);
+        }
+        .ruudukko {
+          display: grid;
+          grid-template-columns:
+            repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+          gap: var(--tila);
+        }
+        :focus-visible { outline: 3px solid; outline-offset: 2px; }
+        @media (prefers-reduced-motion: reduce) {
+          * { animation: none !important; transition: none !important; }
+        }
+      }
+      /* @loppu asettelu */
+    </style>
+  </head>
+  <body>
+    <!-- @alku runko -->
+    <a href="#sisalto" class="ohituslinkki">Siirry sisältöön</a>
+    <header class="runko">
+      <nav aria-label="Päävalikko">…</nav>
+    </header>
+    <main id="sisalto" class="runko" data-mitta="runko">
+      <h1>Otsikko</h1>
+      <ul class="ruudukko">
+        <li data-mitta="kohde 1">Yksi</li>
+        <li data-mitta="kohde 2">Kaksi</li>
+      </ul>
+    </main>
+    <footer class="runko">…</footer>
+    <!-- @loppu runko -->
+  </body>
+</html>

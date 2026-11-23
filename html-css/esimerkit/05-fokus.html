@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:saavutettavuus" content="ei">
+    <title>Fokus – Verkkokauppa</title>
+    <style>
+      /* @alku fokus */
+      :focus-visible {
+        outline: 3px solid #1d4f91;
+        outline-offset: 2px;
+      }
+      .ohituslinkki:not(:focus) {
+        position: absolute;
+        inset-inline-start: -10000px;
+      }
+      /* @loppu fokus */
+    </style>
+  </head>
+  <body>
+    <a href="#sisalto" class="ohituslinkki" data-mitta="ohituslinkki">
+      Siirry sisältöön</a>
+    <main id="sisalto">
+      <h1>Tarjoukset</h1>
+      <button type="button" autofocus data-nimi="painike"
+              data-tyyli="outline-style outline-color">Näytä</button>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+[leveys 1024 px]
+[saavutettavuuspuu]
+- main:
+  - table "Sähkönkulutus neljänneksittäin (kWh)":
+    - caption: Sähkönkulutus neljänneksittäin (kWh)
+    - rowgroup:
+      - row "Rappu Q1 Q2":
+        - columnheader "Rappu"
+        - columnheader "Q1"
+        - columnheader "Q2"
+    - rowgroup:
+      - row "A 4 120 2 380":
+        - rowheader "A"
+        - cell "4 120"
+        - cell "2 380"
+      - row "B 3 960 2 210":
+        - rowheader "B"
+        - cell "3 960"
+        - cell "2 210"

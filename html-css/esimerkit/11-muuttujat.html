@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:saavutettavuus" content="ei">
+    <title>Mukautetut ominaisuudet – Tyyliopas</title>
+    <style>
+      /* @alku muuttujat */
+      .merkki {
+        --merkin-vari: #1d4f91;
+        color: var(--merkin-vari);
+        border: 1px solid var(--merkin-reuna, currentcolor);
+        background: color-mix(in srgb, var(--merkin-vari) 15%, white);
+      }
+      .merkki.varoitus { --merkin-vari: #b00020; }
+      .merkki.rikki { --merkin-vari: 12px; }   /* ei väri */
+      /* @loppu muuttujat */
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Merkit</h1>
+      <!-- @alku rakenne -->
+      <span class="merkki" data-nimi="perus"
+            data-tyyli="color background-color">Uusi</span>
+      <span class="merkki varoitus" data-nimi="varoitus"
+            data-tyyli="color border-top-color">Loppuu</span>
+      <span class="merkki rikki" data-nimi="rikki"
+            data-tyyli="color">Virhe</span>
+      <!-- @loppu rakenne -->
+    </main>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="testi:leveydet" content="360 1024 1600">
+    <meta name="testi:saavutettavuus" content="ei">
+    <title>Fluidi typografia – Tyyliopas</title>
+    <style>
+      body { margin: 0; font: 16px/1.5 "DejaVu Sans", sans-serif; }
+      /* @alku fluidi */
+      h1 {
+        font-size: clamp(1.5rem, 1rem + 2.5vw, 3rem);
+        line-height: 1.2;
+      }
+      main {
+        max-inline-size: 65ch;      /* noin 65 merkkiä riville */
+        margin-inline: auto;
+        padding-inline: 1rem;
+      }
+      /* @loppu fluidi */
+    </style>
+  </head>
+  <body>
+    <main data-mitta="main">
+      <h1 data-nimi="h1" data-tyyli="font-size">Kirjasto uudistuu</h1>
+      <p>Pääkirjaston peruskorjaus valmistuu keväällä.</p>
+    </main>
+  </body>
+</html>

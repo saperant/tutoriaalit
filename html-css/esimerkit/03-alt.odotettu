@@ -1,0 +1,6 @@
+[leveys 1024 px]
+[saavutettavuuspuu]
+- main:
+  - heading "Henkilökunta" [level=1]
+  - img "Kirjastonjohtaja Aino Laine"
+  - figure "Tietopalvelusihteeri Matti Koski"

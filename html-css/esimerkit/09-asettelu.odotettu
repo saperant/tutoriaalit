@@ -1,0 +1,20 @@
+[leveys 360 px]
+header: x=0 y=0 l=360 k=88
+main: x=0 y=104 l=360 k=456
+aside: x=0 y=576 l=360 k=88
+footer: x=0 y=680 l=360 k=88
+[leveys 1024 px]
+header: x=0 y=0 l=1024 k=88
+main: x=0 y=104 l=752 k=560
+aside: x=768 y=104 l=256 k=560
+footer: x=0 y=680 l=1024 k=88
+[saavutettavuuspuu]
+- banner:
+  - paragraph: Kylälehti
+- main:
+  - heading "Kirjasto auki sunnuntaisin" [level=1]
+  - paragraph: Uudet ajat tammikuussa.
+- complementary "Luetuimmat":
+  - paragraph: Luetuimmat uutiset
+- contentinfo:
+  - paragraph: © Kylälehti

@@ -1,0 +1,11 @@
+/* @alku kuvat */
+img {
+  max-inline-size: 100%;
+  block-size: auto;
+}
+/* @loppu kuvat */
+body {
+  margin: 0;
+  padding: 16px;
+  font: 16px/1.5 "DejaVu Sans", sans-serif;
+}

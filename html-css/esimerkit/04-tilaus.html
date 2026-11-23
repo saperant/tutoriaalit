@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <title>Tilaa uutiskirje – Kylälehti</title>
+  </head>
+  <body>
+    <main>
+      <h1>Tilaa uutiskirje</h1>
+      <!-- @alku lomake -->
+      <form action="/tilaus" method="post">
+        <label for="nimi">Nimi</label>
+        <input id="nimi" name="nimi" type="text"
+               autocomplete="name" required>
+
+        <label for="sposti">Sähköposti</label>
+        <input id="sposti" name="sposti" type="email"
+               autocomplete="email" required
+               aria-describedby="sposti-ohje">
+        <p id="sposti-ohje">Emme luovuta osoitetta eteenpäin.</p>
+
+        <fieldset>
+          <legend>Kuinka usein?</legend>
+          <label><input type="radio" name="tiheys" value="viikko"
+                        checked> Kerran viikossa</label>
+          <label><input type="radio" name="tiheys" value="kuukausi">
+            Kerran kuukaudessa</label>
+        </fieldset>
+
+        <label for="aiheet">Kiinnostavin aihe</label>
+        <select id="aiheet" name="aihe">
+          <option value="uutiset">Paikallisuutiset</option>
+          <option value="urheilu">Urheilu</option>
+        </select>
+
+        <label><input type="checkbox" name="ehdot" required>
+          Hyväksyn tilausehdot</label>
+
+        <button type="submit">Tilaa</button>
+      </form>
+      <!-- @loppu lomake -->
+    </main>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+[leveys 1024 px]
+[saavutettavuuspuu]
+- link "Siirry sisältöön":
+  - /url: "#sisalto"
+- banner:
+  - navigation "Päävalikko":
+    - list:
+      - listitem:
+        - link "Etusivu":
+          - /url: /
+      - listitem:
+        - link "Keittiö":
+          - /url: /keittio
+      - listitem:
+        - link "Asiakaspalvelu":
+          - /url: /asiakaspalvelu
+- main:
+  - navigation "Murupolku":
+    - list:
+      - listitem:
+        - link "Etusivu":
+          - /url: /
+      - listitem:
+        - link "Keittiö":
+          - /url: /keittio
+      - listitem:
+        - link "Kahvi":
+          - /url: /keittio/kahvi
+  - heading "Kahvinkeittimet" [level=1]
+  - paragraph:
+    - link "Vertaile kahvinkeittimiä":
+      - /url: /vertailu

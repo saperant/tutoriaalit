@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:saavutettavuus" content="ei">
+    <title>Spesifisyys – Tyyliopas</title>
+    <style>
+      /* @alku saannot */
+      p { color: black; }                      /* (0,0,1) */
+      .ilmoitus p { color: navy; }             /* (0,1,1) */
+      p.tarkea { color: darkred; }             /* (0,1,1), myöhempi */
+      #tiedote { color: green; }               /* (1,0,0) */
+      :where(#tiedote, .ilmoitus) .pieni {     /* (0,1,0) */
+        color: gray;
+      }
+      .ilmoitus .pieni { font-size: 12px; }    /* (0,2,0) */
+      /* @loppu saannot */
+    </style>
+  </head>
+  <body>
+    <!-- @alku rakenne -->
+    <section class="ilmoitus" aria-label="Ilmoitus">
+      <p data-nimi="a" data-tyyli="color">Kokous on torstaina.</p>
+      <p class="tarkea" data-nimi="b" data-tyyli="color">Huom!</p>
+      <p id="tiedote" class="tarkea" data-nimi="c"
+         data-tyyli="color">Tiedote</p>
+      <p class="pieni" data-nimi="d"
+         data-tyyli="color font-size">Lisätiedot</p>
+    </section>
+    <!-- @loppu rakenne -->
+  </body>
+</html>

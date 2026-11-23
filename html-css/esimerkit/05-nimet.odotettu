@@ -1,0 +1,14 @@
+[leveys 1024 px]
+[saavutettavuuspuu]
+- main:
+  - heading "Ostoskori" [level=1]
+  - heading "Kahvinkeitin K-200" [level=2]
+  - button "Poista"
+  - text: Määrä
+  - spinbutton "Määrä": "1"
+  - link "Lue lisää tuotteesta K-200":
+    - /url: /tuotteet/k-200
+  - navigation "Sivutus":
+    - link "Seuraava sivu":
+      - /url: /kori?sivu=2
+      - text: →

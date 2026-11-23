@@ -1,0 +1,18 @@
+body {
+  margin: 0;
+  font: 16px/1.5 "DejaVu Sans", sans-serif;
+}
+.sivu { display: grid; grid-template-columns: 1fr 250px; gap: 16px; }
+.kortti img { display: block; inline-size: 100%; block-size: auto; }
+.kortti h2 { margin: 0; font-size: 18px; }
+/* @alku kysely */
+.kortin-kehys { container-type: inline-size; }
+
+@container (min-width: 400px) {
+  .kortti {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 16px;
+  }
+}
+/* @loppu kysely */

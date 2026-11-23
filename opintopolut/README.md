@@ -119,7 +119,7 @@ flowchart LR
   end
   subgraph sovellukset["Sovelluskehitys"]
     sql["✓ SQL ja relaatiotietokannat"]
-    html_css["HTML ja CSS"]
+    html_css["✓ HTML ja CSS"]
     web_sovellukset["Web-sovellukset"]
     taustapalvelut["Taustapalvelut"]
     android_sovellukset["Android-sovellukset"]
@@ -372,7 +372,7 @@ flowchart LR
 
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
-| HTML ja CSS | 3 | – | suunniteltu |
+| HTML ja CSS | 3 | – | [valmis](../html-css/) |
 | SQL ja relaatiotietokannat | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../sql/) |
 | Taustapalvelut | 5 | Java, SQL ja relaatiotietokannat, Tietoverkot | suunniteltu |
 | Android-sovellukset | 5 | Kotlin | suunniteltu |

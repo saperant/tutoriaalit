@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="testi:leveydet" content="360 700 1024">
+    <meta name="testi:saavutettavuus" content="ei">
+    <title>Tuotekortit – Verkkokauppa</title>
+    <style>
+      body { margin: 0; font: 16px/1.5 "DejaVu Sans", sans-serif; }
+      /* @alku ruudukko */
+      .kortit {
+        display: grid;
+        grid-template-columns:
+          repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+        gap: 16px;
+        padding: 16px;
+        margin: 0;
+        list-style: none;
+      }
+      /* @loppu ruudukko */
+      .kortit li { block-size: 80px; background: #e8eef7; }
+    </style>
+  </head>
+  <body>
+    <!-- @alku rakenne -->
+    <ul class="kortit">
+      <li data-mitta="kortti 1">Kahvinkeitin</li>
+      <li data-mitta="kortti 2">Vedenkeitin</li>
+      <li data-mitta="kortti 3">Leivänpaahdin</li>
+      <li data-mitta="kortti 4">Sauvasekoitin</li>
+    </ul>
+    <!-- @loppu rakenne -->
+  </body>
+</html>

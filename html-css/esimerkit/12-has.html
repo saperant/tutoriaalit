@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:saavutettavuus" content="ei">
+    <title>Has-valitsin – Verkkokauppa</title>
+    <style>
+      body { margin: 0; font: 16px/1.5 "DejaVu Sans", sans-serif; }
+      /* @alku has */
+      /* Kortti, jossa on kuva, asetellaan kahteen sarakkeeseen. */
+      .kortti:has(> img) {
+        display: grid;
+        grid-template-columns: 96px 1fr;
+        gap: 16px;
+      }
+      /* Valittu vaihtoehto korostetaan ilman JavaScriptiä. */
+      label:has(:checked) {
+        font-weight: bold;
+      }
+      /* @loppu has */
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Toimitustapa</h1>
+      <!-- @alku rakenne -->
+      <article class="kortti" data-mitta="kuvallinen">
+        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
+             width="96" height="96" alt="">
+        <p data-mitta="kuvallisen teksti">Nouto myymälästä</p>
+      </article>
+      <article class="kortti" data-mitta="kuvaton">
+        <p data-mitta="kuvattoman teksti">Kotiinkuljetus</p>
+      </article>
+      <fieldset>
+        <legend>Valitse</legend>
+        <label data-nimi="nouto" data-tyyli="font-weight">
+          <input type="radio" name="tapa" value="nouto" checked>
+          Nouto</label>
+        <label data-nimi="kuljetus" data-tyyli="font-weight">
+          <input type="radio" name="tapa" value="kuljetus">
+          Kuljetus</label>
+      </fieldset>
+      <!-- @loppu rakenne -->
+    </main>
+  </body>
+</html>

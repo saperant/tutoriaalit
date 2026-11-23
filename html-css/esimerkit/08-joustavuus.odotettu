@@ -1,0 +1,6 @@
+[leveys 1024 px]
+a (flex: 1): x=0 y=0 l=160 k=24
+b (flex: 2): x=160 y=0 l=320 k=24
+c (flex: none): x=480 y=0 l=120 k=24
+lyhyt (flex: auto): x=0 y=24 l=249 k=24
+pitkä (flex: auto): x=249 y=24 l=351 k=24
