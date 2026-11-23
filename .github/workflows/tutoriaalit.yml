@@ -41,6 +41,12 @@ jobs:
         with:
           node-version: 24.22.3
 
+      # Ajokoneen oletus-JDK on vanhempi; esimerkit vaativat Java 21:n.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
       - name: Asenna TypeScript, html-validate ja Kotlin
         run: |
           npm install -g typescript@7.0.2 @types/node@24 html-validate@11.21.1

@@ -260,7 +260,8 @@ KIELET: dict[str, Kieli] = {
         "go", ("/usr/lib/go-1.23/bin/go", "go"), go_tarkistus, binaari),)),
     "java": Kieli((".java",), (), "Main.java", (Toteutus(
         "java", ("javac",),
-        lambda a: [[a.tyokalu, "-Xlint:all", "-Werror", "-d",
+        lambda a: [[a.tyokalu, "--release", "21", "-Xlint:all", "-Werror",
+                    "-d",
                     str(a.tyohak / "luokat"), *map(str, a.lahteet)]],
         lambda a: ["java", "-cp", str(a.tyohak / "luokat"), "Main"]),)),
     "kotlin": Kieli((".kt",), (), "main.kt", (Toteutus(
