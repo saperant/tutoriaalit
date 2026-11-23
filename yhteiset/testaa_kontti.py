@@ -51,7 +51,8 @@ def luottava_konteksti(dockerfile: Path, konteksti: Path, varmenne: Path,
         "COPY ymparisto-ca.crt /usr/local/share/ca-certificates/\n"
         "RUN update-ca-certificates\n"
         f"ENV PIP_CERT={OLETUSVARMENNE} "
-        f"REQUESTS_CA_BUNDLE={OLETUSVARMENNE}\n")
+        f"REQUESTS_CA_BUNDLE={OLETUSVARMENNE} "
+        f"NODE_EXTRA_CA_CERTS={OLETUSVARMENNE}\n")
     for i, rivi in enumerate(rivit):
         if rivi.startswith("FROM "):
             rivit.insert(i + 1, lisays)

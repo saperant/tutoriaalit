@@ -3,13 +3,14 @@
 
 Käyttö:  python3 yhteiset/testaa_esimerkit.py --kieli KIELI <hakemisto>
 
-Kielet: c, cpp, python, bash, rust, go, java, tcl, racket, sql,
-systemverilog, vhdl.
+Kielet: c, cpp, python, python-perus, bash, rust, go, java, kotlin,
+javascript, typescript, tcl, racket, sql, systemverilog, vhdl.
 
 Esimerkki on joko yksittäinen lähdetiedosto `esimerkit/<nimi>.<pääte>`
 tai hakemisto `esimerkit/<nimi>/`, jonka lähdetiedostot muodostavat yhden
 ohjelman. Hakemistoesimerkin pääohjelma on kielen mukaan `main.py`,
-`main.sh`, `main.rs`, `main.tcl`, `main.rkt` tai `main.sql`; Javassa
+`main.sh`, `main.rs`, `main.go`, `main.kt`, `main.js`, `main.ts`,
+`main.tcl`, `main.rkt` tai `main.sql`; Javassa
 pääluokka on aina `Main`, ja SystemVerilogin ja VHDL:n ylin taso on
 `testipenkki`.
 
@@ -21,7 +22,10 @@ Testaaja tekee seuraavat tarkistukset:
 2. Esimerkkien rivit ovat enintään 78 merkkiä pitkiä (PDF:n leveys).
 3. Esimerkki tarkistetaan ja käännetään kielen työkaluilla varoitukset
    virheinä (esim. GCC/Clang sanitoijineen, ruff ja mypy --strict,
-   ShellCheck, Clippy, go vet ja gofmt, javac -Xlint, Verilator -Wall).
+   ShellCheck, Clippy, go vet ja gofmt, javac -Xlint, kotlinc -Werror,
+   tsc --strict myös JavaScriptille JSDoc-tyyppeineen, Verilator -Wall).
+   JavaScript- ja TypeScript-esimerkit ovat ES-moduleita: esimerkki-
+   hakemistossa on package.json, jossa "type": "module".
 4. Ohjelma ajetaan tyhjässä väliaikaisessa työhakemistossa, ja sen
    tulostetta verrataan tiedostoon `<nimi>.odotettu`. Paluuarvon on
    oltava 0. Tiedosto `<nimi>.syote` annetaan syötteeksi ja tiedoston
@@ -44,6 +48,7 @@ from __future__ import annotations
 
 import argparse
 import concurrent.futures
+import functools
 import os
 import re
 import shutil
@@ -168,6 +173,34 @@ def bash_tarkistus(ajo: Ajo) -> list[list[str]]:
     return komennot
 
 
+@functools.cache
+def npm_juuri() -> str:
+    """Globaalien npm-pakettien hakemisto (@types/node löytyy sieltä)."""
+    tulos = subprocess.run(["npm", "root", "-g"], capture_output=True,
+                           text=True)
+    return tulos.stdout.strip()
+
+
+def tsc(*liput: str) -> Komennot:
+    # Tiedostot annetaan komentorivillä, joten liput ovat tässä eivätkä
+    # tsconfig.json-tiedostossa. Lukijan tsconfig.json toistaa ne.
+    def komennot(ajo: Ajo) -> list[list[str]]:
+        return [["tsc", "--noEmit", "--ignoreConfig", "--strict",
+                 "--target", "es2024", "--module", "nodenext",
+                 "--types", "node", "--typeRoots", f"{npm_juuri()}/@types",
+                 *liput, *map(str, ajo.lahteet)]]
+    return komennot
+
+
+def node_ajo(paaohjelma: str) -> Callable[[Ajo], list[str]]:
+    return lambda a: [a.tyokalu, str(paa(a, paaohjelma))]
+
+
+def kotlin_tarkistus(ajo: Ajo) -> list[list[str]]:
+    return [[ajo.tyokalu, "-Werror", "-include-runtime",
+             "-d", str(ajo.tyohak / "ohjelma.jar"), *map(str, ajo.lahteet)]]
+
+
 def ghdl_tarkistus(ajo: Ajo) -> list[list[str]]:
     return [[ajo.tyokalu, "-a", "--std=08", "--warn-error",
              f"--workdir={ajo.tyohak}", *map(str, ajo.lahteet)],
@@ -220,6 +253,22 @@ KIELET: dict[str, Kieli] = {
         lambda a: [[a.tyokalu, "-Xlint:all", "-Werror", "-d",
                     str(a.tyohak / "luokat"), *map(str, a.lahteet)]],
         lambda a: ["java", "-cp", str(a.tyohak / "luokat"), "Main"]),)),
+    "kotlin": Kieli((".kt",), (), "main.kt", (Toteutus(
+        "kotlin", ("kotlinc", "/opt/kotlinc/bin/kotlinc"), kotlin_tarkistus,
+        lambda a: ["java", "-jar", str(a.tyohak / "ohjelma.jar")]),)),
+    # JavaScript ja TypeScript: ES-modulit (esimerkkihakemistossa
+    # package.json, jossa "type": "module"). TypeScript tarkistaa myös
+    # JavaScriptin; Node ajaa TypeScriptin suoraan tyypit poistaen, joten
+    # käytetään vain poistettavaa syntaksia (--erasableSyntaxOnly).
+    "javascript": Kieli((".js",), (), "main.js", (Toteutus(
+        "node", ("node",),
+        tsc("--allowJs", "--checkJs"),   # tyypit JSDoc-kommenteilla
+        node_ajo("main.js")),)),
+    "typescript": Kieli((".ts",), (), "main.ts", (Toteutus(
+        "node", ("node",),
+        tsc("--erasableSyntaxOnly", "--allowImportingTsExtensions",
+            "--verbatimModuleSyntax", "--noUncheckedIndexedAccess"),
+        node_ajo("main.ts")),)),
     "tcl": Kieli((".tcl",), (), "main.tcl", (Toteutus(
         "tcl", ("tclsh8.6", "tclsh"), lambda a: [],
         lambda a: [a.tyokalu, str(paa(a, "main.tcl"))]),)),
@@ -334,6 +383,12 @@ def korjattu_kopio(esimerkki: Esimerkki, kohde: Path) -> list[Path]:
         uusi = kohde / p.name
         uusi.write_text("".join(rivit), "utf-8")
         tulos.append(uusi)
+    # JavaScript ja TypeScript: moduulityypin kertova package.json mukaan.
+    lahde = esimerkki.lahteet[0].parent
+    for hak in (lahde, lahde.parent):
+        if (hak / "package.json").exists():
+            shutil.copy(hak / "package.json", kohde / "package.json")
+            break
     return tulos
 
 

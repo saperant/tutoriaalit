@@ -1,0 +1,19 @@
+{
+  "name": "Kotlin: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "openjdk-21-jdk-headless",
+      "KOTLIN": "2.4.21"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/kotlin/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "fwcd.kotlin"
+      ]
+    }
+  }
+}

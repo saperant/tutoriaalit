@@ -1,0 +1,19 @@
+{
+  "name": "TypeScript: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "NODEJS": "24.22.3",
+      "NPM_PAKETIT": "typescript@7.0.2 @types/node@24"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/typescript/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint"
+      ]
+    }
+  }
+}

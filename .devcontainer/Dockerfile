@@ -8,17 +8,25 @@
 #   PIP_PAKETIT     Python-paketit, esim. "ruff mypy pytest"
 #   KIRJOITTAMINEN  true lisää pandocin, XeLaTeXin ja Graphvizin PDF:ien
 #                   ja kaavioiden tuottamiseen
+#   NODEJS          Node.js-versio, esim. "24.22.3" (nodejs.org)
+#   NPM_PAKETIT     globaalit npm-paketit, esim. "typescript@7.0.2"
+#   KOTLIN          Kotlin-kääntäjän versio, esim. "2.4.21" (vaatii
+#                   LISAPAKETIT-listaan JDK:n)
 
 FROM mcr.microsoft.com/devcontainers/base:ubuntu-24.04
 
 ARG KIRJOITTAMINEN=false
 ARG LISAPAKETIT=""
 ARG PIP_PAKETIT=""
+ARG NODEJS=""
+ARG NPM_PAKETIT=""
+ARG KOTLIN=""
 
 RUN apt-get update \
     && export DEBIAN_FRONTEND=noninteractive \
     && apt-get install -y --no-install-recommends \
         make gcc-14 g++-14 clang-20 libclang-rt-20-dev gdb python3 \
+        curl ca-certificates xz-utils unzip \
         $LISAPAKETIT \
     && if [ "$KIRJOITTAMINEN" = "true" ]; then \
         apt-get install -y --no-install-recommends \
@@ -33,5 +41,20 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Ubuntun versioidut Go- ja Rust-työkalut omista hakemistoistaan.
-ENV PATH="/usr/lib/go-1.23/bin:/usr/lib/rust-1.80/bin:${PATH}"
+RUN if [ -n "$NODEJS" ]; then \
+        arkkitehtuuri=$(dpkg --print-architecture | sed 's/amd64/x64/') \
+        && curl -fsSL "https://nodejs.org/dist/v$NODEJS/node-v$NODEJS-linux-$arkkitehtuuri.tar.xz" \
+            | tar -xJ -C /usr/local --strip-components=1 \
+            --exclude=CHANGELOG.md --exclude=LICENSE --exclude=README.md \
+        && if [ -n "$NPM_PAKETIT" ]; then \
+            npm install -g $NPM_PAKETIT && npm cache clean --force; \
+        fi; \
+    fi \
+    && if [ -n "$KOTLIN" ]; then \
+        curl -fsSL -o /tmp/kotlin.zip "https://github.com/JetBrains/kotlin/releases/download/v$KOTLIN/kotlin-compiler-$KOTLIN.zip" \
+        && unzip -q /tmp/kotlin.zip -d /opt && rm /tmp/kotlin.zip; \
+    fi
+
+# Ubuntun versioidut Go- ja Rust-työkalut omista hakemistoistaan sekä
+# Kotlin-kääntäjä.
+ENV PATH="/usr/lib/go-1.23/bin:/usr/lib/rust-1.80/bin:/opt/kotlinc/bin:${PATH}"

@@ -37,6 +37,18 @@ jobs:
             openjdk-21-jdk-headless
           pip install --break-system-packages ruff mypy pytest
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.22.3
+
+      - name: Asenna TypeScript ja Kotlin
+        run: |
+          npm install -g typescript@7.0.2 @types/node@24
+          curl -fsSL -o /tmp/kotlin.zip \
+            https://github.com/JetBrains/kotlin/releases/download/v2.4.21/kotlin-compiler-2.4.21.zip
+          sudo unzip -q /tmp/kotlin.zip -d /opt
+          echo /opt/kotlinc/bin >> "$GITHUB_PATH"
+
       - name: Asenna Playwright sivuston testeihin
         run: |
           npm install --no-save playwright@1.49.1
