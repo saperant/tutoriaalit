@@ -1,0 +1,3 @@
+<nil>
+tehtävä b-indeksi: paniikki: runtime error: index out of range [3] with length 2
+tehtävä c-nil: paniikki: assignment to entry in nil map

@@ -1,0 +1,7 @@
+{ulko-1 21.4 °C [piha pohjoinen]}
+{Anturi:ulko-1 Arvo:21.4 °C Paikka:[piha pohjoinen]}
+[]string{"piha", "pohjoinen"}
+main.Lampotila | "ulko-1" | ff | 0003.142 |     42|42    |
+12340.50 255 <nil>
+strconv.Atoi: parsing "12a": invalid syntax
+valmis: true

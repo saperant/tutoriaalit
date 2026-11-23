@@ -643,6 +643,7 @@ laajuus = 5
 testaus = "GHDL, itsetarkistavat testipenkit"
 roadmap = []
 amk = "Digitaalitekniikka / VHDL"
+tutoriaali = "vhdl"
 
 [[taito]]
 id = "verifiointi"
@@ -1254,6 +1255,7 @@ laajuus = 5
 testaus = "go vet ja go test"
 roadmap = ["golang"]
 amk = "Ohjelmointi"
+tutoriaali = "go"
 
 [[taito]]
 id = "java"

@@ -1,0 +1,6 @@
+arvo                 0 allokaatiota
+osoitin              1 allokaatiota
+append kasvaen      12 allokaatiota
+append varaten       1 allokaatiota
+merkkijono +=       99 allokaatiota
+strings.Builder      1 allokaatiota

@@ -1,0 +1,8 @@
+lisaa FI-100 20
+lisaa se-7 5
+ota FI-100 8
+ota SE-7 6
+saldo fi-100
+lisaa X-1 1
+poista FI-100
+listaa

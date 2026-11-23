@@ -202,10 +202,12 @@ def kotlin_tarkistus(ajo: Ajo) -> list[list[str]]:
 
 
 def ghdl_tarkistus(ajo: Ajo) -> list[list[str]]:
-    return [[ajo.tyokalu, "-a", "--std=08", "--warn-error",
-             f"--workdir={ajo.tyohak}", *map(str, ajo.lahteet)],
-            [ajo.tyokalu, "-e", "--std=08", f"--workdir={ajo.tyohak}",
-             "testipenkki"]]
+    # -i tuo tiedostot kirjastoon, -m analysoi ne riippuvuusjärjestyksessä
+    # ja elaboroi ylimmän tason.
+    return [[ajo.tyokalu, "-i", "--std=08", f"--workdir={ajo.tyohak}",
+             *map(str, ajo.lahteet)],
+            [ajo.tyokalu, "-m", "--std=08", "--warn-error",
+             f"--workdir={ajo.tyohak}", "testipenkki"]]
 
 
 def ghdl_ajo(ajo: Ajo) -> list[str]:
@@ -535,7 +537,12 @@ def testaa(kieli: Kieli, esimerkki: Esimerkki, valittu: Valittu,
                    korjattu and kieli.korjaus == "makro", muut)
 
     if esimerkki.ei_kaanny:
-        ok, _ = suorita(t.tarkista(ajo(False, valittu.liput, tyohak)), env)
+        # Virheellinen versio omaan hakemistoonsa, jotta sen osittaiset
+        # käännöstuotteet (esim. GHDL:n kirjasto) eivät häiritse korjattua.
+        virhehak = tyohak / "virheellinen"
+        virhehak.mkdir()
+        ok, _ = suorita(t.tarkista(ajo(False, valittu.liput, virhehak)),
+                        env)
         if ok:
             virheet.append(f"{tunnus}: tarkistus tai käännös onnistui, "
                            "vaikka ei pitäisi")

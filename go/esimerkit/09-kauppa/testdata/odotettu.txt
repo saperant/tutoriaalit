@@ -1,0 +1,6 @@
+virhe: SE-7: saldo 5, pyydetty 6: saldo ei riitä
+12
+virhe: "X-1": tunnuksen muoto on AA-1234
+virhe: "poista FI-100": tuntematon komento
+FI-100      12
+SE-7         5

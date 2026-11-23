@@ -1,0 +1,6 @@
+800 -> 0 kyllästyi=0
+801 -> 20 kyllästyi=0
+7FF -> -20 kyllästyi=0
+C00 -> 20480 kyllästyi=0
+FFF -> 32767 kyllästyi=1
+000 -> -32768 kyllästyi=1

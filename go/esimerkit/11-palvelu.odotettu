@@ -1,0 +1,12 @@
+  palvelin: POST /muistiinpanot
+201 {"id":1,"otsikko":"Osta maitoa","tagit":["kauppa"]}
+  palvelin: GET /muistiinpanot/1
+200 {"id":1,"otsikko":"Osta maitoa","tagit":["kauppa"]}
+  palvelin: GET /muistiinpanot/9
+404 {"virhe":"ei löydy"}
+  palvelin: POST /muistiinpanot
+422 {"virhe":"otsikko puuttuu"}
+  palvelin: POST /muistiinpanot
+400 {"virhe":"virheellinen JSON: json: unknown field \"nimi\""}
+  palvelin: DELETE /muistiinpanot/1
+405 Method Not Allowed

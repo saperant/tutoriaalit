@@ -1,0 +1,6 @@
+summa F0 20 = 10 K=1 N=0
+erotus 10 10 = 00 K=0 N=1
+erotus 10 20 = F0 K=1 N=0
+xtai AA FF = 55 K=0 N=0
+siirto_o 81 00 = C0 K=1 N=0
+pienempi FF 01 = 01 K=0 N=0

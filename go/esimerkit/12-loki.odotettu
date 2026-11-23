@@ -1,0 +1,3 @@
+level=INFO msg="pyyntö alkoi" pyynto=a1b2 kayttaja=42
+level=DEBUG msg=välimuisti pyynto=a1b2 osuma=false
+level=ERROR msg="haku epäonnistui" pyynto=a1b2 virhe=aikakatkaisu yritys.nro=3

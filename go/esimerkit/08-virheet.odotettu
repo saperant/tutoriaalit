@@ -1,0 +1,7 @@
+asetusten lataus: tiedosto puuttuu.conf: ei löydy
+  -> käytetään oletuksia
+asetusten lataus: palvelu.conf: rivi 2: strconv.Atoi: parsing "x10": invalid syntax
+  -> korjaa rivi 2, arvo "x10"
+portti 70000 ei kelpaa
+nimi puuttuu
+true

@@ -93,6 +93,24 @@ local function poista_sisennys(lista)
   return tulos
 end
 
+-- Sarkaimet välilyönneiksi 4 merkin välein, kuten testaaja ne laskee
+-- (Go-koodi sisennetään sarkaimin; PDF:n Verbatim käyttäisi leveyttä 8).
+local function laajenna_sarkaimet(rivi)
+  if not rivi:find("\t") then return rivi end
+  local tulos, sarake = {}, 0
+  for merkki in rivi:gmatch(utf8.charpattern) do
+    if merkki == "\t" then
+      local maara = 4 - sarake % 4
+      table.insert(tulos, string.rep(" ", maara))
+      sarake = sarake + maara
+    else
+      table.insert(tulos, merkki)
+      sarake = sarake + 1
+    end
+  end
+  return table.concat(tulos)
+end
+
 function CodeBlock(lohko)
   local polku = lohko.attributes["tiedosto"]
   if not polku then return nil end
@@ -109,6 +127,9 @@ function CodeBlock(lohko)
     end
   end
 
+  for i, rivi in ipairs(valitut) do
+    valitut[i] = laajenna_sarkaimet(rivi)
+  end
   lohko.text = table.concat(valitut, "\n")
   lohko.attributes["tiedosto"] = nil
   lohko.attributes["osa"] = nil

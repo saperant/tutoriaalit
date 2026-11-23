@@ -1,0 +1,5 @@
+pyynnöt 00000000 maski 11111111 -> ei keskeytystä
+pyynnöt 10010000 maski 11111111 -> IRQ 4
+pyynnöt 10010000 maski 11101111 -> IRQ 7
+pyynnöt 00000111 maski 11111110 -> IRQ 1
+pyynnöt 10000000 maski 01111111 -> ei keskeytystä

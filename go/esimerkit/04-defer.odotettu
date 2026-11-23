@@ -1,0 +1,6 @@
+funktion runko
+defer 2
+defer 1
+defer 0
+"data\n" <nil>
+puuttuva hakemisto: true

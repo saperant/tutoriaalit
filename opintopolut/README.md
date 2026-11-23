@@ -63,7 +63,7 @@ flowchart LR
   subgraph laitteisto["Laitteistosuunnittelu"]
     kiintea_pilkku["Lukujen esitys ja kiinteän pilkun aritmetiikka"]
     rtl_suunnittelu["✓ RTL-suunnittelu SystemVerilogilla"]
-    vhdl["RTL-suunnittelu VHDL:llä"]
+    vhdl["✓ RTL-suunnittelu VHDL:llä"]
     verifiointi["Laitteiston verifiointi"]
     fpga_toteutus["FPGA-toteutus"]
     hlm_mallinnus["Korkean tason mallinnus (SystemC/TLM)"]
@@ -106,7 +106,7 @@ flowchart LR
   end
   subgraph kielet["Ohjelmointikielet"]
     rust["✓ Rust"]
-    go["Go"]
+    go["✓ Go"]
     java["Java"]
     kotlin["Kotlin"]
     javascript["JavaScript"]
@@ -296,7 +296,7 @@ flowchart LR
 |-------|---:|------------|------|
 | Lukujen esitys ja kiinteän pilkun aritmetiikka | 3 | C-kieli, Digitaalitekniikka | suunniteltu |
 | RTL-suunnittelu SystemVerilogilla | 5 | Digitaalitekniikka | [valmis](../rtl-suunnittelu/) |
-| RTL-suunnittelu VHDL:llä | 5 | Digitaalitekniikka | suunniteltu |
+| RTL-suunnittelu VHDL:llä | 5 | Digitaalitekniikka | [valmis](../vhdl/) |
 | EDA-työkaluketjujen automatisointi | 3 | Käännösjärjestelmät, testaus ja CI, Python työkaluohjelmointiin, RTL-suunnittelu SystemVerilogilla, Tcl | suunniteltu |
 | FPGA-toteutus | 5 | RTL-suunnittelu SystemVerilogilla | suunniteltu |
 | Laitteiston verifiointi | 5 | Python työkaluohjelmointiin, RTL-suunnittelu SystemVerilogilla | suunniteltu |
@@ -357,7 +357,7 @@ flowchart LR
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
 | Funktionaalinen ohjelmointi (Racket) | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../funktionaalinen-ohjelmointi/) |
-| Go | 5 | Ohjelmoinnin perusteet (Python) | suunniteltu |
+| Go | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../go/) |
 | Java | 5 | Ohjelmoinnin perusteet (Python) | suunniteltu |
 | JavaScript | 5 | Ohjelmoinnin perusteet (Python) | suunniteltu |
 | Tcl | 2 | Ohjelmoinnin perusteet (Python) | [valmis](../tcl/) |

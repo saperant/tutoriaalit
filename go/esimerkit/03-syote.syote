@@ -1,0 +1,7 @@
+# anturi arvo
+ulko 3.5
+sisa 21.0
+ulko -1.5
+sisa 21,5
+ulko
+sisa 22.25

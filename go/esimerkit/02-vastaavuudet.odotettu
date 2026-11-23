@@ -1,0 +1,4 @@
+portti -> 8080
+virhe: puuttuva '='
+virhe: avain "yrityksia": strconv.Atoi: parsing "kolme": invalid syntax
+main.Suorakaide {3 4} 12.0
