@@ -3,6 +3,7 @@
 
 Käyttö:  python3 yhteiset/testaa_kontti.py <tutoriaali> [<tutoriaali> ...]
          python3 yhteiset/testaa_kontti.py --kaikki
+         python3 yhteiset/testaa_kontti.py --lista   (JSON-lista CI:lle)
 
 Lukee tiedoston .devcontainer/<tutoriaali>/devcontainer.json, rakentaa
 sen kuvaamasta Dockerfilesta kuvan samoilla rakennusargumenteilla ja
@@ -93,14 +94,21 @@ def testaa(tutoriaali: str) -> bool:
     return tulos.returncode == 0
 
 
+def kaikki() -> list[str]:
+    return sorted(
+        p.parent.name for p in
+        (JUURI / ".devcontainer").glob("*/devcontainer.json")
+        if p.parent.name != "kirjoittaminen"
+        and (JUURI / p.parent.name / "Makefile").exists())
+
+
 def main() -> int:
     argumentit = sys.argv[1:]
+    if argumentit == ["--lista"]:
+        print(json.dumps(kaikki()))
+        return 0
     if argumentit == ["--kaikki"]:
-        argumentit = sorted(
-            p.parent.name for p in
-            (JUURI / ".devcontainer").glob("*/devcontainer.json")
-            if p.parent.name != "kirjoittaminen"
-            and (JUURI / p.parent.name / "Makefile").exists())
+        argumentit = kaikki()
     if not argumentit:
         print(__doc__)
         return 2

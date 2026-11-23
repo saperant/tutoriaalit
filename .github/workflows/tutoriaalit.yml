@@ -18,12 +18,14 @@ concurrency:
 jobs:
   testaa-ja-rakenna:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
 
       - name: Asenna työkalut
         run: |
+          # man-db:n hakemiston päivitys hidastaa asennusta minuutteja.
+          sudo rm -f /var/lib/man-db/auto-update
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
             make python3 pandoc g++-14 clang-20 libclang-rt-20-dev \
@@ -73,11 +75,28 @@ jobs:
       - id: julkaisu
         uses: actions/deploy-pages@v4
 
-  kehityskontti:
+  kontit:
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    timeout-minutes: 5
+    outputs:
+      tutoriaalit: ${{ steps.lista.outputs.tutoriaalit }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: lista
+        run: |
+          echo "tutoriaalit=$(python3 yhteiset/testaa_kontti.py --lista)" \
+            >> "$GITHUB_OUTPUT"
+
+  kehityskontti:
+    needs: kontit
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        tutoriaali: ${{ fromJSON(needs.kontit.outputs.tutoriaalit) }}
     steps:
       - uses: actions/checkout@v4
 
-      - name: Testaa jokainen tutoriaali omassa kehityskontissaan
-        run: python3 yhteiset/testaa_kontti.py --kaikki
+      - name: Testaa tutoriaali omassa kehityskontissaan
+        run: python3 yhteiset/testaa_kontti.py ${{ matrix.tutoriaali }}
