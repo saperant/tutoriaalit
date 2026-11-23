@@ -1,0 +1,6 @@
+aino@example.com: 2 riviä, 4.25 €
+  asiakas: virheellinen sähköposti
+  rivit[0].tuote: odotettiin ei-tyhjää merkkijonoa
+  rivit[0].maara: määrän on oltava positiivinen
+  rivit: odotettiin taulukkoa
+virheellinen JSON

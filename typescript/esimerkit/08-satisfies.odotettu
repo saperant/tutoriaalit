@@ -1,0 +1,3 @@
+POST /tilaukset /tilaukset 1
+/tuotteet /tuotteet
+{ kieli: 'fi', sivukoko: 50, tumma: false }

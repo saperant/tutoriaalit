@@ -110,7 +110,7 @@ flowchart LR
     java["Java"]
     kotlin["Kotlin"]
     javascript["JavaScript"]
-    typescript["TypeScript"]
+    typescript["✓ TypeScript"]
     tcl["✓ Tcl"]
     funktionaalinen_ohjelmointi["✓ Funktionaalinen ohjelmointi (Racket)"]
     cpp_suorituskyky["C++:n suorituskyky"]
@@ -363,7 +363,7 @@ flowchart LR
 | Tcl | 2 | Ohjelmoinnin perusteet (Python) | [valmis](../tcl/) |
 | Kotlin | 3 | Java | suunniteltu |
 | Rust | 5 | C-kieli | [valmis](../rust/) |
-| TypeScript | 3 | JavaScript | suunniteltu |
+| TypeScript | 3 | JavaScript | [valmis](../typescript/) |
 | C ja assembly yhteen | 2 | Assembly | suunniteltu |
 | Python ja C/C++ yhteen | 3 | Moderni C++, Python työkaluohjelmointiin | suunniteltu |
 | C++:n suorituskyky | 3 | Moderni C++, Suorituskyvyn analyysi ja optimointi | suunniteltu |

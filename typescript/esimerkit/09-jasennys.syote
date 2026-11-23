@@ -1,0 +1,4 @@
+{"asiakas": "aino@example.com", "rivit": [{"tuote": "omena", "maara": 3, "hinta": 45}, {"tuote": "leipä", "maara": 1, "hinta": 290}]}
+{"asiakas": "ei-osoite", "rivit": [{"tuote": "", "maara": 0, "hinta": 45}]}
+{"asiakas": "eero@example.fi", "rivit": "kaikki"}
+{"asiakas": "eero@example.fi"

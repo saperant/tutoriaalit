@@ -1,0 +1,12 @@
+---
+title: TypeScript
+subtitle: Tyyppijärjestelmä suunnittelun välineenä JavaScript-kehittäjälle
+date: Marraskuu 2026
+lang: fi
+rights: >
+  Tämä teos on lisensoitu Creative Commons Nimeä–JaaSamoin 4.0
+  Kansainvälinen -lisenssillä (CC BY-SA 4.0).
+# Muistimalli ja rinnakkaisuus ovat JavaScriptin ajonaikaisia asioita,
+# joita TypeScript ei muuta (ks. luku 2 ja javascript/-paketti).
+runko_ei_sovellu: [muisti, rinnakkaisuus]
+---

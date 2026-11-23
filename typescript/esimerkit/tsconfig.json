@@ -1,0 +1,21 @@
+// Samat asetukset kuin testaajalla (yhteiset/testaa_esimerkit.py).
+// Tarkistus: tsc -p .   (tsconfig.json saa sisältää kommentteja)
+{
+  "compilerOptions": {
+    "target": "es2024",
+    "module": "nodenext",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "types": ["node"],
+    // @types/node paikallisesti (npm install) tai kehityskontissa
+    // globaalisti asennettuna.
+    "typeRoots": ["./node_modules/@types",
+                  "/usr/local/lib/node_modules/@types"]
+  },
+  // Tarkoituksella virheelliset esimerkit eivät käänny.
+  "exclude": ["*.ei-kaanny.ts", "node_modules"]
+}

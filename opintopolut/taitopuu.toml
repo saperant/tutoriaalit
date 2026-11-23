@@ -1334,6 +1334,7 @@ laajuus = 3
 testaus = "tsc --strict ja node:test"
 roadmap = ["typescript"]
 amk = "Web-ohjelmointi"
+tutoriaali = "typescript"
 
 [[taito]]
 id = "tcl"
