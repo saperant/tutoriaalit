@@ -121,6 +121,11 @@ Esimerkit opettavat oikeita taitoja:
 - Väärä tapa näytetään vain, jos se on yleinen virhe, ja silloin
   testattuna `.ei-kaanny`- tai `.kaatuu`-esimerkkinä.
 
+Koodilohkot kirjoitetaan rivin alkuun, ei luettelon kohdan sisään
+sisennettyinä: tarkistimet etsivät vain sisentämättömiä lohkoja. Taulukon
+solussa olevan koodin pystyviiva näkyy PDF:ssä muodossa `\|`, joten
+sellaista koodia ei kirjoiteta taulukkoon.
+
 ## Pikaopas
 
 Paketin juuressa on `pikaopas.md`, josta rakennetaan muutaman sivun

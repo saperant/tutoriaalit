@@ -1,7 +1,8 @@
 {
   "root": true,
-  "extends": ["html-validate:recommended"],
+  "extends": ["html-validate:recommended", "html-validate:document"],
   "rules": {
-    "doctype-style": ["error", { "style": "lowercase" }]
+    "doctype-style": ["error", { "style": "lowercase" }],
+    "require-sri": ["error", { "target": "crossorigin" }]
   }
 }
