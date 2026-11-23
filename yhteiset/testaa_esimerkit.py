@@ -234,7 +234,8 @@ KIELET: dict[str, Kieli] = {
                    str(paa(a, "main.sql")), ":memory:", ".quit"]),)),
     "systemverilog": Kieli((".sv",), (".svh",), "testipenkki.sv", (Toteutus(
         "verilator", ("verilator",),
-        lambda a: [[a.tyokalu, "--binary", "-Wall", "-Wno-DECLFILENAME",
+        lambda a: [[a.tyokalu, "--binary", "--assert", "-Wall",
+                    "-Wno-DECLFILENAME",
                     "--top-module", "testipenkki",
                     "-Mdir", str(a.tyohak / "obj"), "-o", "ohjelma",
                     *map(str, a.lahteet)]],

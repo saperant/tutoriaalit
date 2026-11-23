@@ -1,0 +1,7 @@
+väylällä: 12af29
+suure PAINE, anturi 7, arvo 255
+pariteetti ^tavu = 0
+kaikki ykkösiä &tavu = 0, yksikin |tavu = 1
+liitos {4'hA, tavu[3:0]} = a2
+toisto {4{2'b10}} = 10101010
+etumerkkilaajennus {{8{tavu[7]}}, tavu} = ffb2

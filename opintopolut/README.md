@@ -62,7 +62,7 @@ flowchart LR
   end
   subgraph laitteisto["Laitteistosuunnittelu"]
     kiintea_pilkku["Lukujen esitys ja kiinteän pilkun aritmetiikka"]
-    rtl_suunnittelu["RTL-suunnittelu SystemVerilogilla"]
+    rtl_suunnittelu["✓ RTL-suunnittelu SystemVerilogilla"]
     vhdl["RTL-suunnittelu VHDL:llä"]
     verifiointi["Laitteiston verifiointi"]
     fpga_toteutus["FPGA-toteutus"]
@@ -295,7 +295,7 @@ flowchart LR
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
 | Lukujen esitys ja kiinteän pilkun aritmetiikka | 3 | C-kieli, Digitaalitekniikka | suunniteltu |
-| RTL-suunnittelu SystemVerilogilla | 5 | Digitaalitekniikka | suunniteltu |
+| RTL-suunnittelu SystemVerilogilla | 5 | Digitaalitekniikka | [valmis](../rtl-suunnittelu/) |
 | RTL-suunnittelu VHDL:llä | 5 | Digitaalitekniikka | suunniteltu |
 | EDA-työkaluketjujen automatisointi | 3 | Käännösjärjestelmät, testaus ja CI, Python työkaluohjelmointiin, RTL-suunnittelu SystemVerilogilla, Tcl | suunniteltu |
 | FPGA-toteutus | 5 | RTL-suunnittelu SystemVerilogilla | suunniteltu |

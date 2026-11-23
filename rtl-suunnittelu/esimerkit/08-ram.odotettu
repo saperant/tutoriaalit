@@ -1,0 +1,8 @@
+ennen reunaa: l_data = 0 (edellinen luku)
+reunan jälkeen: muisti[100] = 44
+samanaikainen kirjoitus: luettiin vanha 44
+seuraavalla jaksolla: 7
+sini_rom[ 0] =   0
+sini_rom[21] = 126
+sini_rom[42] = 219
+sini_rom[63] = 255

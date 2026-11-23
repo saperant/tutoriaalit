@@ -1,0 +1,4 @@
+lampotila < korjaus: 0
+int'(lampotila) < int'(korjaus): 1
+raja >>> 1 = -5 (aritmeettinen)
+raja >> 1  = 123 (looginen)

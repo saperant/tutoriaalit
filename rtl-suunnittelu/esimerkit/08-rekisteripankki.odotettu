@@ -1,0 +1,7 @@
+OHJAUS = 00002a01, käynnissä = 1, jakaja = 42
+TILA = 00000003, keskeytys = 1
+0 kirjoitettu: keskeytys = 1
+kuittaus + laukeaminen: keskeytys = 1
+kuittaus: keskeytys = 0
+LASKURI = 2
+tuntematon osoite 0x6: deadbeef

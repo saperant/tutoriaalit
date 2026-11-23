@@ -1,0 +1,4 @@
+ulkoinen vapautus t = 23, tahdistettu t = 35
+ennen nollausta: async 5a, sync 5a
+kello seis:      async 00, sync 5a
+reunan jälkeen:  async 00, sync 00

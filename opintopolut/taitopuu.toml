@@ -620,6 +620,7 @@ laajuus = 5
 testaus = "Verilator ja Icarus Verilog, itsetarkistavat testipenkit"
 roadmap = []
 amk = "FPGA-suunnittelu / VHDL"
+tutoriaali = "rtl-suunnittelu"
 
 [[taito]]
 id = "vhdl"
