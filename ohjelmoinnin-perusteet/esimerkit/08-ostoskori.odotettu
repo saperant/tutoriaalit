@@ -1,0 +1,5 @@
+Kahvi 500 g     1 kpl   699 snt
+Korvapuusti     6 kpl   900 snt
+Yhteensä 1599 snt
+Tuote(nimi='Kahvi 500 g', hinta_snt=699)
+True

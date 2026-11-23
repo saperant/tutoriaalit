@@ -122,6 +122,7 @@ laajuus = 5
 testaus = "Python, pytest"
 roadmap = ["python"]
 amk = "Ohjelmoinnin perusteet"
+tutoriaali = "ohjelmoinnin-perusteet"
 
 [[taito]]
 id = "komentorivi"

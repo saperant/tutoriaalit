@@ -1,0 +1,19 @@
+# Esimerkkien tarkistusasetukset. Samat asetukset sopivat omankin
+# projektin pohjaksi (ks. luku Modulit ja standardikirjasto).
+[project]
+name = "ohjelmoinnin-perusteet-esimerkit"
+version = "1.0.0"
+requires-python = ">=3.12"
+
+[tool.ruff]
+target-version = "py312"
+
+[tool.ruff.lint]
+# Pyflakes ja pycodestyle (oletus) sekä bugbear, pyupgrade ja simplify.
+select = ["E", "F", "B", "UP", "SIM"]
+
+[tool.mypy]
+# Aloittelijan asetukset: mypy tarkistaa funktiot, joissa on
+# tyyppivihjeet. Tiukka tila (strict = true) vaatii vihjeet kaikkialle.
+python_version = "3.12"
+warn_unused_ignores = true

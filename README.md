@@ -39,6 +39,7 @@ Jokaisessa tutoriaalissa on lisäksi muutaman sivun pikaopas
 
 | Tutoriaali | Hakemisto | PDF |
 |------------|-----------|-----|
+| Ohjelmoinnin perusteet (Python) | [`ohjelmoinnin-perusteet/`](ohjelmoinnin-perusteet/) | [ohjelmoinnin-perusteet.pdf](ohjelmoinnin-perusteet/ohjelmoinnin-perusteet.pdf) |
 | Moderni C++ | [`moderni-cpp/`](moderni-cpp/) | [moderni-cpp.pdf](moderni-cpp/moderni-cpp.pdf) |
 | C-kieli | [`c-kieli/`](c-kieli/) | [c-kieli.pdf](c-kieli/c-kieli.pdf) |
 | Python | [`python/`](python/) | [python.pdf](python/python.pdf) |

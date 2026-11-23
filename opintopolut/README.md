@@ -29,7 +29,7 @@ Valmiit tutoriaalit on merkitty merkillä ✓.
 ```mermaid
 flowchart LR
   subgraph perusta["Perusta"]
-    ohjelmoinnin_perusteet["Ohjelmoinnin perusteet (Python)"]
+    ohjelmoinnin_perusteet["✓ Ohjelmoinnin perusteet (Python)"]
     komentorivi["Komentorivi ja Linux"]
     versionhallinta["Versionhallinta (Git)"]
     c_kieli["✓ C-kieli"]
@@ -251,7 +251,7 @@ flowchart LR
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
 | Komentorivi ja Linux | 3 | – | suunniteltu |
-| Ohjelmoinnin perusteet (Python) | 5 | – | suunniteltu |
+| Ohjelmoinnin perusteet (Python) | 5 | – | [valmis](../ohjelmoinnin-perusteet/) |
 | Bash-skriptaus | 3 | Komentorivi ja Linux, Ohjelmoinnin perusteet (Python) | [valmis](../bash/) |
 | C-kieli | 5 | Komentorivi ja Linux, Ohjelmoinnin perusteet (Python) | [valmis](../c-kieli/) |
 | Python | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../python/) |

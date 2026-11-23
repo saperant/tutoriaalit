@@ -1,0 +1,3 @@
+Traceback (most recent call last):
+in lue_luvut
+ValueError: could not convert string to float: 'kaksi'
