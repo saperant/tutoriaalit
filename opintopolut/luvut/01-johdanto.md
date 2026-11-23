@@ -1,19 +1,17 @@
-# Johdanto
+# Taitopuun rakenne
 
-Tämän repositorion tutoriaalit eivät ole irrallisia oppaita, vaan ne
-muodostavat *taitopuun*. Jokainen tutoriaali opettaa yhden taidon, ja
-taito voi edellyttää toisia taitoja. Kun esitiedot hallitaan, taito
-avautuu, ja se puolestaan avaa uusia taitoja. Kiinteiden kurssipolkujen
-sijaan oppija voi kulkea puussa kohti sitä osaamista, jota hän
-tarvitsee.
+Edellinen luku kuvaa, miksi materiaali tehdään, kenelle ja millä
+periaatteilla. Tämä luku kertoo, miten taitopuu ja roolit on rakennettu.
 
-*Roolit* ovat ammattiprofiileja, kuten laitteistoarkkitehti tai
-sulautettujen ohjelmistojen kehittäjä. Rooli määritellään muutamana
-tavoitetaitona, ja sen polku on näiden tavoitteiden ja kaikkien niiden
-esitietojen joukko. Samat perustaidot palvelevat useita rooleja: C-kieli
-on osa lähes jokaista polkua.
+Taitopuussa jokainen tutoriaali opettaa yhden taidon, ja taito voi
+edellyttää toisia taitoja. Kun esitiedot hallitaan, taito avautuu ja
+avaa puolestaan uusia taitoja. Kiinteiden kurssipolkujen sijaan oppija
+kulkee puussa kohti sitä osaamista, jota hän tarvitsee. Roolin polku on
+sen tavoitetaitojen ja kaikkien niiden esitietojen joukko, joten samat
+perustaidot palvelevat useita rooleja: C-kieli on osa lähes jokaista
+polkua.
 
-## Periaatteet
+## Rakenteen säännöt
 
 1. **Yksi taito, yksi tutoriaali.** Taito on rajattu kokonaisuus, jonka
    laajuus on 2–5 opintopistettä. Laajempi aihe jaetaan useaksi

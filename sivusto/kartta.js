@@ -738,6 +738,8 @@
       h("div", { luokka: "linkit" },
         tila.data.meta.opintopolut_pdf && linkki(
           tila.data.meta.opintopolut_pdf, "Opintopolut", "PDF"),
+        linkki(`${tila.data.meta.repo}/blob/main/VISIO.md`, "Projektin visio",
+          "GitHub"),
         linkki(tila.data.meta.repo, "Repositorio", "GitHub")),
     ];
   }

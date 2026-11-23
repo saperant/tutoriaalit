@@ -1,13 +1,22 @@
 # Tutoriaalit
 
-Suomenkielisiä tutoriaaleja eri aiheista. Tutoriaalit kirjoitetaan
-Markdownilla, ja lopullinen versio on PDF-dokumentti.
+Avoin, suomenkielinen oppimateriaalikokonaisuus tekniikan osaajille:
+opiskelijoille, alaa vaihtaville ja syventäville ammattilaisille sekä
+tiiminvetäjille. Projektin tavoitteet, kohderyhmät ja periaatteet on
+kuvattu dokumentissa **[VISIO.md](VISIO.md)**.
 
-Tutoriaalit muodostavat **taitopuun**: jokainen tutoriaali on yksi
-taito, joka rakentuu esitietojensa päälle. Roolit, kuten
-laitteistoarkkitehti tai sulautettujen ohjelmistojen kehittäjä, ovat
-polkuja puun läpi. Taitopuu, roolipolut ja tutoriaalien
-tuotantojärjestys ovat hakemistossa [`opintopolut/`](opintopolut/)
+Kokonaisuus koostuu kolmesta osasta:
+
+- **Taitopuu** kertoo, mikä taito mahdollistaa minkäkin ja mitä on
+  hallittava ensin.
+- **Roolit** ovat taitopuun osajoukkoja: kunkin roolin
+  osaamisvaatimukset, esimerkiksi laitteistoarkkitehdille tai
+  sulautettujen ohjelmistojen kehittäjälle.
+- **Tutoriaalipaketit** opettavat taidot. Jokaisessa on PDF, testatut
+  esimerkit ja valmis kehityskontti.
+
+Taitopuu, roolipolut ja tutoriaalien tuotantojärjestys ovat hakemistossa
+[`opintopolut/`](opintopolut/)
 ([opintopolut.pdf](opintopolut/opintopolut.pdf)).
 
 **Taitopuukartta** ([`sivusto/`](sivusto/)) on interaktiivinen

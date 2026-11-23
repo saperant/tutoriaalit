@@ -22,12 +22,12 @@ readme:
 
 pdf: $(NIMI).pdf
 
-$(NIMI).pdf: taitopuu.toml metadata.yaml $(wildcard luvut/*.md) \
+$(NIMI).pdf: taitopuu.toml metadata.yaml ../VISIO.md $(wildcard luvut/*.md) \
              $(wildcard $(YHTEISET)/*)
 	rm -rf $(RAKENNUS)
 	$(TAITOPUU) generoi taitopuu.toml $(RAKENNUS)
 	pandoc --defaults=$(YHTEISET)/pdf.yaml metadata.yaml \
-	    luvut/01-johdanto.md $(RAKENNUS)/luvut/*.md \
+	    ../VISIO.md luvut/01-johdanto.md $(RAKENNUS)/luvut/*.md \
 	    luvut/06-yllapito.md -o $@
 
 siivoa:
