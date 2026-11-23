@@ -1,12 +1,21 @@
 #!/usr/bin/env python3
-"""Kielipaketin rakenteen tarkistin.
+"""Tutoriaalipaketin rakenteen tarkistin.
 
-Käyttö:  python3 yhteiset/tarkista_paketti.py <paketin hakemisto>
+Käyttö:  python3 yhteiset/tarkista_paketti.py [--rakenne kieli|taito] <hakemisto>
 
-Tarkistaa, että paketti noudattaa mallia yhteiset/KIELIPAKETTI.md:
-pakolliset rungon osat löytyvät oikeilta paikoiltaan, sisältöluvut
-päättyvät osioihin "Käytännössä" ja "Itsearviointi", itsearvioinnissa on
-vähintään kolme osaamisväitettä ja pikaopas on olemassa.
+Rakenne `kieli` (oletus) tarkistaa, että kielipaketti noudattaa mallia
+yhteiset/KIELIPAKETTI.md: pakolliset rungon osat löytyvät oikeilta
+paikoiltaan, sisältöluvut päättyvät osioihin "Käytännössä" ja
+"Itsearviointi", itsearvioinnissa on vähintään kolme osaamisväitettä ja
+pikaopas on olemassa. Rungon osan voi ilmoittaa kieleen soveltumattomaksi
+paketin metadata.yaml-tiedostossa:
+
+    runko_ei_sovellu: [muisti, omat-tyypit]
+
+Rakenne `taito` koskee muita tutoriaaleja (esim. RTL-suunnittelu, SQL):
+ensimmäinen luku on johdanto ja viimeinen sisältää lähteet (merkinnät
+{.runko-johdanto} ja {.runko-lahteet}), muut luvut päättyvät osioihin
+"Käytännössä" ja "Itsearviointi", ja pikaopas on olemassa.
 """
 
 from __future__ import annotations
@@ -70,26 +79,42 @@ def lue_luvut(hakemisto: Path) -> tuple[list[Luku], list[str]]:
     return luvut, virheet
 
 
-def tarkista(hakemisto: Path) -> list[str]:
+def ei_sovellu(hakemisto: Path) -> set[str]:
+    metadata = hakemisto / "metadata.yaml"
+    if not metadata.exists():
+        return set()
+    m = re.search(r"^runko_ei_sovellu:\s*\[([^\]]*)\]",
+                  metadata.read_text("utf-8"), re.M)
+    return {o.strip() for o in m.group(1).split(",")} if m else set()
+
+
+def tarkista(hakemisto: Path, rakenne: str = "kieli") -> list[str]:
     luvut, virheet = lue_luvut(hakemisto)
     if not luvut:
         return [f"{hakemisto}: lukuja ei löytynyt"]
 
     loytyneet = set().union(*(l.osat for l in luvut))
-    for osa in PAKOLLISET:
-        if osa not in loytyneet:
+    vaaditut = (PAKOLLISET if rakenne == "kieli"
+                else ["johdanto", "lahteet"])
+    poissa = ei_sovellu(hakemisto)
+    for osa in poissa - set(PAKOLLISET):
+        virheet.append(f"metadata.yaml: tuntematon rungon osa '{osa}'")
+    for osa in vaaditut:
+        if osa not in loytyneet and osa not in poissa:
             virheet.append(f"rungon osa '{osa}' puuttuu "
                            f"(merkintä {{.runko-{osa}}})")
 
     if "johdanto" not in luvut[0].osat:
         virheet.append(f"{luvut[0].tiedosto}: ensimmäisen luvun on oltava "
                        "johdanto")
-    if len(luvut) < 2 or "kokeneelle" not in luvut[1].osat:
+    if rakenne == "kieli" and (len(luvut) < 2
+                               or "kokeneelle" not in luvut[1].osat):
         virheet.append("toisen luvun on oltava kokeneelle tarkoitettu luku")
     if "lahteet" not in luvut[-1].osat:
         virheet.append(f"{luvut[-1].tiedosto}: lähteiden on oltava "
                        "viimeisessä luvussa")
-    if not any("kaytannot" in l.osat for l in luvut[-2:]):
+    if rakenne == "kieli" and not any("kaytannot" in l.osat
+                                      for l in luvut[-2:]):
         virheet.append("käytäntöjen on oltava kahdessa viimeisessä luvussa")
     for i, l in enumerate(luvut):
         if "johdanto" in l.osat and i != 0:
@@ -98,8 +123,9 @@ def tarkista(hakemisto: Path) -> list[str]:
             virheet.append(f"{l.tiedosto}: kokeneelle-luvun on oltava "
                            "toinen")
 
-    for l in luvut:
-        if l.osat & KEHYS:
+    for i, l in enumerate(luvut):
+        if l.osat & KEHYS or (rakenne == "taito"
+                              and i in (0, len(luvut) - 1)):
             continue
         alku = f"{l.tiedosto} ({l.otsikko})"
         if l.alaotsikot[-2:] != ["Käytännössä", "Itsearviointi"]:
@@ -115,17 +141,23 @@ def tarkista(hakemisto: Path) -> list[str]:
 
 
 def main() -> int:
-    if len(sys.argv) != 2:
+    argumentit = sys.argv[1:]
+    rakenne = "kieli"
+    if len(argumentit) == 3 and argumentit[0] == "--rakenne":
+        rakenne = argumentit[1]
+        argumentit = argumentit[2:]
+    if len(argumentit) != 1 or rakenne not in ("kieli", "taito"):
         print(__doc__)
         return 2
-    hakemisto = Path(sys.argv[1])
-    virheet = tarkista(hakemisto)
+    hakemisto = Path(argumentit[0])
+    virheet = tarkista(hakemisto, rakenne)
+    nimi = "kielipaketin" if rakenne == "kieli" else "taitopaketin"
     if virheet:
         print("\n".join(virheet))
-        print(f"\nKIELIPAKETIN RAKENNE: {len(virheet)} virhettä")
+        print(f"\n{nimi.upper()} RAKENNE: {len(virheet)} virhettä")
         return 1
     luvut, _ = lue_luvut(hakemisto)
-    print(f"OK: kielipaketin rakenne ({len(luvut)} lukua)")
+    print(f"OK: {nimi} rakenne ({len(luvut)} lukua)")
     return 0
 
 

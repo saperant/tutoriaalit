@@ -70,6 +70,30 @@ Säännöt:
   luokkia. Paketissa voi olla myös kielen omia lisälukuja, kuten C++:n
   käännösaikainen laskenta.
 
+Jos jokin rungon osa ei sovellu kieleen (esim. Bashissa ei ole omia
+tyyppejä eikä muistimallia), se ilmoitetaan paketin `metadata.yaml`-
+tiedostossa, ja kokeneelle-luku kertoo syyn:
+
+```yaml
+runko_ei_sovellu: [muisti, omat-tyypit]
+```
+
+## Taitopaketit
+
+Tutoriaalit, jotka eivät opeta yleiskäyttöistä ohjelmointikieltä, kuten
+RTL-suunnittelu, SQL tai HTML ja CSS, ovat *taitopaketteja*. Niissä on
+vapaa lukujako, mutta ensimmäinen luku on johdanto
+(`{.runko-johdanto}`), viimeinen sisältää lähteet (`{.runko-lahteet}`),
+muut luvut päättyvät osioihin *Käytännössä* ja *Itsearviointi*, ja
+paketissa on pikaopas. Paketin Makefile valitsee rakenteen:
+
+```make
+NIMI    := sql
+KIELI   := sql python        # testaajan kieliprofiilit
+RAKENNE := taito             # kieli tai taito
+include ../yhteiset/paketti.mk
+```
+
 ## Luvun rakenne
 
 Jokainen sisältöluku (muut kuin johdanto, kokeneelle, käytännöt ja

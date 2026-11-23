@@ -29,7 +29,11 @@ jobs:
             make python3 pandoc g++-14 clang-20 libclang-rt-20-dev \
             texlive-xetex texlive-latex-recommended texlive-latex-extra \
             texlive-fonts-recommended texlive-lang-european lmodern \
-            fonts-dejavu graphviz
+            fonts-dejavu graphviz \
+            shellcheck bats verilator sqlite3 tcl8.6 ghdl racket \
+            rustc-1.80 cargo-1.80 rust-1.80-clippy golang-1.23-go \
+            openjdk-21-jdk-headless
+          pip install --break-system-packages ruff mypy pytest
 
       - name: Asenna Playwright sivuston testeihin
         run: |
@@ -71,14 +75,9 @@ jobs:
 
   kehityskontti:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
 
-      - name: Rakenna devcontainer-kuva
-        run: docker build -t tutoriaalit-kehitys -f .devcontainer/Dockerfile .devcontainer
-
-      - name: Testaa esimerkit kontissa
-        run: |
-          docker run --rm -v "$PWD":/w -w /w tutoriaalit-kehitys \
-            bash -c 'make -C c-kieli testaa && make -C moderni-cpp testaa'
+      - name: Testaa jokainen tutoriaali omassa kehityskontissaan
+        run: python3 yhteiset/testaa_kontti.py --kaikki

@@ -1,0 +1,18 @@
+{
+  "name": "RTL-suunnittelu (SystemVerilog): esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "verilator"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/rtl-suunnittelu/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "mshr-h.veriloghdl"
+      ]
+    }
+  }
+}

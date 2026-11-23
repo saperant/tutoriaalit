@@ -493,7 +493,8 @@ def main() -> int:
     juuri = argumentit.hakemisto.resolve()
     esimerkit = etsi_esimerkit(kieli, juuri / "esimerkit")
     valitut = valitse(kieli)
-    print("Työkalut:", ", ".join(v.tyokalu for v in valitut))
+    print(f"Kieli {argumentit.kieli}, työkalut:",
+          ", ".join(v.tyokalu for v in valitut))
 
     virheet, viitatut = tarkista_markdown(juuri)
     for esimerkki in esimerkit:

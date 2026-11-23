@@ -1,0 +1,18 @@
+{
+  "name": "Bash-skriptaus: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "shellcheck bats"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/bash/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "timonwong.shellcheck"
+      ]
+    }
+  }
+}
