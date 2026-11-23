@@ -1,4 +1,4 @@
-# Virheenkäsittely
+# Virheenkäsittely {.runko-virheet}
 
 C:ssä ei ole poikkeuksia. Virheet ilmaistaan paluuarvoilla, ja kutsujan
 on tarkistettava ne. Tässä luvussa käydään läpi tavallisimmat
@@ -14,7 +14,7 @@ ja tarkempi syy kerrotaan muuttujassa `errno`. Omassa koodissa
 kannattaa valita yksi johdonmukainen tapa. Yleinen ratkaisu on
 luettelotyyppi, jossa nolla tarkoittaa onnistumista:
 
-```{.c tiedosto="esimerkit/10-siivous.c" osa="virhekoodit"}
+```{.c tiedosto="esimerkit/11-siivous.c" osa="virhekoodit"}
 ```
 
 Taulukon nimetyt alustimet (`[OK] = "ok"`) pitävät tekstit ja koodit
@@ -30,7 +30,7 @@ yhdessä paikassa. Tämä on yksi harvoista tilanteista, joissa `goto`
 selkeyttää koodia; tekniikkaa käytetään laajasti esimerkiksi
 Linux-ytimessä.
 
-```{.c tiedosto="esimerkit/10-siivous.c" osa="siivous"}
+```{.c tiedosto="esimerkit/11-siivous.c" osa="siivous"}
 ```
 
 Tekniikka toimii, koska kaikki resurssimuuttujat alustetaan tyhjiksi
@@ -40,10 +40,10 @@ funktion alussa, ja `free(nullptr)` on sallittu. `toupper` ja muut
 `unsigned char`-tyypiksi; muuten negatiiviset merkkiarvot olisivat
 määrittelemätöntä käyttäytymistä.
 
-```{.c tiedosto="esimerkit/10-siivous.c" osa="kaytto"}
+```{.c tiedosto="esimerkit/11-siivous.c" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-siivous.odotettu"}
+```{.tuloste tiedosto="esimerkit/11-siivous.odotettu"}
 ```
 
 ## Väittämät: `assert` ja `static_assert`
@@ -54,12 +54,12 @@ ajonaikaisia virheitä, joista toivutaan. Niitä varten on makro `assert`
 tarkistaa ehdon jo käännösaikana; C23:ssa se on avainsana, eikä
 viestiä tarvitse antaa.
 
-```{.c tiedosto="esimerkit/10-assert.kaatuu.c"}
+```{.c tiedosto="esimerkit/11-assert.kaatuu.c"}
 ```
 
 Ohjelma tulostaa ensin `1.5` ja kaatuu sitten toisessa kutsussa:
 
-```{.tuloste tiedosto="esimerkit/10-assert.virhe"}
+```{.tuloste tiedosto="esimerkit/11-assert.virhe"}
 ```
 
 Virheilmoituksessa on myös tiedoston nimi, rivinumero ja funktio.
@@ -95,10 +95,10 @@ Tavallisimpia määrittelemättömän käyttäytymisen lähteitä:
 Sanitoijat havaitsevat suuren osan näistä. Seuraavassa ohjelmassa
 silmukan ehto on yhden liian suuri:
 
-```{.c tiedosto="esimerkit/10-rajat.kaatuu.c"}
+```{.c tiedosto="esimerkit/11-rajat.kaatuu.c"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-rajat.virhe"}
+```{.tuloste tiedosto="esimerkit/11-rajat.virhe"}
 ```
 
 Ilman sanitoijaa ohjelma luultavasti tulostaisi jonkin luvun eikä
@@ -109,10 +109,10 @@ kaatuisi. Virhe jäisi huomaamatta.
 Etumerkillisen kokonaisluvun ylivuoto on UB, jonka
 UndefinedBehaviorSanitizer havaitsee:
 
-```{.c tiedosto="esimerkit/10-ylivuoto.kaatuu.c"}
+```{.c tiedosto="esimerkit/11-ylivuoto.kaatuu.c"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-ylivuoto.virhe"}
+```{.tuloste tiedosto="esimerkit/11-ylivuoto.virhe"}
 ```
 
 Ylivuodon tarkistaminen jälkikäteen ei toimi, koska ylivuoto on jo
@@ -122,16 +122,51 @@ funktiot `ckd_add`, `ckd_sub` ja `ckd_mul`. Ne laskevat tuloksen
 ensimmäisen argumentin osoittamaan muuttujaan ja palauttavat `true`,
 jos tulos ei mahtunut tyyppiin:
 
-```{.c tiedosto="esimerkit/10-tarkistettu.c" osa="tarkistettu"}
+```{.c tiedosto="esimerkit/11-tarkistettu.c" osa="tarkistettu"}
 ```
 
-```{.c tiedosto="esimerkit/10-tarkistettu.c" osa="kaytto"}
+```{.c tiedosto="esimerkit/11-tarkistettu.c" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-tarkistettu.odotettu"}
+```{.tuloste tiedosto="esimerkit/11-tarkistettu.odotettu"}
 ```
 
 Määrittelemätöntä käyttäytymistä vastaan ei ole yhtä keinoa. Parhaat
 puolustukset ovat varoitukset (`-Wall -Wextra`), sanitoijat
 testauksessa, staattiset analyysityökalut ja koodi, jossa koot ja
 omistus ovat aina selvillä.
+
+## Käytännössä
+
+- **Yksi virhekäytäntö kirjastoa kohti.** Joko virhekoodi paluuarvona
+  (nolla on onnistuminen) ja tulos tulosparametrissa, tai tyhjä osoitin
+  ja syy `errno`ssa kuten standardikirjastossa. Johdonmukaisuus on
+  tärkeämpää kuin valinta.
+- **Tarkistamaton virhe varoitukseksi.** C23:n attribuutti
+  `[[nodiscard]]` virhekoodin palauttavan funktion esittelyssä saa
+  kääntäjän varoittamaan, jos paluuarvo jätetään käyttämättä.
+- **`goto`-siivous** vapauttaa resurssit yhdessä paikassa. Malli on
+  vakiintunut, koska se pitää virhepolut lyhyinä ja vapautukset
+  käänteisessä järjestyksessä.
+- **Kirjasto ei tulosta eikä lopeta.** Kirjastofunktio palauttaa virheen
+  kutsujalle. Vain sovellus päättää, tulostetaanko viesti, yritetäänkö
+  uudelleen vai lopetetaanko.
+- **`assert` ohjelmointivirheille, paluuarvo ajonaikaisille.** Väittämä
+  on dokumentaatiota esiehdoista; virheellinen syöte ei ole
+  ohjelmointivirhe.
+- **Virheen konteksti.** Jäsentimet palauttavat virhekoodin lisäksi
+  sijainnin (rivi ja sarake), jotta käyttäjä voi korjata syötteen.
+- **Määrittelemätön käyttäytyminen torjutaan työkaluilla:** varoitukset,
+  sanitoijat testeissä, `ckd_*`-tarkistukset ja syötettä käsittelevän
+  koodin sumutestaus (*fuzzing*, luku 13).
+
+## Itsearviointi
+
+- Osaat suunnitella virhekoodiluettelon tekstitaulukkoineen ja käyttää
+  sitä johdonmukaisesti.
+- Osaat kirjoittaa funktion, joka varaa useita resursseja ja vapauttaa ne
+  kaikilla poluilla `goto`-siivouksella.
+- Osaat erottaa ohjelmointivirheet (`assert`) ajonaikaisista virheistä
+  (paluuarvo).
+- Osaat luetella yleisimmät määrittelemättömän käyttäytymisen lähteet ja
+  havaita ne sanitoijilla.

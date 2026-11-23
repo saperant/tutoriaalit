@@ -1,4 +1,4 @@
-# Tyypit ja lausekkeet
+# Tyypit ja lausekkeet {.runko-tyypit}
 
 ## Perustyypit
 
@@ -11,12 +11,12 @@ Standardi määrää tyypeille vain vähimmäiskoot: esimerkiksi `int` on
 vähintään 16 ja `long` vähintään 32 bittiä. Todelliset koot riippuvat
 alustasta. Operaattori `sizeof` kertoo tyypin koon tavuina:
 
-```{.c tiedosto="esimerkit/02-tyypit.c" osa="koot"}
+```{.c tiedosto="esimerkit/03-tyypit.c" osa="koot"}
 ```
 
 Tuloste 64-bittisellä Linuxilla:
 
-```{.tuloste tiedosto="esimerkit/02-tyypit.odotettu"}
+```{.tuloste tiedosto="esimerkit/03-tyypit.odotettu"}
 ```
 
 64-bittisessä Windowsissa `long` on 4 tavua, joten `long`-tyyppiin ei
@@ -32,7 +32,7 @@ merkitystä, esimerkiksi tiedostomuodoissa ja verkkoprotokollissa.
 Otsikon `<inttypes.h>` makrot, kuten `PRId32`, antavat oikean
 `printf`-muunnosmääreen:
 
-```{.c tiedosto="esimerkit/02-kokonaisluvut.c" osa="stdint"}
+```{.c tiedosto="esimerkit/03-kokonaisluvut.c" osa="stdint"}
 ```
 
 Pitkiin lukuihin voi C23:sta alkaen kirjoittaa erottimeksi heittomerkin.
@@ -42,7 +42,7 @@ Pitkiin lukuihin voi C23:sta alkaen kirjoittaa erottimeksi heittomerkin.
 Etumerkittömät kokonaisluvut lasketaan aina modulo $2^n$, missä $n$ on
 bittien määrä. Ylivuoto on siis määritelty ja "kiertää" nollaan:
 
-```{.c tiedosto="esimerkit/02-kokonaisluvut.c" osa="kierto"}
+```{.c tiedosto="esimerkit/03-kokonaisluvut.c" osa="kierto"}
 ```
 
 Etumerkillisen kokonaisluvun ylivuoto taas on määrittelemätöntä
@@ -56,7 +56,7 @@ Kokonaislukujen jakolasku katkaisee tuloksen kohti nollaa, ja
 jakojäännöksellä on jaettavan etumerkki. Jos jompikumpi operandi on
 liukuluku, lasketaan liukulukujako:
 
-```{.c tiedosto="esimerkit/02-kokonaisluvut.c" osa="jako"}
+```{.c tiedosto="esimerkit/03-kokonaisluvut.c" osa="jako"}
 ```
 
 `printf`-merkkijonossa `%%` tulostaa prosenttimerkin.
@@ -67,10 +67,10 @@ Kokonaislukuliteraalin voi kirjoittaa kymmen-, heksadesimaali- (`0x`),
 oktaali- (`0`) tai C23:sta alkaen binäärimuodossa (`0b`). Etunolla on
 ansa: `017` on oktaaliluku 15.
 
-```{.c tiedosto="esimerkit/02-kokonaisluvut.c" osa="literaalit"}
+```{.c tiedosto="esimerkit/03-kokonaisluvut.c" osa="literaalit"}
 ```
 
-```{.tuloste tiedosto="esimerkit/02-kokonaisluvut.odotettu"}
+```{.tuloste tiedosto="esimerkit/03-kokonaisluvut.odotettu"}
 ```
 
 ## Tyyppimuunnokset
@@ -87,7 +87,7 @@ vertailua: etumerkillinen luku muunnetaan etumerkittömäksi. Silloin
 `-1` muuttuu suurimmaksi mahdolliseksi etumerkittömäksi luvuksi, ja
 vertailu `-1 < 1u` on epätosi. Valitsin `-Wextra` varoittaa tästä:
 
-```{.c tiedosto="esimerkit/02-etumerkki.ei-kaanny.c"}
+```{.c tiedosto="esimerkit/03-etumerkki.ei-kaanny.c"}
 ```
 
 Eksplisiittinen muunnos kirjoitetaan muodossa `(tyyppi)lauseke`. Sitä
@@ -102,15 +102,15 @@ oletuksena kannattaa käyttää `double`-tyyppiä. Useimpia
 desimaalilukuja ei voi esittää binäärisesti tarkasti, minkä vuoksi
 liukulukuja ei pidä vertailla operaattorilla `==`:
 
-```{.c tiedosto="esimerkit/02-liukuluvut.c" osa="tarkkuus"}
+```{.c tiedosto="esimerkit/03-liukuluvut.c" osa="tarkkuus"}
 ```
 
 Matemaattiset funktiot ovat otsikossa `<math.h>`:
 
-```{.c tiedosto="esimerkit/02-liukuluvut.c" osa="math"}
+```{.c tiedosto="esimerkit/03-liukuluvut.c" osa="math"}
 ```
 
-```{.tuloste tiedosto="esimerkit/02-liukuluvut.odotettu"}
+```{.tuloste tiedosto="esimerkit/03-liukuluvut.odotettu"}
 ```
 
 Rahasummat ja muut tarkkuutta vaativat arvot kannattaa tallentaa
@@ -123,13 +123,13 @@ Vakiot on perinteisesti määritelty esikääntäjän makroina. C23:n
 Toisin kuin makrolla, sillä on tyyppi ja näkyvyysalue, ja se näkyy
 debuggerissa.
 
-```{.c tiedosto="esimerkit/02-vakiot.c" osa="vakiot"}
+```{.c tiedosto="esimerkit/03-vakiot.c" osa="vakiot"}
 ```
 
 `const` puolestaan tarkoittaa vain, ettei muuttujaa saa muuttaa. Sen
 arvo voi selvitä vasta ajoaikana:
 
-```{.c tiedosto="esimerkit/02-vakiot.c" osa="const"}
+```{.c tiedosto="esimerkit/03-vakiot.c" osa="const"}
 ```
 
 C23:ssa `bool`, `true` ja `false` ovat avainsanoja. Aiemmissa
@@ -137,7 +137,7 @@ standardeissa ne otettiin käyttöön otsikolla `<stdbool.h>`. Tyhjät
 aaltosulkeet `{}` alustavat muuttujan tai taulukon nolliksi
 (aiemmin kirjoitettiin `{0}`):
 
-```{.c tiedosto="esimerkit/02-vakiot.c" osa="bool"}
+```{.c tiedosto="esimerkit/03-vakiot.c" osa="bool"}
 ```
 
 C23 toi myös tyyppipäättelyn: `auto` päättelee muuttujan tyypin
@@ -145,5 +145,39 @@ alustuslausekkeesta ja `typeof` antaa lausekkeen tyypin. Ne ovat
 hyödyllisimpiä makroissa; tavallisessa koodissa tyypin kirjoittaminen
 auki on yleensä selkeämpää.
 
-```{.c tiedosto="esimerkit/02-vakiot.c" osa="paattely"}
+```{.c tiedosto="esimerkit/03-vakiot.c" osa="paattely"}
 ```
+
+## Käytännössä
+
+- **Tyyppi käyttötarkoituksen mukaan.** `int` paikallisiin laskuihin,
+  `size_t` kokoihin ja indekseihin, `ptrdiff_t` osoittimien erotuksiin ja
+  `<stdint.h>`-tyypit kaikkeen, mikä kulkee rajapinnan, tiedoston tai
+  verkon yli. Näin koodin merkitys ei riipu alustasta.
+- **Etumerkittömät tyypit bittioperaatioihin, ei "koska arvo ei ole
+  negatiivinen".** `0u - 1` on suurin mahdollinen luku, joten etumerkitön
+  vähennyslasku kiertää huomaamatta. Alaspäin laskeva silmukka
+  etumerkittömällä indeksillä kirjoitetaan idiomilla
+  `for (size_t i = n; i-- > 0;)`.
+- **Implisiittiset muunnokset näkyviin.** Valitsimet `-Wconversion` ja
+  `-Wsign-conversion` paljastavat hiljaiset kavennukset. Eksplisiittinen
+  muunnos kirjoitetaan vasta, kun arvoalue on tarkistettu.
+- **Ei maagisia lukuja.** Vakiot nimetään `constexpr`-määrittelyllä tai
+  luettelolla. Makroa käytetään vakiona vain, jos koodin on käännyttävä
+  myös vanhemmilla standardeilla.
+- **Alusta jokainen muuttuja ja esittele se lähellä käyttöä.** Alustamaton
+  muuttuja on yleinen määrittelemättömän käyttäytymisen lähde, ja `{}`
+  tekee alustuksesta vaivatonta.
+- **Liukuluvut:** `double` oletuksena, vertailu toleranssilla ja raha
+  kokonaislukuina pienimmässä yksikössä.
+
+## Itsearviointi
+
+- Osaat valita kokonaislukutyypin käyttötarkoituksen mukaan ja tulostaa
+  sen oikealla muunnosmääreellä.
+- Osaat selittää kokonaislukujen ylennyksen ja sen, miksi `-1 < 1u` on
+  epätosi.
+- Osaat vertailla liukulukuja toleranssilla ja perustella, miksi rahaa ei
+  esitetä liukulukuina.
+- Osaat määritellä vakion `constexpr`-määrittelyllä ja kertoa, miten se
+  eroaa makrosta.

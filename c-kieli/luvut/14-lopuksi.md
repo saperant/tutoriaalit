@@ -1,4 +1,4 @@
-# Lopuksi
+# Lopuksi {.runko-kaytannot .runko-lahteet}
 
 ## C23 lyhyesti
 
@@ -7,23 +7,47 @@ GCC 14:ssä ja Clang 20:ssä valitsimella `-std=c23`.
 
 | Ominaisuus | Aiempi tapa | Luku |
 |------------|-------------|------|
-| `bool`, `true`, `false` avainsanoina | `#include <stdbool.h>` | 2 |
-| `nullptr` | `NULL` | 4 |
-| `constexpr`-vakiot | `#define`, `enum` | 2 |
-| `auto` ja `typeof` | tyyppi kirjoitettiin auki | 2 |
-| tyhjä alustin `{}` | `{0}` | 2 |
-| binääriliteraalit `0b1010` | heksadesimaaliluvut | 2 |
-| numeroerotin `1'000'000` | – | 2 |
-| `static_assert` ilman viestiä | `_Static_assert(ehto, "viesti")` | 10 |
-| attribuutit, kuten `[[fallthrough]]` | kääntäjäkohtaiset laajennokset | 3 |
-| luettelon perustyyppi `enum e : uint8_t` | – | 7 |
-| `<stdckdint.h>` | omat ylivuototarkistukset | 10 |
-| `strdup` standardikirjastossa | POSIX-laajennos | 6 |
-| funktio `f()` tarkoittaa samaa kuin `f(void)` | `()` tarkoitti määrittelemättömiä parametreja | 3 |
+| `bool`, `true`, `false` avainsanoina | `#include <stdbool.h>` | 3 |
+| `nullptr` | `NULL` | 5 |
+| `constexpr`-vakiot | `#define`, `enum` | 3 |
+| `auto` ja `typeof` | tyyppi kirjoitettiin auki | 3 |
+| tyhjä alustin `{}` | `{0}` | 3 |
+| binääriliteraalit `0b1010` | heksadesimaaliluvut | 3 |
+| numeroerotin `1'000'000` | – | 3 |
+| `static_assert` ilman viestiä | `_Static_assert(ehto, "viesti")` | 11 |
+| attribuutit, kuten `[[fallthrough]]` | kääntäjäkohtaiset laajennokset | 4 |
+| luettelon perustyyppi `enum e : uint8_t` | – | 8 |
+| `<stdckdint.h>` | omat ylivuototarkistukset | 11 |
+| `strdup` standardikirjastossa | POSIX-laajennos | 7 |
+| `thread_local` avainsanana | `_Thread_local` | 12 |
+| attribuutti `[[nodiscard]]` | kääntäjäkohtaiset laajennokset | 11 |
+| funktio `f()` tarkoittaa samaa kuin `f(void)` | `()` tarkoitti määrittelemättömiä parametreja | 4 |
 
 Muita C23:n uudistuksia ovat esimerkiksi `#embed`, joka liittää
 binääritiedoston sisällön taulukoksi, `<stdbit.h>`-otsikon
 bittioperaatiot sekä mielivaltaisen levyiset kokonaisluvut `_BitInt(N)`.
+
+## Mallit ja idiomit
+
+Tutoriaalissa esitellyt mallit ovat C-kehittäjien yhteistä sanastoa.
+Niiden nimet kannattaa tuntea, sillä ne toistuvat koodikatselmoinneissa
+ja avoimen lähdekoodin projekteissa.
+
+| Malli | Ongelma, jonka se ratkaisee | Luku |
+|-------|-----------------------------|------|
+| Tulosparametri ja onnistumisen paluuarvo | useita tuloksia ja virheen ilmaisu ilman poikkeuksia | 5 |
+| Osoitin ja pituus, viipale | taulukot ja alijonot ilman kopiointia | 6 |
+| Dynaaminen taulukko geometrisella kasvatuksella | kasvava kokoelma | 7 |
+| Areena | monen olion yhteinen elinaika ilman vuotoja | 7 |
+| Luonti- ja tuhoamisfunktiopari | resurssin elinkaari ilman konstruktoreita | 7, 9 |
+| Merkitty unioni | arvo, joka voi olla yksi monesta tyypistä | 8 |
+| Funktio-osoitintaulu | rajapinnat ja vaihdettavat toteutukset | 8 |
+| Läpinäkymätön tyyppi | kapselointi ja vakaa binäärirajapinta | 9 |
+| Moduulietuliite | nimiavaruudet | 9 |
+| X-makro | saman luettelon useat näkymät | 9 |
+| `goto`-siivous | resurssien vapautus kaikilla poluilla | 11 |
+| Virhekoodiluettelo ja tekstitaulukko | yhtenäinen virheenkäsittely | 11 |
+| Tuottaja–kuluttaja-jono | työnjako säikeiden välillä | 12 |
 
 ## Nyrkkisäännöt
 
@@ -62,6 +86,30 @@ bittioperaatiot sekä mielivaltaisen levyiset kokonaisluvut `_BitInt(N)`.
   kääntäjäkohtaiset laajennokset.
 - **Compiler Explorer** (<https://godbolt.org>) kääntää koodia selaimessa
   ja näyttää tuotetun konekielen. Se sopii pienten kokeilujen tekemiseen.
+- **SEI CERT C Coding Standard**
+  (<https://wiki.sei.cmu.edu/confluence/display/c>) on turvallisen
+  C-ohjelmoinnin sääntökokoelma perusteluineen ja esimerkkeineen.
+- **Kirjat:** Kernighanin ja Ritchien *The C Programming Language* on
+  kielen klassinen kuvaus (C89). Jens Gustedtin *Modern C* käsittelee
+  nykyistä C:tä ja sen hyviä käytäntöjä.
+
+### Kirjastot
+
+- **GLib** (<https://docs.gtk.org/glib/>): tietorakenteet, merkkijonot,
+  tapahtumasilmukka ja säikeet; GNOME-projektin perusta.
+- **stb** (<https://github.com/nothings/stb>): yksitiedostoisia
+  kirjastoja, mm. kuvien lataus ja dynaamiset taulukot (`stb_ds.h`).
+- **klib** (<https://github.com/attractivechaos/klib>): kevyitä,
+  makroilla tyypitettyjä tietorakenteita.
+- **SQLite** (<https://sqlite.org>): sulautettava tietokanta ja
+  esimerkki huolellisesti testatusta C-koodista.
+
+### Mihin tästä eteenpäin
+
+Taitopuussa C-kieli on esitietona muun muassa tietorakenteille,
+assemblylle, käyttöjärjestelmille ja sulautetuille järjestelmille.
+Erityistarpeisiin on omat taitonsa, kuten C:n ja assemblyn sekä Pythonin
+ja C:n yhteiskäyttö.
 
 ## Lisenssi
 

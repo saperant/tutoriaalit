@@ -1,4 +1,4 @@
-# Johdanto
+# Johdanto {.runko-johdanto}
 
 C on Dennis Ritchien 1970-luvun alussa Bell Labsissa kehittämä
 ohjelmointikieli. Se luotiin Unix-käyttöjärjestelmän toteutuskieleksi,
@@ -14,6 +14,32 @@ ohjelmoijaa: taulukon rajojen ylitystä, vapautetun muistin käyttöä
 tai kokonaisluvun ylivuotoa ei tarkisteta, vaan ne johtavat
 *määrittelemättömään käyttäytymiseen*. Hyvä C-ohjelmointi on suurelta
 osin sen tuntemista, mitä ei saa tehdä.
+
+## Mihin C sopii ja mihin ei
+
+C on oikea valinta, kun tarvitaan ennustettava suorituskyky, pieni
+muistijalanjälki tai suora pääsy laitteistoon, tai kun koodin on
+toimittava lähes millä tahansa alustalla:
+
+- käyttöjärjestelmät, laiteajurit ja sulautettujen laitteiden ohjelmistot
+- kirjastot, joita käytetään muista kielistä (C:n binäärirajapinta on
+  ohjelmointikielten yhteinen nimittäjä)
+- suorituskykykriittiset ytimet, kuten pakkaus, salaus ja
+  signaalinkäsittely.
+
+C ei ole hyvä valinta, kun kehitysnopeus, turvallisuus tai korkean tason
+abstraktiot painavat enemmän kuin kontrolli:
+
+- verkkopalvelut ja liiketoimintasovellukset, joissa käsitellään paljon
+  merkkijonoja ja ulkoista syötettä (muistiturvallisuusvirheet ovat
+  tietoturvariski)
+- suuret sovellukset, joissa tarvitaan valmiita tietorakenteita,
+  merkkijonotyyppiä ja moduulijärjestelmää
+- kertakäyttöiset skriptit ja datan käsittely, joihin Python tai
+  komentotulkki sopii paremmin.
+
+Uusissa järjestelmäprojekteissa C:n rinnalla harkitaan usein C++:aa tai
+Rustia, jotka tarjoavat saman suorituskyvyn vahvemmilla takuilla.
 
 ## Standardit
 

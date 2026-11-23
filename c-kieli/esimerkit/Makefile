@@ -2,9 +2,9 @@
 #
 #   make                    kääntää kaikki esimerkit hakemistoon bin/
 #   make 01-hei             kääntää yhden esimerkin
-#   make aja-09-rivit       kääntää ja ajaa esimerkin; syöte ja argumentit
+#   make aja-10-rivit       kääntää ja ajaa esimerkin; syöte ja argumentit
 #                           luetaan tiedostoista .syote ja .argumentit
-#   make virhe-02-etumerkki näyttää .ei-kaanny-esimerkin käännösvirheen
+#   make virhe-03-etumerkki näyttää .ei-kaanny-esimerkin käännösvirheen
 #                           (varoitukset virheinä, kuten testeissä)
 #   make siivoa             poistaa käännetyt ohjelmat
 #

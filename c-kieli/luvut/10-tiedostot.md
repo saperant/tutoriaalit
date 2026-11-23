@@ -1,4 +1,4 @@
-# Syöte, tuloste ja tiedostot
+# Syöte, tuloste ja tiedostot {.runko-tyypit}
 
 ## Komentoriviargumentit
 
@@ -6,7 +6,7 @@
 taulukon `argv`, jonka alkiot ovat argumentteja merkkijonoina.
 `argv[0]` on ohjelman nimi, ja `argv[argc]` on tyhjä osoitin.
 
-```{.c tiedosto="esimerkit/09-argumentit.c" osa="argumentit"}
+```{.c tiedosto="esimerkit/10-argumentit.c" osa="argumentit"}
 ```
 
 Ajettuna komennolla
@@ -17,7 +17,7 @@ Ajettuna komennolla
 
 ohjelma tulostaa:
 
-```{.tuloste tiedosto="esimerkit/09-argumentit.odotettu"}
+```{.tuloste tiedosto="esimerkit/10-argumentit.odotettu"}
 ```
 
 Lisäksi virheviesti `ohitetaan virheellinen luku: kolme` menee
@@ -38,17 +38,17 @@ Se jättää rivinvaihdon merkkijonoon, ja se poistetaan usein
 esimerkiksi `sscanf`-funktiolla, jonka paluuarvo kertoo, montako kenttää
 onnistuttiin lukemaan:
 
-```{.c tiedosto="esimerkit/09-rivit.c" osa="rivit"}
+```{.c tiedosto="esimerkit/10-rivit.c" osa="rivit"}
 ```
 
 Syötteellä
 
-```{.tuloste tiedosto="esimerkit/09-rivit.syote"}
+```{.tuloste tiedosto="esimerkit/10-rivit.syote"}
 ```
 
 ohjelma tulostaa:
 
-```{.tuloste tiedosto="esimerkit/09-rivit.odotettu"}
+```{.tuloste tiedosto="esimerkit/10-rivit.odotettu"}
 ```
 
 Merkkijonomääreeseen `%s` on aina annettava enimmäispituus (`%63s`),
@@ -65,7 +65,7 @@ tai tyhjän osoittimen, jos avaaminen epäonnistuu. Toinen argumentti on
 poistetaan) ja `"a"` loppuun lisäämiseen. Tiedostoon kirjoitetaan
 samoilla funktioilla kuin päätteelle: `fprintf`, `fputs` ja `fputc`.
 
-```{.c tiedosto="esimerkit/09-tiedostot.c" osa="kirjoita"}
+```{.c tiedosto="esimerkit/10-tiedostot.c" osa="kirjoita"}
 ```
 
 Kun kirjastofunktio epäonnistuu, se asettaa yleensä muuttujan `errno`
@@ -78,13 +78,13 @@ tallentaminen `char`-muuttujaan on klassinen virhe. `EOF` voi tarkoittaa
 tiedoston loppua tai lukuvirhettä; ne erotetaan funktioilla `feof` ja
 `ferror`.
 
-```{.c tiedosto="esimerkit/09-tiedostot.c" osa="lue"}
+```{.c tiedosto="esimerkit/10-tiedostot.c" osa="lue"}
 ```
 
-```{.c tiedosto="esimerkit/09-tiedostot.c" osa="kaytto"}
+```{.c tiedosto="esimerkit/10-tiedostot.c" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/09-tiedostot.odotettu"}
+```{.tuloste tiedosto="esimerkit/10-tiedostot.odotettu"}
 ```
 
 Jokainen avattu tiedosto on suljettava `fclose`-funktiolla. Tuloste on
@@ -98,16 +98,16 @@ sellaisenaan. Tila `"b"` (`"wb"`, `"rb"`) estää rivinvaihtojen
 muunnokset alustoilla, joilla tekstitiedostoja käsitellään eri tavoin
 (Windows). `fseek` siirtää lukukohtaa ja `ftell` kertoo sen.
 
-```{.c tiedosto="esimerkit/09-binaari.c" osa="tyyppi"}
+```{.c tiedosto="esimerkit/10-binaari.c" osa="tyyppi"}
 ```
 
-```{.c tiedosto="esimerkit/09-binaari.c" osa="kirjoitus"}
+```{.c tiedosto="esimerkit/10-binaari.c" osa="kirjoitus"}
 ```
 
-```{.c tiedosto="esimerkit/09-binaari.c" osa="luku"}
+```{.c tiedosto="esimerkit/10-binaari.c" osa="luku"}
 ```
 
-```{.tuloste tiedosto="esimerkit/09-binaari.odotettu"}
+```{.tuloste tiedosto="esimerkit/10-binaari.odotettu"}
 ```
 
 Rakenteiden kirjoittaminen sellaisinaan on nopeaa, mutta tiedosto on
@@ -115,3 +115,33 @@ sidottu alustaan: kenttien koko, täyte ja tavujärjestys voivat olla
 toisella koneella erilaiset. Siirrettävissä tiedostomuodoissa kentät
 kirjoitetaan yksitellen kiinteänkokoisina ja sovitussa
 tavujärjestyksessä.
+
+## Käytännössä
+
+- **Lue rivi, jäsennä erikseen.** `fgets` ja sen jälkeen `sscanf`,
+  `strtol` tai oma jäsennin. `scanf` suoraan syötteeseen jättää
+  virheellisen syötteen puskuriin.
+- **Ohjelma putken osana.** Tulos `stdout`iin, virheet `stderr`iin ja
+  paluuarvona `EXIT_SUCCESS` tai `EXIT_FAILURE`. Silloin ohjelmaa voi
+  käyttää skripteissä ja yhdistää muihin työkaluihin.
+- **Turvallinen tallennus.** Tiedosto kirjoitetaan ensin
+  väliaikaistiedostoon, tarkistetaan `fclose`n paluuarvo ja vaihdetaan
+  tiedosto paikalleen `rename`-kutsulla. Kaatuminen kesken kirjoituksen
+  ei silloin tuhoa vanhaa versiota.
+- **Komentorivi.** Laajemmissa ohjelmissa valitsimet jäsennetään POSIX:n
+  `getopt`illa tai GNU:n `getopt_long`illa, joten ohjelma käyttäytyy kuten
+  muut komentorivityökalut.
+- **Binäärimuodot** kirjoitetaan kenttä kerrallaan kiinteänkokoisina ja
+  sovitussa tavujärjestyksessä, ja muodolle annetaan versionumero.
+- **Puskurointi.** `stdout` on päätteellä rivipuskuroitu mutta putkessa
+  täysin puskuroitu. Jos tulosteen on näyttävä heti, esimerkiksi ennen
+  pitkää laskentaa, kutsutaan `fflush(stdout)`.
+
+## Itsearviointi
+
+- Osaat lukea syötteen riveittäin ja jäsentää rivit niitä validoiden.
+- Osaat käsitellä komentoriviargumentit ja palauttaa oikean paluuarvon.
+- Osaat kirjoittaa ja lukea tiedoston niin, että kaikki virhetilanteet
+  tarkistetaan, myös `fclose`.
+- Osaat selittää, miksi rakenteen kirjoittaminen tiedostoon sellaisenaan
+  ei ole siirrettävää.

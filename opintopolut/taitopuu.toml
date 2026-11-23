@@ -25,6 +25,9 @@ roadmap_polut = [
   "datastructures-and-algorithms", "linux", "shell-bash", "git-github",
   "cyber-security", "network-engineer", "system-design", "game-developer",
   "server-side-game-developer", "devops", "docker", "kubernetes",
+  "golang", "java", "kotlin", "javascript", "typescript", "sql",
+  "postgresql-dba", "html", "css", "frontend", "react", "backend",
+  "spring-boot", "android",
 ]
 
 # Taitopuukartan (sivusto/) linkit lähdekoodiin ja Codespacesiin.
@@ -88,8 +91,13 @@ kuvaus = "Ohjelmien toiminnan selvittäminen konekielestä, haavoittuvuudet ja n
 
 [[alue]]
 id = "kielet"
-nimi = "Kielet syvemmin"
-kuvaus = "Erityistarpeiden taidot kielipakettien päälle: kielikohtainen suorituskyky ja kielten yhteiskäyttö."
+nimi = "Ohjelmointikielet"
+kuvaus = "Kielipaketit perusteiden jälkeen sekä erityistaidot niiden päälle: kielikohtainen suorituskyky ja kielten yhteiskäyttö."
+
+[[alue]]
+id = "sovellukset"
+nimi = "Sovelluskehitys"
+kuvaus = "Web-, tausta- ja mobiilisovellukset sekä relaatiotietokannat."
 
 # ---------------------------------------------------------------------
 # Perusta
@@ -119,18 +127,18 @@ amk = "Ohjelmoinnin perusteet"
 id = "komentorivi"
 nimi = "Komentorivi ja Linux"
 alue = "perusta"
-kuvaus = "Linux-järjestelmän käyttö komentoriviltä ja tehtävien automatisointi komentotulkin skripteillä."
+kuvaus = "Linux-järjestelmän käyttö komentoriviltä: tiedostot, prosessit, putket ja tekstinkäsittelytyökalut."
 edellyttaa = []
 aiheet = [
   "tiedostojärjestelmä ja oikeudet",
   "putket, uudelleenohjaukset ja tekstinkäsittely (grep, sed, awk)",
   "prosessit ja signaalit",
   "pakettienhallinta ja palvelut",
-  "Bash-skriptit: muuttujat, ehdot, silmukat, funktiot",
+  "ympäristömuuttujat ja komentotulkin asetukset",
   "ssh ja etäkäyttö",
 ]
 laajuus = 3
-testaus = "Bash-skriptit ajetaan säiliössä, tulosteita verrataan"
+testaus = "komentosarjat ajetaan säiliössä, tulosteita verrataan"
 roadmap = ["linux", "shell-bash"]
 amk = "Linux-perusteet"
 
@@ -195,11 +203,51 @@ amk = "Olio-ohjelmointi C++:lla"
 tutoriaali = "moderni-cpp"
 
 [[taito]]
+id = "python"
+nimi = "Python"
+alue = "perusta"
+kuvaus = "Idiomaattinen Python ohjelmoinnin osaavalle: tietomalli, iteraattorit, tyypitys, virheenkäsittely ja projektin rakenne."
+edellyttaa = ["ohjelmoinnin-perusteet"]
+aiheet = [
+  "Pythonin tietomalli: oliot, viittaukset ja muuttumattomuus",
+  "iteraattorit, generaattorit ja kontekstinhallinta",
+  "dataluokat, protokollat ja tyyppivihjeet",
+  "poikkeukset ja EAFP",
+  "modulit, paketit ja virtuaaliympäristöt",
+  "rinnakkaisuus: säikeet, prosessit ja asyncio",
+  "testaus pytestillä, mypy ja ruff",
+]
+laajuus = 5
+testaus = "Python, pytest, mypy ja ruff"
+roadmap = ["python"]
+amk = "Ohjelmointi Pythonilla"
+
+[[taito]]
+id = "bash"
+nimi = "Bash-skriptaus"
+alue = "perusta"
+kuvaus = "Luotettavien komentotulkkiskriptien kirjoittaminen: lainaus, virheiden käsittely, putket ja prosessit."
+edellyttaa = ["komentorivi", "ohjelmoinnin-perusteet"]
+aiheet = [
+  "muuttujat, lainausmerkit ja laajennukset",
+  "ehdot, silmukat ja funktiot",
+  "taulukot ja assosiatiiviset taulukot",
+  "virheiden käsittely: set -euo pipefail ja trap",
+  "putket, prosessit ja rinnakkaiset työt",
+  "argumentit ja getopts",
+  "ShellCheck ja testaus (bats)",
+]
+laajuus = 3
+testaus = "bash, ShellCheck, tulosteiden vertailu"
+roadmap = ["shell-bash"]
+amk = "Linux-ylläpito ja skriptaus"
+
+[[taito]]
 id = "python-tyokalut"
 nimi = "Python työkaluohjelmointiin"
 alue = "perusta"
 kuvaus = "Komentorivityökalujen, tiedostomuotojen jäsentäjien ja automaation kirjoittaminen Pythonilla."
-edellyttaa = ["ohjelmoinnin-perusteet", "komentorivi"]
+edellyttaa = ["python", "komentorivi"]
 aiheet = [
   "komentorivityökalut (argparse) ja paketointi",
   "säännölliset lausekkeet ja tekstimuotojen jäsentäminen",
@@ -218,7 +266,7 @@ id = "rakennus-ja-testaus"
 nimi = "Käännösjärjestelmät, testaus ja CI"
 alue = "perusta"
 kuvaus = "C- ja C++-projektien rakentaminen, automaattinen testaus ja jatkuva integraatio."
-edellyttaa = ["c-kieli", "versionhallinta"]
+edellyttaa = ["c-kieli", "versionhallinta", "bash"]
 aiheet = [
   "Make ja CMake",
   "riippuvuudet ja kirjastot",
@@ -377,7 +425,7 @@ id = "kaantajatekniikka"
 nimi = "Kääntäjätekniikka"
 alue = "algoritmit"
 kuvaus = "Pienen ohjelmointikielen kääntäjän rakentaminen jäsentimestä koodingenerointiin."
-edellyttaa = ["algoritmit", "assembly"]
+edellyttaa = ["algoritmit", "assembly", "funktionaalinen-ohjelmointi"]
 aiheet = [
   "selaus ja jäsennys (rekursiivinen laskeutuminen)",
   "abstrakti syntaksipuu ja semanttinen analyysi",
@@ -564,12 +612,32 @@ aiheet = [
   "muistit ja FIFOt",
   "kellot, resetit ja kellotasojen ylitykset",
   "synteesikelpoisuus ja koodaustyyli",
-  "VHDL-vertailu",
+  "Verilog-2005-yhteensopivuus",
 ]
 laajuus = 5
 testaus = "Verilator ja Icarus Verilog, itsetarkistavat testipenkit"
 roadmap = []
 amk = "FPGA-suunnittelu / VHDL"
+
+[[taito]]
+id = "vhdl"
+nimi = "RTL-suunnittelu VHDL:llä"
+alue = "laitteisto"
+kuvaus = "Synteesikelpoisen digitaalilogiikan kuvaaminen VHDL:llä, jota käytetään laajasti eurooppalaisessa teollisuudessa ja opetuksessa."
+edellyttaa = ["digitaalitekniikka"]
+aiheet = [
+  "entiteetit, arkkitehtuurit ja kirjastot",
+  "vahva tyypitys: std_logic, numeric_std ja omat tyypit",
+  "prosessit, signaalit ja muuttujat",
+  "tilakoneet ja datapolut",
+  "generics ja generate-rakenteet",
+  "testipenkit ja VHDL-2008:n parannukset",
+  "vertailu SystemVerilogiin",
+]
+laajuus = 5
+testaus = "GHDL, itsetarkistavat testipenkit"
+roadmap = []
+amk = "Digitaalitekniikka / VHDL"
 
 [[taito]]
 id = "verifiointi"
@@ -652,9 +720,8 @@ id = "eda-skriptaus"
 nimi = "EDA-työkaluketjujen automatisointi"
 alue = "laitteisto"
 kuvaus = "Laitteistosuunnittelun työkalujen ohjaus ja tulosten käsittely Tcl- ja Python-skripteillä."
-edellyttaa = ["rtl-suunnittelu", "python-tyokalut", "rakennus-ja-testaus"]
+edellyttaa = ["rtl-suunnittelu", "python-tyokalut", "rakennus-ja-testaus", "tcl"]
 aiheet = [
-  "Tcl-kielen perusteet EDA-työkaluissa",
   "suunnitteluvuon hallinta (Make, Python)",
   "raporttien jäsentäminen ja koosteet",
   "regressioajot ja tulosten seuranta",
@@ -947,7 +1014,7 @@ id = "jarjestelmasuunnittelu"
 nimi = "Skaalautuvien järjestelmien suunnittelu"
 alue = "hajautetut"
 kuvaus = "Suurten palvelujärjestelmien arkkitehtuuri: skaalautuvuus, välimuistit, jonot ja havaittavuus."
-edellyttaa = ["hajautetut-jarjestelmat"]
+edellyttaa = ["hajautetut-jarjestelmat", "sql"]
 aiheet = [
   "suorituskyky ja skaalautuvuus",
   "kuormantasaus ja välimuistit",
@@ -1142,6 +1209,163 @@ amk = "Sulautettujen järjestelmien tietoturva"
 # ---------------------------------------------------------------------
 
 [[taito]]
+id = "rust"
+nimi = "Rust"
+alue = "kielet"
+kuvaus = "Muistiturvallinen järjestelmäohjelmointi: omistajuus, lainaus, piirreperusteinen geneerisyys ja pelottomat säikeet."
+edellyttaa = ["c-kieli"]
+aiheet = [
+  "omistajuus, lainaus ja elinajat",
+  "enum, match ja Option/Result",
+  "piirteet (traits) ja geneerisyys",
+  "kokoelmat ja iteraattorit",
+  "virheenkäsittely ?-operaattorilla",
+  "moduulit, crate-paketit ja Cargo",
+  "säikeet, Send/Sync ja async",
+  "unsafe ja C-rajapinta",
+]
+laajuus = 5
+testaus = "rustc ja cargo test, Clippy varoitukset virheinä"
+roadmap = ["rust"]
+amk = "Järjestelmäohjelmointi"
+
+[[taito]]
+id = "go"
+nimi = "Go"
+alue = "kielet"
+kuvaus = "Yksinkertaisuuteen ja rinnakkaisuuteen suunniteltu kieli verkkopalveluille ja pilvi-infrastruktuurille."
+edellyttaa = ["ohjelmoinnin-perusteet"]
+aiheet = [
+  "tyypit, rakenteet ja rajapinnat",
+  "slice- ja map-tietorakenteet",
+  "virheet arvoina",
+  "goroutinet, kanavat ja context",
+  "paketit ja moduulit",
+  "standardikirjaston net/http",
+  "testaus ja vertailuajot go testillä",
+]
+laajuus = 5
+testaus = "go vet ja go test"
+roadmap = ["golang"]
+amk = "Ohjelmointi"
+
+[[taito]]
+id = "java"
+nimi = "Java"
+alue = "kielet"
+kuvaus = "Java ja JVM-alusta: oliomalli, kokoelmat, roskienkeruu, säikeet ja modernit kielipiirteet."
+edellyttaa = ["ohjelmoinnin-perusteet"]
+aiheet = [
+  "luokat, rajapinnat, recordit ja sealed-tyypit",
+  "geneerisyys ja kokoelmat",
+  "streamit ja lambdat",
+  "poikkeukset ja niiden hinta",
+  "JVM: roskienkeruu ja JIT",
+  "säikeet, virtuaalisäikeet ja java.util.concurrent",
+  "Maven/Gradle ja JUnit",
+]
+laajuus = 5
+testaus = "javac -Xlint ja JUnit"
+roadmap = ["java"]
+amk = "Olio-ohjelmointi Javalla"
+
+[[taito]]
+id = "kotlin"
+nimi = "Kotlin"
+alue = "kielet"
+kuvaus = "Kotlin JVM:n tuntevalle: null-turvallisuus, tiivis syntaksi, laajennusfunktiot ja korutiinit."
+edellyttaa = ["java"]
+aiheet = [
+  "null-turvallisuus ja tyyppijärjestelmä",
+  "data- ja sealed-luokat",
+  "laajennusfunktiot ja DSL:t",
+  "kokoelmat ja funktionaalinen tyyli",
+  "korutiinit ja Flow",
+  "yhteiskäyttö Javan kanssa",
+]
+laajuus = 3
+testaus = "kotlinc ja kotlin.test"
+roadmap = ["kotlin"]
+amk = "Mobiiliohjelmointi"
+
+[[taito]]
+id = "javascript"
+nimi = "JavaScript"
+alue = "kielet"
+kuvaus = "JavaScript selaimessa ja Nodessa: arvot ja oliot, sulkeumat, prototyypit, lupaukset ja tapahtumasilmukka."
+edellyttaa = ["ohjelmoinnin-perusteet"]
+aiheet = [
+  "arvot, tyypit ja yhtäsuuruus",
+  "funktiot, sulkeumat ja this",
+  "oliot, prototyypit ja luokat",
+  "taulukot, Map ja Set",
+  "tapahtumasilmukka, lupaukset ja async/await",
+  "ES-moduulit ja npm",
+  "testaus (node:test)",
+]
+laajuus = 5
+testaus = "Node.js, node:test ja ESLint"
+roadmap = ["javascript"]
+amk = "Web-ohjelmointi"
+
+[[taito]]
+id = "typescript"
+nimi = "TypeScript"
+alue = "kielet"
+kuvaus = "Staattinen tyypitys JavaScriptille: tyyppijärjestelmän käyttö suunnittelun ja ylläpidettävyyden välineenä."
+edellyttaa = ["javascript"]
+aiheet = [
+  "rakenteellinen tyypitys",
+  "unionit, kavennus ja erotellut unionit",
+  "geneerisyys ja apuvälinetyypit",
+  "tyyppien johtaminen datasta",
+  "tsconfig ja tiukka tila",
+  "tyypit kirjastorajapinnoissa",
+]
+laajuus = 3
+testaus = "tsc --strict ja node:test"
+roadmap = ["typescript"]
+amk = "Web-ohjelmointi"
+
+[[taito]]
+id = "tcl"
+nimi = "Tcl"
+alue = "kielet"
+kuvaus = "Tcl-kieli ja sen käyttö EDA-työkalujen ja muiden sovellusten komentotulkkina."
+edellyttaa = ["ohjelmoinnin-perusteet"]
+aiheet = [
+  "kaikki on merkkijono: korvaukset ja lainaus",
+  "listat ja sanakirjat",
+  "proseduurit ja nimiavaruudet",
+  "uplevel, upvar ja omat ohjausrakenteet",
+  "virheet ja catch/try",
+  "Tcl sovellusten sulautettuna komentotulkkina",
+]
+laajuus = 2
+testaus = "tclsh ja tcltest"
+roadmap = []
+amk = "Tuotekehityksen työkalut"
+
+[[taito]]
+id = "funktionaalinen-ohjelmointi"
+nimi = "Funktionaalinen ohjelmointi (Racket)"
+alue = "kielet"
+kuvaus = "Ohjelmoinnin ajattelutapoja Lispin perinteestä: rekursio, korkeamman asteen funktiot, muuttumaton data, makrot ja oma tulkki."
+edellyttaa = ["ohjelmoinnin-perusteet"]
+aiheet = [
+  "lausekkeet, listat ja rekursio",
+  "korkeamman asteen funktiot ja sulkeumat",
+  "muuttumaton data ja rakenteellinen rekursio",
+  "koodi datana ja makrot",
+  "laiska laskenta ja virrat",
+  "oma tulkki: eval ja apply",
+]
+laajuus = 5
+testaus = "Racket ja rackunit"
+roadmap = ["computer-science"]
+amk = "Ohjelmointiparadigmat"
+
+[[taito]]
 id = "cpp-suorituskyky"
 nimi = "C++:n suorituskyky"
 alue = "kielet"
@@ -1199,6 +1423,107 @@ roadmap = ["python", "cpp"]
 amk = "Ohjelmointi ja skriptaus"
 
 # ---------------------------------------------------------------------
+# Sovelluskehitys
+# ---------------------------------------------------------------------
+
+[[taito]]
+id = "sql"
+nimi = "SQL ja relaatiotietokannat"
+alue = "sovellukset"
+kuvaus = "Datan mallintaminen ja kyselyt relaatiotietokannassa: joukko-operaatiot, eheys, transaktiot ja indeksit."
+edellyttaa = ["ohjelmoinnin-perusteet"]
+aiheet = [
+  "relaatiomalli ja normalisointi",
+  "SELECT, liitokset ja koosteet",
+  "alikyselyt, CTE:t ja ikkunafunktiot",
+  "rajoitteet ja eheys",
+  "transaktiot ja eristystasot",
+  "indeksit ja kyselysuunnitelmat",
+  "SQL sovelluksesta: parametrit ja injektioiden torjunta",
+]
+laajuus = 5
+testaus = "SQLite, kyselyjen tulosten vertailu"
+roadmap = ["sql", "postgresql-dba"]
+amk = "Tietokannat"
+
+[[taito]]
+id = "html-css"
+nimi = "HTML ja CSS"
+alue = "sovellukset"
+kuvaus = "Verkkosivujen rakenne ja ulkoasu: semanttinen HTML, saavutettavuus ja responsiivinen CSS-asettelu."
+edellyttaa = []
+aiheet = [
+  "dokumentin rakenne ja semanttiset elementit",
+  "lomakkeet ja saavutettavuus",
+  "CSS:n kaskadi, periytyminen ja spesifisyys",
+  "laatikkomalli, flexbox ja grid",
+  "responsiivisuus ja mediakyselyt",
+  "teemat ja muuttujat",
+]
+laajuus = 3
+testaus = "Playwright: rakenne-, saavutettavuus- ja asettelutarkistukset"
+roadmap = ["html", "css"]
+amk = "Web-suunnittelu"
+
+[[taito]]
+id = "web-sovellukset"
+nimi = "Web-sovellukset"
+alue = "sovellukset"
+kuvaus = "Selainsovellusten rakentaminen: DOM, tila, komponentit, verkkopyynnöt ja testaus."
+edellyttaa = ["typescript", "html-css", "tietoverkot"]
+aiheet = [
+  "DOM ja tapahtumat",
+  "tilan hallinta ja komponentit",
+  "fetch, REST ja virheiden käsittely",
+  "reititys ja selaimen tallennus",
+  "kehykset (React, Vue) ja niiden periaatteet",
+  "päästä päähän -testaus Playwrightilla",
+  "tietoturva selaimessa: XSS, CSP ja CORS",
+]
+laajuus = 5
+testaus = "Playwright ja node:test"
+roadmap = ["frontend", "react"]
+amk = "Web-sovelluskehitys"
+
+[[taito]]
+id = "taustapalvelut"
+nimi = "Taustapalvelut"
+alue = "sovellukset"
+kuvaus = "HTTP-rajapintojen ja taustajärjestelmien toteutus: REST, tietokantaliitännät, todennus ja testaus."
+edellyttaa = ["java", "sql", "tietoverkot"]
+aiheet = [
+  "HTTP ja REST-rajapintojen suunnittelu",
+  "Spring Boot: riippuvuuksien injektointi ja konfiguraatio",
+  "tietokantaliitännät: JDBC, JPA ja migraatiot",
+  "todennus ja valtuutus",
+  "virheiden käsittely ja havaittavuus",
+  "integraatiotestaus",
+]
+laajuus = 5
+testaus = "JUnit, Spring Boot -testit ja upotettu tietokanta"
+roadmap = ["backend", "spring-boot"]
+amk = "Palvelinohjelmointi"
+
+[[taito]]
+id = "android-sovellukset"
+nimi = "Android-sovellukset"
+alue = "sovellukset"
+kuvaus = "Android-sovellusten kehitys Kotlinilla ja Jetpack Composella."
+edellyttaa = ["kotlin"]
+aiheet = [
+  "sovelluksen rakenne ja elinkaari",
+  "käyttöliittymä Jetpack Composella",
+  "tila ja ViewModel",
+  "verkko ja tallennus",
+  "taustatyöt ja korutiinit",
+  "testaus",
+]
+laajuus = 5
+testaus = "Gradle, yksikkötestit ja Robolectric"
+roadmap = ["android"]
+amk = "Mobiiliohjelmointi"
+
+# ---------------------------------------------------------------------
 # Roolit
 # ---------------------------------------------------------------------
 
@@ -1207,14 +1532,14 @@ id = "laitteistoarkkitehti"
 nimi = "Laitteistoarkkitehti"
 kuvaus = "Työskentelee rautatason arkkitehtuurin parissa: mallintaa järjestelmän korkean tason malleilla (HLM), toteuttaa ja verifioi RTL:n ja automatisoi työkaluketjut skripteillä."
 tavoitteet = ["arkkitehtuurin-tutkiminen", "verifiointi", "fpga-toteutus", "eda-skriptaus"]
-valinnaiset = ["hls", "dsp-laitteisto", "kaantajatekniikka", "python-c-integraatio"]
+valinnaiset = ["hls", "dsp-laitteisto", "kaantajatekniikka", "python-c-integraatio", "vhdl"]
 
 [[rooli]]
 id = "sulautettujen-kehittaja"
 nimi = "Sulautettujen ohjelmistojen kehittäjä"
 kuvaus = "Kehittää ohjelmistoja mikrokontrollereille ja sulautetuille Linux-laitteille: bare-metal-koodia, RTOS-sovelluksia ja laiteajureita."
 tavoitteet = ["rtos", "linux-ajurit"]
-valinnaiset = ["dsp", "laiteohjelmiston-takaisinmallinnus", "c-asm-integraatio"]
+valinnaiset = ["dsp", "laiteohjelmiston-takaisinmallinnus", "c-asm-integraatio", "rust"]
 
 [[rooli]]
 id = "signaalinkasittelija"
@@ -1235,18 +1560,39 @@ id = "hajautettujen-kehittaja"
 nimi = "Hajautettujen järjestelmien kehittäjä"
 kuvaus = "Rakentaa verkossa toimivia, vikasietoisia ja skaalautuvia palveluja ja infrastruktuuria."
 tavoitteet = ["jarjestelmasuunnittelu", "kontit-ja-pilvi"]
-valinnaiset = ["suorituskyky", "tietoturvan-perusteet"]
+valinnaiset = ["suorituskyky", "tietoturvan-perusteet", "go"]
 
 [[rooli]]
 id = "takaisinmallintaja"
 nimi = "Takaisinmallintaja ja tietoturva-analyytikko"
 kuvaus = "Analysoi ohjelmia ja laiteohjelmistoja konekielen tasolla, etsii haavoittuvuuksia ja arvioi suojauksia."
 tavoitteet = ["haavoittuvuudet", "laiteohjelmiston-takaisinmallinnus"]
-valinnaiset = ["kaantajatekniikka", "verkko-ohjelmointi", "c-asm-integraatio"]
+valinnaiset = ["kaantajatekniikka", "verkko-ohjelmointi", "c-asm-integraatio", "rust"]
 
 [[rooli]]
 id = "algoritmiikka"
 nimi = "Algoritmiikan ja ohjelmistokehityksen perusta"
 kuvaus = "Yleinen ohjelmistokehittäjän tietojenkäsittelytieteen perusta: tietorakenteet, algoritmit ja niiden toteutus."
 tavoitteet = ["edistyneet-algoritmit", "rakennus-ja-testaus"]
-valinnaiset = ["kaantajatekniikka", "rinnakkaisohjelmointi", "cpp-suorituskyky"]
+valinnaiset = ["kaantajatekniikka", "rinnakkaisohjelmointi", "cpp-suorituskyky", "funktionaalinen-ohjelmointi"]
+
+[[rooli]]
+id = "web-kehittaja"
+nimi = "Web-kehittäjä"
+kuvaus = "Rakentaa saavutettavia ja ylläpidettäviä selainsovelluksia."
+tavoitteet = ["web-sovellukset"]
+valinnaiset = ["sql", "taustapalvelut", "kontit-ja-pilvi"]
+
+[[rooli]]
+id = "taustajarjestelmakehittaja"
+nimi = "Taustajärjestelmäkehittäjä"
+kuvaus = "Toteuttaa palvelinsovelluksia, rajapintoja ja tietokantaratkaisuja."
+tavoitteet = ["taustapalvelut", "kontit-ja-pilvi"]
+valinnaiset = ["kotlin", "go", "jarjestelmasuunnittelu"]
+
+[[rooli]]
+id = "mobiilikehittaja"
+nimi = "Mobiilikehittäjä (Android)"
+kuvaus = "Kehittää Android-sovelluksia Kotlinilla."
+tavoitteet = ["android-sovellukset"]
+valinnaiset = ["sql", "taustapalvelut"]

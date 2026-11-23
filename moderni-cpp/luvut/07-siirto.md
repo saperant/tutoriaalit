@@ -1,4 +1,4 @@
-# Siirtosemantiikka
+# Siirtosemantiikka {.runko-muisti}
 
 Ennen C++11:tä olion välittäminen arvona tarkoitti aina kopiointia.
 Suuren vektorin palauttaminen funktiosta saattoi kopioida koko sisällön,
@@ -30,7 +30,7 @@ siirtomuodostimen ja siirtosijoituksen. Tätä kutsutaan *viiden
 säännöksi* (*rule of five*). Seuraava luokka hallitsee dynaamista
 taulukkoa ja tulostaa, mitä tapahtuu:
 
-```{.cpp tiedosto="esimerkit/06-puskuri.cpp" osa="luokka"}
+```{.cpp tiedosto="esimerkit/07-puskuri.cpp" osa="luokka"}
 ```
 
 Siirtomuodostin ei varaa muistia, vaan ottaa lähteen osoittimen ja
@@ -43,13 +43,13 @@ tehdään jo parametria alustettaessa, minkä jälkeen operaattori vain
 vaihtaa sisällön. Tämä *copy-and-swap*-tekniikka hoitaa sekä kopio- että
 siirtosijoituksen ja on turvallinen myös itseen sijoittaessa.
 
-```{.cpp tiedosto="esimerkit/06-puskuri.cpp" osa="tehdas"}
+```{.cpp tiedosto="esimerkit/07-puskuri.cpp" osa="tehdas"}
 ```
 
-```{.cpp tiedosto="esimerkit/06-puskuri.cpp" osa="kaytto"}
+```{.cpp tiedosto="esimerkit/07-puskuri.cpp" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/06-puskuri.odotettu"}
+```{.tuloste tiedosto="esimerkit/07-puskuri.odotettu"}
 ```
 
 Kohdissa 4 ja 5 ei kutsuta kopio- eikä siirtomuodostinta. C++17 takaa
@@ -77,7 +77,7 @@ Edellinen `Puskuri` olisi käytännössä vain `std::vector<int>`. Itse
 toteutettu resurssinhallinta kannattaa rajata pieniin, yhden asian
 luokkiin, joita muut luokat käyttävät jäseninään.
 
-```{.cpp tiedosto="esimerkit/06-nollasaanto.cpp" osa="nolla"}
+```{.cpp tiedosto="esimerkit/07-nollasaanto.cpp" osa="nolla"}
 ```
 
 Metodi `lisaa` ottaa merkkijonon arvona ja siirtää sen vektoriin. Jos
@@ -85,10 +85,10 @@ kutsuja antaa nimetyn muuttujan, se kopioidaan parametriin kerran. Jos
 kutsuja antaa väliaikaisen arvon, kopiota ei tehdä lainkaan. Yksi
 funktio palvelee siis molempia tapauksia lähes optimaalisesti.
 
-```{.cpp tiedosto="esimerkit/06-nollasaanto.cpp" osa="kaytto"}
+```{.cpp tiedosto="esimerkit/07-nollasaanto.cpp" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/06-nollasaanto.odotettu"}
+```{.tuloste tiedosto="esimerkit/07-nollasaanto.odotettu"}
 ```
 
 Vektorin siirtäminen siirtää vain sisäisen osoittimen: alkiot pysyvät
@@ -103,18 +103,54 @@ joutuu kasvattamaan muistiaan, se siirtää alkiot uuteen muistiin vain,
 jos siirto ei voi epäonnistua. Muuten se kopioi alkiot, jotta
 poikkeuksen sattuessa alkuperäinen vektori säilyy ehjänä.
 
-```{.cpp tiedosto="esimerkit/06-noexcept.cpp" osa="tyypit"}
+```{.cpp tiedosto="esimerkit/07-noexcept.cpp" osa="tyypit"}
 ```
 
-```{.cpp tiedosto="esimerkit/06-noexcept.cpp" osa="kasvatus"}
+```{.cpp tiedosto="esimerkit/07-noexcept.cpp" osa="kasvatus"}
 ```
 
-```{.cpp tiedosto="esimerkit/06-noexcept.cpp" osa="kaytto"}
+```{.cpp tiedosto="esimerkit/07-noexcept.cpp" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/06-noexcept.odotettu"}
+```{.tuloste tiedosto="esimerkit/07-noexcept.odotettu"}
 ```
 
 Kääntäjän tuottama siirtomuodostin on automaattisesti `noexcept`, jos
 kaikkien jäsenten siirtomuodostimet ovat. Tämäkin puoltaa nollan
 sääntöä.
+
+## Käytännössä
+
+- **Nollan sääntö on oletus.** Luokka koostetaan jäsenistä, jotka
+  hoitavat itsensä, eikä erikoisjäsenfunktioita kirjoiteta. Viiden sääntö
+  rajataan pieniin resurssikääreisiin. Jos yksikin erikoisjäsenfunktio
+  määritellään, kaikki viisi määritellään tai merkitään `= default` tai
+  `= delete` (Core Guidelines C.21).
+- **Tallennettava parametri arvona ja siirtäen.** Tämä *sink-parametrin*
+  malli palvelee sekä kopioitavia että siirrettäviä argumentteja yhdellä
+  funktiolla.
+- **Paluuarvoon ei kirjoiteta `std::move`.** Se estää kopion poiston, ja
+  GCC ja Clang varoittavat siitä (`-Wpessimizing-move`).
+- **`const`-oliota ei voi siirtää.** `std::move` vakio-olioon tuottaa
+  `const T&&`:n, joka valitsee kopiomuodostimen. Ohjelma toimii mutta
+  kopioi hiljaa. Siirrettäväksi tarkoitettua muuttujaa ei merkitä
+  `const`.
+- **Siirretyn olion jälkeen vain sijoitus tai tuhoaminen.** Standardin
+  tyypit jäävät kelvolliseen mutta määrittelemättömään tilaan. Omat tyypit
+  voivat luvata enemmän, kuten tyhjän tilan, mutta lupaus dokumentoidaan.
+- **`noexcept` siirroille ja `swap`ille.** Ilman sitä `std::vector`
+  kopioi alkiot kasvaessaan, ja hinta näkyy vasta suurilla aineistoilla.
+- **Malleissa `T&&` on välittävä viittaus.** Kun malliparametrin tyyppi
+  päätellään, `T&&` sitoutuu sekä lvalue- että rvalue-arvoihin, ja arvo
+  välitetään eteenpäin funktiolla `std::forward<T>`. Tätä käytetään
+  esimerkiksi `emplace`-funktioissa.
+
+## Itsearviointi
+
+- Osaat erottaa lvalue- ja rvalue-arvon ja selittää, mitä `std::move`
+  tekee ja mitä se ei tee.
+- Osaat kirjoittaa siirtomuodostimen ja siirtosijoituksen resurssia
+  hallitsevalle luokalle.
+- Osaat soveltaa nollan sääntöä ja tunnistaa, milloin viiden sääntöä
+  tarvitaan.
+- Osaat selittää, miksi siirtomuodostin merkitään `noexcept`.

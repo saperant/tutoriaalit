@@ -68,7 +68,7 @@ debuggeri:
 
 Kontin sisällä tai ilman konttia esimerkit käännetään esimerkkihakemiston
 Makefilellä: `make` kääntää kaikki, `make aja-01-hei` kääntää ja ajaa
-yhden ja `make virhe-02-etumerkki` näyttää tarkoituksella virheellisen
+yhden ja `make virhe-03-etumerkki` näyttää tarkoituksella virheellisen
 esimerkin käännösvirheen.
 
 Konfiguraatiot ovat hakemistossa `.devcontainer/`: yhteinen `Dockerfile`

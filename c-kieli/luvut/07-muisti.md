@@ -1,4 +1,4 @@
-# Dynaaminen muistinhallinta
+# Dynaaminen muistinhallinta {.runko-muisti}
 
 C-ohjelman oliot sijaitsevat kolmenlaisessa muistissa:
 
@@ -22,7 +22,7 @@ osoittimen varattuun muistiin tai tyhjän osoittimen, jos muistia ei ole.
 Muistin sisältö on alustamaton. `calloc(n, koko)` varaa `n` alkiota ja
 alustaa ne nolliksi. Varattu muisti vapautetaan funktiolla `free`.
 
-```{.c tiedosto="esimerkit/06-malloc.c" osa="perusteet"}
+```{.c tiedosto="esimerkit/07-malloc.c" osa="perusteet"}
 ```
 
 Muutama vakiintunut käytäntö:
@@ -42,13 +42,13 @@ rajapinnassa ja kerrottava dokumentaatiossa. Tavallinen käytäntö on,
 että funktio, joka palauttaa dynaamisesti varatun olion, siirtää sen
 *omistuksen* kutsujalle:
 
-```{.c tiedosto="esimerkit/06-malloc.c" osa="yhdista"}
+```{.c tiedosto="esimerkit/07-malloc.c" osa="yhdista"}
 ```
 
-```{.c tiedosto="esimerkit/06-malloc.c" osa="omistus"}
+```{.c tiedosto="esimerkit/07-malloc.c" osa="omistus"}
 ```
 
-```{.tuloste tiedosto="esimerkit/06-malloc.odotettu"}
+```{.tuloste tiedosto="esimerkit/07-malloc.odotettu"}
 ```
 
 C23 standardoi POSIX-järjestelmistä tutun funktion `strdup`, joka
@@ -66,16 +66,16 @@ osoitin katoaisi virhetilanteessa, ja muisti vuotaisi.
 Seuraava dynaaminen taulukko kaksinkertaistaa kapasiteettinsa aina,
 kun tila loppuu. Näin lisäys on keskimäärin vakioaikainen.
 
-```{.c tiedosto="esimerkit/06-vektori.c" osa="tyyppi"}
+```{.c tiedosto="esimerkit/07-vektori.c" osa="tyyppi"}
 ```
 
-```{.c tiedosto="esimerkit/06-vektori.c" osa="lisaa"}
+```{.c tiedosto="esimerkit/07-vektori.c" osa="lisaa"}
 ```
 
-```{.c tiedosto="esimerkit/06-vektori.c" osa="kaytto"}
+```{.c tiedosto="esimerkit/07-vektori.c" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/06-vektori.odotettu"}
+```{.tuloste tiedosto="esimerkit/07-vektori.odotettu"}
 ```
 
 Lauseke `(Vektori){}` on *yhdistetty literaali* (*compound literal*):
@@ -88,13 +88,13 @@ Rakenteen viimeinen jäsen voi olla kooltaan määrittelemätön taulukko
 (C99). Rakenne ja sen vaihtelevanpituinen data varataan silloin yhdellä
 `malloc`-kutsulla ja vapautetaan yhdellä `free`-kutsulla:
 
-```{.c tiedosto="esimerkit/06-joustava.c" osa="tyyppi"}
+```{.c tiedosto="esimerkit/07-joustava.c" osa="tyyppi"}
 ```
 
-```{.c tiedosto="esimerkit/06-joustava.c" osa="kaytto"}
+```{.c tiedosto="esimerkit/07-joustava.c" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/06-joustava.odotettu"}
+```{.tuloste tiedosto="esimerkit/07-joustava.odotettu"}
 ```
 
 ## Tyypilliset virheet
@@ -116,22 +116,22 @@ muistia ja aiheuttavat oireita aivan muualla. Siksi testaus
 sanitoijien kanssa on C-ohjelmoinnissa välttämätöntä. Seuraavassa
 ohjelmassa ainoa osoitin varattuun muistiin katoaa:
 
-```{.c tiedosto="esimerkit/06-vuoto.kaatuu.c"}
+```{.c tiedosto="esimerkit/07-vuoto.kaatuu.c"}
 ```
 
 AddressSanitizer (LeakSanitizer) ilmoittaa ohjelman lopussa:
 
-```{.tuloste tiedosto="esimerkit/06-vuoto.virhe"}
+```{.tuloste tiedosto="esimerkit/07-vuoto.virhe"}
 ```
 
 Ilmoituksessa on myös kutsupino, josta näkee, missä vuotanut muisti
 varattiin. Toisessa esimerkissä kaksi rakennetta jakaa saman muistin, ja
 toisen vapauttaminen jättää toiseen roikkuvan osoittimen:
 
-```{.c tiedosto="esimerkit/06-vapautettu.kaatuu.c"}
+```{.c tiedosto="esimerkit/07-vapautettu.kaatuu.c"}
 ```
 
-```{.tuloste tiedosto="esimerkit/06-vapautettu.virhe"}
+```{.tuloste tiedosto="esimerkit/07-vapautettu.virhe"}
 ```
 
 Kun virhe on saman funktion sisällä, GCC voi havaita sen jo
@@ -139,3 +139,59 @@ käännösaikana (`-Wuse-after-free`), mutta funktiorajojen yli ulottuvat
 virheet löytyvät vain ajon aikana. Parhaiten virheitä ehkäisee selkeä
 omistuskäytäntö: jokaisella varauksella on yksi omistaja, joka
 vapauttaa sen.
+
+## Areena: yhteinen elinaika
+
+Jos monella oliolla on sama elinaika, esimerkiksi yhden verkkopyynnön
+käsittelyn ajan, niitä ei kannata varata ja vapauttaa yksitellen.
+*Areena* (*arena*, *bump allocator*) varaa yhden suuren lohkon ja jakaa
+siitä paloja peräkkäin. Koko areena vapautetaan tai tyhjennetään
+kerralla. Tekniikkaa käyttävät esimerkiksi kääntäjät, pelimoottorit ja
+verkkopalvelimet.
+
+```{.c tiedosto="esimerkit/07-areena.c" osa="areena"}
+```
+
+Paloja tasataan `max_align_t`-tyypin vaatimaan rajaan, jotta niihin voi
+sijoittaa minkä tahansa tyyppisen olion. Tasaus näkyy tulosteessa: kolme
+merkkijonoa ja kolme solmua vievät 96 tavua, vaikka dataa on vähemmän.
+
+```{.c tiedosto="esimerkit/07-areena.c" osa="kaytto"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-areena.odotettu"}
+```
+
+Areenassa yksittäistä oliota ei voi vapauttaa, mutta vuotoja ei myöskään
+synny: kun käsittely päättyy, kaikki vapautuu yhdellä kutsulla.
+
+## Käytännössä
+
+- **Yksi omistaja jokaiselle varaukselle.** Omistus kirjataan funktion
+  kommenttiin ("kutsuja vapauttaa"). Kun omistus siirtyy, lähettäjän
+  osoitin nollataan.
+- **Symmetriset parit.** Jokaisella `_luo`- tai `_init`-funktiolla on
+  `_tuhoa`- tai `_vapauta`-pari, ja tuhoamisfunktio hyväksyy tyhjän
+  osoittimen kuten `free`. Kutsujan siivouskoodi yksinkertaistuu.
+- **`n * sizeof *p` ja ylivuoto.** Koon laskemisen kertolasku voi
+  ylivuotaa suurilla `n`:n arvoilla, jolloin varataan liian vähän. Tarkista
+  kertolasku (`ckd_mul`) tai käytä `calloc`ia, joka tarkistaa sen itse.
+- **Kasvatus geometrisesti.** Kapasiteetti kaksinkertaistetaan (tai
+  kerrotaan 1,5:llä), jolloin lisäys on keskimäärin vakioaikainen.
+- **Varauksen epäonnistuminen.** Kirjasto palauttaa virheen. Sovellus voi
+  käyttää käärettä (usein nimeltään `xmalloc`), joka lopettaa ohjelman
+  hallitusti, jos muisti loppuu, kunhan valinta on tietoinen.
+- **Areenat ja poolit**, kun olioilla on yhteinen elinaika tai sama koko.
+  Ne vähentävät `malloc`-kutsuja ja tekevät vuodot lähes mahdottomiksi.
+- **Sanitoijat aina testeissä.** Vuodot ja vapautetun muistin käyttö
+  löytyvät AddressSanitizerilla.
+
+## Itsearviointi
+
+- Osaat kirjoittaa dynaamisesti kasvavan taulukon, joka säilyy ehjänä,
+  jos `realloc` epäonnistuu.
+- Osaat dokumentoida ja noudattaa omistussääntöä funktion rajapinnassa.
+- Osaat toteuttaa areenan ja kertoa, milloin se sopii yksittäisiä
+  varauksia paremmin.
+- Osaat tulkita AddressSanitizerin raportin muistivuodosta ja vapautetun
+  muistin käytöstä.

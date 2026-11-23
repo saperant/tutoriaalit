@@ -11,6 +11,14 @@
 
 % Kaksipalstaisessa tilassa longtable ei ole sallittu. Pikaoppaan
 % taulukot ovat lyhyitä, joten ne ladotaan tavallisina taulukoina.
+% Pandoc kirjoittaa otsakkeen ja alatunnisteen (\bottomrule) ennen rivejä;
+% alatunniste ja mahdollinen toistettu otsake ohitetaan, ja alaviiva
+% piirretään taulukon loppuun.
 \usepackage{longtable}
-\renewenvironment{longtable}[1][]{\par\noindent\begin{tabular}}{\end{tabular}\par}
-\def\endhead{}\def\endfirsthead{}\def\endfoot{}\def\endlastfoot{}
+\renewenvironment{longtable}[1][]{\par\noindent\begin{tabular}}%
+  {\bottomrule\end{tabular}\par}
+\long\def\endfirsthead#1\endhead{\endhead}
+\long\def\endhead#1\endlastfoot{}
+
+% Palstoja ei venytetä tasakorkeiksi.
+\raggedbottom

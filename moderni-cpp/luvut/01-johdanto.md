@@ -1,4 +1,4 @@
-# Johdanto
+# Johdanto {.runko-johdanto}
 
 C++ on yleiskäyttöinen, käännettävä ohjelmointikieli, jonka vahvuuksia
 ovat suorituskyky, suora pääsy laitteistoon ja kyky rakentaa
@@ -14,6 +14,33 @@ ohjelmointityyliä, jossa
   toteutusten sijaan,
 - virheet pyritään havaitsemaan käännösaikana tyyppijärjestelmän,
   `constexpr`-laskennan ja konseptien avulla.
+
+## Historia ja käyttökohteet
+
+Bjarne Stroustrup aloitti kielen kehittämisen Bell Labsissa vuonna 1979
+nimellä *C with Classes*. Tavoitteena oli yhdistää C:n tehokkuus ja
+laitteistoläheisyys Simula-kielen luokkiin. Nimi C++ otettiin käyttöön
+vuonna 1983, ja ensimmäinen ISO-standardi julkaistiin vuonna 1998.
+
+C++:aa käytetään, kun suorituskyvyllä, muistinkäytöllä tai
+ennustettavalla ajoituksella on merkitystä ja kun ohjelma on niin suuri,
+että se tarvitsee abstraktioita. Tyypillisiä käyttökohteita ovat
+pelimoottorit, selaimet, tietokannat, kääntäjät, kaupankäyntijärjestelmät,
+tieteellinen laskenta, sulautetut järjestelmät, laitteistomallit
+(SystemC) sekä työpöytäsovellukset (esimerkiksi Qt-kirjaston päällä).
+Monen muun kielen ajoympäristö, kuten Pythonin NumPy, on kirjoitettu
+C:llä tai C++:lla.
+
+### Mihin C++ ei sovellu
+
+C++ ei ole hyvä valinta, kun kehitysnopeus on tärkeämpää kuin
+suorituskyky. Pienet työkalut, automaatio ja kertaluonteinen analyysi
+syntyvät nopeammin Pythonilla. Verkkopalvelujen liiketoimintalogiikkaan
+on yleensä tarjolla tuottavampia ympäristöjä. Kielen laajuus ja
+määrittelemätön käyttäytyminen tekevät siitä myös raskaan oppia ja
+virhealttiin ilman hyviä käytäntöjä ja työkaluja. Uusissa
+järjestelmäohjelmointiprojekteissa vaihtoehtona harkitaan usein Rustia,
+jonka kääntäjä takaa muistiturvallisuuden.
 
 ## Standardit
 
@@ -40,6 +67,21 @@ tuntee C-tyylisen syntaksin perusteet: muuttujat, funktiot, silmukat ja
 osoittimet. Vanhemman C++:n tuntemus on hyödyksi muttei välttämätöntä.
 Tavoitteena ei ole kattaa koko kieltä, vaan esitellä ne piirteet, joiden
 varaan nykyaikainen C++-koodi rakentuu.
+
+Tutoriaali palvelee kolmella tavalla:
+
+- **Kieltä opetteleva** lukee luvut järjestyksessä.
+- **Toista kieltä osaava kokenut kehittäjä** aloittaa luvusta
+  [C++ kokeneelle](#c-kokeneelle) ja erillisestä pikaoppaasta ja lukee
+  muista luvuista ensin loppuosion *Itsearviointi*.
+- **Kaikille** tärkeimmät osiot ovat lukujen lopun *Käytännössä*-osiot.
+  Niissä kerrotaan, miten C++-kehittäjät asioita oikeasti käyttävät:
+  nimetyt mallit, parhaat käytännöt perusteluineen sekä kielikohtaiset
+  hinnat ja sudenkuopat.
+
+Kieliriippumattomat aiheet, kuten algoritmien suunnittelu, yleinen
+suorituskykyanalyysi ja verkko-ohjelmointi, käsitellään taitopuun omissa
+tutoriaaleissa. Tämä tutoriaali kertoo, miten ne tehdään C++:lla.
 
 ## Työkalut
 
@@ -94,4 +136,6 @@ tulostaa, tulos on siis todennettu.
 Osa esimerkeistä havainnollistaa koodia, jonka *ei* pidä kääntyä.
 Tällaiset tiedostot testataan kahdesti: ensin varmistetaan, että
 käännös epäonnistuu, ja sitten, että se onnistuu, kun virheellinen
-kohta on poistettu esikääntäjän makrolla `KORJATTU`.
+kohta on poistettu esikääntäjän makrolla `KORJATTU`. Muutama esimerkki
+näyttää virheen, jonka sanitoija havaitsee ajon aikana; niiden testi
+varmistaa, että ohjelma todella kaatuu odotetulla tavalla.

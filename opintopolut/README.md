@@ -5,19 +5,22 @@
 
 Tutoriaalit muodostavat taitopuun: jokainen tutoriaali on yksi taito, ja taidot rakentuvat toistensa päälle. Roolit ovat ammattiprofiileja, joiden polku kulkee puun läpi.
 
-Taitoja on 56, yhteensä noin 248 op. Valmis PDF: [opintopolut.pdf](opintopolut.pdf). Taitopuun lähdetiedosto: [taitopuu.toml](taitopuu.toml).
+Taitoja on 72, yhteensä noin 317 op. Valmis PDF: [opintopolut.pdf](opintopolut.pdf). Taitopuun lähdetiedosto: [taitopuu.toml](taitopuu.toml).
 
 ## Roolit
 
 | Rooli | Tavoitteet | Taitoja | op |
 |-------|------------|--------:|---:|
-| Laitteistoarkkitehti | Arkkitehtuurin mallinnus ja suunnittelutilan tutkiminen, EDA-työkaluketjujen automatisointi, FPGA-toteutus, Laitteiston verifiointi | 22 | 95 |
-| Sulautettujen ohjelmistojen kehittäjä | Linux-laiteajurit, Reaaliaikakäyttöjärjestelmät | 16 | 69 |
-| Signaalinkäsittelyn ja ohjelmistoradion kehittäjä | Ohjelmistoradio | 12 | 56 |
+| Laitteistoarkkitehti | Arkkitehtuurin mallinnus ja suunnittelutilan tutkiminen, EDA-työkaluketjujen automatisointi, FPGA-toteutus, Laitteiston verifiointi | 25 | 105 |
+| Sulautettujen ohjelmistojen kehittäjä | Linux-laiteajurit, Reaaliaikakäyttöjärjestelmät | 17 | 72 |
+| Signaalinkäsittelyn ja ohjelmistoradion kehittäjä | Ohjelmistoradio | 13 | 61 |
 | Grafiikkaohjelmoija | GPU-laskenta, Säteenseuranta ja fysikaalinen valaistus | 19 | 87 |
-| Hajautettujen järjestelmien kehittäjä | Skaalautuvien järjestelmien suunnittelu, Säiliöt ja pilvi-infrastruktuuri | 17 | 81 |
+| Hajautettujen järjestelmien kehittäjä | Skaalautuvien järjestelmien suunnittelu, Säiliöt ja pilvi-infrastruktuuri | 18 | 86 |
 | Takaisinmallintaja ja tietoturva-analyytikko | Haavoittuvuuksien analyysi ja hyödyntäminen, Laiteohjelmiston takaisinmallinnus | 15 | 69 |
-| Algoritmiikan ja ohjelmistokehityksen perusta | Edistyneet algoritmit ja tietorakenteet, Käännösjärjestelmät, testaus ja CI | 9 | 38 |
+| Algoritmiikan ja ohjelmistokehityksen perusta | Edistyneet algoritmit ja tietorakenteet, Käännösjärjestelmät, testaus ja CI | 10 | 41 |
+| Web-kehittäjä | Web-sovellukset | 7 | 29 |
+| Taustajärjestelmäkehittäjä | Säiliöt ja pilvi-infrastruktuuri, Taustapalvelut | 7 | 31 |
+| Mobiilikehittäjä (Android) | Android-sovellukset | 4 | 18 |
 
 ## Taitopuu
 
@@ -31,6 +34,8 @@ flowchart LR
     versionhallinta["Versionhallinta (Git)"]
     c_kieli["✓ C-kieli"]
     moderni_cpp["✓ Moderni C++"]
+    python["Python"]
+    bash["Bash-skriptaus"]
     python_tyokalut["Python työkaluohjelmointiin"]
     rakennus_ja_testaus["Käännösjärjestelmät, testaus ja CI"]
   end
@@ -58,6 +63,7 @@ flowchart LR
   subgraph laitteisto["Laitteistosuunnittelu"]
     kiintea_pilkku["Lukujen esitys ja kiinteän pilkun aritmetiikka"]
     rtl_suunnittelu["RTL-suunnittelu SystemVerilogilla"]
+    vhdl["RTL-suunnittelu VHDL:llä"]
     verifiointi["Laitteiston verifiointi"]
     fpga_toteutus["FPGA-toteutus"]
     hlm_mallinnus["Korkean tason mallinnus (SystemC/TLM)"]
@@ -98,19 +104,38 @@ flowchart LR
     haavoittuvuudet["Haavoittuvuuksien analyysi ja hyödyntäminen"]
     laiteohjelmiston_takaisinmallinnus["Laiteohjelmiston takaisinmallinnus"]
   end
-  subgraph kielet["Kielet syvemmin"]
+  subgraph kielet["Ohjelmointikielet"]
+    rust["Rust"]
+    go["Go"]
+    java["Java"]
+    kotlin["Kotlin"]
+    javascript["JavaScript"]
+    typescript["TypeScript"]
+    tcl["Tcl"]
+    funktionaalinen_ohjelmointi["Funktionaalinen ohjelmointi (Racket)"]
     cpp_suorituskyky["C++:n suorituskyky"]
     c_asm_integraatio["C ja assembly yhteen"]
     python_c_integraatio["Python ja C/C++ yhteen"]
+  end
+  subgraph sovellukset["Sovelluskehitys"]
+    sql["SQL ja relaatiotietokannat"]
+    html_css["HTML ja CSS"]
+    web_sovellukset["Web-sovellukset"]
+    taustapalvelut["Taustapalvelut"]
+    android_sovellukset["Android-sovellukset"]
   end
   komentorivi --> versionhallinta
   ohjelmoinnin_perusteet --> c_kieli
   komentorivi --> c_kieli
   c_kieli --> moderni_cpp
-  ohjelmoinnin_perusteet --> python_tyokalut
+  ohjelmoinnin_perusteet --> python
+  komentorivi --> bash
+  ohjelmoinnin_perusteet --> bash
+  python --> python_tyokalut
   komentorivi --> python_tyokalut
   c_kieli --> rakennus_ja_testaus
   versionhallinta --> rakennus_ja_testaus
+  bash --> rakennus_ja_testaus
   ohjelmoinnin_perusteet --> lineaarialgebra
   lineaarialgebra --> signaalimatematiikka
   diskreetti_matematiikka --> todennakoisyys
@@ -120,6 +145,7 @@ flowchart LR
   algoritmit --> edistyneet_algoritmit
   algoritmit --> kaantajatekniikka
   assembly --> kaantajatekniikka
+  funktionaalinen_ohjelmointi --> kaantajatekniikka
   diskreetti_matematiikka --> digitaalitekniikka
   c_kieli --> assembly
   digitaalitekniikka --> assembly
@@ -133,6 +159,7 @@ flowchart LR
   digitaalitekniikka --> kiintea_pilkku
   c_kieli --> kiintea_pilkku
   digitaalitekniikka --> rtl_suunnittelu
+  digitaalitekniikka --> vhdl
   rtl_suunnittelu --> verifiointi
   python_tyokalut --> verifiointi
   rtl_suunnittelu --> fpga_toteutus
@@ -145,6 +172,7 @@ flowchart LR
   rtl_suunnittelu --> eda_skriptaus
   python_tyokalut --> eda_skriptaus
   rakennus_ja_testaus --> eda_skriptaus
+  tcl --> eda_skriptaus
   hlm_mallinnus --> hls
   fpga_toteutus --> hls
   dsp --> dsp_laitteisto
@@ -174,6 +202,7 @@ flowchart LR
   rinnakkaisohjelmointi --> hajautetut_jarjestelmat
   algoritmit --> hajautetut_jarjestelmat
   hajautetut_jarjestelmat --> jarjestelmasuunnittelu
+  sql --> jarjestelmasuunnittelu
   tietoverkot --> kontit_ja_pilvi
   lineaarialgebra --> renderoinnin_perusteet
   moderni_cpp --> renderoinnin_perusteet
@@ -192,11 +221,27 @@ flowchart LR
   takaisinmallinnus --> haavoittuvuudet
   takaisinmallinnus --> laiteohjelmiston_takaisinmallinnus
   mikrokontrollerit --> laiteohjelmiston_takaisinmallinnus
+  c_kieli --> rust
+  ohjelmoinnin_perusteet --> go
+  ohjelmoinnin_perusteet --> java
+  java --> kotlin
+  ohjelmoinnin_perusteet --> javascript
+  javascript --> typescript
+  ohjelmoinnin_perusteet --> tcl
+  ohjelmoinnin_perusteet --> funktionaalinen_ohjelmointi
   moderni_cpp --> cpp_suorituskyky
   suorituskyky --> cpp_suorituskyky
   assembly --> c_asm_integraatio
   python_tyokalut --> python_c_integraatio
   moderni_cpp --> python_c_integraatio
+  ohjelmoinnin_perusteet --> sql
+  typescript --> web_sovellukset
+  html_css --> web_sovellukset
+  tietoverkot --> web_sovellukset
+  java --> taustapalvelut
+  sql --> taustapalvelut
+  tietoverkot --> taustapalvelut
+  kotlin --> android_sovellukset
 ```
 
 ## Taidot alueittain
@@ -207,11 +252,13 @@ flowchart LR
 |-------|---:|------------|------|
 | Komentorivi ja Linux | 3 | – | suunniteltu |
 | Ohjelmoinnin perusteet (Python) | 5 | – | suunniteltu |
+| Bash-skriptaus | 3 | Komentorivi ja Linux, Ohjelmoinnin perusteet (Python) | suunniteltu |
 | C-kieli | 5 | Komentorivi ja Linux, Ohjelmoinnin perusteet (Python) | [valmis](../c-kieli/) |
-| Python työkaluohjelmointiin | 5 | Komentorivi ja Linux, Ohjelmoinnin perusteet (Python) | suunniteltu |
+| Python | 5 | Ohjelmoinnin perusteet (Python) | suunniteltu |
 | Versionhallinta (Git) | 2 | Komentorivi ja Linux | suunniteltu |
-| Käännösjärjestelmät, testaus ja CI | 3 | C-kieli, Versionhallinta (Git) | suunniteltu |
+| Käännösjärjestelmät, testaus ja CI | 3 | Bash-skriptaus, C-kieli, Versionhallinta (Git) | suunniteltu |
 | Moderni C++ | 5 | C-kieli | [valmis](../moderni-cpp/) |
+| Python työkaluohjelmointiin | 5 | Komentorivi ja Linux, Python | suunniteltu |
 
 ### Matematiikka
 
@@ -229,7 +276,7 @@ flowchart LR
 | Tietorakenteet | 5 | C-kieli, Diskreetti matematiikka | suunniteltu |
 | Algoritmit | 5 | Tietorakenteet | suunniteltu |
 | Edistyneet algoritmit ja tietorakenteet | 5 | Algoritmit | suunniteltu |
-| Kääntäjätekniikka | 5 | Algoritmit, Assembly | suunniteltu |
+| Kääntäjätekniikka | 5 | Algoritmit, Assembly, Funktionaalinen ohjelmointi (Racket) | suunniteltu |
 
 ### Tietokonejärjestelmät
 
@@ -249,7 +296,8 @@ flowchart LR
 |-------|---:|------------|------|
 | Lukujen esitys ja kiinteän pilkun aritmetiikka | 3 | C-kieli, Digitaalitekniikka | suunniteltu |
 | RTL-suunnittelu SystemVerilogilla | 5 | Digitaalitekniikka | suunniteltu |
-| EDA-työkaluketjujen automatisointi | 3 | Käännösjärjestelmät, testaus ja CI, Python työkaluohjelmointiin, RTL-suunnittelu SystemVerilogilla | suunniteltu |
+| RTL-suunnittelu VHDL:llä | 5 | Digitaalitekniikka | suunniteltu |
+| EDA-työkaluketjujen automatisointi | 3 | Käännösjärjestelmät, testaus ja CI, Python työkaluohjelmointiin, RTL-suunnittelu SystemVerilogilla, Tcl | suunniteltu |
 | FPGA-toteutus | 5 | RTL-suunnittelu SystemVerilogilla | suunniteltu |
 | Laitteiston verifiointi | 5 | Python työkaluohjelmointiin, RTL-suunnittelu SystemVerilogilla | suunniteltu |
 | Korkean tason mallinnus (SystemC/TLM) | 5 | Lukujen esitys ja kiinteän pilkun aritmetiikka, Moderni C++, Tietokonearkkitehtuuri | suunniteltu |
@@ -284,7 +332,7 @@ flowchart LR
 | Säiliöt ja pilvi-infrastruktuuri | 3 | Tietoverkot | suunniteltu |
 | Verkko-ohjelmointi | 5 | Käyttöjärjestelmät, Tietoverkot | suunniteltu |
 | Hajautetut järjestelmät | 5 | Algoritmit, Rinnakkaisohjelmointi, Verkko-ohjelmointi | suunniteltu |
-| Skaalautuvien järjestelmien suunnittelu | 5 | Hajautetut järjestelmät | suunniteltu |
+| Skaalautuvien järjestelmien suunnittelu | 5 | Hajautetut järjestelmät, SQL ja relaatiotietokannat | suunniteltu |
 
 ### Tietokonegrafiikka
 
@@ -304,10 +352,28 @@ flowchart LR
 | Haavoittuvuuksien analyysi ja hyödyntäminen | 5 | Takaisinmallinnus | suunniteltu |
 | Laiteohjelmiston takaisinmallinnus | 5 | Mikrokontrollerit ja bare-metal-ohjelmointi, Takaisinmallinnus | suunniteltu |
 
-### Kielet syvemmin
+### Ohjelmointikielet
 
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
+| Funktionaalinen ohjelmointi (Racket) | 5 | Ohjelmoinnin perusteet (Python) | suunniteltu |
+| Go | 5 | Ohjelmoinnin perusteet (Python) | suunniteltu |
+| Java | 5 | Ohjelmoinnin perusteet (Python) | suunniteltu |
+| JavaScript | 5 | Ohjelmoinnin perusteet (Python) | suunniteltu |
+| Tcl | 2 | Ohjelmoinnin perusteet (Python) | suunniteltu |
+| Kotlin | 3 | Java | suunniteltu |
+| Rust | 5 | C-kieli | suunniteltu |
+| TypeScript | 3 | JavaScript | suunniteltu |
 | C ja assembly yhteen | 2 | Assembly | suunniteltu |
 | Python ja C/C++ yhteen | 3 | Moderni C++, Python työkaluohjelmointiin | suunniteltu |
 | C++:n suorituskyky | 3 | Moderni C++, Suorituskyvyn analyysi ja optimointi | suunniteltu |
+
+### Sovelluskehitys
+
+| Taito | op | Edellyttää | Tila |
+|-------|---:|------------|------|
+| HTML ja CSS | 3 | – | suunniteltu |
+| SQL ja relaatiotietokannat | 5 | Ohjelmoinnin perusteet (Python) | suunniteltu |
+| Taustapalvelut | 5 | Java, SQL ja relaatiotietokannat, Tietoverkot | suunniteltu |
+| Android-sovellukset | 5 | Kotlin | suunniteltu |
+| Web-sovellukset | 5 | HTML ja CSS, Tietoverkot, TypeScript | suunniteltu |

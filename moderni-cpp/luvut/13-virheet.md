@@ -1,4 +1,4 @@
-# Virheenkäsittely
+# Virheenkäsittely {.runko-virheet}
 
 C++:ssa on kaksi pääasiallista tapaa käsitellä virheitä: poikkeukset ja
 virheen palauttaminen arvona. C++23:n `std::expected` teki
@@ -16,7 +16,7 @@ Omat poikkeusluokat kannattaa periä standardikirjaston luokista, kuten
 perii kantaluokan muodostimet, joten niitä ei tarvitse kirjoittaa
 uudelleen.
 
-```{.cpp tiedosto="esimerkit/11-poikkeukset.cpp" osa="tyyppi"}
+```{.cpp tiedosto="esimerkit/13-poikkeukset.cpp" osa="tyyppi"}
 ```
 
 Poikkeus siepataan aina `const`-viittauksena. Arvona sieppaaminen
@@ -24,17 +24,17 @@ kopioisi poikkeuksen ja voisi leikata siitä johdetun luokan osan pois.
 `catch`-lohkot käydään läpi järjestyksessä, joten tarkimmat tyypit on
 lueteltava ensin:
 
-```{.cpp tiedosto="esimerkit/11-poikkeukset.cpp" osa="kaytto"}
+```{.cpp tiedosto="esimerkit/13-poikkeukset.cpp" osa="kaytto"}
 ```
 
 Standardikirjasto käyttää poikkeuksia esimerkiksi rajatarkistuksissa.
 Säiliön metodi `at` tarkistaa indeksin ja heittää `std::out_of_range`,
 kun taas `operator[]` ei tarkista mitään:
 
-```{.cpp tiedosto="esimerkit/11-poikkeukset.cpp" osa="vahva"}
+```{.cpp tiedosto="esimerkit/13-poikkeukset.cpp" osa="vahva"}
 ```
 
-```{.tuloste tiedosto="esimerkit/11-poikkeukset.odotettu"}
+```{.tuloste tiedosto="esimerkit/13-poikkeukset.odotettu"}
 ```
 
 ### `noexcept`
@@ -57,10 +57,10 @@ heti. Tällöin virhe kannattaa palauttaa arvona.
 mutta kertoo myös, miksi tulosta ei saatu. Virhe palautetaan
 käärimällä se `std::unexpected`-olioon.
 
-```{.cpp tiedosto="esimerkit/11-expected.cpp" osa="tyypit"}
+```{.cpp tiedosto="esimerkit/13-expected.cpp" osa="tyypit"}
 ```
 
-```{.cpp tiedosto="esimerkit/11-expected.cpp" osa="jasenna"}
+```{.cpp tiedosto="esimerkit/13-expected.cpp" osa="jasenna"}
 ```
 
 Kuten `optional`, myös `expected` muuntuu totuusarvoksi ja sen arvoon
@@ -68,17 +68,17 @@ päästään operaattorilla `*`. Virhe luetaan metodilla `error`. Vaiheet
 ketjutetaan `and_then`-metodilla, joka kutsuu seuraavaa vaihetta vain,
 jos edellinen onnistui:
 
-```{.cpp tiedosto="esimerkit/11-expected.cpp" osa="kaytto"}
+```{.cpp tiedosto="esimerkit/13-expected.cpp" osa="kaytto"}
 ```
 
 `transform` muuntaa onnistuneen arvon ja `value_or` antaa oletusarvon
 virhetilanteessa. Lisäksi on `or_else`, joka käsittelee virheen, ja
 `transform_error`, joka muuntaa virhetyypin toiseksi.
 
-```{.cpp tiedosto="esimerkit/11-expected.cpp" osa="ketju"}
+```{.cpp tiedosto="esimerkit/13-expected.cpp" osa="ketju"}
 ```
 
-```{.tuloste tiedosto="esimerkit/11-expected.odotettu"}
+```{.tuloste tiedosto="esimerkit/13-expected.odotettu"}
 ```
 
 ## Kumpi valita?
@@ -100,3 +100,41 @@ Yleinen linjaus on seuraava:
 
 Projektissa kannattaa sopia yhtenäinen käytäntö ja noudattaa sitä
 johdonmukaisesti.
+
+## Käytännössä
+
+- **Heitä arvona, sieppaa `const`-viittauksena.** Omat poikkeukset
+  periytyvät standardin luokista, jotta yläkerroksen
+  `catch (const std::exception&)` sieppaa ne.
+- **Poikkeusturvallisuuden tasot.** Funktion takuu dokumentoidaan:
+  *perustakuu* (ei vuotoja, olio kelvollinen), *vahva takuu* (operaatio
+  onnistuu kokonaan tai ei lainkaan) tai *ei heitä* (`noexcept`).
+  Copy-and-swap antaa vahvan takuun, RAII perustakuun.
+- **Poikkeus ei ole ohjausvuo.** Heittäminen on C++:ssa kallista (luku
+  [C++ kokeneelle](#c-kokeneelle)). Pythonista tuttu tapa siepata
+  esimerkiksi puuttuva avain ei ole C++:ssa idiomaattinen. Ensin
+  tarkistetaan (`contains`, `find`) tai palautetaan `optional` tai
+  `expected`.
+- **Virheiden raja.** Poikkeukset siepataan harvoissa paikoissa:
+  pääohjelmassa, säikeen tai tehtävän aloitusfunktiossa ja
+  tapahtumasilmukassa, jossa virhe kirjataan ja ohjelma jatkaa tai
+  lopettaa hallitusti. Säikeestä karkaava poikkeus kutsuu
+  `std::terminate`a, mutta `std::async` välittää sen `future`n kautta.
+- **Projektin linjaus.** Monissa ympäristöissä, kuten peleissä ja
+  sulautetuissa järjestelmissä, poikkeukset on poistettu käytöstä
+  (`-fno-exceptions`), ja virheet ilmaistaan `expected`-arvoina tai
+  virhekoodeina. Linjaus sovitaan projektin alussa ja sitä noudatetaan
+  johdonmukaisesti.
+- **Esiehdot ovat eri asia kuin virheet.** Ohjelmointivirhe, kuten
+  väärä indeksi, tarkistetaan `assert`illa. C++26:n sopimukset
+  (*contracts*) tuovat esi- ja jälkiehdot kielen osaksi.
+
+## Itsearviointi
+
+- Osaat määritellä oman poikkeusluokan ja siepata poikkeukset oikeassa
+  järjestyksessä.
+- Osaat ketjuttaa `std::expected`-arvoja `and_then`- ja
+  `transform`-metodeilla.
+- Osaat valita poikkeuksen, `expected`in ja `optional`in välillä ja
+  perustella valinnan hinnalla.
+- Osaat kertoa, mitä perustakuu, vahva takuu ja `noexcept` lupaavat.

@@ -35,7 +35,7 @@ TUNNISTE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 # Alueiden värit kaavioissa (vaaleat taustat, jotta teksti erottuu).
 VARIT = ["#DCE8F5", "#F5E6D3", "#E3F0DA", "#EEE0F2", "#FCE4E4",
          "#DDF1EF", "#F7F0CF", "#E6E6E6", "#E2E7F8", "#F2DDE8",
-         "#E8F2D0"]
+         "#E8F2D0", "#FBE3D3"]
 VALMIS_REUNA = "#2E7D32"
 
 

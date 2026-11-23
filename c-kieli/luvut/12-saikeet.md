@@ -1,4 +1,4 @@
-# Säikeet ja atomiset operaatiot
+# Säikeet ja atomiset operaatiot {.runko-rinnakkaisuus}
 
 C11 lisäsi kieleen muistimallin, säikeet (`<threads.h>`) ja atomiset
 tyypit (`<stdatomic.h>`). Sitä ennen säikeistys oli
@@ -19,13 +19,13 @@ Seuraava ohjelma laskee summan neljässä säikeessä. Jokainen säie saa
 oman `Osa`-rakenteensa ja kirjoittaa tuloksen vain siihen, joten
 säikeet eivät käsittele samaa muistia eikä lukitusta tarvita:
 
-```{.c tiedosto="esimerkit/11-saikeet.c" osa="tehtava"}
+```{.c tiedosto="esimerkit/12-saikeet.c" osa="tehtava"}
 ```
 
-```{.c tiedosto="esimerkit/11-saikeet.c" osa="kaytto"}
+```{.c tiedosto="esimerkit/12-saikeet.c" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/11-saikeet.odotettu"}
+```{.tuloste tiedosto="esimerkit/12-saikeet.odotettu"}
 ```
 
 Esimerkissä taulukon pituus on jaollinen säikeiden määrällä.
@@ -47,13 +47,13 @@ oleva koodi suoritetaan siis yksi säie kerrallaan. Yksittäisille
 laskureille ja lipuille kevyempi vaihtoehto on *atominen* tyyppi, kuten
 `atomic_int`, jonka operaatiot ovat jakamattomia:
 
-```{.c tiedosto="esimerkit/11-lukitus.c" osa="jaettu"}
+```{.c tiedosto="esimerkit/12-lukitus.c" osa="jaettu"}
 ```
 
-```{.c tiedosto="esimerkit/11-lukitus.c" osa="kaytto"}
+```{.c tiedosto="esimerkit/12-lukitus.c" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/11-lukitus.odotettu"}
+```{.tuloste tiedosto="esimerkit/12-lukitus.odotettu"}
 ```
 
 Ilman lukkoa saldo jäisi satunnaisesti alle 40000:n. Jokainen
@@ -77,3 +77,57 @@ Tämän luvun esimerkit on kuitenkin testattu vain AddressSanitizerilla
 ja UndefinedBehaviorSanitizerilla: ThreadSanitizer ei tue glibc:n
 `<threads.h>`-toteutusta, vaan ohjelma kaatuu säikeen luonnissa.
 POSIX-säikeitä käyttäville ohjelmille ThreadSanitizer toimii.
+
+## Tuottaja–kuluttaja-jono
+
+Säikeiden välinen työnjako tehdään usein jonon kautta: yksi säie tuottaa
+tehtäviä ja muut käsittelevät niitä. Lukon lisäksi tarvitaan
+*ehtomuuttujia* (`cnd_t`), joiden avulla säie voi nukkua, kunnes jonoon
+tulee tilaa tai tehtäviä.
+
+```{.c tiedosto="esimerkit/12-jono.c" osa="jono"}
+```
+
+`cnd_wait` vapauttaa lukon odotuksen ajaksi ja varaa sen uudelleen
+herätessään. Ehto tarkistetaan silmukassa, koska herätys voi tulla
+ilman, että ehto on tosi. Jonon sulkeminen herättää kaikki kuluttajat,
+jotta ne voivat lopettaa, kun jono on tyhjä.
+
+```{.c tiedosto="esimerkit/12-jono.c" osa="kaytto"}
+```
+
+```{.tuloste tiedosto="esimerkit/12-jono.odotettu"}
+```
+
+Kuluttajien keskinäinen työnjako vaihtelee ajokerrasta toiseen, mutta
+kokonaissumma on aina sama.
+
+## Käytännössä
+
+- **Jaa data, älä tilaa.** Paras synkronointi on se, jota ei tarvita:
+  kukin säie käsittelee omaa osaansa, ja tulokset yhdistetään lopuksi
+  (luvun ensimmäinen esimerkki).
+- **Lukko suojaa dataa, ei koodia.** Jokaisella jaetulla tiedolla on
+  yksi lukko, ja se dokumentoidaan rakenteen kenttien viereen. Lukko
+  pidetään mahdollisimman lyhyesti, eikä sen sisällä tehdä I/O:ta eikä
+  muistinvarauksia.
+- **Lukitusjärjestys.** Jos lukkoja on useita, ne varataan aina samassa
+  järjestyksessä. Yksi lukko on usein parempi kuin monta.
+- **Ehtomuuttuja aina silmukassa** ja jaetun ehdon muutos aina lukon
+  alla.
+- **Säieturvattomat funktiot.** `strtok`, `rand` ja `localtime` käyttävät
+  sisäistä tilaa. Niiden tilalle tulevat `_r`-versiot tai säiekohtainen
+  tila (C23:n `thread_local`).
+- **Atomiset muuttujat** laskureihin ja lippuihin. Heikommat
+  muistijärjestykset (`memory_order_relaxed` ym.) vain, kun tarve on
+  mitattu ja mallin tuntee; oletusjärjestys on turvallisin.
+- **Tuotannossa** käytetään usein POSIX-säikeitä ja säiepoolia: säikeitä
+  ei luoda tehtävää kohti, vaan kiinteä joukko säikeitä lukee tehtäviä
+  jonosta kuten yllä.
+
+## Itsearviointi
+
+- Osaat jakaa työn säikeille niin, että kukin käsittelee omaa dataansa.
+- Osaat suojata jaetun datan lukolla ja välttää lukkiutumisen.
+- Osaat toteuttaa tuottaja–kuluttaja-jonon ehtomuuttujilla.
+- Osaat perustella valinnan lukon ja atomisen muuttujan välillä.

@@ -279,7 +279,7 @@ async function main() {
 
   // Valmiin taidon materiaalilinkit osoittavat olemassa oleviin tiedostoihin.
   for (const t of data.taidot.filter((x) => x.materiaalit)) {
-    for (const avain of ["pdf", "esimerkit"]) {
+    for (const avain of ["pdf", "esimerkit", "pikaopas"]) {
       const polku = t.materiaalit[avain];
       tarkista(polku && fs.existsSync(path.join(juuri, polku)),
         `${t.nimi}: ${avain} ${polku}`);
