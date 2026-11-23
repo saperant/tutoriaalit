@@ -112,7 +112,7 @@ flowchart LR
     javascript["JavaScript"]
     typescript["TypeScript"]
     tcl["Tcl"]
-    funktionaalinen_ohjelmointi["Funktionaalinen ohjelmointi (Racket)"]
+    funktionaalinen_ohjelmointi["✓ Funktionaalinen ohjelmointi (Racket)"]
     cpp_suorituskyky["C++:n suorituskyky"]
     c_asm_integraatio["C ja assembly yhteen"]
     python_c_integraatio["Python ja C/C++ yhteen"]
@@ -356,7 +356,7 @@ flowchart LR
 
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
-| Funktionaalinen ohjelmointi (Racket) | 5 | Ohjelmoinnin perusteet (Python) | suunniteltu |
+| Funktionaalinen ohjelmointi (Racket) | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../funktionaalinen-ohjelmointi/) |
 | Go | 5 | Ohjelmoinnin perusteet (Python) | suunniteltu |
 | Java | 5 | Ohjelmoinnin perusteet (Python) | suunniteltu |
 | JavaScript | 5 | Ohjelmoinnin perusteet (Python) | suunniteltu |

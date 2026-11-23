@@ -1,0 +1,3 @@
+luettiin 5 riviä ensimmäiseen virheeseen asti
+12:00:05 WARN levytilaa alle 10 %
+12:01:12 WARN hidas kysely 2,4 s

@@ -1,0 +1,8 @@
+(table
+ ((class "hinnat"))
+ (tr (th "tuote") (th "hinta"))
+ (tr (td "kahvi") (td "4.59"))
+ (tr (td "tee") (td "3.29")))
+<tr><td>tee</td><td>3.29</td></tr>
+(+ 459 329)
+788

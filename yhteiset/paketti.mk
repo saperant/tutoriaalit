@@ -16,7 +16,8 @@ YHTEISET  := ../yhteiset
 RAKENNE   ?= kieli
 LUVUT     := $(sort $(wildcard luvut/*.md))
 ESIMERKIT := $(shell find esimerkit -type f -not -path '*/bin/*' \
-                  -not -path '*/obj_dir/*' -not -path '*/target/*')
+                  -not -path '*/obj_dir/*' -not -path '*/target/*' \
+                  -not -path '*/compiled/*' -not -path '*/__pycache__/*')
 
 .PHONY: kaikki testaa pdf siivoa
 

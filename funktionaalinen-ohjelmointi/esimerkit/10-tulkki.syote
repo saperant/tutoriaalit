@@ -1,0 +1,23 @@
+(define nelio (lambda (x) (* x x)))
+(nelio 12)
+(define kertoma
+  (lambda (n) (if (= n 0) 1 (* n (kertoma (- n 1))))))
+(kertoma 20)
+(define lisaaja (lambda (n) (lambda (x) (+ x n))))
+((lisaaja 5) 10)
+(let ([a 3] [b 4]) (+ (nelio a) (nelio b)))
+(define merkki
+  (lambda (x) (cond [(< x 0) (quote negatiivinen)]
+                    [(= x 0) (quote nolla)]
+                    [else (quote positiivinen)])))
+(list (merkki -7) (merkki 0) (merkki 7))
+(define kartta
+  (lambda (f xs)
+    (if (null? xs)
+        (quote ())
+        (cons (f (car xs)) (kartta f (cdr xs))))))
+(kartta nelio (list 1 2 3 4))
+(define laske (lambda (n kertyma)
+  (if (= n 0) kertyma (laske (- n 1) (+ kertyma 1)))))
+(laske 1000000 0)
+(lisaaja 1)

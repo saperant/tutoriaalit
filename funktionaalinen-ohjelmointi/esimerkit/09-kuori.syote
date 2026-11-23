@@ -1,0 +1,8 @@
+(avaa "A1")
+(talleta "A1" 100)
+(siirto "A1" "B2" 30)
+(avaa "B2")
+(siirto "A1" "B2" 30)
+(siirto "B2" "A1" 50)
+(talleta "A1" -5)
+(saldot)

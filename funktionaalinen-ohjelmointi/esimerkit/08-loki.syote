@@ -1,0 +1,7 @@
+12:00:01 INFO palvelu käynnistyi
+12:00:05 WARN levytilaa alle 10 %
+12:00:09 INFO yhteys tietokantaan
+12:01:12 WARN hidas kysely 2,4 s
+12:01:13 ERROR tietokantayhteys katkesi
+12:01:14 INFO yritetään uudelleen
+12:01:15 WARN uudelleenyritys 1/3

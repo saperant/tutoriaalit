@@ -1,0 +1,4 @@
+fib(10) = 55: 177 kutsua, iteroiden 10 askelta
+fib(20) = 6765: 21891 kutsua, iteroiden 20 askelta
+fib(25) = 75025: 242785 kutsua, iteroiden 25 askelta
+354224848179261915075

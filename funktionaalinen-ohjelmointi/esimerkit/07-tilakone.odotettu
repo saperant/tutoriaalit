@@ -1,0 +1,4 @@
+kiinni --avaa--> auki
+auki --sulje--> kiinni
+kiinni --lukitse--> lukossa
+lukossa --avaa-lukko--> kiinni

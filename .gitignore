@@ -8,3 +8,8 @@
 **/esimerkit/bin/
 __pycache__/
 node_modules/
+compiled/
+.pytest_cache/
+.mypy_cache/
+target/
+obj_dir/

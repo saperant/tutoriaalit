@@ -1,0 +1,5 @@
+pieni ympyrä: 0.79
+neliö 3: 9
+suorakulmio 2×5: 10
+kolmio: 6
+(list (suorakulmio 3 3) (suorakulmio 10 3))

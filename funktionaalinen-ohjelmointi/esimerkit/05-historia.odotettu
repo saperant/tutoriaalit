@@ -1,0 +1,7 @@
+() alennus 0 %
+((kahvi . 2)) alennus 0 %
+((kahvi . 2) (pulla . 3)) alennus 0 %
+((kahvi . 2) (pulla . 3)) alennus 10 %
+((pulla . 3)) alennus 10 %
+((kahvi . 2) (pulla . 3)) alennus 0 %
+#t

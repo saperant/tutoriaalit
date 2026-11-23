@@ -1,0 +1,4 @@
+d/dx (+ (* 3 x) 5) = 3
+d/dx (* x y) = y
+d/dx (expt x 3) = (* 3 (expt x 2))
+d/dx (* (expt x 2) (+ x 1)) = (+ (* (* 2 x) (+ x 1)) (expt x 2))

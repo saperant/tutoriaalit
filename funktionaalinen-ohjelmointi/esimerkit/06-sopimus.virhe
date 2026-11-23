@@ -1,0 +1,4 @@
+alv-osuus: contract violation
+expected: rational?
+given: "100"
+blaming:

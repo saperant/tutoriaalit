@@ -1,0 +1,8 @@
+(avaa "A1"): avattu A1
+(talleta "A1" 100): ok
+(siirto "A1" "B2" 30): hylätty: tuntematon tili tai väärä arvo
+(avaa "B2"): avattu B2
+(siirto "A1" "B2" 30): ok
+(siirto "B2" "A1" 50): kate ei riitä tilillä B2
+(talleta "A1" -5): hylätty: tuntematon tili tai väärä arvo
+(saldot): A1=70 B2=30
