@@ -1,0 +1,33 @@
+# Pandoc-asetukset kielipakettien pikaoppaille: vaakasuuntainen,
+# kaksipalstainen A4. Käyttö:
+#   pandoc --defaults=../yhteiset/pikaopas.yaml pikaopas.md -o x.pdf
+from: markdown
+pdf-engine: xelatex
+filters:
+  - ${.}/sisallyta.lua
+include-in-header:
+  - ${.}/tyyli.tex
+  - ${.}/pikaopas.tex
+number-sections: false
+highlight-style: tango
+variables:
+  documentclass: scrartcl
+  classoption:
+    - a4paper
+    - landscape
+    - twocolumn
+    - fontsize=9pt
+    - parskip=half
+  lang: fi
+  geometry:
+    - landscape
+    - margin=11mm
+    - columnsep=9mm
+  mainfont: Latin Modern Roman
+  sansfont: Latin Modern Sans
+  monofont: DejaVu Sans Mono
+  monofontoptions:
+    - Scale=0.80
+  colorlinks: true
+  linkcolor: blue!50!black
+  urlcolor: blue!50!black

@@ -5,7 +5,7 @@
 
 Tutoriaalit muodostavat taitopuun: jokainen tutoriaali on yksi taito, ja taidot rakentuvat toistensa päälle. Roolit ovat ammattiprofiileja, joiden polku kulkee puun läpi.
 
-Taitoja on 53, yhteensä noin 240 op. Valmis PDF: [opintopolut.pdf](opintopolut.pdf). Taitopuun lähdetiedosto: [taitopuu.toml](taitopuu.toml).
+Taitoja on 56, yhteensä noin 248 op. Valmis PDF: [opintopolut.pdf](opintopolut.pdf). Taitopuun lähdetiedosto: [taitopuu.toml](taitopuu.toml).
 
 ## Roolit
 
@@ -98,6 +98,11 @@ flowchart LR
     haavoittuvuudet["Haavoittuvuuksien analyysi ja hyödyntäminen"]
     laiteohjelmiston_takaisinmallinnus["Laiteohjelmiston takaisinmallinnus"]
   end
+  subgraph kielet["Kielet syvemmin"]
+    cpp_suorituskyky["C++:n suorituskyky"]
+    c_asm_integraatio["C ja assembly yhteen"]
+    python_c_integraatio["Python ja C/C++ yhteen"]
+  end
   komentorivi --> versionhallinta
   ohjelmoinnin_perusteet --> c_kieli
   komentorivi --> c_kieli
@@ -187,6 +192,11 @@ flowchart LR
   takaisinmallinnus --> haavoittuvuudet
   takaisinmallinnus --> laiteohjelmiston_takaisinmallinnus
   mikrokontrollerit --> laiteohjelmiston_takaisinmallinnus
+  moderni_cpp --> cpp_suorituskyky
+  suorituskyky --> cpp_suorituskyky
+  assembly --> c_asm_integraatio
+  python_tyokalut --> python_c_integraatio
+  moderni_cpp --> python_c_integraatio
 ```
 
 ## Taidot alueittain
@@ -293,3 +303,11 @@ flowchart LR
 | Takaisinmallinnus | 5 | Käyttöjärjestelmät, Objektitiedostot, linkitys ja ABI, Tietoturvan perusteet | suunniteltu |
 | Haavoittuvuuksien analyysi ja hyödyntäminen | 5 | Takaisinmallinnus | suunniteltu |
 | Laiteohjelmiston takaisinmallinnus | 5 | Mikrokontrollerit ja bare-metal-ohjelmointi, Takaisinmallinnus | suunniteltu |
+
+### Kielet syvemmin
+
+| Taito | op | Edellyttää | Tila |
+|-------|---:|------------|------|
+| C ja assembly yhteen | 2 | Assembly | suunniteltu |
+| Python ja C/C++ yhteen | 3 | Moderni C++, Python työkaluohjelmointiin | suunniteltu |
+| C++:n suorituskyky | 3 | Moderni C++, Suorituskyvyn analyysi ja optimointi | suunniteltu |

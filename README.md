@@ -83,6 +83,9 @@ yhteiset/                 kaikille tutoriaaleille yhteiset työkalut
   pdf.yaml                pandocin PDF-asetukset
   tyyli.tex               PDF:n LaTeX-tyylit
   sisallyta.lua           pandoc-suodatin koodin sisällyttämiseen
+  KIELIPAKETTI.md         kielipakettien yhteinen runko ja säännöt
+  tarkista_paketti.py     kielipaketin rakenteen tarkistin
+  pikaopas.yaml           pikaoppaiden (kaksipalstainen PDF) asetukset
   testaa_esimerkit.py     esimerkkikoodin testaaja
   taitopuu.py             taitopuun tarkistin ja generaattori
   sivusto.py              taitopuukartan rakentaja
@@ -96,7 +99,8 @@ sivusto/                  taitopuukartta (HTML, CSS, JS, asettelu ja selaintesti
   luvut/NN-nimi.md        luvut järjestyksessä
   esimerkit/              koodiesimerkit, odotetut tulosteet ja syötteet
                           sekä Makefile niiden kääntämiseen
-  <tutoriaali>.pdf        valmis PDF
+  pikaopas.md             kielipaketin pikaopas kokeneelle
+  <tutoriaali>.pdf        valmis PDF (ja <tutoriaali>-pikaopas.pdf)
 ```
 
 ## Rakentaminen

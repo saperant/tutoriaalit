@@ -51,12 +51,19 @@ on oma kokonaisuutensa:
 - **kehityskontti**, jossa kaikki tarvittavat työkalut ovat valmiina:
   paikallisesti, GitHub Codespacesissa tai ladattavana pakettina.
 
+Ohjelmointikieliä opettavat paketit noudattavat yhteistä runkoa
+([`yhteiset/KIELIPAKETTI.md`](yhteiset/KIELIPAKETTI.md)), ja osaaminen
+jakautuu niissä kolmeen tasoon: **perusteet**, **kokeneen kehittäjän
+materiaali** (oma luku, pikaopas ja itsearvioinnit) sekä
+**erityistarpeet**, kuten kehykset, kielten yhteiskäyttö ja
+kielikohtainen suorituskyky, jotka ovat taitopuussa omia taitojaan.
+
 ## Kenelle
 
 | Kohderyhmä | Tarve | Miten materiaali palvelee |
 |----------------|----------------------|------------------------------------------|
 | Opiskelijat ja harrastajat | Osaamisen rakentaminen alusta | Taitopuun ensimmäiset tasot eivät vaadi esitietoja. Polku etenee aina tunnetulta pohjalta, ja työkalut ovat valmiina. |
-| Ammattilaiset | Uralla eteneminen, itsensä haastaminen ja osaamisen uudelleensuuntaaminen | Taitoon voi siirtyä suoraan. Esitiedot paljastavat mahdolliset aukot, ja roolipolut näyttävät, mitä uusi suunta vaatii. |
+| Ammattilaiset | Uralla eteneminen, itsensä haastaminen ja osaamisen uudelleensuuntaaminen | Taitoon voi siirtyä suoraan. Kielipaketeissa on oma luku ja pikaopas kokeneelle, ja itsearvioinnit kertovat, mitkä luvut voi ohittaa. Roolipolut näyttävät, mitä uusi suunta vaatii. |
 | Tiiminvetäjät | Alaisten osaamisen kehittäminen | Roolien osaamisvaatimukset antavat yhteisen kielen kehityskeskusteluihin. Polun voi jakaa linkkinä, ja laajuusarviot auttavat ajan suunnittelussa. |
 
 ## Periaatteet
@@ -69,19 +76,25 @@ on oma kokonaisuutensa:
    Materiaali on ytimekästä tekstiä ja toimivia esimerkkejä, jotka voi
    käydä läpi omaan tahtiin. Yksi paketti on laajuudeltaan 2–5
    opintopistettä.
-3. **Yksi jaottelu, ei toistoa.** Kukin asia opetetaan yhdessä
+3. **Oikeita taitoja, ei "Hello, World" -materiaalia.** Esimerkit
+   ratkaisevat tunnistettavia tehtäviä ja on kirjoitettu kuin
+   tuotantokoodi. Jokainen luku kertoo, mitä malleja ja käytäntöjä
+   ammattilaiset käyttävät ja miksi, sekä mitä asiat maksavat juuri
+   tässä kielessä: samat mallit eivät siirry kielestä toiseen, kun
+   esimerkiksi poikkeuksen hinta on täysin eri.
+4. **Yksi jaottelu, ei toistoa.** Kukin asia opetetaan yhdessä
    paketissa. Muut paketit viittaavat siihen esitietona eivätkä toista
    sitä. Taitopuun tarkistin valvoo, ettei rakenteeseen synny syklejä
    eikä päällekkäisiä riippuvuuksia.
-4. **Testattu.** Kaikki koodi käännetään ja ajetaan automaattisesti,
+5. **Testattu.** Kaikki koodi käännetään ja ajetaan automaattisesti,
    ja tekstissä näkyvät tulosteet on todennettu. Työkalut ovat avointa
    lähdekoodia, jotta kuka tahansa voi toistaa testit.
-5. **Suomeksi ja avoimesti.** Materiaali kirjoitetaan suomeksi.
+6. **Suomeksi ja avoimesti.** Materiaali kirjoitetaan suomeksi.
    Vakiintuneet englanninkieliset termit mainitaan, jotta lukija löytää
    myös kansainvälisen aineiston. Kaikki on lisensoitu CC BY-SA 4.0
    -lisenssillä, ja lähteinä käytetään vain lisenssiltään yhteensopivaa
    aineistoa.
-6. **Tekoäly tuottaa rakennetta ja todennettavaa sisältöä.** Tekoälyä
+7. **Tekoäly tuottaa rakennetta ja todennettavaa sisältöä.** Tekoälyä
    käytetään tiiviin, ajantasaisen ja testatun materiaalin tuottamiseen:
    rakenteeseen, esimerkkeihin, testeihin ja tarkistuksiin, ei proosan
    paisuttamiseen. Ihmisen ja tekoälyn välistä työnjakoa voidaan

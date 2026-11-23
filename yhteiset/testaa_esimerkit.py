@@ -9,7 +9,7 @@ lähdetiedostot käännetään yhdeksi ohjelmaksi.
 
 Testaaja tekee seuraavat tarkistukset:
 
-1. Jokainen Markdownin C- tai C++-koodilohko viittaa tiedostoon
+1. Jokainen lukujen ja pikaoppaan C- tai C++-koodilohko viittaa tiedostoon
    attribuutilla `tiedosto=`, eli käsin kirjoitettua, testaamatonta
    koodia ei ole.
 2. Jokainen viitattu tiedosto on olemassa ja jokainen esimerkkitiedosto
@@ -167,7 +167,10 @@ def koodilohkon_kielet(attr: str) -> set[str]:
 def tarkista_markdown(juuri: Path) -> tuple[list[str], set[Path]]:
     virheet: list[str] = []
     viitatut: set[Path] = set()
-    for md in sorted((juuri / "luvut").glob("*.md")):
+    tiedostot = sorted((juuri / "luvut").glob("*.md"))
+    if (juuri / "pikaopas.md").exists():
+        tiedostot.append(juuri / "pikaopas.md")
+    for md in tiedostot:
         koodissa = False
         for nro, rivi in enumerate(md.read_text("utf-8").splitlines(), 1):
             osuma = LOHKO.match(rivi.strip())

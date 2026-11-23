@@ -25,7 +25,7 @@
 
 % Otsikot hieman hillitymmiksi.
 \addtokomafont{disposition}{\rmfamily}
-\addtokomafont{chapter}{\Huge}
+\ifdefined\chapter\addtokomafont{chapter}{\Huge}\fi
 
 % Taulukot eivät saa ylittää tekstialuetta.
 \usepackage{booktabs}

@@ -86,6 +86,11 @@ id = "tietoturva"
 nimi = "Tietoturva ja takaisinmallinnus"
 kuvaus = "Ohjelmien toiminnan selvittäminen konekielestä, haavoittuvuudet ja niiltä suojautuminen."
 
+[[alue]]
+id = "kielet"
+nimi = "Kielet syvemmin"
+kuvaus = "Erityistarpeiden taidot kielipakettien päälle: kielikohtainen suorituskyky ja kielten yhteiskäyttö."
+
 # ---------------------------------------------------------------------
 # Perusta
 # ---------------------------------------------------------------------
@@ -1133,6 +1138,67 @@ roadmap = ["cyber-security"]
 amk = "Sulautettujen järjestelmien tietoturva"
 
 # ---------------------------------------------------------------------
+# Kielet syvemmin
+# ---------------------------------------------------------------------
+
+[[taito]]
+id = "cpp-suorituskyky"
+nimi = "C++:n suorituskyky"
+alue = "kielet"
+kuvaus = "Mitä C++:n abstraktiot maksavat ja miten nopeaa koodia kirjoitetaan mittaamalla eikä arvaamalla."
+edellyttaa = ["moderni-cpp", "suorituskyky"]
+aiheet = [
+  "abstraktioiden hinta: virtuaalikutsut, std::function ja tyyppien pyyhintä",
+  "poikkeusten hinta ja noexcept",
+  "allokaatiot: reserve, pienet puskurit ja pmr-allokaattorit",
+  "siirrot, kopioiden poisto ja paluuarvot",
+  "datan asettelu: rakenteiden taulukko vai taulukoiden rakenne",
+  "käännösoptimoinnit: inline, LTO ja PGO",
+  "mittaaminen: mikrovertailut ja perf",
+]
+laajuus = 3
+testaus = "C++, toiminnallisuus testataan; mittaukset raportoidaan suuntaa-antavina"
+roadmap = ["cpp"]
+amk = "Ohjelmien optimointi"
+
+[[taito]]
+id = "c-asm-integraatio"
+nimi = "C ja assembly yhteen"
+alue = "kielet"
+kuvaus = "Konekielen liittäminen C-ohjelmaan ja kääntäjän sisäisten funktioiden käyttö."
+edellyttaa = ["assembly"]
+aiheet = [
+  "kutsukonventio rajapintana",
+  "erilliset assembly-tiedostot ja linkitys",
+  "GCC:n inline-assembly ja sen rajoitteet",
+  "kääntäjän sisäiset funktiot (intrinsics) ja SIMD",
+  "milloin assemblyä ei kannata kirjoittaa",
+]
+laajuus = 2
+testaus = "GCC, natiivi x86-64 ja QEMU (RISC-V)"
+roadmap = ["c"]
+amk = "Tietokonetekniikka"
+
+[[taito]]
+id = "python-c-integraatio"
+nimi = "Python ja C/C++ yhteen"
+alue = "kielet"
+kuvaus = "Nopeiden C- ja C++-osien liittäminen Python-ohjelmiin ja Python-rajapintojen tarjoaminen C++-kirjastoille."
+edellyttaa = ["python-tyokalut", "moderni-cpp"]
+aiheet = [
+  "ctypes ja C-rajapinnat",
+  "laajennusmoduulit pybind11:llä ja nanobindilla",
+  "NumPy-taulukot ilman kopiointia (puskuriprotokolla)",
+  "GIL ja rinnakkaisuus kielten rajalla",
+  "virheiden ja omistuksen välittäminen kielten välillä",
+  "paketointi ja binäärijakelu (wheel)",
+]
+laajuus = 3
+testaus = "Python ja pytest, käännetyt laajennukset"
+roadmap = ["python", "cpp"]
+amk = "Ohjelmointi ja skriptaus"
+
+# ---------------------------------------------------------------------
 # Roolit
 # ---------------------------------------------------------------------
 
@@ -1141,28 +1207,28 @@ id = "laitteistoarkkitehti"
 nimi = "Laitteistoarkkitehti"
 kuvaus = "Työskentelee rautatason arkkitehtuurin parissa: mallintaa järjestelmän korkean tason malleilla (HLM), toteuttaa ja verifioi RTL:n ja automatisoi työkaluketjut skripteillä."
 tavoitteet = ["arkkitehtuurin-tutkiminen", "verifiointi", "fpga-toteutus", "eda-skriptaus"]
-valinnaiset = ["hls", "dsp-laitteisto", "kaantajatekniikka"]
+valinnaiset = ["hls", "dsp-laitteisto", "kaantajatekniikka", "python-c-integraatio"]
 
 [[rooli]]
 id = "sulautettujen-kehittaja"
 nimi = "Sulautettujen ohjelmistojen kehittäjä"
 kuvaus = "Kehittää ohjelmistoja mikrokontrollereille ja sulautetuille Linux-laitteille: bare-metal-koodia, RTOS-sovelluksia ja laiteajureita."
 tavoitteet = ["rtos", "linux-ajurit"]
-valinnaiset = ["dsp", "laiteohjelmiston-takaisinmallinnus"]
+valinnaiset = ["dsp", "laiteohjelmiston-takaisinmallinnus", "c-asm-integraatio"]
 
 [[rooli]]
 id = "signaalinkasittelija"
 nimi = "Signaalinkäsittelyn ja ohjelmistoradion kehittäjä"
 kuvaus = "Suunnittelee ja toteuttaa signaalinkäsittelyä ja radiojärjestelmiä ohjelmistolla ja tarvittaessa laitteistolla."
 tavoitteet = ["sdr"]
-valinnaiset = ["dsp-laitteisto", "rtos", "suorituskyky"]
+valinnaiset = ["dsp-laitteisto", "rtos", "suorituskyky", "python-c-integraatio"]
 
 [[rooli]]
 id = "grafiikkaohjelmoija"
 nimi = "Grafiikkaohjelmoija"
 kuvaus = "Toteuttaa renderöintiä ja GPU-laskentaa peleihin, visualisointiin ja simulaatioihin."
 tavoitteet = ["sateenseuranta", "gpu-laskenta"]
-valinnaiset = []
+valinnaiset = ["cpp-suorituskyky"]
 
 [[rooli]]
 id = "hajautettujen-kehittaja"
@@ -1176,11 +1242,11 @@ id = "takaisinmallintaja"
 nimi = "Takaisinmallintaja ja tietoturva-analyytikko"
 kuvaus = "Analysoi ohjelmia ja laiteohjelmistoja konekielen tasolla, etsii haavoittuvuuksia ja arvioi suojauksia."
 tavoitteet = ["haavoittuvuudet", "laiteohjelmiston-takaisinmallinnus"]
-valinnaiset = ["kaantajatekniikka", "verkko-ohjelmointi"]
+valinnaiset = ["kaantajatekniikka", "verkko-ohjelmointi", "c-asm-integraatio"]
 
 [[rooli]]
 id = "algoritmiikka"
 nimi = "Algoritmiikan ja ohjelmistokehityksen perusta"
 kuvaus = "Yleinen ohjelmistokehittäjän tietojenkäsittelytieteen perusta: tietorakenteet, algoritmit ja niiden toteutus."
 tavoitteet = ["edistyneet-algoritmit", "rakennus-ja-testaus"]
-valinnaiset = ["kaantajatekniikka", "rinnakkaisohjelmointi"]
+valinnaiset = ["kaantajatekniikka", "rinnakkaisohjelmointi", "cpp-suorituskyky"]

@@ -11,6 +11,24 @@ sen tavoitetaitojen ja kaikkien niiden esitietojen joukko, joten samat
 perustaidot palvelevat useita rooleja: C-kieli on osa lähes jokaista
 polkua.
 
+## Kolme tasoa
+
+Ohjelmointikieliä opettavat paketit (*kielipaketit*) noudattavat yhteistä
+runkoa, joka on kuvattu tiedostossa `yhteiset/KIELIPAKETTI.md`. Osaaminen
+jakautuu kolmeen tasoon:
+
+1. **Perusteet** ovat kielipaketin ydinluvut. Ne opettavat kielen omat
+   piirteet ja viittaavat kieliriippumattomissa asioissa, kuten
+   algoritmeissa ja rinnakkaisuuden käsitteissä, taitopuun muihin
+   taitoihin.
+2. **Kokeneelle** on samassa paketissa: luku kokeneelle kehittäjälle,
+   tiivis pikaopas ja lukujen itsearvioinnit, joiden avulla tutun asian
+   voi ohittaa.
+3. **Erityistarpeet**, kuten kielikohtainen suorituskyky, kielten
+   yhteiskäyttö, kehykset ja tietokantaliitännät, ovat taitopuussa omia
+   taitojaan kielipakettien päällä. Esimerkiksi *Python ja C/C++ yhteen*
+   edellyttää molempien kielten taitoja.
+
 ## Rakenteen säännöt
 
 1. **Yksi taito, yksi tutoriaali.** Taito on rajattu kokonaisuus, jonka
@@ -41,8 +59,8 @@ ne voi opiskella missä järjestyksessä tahansa tai rinnakkain.
 
 *Laajuus* on arvio opintopisteinä. Yksi opintopiste vastaa noin
 27 tunnin työtä, joten 5 op:n tutoriaali on noin 135 tunnin kokonaisuus
-harjoituksineen. Koko taitopuun laajuus on 240 op, mikä on saman verran
-kuin ammattikorkeakoulun insinöörin tutkinto. Yksittäisen roolin polku
+harjoituksineen. Koko taitopuu on laajuudeltaan samaa luokkaa kuin
+ammattikorkeakoulun insinöörin tutkinto (240 op). Yksittäisen roolin polku
 on tästä noin kolmannes tai puolet.
 
 ## Ohjaavat lähteet

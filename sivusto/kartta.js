@@ -635,6 +635,7 @@
         h("h3", null, "Materiaalit"),
         h("div", { luokka: "linkit" },
           m.pdf && linkki(m.pdf, "Tutoriaali", "PDF"),
+          m.pikaopas && linkki(m.pikaopas, "Pikaopas kokeneelle", "PDF"),
           m.esimerkit && linkki(m.esimerkit, "Esimerkit ja kehityskontti",
             "zip"),
           m.codespaces && linkki(m.codespaces, "Avaa Codespacesissa",

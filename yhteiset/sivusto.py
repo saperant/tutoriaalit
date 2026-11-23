@@ -118,6 +118,10 @@ def rakenna_data(juuri: Path, kohde: Path) -> dict:
             if pdf.exists():
                 shutil.copy(pdf, materiaalit / pdf.name)
                 aineisto["pdf"] = f"materiaalit/{pdf.name}"
+            pikaopas = juuri / d / f"{d}-pikaopas.pdf"
+            if pikaopas.exists():
+                shutil.copy(pikaopas, materiaalit / pikaopas.name)
+                aineisto["pikaopas"] = f"materiaalit/{pikaopas.name}"
             paketti = materiaalit / f"{d}-esimerkit.zip"
             if esimerkkipaketti(juuri, d, paketti):
                 aineisto["esimerkit"] = f"materiaalit/{paketti.name}"
