@@ -1,0 +1,18 @@
+{
+  "name": "VHDL: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "ghdl"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/vhdl/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "hbohlin.vhdl-ls"
+      ]
+    }
+  }
+}
