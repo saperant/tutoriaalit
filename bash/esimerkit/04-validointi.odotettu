@@ -1,0 +1,6 @@
+ok: api:8080 (taso 3)
+hylätty: virheellinen nimi 'Api'
+hylätty: varasto: virheellinen portti '70000'
+hylätty: jono: tuntematon ympäristö 'staging'
+ok: loki:514 (taso 2)
+pää 2, sivu 14, korjaus 3

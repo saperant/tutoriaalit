@@ -221,6 +221,7 @@ laajuus = 5
 testaus = "Python, pytest, mypy ja ruff"
 roadmap = ["python"]
 amk = "Ohjelmointi Pythonilla"
+tutoriaali = "python"
 
 [[taito]]
 id = "bash"
@@ -241,6 +242,7 @@ laajuus = 3
 testaus = "bash, ShellCheck, tulosteiden vertailu"
 roadmap = ["shell-bash"]
 amk = "Linux-ylläpito ja skriptaus"
+tutoriaali = "bash"
 
 [[taito]]
 id = "python-tyokalut"
@@ -1228,6 +1230,7 @@ laajuus = 5
 testaus = "rustc ja cargo test, Clippy varoitukset virheinä"
 roadmap = ["rust"]
 amk = "Järjestelmäohjelmointi"
+tutoriaali = "rust"
 
 [[taito]]
 id = "go"
@@ -1445,6 +1448,7 @@ laajuus = 5
 testaus = "SQLite, kyselyjen tulosten vertailu"
 roadmap = ["sql", "postgresql-dba"]
 amk = "Tietokannat"
+tutoriaali = "sql"
 
 [[taito]]
 id = "html-css"

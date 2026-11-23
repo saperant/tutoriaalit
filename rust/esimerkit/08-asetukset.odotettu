@@ -1,0 +1,8 @@
+laskutus: portti 8443, 16 säiettä
+Asetukset { portti: 8080, tyontekijat: 4, nimi: "kassa" }
+virhe: rivi 1: odotettiin avain = arvo: "portti 8080"
+virhe: rivi 1: avaimen portti arvo ei ole luku
+  syy: invalid digit found in string
+virhe: avain portti puuttuu
+virhe: rivi 1: avaimen portti arvo ei ole luku
+  syy: number too large to fit in target type

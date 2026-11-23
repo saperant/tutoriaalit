@@ -1,0 +1,8 @@
+erä (3, 5, 4)
+erä (8, 12, 11)
+erä (15,)
+muutokset [2, -1, 4, 4, -1, 4]
+kumulatiivinen [3, 8, 12, 20, 32, 43, 58]
+ma ['kirjaus', 'haku']
+ti ['haku']
+['TILAUS-0001', 'TILAUS-0002', 'TILAUS-0003']

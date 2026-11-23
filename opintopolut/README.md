@@ -34,8 +34,8 @@ flowchart LR
     versionhallinta["Versionhallinta (Git)"]
     c_kieli["✓ C-kieli"]
     moderni_cpp["✓ Moderni C++"]
-    python["Python"]
-    bash["Bash-skriptaus"]
+    python["✓ Python"]
+    bash["✓ Bash-skriptaus"]
     python_tyokalut["Python työkaluohjelmointiin"]
     rakennus_ja_testaus["Käännösjärjestelmät, testaus ja CI"]
   end
@@ -105,7 +105,7 @@ flowchart LR
     laiteohjelmiston_takaisinmallinnus["Laiteohjelmiston takaisinmallinnus"]
   end
   subgraph kielet["Ohjelmointikielet"]
-    rust["Rust"]
+    rust["✓ Rust"]
     go["Go"]
     java["Java"]
     kotlin["Kotlin"]
@@ -118,7 +118,7 @@ flowchart LR
     python_c_integraatio["Python ja C/C++ yhteen"]
   end
   subgraph sovellukset["Sovelluskehitys"]
-    sql["SQL ja relaatiotietokannat"]
+    sql["✓ SQL ja relaatiotietokannat"]
     html_css["HTML ja CSS"]
     web_sovellukset["Web-sovellukset"]
     taustapalvelut["Taustapalvelut"]
@@ -252,9 +252,9 @@ flowchart LR
 |-------|---:|------------|------|
 | Komentorivi ja Linux | 3 | – | suunniteltu |
 | Ohjelmoinnin perusteet (Python) | 5 | – | suunniteltu |
-| Bash-skriptaus | 3 | Komentorivi ja Linux, Ohjelmoinnin perusteet (Python) | suunniteltu |
+| Bash-skriptaus | 3 | Komentorivi ja Linux, Ohjelmoinnin perusteet (Python) | [valmis](../bash/) |
 | C-kieli | 5 | Komentorivi ja Linux, Ohjelmoinnin perusteet (Python) | [valmis](../c-kieli/) |
-| Python | 5 | Ohjelmoinnin perusteet (Python) | suunniteltu |
+| Python | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../python/) |
 | Versionhallinta (Git) | 2 | Komentorivi ja Linux | suunniteltu |
 | Käännösjärjestelmät, testaus ja CI | 3 | Bash-skriptaus, C-kieli, Versionhallinta (Git) | suunniteltu |
 | Moderni C++ | 5 | C-kieli | [valmis](../moderni-cpp/) |
@@ -362,7 +362,7 @@ flowchart LR
 | JavaScript | 5 | Ohjelmoinnin perusteet (Python) | suunniteltu |
 | Tcl | 2 | Ohjelmoinnin perusteet (Python) | suunniteltu |
 | Kotlin | 3 | Java | suunniteltu |
-| Rust | 5 | C-kieli | suunniteltu |
+| Rust | 5 | C-kieli | [valmis](../rust/) |
 | TypeScript | 3 | JavaScript | suunniteltu |
 | C ja assembly yhteen | 2 | Assembly | suunniteltu |
 | Python ja C/C++ yhteen | 3 | Moderni C++, Python työkaluohjelmointiin | suunniteltu |
@@ -373,7 +373,7 @@ flowchart LR
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
 | HTML ja CSS | 3 | – | suunniteltu |
-| SQL ja relaatiotietokannat | 5 | Ohjelmoinnin perusteet (Python) | suunniteltu |
+| SQL ja relaatiotietokannat | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../sql/) |
 | Taustapalvelut | 5 | Java, SQL ja relaatiotietokannat, Tietoverkot | suunniteltu |
 | Android-sovellukset | 5 | Kotlin | suunniteltu |
 | Web-sovellukset | 5 | HTML ja CSS, Tietoverkot, TypeScript | suunniteltu |

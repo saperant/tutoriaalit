@@ -1,0 +1,10 @@
+[lämpötila ] [   21.46] [0021.456]
+0xff 0b101 1.2345e3
+ping, pong, ping
+Anturi { tunnus: 3, sijainti: "konehuone" }
+Anturi {
+    tunnus: 3,
+    sijainti: "konehuone",
+}
+anturi 3 sijaitsee: konehuone
+21.5 °C / -4.000 °C

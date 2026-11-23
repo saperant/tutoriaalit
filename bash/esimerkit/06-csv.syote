@@ -1,0 +1,6 @@
+tilaus,asiakas,määrä,hinta
+T-1001,kaisa,2,12.50
+T-1002,matti,1,99.00
+T-1003,kaisa,3,0.99
+T-1004,laura,x,10.00
+T-1005,matti,10,1.05

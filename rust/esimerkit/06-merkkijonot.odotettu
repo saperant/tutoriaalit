@@ -1,0 +1,7 @@
+tavuja 8, merkkejä 5
+ensimmäinen merkki: Some('H')
+tavut 0..2: None
+tavut 0..3: Some("Hä")
+Ada Lovelace
+Content-Type -> ["text/html", "charset=utf-8"]
+Err(ParseIntError { kind: InvalidDigit })

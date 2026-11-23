@@ -1,0 +1,5 @@
+käyttäjä 7: ada@example.org
+käyttäjä 8: (ei osoitetta)
+portti 8080
+virhe: portti 0 on varattu
+virhe: 'http' ei ole portti: invalid digit found in string

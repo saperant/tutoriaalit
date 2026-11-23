@@ -1,0 +1,8 @@
+== ensimmäinen ajo
+luotu hakemisto etc/sovellus
+luotu hakemisto var/log/sovellus
+lisätty rivi 'LOKI_HAKEMISTO=/var/log/sovellus' tiedostoon etc/sovellus/ymparisto
+lisätty rivi 'TYOLAISIA=4' tiedostoon etc/sovellus/ymparisto
+linkki var/ymparisto -> ../etc/sovellus/ymparisto
+== toinen ajo
+== valmis

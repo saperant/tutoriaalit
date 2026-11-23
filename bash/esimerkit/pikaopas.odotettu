@@ -1,0 +1,18 @@
+access.log.2.gz
+/var/log/nginx
+/var/log/nginx/access
+/var/LOG/nginx/access.log.2.gz
+30
+log
+8080
+ADA ada
+on tiedosto, ei tyhjä
+alkaa A:lla
+v. 2026
+pitkä nimi
+4 db 1 valvonta
+[web1][db 1][jono1][valvonta]
+http=80
+https=443
+ssh=22
+ssh: 22

@@ -1,0 +1,6 @@
+DEBUG   kauppa.tilaus: käsitellään tilausta 101
+INFO    kauppa.tilaus: tilaus 101: 3 kpl
+DEBUG   kauppa.tilaus: käsitellään tilausta 102
+ERROR   kauppa.tilaus: tilaus 102 hylätty
+  ValueError: invalid literal for int() with base 10: 'kolme'
+WARNING kauppa.maksu: maksupalvelu hidas

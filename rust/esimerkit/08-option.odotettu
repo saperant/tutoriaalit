@@ -1,0 +1,8 @@
+GRACE: None
+LINUS: Some("grace@example.org")
+<tuntematon 3>: None
+Ok(42)
+Err("\"x\" ei ole ikä")
+Err("200 on epäuskottava ikä")
+Err("\"x\" ei ole ikä")
+Kayttaja { nimi: "Linus", esimies: Some(1), sahkoposti: None }

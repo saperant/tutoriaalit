@@ -1,0 +1,5 @@
+portti 8080
+virhe: portti: puuttuu (alkuperäinen: -)
+virhe: portti: ei kokonaisluku (alkuperäinen: ValueError)
+virhe: portti: alueen ulkopuolella: 70000 (alkuperäinen: -)
+virhe: portti: ei kokonaisluku (alkuperäinen: JSONDecodeError)

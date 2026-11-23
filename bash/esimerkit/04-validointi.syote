@@ -1,0 +1,5 @@
+api 8080 prod
+Api 8080 prod
+varasto 70000 test
+jono 5672 staging
+loki 514 testi

@@ -1,0 +1,7 @@
+--ymparisto=testi
+dist/app.tar.gz
+--kohde
+/srv/julkaisut/v2
+-n
+--
+--outo-nimi.txt

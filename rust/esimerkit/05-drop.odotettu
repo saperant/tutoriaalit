@@ -1,0 +1,14 @@
+lohko alkaa
+  avataan tietokanta
+  avataan välimuisti
+  työtä
+  suljetaan välimuisti
+  suljetaan tietokanta
+lohko päättyi
+  avataan loki
+  suljetaan loki
+loki suljettu ennen ohjelman loppua
+  avataan istunto
+  siirrettiin istunto
+  suljetaan istunto
+aktiivinen on tyhjä: true

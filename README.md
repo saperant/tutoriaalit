@@ -34,10 +34,17 @@ Nippujen väliset yhteydet kulkevat yhteisinä johdinnippuina, jotka
 kiertävät muut niput. Taidolle voi antaa taitopuussa kentän `nippu`,
 jos alue halutaan jakaa useampaan nippuun.
 
+Jokaisessa tutoriaalissa on lisäksi muutaman sivun pikaopas
+(`<paketti>-pikaopas.pdf`) kokeneelle lukijalle.
+
 | Tutoriaali | Hakemisto | PDF |
 |------------|-----------|-----|
 | Moderni C++ | [`moderni-cpp/`](moderni-cpp/) | [moderni-cpp.pdf](moderni-cpp/moderni-cpp.pdf) |
 | C-kieli | [`c-kieli/`](c-kieli/) | [c-kieli.pdf](c-kieli/c-kieli.pdf) |
+| Python | [`python/`](python/) | [python.pdf](python/python.pdf) |
+| Bash-skriptaus | [`bash/`](bash/) | [bash.pdf](bash/bash.pdf) |
+| Rust | [`rust/`](rust/) | [rust.pdf](rust/rust.pdf) |
+| SQL ja relaatiotietokannat | [`sql/`](sql/) | [sql.pdf](sql/sql.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](opintopolut/opintopolut.pdf) |
 
 ## Periaatteet
@@ -56,8 +63,10 @@ jos alue halutaan jakaa useampaan nippuun.
 ## Esimerkit kehityskontissa
 
 Jokaisen tutoriaalin esimerkeille on valmis kehityskontti
-(devcontainer), jossa on kääntäjät (GCC 14, Clang 20), sanitoijat ja
-debuggeri:
+(devcontainer), jossa on tutoriaalin työkalut: esimerkiksi C:lle ja
+C++:lle GCC 14, Clang 20, sanitoijat ja debuggeri, Pythonille ruff,
+mypy ja pytest ja Rustille rustc, Cargo ja Clippy. Kontin voi avata
+näin:
 
 - **GitHub Codespaces:** *Code → Codespaces → New with options* ja
   valitse konfiguraatio, esimerkiksi *C-kieli: esimerkit*.
@@ -66,8 +75,9 @@ debuggeri:
 - **Ilman repositoriota:** taitopuukartalta saa kunkin tutoriaalin
   esimerkit zip-pakettina, jossa on mukana oma kehityskontti.
 
-Kontin sisällä tai ilman konttia esimerkit käännetään esimerkkihakemiston
-Makefilellä: `make` kääntää kaikki, `make aja-01-hei` kääntää ja ajaa
+Kontissa `make -C <paketti> testaa` tarkistaa ja ajaa paketin kaikki
+esimerkit samoin kuin CI. C- ja C++-esimerkit voi kääntää myös
+esimerkkihakemiston Makefilellä: `make` kääntää kaikki, `make aja-01-hei` kääntää ja ajaa
 yhden ja `make virhe-03-etumerkki` näyttää tarkoituksella virheellisen
 esimerkin käännösvirheen.
 

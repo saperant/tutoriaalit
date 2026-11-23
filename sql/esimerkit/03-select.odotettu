@@ -1,0 +1,14 @@
+┌────────────────┬───────────┬─────────┐
+│      nimi      │ kategoria │  hinta  │
+├────────────────┼───────────┼─────────┤
+│ Kahvimylly     │ laitteet  │ 59.00 € │
+│ Maitovaahdotin │ laitteet  │ 34.90 € │
+└────────────────┴───────────┴─────────┘
+┌────────────────┬────────────────┐
+│      nimi      │  hintaluokka   │
+├────────────────┼────────────────┤
+│ Suodatinpaperi │ edullinen      │
+│ Tee 100 g      │ edullinen      │
+│ Kahvi 500 g    │ edullinen      │
+│ Termosmuki     │ keskihintainen │
+└────────────────┴────────────────┘

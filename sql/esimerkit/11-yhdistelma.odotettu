@@ -1,0 +1,8 @@
+QUERY PLAN
+`--SEARCH tilaus USING COVERING INDEX asiakas_pv (asiakas_id=? AND paiva>?)
+QUERY PLAN
+`--SEARCH tilaus USING COVERING INDEX asiakas_pv (ANY(asiakas_id) AND paiva=?)
+QUERY PLAN
+`--SEARCH tilaus USING INDEX asiakas_pv (asiakas_id=?)
+QUERY PLAN
+`--SEARCH tilaus USING COVERING INDEX asiakas_pv (asiakas_id=?)

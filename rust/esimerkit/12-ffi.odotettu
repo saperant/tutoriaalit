@@ -1,0 +1,4 @@
+C:n mukaan 11 tavua
+Err("nul byte found in provided data at position: 5")
+Ok("3.142")
+[-7, -7, 0, 19, 42]

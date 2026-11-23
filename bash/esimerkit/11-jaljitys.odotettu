@@ -1,0 +1,7 @@
+alv: 480 senttiä
+--- jalki.txt
+++ main:17: laske_alv 1999 24
+++ laske_alv:8: local senttia=1999 prosentti=24
+++ laske_alv:9: echo 480
++ main:17: alv=480
++ main:18: set +x

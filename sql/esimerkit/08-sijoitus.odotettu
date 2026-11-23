@@ -1,0 +1,17 @@
+┌─────────────┬────────────────┬───────────┐
+│  kategoria  │      nimi      │ hinta_snt │
+├─────────────┼────────────────┼───────────┤
+│ astiat      │ Termosmuki     │ 2490      │
+│ elintarvike │ Kahvi 500 g    │ 899       │
+│ laitteet    │ Kahvimylly     │ 5900      │
+│ tarvikkeet  │ Suodatinpaperi │ 299       │
+└─────────────┴────────────────┴───────────┘
+┌────────────────┬───────────┬──────┬────────────┐
+│      nimi      │ tilauksia │ rank │ dense_rank │
+├────────────────┼───────────┼──────┼────────────┤
+│ Aino Virtanen  │ 2         │ 1    │ 1          │
+│ Matti Korhonen │ 2         │ 1    │ 1          │
+│ Juha Mäkinen   │ 1         │ 3    │ 2          │
+│ Liisa Nieminen │ 1         │ 3    │ 2          │
+│ Sari Laine     │ 0         │ 5    │ 3          │
+└────────────────┴───────────┴──────┴────────────┘

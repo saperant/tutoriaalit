@@ -1,0 +1,9 @@
+10.0.0.1 GET / 200 512
+10.0.0.2 GET /tuotteet 200 2048
+10.0.0.1 GET /vanha-sivu 404 0
+10.0.0.3 POST /tilaus 201 64
+10.0.0.4 GET /tuotteet 200 2048
+10.0.0.2 GET /kuva.png 404 0
+10.0.0.5 POST /tilaus 500 0
+virheellinen rivi
+10.0.0.1 GET / 304 0

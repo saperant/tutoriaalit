@@ -1,0 +1,1 @@
+rsync --archive --delete --dry-run --exclude \*.tmp --exclude cache/ /home/ada/Omat\ tiedostot/ /mnt/varmuus/

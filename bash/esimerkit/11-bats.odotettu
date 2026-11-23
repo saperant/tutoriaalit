@@ -1,0 +1,5 @@
+1..4
+ok 1 euroiksi muotoilee sentit kahdella desimaalilla
+ok 2 senteiksi hyväksyy pilkun, pisteen ja kokonaisluvun
+ok 3 senteiksi hylkää virheellisen syötteen
+ok 4 alennus pyöristää lähimpään senttiin

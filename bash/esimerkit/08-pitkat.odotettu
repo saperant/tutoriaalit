@@ -1,0 +1,3 @@
+kohde=/srv/julkaisut/v2 ympäristö=testi kuiva=1
+lähde: dist/app.tar.gz
+lähde: --outo-nimi.txt

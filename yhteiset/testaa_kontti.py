@@ -9,19 +9,55 @@ sen kuvaamasta Dockerfilesta kuvan samoilla rakennusargumenteilla ja
 ajaa kontissa `make -C <tutoriaali> testaa`. Näin varmistetaan, että
 lukijalle tarjottu kehityskontti todella riittää esimerkkien
 kääntämiseen ja ajamiseen.
+
+Jos ympäristömuuttuja SSL_CERT_FILE osoittaa järjestelmän oletuksesta
+poikkeavaan varmennetiedostoon (esim. yrityksen tai muun välityspalvelimen
+CA), varmenne lisätään testikuvaan, jotta paketinhallinta (apt, pip)
+toimii välityspalvelimen takana. Lukijoille jaettava Dockerfile ei muutu.
 """
 
 from __future__ import annotations
 
 import json
 import os
+import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 JUURI = Path(__file__).resolve().parent.parent
 VALITYS = ["http_proxy", "https_proxy", "HTTP_PROXY", "HTTPS_PROXY",
            "no_proxy", "NO_PROXY"]
+OLETUSVARMENNE = "/etc/ssl/certs/ca-certificates.crt"
+
+
+def ymparistön_varmenne() -> Path | None:
+    polku = os.environ.get("SSL_CERT_FILE")
+    if polku and Path(polku).is_file() and polku != OLETUSVARMENNE:
+        return Path(polku)
+    return None
+
+
+def luottava_konteksti(dockerfile: Path, konteksti: Path, varmenne: Path,
+                       tmp: Path) -> tuple[Path, Path]:
+    """Kopio rakennuskontekstista, jonka Dockerfile luottaa varmenteeseen."""
+    uusi = tmp / "konteksti"
+    shutil.copytree(konteksti, uusi)
+    shutil.copy(varmenne, uusi / "ymparisto-ca.crt")
+    rivit = dockerfile.read_text("utf-8").splitlines(keepends=True)
+    lisays = (
+        "COPY ymparisto-ca.crt /usr/local/share/ca-certificates/\n"
+        "RUN update-ca-certificates\n"
+        f"ENV PIP_CERT={OLETUSVARMENNE} "
+        f"REQUESTS_CA_BUNDLE={OLETUSVARMENNE}\n")
+    for i, rivi in enumerate(rivit):
+        if rivi.startswith("FROM "):
+            rivit.insert(i + 1, lisays)
+            break
+    uusi_dockerfile = uusi / "Dockerfile.testi"
+    uusi_dockerfile.write_text("".join(rivit), "utf-8")
+    return uusi_dockerfile, uusi
 
 
 def testaa(tutoriaali: str) -> bool:
@@ -32,17 +68,23 @@ def testaa(tutoriaali: str) -> bool:
     konteksti = (konfiguraatio.parent / rakennus.get("context", ".")).resolve()
     kuva = f"tutoriaalit-{tutoriaali}"
 
-    komento = ["docker", "build", "-q", "-t", kuva, "-f", str(dockerfile)]
-    for avain, arvo in rakennus.get("args", {}).items():
-        komento += ["--build-arg", f"{avain}={arvo}"]
-    for avain in VALITYS:
-        if avain in os.environ:
-            komento += ["--build-arg", f"{avain}={os.environ[avain]}"]
-    komento.append(str(konteksti))
-    print(f"== {tutoriaali}: rakennetaan kuva {kuva}", flush=True)
-    if subprocess.run(komento, stdout=subprocess.DEVNULL).returncode != 0:
-        print(f"{tutoriaali}: kuvan rakentaminen epäonnistui")
-        return False
+    with tempfile.TemporaryDirectory() as tmp:
+        varmenne = ymparistön_varmenne()
+        if varmenne:
+            dockerfile, konteksti = luottava_konteksti(
+                dockerfile, konteksti, varmenne, Path(tmp))
+        komento = ["docker", "build", "-q", "-t", kuva,
+                   "-f", str(dockerfile)]
+        for avain, arvo in rakennus.get("args", {}).items():
+            komento += ["--build-arg", f"{avain}={arvo}"]
+        for avain in VALITYS:
+            if avain in os.environ:
+                komento += ["--build-arg", f"{avain}={os.environ[avain]}"]
+        komento.append(str(konteksti))
+        print(f"== {tutoriaali}: rakennetaan kuva {kuva}", flush=True)
+        if subprocess.run(komento, stdout=subprocess.DEVNULL).returncode:
+            print(f"{tutoriaali}: kuvan rakentaminen epäonnistui")
+            return False
 
     print(f"== {tutoriaali}: make testaa kontissa", flush=True)
     tulos = subprocess.run(

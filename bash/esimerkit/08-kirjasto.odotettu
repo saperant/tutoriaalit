@@ -1,0 +1,3 @@
+12:00:00 varoitus palvelu.conf:4: ohitetaan: virheellinen rivi
+12:00:00 info     portti 8080
+NIMI = laskutus $(rm -rf ~)

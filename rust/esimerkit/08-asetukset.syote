@@ -1,0 +1,4 @@
+# palvelun asetukset
+portti = 8443
+tyontekijat = 16
+nimi = laskutus

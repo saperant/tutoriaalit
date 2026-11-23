@@ -1,0 +1,7 @@
+QUERY PLAN
+`--SCAN tilaus USING COVERING INDEX tilaus_avoin
+┌─────────┐
+│ avoimia │
+├─────────┤
+│ 2000    │
+└─────────┘

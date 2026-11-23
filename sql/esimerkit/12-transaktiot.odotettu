@@ -1,0 +1,3 @@
+siirron jälkeen: Aino 70.00, Matti 55.00
+peruttu: CHECK constraint failed: saldo_snt >= 0
+perumisen jälkeen: Aino 70.00, Matti 55.00

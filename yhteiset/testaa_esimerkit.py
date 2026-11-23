@@ -79,6 +79,7 @@ class Ajo:
     tyohak: Path           # käännöstuotteiden hakemisto
     liput: list[str] = field(default_factory=list)
     korjattu: bool = False
+    muut: list[Path] = field(default_factory=list)  # esim. .bats-testit
 
 
 Komennot = Callable[[Ajo], list[list[str]]]
@@ -133,6 +134,15 @@ def python_tarkistus(ajo: Ajo) -> list[list[str]]:
              f"--cache-dir={ajo.tyohak / 'mypy'}", *tiedostot]]
 
 
+def python_perus_tarkistus(ajo: Ajo) -> list[list[str]]:
+    # Aloittelijan profiili: mypy tarkistaa vain annotoidut funktiot,
+    # joten tyyppivihjeet voidaan opettaa vähitellen.
+    tiedostot = list(map(str, ajo.lahteet))
+    return [["ruff", "check", "--no-cache", "--quiet", *tiedostot],
+            ["mypy", "--no-error-summary",
+             f"--cache-dir={ajo.tyohak / 'mypy'}", *tiedostot]]
+
+
 def go_tarkistus(ajo: Ajo) -> list[list[str]]:
     tiedostot = list(map(str, ajo.lahteet))
     gofmt = str(Path(ajo.tyokalu).with_name("gofmt"))
@@ -145,6 +155,17 @@ def go_tarkistus(ajo: Ajo) -> list[list[str]]:
             [ajo.tyokalu, "vet", *tiedostot],
             [ajo.tyokalu, "build", "-o", str(ajo.tyohak / "ohjelma"),
              *tiedostot]]
+
+
+def bash_tarkistus(ajo: Ajo) -> list[list[str]]:
+    # ShellCheck tarvitsee UTF-8-lokaalin, jos viestissä on ääkkösiä.
+    komennot = [["env", "LC_ALL=C.UTF-8", "shellcheck", "-x",
+                 *map(str, ajo.lahteet)]]
+    bats = [str(p) for p in ajo.muut if p.suffix == ".bats"]
+    if bats:
+        komennot.append(["env", "LC_ALL=C.UTF-8", "shellcheck", "-x",
+                         "-s", "bats", *bats])
+    return komennot
 
 
 def ghdl_tarkistus(ajo: Ajo) -> list[list[str]]:
@@ -178,9 +199,11 @@ KIELET: dict[str, Kieli] = {
     "python": Kieli((".py",), (), "main.py", (Toteutus(
         "python", ("python3",), python_tarkistus,
         lambda a: [a.tyokalu, str(paa(a, "main.py"))]),)),
-    "bash": Kieli((".sh",), (), "main.sh", (Toteutus(
-        "bash", ("bash",),
-        lambda a: [["shellcheck", "-x", *map(str, a.lahteet)]],
+    "python-perus": Kieli((".py",), (), "main.py", (Toteutus(
+        "python", ("python3",), python_perus_tarkistus,
+        lambda a: [a.tyokalu, str(paa(a, "main.py"))]),)),
+    "bash": Kieli((".sh",), (".bats",), "main.sh", (Toteutus(
+        "bash", ("bash",), bash_tarkistus,
         lambda a: [a.tyokalu, str(paa(a, "main.sh"))]),)),
     "rust": Kieli((".rs",), (), "main.rs", (Toteutus(
         "rust", ("/usr/lib/rust-1.80/bin/clippy-driver", "clippy-driver"),
@@ -450,8 +473,10 @@ def testaa(kieli: Kieli, esimerkki: Esimerkki, valittu: Valittu,
         lahteet = esimerkki.lahteet
         if korjattu and kieli.korjaus == "rivi":
             lahteet = korjattu_kopio(esimerkki, hak / "korjattu")
+        muut = [p for p in esimerkki.tiedostot
+                if p not in esimerkki.lahteet]
         return Ajo(valittu.tyokalu, lahteet, hak, liput,
-                   korjattu and kieli.korjaus == "makro")
+                   korjattu and kieli.korjaus == "makro", muut)
 
     if esimerkki.ei_kaanny:
         ok, _ = suorita(t.tarkista(ajo(False, valittu.liput, tyohak)), env)

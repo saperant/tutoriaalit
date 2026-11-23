@@ -1,0 +1,10 @@
+┌──────┬────────────────────────────────────────────┐
+│ taso │                   reitti                   │
+├──────┼────────────────────────────────────────────┤
+│ 0    │ Kaikki                                     │
+│ 1    │ Kaikki > Keittiö                           │
+│ 2    │ Kaikki > Keittiö > Astiat                  │
+│ 2    │ Kaikki > Keittiö > Kahvi ja tee            │
+│ 3    │ Kaikki > Keittiö > Kahvi ja tee > Laitteet │
+│ 1    │ Kaikki > Puutarha                          │
+└──────┴────────────────────────────────────────────┘

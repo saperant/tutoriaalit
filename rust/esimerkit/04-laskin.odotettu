@@ -1,0 +1,6 @@
+1 + 2 * 3      = 7
+(1 + 2) * 3    = 9
+-4 / (2 - 2)   : jako nollalla
+2 * (3 + 4     : puuttuva ')'
+7 % 2          : tuntematon merkki '%'
+1.5 * 4 - 0.5  = 5.5

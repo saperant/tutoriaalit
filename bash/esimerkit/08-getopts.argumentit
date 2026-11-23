@@ -1,0 +1,9 @@
+-vv
+-n
+-k
+14
+-o
+/mnt/levy 2/kopiot
+--
+/etc
+/home/ada/Omat tiedostot

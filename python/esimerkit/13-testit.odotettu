@@ -1,0 +1,8 @@
+passed  test_kelvolliset[pilkku]
+passed  test_kelvolliset[euromerkki]
+passed  test_kelvolliset[nolla]
+passed  test_virheelliset[tyhja]
+passed  test_virheelliset[kirjaimet]
+passed  test_virheelliset[negatiivinen]
+passed  test_tiedostosta
+paluuarvo: 0

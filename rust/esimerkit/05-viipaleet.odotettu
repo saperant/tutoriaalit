@@ -1,0 +1,4 @@
+Some(19.8) Some(1.5)
+kolme ensimmäistä: Some(15.0)
+tyhjä: None
+[0.0, 1.0, 0.0, 1.0, 0.6]

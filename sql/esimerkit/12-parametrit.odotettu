@@ -1,0 +1,5 @@
+vaarallinen: ['Aino Virtanen', 'Matti Korhonen', 'Liisa Nieminen']
+parametrisoitu: []
+kaupungeista: ['Matti Korhonen', 'Liisa Nieminen']
+järjestys: ['Aino Virtanen', 'Liisa Nieminen', 'Matti Korhonen']
+hylätty: tuntematon järjestys: 'nimi; DROP TABLE asiakas'

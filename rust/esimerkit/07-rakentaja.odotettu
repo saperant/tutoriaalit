@@ -1,0 +1,7 @@
+Pyynto {
+    osoite: "https://example.org/api",
+    metodi: "GET",
+    aikakatkaisu: 30s,
+    yritykset: 1,
+}
+POST https://example.org/api/tilaus 2.5s 3

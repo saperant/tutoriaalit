@@ -1,0 +1,10 @@
+Avaa           -> Yhdistaa { yritykset: 1 }
+Epaonnistui    -> Yhdistaa { yritykset: 2 }
+Onnistui(42)   -> Auki { istunto: 42 }
+Avaa           -> Auki { istunto: 42 }
+Sulje          -> Suljettu
+Avaa           -> Yhdistaa { yritykset: 1 }
+Epaonnistui    -> Yhdistaa { yritykset: 2 }
+Epaonnistui    -> Yhdistaa { yritykset: 3 }
+Epaonnistui    -> Suljettu
+yhteys suljettu

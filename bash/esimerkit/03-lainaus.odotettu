@@ -1,0 +1,10 @@
+[kesän]
+[raportti.txt]
+[kesän raportti.txt]
+<kesän raportti.txt>
+<muistio.txt>
+<*.txt>
+yksinkertaiset: $nimi ja \n pysyvät sellaisinaan
+kaksinkertaiset: Ada, 3, ls
+ANSI-C-lainaus: sarkain	ja rivinvaihto
+(loppui)

@@ -1,0 +1,5 @@
+a.txt -> b.txt turvallisesti, 3 yritystä
+a.txt -> b.txt ylikirjoittaen, 1 yritystä
+21.08
+pyyntö käsitelty kayttaja=ada kesto_ms=12
+tietokanta.db -> tietokanta.bak turvallisesti, 5 yritystä

@@ -1,0 +1,5 @@
+glob: data/raportti\ 1.csv
+glob: data/raportti2.csv
+glob: $'data/rivin\nvaihto.csv'
+find löysi 4 CSV-tiedostoa
+3...2...1...käynnistys

@@ -1,0 +1,9 @@
+0
+[('ruuvi', 120), ('mutteri', 75)]
+{'Ada': ['kirja', 'lamppu'], 'Bob': ['kynä', 'kirja'], 'Cia': ['kirja']}
+[('kirja', 3), ('kynä', 1)]
+['poisto'] ['luku']
+True
+['tallensi', 'poisti', 'poistui']
+alku c
+[('Dan', 41), ('Ada', 36), ('Cia', 36), ('Bob', 28)]

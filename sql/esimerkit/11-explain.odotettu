@@ -1,0 +1,8 @@
+QUERY PLAN
+`--SCAN tilaus
+QUERY PLAN
+`--SEARCH tilaus USING INDEX tilaus_asiakas (asiakas_id=?)
+QUERY PLAN
+`--SCAN tilaus USING COVERING INDEX tilaus_paiva
+QUERY PLAN
+`--SEARCH tilaus USING COVERING INDEX tilaus_paiva (paiva>? AND paiva<?)
