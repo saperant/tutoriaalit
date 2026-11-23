@@ -1,0 +1,11 @@
+merkkijono       length  koodipisteet  merkit
+kissa            5       5             5
+äiti             4       4             4
+peukku           2       1             1
+peukku + sävy    4       2             1
+Suomen lippu     4       2             1
+false true
+WARN /var "levy 91 % täynnä"
+a/b/c ..x
+true [ 'kahvi', 'tee', '', '' ]
+rivi 1 | rivi 2 | rivi 3

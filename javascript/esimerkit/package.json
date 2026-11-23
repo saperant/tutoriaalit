@@ -1,0 +1,17 @@
+{
+  "name": "javascript-esimerkit",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "tarkista": "tsc -p .",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "~7.0.2"
+  }
+}

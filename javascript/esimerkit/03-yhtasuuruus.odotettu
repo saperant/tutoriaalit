@@ -1,0 +1,10 @@
+                   ==     ===    Object.is
+0 ja ""            true   false  false
+"1" ja 1           true   false  false
+null ja undefined  true   false  false
+NaN ja NaN         false  false  true
+0 ja -0            true   true   false
+[1] ja 1           true   false  false
+false true
+true -1
+true

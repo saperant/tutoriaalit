@@ -1,0 +1,4 @@
+ok 100
+virhe: ei postinumero: "1234"
+ok 33720
+[ 'Tampere: 2', 'Oulu: 1' ]

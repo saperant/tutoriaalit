@@ -1,0 +1,7 @@
+peräkkäin ≥ 180 ms: true
+rinnakkain < 150 ms: true
+all: mehu: palvelu ei vastaa
+kahvi 500
+mehu virhe
+tee 300
+race: 500

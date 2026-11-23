@@ -1,0 +1,21 @@
+42                      number
+4.2                     number
+10n                     bigint
+'teksti'                string
+true                    boolean
+undefined               undefined
+null                    object
+Symbol(id)              symbol
+{ a: 1 }                object
+[ 1, 2 ]                object
+[Function (anonymous)]  function
+0.30000000000000004 false
+true
+9007199254740991 true
+18014398509481986n
+3.5 3 1 -1
+Infinity -Infinity NaN
+42 4.5 0 NaN
+42 350
+12 ff false true
+51 4 2

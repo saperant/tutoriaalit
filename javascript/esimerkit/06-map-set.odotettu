@@ -1,0 +1,7 @@
+[ '1' ] true
+2 10 20
+[ 'admin' ] undefined
+3 [ 'kahvi' ] [ 'tee', 'mehu' ]
+[ 3, 1, 2 ]
+Aino [ 'kirjautui', 'osti' ]
+Eero [ 'osti' ]

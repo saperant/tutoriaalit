@@ -1,0 +1,12 @@
+[ 'äyriäiset', 'kahvi', 'lohi' ] 4454 Pätkis
+true Pätkis
+kahvi
+[ 1, 10, 100, 9 ] [ 1, 9, 10, 100 ]
+[ 'kahvi', 'lohi', 'Pätkis', 'tee', 'äyriäiset' ]
+[ 'Pätkis', 'kahvi', 'lohi', 'tee', 'äyriäiset' ]
+tee kahvi äyriäiset lohi Pätkis
+juomat        2 kpl 1075 snt
+kala          2 kpl 3180 snt
+leivonnaiset  1 kpl 199 snt
+3 false [ '1', <1 empty item>, '3' ]
+[ 0, 1, 4 ]

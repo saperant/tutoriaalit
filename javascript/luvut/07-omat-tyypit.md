@@ -1,0 +1,143 @@
+# Oliot, luokat ja tyypit {.runko-omat-tyypit}
+
+JavaScriptissa on kaksi tapaa kuvata omia tyyppejä. Ajonaikana on
+olioita ja niiden prototyyppiketjuja; `class` on niiden päälle rakennettu
+syntaksi. Tyyppitarkistimelle kuvataan rakenteita JSDocin
+`@typedef`-määrittelyillä, jotka ovat rakenteellisia: olio kelpaa, jos
+sillä on oikeat kentät, riippumatta siitä, miten se on luotu.
+
+## Luokat
+
+```{.javascript tiedosto="esimerkit/07-luokat.js"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-luokat.odotettu"}
+```
+
+- **Yksityiset jäsenet** (`#saldo`, `#tarkista`) ovat kielen tasolla
+  yksityisiä: niitä ei näe luokan ulkopuolelta edes `Object.keys`-
+  funktiolla tai debuggerin ulkopuolisella koodilla. Vanha alaviivakäytäntö
+  (`_saldo`) on vain sopimus.
+- **Staattiset jäsenet** kuuluvat luokalle. Staattinen tehdasmetodi
+  (`Tili.avaa`) antaa nimen luontitavalle ja voi palauttaa valmiiksi
+  alustetun olion.
+- **Getter** (`get saldo()`) näyttää kentältä, mutta on vain luku -
+  ominaisuus, joten saldoa ei voi asettaa ohi invariantin.
+- **Invariantti tarkistetaan jokaisessa muuttavassa metodissa**, jolloin
+  olio ei voi koskaan olla virheellisessä tilassa.
+- `toString` määrää, miten olio muuttuu merkkijonoksi.
+
+Yksityiseen kenttään viittaaminen luokan ulkopuolella on jo
+jäsennysvirhe:
+
+```{.javascript tiedosto="esimerkit/07-yksityinen.ei-kaanny.js"}
+```
+
+```text
+SyntaxError: Private field '#arvo' must be declared in an enclosing
+class
+```
+
+## Prototyypit
+
+Jokaisella oliolla on prototyyppi, josta se perii ominaisuudet. Haku
+etenee ketjua pitkin, kunnes ominaisuus löytyy tai ketju päättyy
+(`null`). `class` ja `extends` rakentavat saman ketjun:
+
+```{.javascript tiedosto="esimerkit/07-prototyypit.js" osa="ketju"}
+```
+
+```{.javascript tiedosto="esimerkit/07-prototyypit.js" osa="luokka"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-prototyypit.odotettu"}
+```
+
+Metodit ovat prototyypissä ja jaettuja, kentät jokaisessa oliossa.
+`super(...)` on kutsuttava ennen kuin aliluokan konstruktori käyttää
+`this`-arvoa. `Object.create` palauttaa tyyppitarkistimelle tyypin
+`any`, joten suorat prototyypit ovat nykykoodissa harvinaisia.
+
+## Koostaminen periytymisen sijaan
+
+Periytyminen sitoo aliluokan yliluokan toteutukseen, ja syvät
+hierarkiat ovat vaikeita muuttaa. JavaScriptissa tavallisempia ovat
+koostaminen (olio sisältää toisen ja delegoi sille), tehdasfunktiot
+(luku 9) ja *erotellut unionit*: kaikki variantit ovat tavallista dataa,
+ja `laji`-kenttä kertoo, mikä variantti on kyseessä.
+
+```{.javascript tiedosto="esimerkit/07-unionit.js" osa="tyypit"}
+```
+
+```{.javascript tiedosto="esimerkit/07-unionit.js" osa="kattava"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-unionit.odotettu"}
+```
+
+Tarkistin kaventaa tyyppiä `switch`-haarassa, joten `m.r` on käytettävissä
+vain ympyrälle. Jos unioniin lisätään uusi laji, jota ei käsitellä,
+`never`-tyyppinen sijoitus paljastaa sen:
+
+```{.javascript tiedosto="esimerkit/07-kattavuus.ei-kaanny.js"}
+```
+
+```text
+07-kattavuus.ei-kaanny.js(20,13): error TS2322: Type '{ tila:
+"palautettu"; syy: string; }' is not assignable to type 'never'.
+```
+
+Malli vastaa Rustin `enum`-tyyppiä ja Kotlinin `sealed`-luokkia. Se
+sopii tilakoneisiin, viesteihin ja jäsennyspuihin. Luokkahierarkia
+sopii paremmin, kun uusia variantteja lisätään useammin kuin uusia
+operaatioita (lausekeongelma).
+
+## Geneeriset tyypit
+
+JSDocin `@template` tekee tyypeistä ja funktioista geneerisiä. *Tulos*-
+tyyppi (Rustin `Result`) ilmaisee odotetun epäonnistumisen ilman
+poikkeusta:
+
+```{.javascript tiedosto="esimerkit/07-geneerinen.js" osa="tulos"}
+```
+
+```{.javascript tiedosto="esimerkit/07-geneerinen.js" osa="kaytto"}
+```
+
+Rajoite `@template {keyof T} K` sallii vain `T`:n kenttien nimet, ja
+paluutyyppi `Map<T[K], T[]>` johdetaan niistä:
+
+```{.javascript tiedosto="esimerkit/07-geneerinen.js" osa="rajoite"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-geneerinen.odotettu"}
+```
+
+## Käytännössä
+
+- **Data ensin.** Jos tyyppi on pelkkää dataa, `@typedef` ja
+  olioliteraali riittävät; luokkaa tarvitaan, kun datalla on
+  invariantti, jota metodit valvovat.
+- **`#yksityinen` sopimuksen sijaan.** Yksityiset kentät mahdollistavat
+  toteutuksen muuttamisen rikkomatta käyttäjiä.
+- **Tehdasmetodi monimutkaiselle luonnille**, konstruktori yksinkertaiselle.
+  Asynkronista alustusta ei voi tehdä konstruktorissa; siihen sopii
+  staattinen `async`-tehdas.
+- **Erotellut unionit ja kattava `switch`** tilakoneisiin ja viesteihin.
+  Kattavuustarkistus muuttaa unohtuneen tapauksen tyyppivirheeksi.
+- **Koostaminen ennen periytymistä.** `extends` sopii lähinnä virheiden
+  hierarkioihin (luku 8) ja kehysten kantaluokkiin.
+- **Hinta.** Luokkien oliot saavat yhtenäisen muodon (luku 5) ja ovat
+  siksi tehokkaita. Yksityiset kentät ovat yhtä nopeita kuin julkiset.
+  Getterin kutsu laajennetaan yleensä inline-koodiksi.
+
+## Itsearviointi
+
+- Osaat kirjoittaa luokan, jolla on yksityiset kentät, getterit,
+  staattinen tehdasmetodi ja invariantti.
+- Osaat selittää prototyyppiketjun ja sen, miten `class` ja `extends`
+  rakentavat sen.
+- Osaat kuvata erotellun unionin JSDoc-tyypeillä ja tarkistaa
+  `switch`-lauseen kattavuuden `never`-tyypillä.
+- Osaat kirjoittaa geneerisen funktion ja tyypin `@template`-
+  merkinnällä ja rajoitteella.

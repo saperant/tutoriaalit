@@ -1,0 +1,6 @@
+5000 5000 suora yhteys
+5000 0 suora yhteys
+200 200 proxy:3128
+0 undefined undefined
+true false
+true {"kahvi":0}

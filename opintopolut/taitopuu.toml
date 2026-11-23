@@ -1315,6 +1315,7 @@ laajuus = 5
 testaus = "Node.js, node:test ja tsc --checkJs (JSDoc-tyypit)"
 roadmap = ["javascript"]
 amk = "Web-ohjelmointi"
+tutoriaali = "javascript"
 
 [[taito]]
 id = "typescript"
