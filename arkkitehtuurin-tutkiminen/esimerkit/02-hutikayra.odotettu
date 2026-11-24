@@ -1,0 +1,17 @@
+hutiosuus (%), täysin assosiatiivinen LRU, rivi 64 B
+  KiB     virta    naiivi  lohkottu     lista
+  0.5      12.5      56.9      51.9      50.0
+    1      12.5      56.9       2.1      50.0
+    2      12.5      51.0       1.6      50.0
+    4      12.5       6.5       1.6      50.0
+    8      12.5       6.5       1.1      50.0
+   16      12.5       0.6       0.5      50.0
+   32      12.5       0.6       0.5      50.0
+   64       6.2       0.6       0.5      12.5
+pinoalgoritmi == suora simulointi: kyllä
+
+hudit, 4 KiB:   täysin  8-tie  2-tie  suora
+  virta        1536   1536  12288  12288
+  naiivi       4352  34944  34976  35440
+  lohkottu     1152   1272   3444   7318
+  lista        4096   4096   4096   4096

@@ -1,0 +1,10 @@
+viive 90 ns, rivi 64 B, kanava 25.6 GB/s
+ kesken  kaista GB/s  käyttöaste
+      1          0.7          3%
+      4          2.8         11%
+     10          7.1         28%
+     16         11.4         44%
+     32         22.8         89%
+     48         25.6        100%
+kanavan täyttämiseen tarvitaan 36 pyyntöä kesken
+yksi ydin (10 MSHR): 7.1 GB/s, kanava täyttyy 3.6 ytimellä

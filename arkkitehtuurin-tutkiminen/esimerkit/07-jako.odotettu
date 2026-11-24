@@ -1,0 +1,12 @@
+     n  malli us  prototyyppi us    ero
+    16     2.116           2.116  +0.0%
+    64     2.368           2.368  +0.0%
+   256     3.376           3.376  +0.0%
+  1024     7.408           7.408  +0.0%
+  4096    23.536          23.536  +0.0%
+
+vaihtoehto       tasapiste  nopeutus n=4096  sovellus p=0.6
+nykyinen                57             7.31            2.07
+kysely (200 ns)          8             7.91            2.10
+kaksoispuskuri          55             8.85            2.14
+molemmat                 8             9.75            2.17

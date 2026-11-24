@@ -4,7 +4,7 @@
     "dockerfile": "../Dockerfile",
     "context": "..",
     "args": {
-      "LISAPAKETIT": "libsystemc-dev pkgconf",
+      "LISAPAKETIT": "libsystemc-dev pkgconf shellcheck",
       "PIP_PAKETIT": "numpy matplotlib ruff mypy pytest"
     }
   },

@@ -1,0 +1,8 @@
+ruudukon optimi 25.66 (150 arviointia)
+menetelmä      n  vaje ka.  vaje max  optimi löytyi
+satunnainen   10     27.4%     68.7%             7%
+hyperkuutio   10     23.7%     63.6%             6%
+satunnainen   20     18.1%     55.5%            12%
+hyperkuutio   20     17.0%     53.7%            11%
+satunnainen   40     10.8%     37.7%            21%
+hyperkuutio   40      9.8%     40.3%            23%

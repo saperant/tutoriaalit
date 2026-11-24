@@ -1,0 +1,9 @@
+pisteitä 150, tehorajan 80 W alittaa 80
+  r   c    v ytimiä  nopeutus  teho W
+  1  16  0.8     48     25.66    67.9
+  1  32  0.9     32     24.81    74.6
+  1  16  0.7     48     22.79    45.9
+  1   8  0.8     56     22.69    73.9
+  1  32  0.8     32     22.52    55.9
+  1   8  0.7     56     21.62    48.2
+huom: paras r = 1 on tilan reunalla

@@ -1,0 +1,9 @@
+intervalleja 100, tarkka CPI 2.131
+menetelmä                 CPI   virhe  simuloitu
+alusta 5 intervallia    1.354  -36.5%         5%
+joka 20. intervalli     1.583  -25.7%         5%
+SimPoint k = 1          1.488  -30.2%         1%
+SimPoint k = 2          2.461  +15.5%         2%
+SimPoint k = 3          2.214   +3.9%         3%
+SimPoint k = 4          2.215   +3.9%         4%
+SimPoint k = 6          2.145   +0.7%         6%

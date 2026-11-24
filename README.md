@@ -114,6 +114,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Reaaliaikakäyttöjärjestelmät | [`rtos/`](rtos/) | [rtos.pdf](https://saperant.github.io/tutoriaalit/materiaalit/rtos.pdf) |
 | Oheislaiteväylät | [`oheislaitevaylat/`](oheislaitevaylat/) | [oheislaitevaylat.pdf](https://saperant.github.io/tutoriaalit/materiaalit/oheislaitevaylat.pdf) |
 | Korkean tason synteesi | [`hls/`](hls/) | [hls.pdf](https://saperant.github.io/tutoriaalit/materiaalit/hls.pdf) |
+| Arkkitehtuurin mallinnus ja suunnittelutilan tutkiminen | [`arkkitehtuurin-tutkiminen/`](arkkitehtuurin-tutkiminen/) | [arkkitehtuurin-tutkiminen.pdf](https://saperant.github.io/tutoriaalit/materiaalit/arkkitehtuurin-tutkiminen.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

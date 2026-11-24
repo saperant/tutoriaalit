@@ -741,6 +741,7 @@ laajuus = 5
 testaus = "C++- ja SystemC-mallit, Python-analyysit"
 roadmap = []
 amk = "Tuotekehitysprojekti"
+tutoriaali = "arkkitehtuurin-tutkiminen"
 
 [[taito]]
 id = "eda-skriptaus"
