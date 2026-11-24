@@ -1,0 +1,10 @@
+Solmu lisätään (4 -> 5):
+  modulo             79.9% siirtyy, vanhalta vanhalle  59.9%
+  rengas, 100 virt.  20.5% siirtyy, vanhalta vanhalle   0.0%
+  rendezvous         19.9% siirtyy, vanhalta vanhalle   0.0%
+Kuormin solmu / keskiarvo, 5 solmua:
+  rengas,    1 virtuaalisolmua: 2.67
+  rengas,   10 virtuaalisolmua: 1.59
+  rengas,  100 virtuaalisolmua: 1.10
+  rengas, 1000 virtuaalisolmua: 1.02
+  rendezvous:                  1.01

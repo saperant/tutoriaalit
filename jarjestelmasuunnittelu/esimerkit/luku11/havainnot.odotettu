@@ -1,0 +1,16 @@
+vastaukset: 18 x 200, muut tilauksille 9 19: [502]
+kauppa /metrics:
+  http_pyynnot_yhteensa{reitti="/tilaus",koodi="200"} 18
+  http_pyynnot_yhteensa{reitti="/tilaus",koodi="502"} 2
+  http_kesto_sekunteina_bucket{reitti="/tilaus",le="0.25"} 18
+  http_kesto_sekunteina_bucket{reitti="/tilaus",le="+Inf"} 20
+varasto /metrics:
+  http_pyynnot_yhteensa{reitti="/varasto",koodi="200"} 18
+  http_pyynnot_yhteensa{reitti="/varasto",koodi="503"} 2
+  http_kesto_sekunteina_bucket{reitti="/varasto",le="0.25"} 18
+  http_kesto_sekunteina_bucket{reitti="/varasto",le="+Inf"} 20
+tilauksen 7 jälki:
+  kauppa /tilaus/7 200 hidas
+    varasto /varasto/7 200 hidas
+  varaston vanhempi on kaupan väli: True
+  muissa jäljissä tilaus 7: 0

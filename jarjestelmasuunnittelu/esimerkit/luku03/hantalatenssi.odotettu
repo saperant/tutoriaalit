@@ -1,0 +1,10 @@
+pyyntö                       p50    p99  p99.9  (ms)
+1 taustakutsua                10    105    284
+10 taustakutsua               14    280    298
+100 taustakutsua             160    298    300
+10 kutsua, varmistus 20 ms    14     34     35
+100 kutsua, varmistus 20 ms    28     35    233
+hitaan osuman todennäköisyys pyyntöä kohden:
+    1 kutsua:  1.0%
+   10 kutsua:  9.6%
+  100 kutsua: 63.4%

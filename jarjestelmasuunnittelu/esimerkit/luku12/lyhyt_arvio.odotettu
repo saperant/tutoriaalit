@@ -1,0 +1,7 @@
+kirjoituksia 39/s, huipussa 150/s
+lukuja 3900/s, huipussa 15000/s
+linkkejä 5 vuodessa 6 mrd., tallennus 3 Tt
+tunnisteeseen tarvitaan 32.5 bittiä; 40 bittiä riittää 183-kertaisesti
+koodin pituus base62:na: 7 merkkiä
+lähtevä kaista huipussa 49 Mbit/s
+välimuisti: päivän luetuista kuumat 20% = 33 Gt (yläraja)

@@ -1,0 +1,7 @@
+replikointi: ('streaming', 'async')
+ensisijainen heti päivityksen jälkeen: 50
+replika heti päivityksen jälkeen:      100
+replika, kun se on saavuttanut sijainnin: 70
+kirjoitus replikaan: 25006 ReadOnlySqlTransaction
+synkroninen kirjoitus odotti replikaa: True
+replika heti synkronisen kirjoituksen jälkeen: 90

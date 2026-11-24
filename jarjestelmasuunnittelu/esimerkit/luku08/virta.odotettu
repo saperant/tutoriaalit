@@ -1,0 +1,18 @@
+k1 lukee kolme:
+  k1 t1: laskutettu 30 e
+  k1 t2: laskutettu 12 e
+  k1 t3: laskutettu 99 e -- KAATUU ennen kuittausta
+k2 lukee loput:
+  k2 t4: virhe, ei kuitata
+  k2 t5: laskutettu 40 e
+  k2 t6: laskutettu 7 e
+k2 ottaa haltuun kuittaamattomat (1):
+  k2 t3: jo laskutettu, kuitataan
+  k2 t4: virhe, ei kuitata
+k2 ottaa haltuun kuittaamattomat (2):
+  k2 t4: virhe, ei kuitata
+k2 ottaa haltuun kuittaamattomat (3):
+  k2 t4: 3 yritystä, kuolleiden virtaan
+kuittaamatta: 0
+kuolleita: 1
+laskutetut: t1 t2 t3 t5 t6

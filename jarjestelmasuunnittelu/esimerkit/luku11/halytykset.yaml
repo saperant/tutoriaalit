@@ -1,0 +1,34 @@
+# Prometheuksen hälytyssäännöt lyhytosoitepalvelun SLO:lle:
+# 99.9 % uudelleenohjauksista onnistuu 30 päivän jaksolla. Palvelun
+# oletetaan raportoivan laskurin http_pyynnot_yhteensa kuten luvun 11
+# esimerkkipalvelu.
+# Monen ikkunan kulumisnopeus: hälytetään vain, kun budjetti kuluu
+# nopeasti sekä pitkällä että lyhyellä ikkunalla. Pitkä ikkuna
+# torjuu yksittäiset piikit, lyhyt lopettaa hälytyksen pian korjauksen
+# jälkeen. Tiedostoa ei ajeta testeissä (ei Prometheusta), vaan se
+# tarkistetaan yamllintillä.
+groups:
+  - name: lyhyt-slo
+    rules:
+      # @alku saanto
+      - record: lyhyt:virhesuhde:5m
+        expr: |
+          sum(rate(http_pyynnot_yhteensa{reitti="/ohjaus",koodi=~"5.."}[5m]))
+          / sum(rate(http_pyynnot_yhteensa{reitti="/ohjaus"}[5m]))
+      - record: lyhyt:virhesuhde:1h
+        expr: |
+          sum(rate(http_pyynnot_yhteensa{reitti="/ohjaus",koodi=~"5.."}[1h]))
+          / sum(rate(http_pyynnot_yhteensa{reitti="/ohjaus"}[1h]))
+      - alert: LyhytVirhebudjettiKuluuNopeasti
+        # 14.4 x (1 - 0.999): 2 % kuukauden budjetista tunnissa
+        expr: |
+          lyhyt:virhesuhde:1h > 14.4 * 0.001
+          and lyhyt:virhesuhde:5m > 14.4 * 0.001
+        labels:
+          vakavuus: paivystys
+        annotations:
+          kuvaus: >-
+            Uudelleenohjauksista epäonnistuu
+            {{ $value | humanizePercentage }}; kuukauden virhebudjetti
+            loppuu alle kahdessa vuorokaudessa.
+      # @loppu saanto

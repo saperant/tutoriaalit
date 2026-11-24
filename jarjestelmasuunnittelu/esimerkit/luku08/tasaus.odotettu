@@ -1,0 +1,15 @@
+ min  saapuu/s   jonossa   odotus
+  10        50         0      0 m
+  20       200     72000     15 m
+  25       200    108000     22 m
+  30        50     99000     21 m
+  40        50     81000     17 m
+  50        50     63000     13 m
+  60        50     45000      9 m
+  70        50     27000      6 m
+  80        50      9000      2 m
+  90        50         0      0 m
+ 100        50         0      0 m
+ilman jonoa hylättäisiin 108000 tilausta
+jono pisimmillään 108000 tilausta minuutilla 25
+purkuaika: 108000 / (30/s * 60) = 60 min, jono tyhjä minuutilla 85

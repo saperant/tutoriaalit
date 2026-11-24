@@ -5,7 +5,7 @@
     "context": "..",
     "args": {
       "LISAPAKETIT": "haproxy redis-server postgresql-16 shellcheck",
-      "PIP_PAKETIT": "ruff mypy pytest"
+      "PIP_PAKETIT": "ruff mypy pytest psycopg==3.3.9 psycopg-binary==3.3.9 yamllint==1.38.0 check-jsonschema==0.39.0 hadolint-bin==2.15.1"
     }
   },
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/jarjestelmasuunnittelu/esimerkit",

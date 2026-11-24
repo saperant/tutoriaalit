@@ -1,0 +1,22 @@
+# Python-esimerkkien tarkistukset (ruff, mypy ja pytest).
+[tool.ruff]
+line-length = 78
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "N", "A", "RUF"]
+# S603/S607: esimerkit käynnistävät tunnettuja ohjelmia (redis-server,
+# haproxy, psql) omilla argumenteillaan, ei käyttäjän syötteellä.
+# S311: satunnaisluvut ovat simulaatioita, eivät salausta.
+# S310: urlopen avaa vain itse muodostettuja http://127.0.0.1-osoitteita.
+# N818: poikkeusten nimet ovat suomeksi (RedisVirhe).
+ignore = ["S603", "S607", "S311", "S310", "N818"]
+
+[tool.ruff.lint.per-file-ignores]
+"testit/*.py" = ["S101"]
+
+[tool.mypy]
+strict = true
+
+[tool.pytest.ini_options]
+addopts = "-q -p no:cacheprovider"

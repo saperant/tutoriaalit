@@ -1,0 +1,5 @@
+onnistuneet vastaukset/s viiden sekunnin jaksoissa (kuorma 80/s)
+aika s         0    5   10   15   20   25   30   35   40   45   50   55
+naiivi        80   80   28    0    0    0    0    0    0    0    0    0
+budjetti      80   80   28    0    0    0    0    0   52   90   80   80
+määräaika     80   80   50   50   99   80   80   80   80   80   80   80

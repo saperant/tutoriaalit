@@ -1,0 +1,7 @@
+kuorma 262/s, kapasiteetti 350/s
+algoritmi               p50 ms   p99 ms  hitaalle
+kierto                      22    58530       25%
+satunnainen                 32    54049       25%
+painotettu kierto           23      156       14%
+vähiten kesken              14       93       13%
+kaksi satunnaista           17      119       17%

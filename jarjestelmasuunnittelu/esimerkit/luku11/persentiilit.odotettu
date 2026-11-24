@@ -1,0 +1,6 @@
+p99 A 30 ms, B 746 ms
+p99-arvojen keskiarvo:         388 ms (väärin)
+painotettu keskiarvo:          101 ms (väärin)
+yhdistetystä datasta:          350 ms (oikein)
+yhdistetystä histogrammista:   332 ms (arvio lokeron sisällä)
+yli 250 ms: 1.2% pyynnöistä; SLO 'p99 < 250 ms' ei täyty

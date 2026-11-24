@@ -1,0 +1,5 @@
+t=0.0 s: 20 pyyntöä kerralla, sallittiin 10
+t=1.0 s: 20 pyyntöä kerralla, sallittiin 5
+t=2-12 s: 10 pyyntöä/s, sallittiin 54/100
+jaettu raja Redisissä, 30 pyyntöä 3 instanssiin: sallittiin 10
+paikalliset rajat, 30 pyyntöä 3 instanssiin: sallittiin 30

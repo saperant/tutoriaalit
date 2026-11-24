@@ -1,0 +1,8 @@
+luotiin 200 eri koodia, molemmat palvelimet käytössä: True
+virheellinen osoite: 400
+  302 huti   192
+  302 osuma  2716
+  404 huti   20
+  404 osuma  72
+Redis pysäytetty, 100 uudelleenohjausta: {'ohitettu': 100}
+kantahakuja yhteensä 312 / 3100 lukua

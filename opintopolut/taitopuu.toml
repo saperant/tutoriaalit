@@ -1073,6 +1073,7 @@ laajuus = 5
 testaus = "säiliöissä ajettavat esimerkkijärjestelmät"
 roadmap = ["system-design"]
 amk = "Ohjelmistoarkkitehtuurit"
+tutoriaali = "jarjestelmasuunnittelu"
 
 [[taito]]
 id = "kontit-ja-pilvi"

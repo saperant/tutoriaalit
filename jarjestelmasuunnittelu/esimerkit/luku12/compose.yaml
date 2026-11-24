@@ -1,0 +1,95 @@
+# Lyhytosoitepalvelu kontteina. Sama kokoonpano, joka testeissä
+# ajetaan prosesseina (lyhyt_ajo.py): HAProxy, kaksi sovellus-
+# palvelinta, Redis ja PostgreSQL.
+#
+#   docker compose up -d --wait
+#   curl -i -d '{"osoite": "https://esimerkki.fi"}' localhost:8080/linkit
+name: lyhyt
+
+# @alku sovellus
+x-api: &api
+  build:
+    context: ..
+    dockerfile: luku12/Dockerfile
+  environment:
+    PGPASSFILE: /run/secrets/pgpass
+  secrets: [pgpass]
+  depends_on:
+    kanta: {condition: service_healthy}
+    skeema: {condition: service_completed_successfully}
+    valimuisti: {condition: service_started}
+  healthcheck:
+    test:
+      - CMD
+      - python3
+      - -c
+      - >-
+        import urllib.request as u;
+        u.urlopen('http://127.0.0.1:8000/terveys')
+    interval: 5s
+  restart: unless-stopped
+
+services:
+  tasaaja:
+    image: haproxy:2.8
+    ports: ["127.0.0.1:8080:8080"]
+    environment:
+      SISAAN: ":8080"
+      A_OSOITE: "api-a:8000"
+      B_OSOITE: "api-b:8000"
+      HALLINTA: /tmp/haproxy.sock
+    volumes: ["./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro"]
+    depends_on:
+      api-a: {condition: service_healthy}
+      api-b: {condition: service_healthy}
+
+  api-a:
+    <<: *api
+    command: ["--nimi", "a", "--osoite", "0.0.0.0", "--portti", "8000",
+              "--pg-isanta", "kanta", "--pg", "5432",
+              "--redis-isanta", "valimuisti", "--redis", "6379"]
+
+  api-b:
+    <<: *api
+    command: ["--nimi", "b", "--osoite", "0.0.0.0", "--portti", "8000",
+              "--pg-isanta", "kanta", "--pg", "5432",
+              "--redis-isanta", "valimuisti", "--redis", "6379"]
+  # @loppu sovellus
+
+  # @alku tila
+  valimuisti:
+    image: redis:7.0
+    command: ["redis-server", "--save", "", "--appendonly", "no",
+              "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru"]
+
+  kanta:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: tutoriaali
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD_FILE: /run/secrets/pg_salasana
+    secrets: [pg_salasana]
+    volumes: ["kanta:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "tutoriaali"]
+      interval: 2s
+
+  skeema:
+    image: postgres:16
+    command: ["psql", "-h", "kanta", "-U", "tutoriaali", "-d", "postgres",
+              "-v", "ON_ERROR_STOP=1", "-f", "/skeema.sql"]
+    environment:
+      PGPASSFILE: /run/secrets/pgpass
+    secrets: [pgpass]
+    volumes: ["./skeema.sql:/skeema.sql:ro"]
+    depends_on:
+      kanta: {condition: service_healthy}
+    restart: "no"
+
+secrets:
+  pg_salasana: {file: ./salaisuudet/pg_salasana}
+  pgpass: {file: ./salaisuudet/pgpass}
+
+volumes:
+  kanta:
+  # @loppu tila

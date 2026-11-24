@@ -1,0 +1,14 @@
+  kokoonpano                        saatavuus ysit   katko/kk
+  yksi api                           99.9000%  3.0   43.2 min
+  tasaaja + api + muisti + kanta     99.7003%  2.5  129.5 min
+  3 api-kopiota rinnan              100.0000%  9.0      0.0 s
+  3 apia, kanta + replika            99.8500%  2.8   64.8 min
+  sama, muisti ohitettavissa         99.9500%  3.3   21.6 min
+  3 apia yhdessä vyöhykkeessä        99.9500%  3.3   21.6 min
+  2 vyöhykettä, 3 apia kummassakin  100.0000%  6.6      0.6 s
+virhebudjetti 30 päivälle ja hälytysrajat:
+  SLO       budjetti  virheitä   14.4x
+  99.00%   432.0 min     1.00%  14.40%
+  99.90%    43.2 min     0.10%   1.44%
+  99.99%     4.3 min     0.01%   0.14%
+  kulumisnopeus 14.4: 2% budjetista tunnissa, koko budjetti 50 tunnissa

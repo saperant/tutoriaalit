@@ -1,0 +1,4 @@
+lru ja random lähes samat (ero < 5 %-yks.): True
+noeviction yli 30 %-yks. huonompi kuin lru: True
+noeviction hylkäsi tallennuksia (OOM): True
+allkeys-lru hylkäsi tallennuksia: 0

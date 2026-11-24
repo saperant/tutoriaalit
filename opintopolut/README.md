@@ -97,7 +97,7 @@ flowchart LR
     tietoverkot["✓ Tietoverkot"]
     verkko_ohjelmointi["✓ Verkko-ohjelmointi"]
     hajautetut_jarjestelmat["✓ Hajautetut järjestelmät"]
-    jarjestelmasuunnittelu["Skaalautuvien järjestelmien suunnittelu"]
+    jarjestelmasuunnittelu["✓ Skaalautuvien järjestelmien suunnittelu"]
     kontit_ja_pilvi["✓ Säiliöt ja pilvi-infrastruktuuri"]
     verkkoinfrastruktuuri["✓ Verkkoinfrastruktuuri"]
     tietoliikennetekniikka["✓ Tietoliikennetekniikka"]
@@ -387,7 +387,7 @@ flowchart LR
 | Tietoliikennetekniikka | 5 | Python työkaluohjelmointiin, Tietoverkot, Todennäköisyys ja tilastot | [valmis](../tietoliikennetekniikka/) |
 | Verkko-ohjelmointi | 5 | Käyttöjärjestelmät, Tietoverkot | [valmis](../verkko-ohjelmointi/) |
 | Hajautetut järjestelmät | 5 | Algoritmit, Rinnakkaisohjelmointi, Verkko-ohjelmointi | [valmis](../hajautetut-jarjestelmat/) |
-| Skaalautuvien järjestelmien suunnittelu | 5 | Hajautetut järjestelmät, SQL ja relaatiotietokannat | suunniteltu |
+| Skaalautuvien järjestelmien suunnittelu | 5 | Hajautetut järjestelmät, SQL ja relaatiotietokannat | [valmis](../jarjestelmasuunnittelu/) |
 
 ### Tietokonegrafiikka
 
