@@ -1,0 +1,10 @@
+ 1 satunnaista vektoria: vikakattavuus  45.5%
+ 2 satunnaista vektoria: vikakattavuus  59.1%
+ 4 satunnaista vektoria: vikakattavuus  81.8%
+ 8 satunnaista vektoria: vikakattavuus  90.9%
+16 satunnaista vektoria: vikakattavuus 100.0%
+tiivis testijoukko: 4 vektoria kattaa 22/22 vikaa
+  00101 -> 01
+  10111 -> 10
+  01010 -> 11
+  00000 -> 00

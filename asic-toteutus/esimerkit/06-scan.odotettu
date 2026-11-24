@@ -1,0 +1,3 @@
+scan-ketjussa 8 kiikkua
+ehjä piiri:   sisään 10110011, ulos 10110100, odotettu 10110100
+vika (SA1):   sisään 10110011, ulos 10110011, odotettu 10110100

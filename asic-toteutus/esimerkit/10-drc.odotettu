@@ -1,0 +1,6 @@
+DRC-rikkeet:
+  johdin C: leveys 0.10 µm
+  johdin A – johdin B: väli 0.12 µm
+  via E johdin D:ssa: reunus 0.02 µm
+lyhyt johdin 50 µm: antennisuhde 93 (OK)
+pitkä johdin 400 µm: antennisuhde 747 (rike: lisää diodi tai hyppy)

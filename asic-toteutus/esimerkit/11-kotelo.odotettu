@@ -1,0 +1,8 @@
+16 lähtöä vaihtaa samaan aikaan:
+  lankabondaus 2 nH  1 maanastaa:   576 mV
+  lankabondaus 2 nH  4 maanastaa:   144 mV
+  flip-chip 0,1 nH   1 maanastaa:    29 mV
+  flip-chip 0,1 nH   4 maanastaa:     7 mV
+200 nastaa, ydin  4.0 mm²: sivu 3.00 mm (nastarajoitteinen)
+64 nastaa, ydin  4.0 mm²: sivu 2.50 mm (ydinrajoitteinen)
+200 nastaa, ydin 25.0 mm²: sivu 5.50 mm (ydinrajoitteinen)

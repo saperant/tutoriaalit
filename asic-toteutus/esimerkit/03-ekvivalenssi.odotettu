@@ -1,0 +1,5 @@
+simulointi: 198 tulosta, samat
+muodollinen: ekvivalentti kaikilla 4096 syötteellä
+muodollinen, rikottu netlista: eroaa, vastaesimerkki a=1 b=24
+RTL-simulointi:    a=1 b=0: y=0 | a=1 b=1: y=0
+porttisimulointi:  a=1 b=0: y=0 | a=1 b=1: y=1

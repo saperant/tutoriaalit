@@ -77,6 +77,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Web-sovellusten tietoturva | [`web-tietoturva/`](web-tietoturva/) | [web-tietoturva.pdf](https://saperant.github.io/tutoriaalit/materiaalit/web-tietoturva.pdf) |
 | Digitaalitekniikka | [`digitaalitekniikka/`](digitaalitekniikka/) | [digitaalitekniikka.pdf](https://saperant.github.io/tutoriaalit/materiaalit/digitaalitekniikka.pdf) |
 | SoC-integraatio | [`soc-integraatio/`](soc-integraatio/) | [soc-integraatio.pdf](https://saperant.github.io/tutoriaalit/materiaalit/soc-integraatio.pdf) |
+| ASIC-toteutus | [`asic-toteutus/`](asic-toteutus/) | [asic-toteutus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/asic-toteutus.pdf) |
 | GPU-ohjelmointi: OpenGL ja Vulkan | [`gpu-ohjelmointi/`](gpu-ohjelmointi/) | [gpu-ohjelmointi.pdf](https://saperant.github.io/tutoriaalit/materiaalit/gpu-ohjelmointi.pdf) |
 | Peliohjelmointi | [`peliohjelmointi/`](peliohjelmointi/) | [peliohjelmointi.pdf](https://saperant.github.io/tutoriaalit/materiaalit/peliohjelmointi.pdf) |
 | Reaaliaikaiset moninpelit | [`moninpelit/`](moninpelit/) | [moninpelit.pdf](https://saperant.github.io/tutoriaalit/materiaalit/moninpelit.pdf) |

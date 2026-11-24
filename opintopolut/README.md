@@ -77,7 +77,7 @@ flowchart LR
     eda_skriptaus["EDA-työkaluketjujen automatisointi"]
     hls["Korkean tason synteesi"]
     dsp_laitteisto["DSP-algoritmien laitteistototeutus"]
-    asic_toteutus["ASIC-toteutus"]
+    asic_toteutus["✓ ASIC-toteutus"]
     soc_integraatio["✓ SoC-integraatio"]
   end
   subgraph signaalit["Signaalinkäsittely ja radiot"]
@@ -345,7 +345,7 @@ flowchart LR
 |-------|---:|------------|------|
 | RTL-suunnittelu SystemVerilogilla | 5 | Digitaalitekniikka | [valmis](../rtl-suunnittelu/) |
 | RTL-suunnittelu VHDL:llä | 5 | Digitaalitekniikka | [valmis](../vhdl/) |
-| ASIC-toteutus | 5 | RTL-suunnittelu SystemVerilogilla | suunniteltu |
+| ASIC-toteutus | 5 | RTL-suunnittelu SystemVerilogilla | [valmis](../asic-toteutus/) |
 | EDA-työkaluketjujen automatisointi | 3 | Käännösjärjestelmät, testaus ja CI, Python työkaluohjelmointiin, RTL-suunnittelu SystemVerilogilla, Tcl | suunniteltu |
 | FPGA-toteutus | 5 | RTL-suunnittelu SystemVerilogilla | suunniteltu |
 | Laitteiston verifiointi | 5 | Python työkaluohjelmointiin, RTL-suunnittelu SystemVerilogilla | suunniteltu |

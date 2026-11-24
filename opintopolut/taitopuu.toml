@@ -1703,6 +1703,7 @@ laajuus = 5
 testaus = "Yosys, OpenSTA ja OpenROAD (SkyWater 130 nm PDK)"
 roadmap = []
 amk = "Mikropiirisuunnittelu"
+tutoriaali = "asic-toteutus"
 
 [[taito]]
 id = "soc-integraatio"

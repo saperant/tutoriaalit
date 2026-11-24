@@ -1,0 +1,1024 @@
+/* opetus.lib: keksitty standardisolukirjasto opetukseen.
+ * Arvot muistuttavat 130 nm:n prosessia mutta eivät vastaa mitään
+ * oikeaa prosessia. Lisenssi: CC BY-SA 4.0 (tutoriaalin mukana). */
+library (opetus) {
+  delay_model : table_lookup;
+  time_unit : "1ns";
+  capacitive_load_unit (1, pf);
+  voltage_unit : "1V";
+  leakage_power_unit : "1nW";
+  nom_process : 1.0;
+  nom_voltage : 1.8;
+  nom_temperature : 25.0;
+  default_max_transition : 1.0;
+  lu_table_template (nldm_3x3) {
+    variable_1 : input_net_transition;
+    variable_2 : total_output_net_capacitance;
+    index_1 ("0.02, 0.10, 0.40");
+    index_2 ("0.002, 0.010, 0.050");
+  }
+  lu_table_template (rajoite_3x3) {
+    variable_1 : related_pin_transition;
+    variable_2 : constrained_pin_transition;
+    index_1 ("0.02, 0.10, 0.40");
+    index_2 ("0.02, 0.10, 0.40");
+  }
+  cell (INV_X1) {
+    area : 3.75;
+    cell_leakage_power : 0.8;
+    pin (A) {
+      direction : input;
+      capacitance : 0.0020;
+    }
+    pin (Y) {
+      direction : output;
+      function : "!A";
+      max_capacitance : 0.08;
+      timing () {
+        related_pin : "A";
+        timing_sense : negative_unate;
+        cell_rise (nldm_3x3) {
+          values ("0.0310, 0.0630, 0.2230" \
+            "0.0430, 0.0750, 0.2350" \
+            "0.0880, 0.1200, 0.2800");
+        }
+        cell_fall (nldm_3x3) {
+          values ("0.0264, 0.0520, 0.1800" \
+            "0.0384, 0.0640, 0.1920" \
+            "0.0834, 0.1090, 0.2370");
+        }
+        rise_transition (nldm_3x3) {
+          values ("0.0400, 0.1040, 0.4240" \
+            "0.0560, 0.1200, 0.4400" \
+            "0.1160, 0.1800, 0.5000");
+        }
+        fall_transition (nldm_3x3) {
+          values ("0.0318, 0.0830, 0.3390" \
+            "0.0478, 0.0990, 0.3550" \
+            "0.1078, 0.1590, 0.4150");
+        }
+      }
+    }
+  }
+  cell (BUF_X1) {
+    area : 3.75;
+    cell_leakage_power : 1.0;
+    pin (A) {
+      direction : input;
+      capacitance : 0.0020;
+    }
+    pin (Y) {
+      direction : output;
+      function : "A";
+      max_capacitance : 0.08;
+      timing () {
+        related_pin : "A";
+        timing_sense : positive_unate;
+        cell_rise (nldm_3x3) {
+          values ("0.0660, 0.0980, 0.2580" \
+            "0.0780, 0.1100, 0.2700" \
+            "0.1230, 0.1550, 0.3150");
+        }
+        cell_fall (nldm_3x3) {
+          values ("0.0562, 0.0818, 0.2098" \
+            "0.0682, 0.0938, 0.2218" \
+            "0.1132, 0.1387, 0.2668");
+        }
+        rise_transition (nldm_3x3) {
+          values ("0.0400, 0.1040, 0.4240" \
+            "0.0560, 0.1200, 0.4400" \
+            "0.1160, 0.1800, 0.5000");
+        }
+        fall_transition (nldm_3x3) {
+          values ("0.0318, 0.0830, 0.3390" \
+            "0.0478, 0.0990, 0.3550" \
+            "0.1078, 0.1590, 0.4150");
+        }
+      }
+    }
+  }
+  cell (BUF_X4) {
+    area : 7.51;
+    cell_leakage_power : 3.2;
+    pin (A) {
+      direction : input;
+      capacitance : 0.0045;
+    }
+    pin (Y) {
+      direction : output;
+      function : "A";
+      max_capacitance : 0.08;
+      timing () {
+        related_pin : "A";
+        timing_sense : positive_unate;
+        cell_rise (nldm_3x3) {
+          values ("0.0650, 0.0730, 0.1130" \
+            "0.0770, 0.0850, 0.1250" \
+            "0.1220, 0.1300, 0.1700");
+        }
+        cell_fall (nldm_3x3) {
+          values ("0.0556, 0.0620, 0.0940" \
+            "0.0676, 0.0740, 0.1060" \
+            "0.1126, 0.1190, 0.1510");
+        }
+        rise_transition (nldm_3x3) {
+          values ("0.0280, 0.0440, 0.1240" \
+            "0.0440, 0.0600, 0.1400" \
+            "0.1040, 0.1200, 0.2000");
+        }
+        fall_transition (nldm_3x3) {
+          values ("0.0222, 0.0350, 0.0990" \
+            "0.0382, 0.0510, 0.1150" \
+            "0.0982, 0.1110, 0.1750");
+        }
+      }
+    }
+  }
+  /* @alku nand2 */
+  cell (NAND2_X1) {
+    area : 3.75;
+    cell_leakage_power : 1.1;
+    pin (A) {
+      direction : input;
+      capacitance : 0.0020;
+    }
+    pin (B) {
+      direction : input;
+      capacitance : 0.0020;
+    }
+    pin (Y) {
+      direction : output;
+      function : "!(A&B)";
+      max_capacitance : 0.08;
+  /* @loppu nand2 */
+  /* @alku kaari */
+      timing () {
+        related_pin : "A";
+        timing_sense : negative_unate;
+        cell_rise (nldm_3x3) {
+          values ("0.0398, 0.0750, 0.2510" \
+            "0.0518, 0.0870, 0.2630" \
+            "0.0968, 0.1320, 0.3080");
+        }
+        cell_fall (nldm_3x3) {
+          values ("0.0338, 0.0620, 0.2028" \
+            "0.0458, 0.0740, 0.2148" \
+            "0.0908, 0.1190, 0.2598");
+        }
+        rise_transition (nldm_3x3) {
+          values ("0.0416, 0.1120, 0.4640" \
+            "0.0576, 0.1280, 0.4800" \
+            "0.1176, 0.1880, 0.5400");
+        }
+        fall_transition (nldm_3x3) {
+          values ("0.0331, 0.0894, 0.3710" \
+            "0.0491, 0.1054, 0.3870" \
+            "0.1091, 0.1654, 0.4470");
+        }
+      }
+  /* @loppu kaari */
+      timing () {
+        related_pin : "B";
+        timing_sense : negative_unate;
+        cell_rise (nldm_3x3) {
+          values ("0.0438, 0.0790, 0.2550" \
+            "0.0558, 0.0910, 0.2670" \
+            "0.1008, 0.1360, 0.3120");
+        }
+        cell_fall (nldm_3x3) {
+          values ("0.0372, 0.0654, 0.2062" \
+            "0.0492, 0.0774, 0.2182" \
+            "0.0942, 0.1224, 0.2632");
+        }
+        rise_transition (nldm_3x3) {
+          values ("0.0416, 0.1120, 0.4640" \
+            "0.0576, 0.1280, 0.4800" \
+            "0.1176, 0.1880, 0.5400");
+        }
+        fall_transition (nldm_3x3) {
+          values ("0.0331, 0.0894, 0.3710" \
+            "0.0491, 0.1054, 0.3870" \
+            "0.1091, 0.1654, 0.4470");
+        }
+      }
+    }
+  }
+  cell (NOR2_X1) {
+    area : 3.75;
+    cell_leakage_power : 1.0;
+    pin (A) {
+      direction : input;
+      capacitance : 0.0020;
+    }
+    pin (B) {
+      direction : input;
+      capacitance : 0.0020;
+    }
+    pin (Y) {
+      direction : output;
+      function : "!(A|B)";
+      max_capacitance : 0.08;
+      timing () {
+        related_pin : "A";
+        timing_sense : negative_unate;
+        cell_rise (nldm_3x3) {
+          values ("0.0490, 0.0970, 0.3370" \
+            "0.0610, 0.1090, 0.3490" \
+            "0.1060, 0.1540, 0.3940");
+        }
+        cell_fall (nldm_3x3) {
+          values ("0.0415, 0.0799, 0.2719" \
+            "0.0535, 0.0919, 0.2839" \
+            "0.0985, 0.1369, 0.3289");
+        }
+        rise_transition (nldm_3x3) {
+          values ("0.0480, 0.1440, 0.6240" \
+            "0.0640, 0.1600, 0.6400" \
+            "0.1240, 0.2200, 0.7000");
+        }
+        fall_transition (nldm_3x3) {
+          values ("0.0382, 0.1150, 0.4990" \
+            "0.0542, 0.1310, 0.5150" \
+            "0.1142, 0.1910, 0.5750");
+        }
+      }
+      timing () {
+        related_pin : "B";
+        timing_sense : negative_unate;
+        cell_rise (nldm_3x3) {
+          values ("0.0530, 0.1010, 0.3410" \
+            "0.0650, 0.1130, 0.3530" \
+            "0.1100, 0.1580, 0.3980");
+        }
+        cell_fall (nldm_3x3) {
+          values ("0.0449, 0.0833, 0.2753" \
+            "0.0569, 0.0953, 0.2873" \
+            "0.1019, 0.1403, 0.3323");
+        }
+        rise_transition (nldm_3x3) {
+          values ("0.0480, 0.1440, 0.6240" \
+            "0.0640, 0.1600, 0.6400" \
+            "0.1240, 0.2200, 0.7000");
+        }
+        fall_transition (nldm_3x3) {
+          values ("0.0382, 0.1150, 0.4990" \
+            "0.0542, 0.1310, 0.5150" \
+            "0.1142, 0.1910, 0.5750");
+        }
+      }
+    }
+  }
+  cell (AND2_X1) {
+    area : 6.26;
+    cell_leakage_power : 1.6;
+    pin (A) {
+      direction : input;
+      capacitance : 0.0020;
+    }
+    pin (B) {
+      direction : input;
+      capacitance : 0.0020;
+    }
+    pin (Y) {
+      direction : output;
+      function : "(A&B)";
+      max_capacitance : 0.08;
+      timing () {
+        related_pin : "A";
+        timing_sense : positive_unate;
+        cell_rise (nldm_3x3) {
+          values ("0.0810, 0.1130, 0.2730" \
+            "0.0930, 0.1250, 0.2850" \
+            "0.1380, 0.1700, 0.3300");
+        }
+        cell_fall (nldm_3x3) {
+          values ("0.0689, 0.0945, 0.2225" \
+            "0.0809, 0.1065, 0.2345" \
+            "0.1259, 0.1515, 0.2795");
+        }
+        rise_transition (nldm_3x3) {
+          values ("0.0400, 0.1040, 0.4240" \
+            "0.0560, 0.1200, 0.4400" \
+            "0.1160, 0.1800, 0.5000");
+        }
+        fall_transition (nldm_3x3) {
+          values ("0.0318, 0.0830, 0.3390" \
+            "0.0478, 0.0990, 0.3550" \
+            "0.1078, 0.1590, 0.4150");
+        }
+      }
+      timing () {
+        related_pin : "B";
+        timing_sense : positive_unate;
+        cell_rise (nldm_3x3) {
+          values ("0.0850, 0.1170, 0.2770" \
+            "0.0970, 0.1290, 0.2890" \
+            "0.1420, 0.1740, 0.3340");
+        }
+        cell_fall (nldm_3x3) {
+          values ("0.0723, 0.0979, 0.2259" \
+            "0.0843, 0.1099, 0.2379" \
+            "0.1293, 0.1549, 0.2829");
+        }
+        rise_transition (nldm_3x3) {
+          values ("0.0400, 0.1040, 0.4240" \
+            "0.0560, 0.1200, 0.4400" \
+            "0.1160, 0.1800, 0.5000");
+        }
+        fall_transition (nldm_3x3) {
+          values ("0.0318, 0.0830, 0.3390" \
+            "0.0478, 0.0990, 0.3550" \
+            "0.1078, 0.1590, 0.4150");
+        }
+      }
+    }
+  }
+  cell (OR2_X1) {
+    area : 6.26;
+    cell_leakage_power : 1.5;
+    pin (A) {
+      direction : input;
+      capacitance : 0.0020;
+    }
+    pin (B) {
+      direction : input;
+      capacitance : 0.0020;
+    }
+    pin (Y) {
+      direction : output;
+      function : "(A|B)";
+      max_capacitance : 0.08;
+      timing () {
+        related_pin : "A";
+        timing_sense : positive_unate;
+        cell_rise (nldm_3x3) {
+          values ("0.0910, 0.1230, 0.2830" \
+            "0.1030, 0.1350, 0.2950" \
+            "0.1480, 0.1800, 0.3400");
+        }
+        cell_fall (nldm_3x3) {
+          values ("0.0774, 0.1030, 0.2310" \
+            "0.0894, 0.1150, 0.2430" \
+            "0.1344, 0.1600, 0.2880");
+        }
+        rise_transition (nldm_3x3) {
+          values ("0.0400, 0.1040, 0.4240" \
+            "0.0560, 0.1200, 0.4400" \
+            "0.1160, 0.1800, 0.5000");
+        }
+        fall_transition (nldm_3x3) {
+          values ("0.0318, 0.0830, 0.3390" \
+            "0.0478, 0.0990, 0.3550" \
+            "0.1078, 0.1590, 0.4150");
+        }
+      }
+      timing () {
+        related_pin : "B";
+        timing_sense : positive_unate;
+        cell_rise (nldm_3x3) {
+          values ("0.0950, 0.1270, 0.2870" \
+            "0.1070, 0.1390, 0.2990" \
+            "0.1520, 0.1840, 0.3440");
+        }
+        cell_fall (nldm_3x3) {
+          values ("0.0808, 0.1064, 0.2344" \
+            "0.0928, 0.1184, 0.2464" \
+            "0.1378, 0.1634, 0.2914");
+        }
+        rise_transition (nldm_3x3) {
+          values ("0.0400, 0.1040, 0.4240" \
+            "0.0560, 0.1200, 0.4400" \
+            "0.1160, 0.1800, 0.5000");
+        }
+        fall_transition (nldm_3x3) {
+          values ("0.0318, 0.0830, 0.3390" \
+            "0.0478, 0.0990, 0.3550" \
+            "0.1078, 0.1590, 0.4150");
+        }
+      }
+    }
+  }
+  cell (XOR2_X1) {
+    area : 8.76;
+    cell_leakage_power : 2.4;
+    pin (A) {
+      direction : input;
+      capacitance : 0.0020;
+    }
+    pin (B) {
+      direction : input;
+      capacitance : 0.0020;
+    }
+    pin (Y) {
+      direction : output;
+      function : "(A^B)";
+      max_capacitance : 0.08;
+      timing () {
+        related_pin : "A";
+        timing_sense : non_unate;
+        cell_rise (nldm_3x3) {
+          values ("0.0880, 0.1280, 0.3280" \
+            "0.1000, 0.1400, 0.3400" \
+            "0.1450, 0.1850, 0.3850");
+        }
+        cell_fall (nldm_3x3) {
+          values ("0.0748, 0.1068, 0.2668" \
+            "0.0867, 0.1187, 0.2787" \
+            "0.1318, 0.1638, 0.3237");
+        }
+        rise_transition (nldm_3x3) {
+          values ("0.0440, 0.1240, 0.5240" \
+            "0.0600, 0.1400, 0.5400" \
+            "0.1200, 0.2000, 0.6000");
+        }
+        fall_transition (nldm_3x3) {
+          values ("0.0350, 0.0990, 0.4190" \
+            "0.0510, 0.1150, 0.4350" \
+            "0.1110, 0.1750, 0.4950");
+        }
+      }
+      timing () {
+        related_pin : "B";
+        timing_sense : non_unate;
+        cell_rise (nldm_3x3) {
+          values ("0.0920, 0.1320, 0.3320" \
+            "0.1040, 0.1440, 0.3440" \
+            "0.1490, 0.1890, 0.3890");
+        }
+        cell_fall (nldm_3x3) {
+          values ("0.0781, 0.1101, 0.2702" \
+            "0.0902, 0.1222, 0.2822" \
+            "0.1351, 0.1671, 0.3271");
+        }
+        rise_transition (nldm_3x3) {
+          values ("0.0440, 0.1240, 0.5240" \
+            "0.0600, 0.1400, 0.5400" \
+            "0.1200, 0.2000, 0.6000");
+        }
+        fall_transition (nldm_3x3) {
+          values ("0.0350, 0.0990, 0.4190" \
+            "0.0510, 0.1150, 0.4350" \
+            "0.1110, 0.1750, 0.4950");
+        }
+      }
+    }
+  }
+  cell (XNOR2_X1) {
+    area : 8.76;
+    cell_leakage_power : 2.4;
+    pin (A) {
+      direction : input;
+      capacitance : 0.0020;
+    }
+    pin (B) {
+      direction : input;
+      capacitance : 0.0020;
+    }
+    pin (Y) {
+      direction : output;
+      function : "!(A^B)";
+      max_capacitance : 0.08;
+      timing () {
+        related_pin : "A";
+        timing_sense : non_unate;
+        cell_rise (nldm_3x3) {
+          values ("0.0880, 0.1280, 0.3280" \
+            "0.1000, 0.1400, 0.3400" \
+            "0.1450, 0.1850, 0.3850");
+        }
+        cell_fall (nldm_3x3) {
+          values ("0.0748, 0.1068, 0.2668" \
+            "0.0867, 0.1187, 0.2787" \
+            "0.1318, 0.1638, 0.3237");
+        }
+        rise_transition (nldm_3x3) {
+          values ("0.0440, 0.1240, 0.5240" \
+            "0.0600, 0.1400, 0.5400" \
+            "0.1200, 0.2000, 0.6000");
+        }
+        fall_transition (nldm_3x3) {
+          values ("0.0350, 0.0990, 0.4190" \
+            "0.0510, 0.1150, 0.4350" \
+            "0.1110, 0.1750, 0.4950");
+        }
+      }
+      timing () {
+        related_pin : "B";
+        timing_sense : non_unate;
+        cell_rise (nldm_3x3) {
+          values ("0.0920, 0.1320, 0.3320" \
+            "0.1040, 0.1440, 0.3440" \
+            "0.1490, 0.1890, 0.3890");
+        }
+        cell_fall (nldm_3x3) {
+          values ("0.0781, 0.1101, 0.2702" \
+            "0.0902, 0.1222, 0.2822" \
+            "0.1351, 0.1671, 0.3271");
+        }
+        rise_transition (nldm_3x3) {
+          values ("0.0440, 0.1240, 0.5240" \
+            "0.0600, 0.1400, 0.5400" \
+            "0.1200, 0.2000, 0.6000");
+        }
+        fall_transition (nldm_3x3) {
+          values ("0.0350, 0.0990, 0.4190" \
+            "0.0510, 0.1150, 0.4350" \
+            "0.1110, 0.1750, 0.4950");
+        }
+      }
+    }
+  }
+  cell (AOI21_X1) {
+    area : 5.0;
+    cell_leakage_power : 1.3;
+    pin (A1) {
+      direction : input;
+      capacitance : 0.0020;
+    }
+    pin (A2) {
+      direction : input;
+      capacitance : 0.0020;
+    }
+    pin (B) {
+      direction : input;
+      capacitance : 0.0020;
+    }
+    pin (Y) {
+      direction : output;
+      function : "!((A1&A2)|B)";
+      max_capacitance : 0.08;
+      timing () {
+        related_pin : "A1";
+        timing_sense : negative_unate;
+        cell_rise (nldm_3x3) {
+          values ("0.0510, 0.0990, 0.3390" \
+            "0.0630, 0.1110, 0.3510" \
+            "0.1080, 0.1560, 0.3960");
+        }
+        cell_fall (nldm_3x3) {
+          values ("0.0432, 0.0816, 0.2736" \
+            "0.0552, 0.0936, 0.2856" \
+            "0.1002, 0.1386, 0.3306");
+        }
+        rise_transition (nldm_3x3) {
+          values ("0.0480, 0.1440, 0.6240" \
+            "0.0640, 0.1600, 0.6400" \
+            "0.1240, 0.2200, 0.7000");
+        }
+        fall_transition (nldm_3x3) {
+          values ("0.0382, 0.1150, 0.4990" \
+            "0.0542, 0.1310, 0.5150" \
+            "0.1142, 0.1910, 0.5750");
+        }
+      }
+      timing () {
+        related_pin : "A2";
+        timing_sense : negative_unate;
+        cell_rise (nldm_3x3) {
+          values ("0.0550, 0.1030, 0.3430" \
+            "0.0670, 0.1150, 0.3550" \
+            "0.1120, 0.1600, 0.4000");
+        }
+        cell_fall (nldm_3x3) {
+          values ("0.0466, 0.0850, 0.2770" \
+            "0.0586, 0.0970, 0.2890" \
+            "0.1036, 0.1420, 0.3340");
+        }
+        rise_transition (nldm_3x3) {
+          values ("0.0480, 0.1440, 0.6240" \
+            "0.0640, 0.1600, 0.6400" \
+            "0.1240, 0.2200, 0.7000");
+        }
+        fall_transition (nldm_3x3) {
+          values ("0.0382, 0.1150, 0.4990" \
+            "0.0542, 0.1310, 0.5150" \
+            "0.1142, 0.1910, 0.5750");
+        }
+      }
+      timing () {
+        related_pin : "B";
+        timing_sense : negative_unate;
+        cell_rise (nldm_3x3) {
+          values ("0.0590, 0.1070, 0.3470" \
+            "0.0710, 0.1190, 0.3590" \
+            "0.1160, 0.1640, 0.4040");
+        }
+        cell_fall (nldm_3x3) {
+          values ("0.0500, 0.0884, 0.2804" \
+            "0.0620, 0.1004, 0.2924" \
+            "0.1070, 0.1454, 0.3374");
+        }
+        rise_transition (nldm_3x3) {
+          values ("0.0480, 0.1440, 0.6240" \
+            "0.0640, 0.1600, 0.6400" \
+            "0.1240, 0.2200, 0.7000");
+        }
+        fall_transition (nldm_3x3) {
+          values ("0.0382, 0.1150, 0.4990" \
+            "0.0542, 0.1310, 0.5150" \
+            "0.1142, 0.1910, 0.5750");
+        }
+      }
+    }
+  }
+  cell (OAI21_X1) {
+    area : 5.0;
+    cell_leakage_power : 1.3;
+    pin (A1) {
+      direction : input;
+      capacitance : 0.0020;
+    }
+    pin (A2) {
+      direction : input;
+      capacitance : 0.0020;
+    }
+    pin (B) {
+      direction : input;
+      capacitance : 0.0020;
+    }
+    pin (Y) {
+      direction : output;
+      function : "!((A1|A2)&B)";
+      max_capacitance : 0.08;
+      timing () {
+        related_pin : "A1";
+        timing_sense : negative_unate;
+        cell_rise (nldm_3x3) {
+          values ("0.0510, 0.0990, 0.3390" \
+            "0.0630, 0.1110, 0.3510" \
+            "0.1080, 0.1560, 0.3960");
+        }
+        cell_fall (nldm_3x3) {
+          values ("0.0432, 0.0816, 0.2736" \
+            "0.0552, 0.0936, 0.2856" \
+            "0.1002, 0.1386, 0.3306");
+        }
+        rise_transition (nldm_3x3) {
+          values ("0.0480, 0.1440, 0.6240" \
+            "0.0640, 0.1600, 0.6400" \
+            "0.1240, 0.2200, 0.7000");
+        }
+        fall_transition (nldm_3x3) {
+          values ("0.0382, 0.1150, 0.4990" \
+            "0.0542, 0.1310, 0.5150" \
+            "0.1142, 0.1910, 0.5750");
+        }
+      }
+      timing () {
+        related_pin : "A2";
+        timing_sense : negative_unate;
+        cell_rise (nldm_3x3) {
+          values ("0.0550, 0.1030, 0.3430" \
+            "0.0670, 0.1150, 0.3550" \
+            "0.1120, 0.1600, 0.4000");
+        }
+        cell_fall (nldm_3x3) {
+          values ("0.0466, 0.0850, 0.2770" \
+            "0.0586, 0.0970, 0.2890" \
+            "0.1036, 0.1420, 0.3340");
+        }
+        rise_transition (nldm_3x3) {
+          values ("0.0480, 0.1440, 0.6240" \
+            "0.0640, 0.1600, 0.6400" \
+            "0.1240, 0.2200, 0.7000");
+        }
+        fall_transition (nldm_3x3) {
+          values ("0.0382, 0.1150, 0.4990" \
+            "0.0542, 0.1310, 0.5150" \
+            "0.1142, 0.1910, 0.5750");
+        }
+      }
+      timing () {
+        related_pin : "B";
+        timing_sense : negative_unate;
+        cell_rise (nldm_3x3) {
+          values ("0.0590, 0.1070, 0.3470" \
+            "0.0710, 0.1190, 0.3590" \
+            "0.1160, 0.1640, 0.4040");
+        }
+        cell_fall (nldm_3x3) {
+          values ("0.0500, 0.0884, 0.2804" \
+            "0.0620, 0.1004, 0.2924" \
+            "0.1070, 0.1454, 0.3374");
+        }
+        rise_transition (nldm_3x3) {
+          values ("0.0480, 0.1440, 0.6240" \
+            "0.0640, 0.1600, 0.6400" \
+            "0.1240, 0.2200, 0.7000");
+        }
+        fall_transition (nldm_3x3) {
+          values ("0.0382, 0.1150, 0.4990" \
+            "0.0542, 0.1310, 0.5150" \
+            "0.1142, 0.1910, 0.5750");
+        }
+      }
+    }
+  }
+  cell (MUX2_X1) {
+    area : 11.26;
+    cell_leakage_power : 2.8;
+    pin (A) {
+      direction : input;
+      capacitance : 0.0020;
+    }
+    pin (B) {
+      direction : input;
+      capacitance : 0.0020;
+    }
+    pin (S) {
+      direction : input;
+      capacitance : 0.0020;
+    }
+    pin (Y) {
+      direction : output;
+      function : "((A&!S)|(B&S))";
+      max_capacitance : 0.08;
+      timing () {
+        related_pin : "A";
+        timing_sense : non_unate;
+        cell_rise (nldm_3x3) {
+          values ("0.1010, 0.1330, 0.2930" \
+            "0.1130, 0.1450, 0.3050" \
+            "0.1580, 0.1900, 0.3500");
+        }
+        cell_fall (nldm_3x3) {
+          values ("0.0859, 0.1115, 0.2395" \
+            "0.0979, 0.1235, 0.2515" \
+            "0.1429, 0.1685, 0.2965");
+        }
+        rise_transition (nldm_3x3) {
+          values ("0.0400, 0.1040, 0.4240" \
+            "0.0560, 0.1200, 0.4400" \
+            "0.1160, 0.1800, 0.5000");
+        }
+        fall_transition (nldm_3x3) {
+          values ("0.0318, 0.0830, 0.3390" \
+            "0.0478, 0.0990, 0.3550" \
+            "0.1078, 0.1590, 0.4150");
+        }
+      }
+      timing () {
+        related_pin : "B";
+        timing_sense : non_unate;
+        cell_rise (nldm_3x3) {
+          values ("0.1050, 0.1370, 0.2970" \
+            "0.1170, 0.1490, 0.3090" \
+            "0.1620, 0.1940, 0.3540");
+        }
+        cell_fall (nldm_3x3) {
+          values ("0.0893, 0.1149, 0.2429" \
+            "0.1013, 0.1269, 0.2549" \
+            "0.1463, 0.1719, 0.2999");
+        }
+        rise_transition (nldm_3x3) {
+          values ("0.0400, 0.1040, 0.4240" \
+            "0.0560, 0.1200, 0.4400" \
+            "0.1160, 0.1800, 0.5000");
+        }
+        fall_transition (nldm_3x3) {
+          values ("0.0318, 0.0830, 0.3390" \
+            "0.0478, 0.0990, 0.3550" \
+            "0.1078, 0.1590, 0.4150");
+        }
+      }
+      timing () {
+        related_pin : "S";
+        timing_sense : non_unate;
+        cell_rise (nldm_3x3) {
+          values ("0.1090, 0.1410, 0.3010" \
+            "0.1210, 0.1530, 0.3130" \
+            "0.1660, 0.1980, 0.3580");
+        }
+        cell_fall (nldm_3x3) {
+          values ("0.0927, 0.1183, 0.2463" \
+            "0.1047, 0.1303, 0.2583" \
+            "0.1497, 0.1753, 0.3033");
+        }
+        rise_transition (nldm_3x3) {
+          values ("0.0400, 0.1040, 0.4240" \
+            "0.0560, 0.1200, 0.4400" \
+            "0.1160, 0.1800, 0.5000");
+        }
+        fall_transition (nldm_3x3) {
+          values ("0.0318, 0.0830, 0.3390" \
+            "0.0478, 0.0990, 0.3550" \
+            "0.1078, 0.1590, 0.4150");
+        }
+      }
+    }
+  }
+  /* @alku dff */
+  cell (DFF_X1) {
+    area : 20.02;
+    cell_leakage_power : 4.5;
+    ff (IQ, IQN) {
+      next_state : "D";
+      clocked_on : "CK";
+    }
+    pin (CK) {
+      direction : input;
+      clock : true;
+      capacitance : 0.0025;
+    }
+    pin (D) {
+      direction : input;
+      capacitance : 0.0020;
+      timing () {
+        related_pin : "CK";
+        timing_type : setup_rising;
+        rise_constraint (rajoite_3x3) {
+          values ("0.0840, 0.1040, 0.1790" \
+            "0.0800, 0.1000, 0.1750" \
+            "0.0650, 0.0850, 0.1600");
+        }
+        fall_constraint (rajoite_3x3) {
+          values ("0.0840, 0.1040, 0.1790" \
+            "0.0800, 0.1000, 0.1750" \
+            "0.0650, 0.0850, 0.1600");
+        }
+      }
+      timing () {
+        related_pin : "CK";
+        timing_type : hold_rising;
+        rise_constraint (rajoite_3x3) {
+          values ("0.0290, 0.0210, -0.0090" \
+            "0.0330, 0.0250, -0.0050" \
+            "0.0480, 0.0400, 0.0100");
+        }
+        fall_constraint (rajoite_3x3) {
+          values ("0.0290, 0.0210, -0.0090" \
+            "0.0330, 0.0250, -0.0050" \
+            "0.0480, 0.0400, 0.0100");
+        }
+      }
+    }
+    pin (Q) {
+      direction : output;
+      function : "IQ";
+      max_capacitance : 0.08;
+  /* @loppu dff */
+      timing () {
+        related_pin : "CK";
+        timing_type : rising_edge;
+        cell_rise (nldm_3x3) {
+          values ("0.2500, 0.2820, 0.4420" \
+            "0.2580, 0.2900, 0.4500" \
+            "0.2880, 0.3200, 0.4800");
+        }
+        cell_fall (nldm_3x3) {
+          values ("0.2284, 0.2540, 0.3820" \
+            "0.2364, 0.2620, 0.3900" \
+            "0.2664, 0.2920, 0.4200");
+        }
+        rise_transition (nldm_3x3) {
+          values ("0.0470, 0.1110, 0.4310" \
+            "0.0510, 0.1150, 0.4350" \
+            "0.0660, 0.1300, 0.4500");
+        }
+        fall_transition (nldm_3x3) {
+          values ("0.0388, 0.0900, 0.3460" \
+            "0.0428, 0.0940, 0.3500" \
+            "0.0578, 0.1090, 0.3650");
+        }
+      }
+    }
+  }
+  cell (SDFF_X1) {
+    area : 26.28;
+    cell_leakage_power : 5.6;
+    ff (IQ, IQN) {
+      next_state : "((D&!SE)|(SI&SE))";
+      clocked_on : "CK";
+    }
+    pin (CK) {
+      direction : input;
+      clock : true;
+      capacitance : 0.0025;
+    }
+    pin (D) {
+      direction : input;
+      capacitance : 0.0020;
+      timing () {
+        related_pin : "CK";
+        timing_type : setup_rising;
+        rise_constraint (rajoite_3x3) {
+          values ("0.0840, 0.1040, 0.1790" \
+            "0.0800, 0.1000, 0.1750" \
+            "0.0650, 0.0850, 0.1600");
+        }
+        fall_constraint (rajoite_3x3) {
+          values ("0.0840, 0.1040, 0.1790" \
+            "0.0800, 0.1000, 0.1750" \
+            "0.0650, 0.0850, 0.1600");
+        }
+      }
+      timing () {
+        related_pin : "CK";
+        timing_type : hold_rising;
+        rise_constraint (rajoite_3x3) {
+          values ("0.0290, 0.0210, -0.0090" \
+            "0.0330, 0.0250, -0.0050" \
+            "0.0480, 0.0400, 0.0100");
+        }
+        fall_constraint (rajoite_3x3) {
+          values ("0.0290, 0.0210, -0.0090" \
+            "0.0330, 0.0250, -0.0050" \
+            "0.0480, 0.0400, 0.0100");
+        }
+      }
+    }
+    pin (SI) {
+      direction : input;
+      capacitance : 0.0020;
+      timing () {
+        related_pin : "CK";
+        timing_type : setup_rising;
+        rise_constraint (rajoite_3x3) {
+          values ("0.0840, 0.1040, 0.1790" \
+            "0.0800, 0.1000, 0.1750" \
+            "0.0650, 0.0850, 0.1600");
+        }
+        fall_constraint (rajoite_3x3) {
+          values ("0.0840, 0.1040, 0.1790" \
+            "0.0800, 0.1000, 0.1750" \
+            "0.0650, 0.0850, 0.1600");
+        }
+      }
+      timing () {
+        related_pin : "CK";
+        timing_type : hold_rising;
+        rise_constraint (rajoite_3x3) {
+          values ("0.0290, 0.0210, -0.0090" \
+            "0.0330, 0.0250, -0.0050" \
+            "0.0480, 0.0400, 0.0100");
+        }
+        fall_constraint (rajoite_3x3) {
+          values ("0.0290, 0.0210, -0.0090" \
+            "0.0330, 0.0250, -0.0050" \
+            "0.0480, 0.0400, 0.0100");
+        }
+      }
+    }
+    pin (SE) {
+      direction : input;
+      capacitance : 0.0020;
+      timing () {
+        related_pin : "CK";
+        timing_type : setup_rising;
+        rise_constraint (rajoite_3x3) {
+          values ("0.0840, 0.1040, 0.1790" \
+            "0.0800, 0.1000, 0.1750" \
+            "0.0650, 0.0850, 0.1600");
+        }
+        fall_constraint (rajoite_3x3) {
+          values ("0.0840, 0.1040, 0.1790" \
+            "0.0800, 0.1000, 0.1750" \
+            "0.0650, 0.0850, 0.1600");
+        }
+      }
+      timing () {
+        related_pin : "CK";
+        timing_type : hold_rising;
+        rise_constraint (rajoite_3x3) {
+          values ("0.0290, 0.0210, -0.0090" \
+            "0.0330, 0.0250, -0.0050" \
+            "0.0480, 0.0400, 0.0100");
+        }
+        fall_constraint (rajoite_3x3) {
+          values ("0.0290, 0.0210, -0.0090" \
+            "0.0330, 0.0250, -0.0050" \
+            "0.0480, 0.0400, 0.0100");
+        }
+      }
+    }
+    pin (Q) {
+      direction : output;
+      function : "IQ";
+      max_capacitance : 0.08;
+      timing () {
+        related_pin : "CK";
+        timing_type : rising_edge;
+        cell_rise (nldm_3x3) {
+          values ("0.2500, 0.2820, 0.4420" \
+            "0.2580, 0.2900, 0.4500" \
+            "0.2880, 0.3200, 0.4800");
+        }
+        cell_fall (nldm_3x3) {
+          values ("0.2284, 0.2540, 0.3820" \
+            "0.2364, 0.2620, 0.3900" \
+            "0.2664, 0.2920, 0.4200");
+        }
+        rise_transition (nldm_3x3) {
+          values ("0.0470, 0.1110, 0.4310" \
+            "0.0510, 0.1150, 0.4350" \
+            "0.0660, 0.1300, 0.4500");
+        }
+        fall_transition (nldm_3x3) {
+          values ("0.0388, 0.0900, 0.3460" \
+            "0.0428, 0.0940, 0.3500" \
+            "0.0578, 0.1090, 0.3650");
+        }
+      }
+    }
+  }
+}

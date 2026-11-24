@@ -1,0 +1,16 @@
+vinous ns   asetus q1->q2   pito q1->q2
+     0.0          +1.615        +0.232
+     0.1          +1.715        +0.132
+     0.2          +1.815        +0.032
+     0.3          +1.915        -0.068
+     0.4          +2.015        -0.168
+0 puskuria: pahin pito q[1] -> q[2] -0.168 ns
+2 puskuria: pahin pito q[1] -> q[2] -0.029 ns
+4 puskuria: pahin pito q[1] -> q[2] +0.105 ns
+pito: q[1] -> q[2]
+  q[1]       alku      +0.254   0.254
+  viive0     BUF_X1    +0.075   0.329
+  viive1     BUF_X1    +0.069   0.398
+  viive2     BUF_X1    +0.068   0.465
+  viive3     BUF_X1    +0.067   0.533
+  saapuminen 0.533, vaadittu 0.427, marginaali +0.105 ns

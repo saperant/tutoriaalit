@@ -1,0 +1,23 @@
+asetus: a_r[7] -> tulo[14]
+  a_r[7]     alku      +0.345   0.345
+  n179       NAND2_X1  +0.098   0.443
+  n181       XOR2_X1   +0.133   0.576
+  n182       XNOR2_X1  +0.131   0.707
+  n184       XOR2_X1   +0.131   0.838
+  n185       XNOR2_X1  +0.131   0.969
+  n187       XOR2_X1   +0.131   1.100
+  n188       XNOR2_X1  +0.131   1.231
+  n190       XOR2_X1   +0.131   1.362
+  n191       XNOR2_X1  +0.146   1.508
+  n193       NOR2_X1   +0.083   1.591
+  n196       AOI21_X1  +0.100   1.691
+  n236       OAI21_X1  +0.096   1.788
+  n271       AOI21_X1  +0.097   1.885
+  n302       OAI21_X1  +0.097   1.983
+  n326       AOI21_X1  +0.097   2.080
+  n345       OAI21_X1  +0.097   2.178
+  n361       AOI21_X1  +0.097   2.275
+  n367       XOR2_X1   +0.114   2.390
+  saapuminen 2.390, vaadittu 1.901, marginaali -0.489 ns
+pahin pitomarginaali: a[0] -> a_r[0] +0.277 ns
+suurin taajuus noin 402 MHz

@@ -1,0 +1,19 @@
+{
+  "name": "ASIC-toteutus: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "yosys iverilog verilator",
+      "PIP_PAKETIT": "ruff mypy"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/asic-toteutus/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "mshr-h.veriloghdl"
+      ]
+    }
+  }
+}
