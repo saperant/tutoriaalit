@@ -28,7 +28,9 @@ Esitiedot: taidot *RTL-suunnittelu SystemVerilogilla* ja
 10. DMA
 11. Kello-, nollaus- ja tehoalueet
 12. Virheet ja protokollatarkistus
-13. Lopuksi – nyrkkisäännöt, jatkotaidot, lähteet
+13. Lohkotestit Pythonilla: cocotb – AXI4-Lite- ja APB-isännät,
+    viitemalli, mutaatiot
+14. Lopuksi – nyrkkisäännöt, jatkotaidot, lähteet
 
 ## Esimerkit
 

@@ -1,0 +1,10 @@
+# cocotb-testien tarkistukset (ruff ja mypy).
+[tool.ruff]
+line-length = 78
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "N", "A", "RUF"]
+
+[tool.mypy]
+strict = true

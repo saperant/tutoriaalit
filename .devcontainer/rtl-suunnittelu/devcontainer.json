@@ -4,7 +4,8 @@
     "dockerfile": "../Dockerfile",
     "context": "..",
     "args": {
-      "LISAPAKETIT": "verilator"
+      "LISAPAKETIT": "verilator iverilog",
+      "PIP_PAKETIT": "cocotb==2.1.0 ruff mypy"
     }
   },
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/rtl-suunnittelu/esimerkit",

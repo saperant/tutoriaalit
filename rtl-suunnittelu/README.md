@@ -23,7 +23,9 @@ pikaopas [rtl-suunnittelu-pikaopas.pdf](https://saperant.github.io/tutoriaalit/m
 11. Synteesikelpoisuus ja koodaustyyli – täydelliset haarat,
     kombinatoriset silmukat, lint
 12. Verilog-2005-yhteensopivuus – erot, implisiittiset johdot, muunnos
-13. Lopuksi – nyrkkisäännöt, mallit ja lähteet
+13. Testit Pythonilla: cocotb – ajurit, monitorit, viitemalli,
+    parametrit ja mutaatiot
+14. Lopuksi – nyrkkisäännöt, mallit ja lähteet
 
 ## Rakentaminen
 

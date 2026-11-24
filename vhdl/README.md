@@ -26,7 +26,8 @@ Valmiit dokumentit: [vhdl.pdf](https://saperant.github.io/tutoriaalit/materiaali
 9. Testipenkit – malli, jono suojattuna tyyppinä, satunnaisuus,
    aikakatkaisut, testikehykset
 10. VHDL ja SystemVerilog rinnakkain
-11. Lopuksi – nyrkkisäännöt, lähteet
+11. Testit Pythonilla: cocotb – GHDL, ajuri ja monitori, mutaatiot
+12. Lopuksi – nyrkkisäännöt, lähteet
 
 ## Rakentaminen
 

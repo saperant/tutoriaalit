@@ -41,10 +41,13 @@ module ram
   assign kirjoita = s.awready;   // AW ja W kättelevät samalla jaksolla
   // @loppu orja
 
+  // Tavukohtainen kirjoitus maskilla: WSTRB:n bitti valitsee tavun.
+  logic [31:0] maski;
+  assign maski = {{8{m.wstrb[3]}}, {8{m.wstrb[2]}},
+                  {8{m.wstrb[1]}}, {8{m.wstrb[0]}}};
   always_ff @(posedge kello) begin
     if (kirjoita)
-      for (int t = 0; t < 4; t++)
-        if (m.wstrb[t]) muisti[kirj_ind][t*8 +: 8] <= m.wdata[t*8 +: 8];
+      muisti[kirj_ind] <= (muisti[kirj_ind] & ~maski) | (m.wdata & maski);
   end
 
   always_ff @(posedge kello or negedge nollaus_n) begin

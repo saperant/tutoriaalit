@@ -71,7 +71,8 @@ kautta, ja UART lähetti ne bitti kerrallaan sarjalinjalle.
 
 | Tehtävä | Tässä | Muita |
 |---------|-------|-------|
-| RTL-simulointi | Verilator 5.020 | Questa, VCS, Xcelium, Icarus |
+| RTL-simulointi | Verilator 5.020 | Questa, VCS, Xcelium |
+| Lohkotestit (luku 13) | cocotb 2.1 ja Icarus Verilog 12 | Verilator ≥ 5.036, kaupalliset simulaattorit |
 | Ristikääntäjä | GCC 13 (`riscv64-unknown-elf`) | LLVM/Clang |
 | Rekisterigeneraattori | oma (`gen/rekisterit.py`) | PeakRDL, Kactus2 |
 | Integrointi | käsin SystemVerilogilla | IP-XACT-työkalut, FuseSoC |

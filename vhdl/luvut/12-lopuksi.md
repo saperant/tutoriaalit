@@ -60,7 +60,8 @@ luvuissa, joihin suluissa viitataan.
   satunnaistus ja kattavuus.
 - **UVVM** (<https://github.com/UVVM/UVVM>): verifiointikomponentit ja
   lokitus.
-- **cocotb** (<https://www.cocotb.org>): testipenkit Pythonilla.
+- **cocotb** (<https://www.cocotb.org>): testipenkit Pythonilla
+  (luku 11).
 
 ### Työkalut
 

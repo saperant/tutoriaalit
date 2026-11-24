@@ -22,8 +22,8 @@ RAK     := build
 SIMULOIDUT := $(patsubst kaaviot/%.kaavio,%,$(wildcard kaaviot/*.kaavio))
 TARKISTUKSET := $(SIMULOIDUT:%=$(RAK)/%.ok)
 
-.PHONY: kaikki paivita siivoa
-kaikki: $(TARKISTUKSET)
+.PHONY: kaikki paivita siivoa cocotb
+kaikki: $(TARKISTUKSET) cocotb
 
 # Kaavio simuloidaan GHDL:llä omassa hakemistossaan.
 $(RAK)/%.json: kaaviot/%.kaavio $(wildcard *.vhd */*.vhd) $(KAAVIOT)
@@ -50,4 +50,43 @@ paivita: $(SIMULOIDUT:%=$(RAK)/%.json)
 	    cp $(RAK)/$$k.json kaaviot/$$k.json; done
 
 siivoa:
-	rm -rf $(RAK)
+	rm -rf $(RAK) cocotb-testit/__pycache__
+
+# --- Luku 11: cocotb-testit ----------------------------------------
+#
+# Jokainen ajo kääntää entiteetin GHDL:llä ja ajaa Python-testit
+# (cocotb-testit/aja.py). Tuloste verrataan tiedostoon
+# cocotb-testit/odotettu/<ajo>.odotettu. Mutaatioajoissa lähteeseen
+# istutetaan vika, ja testien on huomattava se (paluuarvo 1).
+
+COCOTB := python3 cocotb-testit/aja.py
+KVAD   := --top kvadratuuri --moduuli test_kvadratuuri \
+          --lahde 05-kvadratuuri.vhd
+UART   := --top sarjavastaanotin --moduuli test_uart_rx \
+          --lahde 06-uart-rx/sarjavastaanotin.vhd \
+          --parametri KELLOJA_BITTIIN=16
+
+# cocotb_ajo NIMI ODOTETTU_PALUUARVO VALITSIMET
+define cocotb_ajo
+$(RAK)/cocotb-$(1).ok: cocotb-testit/odotettu/$(1).odotettu \
+    $(wildcard cocotb-testit/*.py *.vhd */*.vhd)
+	@mkdir -p $(RAK)
+	@$(COCOTB) $(3) > $(RAK)/cocotb-$(1).tuloste; tila=$$$$?; \
+	diff -u cocotb-testit/odotettu/$(1).odotettu \
+	    $(RAK)/cocotb-$(1).tuloste || exit 1; \
+	[ $$$$tila -eq $(2) ] || \
+	    { echo "cocotb $(1): paluuarvo $$$$tila"; exit 1; }
+	@touch $$@
+COCOTB_AJOT += $(RAK)/cocotb-$(1).ok
+endef
+
+$(eval $(call cocotb_ajo,kvadratuuri,0,$(KVAD)))
+$(eval $(call cocotb_ajo,kvadratuuri-vika,1,$(KVAD) \
+    --mutaatio '"1101" | "0100"=>"1101"'))
+$(eval $(call cocotb_ajo,uart-rx,0,$(UART)))
+$(eval $(call cocotb_ajo,uart-rx-vika,1,$(UART) \
+    --mutaatio 'rx & siirto(7 downto 1)=>siirto(6 downto 0) & rx'))
+
+cocotb: $(COCOTB_AJOT)
+	@cd cocotb-testit && ruff check -q --no-cache . \
+	    && mypy --no-error-summary --cache-dir=/dev/null .

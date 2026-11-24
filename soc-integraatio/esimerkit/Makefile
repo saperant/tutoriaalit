@@ -27,11 +27,11 @@ RTL := rtl/vaylat.sv gen/syscon_regs.sv gen/gpio_regs.sv \
        rtl/axil_tarkistin.sv rtl/soc.sv
 VFLAGS := --binary -Wall --assert -j 2
 
-.PHONY: kaikki generoitu generoi siivoa $(addprefix aja-,$(OHJELMAT))
+.PHONY: kaikki generoitu generoi siivoa cocotb $(addprefix aja-,$(OHJELMAT))
 
 kaikki: generoitu $(OHJELMAT:%=$(RAKENNUS)/%.ok) \
         $(RAKENNUS)/tarkistin.ok $(RAKENNUS)/tehoalue.ok \
-        $(RAKENNUS)/kaavio.ok
+        $(RAKENNUS)/kaavio.ok cocotb
 
 # Generoitujen tiedostojen on vastattava kuvauksia.
 generoitu:
@@ -146,5 +146,50 @@ $(RAKENNUS)/kaavio.ok: $(RTL) tb/testipenkki.sv $(RAKENNUS)/kaynnistys.hex \
 
 .PRECIOUS: $(RAKENNUS)/%.elf $(RAKENNUS)/%.hex
 
+# --- Luku 13: cocotb-testit -------------------------------------------
+#
+# RAM (AXI4-Lite) ja GPIO (APB) testataan Pythonilla Icarus Verilogissa
+# (cocotb-testit/aja.py). Kääreet tb/cocotb_*.sv tuovat väylän signaalit
+# erillisinä portteina. Tuloste verrataan tiedostoon
+# cocotb-testit/odotettu/<ajo>.odotettu; mutaatioajoissa lähteeseen
+# istutetaan vika, ja testien on huomattava se (paluuarvo 1).
+
+COCOTB := python3 cocotb-testit/aja.py
+RAM_C  := --top cocotb_ram --moduuli test_ram --lahde rtl/vaylat.sv \
+          --lahde rtl/ram.sv --lahde tb/cocotb_ram.sv
+GPIO_C := --top cocotb_gpio --moduuli test_gpio --lahde rtl/vaylat.sv \
+          --lahde gen/gpio_regs.sv --lahde rtl/gpio.sv \
+          --lahde tb/cocotb_gpio.sv
+
+# cocotb_ajo NIMI ODOTETTU_PALUUARVO VALITSIMET
+define cocotb_ajo
+$(RAKENNUS)/cocotb-$(1).ok: cocotb-testit/odotettu/$(1).odotettu \
+    $(wildcard cocotb-testit/*.py rtl/*.sv gen/*.sv tb/cocotb_*.sv)
+	@mkdir -p $(RAKENNUS)
+	@$(COCOTB) $(3) > $(RAKENNUS)/cocotb-$(1).tuloste; tila=$$$$?; \
+	diff -u cocotb-testit/odotettu/$(1).odotettu \
+	    $(RAKENNUS)/cocotb-$(1).tuloste || exit 1; \
+	[ $$$$tila -eq $(2) ] || \
+	    { echo "cocotb $(1): paluuarvo $$$$tila"; exit 1; }
+	@touch $$@
+COCOTB_AJOT += $(RAKENNUS)/cocotb-$(1).ok
+endef
+
+$(eval $(call cocotb_ajo,ram,0,$(RAM_C)))
+$(eval $(call cocotb_ajo,ram-rready,1,$(RAM_C) \
+    --mutaatio 'end else if (m.rready) begin=>end else begin'))
+$(eval $(call cocotb_ajo,ram-wstrb,1,$(RAM_C) \
+    --mutaatio '| (m.wdata & maski)=>| m.wdata'))
+$(eval $(call cocotb_ajo,gpio,0,$(GPIO_C)))
+# Mutaatiossa on pariton sulkumerkki, joten se annetaan muuttujana.
+W1C_VIKA := "(reunat_q & ~8'(=>(reunat_q & 8'("
+$(eval $(call cocotb_ajo,gpio-w1c,1,$(GPIO_C) --mutaatio $(W1C_VIKA)))
+$(eval $(call cocotb_ajo,gpio-pslverr,1,$(GPIO_C) \
+    --mutaatio "apb_s.pslverr = kirjoita;=>apb_s.pslverr = 1'b0;"))
+
+cocotb: $(COCOTB_AJOT)
+	@cd cocotb-testit && ruff check -q --no-cache . \
+	    && mypy --no-error-summary --cache-dir=/dev/null .
+
 siivoa:
-	rm -rf $(RAKENNUS)
+	rm -rf $(RAKENNUS) cocotb-testit/__pycache__

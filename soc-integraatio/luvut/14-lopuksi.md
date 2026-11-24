@@ -35,6 +35,8 @@
 | MMIO-rakenne `volatile`-kentin | `soc.h`, `gen/*_regs.h` |
 | Protokollatarkistin | `axil_tarkistin.sv` ja negatiivinen testi `huono_orja.sv` |
 | Tehoalueen sekvenssi ja eristys | `tehoalue.sv` |
+| Väyläisäntä testissä ja testikääre | `cocotb-testit/axil.py`, `apb.py`, `tb/cocotb_*.sv` |
+| Mutaatio testin tehon mittana | luku 13, `--mutaatio` |
 
 ## Jatkotaidot
 
@@ -52,7 +54,7 @@
 
 ## Lähteet
 
-Määrittelyt:
+Määrittelyt ja työkalut:
 
 - Arm: *AMBA AXI Protocol Specification* (IHI 0022), *AMBA APB
   Protocol Specification* (IHI 0024), *AMBA AHB Protocol
@@ -81,6 +83,10 @@ ratkaisuja:
 - PeakRDL: SystemRDL-työkalut RTL:n, otsakkeiden ja dokumentaation
   generointiin. LGPL/MIT.
 - Verilator. LGPL/Artistic. verilator.org
+- cocotb: testit Pythonilla. BSD. docs.cocotb.org
+- cocotbext-axi: AXI-ajurit ja -mallit cocotbille. MIT.
+  github.com/alexforencich/cocotbext-axi
+- Icarus Verilog. GPL. steveicarus.github.io/iverilog
 
 Kirjat:
 

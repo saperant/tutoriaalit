@@ -44,13 +44,16 @@ sanastoa:
 | Pulssi tasonvaihdoksena | tapahtuman ylitys | 10 |
 | Nelivaiheinen kättely | monibittisen arvon ylitys | 10 |
 | Gray-koodattu osoitin | asynkroninen FIFO | 10 |
+| Viitemalli ja satunnaiset syötteet | kulmatapaukset ilman käsin kirjoitettuja testejä | 13 |
+| Ajuri ja monitori | rajapinnan protokolla testistä erillään | 13 |
+| Mutaatio | testin tehon tarkistus | 13 |
 
 ## Mihin tästä
 
 - **Laitteiston verifiointi.** Testipenkkien rakenne, rajoitettu
   satunnaistus, toiminnallinen kattavuus, SystemVerilog-väittämät,
-  cocotb ja formaali verifiointi. Tämän tutoriaalin testipenkit ovat
-  tarkoituksella yksinkertaisia.
+  cocotb syvemmin ja formaali verifiointi. Tämän tutoriaalin
+  testipenkit ovat tarkoituksella yksinkertaisia.
 - **FPGA-toteutus.** Synteesi, sijoittelu, ajoitusrajoitteet ja
   -analyysi sekä testaus kortilla. Siellä nähdään, mitä tämän
   tutoriaalin koodista syntyy.
@@ -72,6 +75,8 @@ Standardit ja dokumentaatio:
 - Yosys: <https://yosyshq.net/yosys/>
 - Verible-työkalut (muotoilu ja lint):
   <https://github.com/chipsalliance/verible>
+- cocotb: <https://docs.cocotb.org/>
+- Icarus Verilog: <https://steveicarus.github.io/iverilog/>
 - sv2v (SystemVerilogista Verilog-2005:ksi):
   <https://github.com/zachjs/sv2v>
 

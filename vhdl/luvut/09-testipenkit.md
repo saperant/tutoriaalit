@@ -189,7 +189,7 @@ valmiista avoimesta kirjastosta:
 | VUnit | testien löytö ja ajo Python-skriptillä, rinnakkaisajo, CI-raportit, tarkistuskirjasto |
 | OSVVM | tulostaulut, väyläkomponentit, rajoitettu satunnaistus, toiminnallinen kattavuus |
 | UVVM | väyläkomponentit (UART, SPI, AXI...), lokitus, toiminnallinen kattavuus |
-| cocotb | testipenkki Pythonilla; simulaattori ajaa VHDL:n |
+| cocotb | testipenkki Pythonilla; simulaattori ajaa VHDL:n (luku 11) |
 
 VUnitin ja OSVVM:n voi yhdistää: VUnit ajaa testit ja OSVVM tarjoaa
 verifiointikomponentit. Kehyksen valinta on tiimin päätös, mutta
