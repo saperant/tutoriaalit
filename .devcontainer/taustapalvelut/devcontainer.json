@@ -4,7 +4,7 @@
     "dockerfile": "../Dockerfile",
     "context": "..",
     "args": {
-      "LISAPAKETIT": "openjdk-21-jdk-headless sqlite3"
+      "LISAPAKETIT": "openjdk-21-jdk-headless"
     }
   },
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/taustapalvelut/esimerkit",
