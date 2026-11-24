@@ -1,0 +1,18 @@
+{
+  "name": "C ja assembly yhteen: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "gcc-riscv64-linux-gnu libc6-dev-riscv64-cross qemu-user"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/c-asm-integraatio/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools"
+      ]
+    }
+  }
+}

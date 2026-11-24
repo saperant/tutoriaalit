@@ -1,0 +1,18 @@
+{
+  "name": "Binaarit ja linkitys: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "binutils elfutils patchelf"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/binaarit-ja-linkitys/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools"
+      ]
+    }
+  }
+}
