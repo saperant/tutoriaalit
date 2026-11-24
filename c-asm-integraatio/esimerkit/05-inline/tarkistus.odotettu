@@ -1,0 +1,12 @@
+ilman_volatile, x86:
+    endbr64
+    ret
+ilman_volatile, rv:
+    ret
+volatilen_kanssa, x86:
+    endbr64
+    mov $0x7,%rax
+    ret
+volatilen_kanssa, rv:
+    li a5,7
+    ret

@@ -1,0 +1,29 @@
+jaa_kymmenella, x86:
+    endbr64
+    movabs $0xcccccccccccccccd,%rax
+    mul %rdi
+    mov %rdx,%rax
+    shr $0x3,%rax
+    ret
+jaa_kymmenella, rv:
+    li a5,10
+    divu a0,a0,a5
+    ret
+vakio_c, x86:
+    endbr64
+    mov $0x2a,%eax
+    ret
+vakio_c, rv:
+    li a0,42
+    ret
+vakio_asm, x86:
+    endbr64
+    mov $0x2,%edx
+    mov $0x28,%eax
+    add %rdx,%rax
+    ret
+vakio_asm, rv:
+    li a5,2
+    li a0,40
+    add a0,a0,a5
+    ret

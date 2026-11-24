@@ -1,0 +1,3 @@
+lisaa(40, 2)     = 42
+lisaa_sata(-58)  = 42
+kasvata(41)      = 42

@@ -133,7 +133,7 @@ flowchart LR
     tcl["✓ Tcl"]
     funktionaalinen_ohjelmointi["✓ Funktionaalinen ohjelmointi (Racket)"]
     cpp_suorituskyky["C++:n suorituskyky"]
-    c_asm_integraatio["C ja assembly yhteen"]
+    c_asm_integraatio["✓ C ja assembly yhteen"]
     python_c_integraatio["✓ Python ja C/C++ yhteen"]
   end
   subgraph sovellukset["Sovelluskehitys"]
@@ -426,7 +426,7 @@ flowchart LR
 | Kotlin | 3 | Java | [valmis](../kotlin/) |
 | Rust | 5 | C-kieli | [valmis](../rust/) |
 | TypeScript | 3 | JavaScript | [valmis](../typescript/) |
-| C ja assembly yhteen | 2 | Assembly | suunniteltu |
+| C ja assembly yhteen | 2 | Assembly | [valmis](../c-asm-integraatio/) |
 | Python ja C/C++ yhteen | 3 | Moderni C++, Python työkaluohjelmointiin | [valmis](../python-c-integraatio/) |
 | C++:n suorituskyky | 3 | Moderni C++, Suorituskyvyn analyysi ja optimointi | suunniteltu |
 

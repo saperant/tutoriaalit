@@ -1,0 +1,3 @@
+cpuid ja __builtin_cpu_supports samaa mieltä: kyllä
+laske(1000 tavua) = 77, odotettu 77
+kaikki pituudet oikein: kyllä

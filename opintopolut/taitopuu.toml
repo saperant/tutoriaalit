@@ -1436,6 +1436,7 @@ laajuus = 2
 testaus = "GCC, natiivi x86-64 ja QEMU (RISC-V)"
 roadmap = ["c"]
 amk = "Tietokonetekniikka"
+tutoriaali = "c-asm-integraatio"
 
 [[taito]]
 id = "python-c-integraatio"

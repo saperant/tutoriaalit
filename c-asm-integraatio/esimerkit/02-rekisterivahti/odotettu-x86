@@ -1,0 +1,5 @@
+kasvata_c       tulos 42, muuttuneet: ei yhtään
+kasvata_oikein  tulos 42, muuttuneet: ei yhtään
+kasvata_rikki   tulos 42, muuttuneet: rbx
+laske(kasvata_oikein, 5) = 21
+laske(kasvata_rikki, 5)  = 24

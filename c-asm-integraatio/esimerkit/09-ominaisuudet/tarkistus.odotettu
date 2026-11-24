@@ -1,0 +1,10 @@
+qemu-x86_64 -cpu Nehalem:
+  cpuid ja __builtin_cpu_supports samaa mieltä: kyllä
+  AVX2 käytettävissä: ei
+  laske(1000 tavua) = 77, odotettu 77
+  kaikki pituudet oikein: kyllä
+qemu-x86_64 -cpu Haswell-noTSX:
+  cpuid ja __builtin_cpu_supports samaa mieltä: kyllä
+  AVX2 käytettävissä: kyllä
+  laske(1000 tavua) = 77, odotettu 77
+  kaikki pituudet oikein: kyllä

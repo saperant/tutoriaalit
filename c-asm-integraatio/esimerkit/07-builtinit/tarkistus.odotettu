@@ -1,0 +1,12 @@
+x86-64 (perustaso)
+  ykkosia: kirjastokutsu __popcountdi2
+  kaanna:  endbr64 mov bswap ret
+x86-64 -mpopcnt
+  ykkosia: endbr64 xor popcnt ret
+  kaanna:  endbr64 mov bswap ret
+RISC-V rv64gc
+  ykkosia: kirjastokutsu __popcountdi2
+  kaanna:  kirjastokutsu __bswapdi2
+RISC-V rv64gc_zbb
+  ykkosia: cpop ret
+  kaanna:  rev8 ret

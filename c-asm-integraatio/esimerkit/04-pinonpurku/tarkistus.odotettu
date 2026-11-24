@@ -1,0 +1,10 @@
+x86 ilman CFI:
+kehykset sisimmästä ulospäin:
+  syvin
+  syvin
+main tavoitettu: ei
+rv ilman CFI:
+kehykset sisimmästä ulospäin:
+  syvin
+  syvin
+main tavoitettu: ei

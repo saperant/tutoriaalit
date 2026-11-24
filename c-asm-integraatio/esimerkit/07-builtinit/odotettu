@@ -1,0 +1,6 @@
+ykkosia(0x123456789abcdef) = 32
+nollia_lopussa(0x50) = 4
+nollia_lopussa(0) = 64
+kaanna(0x123456789abcdef) = 0xefcdab8967452301
+jaa_turvallisesti(84, 2) = 0, tulos 42
+jaa_turvallisesti(1, 0) = -1

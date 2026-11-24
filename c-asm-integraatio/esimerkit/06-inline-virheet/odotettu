@@ -1,0 +1,6 @@
+x = 1, asm kirjoittaa 5:
+  ilman memorya   1
+  memoryn kanssa  5
+a = 1, b = 10, a + 2b:
+  ilman &     4
+  &:n kanssa  21

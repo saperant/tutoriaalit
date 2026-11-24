@@ -1,0 +1,9 @@
+sama.s (ei esikääntäjää):
+Error: invalid character '(' in mnemonic
+Error: invalid character '(' in mnemonic
+Error: no such instruction: `pino_ei_suoritettava'
+merkinnän kanssa:
+GNU_STACK RW
+ilman merkintää:
+missing .note.GNU-stack section implies executable stack
+GNU_STACK RWE

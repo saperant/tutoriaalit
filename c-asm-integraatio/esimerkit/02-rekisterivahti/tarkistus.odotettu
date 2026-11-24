@@ -1,0 +1,9 @@
+kaatui signaaliin SEGV
+kayttaa_vektoria:
+    endbr64
+    mov $0x7,%eax
+    movd %eax,%xmm0
+    pshufd $0x0,%xmm0,%xmm0
+    movaps %xmm0,-0x18(%rsp)
+    movdqa -0x18(%rsp),%xmm0
+    ret

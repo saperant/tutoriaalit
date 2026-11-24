@@ -1,0 +1,4 @@
+x86 -O2: käskyjä 18, vektorikäskyjä 0
+rv  -O2: käskyjä 14, vektorikäskyjä 0
+x86 -O3: käskyjä 177, vektorikäskyjä 46
+rv  -O3: käskyjä 14, vektorikäskyjä 0

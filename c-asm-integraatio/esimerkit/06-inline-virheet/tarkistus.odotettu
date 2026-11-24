@@ -1,0 +1,11 @@
+x86 -O0:
+x = 1, asm kirjoittaa 5:
+  ilman memorya   5
+  memoryn kanssa  5
+a = 1, b = 10, a + 2b:
+  ilman &     21
+  &:n kanssa  21
+ilman_et, x86 -O2 (kolme ensimmäistä käskyä):
+    mov %rsi,%rdi
+    add %rdi,%rdi
+    add %rdi,%rdi
