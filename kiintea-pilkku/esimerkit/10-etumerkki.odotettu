@@ -1,0 +1,4 @@
+0x07ff: väärin  2047, oikein  2047
+0xa001: väärin     1, oikein     1
+0x5fff: väärin  4095, oikein    -1
+0x3800: väärin  2048, oikein -2048

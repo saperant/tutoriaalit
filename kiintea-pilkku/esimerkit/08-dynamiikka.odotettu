@@ -1,0 +1,10 @@
+Q1.15          90 dB
+Q1.31         187 dB
+binary16      241 dB
+bfloat16     1571 dB
+binary32     1668 dB
+    taso  Q1.15 (dB)  lohko 64 (dB)
+    0 dB        97.1           97.1
+  -20 dB        77.2           95.1
+  -40 dB        56.3           93.4
+  -60 dB        37.5           97.3

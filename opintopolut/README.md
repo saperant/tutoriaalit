@@ -67,7 +67,7 @@ flowchart LR
     virtualisointi["✓ Virtualisointi"]
   end
   subgraph laitteisto["Laitteistosuunnittelu"]
-    kiintea_pilkku["Lukujen esitys ja kiinteän pilkun aritmetiikka"]
+    kiintea_pilkku["✓ Lukujen esitys ja kiinteän pilkun aritmetiikka"]
     rtl_suunnittelu["✓ RTL-suunnittelu SystemVerilogilla"]
     vhdl["✓ RTL-suunnittelu VHDL:llä"]
     verifiointi["Laitteiston verifiointi"]
@@ -349,7 +349,7 @@ flowchart LR
 | EDA-työkaluketjujen automatisointi | 3 | Käännösjärjestelmät, testaus ja CI, Python työkaluohjelmointiin, RTL-suunnittelu SystemVerilogilla, Tcl | suunniteltu |
 | FPGA-toteutus | 5 | RTL-suunnittelu SystemVerilogilla | suunniteltu |
 | Laitteiston verifiointi | 5 | Python työkaluohjelmointiin, RTL-suunnittelu SystemVerilogilla | suunniteltu |
-| Lukujen esitys ja kiinteän pilkun aritmetiikka | 3 | Digitaalitekniikka, Miten tietokone laskee | suunniteltu |
+| Lukujen esitys ja kiinteän pilkun aritmetiikka | 3 | Digitaalitekniikka, Miten tietokone laskee | [valmis](../kiintea-pilkku/) |
 | Korkean tason mallinnus (SystemC/TLM) | 5 | Lukujen esitys ja kiinteän pilkun aritmetiikka, Moderni C++, Tietokonearkkitehtuuri | suunniteltu |
 | SoC-integraatio | 5 | RTL-suunnittelu SystemVerilogilla, Tietokonearkkitehtuuri | [valmis](../soc-integraatio/) |
 | Arkkitehtuurin mallinnus ja suunnittelutilan tutkiminen | 5 | Korkean tason mallinnus (SystemC/TLM), Suorituskyvyn analyysi ja optimointi, Todennäköisyys ja tilastot | suunniteltu |

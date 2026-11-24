@@ -1,0 +1,6 @@
+muoto                summain  kertoja
+kiinteä 16 b              16      256
+kiinteä 32 b              32     1024
+binary16 (e5, m11)       156      148
+bfloat16 (e8, m8)        126       88
+binary32 (e8, m24)       356      632

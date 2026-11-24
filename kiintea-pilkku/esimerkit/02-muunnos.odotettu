@@ -1,0 +1,5 @@
+pi Q4.12:  koodi  12868, arvo 3.141602
+pi Q8.8:   koodi    804, arvo 3.140625
+pi Q1.15:  koodi  32767, arvo 0.999969 (saturoitui)
+0.75 Q4.12  3072 -> Q1.15  24576
+2.50 Q4.12 10240 -> Q1.15  81920 ei mahdu int16:een

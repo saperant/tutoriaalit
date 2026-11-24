@@ -1,0 +1,12 @@
+n=2: summa 3 = n+1, tulo 4 = 2n, ilman (-2^(n-1))^2: 3 = 2n-1
+n=3: summa 4 = n+1, tulo 6 = 2n, ilman (-2^(n-1))^2: 5 = 2n-1
+n=4: summa 5 = n+1, tulo 8 = 2n, ilman (-2^(n-1))^2: 7 = 2n-1
+n=5: summa 6 = n+1, tulo 10 = 2n, ilman (-2^(n-1))^2: 9 = 2n-1
+n=6: summa 7 = n+1, tulo 12 = 2n, ilman (-2^(n-1))^2: 11 = 2n-1
+n=7: summa 8 = n+1, tulo 14 = 2n, ilman (-2^(n-1))^2: 13 = 2n-1
+n=8: summa 9 = n+1, tulo 16 = 2n, ilman (-2^(n-1))^2: 15 = 2n-1
+K=    2: tarvitaan 33 bittiä, sääntö 32 + 1 = 33
+K=   16: tarvitaan 36 bittiä, sääntö 32 + 4 = 36
+K=   64: tarvitaan 38 bittiä, sääntö 32 + 6 = 38
+K=  256: tarvitaan 40 bittiä, sääntö 32 + 8 = 40
+K= 1000: tarvitaan 41 bittiä, sääntö 32 + 10 = 42
