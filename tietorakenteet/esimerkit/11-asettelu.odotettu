@@ -1,0 +1,5 @@
+65536 kokonaislukua, summat samat: kyllä
+taulukko:    4096 rivinvaihtoa
+lista:      65531 rivinvaihtoa
+x-summa, tietuetaulukko (AoS):  32768 rivinvaihtoa
+x-summa, kenttätaulukot (SoA):   4096 rivinvaihtoa

@@ -1,0 +1,4 @@
+vertailutesti: 200000 operaatiota, ei eroja, lopussa 2058 avainta
+alfa 0.50: löytyy  1.49 (teoria  1.50), ei löydy   2.47 (teoria   2.50)
+alfa 0.75: löytyy  2.45 (teoria  2.50), ei löydy   8.44 (teoria   8.50)
+alfa 0.90: löytyy  5.55 (teoria  5.50), ei löydy  51.21 (teoria  50.50)

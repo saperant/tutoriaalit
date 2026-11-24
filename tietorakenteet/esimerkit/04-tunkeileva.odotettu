@@ -1,0 +1,3 @@
+ajovalmiit: init(1) sshd(7) cron(12) httpd(30)
+ajovalmiit: init(1) cron(12) httpd(30)
+prosesseja kaikkiaan: 4, ei yhtään malloc-kutsua

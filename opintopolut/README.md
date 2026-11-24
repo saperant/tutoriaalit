@@ -50,7 +50,7 @@ flowchart LR
     todennakoisyys["✓ Todennäköisyys ja tilastot"]
   end
   subgraph algoritmit["Algoritmit ja tietorakenteet"]
-    tietorakenteet["Tietorakenteet"]
+    tietorakenteet["✓ Tietorakenteet"]
     algoritmit["Algoritmit"]
     edistyneet_algoritmit["Edistyneet algoritmit ja tietorakenteet"]
     kaantajatekniikka["Kääntäjätekniikka"]
@@ -320,7 +320,7 @@ flowchart LR
 
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
-| Tietorakenteet | 5 | C-kieli, Diskreetti matematiikka | suunniteltu |
+| Tietorakenteet | 5 | C-kieli, Diskreetti matematiikka | [valmis](../tietorakenteet/) |
 | Algoritmit | 5 | Tietorakenteet | suunniteltu |
 | Edistyneet algoritmit ja tietorakenteet | 5 | Algoritmit | suunniteltu |
 | Kääntäjätekniikka | 5 | Algoritmit, Assembly, Funktionaalinen ohjelmointi (Racket) | suunniteltu |

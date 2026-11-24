@@ -1,0 +1,6 @@
+lista: 2 3
+kapasiteetti 100
+rengas: täyttö 4, paikka 5
+keko: vanhempi(5)=2 vasen(2)=5 oikea(2)=6
+tunkeileva: 7
+fnv1a("avain") = 39cb24b6

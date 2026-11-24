@@ -1,0 +1,10 @@
+Tietorakenne on tapa järjestää tieto muistiin niin, että ohjelma
+löytää ja muuttaa sitä tehokkaasti. Sama tieto voidaan tallentaa
+taulukkoon, listaan, puuhun tai hajautustauluun, ja jokainen
+rakenne tekee jostain operaatiosta halvan ja jostain kalliin.
+Taulukko on nopea, kun tieto luetaan järjestyksessä. Lista on
+nopea, kun tieto lisätään keskelle ja paikka on jo tiedossa.
+Hajautustaulu löytää tiedon avaimella, mutta ei pidä sitä
+järjestyksessä. Puu pitää tiedon järjestyksessä ja löytää sen
+silti nopeasti. Hyvä ohjelmoija valitsee rakenteen sen mukaan,
+mitä tiedolle tehdään useimmin, ja mittaa ennen kuin päättää.

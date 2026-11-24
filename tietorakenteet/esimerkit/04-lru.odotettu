@@ -1,0 +1,11 @@
+sivu 1: huti  välimuisti: 1
+sivu 2: huti  välimuisti: 2 1
+sivu 3: huti  välimuisti: 3 2 1
+sivu 1: osuma välimuisti: 1 3 2
+sivu 4: huti  välimuisti: 4 1 3
+sivu 2: huti  välimuisti: 2 4 1
+sivu 5: huti  välimuisti: 5 2 4
+sivu 1: huti  välimuisti: 1 5 2
+sivu 2: osuma välimuisti: 2 1 5
+sivu 3: huti  välimuisti: 3 2 1
+osumia 2 / 10
