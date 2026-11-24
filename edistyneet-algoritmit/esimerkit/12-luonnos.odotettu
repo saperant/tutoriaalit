@@ -1,0 +1,9 @@
+Count-Min 5 x 1360 = 6800 laskuria 100000 tuotteelle
+raja eps N = 400: ylittää 0 / 100000, suurin virhe 245
+  tuote     1: tarkka 16514, arvio 16562
+  tuote     2: tarkka  8324, arvio  8366
+  tuote    10: tarkka  1693, arvio  1753
+  tuote   100: tarkka   157, arvio   206
+  tuote  1000: tarkka    12, arvio    68
+  tuote 10000: tarkka     4, arvio    53
+otanta: 5907 ... 6128 kertaa, khii^2 = 9.8

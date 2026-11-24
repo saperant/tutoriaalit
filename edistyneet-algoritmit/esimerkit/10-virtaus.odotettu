@@ -1,0 +1,4 @@
+vertailutesti: 300 verkkoa, molemmat algoritmit = pienin leikkaus
+Edmonds-Karp: 19 Gbit/s, 4 lisäyspolkua
+Dinic:        19 Gbit/s, 2 vaihetta
+minimileikkaus: A-B (10) C-E (9)

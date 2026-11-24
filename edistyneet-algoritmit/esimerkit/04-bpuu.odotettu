@@ -1,0 +1,7 @@
+vertailutesti: asteet 2, 3 ja 5, 60 000 operaatiota
+    t  korkeus  solmuja/haku     vertailuja  täyttöaste
+    2       13         12.43          16.63         58 %
+    4        7          6.78          16.58         66 %
+   16        4          3.95          16.64         69 %
+   64        3          2.99          16.66         72 %
+  256        2          2.00          16.68         75 %

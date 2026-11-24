@@ -1,0 +1,4 @@
+menetelmä               keskimäärin  huonoin
+lähin naapuri                 1.121    1.330
+puukierros                    1.192    1.359
+lähin naapuri + 2-opt         1.008    1.105

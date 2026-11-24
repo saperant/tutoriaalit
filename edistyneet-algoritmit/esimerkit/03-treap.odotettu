@@ -1,0 +1,3 @@
+vertailutesti: 45000 operaatiota, 0 eroa
+n =   1000: korkeus 19, odotettu syvyys 2 ln n = 13.8
+n = 100000: korkeus 42, odotettu syvyys 2 ln n = 23.0

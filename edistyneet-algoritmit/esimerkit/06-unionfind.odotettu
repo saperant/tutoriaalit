@@ -1,0 +1,6 @@
+vertailutesti: 4 muunnelmaa x 10 ajoa x 3000 operaatiota
+askelia/haku         ketju    parit  satunnainen
+ei parannuksia     4052.86     6.49       998.82
+polun tiivistys       2.00     1.72         1.24
+tasot                 1.00     6.49         2.02
+molemmat              1.00     1.72         1.00

@@ -1,0 +1,6 @@
+kasvatus x2:     1.05 kopiota/lisäys
+kasvatus x1.5:   2.10 kopiota/lisäys
+kasvatus +1000:  49.50 kopiota/lisäys (n/10 lisäystä)
+suurin todellinen hinta 524289, suurin tasoitettu 3
+kutistus kun koko <= kapasiteetti/2: 2048000 kopiota 1000 vuorottelussa
+kutistus kun koko <= kapasiteetti/4:   1024 kopiota 1000 vuorottelussa

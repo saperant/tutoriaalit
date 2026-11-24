@@ -1,0 +1,6 @@
+vertailutesti: 300 valintaa, 0 eroa
+mediaani, ensimmäinen jakoalkiona:     9378750 vertailua
+mediaani, satunnainen jakoalkio:         16832 vertailua (keskiarvo, n = 5000)
+oikea tulo:           hyväksytty 1000 / 1000
+virhe,  1 kierrosta: hyväksytty 464 / 1000
+virhe, 10 kierrosta: hyväksytty 0 / 1000

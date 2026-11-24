@@ -1,0 +1,7 @@
+vika(ababaca) = 0 0 1 2 3 0 1
+vika(aabaaab) = 0 1 0 1 2 2 3
+vika(abcabd) = 0 0 0 1 2 0
+vertailutesti: 500 satunnaista tekstiä, 0 eroa
+suora    99001000 vertailua, 0 osumaa
+KMP        200998 vertailua, 0 osumaa
+Z          200999 vertailua, 0 osumaa

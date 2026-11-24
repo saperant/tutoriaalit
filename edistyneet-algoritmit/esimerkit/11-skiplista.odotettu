@@ -1,0 +1,3 @@
+vertailutesti: 30 ajoa x 2000 operaatiota, 0 eroa
+n =   1000:  8.2 askelta/haku, log2 n = 10.0, korkein taso 14
+n = 100000: 14.7 askelta/haku, log2 n = 16.6, korkein taso 17

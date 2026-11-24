@@ -432,6 +432,7 @@ laajuus = 5
 testaus = "C++, sanitoijat, satunnaistetut vertailutestit"
 roadmap = ["datastructures-and-algorithms", "computer-science"]
 amk = "Algoritmien syventävä opintojakso"
+tutoriaali = "edistyneet-algoritmit"
 
 [[taito]]
 id = "kaantajatekniikka"

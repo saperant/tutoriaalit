@@ -1,0 +1,3 @@
+vertailutesti: 45000 operaatiota, invariantit kunnossa
+n =   1000: korkeus 10, log2 n = 10.0, raja 2 log2 n = 19.9
+n = 100000: korkeus 17, log2 n = 16.6, raja 2 log2 n = 33.2

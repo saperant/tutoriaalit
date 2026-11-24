@@ -1,0 +1,5 @@
+vertailutesti: 300 tekstiä, 3506 osumaa, 0 turhaa ehdokasta
+kanta                   31: mod 2^64 törmää, mod 2^61-1 eroaa
+kanta                  131: mod 2^64 törmää, mod 2^61-1 eroaa
+kanta              1000003: mod 2^64 törmää, mod 2^61-1 eroaa
+kanta 11288449918072354817: mod 2^64 törmää, mod 2^61-1 eroaa

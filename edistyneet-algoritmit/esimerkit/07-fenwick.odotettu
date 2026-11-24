@@ -1,0 +1,5 @@
+vertailutesti: 20 taulukkoa x 3000 operaatiota
+pyyntö  2500: mediaani 51 ms, 99. persentiili 652 ms
+pyyntö  5000: mediaani 50 ms, 99. persentiili 80 ms
+pyyntö  7500: mediaani 48 ms, 99. persentiili 649 ms
+pyyntö 10000: mediaani 50 ms, 99. persentiili 651 ms
