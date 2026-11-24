@@ -1,0 +1,12 @@
+// Tahallaan virheellinen kuvaus: samat virheet kuin taidon
+// EDA-tyokaluketjujen automatisointi TOML-esimerkissa.
+addrmap kentat {
+    reg {
+        field { sw = rw; hw = r; } EN[0:0] = 0;
+        field { sw = rw; hw = r; } TILA[1:0] = 0;
+        field { sw = rw; hw = r; } JAKAJA[35:28] = 1;
+    } CTRL @ 0x00;
+    reg {
+        field { sw = rw; hw = r; } ARVO[7:0] = 0x1FF;
+    } VERTAA @ 0x02;
+};

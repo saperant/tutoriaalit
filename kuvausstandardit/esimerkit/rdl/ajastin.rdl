@@ -1,0 +1,47 @@
+// Ajastinlohkon rekisterikuvaus SystemRDL 2.0 -muodossa. Sama lohko on
+// taidossa EDA-tyokaluketjujen automatisointi kuvattu omana
+// TOML-muotonaan (vertailu/rekisterit.toml).
+
+`ifndef AJASTIN_RDL
+`define AJASTIN_RDL
+
+// @alku ajastin
+addrmap ajastin {
+    name = "Ajastin";
+    desc = "Vertailuajastin: laskuri kasvaa jakajan tahdissa, ja kun se
+            saavuttaa vertailuarvon, VALMIS-lippu asettuu.";
+    default regwidth = 32;
+    default sw = rw;
+    default hw = r;
+
+    reg {
+        name = "Ohjaus";
+        field { desc = "Ajastin kay."; } EN[0:0] = 0;
+        field { desc = "Keskeytys sallittu."; } IE[1:1] = 0;
+        field { desc = "Kellon jakaja."; } JAKAJA[15:8] = 1;
+    } CTRL @ 0x00;
+    // @loppu ajastin
+
+    // @alku status
+    reg {
+        name = "Tila";
+        field {
+            desc = "Vertailuarvo saavutettu. 1 nollaa.";
+            hw = na; hwset; onwrite = woclr; intr;
+        } VALMIS[0:0] = 0;
+    } STATUS @ 0x04;
+    STATUS.VALMIS->enable = CTRL.IE;
+
+    reg {
+        name = "Laskurin arvo";
+        field { desc = "Nykyinen arvo."; sw = r; hw = w; } ARVO[15:0];
+    } LASKURI @ 0x08;
+    // @loppu status
+
+    reg {
+        name = "Vertailuarvo";
+        field { desc = "Arvo, jolla VALMIS asettuu."; } ARVO[15:0] = 0xFFFF;
+    } VERTAA @ 0x0C;
+};
+
+`endif

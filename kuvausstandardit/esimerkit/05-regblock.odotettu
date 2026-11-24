@@ -1,0 +1,41 @@
+ajastin: varoituksia ilman poikkeuksia 12, poikkeusten kanssa 0
+  MULTIDRIVEN: 4
+  UNUSEDPARAM: 3
+  UNUSEDSIGNAL: 5
+tapahtumat: varoituksia ilman poikkeuksia 15, poikkeusten kanssa 0
+  MULTIDRIVEN: 6
+  UNUSEDPARAM: 3
+  UNUSEDSIGNAL: 5
+  WIDTHEXPAND: 1
+
+ajastin_tb:
+  OK    00000100  CTRL nollausarvo (JAKAJA=1)
+  OK    0000ffff  VERTAA nollausarvo
+  OK    00000503  CTRL: kuvaamattomat bitit 0
+  OK              CTRL nakyy laitteistolle
+  OK    00001234  LASKURI: laitteiston arvo
+  OK    PSLVERR   LASKURI: kirjoitus kielletty
+  OK    00001234  LASKURI ennallaan
+  OK    00000001  STATUS.VALMIS asettui
+                  keskeytys, IE=1: 1
+                  keskeytys, IE=0: 0
+  OK    00000001  STATUS: 0:n kirjoitus ei nollaa
+  OK    00000000  STATUS: 1:n kirjoitus nollaa
+  REKISTERITESTI: 0 virhetta
+
+tapahtumat_tb:
+  OK    00000000  KAYNNISTA lukee aina 0
+                  KAYNNISTA-pulssi: 1 jakso
+  OK    00000030  TILA kirjoitettu
+                  TILA swmod: 2 kertaa
+  OK    00000005  TAPAHTUMAT laski 5
+  OK    00000000  TAPAHTUMAT nollautui luettaessa
+  OK    0000ffff  TAPAHTUMAT saturoitui
+  OK    00000002  KESKEYTYS.VIRHE asettui
+                  keskeytys ennen sallintaa: 0
+                  keskeytys sallittuna: 1
+  OK    00000000  KESKEYTYS kuitattu
+                  keskeytys kuittauksen jalkeen: 0
+  OK    cafe0042  NAYTE luettu
+                  NAYTE swacc: 1 kertaa
+  REKISTERITESTI: 0 virhetta

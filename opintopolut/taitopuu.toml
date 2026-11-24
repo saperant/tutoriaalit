@@ -933,6 +933,7 @@ laajuus = 5
 testaus = "systemrdl-compiler ja PeakRDL, generoitu RTL Verilatorilla, XML-tarkistukset"
 roadmap = []
 amk = "Digitaalisen järjestelmän suunnittelu"
+tutoriaali = "kuvausstandardit"
 
 # ---------------------------------------------------------------------
 # Signaalinkäsittely ja radiot

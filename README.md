@@ -128,6 +128,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Ohjelmistoradio | [`sdr/`](sdr/) | [sdr.pdf](https://saperant.github.io/tutoriaalit/materiaalit/sdr.pdf) |
 | Skaalautuvien järjestelmien suunnittelu | [`jarjestelmasuunnittelu/`](jarjestelmasuunnittelu/) | [jarjestelmasuunnittelu.pdf](https://saperant.github.io/tutoriaalit/materiaalit/jarjestelmasuunnittelu.pdf) |
 | Haavoittuvuuksien analyysi ja torjunta | [`haavoittuvuudet/`](haavoittuvuudet/) | [haavoittuvuudet.pdf](https://saperant.github.io/tutoriaalit/materiaalit/haavoittuvuudet.pdf) |
+| Laitteiston kuvausstandardit (SystemRDL, IP-XACT) | [`kuvausstandardit/`](kuvausstandardit/) | [kuvausstandardit.pdf](https://saperant.github.io/tutoriaalit/materiaalit/kuvausstandardit.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

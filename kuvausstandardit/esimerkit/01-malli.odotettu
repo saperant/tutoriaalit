@@ -1,0 +1,8 @@
+ajastin: 16 tavua, 4 rekisteria
+osoite kentta          bitit  paasy nollaus  toiminnot
+0x00   CTRL.EN         0:0    RW    0x0
+0x00   CTRL.IE         1:1    RW    0x0
+0x00   CTRL.JAKAJA     15:8   RW    0x1
+0x04   STATUS.VALMIS   0:0    W1C   0x0      hwset intr
+0x08   LASKURI.ARVO    15:0   RO    -
+0x0C   VERTAA.ARVO     15:0   RW    0xFFFF

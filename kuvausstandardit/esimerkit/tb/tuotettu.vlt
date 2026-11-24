@@ -1,0 +1,17 @@
+// Tuotetussa koodissa hyvaksytyt varoitukset (Verilator).
+// Tuotettua koodia ei muokata, joten poikkeukset kirjataan tanne
+// perusteluineen eika lahdekoodin kommentteihin.
+
+`verilator_config
+
+// @alku vlt
+// Kentat kirjoitetaan rakenteen jaseniin eri always_comb-lohkoissa;
+// tama Verilatorin versio (5.020) kasittelee rakenteen yhtena muuttujana.
+lint_off -rule MULTIDRIVEN -file "*tuotettu/*.sv"
+// APB-liitanta: penable, pprot ja osoitteen alimmat bitit eivat
+// vaikuta tahan lohkoon; paketin vakioita ei kayteta.
+lint_off -rule UNUSEDSIGNAL -file "*tuotettu/*.sv"
+lint_off -rule UNUSEDPARAM -file "*tuotettu/*_pkg.sv"
+// Saturoituvan laskurin vertailu 17-bittiseen summaan.
+lint_off -rule WIDTHEXPAND -file "*tuotettu/tapahtumat.sv"
+// @loppu vlt

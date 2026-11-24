@@ -1,0 +1,22 @@
+// Pienen jarjestelmapiirin oheislaitteet. Yksi kuvaus, josta tuotetaan
+// CMSIS-SVD-tiedosto ja laitepuun solmut.
+
+`include "ominaisuudet.rdl"
+`include "ajastin.rdl"
+`include "dma.rdl"
+
+// @alku soc
+addrmap soc {
+    name = "Esimerkkipiiri";
+    ajastin AJASTIN0 @ 0x40001000;
+    ajastin AJASTIN1 @ 0x40001100;
+    dma #(.KANAVIA(2)) DMA0 @ 0x40002000;
+
+    AJASTIN0->keskeytys = 3;
+    AJASTIN1->keskeytys = 4;
+    DMA0->keskeytys = 7;
+    AJASTIN0->yhteensopiva = "esimerkki,ajastin-1.0";
+    AJASTIN1->yhteensopiva = "esimerkki,ajastin-1.0";
+    DMA0->yhteensopiva = "esimerkki,dma-1.2";
+};
+// @loppu soc

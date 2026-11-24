@@ -1,0 +1,19 @@
+kaytos.rdl:
+  rivi 5: error: Field 'LIPPU' has an 'onwrite' property but does not have
+      software write access
+  rivi 6: error: Field 'KOMENTO' has an 'onread' property but does not have
+      software read access
+  fatal: Elaborate aborted due to previous errors
+kentat.rdl:
+  rivi 6: error: Field 'TILA[1:0]' overlaps with field 'EN[0:0]'
+  rivi 7: error: High bit (35) of field 'JAKAJA' exceeds MSb of parent
+      register
+  rivi 11: error: Instance 'VERTAA' at offset +0x2:0x5 overlaps with 'CTRL'
+      at offset +0x0:0x3
+  rivi 10: error: The reset value (511) of field 'ARVO' cannot fit within
+      its width (8)
+  fatal: Elaborate aborted due to previous errors
+ominaisuus.rdl:
+  rivi 8: fatal: Incompatible assignment to property 'turvallinen'
+viittaus.rdl:
+  rivi 7: fatal: Reference to 'SALLI' not found

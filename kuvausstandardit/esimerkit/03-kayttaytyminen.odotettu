@@ -1,0 +1,21 @@
+OHJAUS.KAYNNISTA      WO   singlepulse
+OHJAUS.TILA           RW   swmod
+TAPAHTUMAT.MAARA      RC   counter
+KESKEYTYS.YLIVUOTO    W1C  hwset, intr
+KESKEYTYS.VIRHE       W1C  hwset, intr
+SALLI.YLIVUOTO        RW   -
+SALLI.VIRHE           RW   -
+NAYTE.ARVO            RO   swacc
+
+laitteiston liitanta (tapahtumat_hwif.rpt):
+  hwif_in.TAPAHTUMAT.MAARA.incr
+  hwif_in.KESKEYTYS.YLIVUOTO.hwset
+  hwif_in.KESKEYTYS.VIRHE.hwset
+  hwif_in.NAYTE.ARVO.next[31:0]
+  hwif_out.OHJAUS.KAYNNISTA.value
+  hwif_out.OHJAUS.TILA.value[3:0]
+  hwif_out.OHJAUS.TILA.swmod
+  hwif_out.KESKEYTYS.intr
+  hwif_out.SALLI.YLIVUOTO.value
+  hwif_out.SALLI.VIRHE.value
+  hwif_out.NAYTE.ARVO.swacc

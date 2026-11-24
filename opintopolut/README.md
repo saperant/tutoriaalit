@@ -84,7 +84,7 @@ flowchart LR
     dsp_laitteisto["✓ DSP-algoritmien laitteistototeutus"]
     elektroniikan_perusteet["Elektroniikan perusteet ja SPICE"]
     analogiaelektroniikka["Analogiaelektroniikka"]
-    kuvausstandardit["Laitteiston kuvausstandardit (SystemRDL, IP-XACT)"]
+    kuvausstandardit["✓ Laitteiston kuvausstandardit (SystemRDL, IP-XACT)"]
     asic_toteutus["✓ ASIC-toteutus"]
     soc_integraatio["✓ SoC-integraatio"]
   end
@@ -382,7 +382,7 @@ flowchart LR
 | Arkkitehtuurin mallinnus ja suunnittelutilan tutkiminen | 5 | Korkean tason mallinnus (SystemC/TLM), Suorituskyvyn analyysi ja optimointi, Todennäköisyys ja tilastot | [valmis](../arkkitehtuurin-tutkiminen/) |
 | DSP-algoritmien laitteistototeutus | 5 | Digitaalinen signaalinkäsittely, FPGA-toteutus, Laitteiston verifiointi, Lukujen esitys ja kiinteän pilkun aritmetiikka | [valmis](../dsp-laitteisto/) |
 | Korkean tason synteesi | 5 | FPGA-toteutus, Korkean tason mallinnus (SystemC/TLM) | [valmis](../hls/) |
-| Laitteiston kuvausstandardit (SystemRDL, IP-XACT) | 5 | EDA-työkaluketjujen automatisointi, SoC-integraatio | suunniteltu |
+| Laitteiston kuvausstandardit (SystemRDL, IP-XACT) | 5 | EDA-työkaluketjujen automatisointi, SoC-integraatio | [valmis](../kuvausstandardit/) |
 
 ### Signaalinkäsittely ja radiot
 

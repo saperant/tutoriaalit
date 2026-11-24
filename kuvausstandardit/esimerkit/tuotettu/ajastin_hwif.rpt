@@ -1,0 +1,7 @@
+hwif_in.STATUS.VALMIS.hwset
+hwif_in.LASKURI.ARVO.next[15:0]
+hwif_out.CTRL.EN.value
+hwif_out.CTRL.IE.value
+hwif_out.CTRL.JAKAJA.value[7:0]
+hwif_out.STATUS.intr
+hwif_out.VERTAA.ARVO.value[15:0]

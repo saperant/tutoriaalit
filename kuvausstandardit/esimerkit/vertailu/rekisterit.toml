@@ -1,0 +1,68 @@
+# Ajastinlohkon rekisterikuvaus: ainoa paikka, jossa rekisterit
+# määritellään. RTL, C-otsake, dokumentti ja testipenkki tuotetaan
+# tästä komennolla python3 09-rekisterit.py --kirjoita.
+
+# @alku ctrl
+[lohko]
+nimi = "ajastin"
+perusosoite = 0x4000_1000
+leveys = 32
+
+[[rekisteri]]
+nimi = "CTRL"
+osoite = 0x00
+kuvaus = "Ohjaus"
+
+[[rekisteri.kentta]]
+nimi = "EN"
+bitit = [0, 0]
+paasy = "rw"
+kuvaus = "Ajastin käy"
+
+[[rekisteri.kentta]]
+nimi = "IE"
+bitit = [1, 1]
+paasy = "rw"
+kuvaus = "Keskeytys sallittu"
+
+[[rekisteri.kentta]]
+nimi = "JAKAJA"
+bitit = [15, 8]
+paasy = "rw"
+nollaus = 1
+kuvaus = "Kellon jakaja"
+
+# @loppu ctrl
+[[rekisteri]]
+nimi = "STATUS"
+osoite = 0x04
+kuvaus = "Tila"
+
+[[rekisteri.kentta]]
+nimi = "VALMIS"
+bitit = [0, 0]
+paasy = "w1c"
+kuvaus = "Vertailuarvo saavutettu"
+
+[[rekisteri]]
+nimi = "LASKURI"
+osoite = 0x08
+kuvaus = "Laskurin arvo"
+
+[[rekisteri.kentta]]
+nimi = "ARVO"
+bitit = [15, 0]
+paasy = "ro"
+kuvaus = "Nykyinen arvo"
+
+[[rekisteri]]
+nimi = "VERTAA"
+osoite = 0x0C
+kuvaus = "Vertailuarvo"
+
+[[rekisteri.kentta]]
+nimi = "ARVO"
+bitit = [15, 0]
+paasy = "rw"
+nollaus = 0xFFFF
+kuvaus = "Arvo, jolla VALMIS asettuu"

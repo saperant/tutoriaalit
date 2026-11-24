@@ -1,0 +1,24 @@
+// Omat ominaisuudet (user-defined properties). Kaantaja tarkistaa niiden
+// tyypin ja kayttopaikan, ja omat generaattorit lukevat ne mallista.
+
+`ifndef OMINAISUUDET_RDL
+`define OMINAISUUDET_RDL
+
+// @alku udp
+property turvallinen {
+    type = boolean;
+    component = reg;
+};
+
+property keskeytys {
+    type = longint unsigned;
+    component = addrmap;
+};
+
+property yhteensopiva {
+    type = string;
+    component = addrmap;
+};
+// @loppu udp
+
+`endif

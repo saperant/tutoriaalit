@@ -1,0 +1,8 @@
+muunnos: 17 rivia SystemRDL:aa, ensimmainen rekisteri:
+  reg { name = "Ohjaus";
+  field { sw = rw; hw = r; } EN[0:0] = 0;
+  field { sw = rw; hw = r; } IE[1:1] = 0;
+  field { sw = rw; hw = r; } JAKAJA[15:8] = 1;
+muunnettu ja kasin kirjoitettu: 6 kenttaa
+  osoitteet, bitit, paasyt ja nollaukset: samat
+  vain SystemRDL-kuvauksessa: STATUS.VALMIS hwset, intr, sallinta CTRL.IE

@@ -1,0 +1,16 @@
+soc.svd: hyvin muodostettu, 18 rekisteria
+SVD ja kuvaus: samat osoitteet
+  0x40002000 DMA0.VERSIO
+  0x40002004 DMA0.SUOJAUS
+  0x40002100 DMA0.KANAVA[0].LAHDE
+  0x40002104 DMA0.KANAVA[0].KOHDE
+laitepuu: dtc kaansi solmut; takaisin purettuna:
+  ajastin@40001000 {
+  reg = <0x40001000 0x10>;
+  interrupts = <0x03>;
+  ajastin@40001100 {
+  reg = <0x40001100 0x10>;
+  interrupts = <0x04>;
+  dma@40002000 {
+  reg = <0x40002000 0x120>;
+  interrupts = <0x07>;

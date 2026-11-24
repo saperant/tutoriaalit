@@ -1,0 +1,8 @@
+// Tahallaan virheellinen kuvaus: kaytosominaisuudet, jotka eivat sovi
+// yhteen kentan paasyn kanssa.
+addrmap kaytos {
+    reg {
+        field { sw = r; hw = w; onwrite = woclr; } LIPPU[0:0] = 0;
+        field { sw = w; hw = r; onread = rclr; } KOMENTO[1:1] = 0;
+    } STATUS @ 0x0;
+};

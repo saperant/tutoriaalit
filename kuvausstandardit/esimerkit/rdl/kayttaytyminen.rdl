@@ -1,0 +1,69 @@
+// Kenttien kayttaytymista kuvaavat ominaisuudet: kertapulssi,
+// kirjoitusilmoitus, laskuri, lukemalla nollautuva kentta,
+// keskeytysliput sallintoineen ja lukuilmoitus. Lohko keraa tapahtumia
+// ja ilmoittaa virheista keskeytyksella.
+
+addrmap tapahtumat {
+    name = "Tapahtumalaskuri";
+    default regwidth = 32;
+
+    // @alku ohjaus
+    reg {
+        name = "Ohjaus";
+        field {
+            desc = "Kirjoita 1 aloittaaksesi mittauksen. Pulssi kestaa
+                    yhden kellojakson, ja kentta lukee aina 0.";
+            sw = w; hw = r; singlepulse;
+        } KAYNNISTA[0:0] = 0;
+        field {
+            desc = "Mittaustila. Laitteisto saa ilmoituksen kirjoituksesta.";
+            sw = rw; hw = r; swmod;
+        } TILA[7:4] = 0;
+    } OHJAUS @ 0x0;
+    // @loppu ohjaus
+
+    // @alku laskuri
+    reg {
+        name = "Tapahtumat";
+        field {
+            desc = "Tapahtumien maara viime lukemisen jalkeen.
+                    Lukeminen nollaa kentan. Laskuri ei vuoda yli.";
+            sw = r; hw = na; counter; incrsaturate; onread = rclr;
+        } MAARA[15:0] = 0;
+    } TAPAHTUMAT @ 0x4;
+    // @loppu laskuri
+
+    // @alku keskeytys
+    reg {
+        name = "Keskeytyslahteet";
+        field {
+            desc = "Laskuri saturoitui.";
+            sw = rw; hw = na; hwset; onwrite = woclr; intr;
+        } YLIVUOTO[0:0] = 0;
+        field {
+            desc = "Laitteisto havaitsi virheen.";
+            sw = rw; hw = na; hwset; onwrite = woclr; intr;
+        } VIRHE[1:1] = 0;
+    } KESKEYTYS @ 0x8;
+
+    reg {
+        name = "Keskeytysten sallinta";
+        field { sw = rw; hw = r; } YLIVUOTO[0:0] = 0;
+        field { sw = rw; hw = r; } VIRHE[1:1] = 0;
+    } SALLI @ 0xC;
+
+    KESKEYTYS.YLIVUOTO->enable = SALLI.YLIVUOTO;
+    KESKEYTYS.VIRHE->enable = SALLI.VIRHE;
+    // @loppu keskeytys
+
+    // @alku nayte
+    reg {
+        name = "Nayte";
+        field {
+            desc = "Viimeisin naytearvo. Laitteisto saa ilmoituksen
+                    lukemisesta ja voi poistaa arvon jonostaan.";
+            sw = r; hw = w; swacc;
+        } ARVO[31:0];
+    } NAYTE @ 0x10;
+    // @loppu nayte
+};

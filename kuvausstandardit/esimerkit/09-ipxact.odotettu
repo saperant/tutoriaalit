@@ -1,0 +1,16 @@
+ajastin.xml: hyvin muodostettu XML
+ajastin: addressBlock 0x0, 0x10 tavua
+  0x00 CTRL     EN, IE, JAKAJA
+  0x04 STATUS   VALMIS
+  0x08 LASKURI  ARVO
+  0x0c VERTAA   ARVO
+
+ajastin: 6/6 kenttaa samoin bitein, paasyin ja nollausarvoin
+  menetetty STATUS.VALMIS: hwset, intr
+tapahtumat: 8/8 kenttaa samoin bitein, paasyin ja nollausarvoin
+  menetetty OHJAUS.KAYNNISTA: singlepulse
+  menetetty OHJAUS.TILA: swmod
+  menetetty TAPAHTUMAT.MAARA: counter
+  menetetty KESKEYTYS.YLIVUOTO: hwset, intr
+  menetetty KESKEYTYS.VIRHE: hwset, intr
+  menetetty NAYTE.ARVO: swacc

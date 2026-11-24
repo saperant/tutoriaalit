@@ -1,0 +1,5 @@
+c/ajuri.c (gcc-14): kaannos onnistui
+c/ajuri.c (clang-20): kaannos onnistui
+koko 0x10, nollauksen jalkeen CTRL=0x00000100 jakaja=1
+kaynnistyksen jalkeen CTRL=0x00000503 jakaja=5 VERTAA=1000
+ajastin.h.test.c: 4 siirtymaa tarkistettu

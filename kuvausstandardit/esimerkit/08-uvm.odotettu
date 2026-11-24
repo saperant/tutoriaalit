@@ -1,0 +1,8 @@
+kentta          koko  lsb  access  volatile  reset
+CTRL.EN         1     0    RW      0         0x0
+CTRL.IE         1     1    RW      0         0x0
+CTRL.JAKAJA     8     8    RW      0         0x1
+STATUS.VALMIS   1     0    W1C     1         0x0
+LASKURI.ARVO    16    0    RO      1         -
+VERTAA.ARVO     16    0    RW      0         0xffff
+UVM-malli ja kuvaus: 6 kenttaa, samat

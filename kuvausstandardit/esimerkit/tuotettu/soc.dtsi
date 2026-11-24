@@ -1,0 +1,19 @@
+/* Tuotettu SystemRDL-kuvauksesta. Ala muokkaa kasin. */
+
+ajastin0: ajastin@40001000 {
+    compatible = "esimerkki,ajastin-1.0";
+    reg = <0x40001000 0x10>;
+    interrupts = <3>;
+};
+
+ajastin1: ajastin@40001100 {
+    compatible = "esimerkki,ajastin-1.0";
+    reg = <0x40001100 0x10>;
+    interrupts = <4>;
+};
+
+dma0: dma@40002000 {
+    compatible = "esimerkki,dma-1.2";
+    reg = <0x40002000 0x120>;
+    interrupts = <7>;
+};

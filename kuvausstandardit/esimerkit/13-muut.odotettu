@@ -1,0 +1,22 @@
+ajastin.sdc:
+  create_clock           2 valitsinta
+  set_clock_uncertainty  0 valitsinta
+  set_input_delay        1 valitsinta
+  set_output_delay       1 valitsinta
+  set_false_path         1 valitsinta
+ajastin.upf:
+  create_power_domain    1 valitsinta
+  create_power_domain    1 valitsinta
+  create_supply_port     0 valitsinta
+  create_supply_net      1 valitsinta
+  create_supply_net      1 valitsinta
+  connect_supply_net     1 valitsinta
+  create_power_switch    5 valitsinta
+  set_isolation          4 valitsinta
+rikki.sdc:
+  create_clock           2 valitsinta
+  set_clock_uncertainty  0 valitsinta
+  set_input_delay        1 valitsinta
+  set_output_delay       1 valitsinta
+  VIRHE: invalid command name "set_flase_path"
+  paluuarvo 1

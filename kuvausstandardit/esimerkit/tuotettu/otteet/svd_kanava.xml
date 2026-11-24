@@ -1,0 +1,20 @@
+<cluster>
+  <dim>2</dim>
+  <dimIncrement>0x10</dimIncrement>
+  <name>KANAVA[%s]</name>
+  <addressOffset>0x100</addressOffset>
+  <register>
+    <name>LAHDE</name>
+    <description>LAHDE</description>
+    <addressOffset>0x0</addressOffset>
+    <size>32</size>
+    <resetValue>0x00000000</resetValue>
+    <fields>
+      <field>
+        <name>OSOITE</name>
+        <bitOffset>0</bitOffset>
+        <bitWidth>32</bitWidth>
+        <access>read-write</access>
+      </field>
+    </fields>
+  </register>

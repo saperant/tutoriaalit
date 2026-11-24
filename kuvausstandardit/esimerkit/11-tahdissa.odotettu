@@ -1,0 +1,9 @@
+tuotettu/: ajan tasalla
+kasin muokattu otsake: VANHENTUNUT: ajastin.h
+muutettu kuvaus, tiedostot paivittamatta:
+  ajastin.sv
+  ajastin.h
+  ajastin_uvm.sv
+  ajastin.xml
+  ajastin.md
+  soc.svd

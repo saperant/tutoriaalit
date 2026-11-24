@@ -1,0 +1,7 @@
+KANAVIA=4 (oletus): 0x140 tavua, 18 rekisteria
+  viimeinen KANAVA[3].OHJAUS @ 0x13c
+KANAVIA=2: 0x120 tavua, 10 rekisteria
+  viimeinen KANAVA[1].OHJAUS @ 0x11c
+KANAVIA=16: 0x200 tavua, 66 rekisteria
+  viimeinen KANAVA[15].OHJAUS @ 0x1fc
+turvallinen = true: SUOJAUS

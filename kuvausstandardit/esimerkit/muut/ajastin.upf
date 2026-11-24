@@ -1,0 +1,22 @@
+# Ajastinlohkon virranhallinnan aikomus (UPF, IEEE 1801). UPF on Tcl:aa:
+# kuvaus kertoo virta-alueet ja kytkimet erillaan RTL:sta.
+
+# @alku upf
+create_power_domain PD_AINA -include_scope
+create_power_domain PD_AJASTIN -elements {u_ajastin}
+
+create_supply_port VDD
+create_supply_net VDD -domain PD_AINA
+create_supply_net VDD_AJASTIN -domain PD_AJASTIN
+connect_supply_net VDD -ports VDD
+
+create_power_switch KYTKIN -domain PD_AJASTIN \
+    -input_supply_port {sisaan VDD} \
+    -output_supply_port {ulos VDD_AJASTIN} \
+    -control_port {paalle ajastin_virta} \
+    -on_state {paalla sisaan {paalle}}
+
+# Sammutetun alueen lahdot pakotetaan nollaan.
+set_isolation ISO_AJASTIN -domain PD_AJASTIN \
+    -isolation_power_net VDD -clamp_value 0 -applies_to outputs
+# @loppu upf

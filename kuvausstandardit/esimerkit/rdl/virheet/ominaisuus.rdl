@@ -1,0 +1,11 @@
+// Tahallaan virheellinen kuvaus: omille ominaisuuksille vaaran
+// tyyppiset arvot. Kaantaja tarkistaa ne kuten standardin omat.
+`include "ominaisuudet.rdl"
+
+addrmap ominaisuus {
+    keskeytys = "kolme";
+    reg {
+        turvallinen = "kylla";
+        field { sw = rw; hw = r; } ARVO[7:0] = 0;
+    } AVAIN @ 0x0;
+};

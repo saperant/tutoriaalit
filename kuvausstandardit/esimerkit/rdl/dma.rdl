@@ -1,0 +1,39 @@
+// DMA-ohjaimen rekisterit: parametroitu kanavien maara ja kanavakohtainen
+// rekisteriryhma taulukkona.
+
+`include "ominaisuudet.rdl"
+
+// @alku dma
+addrmap dma #(longint unsigned KANAVIA = 4) {
+    name = "DMA-ohjain";
+    default regwidth = 32;
+    default sw = rw;
+    default hw = r;
+
+    reg {
+        name = "Versio";
+        field { sw = r; hw = na; } TOINEN[7:0] = 2;
+        field { sw = r; hw = na; } ENSIMMAINEN[15:8] = 1;
+    } VERSIO @ 0x000;
+
+    reg {
+        name = "Suojattu tila";
+        turvallinen = true;
+        field {
+            desc = "Vain suojattu ohjelmisto saa muuttaa.";
+        } LUKITUS[0:0] = 0;
+    } SUOJAUS @ 0x004;
+
+    regfile kanava {
+        name = "Kanava";
+        reg { field {} OSOITE[31:0] = 0; } LAHDE @ 0x0;
+        reg { field {} OSOITE[31:0] = 0; } KOHDE @ 0x4;
+        reg { field {} TAVUJA[23:0] = 0; } PITUUS @ 0x8;
+        reg {
+            field {} KAYNNISTA[0:0] = 0;
+            field { sw = r; hw = w; } VALMIS[1:1];
+        } OHJAUS @ 0xC;
+    };
+    kanava KANAVA[KANAVIA] @ 0x100 += 0x10;
+};
+// @loppu dma

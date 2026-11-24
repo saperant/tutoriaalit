@@ -1,0 +1,8 @@
+<peripheral derivedFrom="AJASTIN0">
+  <name>AJASTIN1</name>
+  <baseAddress>0x40001100</baseAddress>
+  <interrupt>
+    <name>AJASTIN1_IRQ</name>
+    <value>4</value>
+  </interrupt>
+</peripheral>
