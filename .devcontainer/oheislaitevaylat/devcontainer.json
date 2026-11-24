@@ -1,0 +1,20 @@
+{
+  "name": "Oheislaiteväylät: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "gcc-arm-none-eabi libnewlib-arm-none-eabi qemu-system-arm gdb-multiarch",
+      "PIP_PAKETIT": "ruff mypy pytest"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/oheislaitevaylat/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "marus25.cortex-debug"
+      ]
+    }
+  }
+}
