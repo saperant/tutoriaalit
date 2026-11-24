@@ -5,22 +5,26 @@
 
 Tutoriaalit muodostavat taitopuun: jokainen tutoriaali on yksi taito, ja taidot rakentuvat toistensa päälle. Roolit ovat ammattiprofiileja, joiden polku kulkee puun läpi.
 
-Taitoja on 72, yhteensä noin 317 op. Valmis PDF: [opintopolut.pdf](opintopolut.pdf). Taitopuun lähdetiedosto: [taitopuu.toml](taitopuu.toml).
+Taitoja on 87, yhteensä noin 382 op. Valmis PDF: [opintopolut.pdf](opintopolut.pdf). Taitopuun lähdetiedosto: [taitopuu.toml](taitopuu.toml).
 
 ## Roolit
 
 | Rooli | Tavoitteet | Taitoja | op |
 |-------|------------|--------:|---:|
-| Laitteistoarkkitehti | Arkkitehtuurin mallinnus ja suunnittelutilan tutkiminen, EDA-työkaluketjujen automatisointi, FPGA-toteutus, Laitteiston verifiointi | 25 | 105 |
+| Laitteistoarkkitehti | Arkkitehtuurin mallinnus ja suunnittelutilan tutkiminen, EDA-työkaluketjujen automatisointi, FPGA-toteutus, Laitteiston verifiointi | 26 | 108 |
 | Sulautettujen ohjelmistojen kehittäjä | Linux-laiteajurit, Reaaliaikakäyttöjärjestelmät | 17 | 72 |
 | Signaalinkäsittelyn ja ohjelmistoradion kehittäjä | Ohjelmistoradio | 13 | 61 |
 | Grafiikkaohjelmoija | GPU-laskenta, Säteenseuranta ja fysikaalinen valaistus | 19 | 87 |
-| Hajautettujen järjestelmien kehittäjä | Skaalautuvien järjestelmien suunnittelu, Säiliöt ja pilvi-infrastruktuuri | 18 | 86 |
+| Hajautettujen järjestelmien kehittäjä | Skaalautuvien järjestelmien suunnittelu, Säiliöt ja pilvi-infrastruktuuri | 18 | 88 |
 | Takaisinmallintaja ja tietoturva-analyytikko | Haavoittuvuuksien analyysi ja hyödyntäminen, Laiteohjelmiston takaisinmallinnus | 15 | 69 |
 | Algoritmiikan ja ohjelmistokehityksen perusta | Edistyneet algoritmit ja tietorakenteet, Käännösjärjestelmät, testaus ja CI | 10 | 41 |
 | Web-kehittäjä | Web-sovellukset | 7 | 29 |
-| Taustajärjestelmäkehittäjä | Säiliöt ja pilvi-infrastruktuuri, Taustapalvelut | 7 | 31 |
+| Taustajärjestelmäkehittäjä | Säiliöt ja pilvi-infrastruktuuri, Taustapalvelut | 7 | 33 |
 | Mobiilikehittäjä (Android) | Android-sovellukset | 4 | 18 |
+| Digitaalisen piirisuunnittelun asiantuntija | ASIC-toteutus, Laitteiston verifiointi, SoC-integraatio | 13 | 63 |
+| Infrastruktuuri- ja ylläpitoasiantuntija | Palvelinympäristöt | 5 | 23 |
+| Peliohjelmoija | Reaaliaikaiset moninpelit | 14 | 66 |
+| Sovellusturvallisuuden asiantuntija | Palveluarkkitehtuurin tietoturva, Tietoturva kehitystyössä, Web-sovellusten tietoturva | 20 | 85 |
 
 ## Taitopuu
 
@@ -59,6 +63,8 @@ flowchart LR
     kayttojarjestelmat["Käyttöjärjestelmät"]
     rinnakkaisohjelmointi["Rinnakkaisohjelmointi"]
     suorituskyky["Suorituskyvyn analyysi ja optimointi"]
+    tietokonearitmetiikka["Miten tietokone laskee"]
+    virtualisointi["Virtualisointi"]
   end
   subgraph laitteisto["Laitteistosuunnittelu"]
     kiintea_pilkku["Lukujen esitys ja kiinteän pilkun aritmetiikka"]
@@ -71,6 +77,8 @@ flowchart LR
     eda_skriptaus["EDA-työkaluketjujen automatisointi"]
     hls["Korkean tason synteesi"]
     dsp_laitteisto["DSP-algoritmien laitteistototeutus"]
+    asic_toteutus["ASIC-toteutus"]
+    soc_integraatio["SoC-integraatio"]
   end
   subgraph signaalit["Signaalinkäsittely ja radiot"]
     signaalit_ja_jarjestelmat["Signaalit ja järjestelmät"]
@@ -91,18 +99,29 @@ flowchart LR
     hajautetut_jarjestelmat["Hajautetut järjestelmät"]
     jarjestelmasuunnittelu["Skaalautuvien järjestelmien suunnittelu"]
     kontit_ja_pilvi["Säiliöt ja pilvi-infrastruktuuri"]
+    verkkoinfrastruktuuri["Verkkoinfrastruktuuri"]
+    tietoliikennetekniikka["Tietoliikennetekniikka"]
+    palvelinymparistot["Palvelinympäristöt"]
+    palveluarkkitehtuurit["Palveluarkkitehtuurit"]
   end
   subgraph grafiikka["Tietokonegrafiikka"]
     renderoinnin_perusteet["Renderöinnin perusteet"]
     sateenseuranta["Säteenseuranta ja fysikaalinen valaistus"]
-    gpu_ohjelmointi["GPU-ohjelmointi ja grafiikkarajapinnat"]
+    gpu_ohjelmointi["GPU-ohjelmointi: OpenGL ja Vulkan"]
     gpu_laskenta["GPU-laskenta"]
+    peliohjelmointi["Peliohjelmointi"]
+    moninpelit["Reaaliaikaiset moninpelit"]
   end
   subgraph tietoturva["Tietoturva ja takaisinmallinnus"]
     tietoturvan_perusteet["Tietoturvan perusteet"]
     takaisinmallinnus["Takaisinmallinnus"]
     haavoittuvuudet["Haavoittuvuuksien analyysi ja hyödyntäminen"]
     laiteohjelmiston_takaisinmallinnus["Laiteohjelmiston takaisinmallinnus"]
+    kryptografia["Kryptografia"]
+    turvallinen_kehitys["Tietoturva kehitystyössä"]
+    web_tietoturva["Web-sovellusten tietoturva"]
+    sulautettujen_tietoturva["Sulautettujen järjestelmien tietoturva"]
+    palvelutietoturva["Palveluarkkitehtuurin tietoturva"]
   end
   subgraph kielet["Ohjelmointikielet"]
     rust["✓ Rust"]
@@ -157,7 +176,7 @@ flowchart LR
   tietokonearkkitehtuuri --> suorituskyky
   algoritmit --> suorituskyky
   digitaalitekniikka --> kiintea_pilkku
-  c_kieli --> kiintea_pilkku
+  tietokonearitmetiikka --> kiintea_pilkku
   digitaalitekniikka --> rtl_suunnittelu
   digitaalitekniikka --> vhdl
   rtl_suunnittelu --> verifiointi
@@ -214,7 +233,7 @@ flowchart LR
   gpu_ohjelmointi --> gpu_laskenta
   suorituskyky --> gpu_laskenta
   tietoverkot --> tietoturvan_perusteet
-  c_kieli --> tietoturvan_perusteet
+  ohjelmoinnin_perusteet --> tietoturvan_perusteet
   binaarit_ja_linkitys --> takaisinmallinnus
   kayttojarjestelmat --> takaisinmallinnus
   tietoturvan_perusteet --> takaisinmallinnus
@@ -242,6 +261,34 @@ flowchart LR
   sql --> taustapalvelut
   tietoverkot --> taustapalvelut
   kotlin --> android_sovellukset
+  c_kieli --> tietokonearitmetiikka
+  kayttojarjestelmat --> virtualisointi
+  tietoverkot --> verkkoinfrastruktuuri
+  tietoverkot --> tietoliikennetekniikka
+  todennakoisyys --> tietoliikennetekniikka
+  python_tyokalut --> tietoliikennetekniikka
+  verkkoinfrastruktuuri --> palvelinymparistot
+  kontit_ja_pilvi --> palvelinymparistot
+  taustapalvelut --> palveluarkkitehtuurit
+  kontit_ja_pilvi --> palveluarkkitehtuurit
+  rtl_suunnittelu --> asic_toteutus
+  rtl_suunnittelu --> soc_integraatio
+  tietokonearkkitehtuuri --> soc_integraatio
+  moderni_cpp --> peliohjelmointi
+  lineaarialgebra --> peliohjelmointi
+  peliohjelmointi --> moninpelit
+  verkko_ohjelmointi --> moninpelit
+  tietoturvan_perusteet --> kryptografia
+  diskreetti_matematiikka --> kryptografia
+  python --> kryptografia
+  tietoturvan_perusteet --> turvallinen_kehitys
+  versionhallinta --> turvallinen_kehitys
+  tietoturvan_perusteet --> web_tietoturva
+  web_sovellukset --> web_tietoturva
+  mikrokontrollerit --> sulautettujen_tietoturva
+  kryptografia --> sulautettujen_tietoturva
+  palveluarkkitehtuurit --> palvelutietoturva
+  kryptografia --> palvelutietoturva
 ```
 
 ## Taidot alueittain
@@ -284,23 +331,27 @@ flowchart LR
 |-------|---:|------------|------|
 | Digitaalitekniikka | 5 | Diskreetti matematiikka | suunniteltu |
 | Assembly | 5 | C-kieli, Digitaalitekniikka | suunniteltu |
+| Miten tietokone laskee | 3 | C-kieli | suunniteltu |
 | Objektitiedostot, linkitys ja ABI | 3 | Assembly | suunniteltu |
 | Tietokonearkkitehtuuri | 5 | Assembly | suunniteltu |
 | Käyttöjärjestelmät | 5 | Tietokonearkkitehtuuri | suunniteltu |
 | Suorituskyvyn analyysi ja optimointi | 3 | Algoritmit, Tietokonearkkitehtuuri | suunniteltu |
 | Rinnakkaisohjelmointi | 5 | Käyttöjärjestelmät, Moderni C++ | suunniteltu |
+| Virtualisointi | 3 | Käyttöjärjestelmät | suunniteltu |
 
 ### Laitteistosuunnittelu
 
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
-| Lukujen esitys ja kiinteän pilkun aritmetiikka | 3 | C-kieli, Digitaalitekniikka | suunniteltu |
 | RTL-suunnittelu SystemVerilogilla | 5 | Digitaalitekniikka | [valmis](../rtl-suunnittelu/) |
 | RTL-suunnittelu VHDL:llä | 5 | Digitaalitekniikka | [valmis](../vhdl/) |
+| ASIC-toteutus | 5 | RTL-suunnittelu SystemVerilogilla | suunniteltu |
 | EDA-työkaluketjujen automatisointi | 3 | Käännösjärjestelmät, testaus ja CI, Python työkaluohjelmointiin, RTL-suunnittelu SystemVerilogilla, Tcl | suunniteltu |
 | FPGA-toteutus | 5 | RTL-suunnittelu SystemVerilogilla | suunniteltu |
 | Laitteiston verifiointi | 5 | Python työkaluohjelmointiin, RTL-suunnittelu SystemVerilogilla | suunniteltu |
+| Lukujen esitys ja kiinteän pilkun aritmetiikka | 3 | Digitaalitekniikka, Miten tietokone laskee | suunniteltu |
 | Korkean tason mallinnus (SystemC/TLM) | 5 | Lukujen esitys ja kiinteän pilkun aritmetiikka, Moderni C++, Tietokonearkkitehtuuri | suunniteltu |
+| SoC-integraatio | 5 | RTL-suunnittelu SystemVerilogilla, Tietokonearkkitehtuuri | suunniteltu |
 | Arkkitehtuurin mallinnus ja suunnittelutilan tutkiminen | 5 | Korkean tason mallinnus (SystemC/TLM), Suorituskyvyn analyysi ja optimointi, Todennäköisyys ja tilastot | suunniteltu |
 | DSP-algoritmien laitteistototeutus | 5 | Digitaalinen signaalinkäsittely, FPGA-toteutus, Laitteiston verifiointi, Lukujen esitys ja kiinteän pilkun aritmetiikka | suunniteltu |
 | Korkean tason synteesi | 5 | FPGA-toteutus, Korkean tason mallinnus (SystemC/TLM) | suunniteltu |
@@ -329,7 +380,11 @@ flowchart LR
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
 | Tietoverkot | 5 | Komentorivi ja Linux | suunniteltu |
-| Säiliöt ja pilvi-infrastruktuuri | 3 | Tietoverkot | suunniteltu |
+| Säiliöt ja pilvi-infrastruktuuri | 5 | Tietoverkot | suunniteltu |
+| Verkkoinfrastruktuuri | 5 | Tietoverkot | suunniteltu |
+| Palvelinympäristöt | 5 | Säiliöt ja pilvi-infrastruktuuri, Verkkoinfrastruktuuri | suunniteltu |
+| Palveluarkkitehtuurit | 5 | Säiliöt ja pilvi-infrastruktuuri, Taustapalvelut | suunniteltu |
+| Tietoliikennetekniikka | 5 | Python työkaluohjelmointiin, Tietoverkot, Todennäköisyys ja tilastot | suunniteltu |
 | Verkko-ohjelmointi | 5 | Käyttöjärjestelmät, Tietoverkot | suunniteltu |
 | Hajautetut järjestelmät | 5 | Algoritmit, Rinnakkaisohjelmointi, Verkko-ohjelmointi | suunniteltu |
 | Skaalautuvien järjestelmien suunnittelu | 5 | Hajautetut järjestelmät, SQL ja relaatiotietokannat | suunniteltu |
@@ -338,16 +393,23 @@ flowchart LR
 
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
+| Peliohjelmointi | 5 | Lineaarialgebra, Moderni C++ | suunniteltu |
 | Renderöinnin perusteet | 5 | Lineaarialgebra, Moderni C++ | suunniteltu |
 | Säteenseuranta ja fysikaalinen valaistus | 5 | Algoritmit, Renderöinnin perusteet, Todennäköisyys ja tilastot | suunniteltu |
-| GPU-ohjelmointi ja grafiikkarajapinnat | 5 | Renderöinnin perusteet, Rinnakkaisohjelmointi | suunniteltu |
-| GPU-laskenta | 3 | GPU-ohjelmointi ja grafiikkarajapinnat, Suorituskyvyn analyysi ja optimointi | suunniteltu |
+| GPU-ohjelmointi: OpenGL ja Vulkan | 5 | Renderöinnin perusteet, Rinnakkaisohjelmointi | suunniteltu |
+| Reaaliaikaiset moninpelit | 3 | Peliohjelmointi, Verkko-ohjelmointi | suunniteltu |
+| GPU-laskenta | 3 | GPU-ohjelmointi: OpenGL ja Vulkan, Suorituskyvyn analyysi ja optimointi | suunniteltu |
 
 ### Tietoturva ja takaisinmallinnus
 
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
-| Tietoturvan perusteet | 3 | C-kieli, Tietoverkot | suunniteltu |
+| Tietoturvan perusteet | 3 | Ohjelmoinnin perusteet (Python), Tietoverkot | suunniteltu |
+| Kryptografia | 5 | Diskreetti matematiikka, Python, Tietoturvan perusteet | suunniteltu |
+| Tietoturva kehitystyössä | 3 | Tietoturvan perusteet, Versionhallinta (Git) | suunniteltu |
+| Palveluarkkitehtuurin tietoturva | 3 | Kryptografia, Palveluarkkitehtuurit | suunniteltu |
+| Web-sovellusten tietoturva | 5 | Tietoturvan perusteet, Web-sovellukset | suunniteltu |
+| Sulautettujen järjestelmien tietoturva | 3 | Kryptografia, Mikrokontrollerit ja bare-metal-ohjelmointi | suunniteltu |
 | Takaisinmallinnus | 5 | Käyttöjärjestelmät, Objektitiedostot, linkitys ja ABI, Tietoturvan perusteet | suunniteltu |
 | Haavoittuvuuksien analyysi ja hyödyntäminen | 5 | Takaisinmallinnus | suunniteltu |
 | Laiteohjelmiston takaisinmallinnus | 5 | Mikrokontrollerit ja bare-metal-ohjelmointi, Takaisinmallinnus | suunniteltu |

@@ -492,13 +492,13 @@ alue = "jarjestelmat"
 kuvaus = "Suorittimen ja muistijärjestelmän toteutus käskykanta-arkkitehtuurista mikroarkkitehtuuriin."
 edellyttaa = ["assembly"]
 aiheet = [
-  "käskykanta-arkkitehtuuri ja käskyjen koodaus",
+  "käskykanta-arkkitehtuuri: RISC ja CISC, käskyjen koodaus",
   "datapolku ja ohjausyksikkö",
   "liukuhihna ja riippuvuudet",
   "välimuistit ja muistihierarkia",
   "virtuaalimuisti ja MMU",
-  "keskeytykset, väylät ja oheislaitteet",
-  "moniydinsuorittimet ja koherenssi",
+  "keskeytykset, DMA, väylät ja oheislaitteet",
+  "moniydinsuorittimet, koherenssi ja NUMA",
 ]
 laajuus = 5
 testaus = "C++-simulaattori RISC-V-osajoukolle, testiohjelmat"
@@ -534,7 +534,7 @@ aiheet = [
   "prosessit ja järjestelmäkutsut",
   "säikeet ja vuorontaminen",
   "virtuaalimuisti ja muistinhallinta",
-  "tiedostojärjestelmät ja I/O",
+  "tiedostojärjestelmät, lohko- ja merkkilaitteet sekä I/O",
   "prosessien välinen kommunikaatio",
   "synkronointi ja lukkiutuminen",
 ]
@@ -590,12 +590,12 @@ id = "kiintea-pilkku"
 nimi = "Lukujen esitys ja kiinteän pilkun aritmetiikka"
 alue = "laitteisto"
 kuvaus = "Lukujen esitys laitteistossa: kiinteä pilkku, liukuluvut, pyöristys ja bittitarkka mallinnus."
-edellyttaa = ["digitaalitekniikka", "c-kieli"]
+edellyttaa = ["digitaalitekniikka", "tietokonearitmetiikka"]
 aiheet = [
   "Q-formaatit ja skaalaus",
   "pyöristys, katkaisu ja saturaatio",
   "kvantisointivirhe",
-  "IEEE 754 -liukuluvut",
+  "kiinteä pilkku vai liukuluku laitteistossa",
   "bittitarkat mallit C:llä ja Pythonilla",
 ]
 laajuus = 3
@@ -966,10 +966,12 @@ kuvaus = "Internetin protokollapino ja verkkojen toiminta."
 edellyttaa = ["komentorivi"]
 aiheet = [
   "kerrosmallit (OSI, TCP/IP)",
-  "Ethernet ja IP-osoitteet",
-  "reititys",
-  "TCP ja UDP",
-  "DNS, HTTP ja TLS",
+  "Ethernet, ARP ja kytkentä",
+  "IPv4, IPv6 ja aliverkot",
+  "reititys ja NAT",
+  "TCP, UDP ja portit",
+  "DHCP, DNS ja mDNS",
+  "HTTP ja TLS",
   "liikenteen analyysi (Wireshark, tcpdump)",
 ]
 laajuus = 5
@@ -1043,11 +1045,12 @@ edellyttaa = ["tietoverkot"]
 aiheet = [
   "säiliöt ja Docker",
   "säiliökuvien rakentaminen",
-  "Kubernetes-perusteet",
+  "Kubernetes: podit, palvelut, käyttöönotot ja konfiguraatio",
+  "Helm ja GitOps",
   "infrastruktuuri koodina",
   "CI/CD-putket palveluille",
 ]
-laajuus = 3
+laajuus = 5
 testaus = "säiliöt rakennetaan ja ajetaan CI:ssä"
 roadmap = ["docker", "kubernetes", "devops"]
 amk = "Pilvipalvelut / DevOps"
@@ -1096,20 +1099,21 @@ amk = "Tietokonegrafiikan syventävä opintojakso"
 
 [[taito]]
 id = "gpu-ohjelmointi"
-nimi = "GPU-ohjelmointi ja grafiikkarajapinnat"
+nimi = "GPU-ohjelmointi: OpenGL ja Vulkan"
 alue = "grafiikka"
 kuvaus = "Grafiikkasuorittimen ohjelmointi nykyaikaisella grafiikkarajapinnalla ja varjostinkielillä."
 edellyttaa = ["renderoinnin-perusteet", "rinnakkaisohjelmointi"]
 aiheet = [
-  "GPU:n arkkitehtuuri",
+  "GPU:n arkkitehtuuri ja grafiikkaputki laitteistossa",
+  "OpenGL ja GLSL: puskurit, varjostimet ja tekstuurit",
   "Vulkan: laitteet, puskurit ja komentojonot",
-  "varjostimet (GLSL, SPIR-V)",
+  "SPIR-V ja varjostimien kääntäminen",
   "resurssit ja synkronointi",
   "renderöintitekniikat: varjokartat, viivästetty varjostus",
   "suorituskyvyn analyysi",
 ]
 laajuus = 5
-testaus = "Vulkan ohjelmistototeutuksella (Mesa lavapipe), kuvien vertailu"
+testaus = "Mesa (llvmpipe, lavapipe) ilman näytönohjainta, kuvien vertailu"
 roadmap = ["game-developer"]
 amk = "Peliohjelmointi / grafiikkaohjelmointi"
 
@@ -1140,14 +1144,14 @@ id = "tietoturvan-perusteet"
 nimi = "Tietoturvan perusteet"
 alue = "tietoturva"
 kuvaus = "Uhkamallinnus, kryptografian perusteet ja turvallinen ohjelmointi."
-edellyttaa = ["tietoverkot", "c-kieli"]
+edellyttaa = ["tietoverkot", "ohjelmoinnin-perusteet"]
 aiheet = [
-  "uhkamallinnus",
-  "kryptografian perusteet: tiivisteet, symmetrinen ja julkisen avaimen salaus",
+  "uhkamallinnus ja riskien arviointi",
+  "luottamuksellisuus, eheys ja saatavuus",
+  "kryptografian käsitteet käyttäjän näkökulmasta",
   "todennus ja pääsynhallinta",
   "yleiset haavoittuvuusluokat",
-  "turvallinen ohjelmointi C:llä",
-  "lainsäädäntö ja etiikka",
+  "lainsäädäntö ja etiikka: GDPR, NIS2 ja CRA",
 ]
 laajuus = 3
 testaus = "C ja Python, sanitoijat"
@@ -1180,6 +1184,7 @@ alue = "tietoturva"
 kuvaus = "Muistiturvallisuusvirheiden löytäminen, hyödyntämisen periaatteet ja suojausmekanismit harjoitusympäristössä."
 edellyttaa = ["takaisinmallinnus"]
 aiheet = [
+  "turvallinen ohjelmointi C:llä",
   "pinon ja keon ylivuodot",
   "muotoilumerkkijonovirheet",
   "suojaukset: ASLR, NX, pinokanarit, CFI",
@@ -1541,6 +1546,315 @@ testaus = "Gradle, yksikkötestit ja Robolectric"
 roadmap = ["android"]
 amk = "Mobiiliohjelmointi"
 
+[[taito]]
+id = "tietokonearitmetiikka"
+nimi = "Miten tietokone laskee"
+alue = "jarjestelmat"
+kuvaus = "Lukujen esitys ja aritmetiikka ohjelmoijan näkökulmasta: kokonaisluvut, liukuluvut, koneoppimisen lukumuodot sekä matriisit ja tensorit muistissa."
+edellyttaa = ["c-kieli"]
+aiheet = [
+  "kokonaisluvut, kahden komplementti ja ylivuoto",
+  "bittioperaatiot, siirrot ja jakolasku",
+  "liukuluvut: IEEE 754 binary64, binary32 ja binary16",
+  "koneoppimisen lukumuodot: bfloat16, FP8 ja int8-kvantisointi",
+  "pyöristys, virheen kertyminen ja Kahanin summa",
+  "vektorit, matriisit ja tensorit muistissa: järjestys ja askeleet",
+  "matriisitulon toteutus ja BLAS",
+]
+laajuus = 3
+testaus = "C (GCC, Clang ja sanitoijat) ja Python (NumPy)"
+roadmap = ["computer-science"]
+amk = "Tietokonetekniikka"
+
+[[taito]]
+id = "virtualisointi"
+nimi = "Virtualisointi"
+alue = "jarjestelmat"
+kuvaus = "Virtuaalikoneet ja kontit laitteistosta ytimeen: hypervisorit, laitteistotuki, I/O-virtualisointi ja eristyksen hinta."
+edellyttaa = ["kayttojarjestelmat"]
+aiheet = [
+  "hypervisorit: tyyppi 1 ja tyyppi 2",
+  "laitteistotuki: VT-x, AMD-V ja sisäkkäiset sivutaulut",
+  "I/O-virtualisointi: virtio, IOMMU (VT-d) ja SR-IOV",
+  "KVM ja QEMU käytännössä",
+  "kontit ytimen keinoin: nimiavaruudet, cgroups ja seccomp",
+  "virtuaalikoneiden ja konttien eristys ja hinta",
+  "tilannevedokset ja elävä siirto",
+]
+laajuus = 3
+testaus = "QEMU (TCG), unshare ja cgroups konttiympäristössä"
+roadmap = ["linux", "devops"]
+amk = "Virtualisointi"
+
+[[taito]]
+id = "verkkoinfrastruktuuri"
+nimi = "Verkkoinfrastruktuuri"
+alue = "hajautetut"
+kuvaus = "Lähiverkkojen ja yritysverkkojen suunnittelu ja ylläpito: kytkentä, reititys, palomuurit, langattomat verkot ja verkkopalvelut."
+edellyttaa = ["tietoverkot"]
+aiheet = [
+  "kytkimet, VLANit ja silmukoiden esto (STP)",
+  "reitityksen suunnittelu: staattinen, OSPF ja BGP:n perusteet",
+  "NAT ja palomuurit (nftables)",
+  "DHCP, PXE ja TFTP",
+  "QoS ja liikenteen muokkaus",
+  "WLAN, 802.1X ja RADIUS",
+  "VPN (WireGuard, IPsec) ja etäkäyttö (SSH, RDP)",
+  "verkon valvonta (SNMP, NetFlow)",
+]
+laajuus = 5
+testaus = "Linuxin verkkonimiavaruudet (ip netns), nftables, dnsmasq ja FRRouting"
+roadmap = ["network-engineer"]
+amk = "Tietoverkkojen suunnittelu ja ylläpito"
+
+[[taito]]
+id = "tietoliikennetekniikka"
+nimi = "Tietoliikennetekniikka"
+alue = "hajautetut"
+kuvaus = "Miten bitit kulkevat: siirtotiet, kapasiteetti, multipleksointi, kytkentätavat ja kanavanvaraus."
+edellyttaa = ["tietoverkot", "todennakoisyys", "python-tyokalut"]
+aiheet = [
+  "siirtotiet: kupari, valokuitu ja radio",
+  "kaistanleveys, kapasiteetti ja Shannonin raja",
+  "multipleksointi: TDM, FDM, OFDM ja CDMA",
+  "piirikytkentä, pakettikytkentä ja best-effort",
+  "kanavanvaraus: CSMA/CD, CSMA/CA, Token Ring ja TDMA",
+  "Ethernetin fyysinen kerros ja kehykset",
+  "matkaviestinverkot: 4G ja 5G",
+  "jonoteoria ja palvelun laatu",
+]
+laajuus = 5
+testaus = "Python-simulaatiot (NumPy)"
+roadmap = ["network-engineer", "computer-science"]
+amk = "Tietoliikennetekniikka"
+
+[[taito]]
+id = "palvelinymparistot"
+nimi = "Palvelinympäristöt"
+alue = "hajautetut"
+kuvaus = "Palvelinten ja konesalien ylläpito: laitteisto, tallennus, varmuuskopiointi, käyttäjähallinta, konfiguraationhallinta ja palvelutasot."
+edellyttaa = ["verkkoinfrastruktuuri", "kontit-ja-pilvi"]
+aiheet = [
+  "palvelinlaitteisto: ECC-muisti, redundanssi ja etähallinta (IPMI, BMC)",
+  "tallennus: SAS, NVMe, RAID, LVM ja ZFS",
+  "varmuuskopiointi ja palautus: 3-2-1, RPO ja RTO",
+  "käyttäjähallinta: LDAP, Kerberos ja Active Directory",
+  "konfiguraationhallinta (Ansible) ja koventaminen",
+  "virtualisointialustat ja Kubernetes-klusterin ylläpito",
+  "valvonta, SLA ja SLO",
+  "kokonaiskustannukset (TCO) ja kapasiteetin suunnittelu",
+]
+laajuus = 5
+testaus = "Ansible ja Linux-palvelut konteissa, OpenLDAP, mdadm silmukkalaitteilla"
+roadmap = ["devops", "linux"]
+amk = "Palvelinympäristöt"
+
+[[taito]]
+id = "palveluarkkitehtuurit"
+nimi = "Palveluarkkitehtuurit"
+alue = "hajautetut"
+kuvaus = "Järjestelmän jakaminen palveluiksi ja niiden yhdistäminen: monoliitit, mikropalvelut, integraatiomallit ja perintöjärjestelmien uudistaminen."
+edellyttaa = ["taustapalvelut", "kontit-ja-pilvi"]
+aiheet = [
+  "monoliitti, modulaarinen monoliitti ja mikropalvelut",
+  "hajautettu monoliitti ja muut antimallit",
+  "rajatut kontekstit ja palvelujen jako (DDD)",
+  "synkroninen viestintä: REST, gRPC, RPC ja CORBA:n opetukset",
+  "viestinvälitys: viestiväylä, julkaise–tilaa ja tapahtumat",
+  "integraatiomallit (enterprise integration patterns)",
+  "hajautetut transaktiot: saga ja outbox",
+  "perintöjärjestelmien uudistaminen: strangler fig ja korruption estokerros",
+  "API-yhdyskäytävä, palveluverkko ja sopimustestaus",
+]
+laajuus = 5
+testaus = "Spring Boot -palvelut, upotettu viestinvälitin ja sopimustestit"
+roadmap = ["backend", "system-design"]
+amk = "Ohjelmistoarkkitehtuurit"
+
+[[taito]]
+id = "asic-toteutus"
+nimi = "ASIC-toteutus"
+alue = "laitteisto"
+kuvaus = "RTL:stä piiriksi: synteesi standardisoluihin, ajoitusanalyysi, testattavuus, sijoittelu ja reititys, sign-off ja kotelointi."
+edellyttaa = ["rtl-suunnittelu"]
+aiheet = [
+  "logiikkasynteesi standardisoluihin ja netlista",
+  "staattinen ajoitusanalyysi: setup, hold, monisykliset ja väärät polut (SDC)",
+  "testattavuus: scan-ketjut ja BIST",
+  "pohjapiirros, sijoittelu, kellopuu ja reititys",
+  "tehonkulutus: kellon portitus ja tehoalueet (UPF)",
+  "sign-off: DRC, LVS ja tapeout",
+  "kotelointi ja bondaus",
+  "asynkroniset piirit lyhyesti",
+]
+laajuus = 5
+testaus = "Yosys, OpenSTA ja OpenROAD (SkyWater 130 nm PDK)"
+roadmap = []
+amk = "Mikropiirisuunnittelu"
+
+[[taito]]
+id = "soc-integraatio"
+nimi = "SoC-integraatio"
+alue = "laitteisto"
+kuvaus = "Järjestelmäpiirin kokoaminen: väylät, kytkentäverkot, valmiit IP-lohkot, keskeytykset ja kello-, nollaus- ja tehoalueet."
+edellyttaa = ["rtl-suunnittelu", "tietokonearkkitehtuuri"]
+aiheet = [
+  "SoC:n rakenne: suorittimet, väylät ja oheislaitteet",
+  "AMBA-väylät: AXI, AHB ja APB",
+  "kytkentäverkot ja muistikartta",
+  "valmiit IP-lohkot (hard ja soft IP) ja IP-XACT",
+  "rekisterikuvaukset ja niistä generoitu koodi",
+  "keskeytykset ja DMA",
+  "kello-, nollaus- ja tehoalueet",
+  "RISC-V-SoC:n kokoaminen ja ohjelmiston ajaminen simulaatiossa",
+]
+laajuus = 5
+testaus = "Verilator ja RISC-V-ohjelmisto simuloidussa SoC:ssa"
+roadmap = []
+amk = "SoC-suunnittelu"
+
+[[taito]]
+id = "peliohjelmointi"
+nimi = "Peliohjelmointi"
+alue = "grafiikka"
+kuvaus = "Pelien rakentaminen: pelisilmukka, 2D- ja 3D-grafiikka, pelin tila ja logiikka, fysiikka, resurssit ja pelimoottorien periaatteet."
+edellyttaa = ["moderni-cpp", "lineaarialgebra"]
+aiheet = [
+  "pelisilmukka ja kiinteä aika-askel",
+  "2D-grafiikka: spritet, animaatiot ja kamerat",
+  "3D-pelin rakenne ja renderöinnin integrointi",
+  "pelin tila, tilakoneet ja entiteettikomponenttijärjestelmä (ECS)",
+  "törmäykset ja fysiikka",
+  "syöte, ääni ja käyttöliittymä",
+  "assetit ja resurssien hallinta",
+  "pelimoottorit (Godot, Unity, Unreal) ja niiden periaatteet",
+]
+laajuus = 5
+testaus = "C++ ja SDL3 ilman näyttöä, deterministiset simulaatiotestit"
+roadmap = ["game-developer"]
+amk = "Peliohjelmointi"
+
+[[taito]]
+id = "moninpelit"
+nimi = "Reaaliaikaiset moninpelit"
+alue = "grafiikka"
+kuvaus = "Verkkopelien arkkitehtuuri: tilan synkronointi, viiveen piilottaminen, deterministinen simulaatio ja huijaamisen esto."
+edellyttaa = ["peliohjelmointi", "verkko-ohjelmointi"]
+aiheet = [
+  "asiakas–palvelin- ja vertaisarkkitehtuurit",
+  "tilan synkronointi ja tilannevedokset",
+  "asiakkaan ennustus ja palvelimen täsmäytys",
+  "viiveen kompensointi ja interpolointi",
+  "deterministinen lukitusaskel ja rollback",
+  "palvelimen auktoriteetti ja huijaamisen esto",
+  "pelipalvelinten skaalaus ja otteluiden muodostus",
+]
+laajuus = 3
+testaus = "C++-simulaatiot keinotekoisella viiveellä ja pakettihäviöllä"
+roadmap = ["server-side-game-developer"]
+amk = "Verkkopeliohjelmointi"
+
+[[taito]]
+id = "kryptografia"
+nimi = "Kryptografia"
+alue = "tietoturva"
+kuvaus = "Salausmenetelmien toiminta ja oikea käyttö: symmetrinen salaus, tiivisteet, julkisen avaimen menetelmät, allekirjoitukset ja protokollat."
+edellyttaa = ["tietoturvan-perusteet", "diskreetti-matematiikka", "python"]
+aiheet = [
+  "symmetrinen salaus: AES, toimintatilat ja AEAD",
+  "tiivisteet, MAC ja avaimen johtaminen (HKDF)",
+  "salasanojen tiivisteet: Argon2, scrypt ja bcrypt",
+  "julkisen avaimen menetelmät: RSA, elliptiset käyrät ja Diffie–Hellman",
+  "digitaaliset allekirjoitukset ja varmenteet (X.509, PKI)",
+  "TLS 1.3 protokollana",
+  "satunnaisuus, sivukanavat ja yleiset virheet",
+  "kvanttiturvallinen kryptografia",
+]
+laajuus = 5
+testaus = "Python (cryptography, hashlib) ja OpenSSL-komentorivi"
+roadmap = ["cyber-security"]
+amk = "Kryptografia"
+
+[[taito]]
+id = "turvallinen-kehitys"
+nimi = "Tietoturva kehitystyössä"
+alue = "tietoturva"
+kuvaus = "Tietoturva osana ohjelmistokehityksen arkea: salaisuuksien hallinta, kehitysympäristöt, toimitusketju ja automaattiset tarkistukset."
+edellyttaa = ["tietoturvan-perusteet", "versionhallinta"]
+aiheet = [
+  "turvallinen kehitysprosessi (SSDLC) ja uhkamallinnus tiimissä",
+  "salaisuuksien hallinta: ympäristömuuttujat, salaisuusvarastot ja vuotojen esto",
+  "paikalliset ja jaetut kehitysympäristöt: kehityskontit ja pääsynhallinta",
+  "toimitusketjun turvallisuus: riippuvuudet, SBOM ja allekirjoitukset",
+  "staattinen ja dynaaminen analyysi CI:ssä",
+  "koodikatselmointi ja turvallinen julkaisuprosessi",
+]
+laajuus = 3
+testaus = "Git-koukut, salaisuusskannaus ja CI-putken tarkistukset"
+roadmap = ["devops", "cyber-security"]
+amk = "Ohjelmistoturvallisuus"
+
+[[taito]]
+id = "web-tietoturva"
+nimi = "Web-sovellusten tietoturva"
+alue = "tietoturva"
+kuvaus = "Web-sovellusten hyökkäykset ja niiden torjunta, käyttäjien tunnistus ja valtuutus sekä kirjautumispalvelut."
+edellyttaa = ["tietoturvan-perusteet", "web-sovellukset"]
+aiheet = [
+  "OWASP Top 10 ja hyökkäysten luokat",
+  "injektiot, XSS ja CSRF torjuntoineen",
+  "istunnot, evästeet ja tokenit",
+  "salasanat, monivaiheinen tunnistus ja pääsyavaimet (WebAuthn)",
+  "OAuth 2.0, OpenID Connect ja kirjautumispalvelut",
+  "JWT oikein ja väärin",
+  "valtuutus: roolit, attribuutit ja objektitason tarkistukset",
+  "tietoturvatestaus",
+]
+laajuus = 5
+testaus = "Playwright ja Node-palvelimet; haavoittuva ja korjattu versio rinnakkain"
+roadmap = ["cyber-security", "backend"]
+amk = "Web-sovellusten tietoturva"
+
+[[taito]]
+id = "sulautettujen-tietoturva"
+nimi = "Sulautettujen järjestelmien tietoturva"
+alue = "tietoturva"
+kuvaus = "Laitteiden suojaaminen: luottamusketju, avainten säilytys, allekirjoitetut päivitykset, fyysiset hyökkäykset ja sääntely."
+edellyttaa = ["mikrokontrollerit", "kryptografia"]
+aiheet = [
+  "laitteen uhkamalli",
+  "turvallinen käynnistys ja luottamusketju",
+  "avainten säilytys: TPM, turvaelementti ja TrustZone",
+  "allekirjoitetut laiteohjelmistopäivitykset (OTA)",
+  "debug-porttien lukitus",
+  "sivukanava- ja vikahyökkäykset",
+  "standardit ja sääntely: IEC 62443, EN 18031 ja CRA",
+]
+laajuus = 3
+testaus = "C ja QEMU, allekirjoitusten tarkistus"
+roadmap = ["cyber-security"]
+amk = "Sulautettujen järjestelmien tietoturva"
+
+[[taito]]
+id = "palvelutietoturva"
+nimi = "Palveluarkkitehtuurin tietoturva"
+alue = "tietoturva"
+kuvaus = "Hajautetun palvelukokonaisuuden suojaaminen: nollaluottamus, palvelujen identiteetit, salaisuudet tuotannossa ja pääsynhallinta pilvessä."
+edellyttaa = ["palveluarkkitehtuurit", "kryptografia"]
+aiheet = [
+  "nollaluottamus (zero trust)",
+  "palvelujen välinen todennus: mTLS ja työkuormien identiteetit",
+  "salaisuuksien hallinta tuotannossa (Vault, KMS)",
+  "pääsynhallinta pilvessä ja vähimmät oikeudet (IAM)",
+  "verkon segmentointi ja API-yhdyskäytävän suojaukset",
+  "auditointilokit ja havainnointi",
+  "tietoturvapoikkeamien käsittely",
+]
+laajuus = 3
+testaus = "Spring Boot ja mTLS testivarmenteilla"
+roadmap = ["cyber-security", "system-design"]
+amk = "Pilvipalveluiden tietoturva"
+
 # ---------------------------------------------------------------------
 # Roolit
 # ---------------------------------------------------------------------
@@ -1550,14 +1864,14 @@ id = "laitteistoarkkitehti"
 nimi = "Laitteistoarkkitehti"
 kuvaus = "Työskentelee rautatason arkkitehtuurin parissa: mallintaa järjestelmän korkean tason malleilla (HLM), toteuttaa ja verifioi RTL:n ja automatisoi työkaluketjut skripteillä."
 tavoitteet = ["arkkitehtuurin-tutkiminen", "verifiointi", "fpga-toteutus", "eda-skriptaus"]
-valinnaiset = ["hls", "dsp-laitteisto", "kaantajatekniikka", "python-c-integraatio", "vhdl"]
+valinnaiset = ["hls", "dsp-laitteisto", "kaantajatekniikka", "python-c-integraatio", "vhdl", "soc-integraatio"]
 
 [[rooli]]
 id = "sulautettujen-kehittaja"
 nimi = "Sulautettujen ohjelmistojen kehittäjä"
 kuvaus = "Kehittää ohjelmistoja mikrokontrollereille ja sulautetuille Linux-laitteille: bare-metal-koodia, RTOS-sovelluksia ja laiteajureita."
 tavoitteet = ["rtos", "linux-ajurit"]
-valinnaiset = ["dsp", "laiteohjelmiston-takaisinmallinnus", "c-asm-integraatio", "rust"]
+valinnaiset = ["dsp", "laiteohjelmiston-takaisinmallinnus", "c-asm-integraatio", "rust", "sulautettujen-tietoturva"]
 
 [[rooli]]
 id = "signaalinkasittelija"
@@ -1571,14 +1885,14 @@ id = "grafiikkaohjelmoija"
 nimi = "Grafiikkaohjelmoija"
 kuvaus = "Toteuttaa renderöintiä ja GPU-laskentaa peleihin, visualisointiin ja simulaatioihin."
 tavoitteet = ["sateenseuranta", "gpu-laskenta"]
-valinnaiset = ["cpp-suorituskyky"]
+valinnaiset = ["cpp-suorituskyky", "peliohjelmointi"]
 
 [[rooli]]
 id = "hajautettujen-kehittaja"
 nimi = "Hajautettujen järjestelmien kehittäjä"
 kuvaus = "Rakentaa verkossa toimivia, vikasietoisia ja skaalautuvia palveluja ja infrastruktuuria."
 tavoitteet = ["jarjestelmasuunnittelu", "kontit-ja-pilvi"]
-valinnaiset = ["suorituskyky", "tietoturvan-perusteet", "go"]
+valinnaiset = ["suorituskyky", "tietoturvan-perusteet", "go", "palveluarkkitehtuurit", "virtualisointi"]
 
 [[rooli]]
 id = "takaisinmallintaja"
@@ -1599,14 +1913,14 @@ id = "web-kehittaja"
 nimi = "Web-kehittäjä"
 kuvaus = "Rakentaa saavutettavia ja ylläpidettäviä selainsovelluksia."
 tavoitteet = ["web-sovellukset"]
-valinnaiset = ["sql", "taustapalvelut", "kontit-ja-pilvi"]
+valinnaiset = ["sql", "taustapalvelut", "kontit-ja-pilvi", "web-tietoturva"]
 
 [[rooli]]
 id = "taustajarjestelmakehittaja"
 nimi = "Taustajärjestelmäkehittäjä"
 kuvaus = "Toteuttaa palvelinsovelluksia, rajapintoja ja tietokantaratkaisuja."
 tavoitteet = ["taustapalvelut", "kontit-ja-pilvi"]
-valinnaiset = ["kotlin", "go", "jarjestelmasuunnittelu"]
+valinnaiset = ["kotlin", "go", "jarjestelmasuunnittelu", "palveluarkkitehtuurit", "web-tietoturva"]
 
 [[rooli]]
 id = "mobiilikehittaja"
@@ -1614,3 +1928,31 @@ nimi = "Mobiilikehittäjä (Android)"
 kuvaus = "Kehittää Android-sovelluksia Kotlinilla."
 tavoitteet = ["android-sovellukset"]
 valinnaiset = ["sql", "taustapalvelut"]
+
+[[rooli]]
+id = "piirisuunnittelija"
+nimi = "Digitaalisen piirisuunnittelun asiantuntija"
+kuvaus = "Vie digitaalisen suunnittelun RTL:stä valmiiksi piiriksi tai FPGA-toteutukseksi: integroi järjestelmäpiirin, verifioi sen ja hallitsee toteutusvuon."
+tavoitteet = ["asic-toteutus", "soc-integraatio", "verifiointi"]
+valinnaiset = ["fpga-toteutus", "vhdl", "eda-skriptaus"]
+
+[[rooli]]
+id = "infrastruktuuriasiantuntija"
+nimi = "Infrastruktuuri- ja ylläpitoasiantuntija"
+kuvaus = "Suunnittelee ja ylläpitää verkkoja, palvelimia ja alustoja, joilla palvelut toimivat luotettavasti ja turvallisesti."
+tavoitteet = ["palvelinymparistot"]
+valinnaiset = ["virtualisointi", "tietoliikennetekniikka", "turvallinen-kehitys"]
+
+[[rooli]]
+id = "peliohjelmoija"
+nimi = "Peliohjelmoija"
+kuvaus = "Toteuttaa pelien logiikkaa, grafiikkaa ja verkkopelaamista pelimoottoreilla ja ilman."
+tavoitteet = ["moninpelit"]
+valinnaiset = ["gpu-ohjelmointi", "cpp-suorituskyky", "sateenseuranta"]
+
+[[rooli]]
+id = "sovellusturvallisuus"
+nimi = "Sovellusturvallisuuden asiantuntija"
+kuvaus = "Huolehtii, että ohjelmistot suunnitellaan, rakennetaan ja ajetaan turvallisesti: kehitysprosessista web-sovelluksiin ja palveluarkkitehtuuriin."
+tavoitteet = ["web-tietoturva", "turvallinen-kehitys", "palvelutietoturva"]
+valinnaiset = ["haavoittuvuudet", "verkkoinfrastruktuuri"]

@@ -364,8 +364,10 @@
   // Runko on toisen asteen Bézier-käyrä. Jos suora runko kulkisi vieraan
   // nipun läpi, ohjauspistettä siirretään kohtisuoraan sivulle: kokeillaan
   // kasvavia taivutuksia vuorotellen kumpaankin suuntaan ja valitaan
-  // pienin, joka kiertää kaikki esteet. Ellei mikään kierrä kaikkia,
-  // valitaan se, jossa esteisiin jää vähiten päällekkäisyyttä.
+  // pienin, joka kiertää kaikki esteet. Jos symmetrinen taivutus ei riitä
+  // (este on lähellä toista päätä), ohjauspistettä siirretään myös rungon
+  // suunnassa, jolloin kaari painottuu toiseen päähän. Ellei mikään kierrä
+  // kaikkia, valitaan se, jossa esteisiin jää vähiten päällekkäisyyttä.
   function runko(p0, p1, esteet) {
     const keski = { x: (p0.x + p1.x) / 2, y: (p0.y + p1.y) / 2 };
     const dx = p1.x - p0.x;
@@ -373,17 +375,23 @@
     const pituus = Math.hypot(dx, dy) || 1;
     const nx = -dy / pituus;
     const ny = dx / pituus;
+    const tx = dx / pituus;
+    const ty = dy / pituus;
     let paras = keski;
     let parasPuute = Infinity;
     for (let askel = 0; askel <= 60; askel++) {
-      for (const puoli of askel ? [1, -1] : [0]) {
-        const siirto = puoli * askel * 40;
-        const c = { x: keski.x + nx * siirto, y: keski.y + ny * siirto };
-        const pahin = pahinEste(p0, c, p1, esteet);
-        if (!pahin) return c;
-        if (pahin.puute < parasPuute) {
-          parasPuute = pahin.puute;
-          paras = c;
+      for (const suunta of [0, 0.3, -0.3, 0.6, -0.6]) {
+        const kx = keski.x + tx * suunta * pituus;
+        const ky = keski.y + ty * suunta * pituus;
+        for (const puoli of askel ? [1, -1] : [0]) {
+          const siirto = puoli * askel * 40;
+          const c = { x: kx + nx * siirto, y: ky + ny * siirto };
+          const pahin = pahinEste(p0, c, p1, esteet);
+          if (!pahin) return c;
+          if (pahin.puute < parasPuute) {
+            parasPuute = pahin.puute;
+            paras = c;
+          }
         }
       }
     }
