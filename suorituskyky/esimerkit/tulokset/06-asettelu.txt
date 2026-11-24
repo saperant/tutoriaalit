@@ -1,0 +1,3 @@
+kaksi saietta, kumpikin kasvattaa omaa laskuriaan
+  samalla rivilla              51.912 ms +-  4.985
+  eri riveilla                 61.822 ms +- 18.618  1.2 x hitaampi

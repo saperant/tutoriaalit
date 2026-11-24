@@ -1,0 +1,6 @@
+== Callgrind: lokit, puskuroitu, 8000 rivia, oma ==
+     182,716,890   56.0 %  __strcmp_avx2
+      64,061,979   19.6 %  etsi_lineaarisesti
+      26,849,303    8.2 %  __vfscanf_internal
+       6,853,368    2.1 %  __printf_buffer
+       4,632,840    1.4 %  __printf_buffer_write

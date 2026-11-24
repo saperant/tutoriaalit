@@ -1,0 +1,6 @@
+nukkuminen 50 ms
+  seinakello >= 50 ms: kylla
+  prosessiaika < 10 ms: kylla
+laskenta 30 ms
+  prosessiaika >= 30 ms: kylla
+  seinakello >= prosessiaika: kylla

@@ -1,0 +1,11 @@
+== gprof: lokit, hidas, 20000 rivia ==
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 50.00      0.01     0.01    20000     0.00     0.00  etsi_lineaarisesti
+ 50.00      0.02     0.01                             _init
+  0.00      0.02     0.00    20000     0.00     0.00  jasenna_sscanf
+  0.00      0.02     0.00        1     0.00    10.00  laske
+  0.00      0.02     0.00        1     0.00     0.00  laske_hidas

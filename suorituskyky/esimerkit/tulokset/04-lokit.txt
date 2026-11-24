@@ -1,0 +1,4 @@
+lokianalyysi, 20000 rivia, 3000 asiakasta
+  hidas                       309.264 ms +- 48.189
+  puskuroitu                   97.789 ms +-  2.822  3.2 x nopeampi
+  nopea                         2.767 ms +-  0.101  111.8 x nopeampi

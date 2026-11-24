@@ -1,0 +1,3 @@
+== LTO: kutsuja funktioon etaisyys2 konekoodissa ==
+  lto-ei     4
+  lto-kylla  0

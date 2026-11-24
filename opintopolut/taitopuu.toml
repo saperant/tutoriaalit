@@ -594,6 +594,7 @@ laajuus = 3
 testaus = "C ja C++, toiminnallisuus testataan, mittaukset raportoidaan suuntaa-antavina"
 roadmap = ["cpp", "computer-science"]
 amk = "Ohjelmien optimointi"
+tutoriaali = "suorituskyky"
 
 # ---------------------------------------------------------------------
 # Laitteistosuunnittelu

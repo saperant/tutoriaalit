@@ -1,0 +1,4 @@
+== Cachegrind: lapikaynti, n = 1024 ==
+  funktio                               Ir          D1mr          DLmr
+  summa_riveittain               2,629,641       131,074       131,074
+  summa_sarakkeittain            6,300,678     1,048,577     1,048,577

@@ -1,0 +1,5 @@
+== Cachegrind: matriisitulo, n = 256 ==
+  funktio                               Ir          D1mr          DLmr
+  tulo_ijk                     118,163,726    16,859,395    16,852,995
+  tulo_ikj                     134,744,604     2,113,796     2,113,796
+  tulo_lohkottu                137,155,078     2,434,054        82,057

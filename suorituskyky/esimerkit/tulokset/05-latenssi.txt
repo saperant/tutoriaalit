@@ -1,0 +1,10 @@
+osoitinjahti, satunnainen sykli
+  tyojoukko   ns/lataus
+      16 KiB       1.83
+      64 KiB       9.67
+     256 KiB      10.13
+    1024 KiB      19.50
+    4096 KiB      47.18
+   16384 KiB     178.06
+   65536 KiB     203.00
+  262144 KiB     154.29

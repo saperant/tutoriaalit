@@ -49,7 +49,7 @@ jobs:
             libc6-dev-riscv64-cross qemu-user nextpnr-ice40 fpga-icestorm \
             cmake ninja-build gcovr clang-tidy-20 cppcheck gdb pkgconf python3-dev \
             rustc-1.80 cargo-1.80 rust-1.80-clippy golang-1.23-go \
-            openjdk-21-jdk-headless z3 libsystemc-dev gdb-multiarch strace
+            openjdk-21-jdk-headless z3 libsystemc-dev gdb-multiarch strace valgrind
           pip install --break-system-packages ruff mypy pytest \
             numpy scipy==1.18.1 scipy-stubs==1.18.1.1 matplotlib cryptography==50.0.1 types-PyYAML hadolint-bin==2.15.1 \
             kubernetes-validate==1.37.0 yamllint==1.38.0 check-jsonschema==0.39.0 \

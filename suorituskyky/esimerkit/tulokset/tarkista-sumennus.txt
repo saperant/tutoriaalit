@@ -1,0 +1,6 @@
+== Cachegrind: sumennus, 256 x 256 ==
+  funktio                               Ir            Dr          D1mr
+  sumenna_v1                   102,341,653     6,554,633         1,026
+  sumenna_v2                    16,309,043     1,180,427         3,076
+  sumenna_v3                     2,871,088       267,532        66,626
+  sumenna_v4                     2,010,810       400,662         3,076

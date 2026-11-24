@@ -1,0 +1,4 @@
+100000 rivin kirjoitus tiedostoon
+  write / rivi                 44.233 ms +-  3.627
+  stdio, oletuspuskuri          7.244 ms +-  0.360  6.1 x nopeampi
+  stdio, 64 KiB puskuri         6.279 ms +-  0.169  7.0 x nopeampi

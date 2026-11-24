@@ -1,0 +1,8 @@
+esimerkkikone
+huippu 100.0 GFLOP/s, kaista 20.0 GB/s, harjanne 5.00 F/B
+ydin                              F/B    GFLOP/s raja
+kopio a[i] = b[i]               0.000       0.00 muisti
+triad a[i] = b[i] + s*c[i]      0.062       1.25 muisti
+pistetulo s += a[i]*b[i]        0.125       2.50 muisti
+polynomi aste 16, y = p(x)      1.333      26.67 muisti
+matriisitulo n = 1024          85.333     100.00 laskenta

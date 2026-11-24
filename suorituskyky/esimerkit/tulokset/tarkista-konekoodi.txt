@@ -1,0 +1,5 @@
+== summa_float konekoodina: skalaarikaskyja (addss) ==
+addss  (%rax),%xmm0
+addss  -0xc(%rax),%xmm0
+addss  -0x8(%rax),%xmm0
+addss  -0x4(%rax),%xmm0

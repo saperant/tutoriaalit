@@ -1,0 +1,4 @@
+== Cachegrind: hiukkaset, 100000 kpl ==
+  funktio                               Ir            Dr          D1mr
+  siirra_aos                     5,600,064     1,600,016     1,000,016
+  siirra_soa                     5,600,056     1,600,016       200,032

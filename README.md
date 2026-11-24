@@ -106,6 +106,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Mikrokontrollerit ja bare-metal-ohjelmointi | [`mikrokontrollerit/`](mikrokontrollerit/) | [mikrokontrollerit.pdf](https://saperant.github.io/tutoriaalit/materiaalit/mikrokontrollerit.pdf) |
 | Käyttöjärjestelmät | [`kayttojarjestelmat/`](kayttojarjestelmat/) | [kayttojarjestelmat.pdf](https://saperant.github.io/tutoriaalit/materiaalit/kayttojarjestelmat.pdf) |
 | Säteenseuranta ja fysikaalinen valaistus | [`sateenseuranta/`](sateenseuranta/) | [sateenseuranta.pdf](https://saperant.github.io/tutoriaalit/materiaalit/sateenseuranta.pdf) |
+| Suorituskyvyn analyysi ja optimointi | [`suorituskyky/`](suorituskyky/) | [suorituskyky.pdf](https://saperant.github.io/tutoriaalit/materiaalit/suorituskyky.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

@@ -1,0 +1,8 @@
+== GCC:n vektorointiraportti, -O3 ==
+08-vektorointi.c:14:26: optimized: loop vectorized using 16 byte vectors
+08-vektorointi.c:14:26: optimized:  loop versioned for vectorization because of possible aliasing
+08-vektorointi.c:14:26: optimized: loop vectorized using 8 byte vectors
+08-vektorointi.c:24:26: optimized: loop vectorized using 16 byte vectors
+08-vektorointi.c:24:26: optimized: loop vectorized using 8 byte vectors
+08-vektorointi.c:35:26: optimized: loop vectorized using 16 byte vectors
+08-vektorointi.c:47:26: optimized: loop vectorized using 16 byte vectors

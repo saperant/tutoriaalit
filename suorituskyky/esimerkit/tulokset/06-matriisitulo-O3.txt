@@ -1,0 +1,7 @@
+matriisitulo n = 512 (2n^3 = 2.7e+08 laskua)
+  ijk                         295.047 ms +-  2.638
+                                   0.91 GFLOP/s
+  ikj                          31.777 ms +-  0.603  9.3 x nopeampi
+                                   8.45 GFLOP/s
+  lohkottu ikj                 29.093 ms +-  0.051  10.1 x nopeampi
+                                   9.23 GFLOP/s

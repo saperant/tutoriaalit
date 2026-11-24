@@ -1,0 +1,13 @@
+== Callgrind: lokit, hidas, 8000 rivia, kumulatiivinen ==
+     526,952,894  100.0 %  __libc_start_main@@GLIBC_2.34
+     526,950,962  100.0 %  main
+     501,571,943   95.1 %  laske_hidas
+     501,571,940   95.1 %  laske
+     260,548,993   49.4 %  etsi_lineaarisesti
+     238,052,857   45.1 %  jasenna_sscanf
+     237,892,857   45.1 %  __isoc23_sscanf
+     202,371,654   38.4 %  _IO_str_init_static_internal
+     201,803,696   38.3 %  __strlen_avx2
+     182,716,870   34.7 %  __strcmp_avx2
+      34,721,203    6.6 %  __vfscanf_internal
+      25,372,171    4.8 %  tuota_loki

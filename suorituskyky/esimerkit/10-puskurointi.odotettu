@@ -1,0 +1,4 @@
+100000 rivia
+  write / rivi            100000 write-kutsua, 1088890 tavua
+  stdio, oletuspuskuri       133 write-kutsua, 1088890 tavua
+  stdio, 64 KiB puskuri       17 write-kutsua, 1088890 tavua

@@ -1,0 +1,6 @@
+saxpy, 4096 alkiota (aika = 1000 kutsua)
+  ilman restrict                2.761 ms +-  0.190
+  restrict                      2.644 ms +-  0.163  1.0 x nopeampi
+float-summa, 4096 alkiota (aika = 1000 kutsua)
+  yksi summa                    3.178 ms +-  0.334
+  kahdeksan osasummaa           0.359 ms +-  0.012  8.9 x nopeampi

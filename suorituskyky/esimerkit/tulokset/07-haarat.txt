@@ -1,0 +1,5 @@
+ehdollinen summa, 16777216 tavua
+  haara, sekaisin              17.079 ms +-  0.050
+  haara, lajiteltu             16.915 ms +-  0.129  1.0 x nopeampi
+  haaraton, sekaisin            6.188 ms +-  0.082  2.8 x nopeampi
+  haaraton, lajiteltu           6.171 ms +-  0.066  2.8 x nopeampi

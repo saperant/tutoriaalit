@@ -1,0 +1,10 @@
+matriisin summa, double, n x n
+ n = 256 (512 KiB)
+  riveittain                    0.044 ms +-  0.000
+  sarakkeittain                 0.074 ms +-  0.000  1.7 x hitaampi
+ n = 1024 (8192 KiB)
+  riveittain                    0.807 ms +-  0.042
+  sarakkeittain                 4.963 ms +-  0.327  6.1 x hitaampi
+ n = 4096 (131072 KiB)
+  riveittain                   24.079 ms +-  1.686
+  sarakkeittain               260.743 ms +- 30.073  10.8 x hitaampi

@@ -1,0 +1,3 @@
+binaarihakupuu, 300000 satunnaista avainta
+  malloc / solmu              200.750 ms +-  6.818
+  areena                       94.853 ms +- 11.611  2.1 x nopeampi

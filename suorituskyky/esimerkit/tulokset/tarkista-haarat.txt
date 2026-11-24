@@ -1,0 +1,4 @@
+== Cachegrind: haarautumisen ennustus, 1000000 tavua ==
+  funktio                               Ir            Bc           Bcm
+  sekaisin                       6,499,464     2,000,001       500,536
+  lajiteltu                      6,499,464     2,000,001            18

@@ -1,0 +1,2 @@
+lahin piste: 4000 hakua 4000 pisteesta: 60.15 ms
+lahin piste: 4000 hakua 4000 pisteesta: 28.38 ms
