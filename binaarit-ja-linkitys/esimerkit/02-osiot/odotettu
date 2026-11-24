@@ -1,0 +1,21 @@
+päiviä vuodessa: 365
+== symbolit ja osiot (main.o)
+kutsuja .bss
+kuukausien_paivat .rodata
+laskuri .data
+main .text.startup
+paivia_vuodessa .text
+puskuri .bss
+valimuisti .data
+== osiot (main.o)
+.text PROGBITS
+.data PROGBITS
+.bss NOBITS
+.rodata.str1.1 PROGBITS
+.text.startup PROGBITS
+.rodata PROGBITS
+== segmentit (osiot)
+LOAD R:
+LOAD RE: .text
+LOAD R: .rodata
+LOAD RW: .data .bss

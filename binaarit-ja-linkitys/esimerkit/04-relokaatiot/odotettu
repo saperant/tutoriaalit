@@ -1,0 +1,24 @@
+== tilaa ennen linkitystä (objdump -dr main.o)
+<tilaa>:
+    endbr64
+    sub    $0x8,%rsp
+    mov    $0x2,%edi
+    call   <tilaa+0x12>
+            R_X86_64_PLT32  lisaa-0x4
+    add    0x0(%rip),%eax # <tilaa+0x18>
+            R_X86_64_PC32   saldo-0x4
+    add    $0x8,%rsp
+    ret
+== relokaatiot (readelf -r main.o)
+R_X86_64_PLT32 lisaa
+R_X86_64_PC32 saldo
+== tilaa linkityksen jälkeen
+<tilaa>:
+    endbr64
+    sub    $0x8,%rsp
+    mov    $0x2,%edi
+    call   <lisaa>
+    add    SIIRTYMA(%rip),%eax # <saldo>
+    add    $0x8,%rsp
+    ret
+tilauksen jälkeen: 84

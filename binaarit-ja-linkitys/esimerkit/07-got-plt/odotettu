@@ -1,0 +1,33 @@
+== relokaatiot -fPIC-objektissa
+R_X86_64_REX_GOTPCRELX kutsuja
+R_X86_64_PLT32 pyorista
+== mittaa kirjastossa
+<mittaa>:
+    endbr64
+    mov    SIIRTYMA(%rip),%rax # <GOT-paikka>
+    lea    (%rdi,%rdi,2),%edi
+    addl   $0x1,(%rax)
+    jmp    <pyorista@plt>
+<mittaa>:
+    endbr64
+    lea    0x5(%rdi,%rdi,2),%edx
+    addl   $0x1,SIIRTYMA(%rip) # <kutsuja>
+    movslq %edx,%rax
+    sar    $0x1f,%edx
+    imul   $0x66666667,%rax,%rax
+    sar    $0x22,%rax
+    sub    %edx,%eax
+    lea    (%rax,%rax,4),%eax
+    add    %eax,%eax
+    ret
+== oletus: sidonta käynnistyksessä
+FLAGS) BIND_NOW
+FLAGS_1) Flags: NOW PIE
+symbol `mittaa'
+ennen ensimmäistä kutsua
+ensimmäisen kutsun jälkeen
+== laiska sidonta (-z lazy)
+FLAGS_1) Flags: PIE
+ennen ensimmäistä kutsua
+symbol `mittaa'
+ensimmäisen kutsun jälkeen

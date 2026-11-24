@@ -95,6 +95,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Käännösjärjestelmät, testaus ja CI | [`rakennus-ja-testaus/`](rakennus-ja-testaus/) | [rakennus-ja-testaus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/rakennus-ja-testaus.pdf) |
 | Python ja C/C++ yhteen | [`python-c-integraatio/`](python-c-integraatio/) | [python-c-integraatio.pdf](https://saperant.github.io/tutoriaalit/materiaalit/python-c-integraatio.pdf) |
 | C ja assembly yhteen | [`c-asm-integraatio/`](c-asm-integraatio/) | [c-asm-integraatio.pdf](https://saperant.github.io/tutoriaalit/materiaalit/c-asm-integraatio.pdf) |
+| Objektitiedostot, linkitys ja ABI | [`binaarit-ja-linkitys/`](binaarit-ja-linkitys/) | [binaarit-ja-linkitys.pdf](https://saperant.github.io/tutoriaalit/materiaalit/binaarit-ja-linkitys.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

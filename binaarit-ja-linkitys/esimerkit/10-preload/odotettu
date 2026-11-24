@@ -1,0 +1,5 @@
+asetus tiedostosta yleinen.conf: nopeus=120
+asetus tiedostosta yleinen.conf: nopeus=120
+[mittari] fopen("oma.conf", "r") -> virhe
+[mittari] fopen("yleinen.conf", "r") -> ok
+[mittari] avauksia 2, epäonnistui 1

@@ -1,0 +1,9 @@
+# @alku kartta
+TUNNUS_1 {
+    global: vertaa_tunnus;
+    local: *;
+};
+TUNNUS_2 {
+    global: vertaa_tunnus;
+} TUNNUS_1;
+# @loppu kartta

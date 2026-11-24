@@ -1,0 +1,17 @@
+== käännös virheenjäljitystiedon kanssa
+.debug_abbrev .debug_aranges .debug_info .debug_line .debug_line_str
+.debug_loclists .debug_rnglists .debug_str
+funktio main rivillä 14
+funktio viimeinen rivillä 9
+== kaatuminen ja osoitteesta riviksi
+viimeinen: 15
+paluuarvo 139 (SIGSEGV = 11, 128 + 11)
+viimeinen
+jono.c:11
+== erillinen debug-tiedosto
+jono           debug-osioita 8
+jono.riisuttu  debug-osioita 0
+jono.debug     debug-osioita 8
+jono.debug
+viimeinen
+jono.c:11

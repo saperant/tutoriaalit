@@ -532,6 +532,7 @@ laajuus = 3
 testaus = "GNU binutils, readelf- ja objdump-tulosteet"
 roadmap = ["c", "cpp"]
 amk = "Tietokonetekniikka"
+tutoriaali = "binaarit-ja-linkitys"
 
 [[taito]]
 id = "kayttojarjestelmat"

@@ -1,0 +1,14 @@
+== riippuvuudet (readelf -d)
+NEEDED libyksikot.so
+NEEDED libc.so.6
+== ajo ilman hakupolkua
+libyksikot.so: cannot open shared object file
+libyksikot.so => not found
+== LD_LIBRARY_PATH
+yksikot 1.0: 37 C = 98.6 F
+== RUNPATH ohjelman sijainnin mukaan
+NEEDED libyksikot.so
+NEEDED libc.so.6
+RUNPATH $ORIGIN/../lib
+yksikot 1.0: 37 C = 98.6 F
+yksikot 1.0: 37 C = 98.6 F

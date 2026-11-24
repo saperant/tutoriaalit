@@ -1,0 +1,10 @@
+== kaksi kirjastoa, sama julkinen nimi
+kuva: tarkistan logo.png
+kuva: tarkistan piip.wav
+== sama ohjelma, kirjastot toisessa järjestyksessä
+ääni: tarkistan logo.png
+ääni: tarkistan piip.wav
+== korjattu: sisäinen funktio piilotettu
+kuva: tarkistan logo.png
+ääni: tarkistan piip.wav
+T lataa_aani

@@ -1,0 +1,4 @@
+TUNNUS_1 {
+    global: vertaa_tunnus;
+    local: *;
+};

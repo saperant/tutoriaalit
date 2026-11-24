@@ -59,7 +59,7 @@ flowchart LR
     digitaalitekniikka["✓ Digitaalitekniikka"]
     assembly["✓ Assembly"]
     tietokonearkkitehtuuri["Tietokonearkkitehtuuri"]
-    binaarit_ja_linkitys["Objektitiedostot, linkitys ja ABI"]
+    binaarit_ja_linkitys["✓ Objektitiedostot, linkitys ja ABI"]
     kayttojarjestelmat["Käyttöjärjestelmät"]
     rinnakkaisohjelmointi["Rinnakkaisohjelmointi"]
     suorituskyky["Suorituskyvyn analyysi ja optimointi"]
@@ -332,7 +332,7 @@ flowchart LR
 | Digitaalitekniikka | 5 | Diskreetti matematiikka | [valmis](../digitaalitekniikka/) |
 | Assembly | 5 | C-kieli, Digitaalitekniikka | [valmis](../assembly/) |
 | Miten tietokone laskee | 3 | C-kieli | [valmis](../tietokonearitmetiikka/) |
-| Objektitiedostot, linkitys ja ABI | 3 | Assembly | suunniteltu |
+| Objektitiedostot, linkitys ja ABI | 3 | Assembly | [valmis](../binaarit-ja-linkitys/) |
 | Tietokonearkkitehtuuri | 5 | Assembly | suunniteltu |
 | Käyttöjärjestelmät | 5 | Tietokonearkkitehtuuri | suunniteltu |
 | Suorituskyvyn analyysi ja optimointi | 3 | Algoritmit, Tietokonearkkitehtuuri | suunniteltu |

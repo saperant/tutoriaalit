@@ -1,0 +1,10 @@
+SONAME) Library soname: [libasetukset.so.1]
+NEEDED) Shared library: [libasetukset.so.1]
+kirjasto 1.0: nopeus 120 mm/s, tarkkuus 5 um
+== yhteensopiva päivitys 1.1
+kirjasto 1.1: nopeus 120 mm/s, tarkkuus 5 um
+== virhe: ABI muuttui, soname ei
+kirjasto 2.0: nopeus 5 mm/s, tarkkuus 120 um
+== oikein: uusi soname
+kirjasto 1.1: nopeus 120 mm/s, tarkkuus 5 um
+kirjasto 2.0: nopeus 120 mm/s, tarkkuus 5 um

@@ -1,0 +1,13 @@
+== koristellut nimet
+_ZN6suodin9keskiarvoEPKdm
+_ZN6suodin9keskiarvoEii
+suodin_keskiarvo
+suodin::keskiarvo(double const*, unsigned long)
+suodin::keskiarvo(int, int)
+suodin_keskiarvo
+suodin::keskiarvo(int, int)
+== linkitys C-ohjelmaan
+keskiarvo 21.10
+== extern "C" unohtui
+undefined reference to `suodin_keskiarvo'
+_Z16suodin_keskiarvoPKdi

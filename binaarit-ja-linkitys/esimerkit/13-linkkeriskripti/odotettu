@@ -1,0 +1,14 @@
+== lisäys oletusskriptiin
+taulun koko 8 tavua
+taulu sivun alussa: kyllä
+anturin 0 korjaus: -12
+A KALIBROINTI_VERSIO = 3
+r korjaus
+.rodata
+.kalibrointi
+== oma skripti, ei C-kirjastoa
+hei ilman C-kirjastoa
+Entry point address: 0x400000
+0000000000400000 T _start
+.text 0000000000400000
+.rodata 0000000000400020

@@ -1,0 +1,16 @@
+1 padding struct to align 'aikaleima'
+1 padding struct to align 'tarkiste'
+perustyypit: long 8, pointer 8, long double 16 (tasaus 16)
+viesti_huono: koko 24, tasaus 8
+  tyyppi     siirtymä  0, koko 1
+  aikaleima  siirtymä  8, koko 8
+  pituus     siirtymä 16, koko 2
+  tarkiste   siirtymä 20, koko 4
+viesti: koko 16, tasaus 8
+  aikaleima  siirtymä  0, koko 8
+  tarkiste   siirtymä  8, koko 4
+  pituus     siirtymä 12, koko 2
+  tyyppi     siirtymä 14, koko 1
+viesti_levy: koko 15, tasaus 1
+== tarkistus pysäyttää käännöksen
+static assertion failed: "viestin koko muuttui"

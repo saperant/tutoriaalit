@@ -1,0 +1,20 @@
+== alustusten järjestys
+1. kirjaston konstruktori
+2. ohjelman konstruktori (101)
+3. ohjelman konstruktori (200)
+4. main kutsuu kirjastoa
+5. main palaa
+6. atexit-käsittelijä
+7. ohjelman destruktori
+8. kirjaston destruktori
+== lataaja ja aloituskohta
+interpreter: /lib64/ld-linux-x86-64.so.2
+aloitus: _start
+.init
+.fini
+.init_array
+.fini_array
+== aputaulukko (auxv)
+AT_PAGESZ:            4096
+AT_ENTRY:             OSOITE
+AT_EXECFN:            (ohjelman polku)

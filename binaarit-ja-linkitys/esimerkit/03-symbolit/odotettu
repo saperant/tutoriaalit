@@ -1,0 +1,15 @@
+== loki.o
+U __snprintf_chk
+T loki
+W loki_kohde
+t muotoile
+b rivinro
+== oletuskohde
+oletus: [001] käynnistys
+oletus: [002] valmis
+== sovelluksen kohde
+sovellus: [001] käynnistys
+sovellus: [002] valmis
+== lopullisen ohjelman loki_kohde
+W loki_kohde
+T loki_kohde

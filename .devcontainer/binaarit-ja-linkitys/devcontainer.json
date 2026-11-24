@@ -4,7 +4,7 @@
     "dockerfile": "../Dockerfile",
     "context": "..",
     "args": {
-      "LISAPAKETIT": "binutils elfutils patchelf"
+      "LISAPAKETIT": "binutils shellcheck"
     }
   },
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/binaarit-ja-linkitys/esimerkit",

@@ -1,0 +1,15 @@
+keskiarvo.o
+hajonta.o
+mediaani.o
+== kirjasto ennen ohjelmaa
+undefined reference to `hajonta'
+undefined reference to `keskiarvo'
+== kirjasto ohjelman jälkeen
+keskiarvo 20.86, hajonta 0.84
+== arkistosta mukaan otetut jäsenet ja syy
+libtilasto.a(keskiarvo.o) main.o (keskiarvo)
+libtilasto.a(hajonta.o) main.o (hajonta)
+T hajonta
+T keskiarvo
+== kaksi määrittelyä samalle muuttujalle
+multiple definition of `koontinumero'

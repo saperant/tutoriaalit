@@ -1,0 +1,10 @@
+== versio 1 ja sitä vasten linkitetty ohjelma
+vertaa_tunnus@@TUNNUS_1
+vertaa_tunnus@TUNNUS_1
+Admin == admin: kyllä
+== versio 2: vanha ohjelma säilyttää vanhan toiminnan
+vertaa_tunnus@@TUNNUS_2
+vertaa_tunnus@TUNNUS_1
+Admin == admin: kyllä
+vertaa_tunnus@TUNNUS_2
+Admin == admin: ei

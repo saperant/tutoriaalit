@@ -1,0 +1,10 @@
+loppusumma: 34.83 euroa
+== laskin.o
+T loppusumma
+== main.o
+U __printf_chk
+U loppusumma
+T main
+== tiedostotyypit
+laskin.o: REL (Relocatable file)
+laskin: DYN (Position-Independent Executable file)
