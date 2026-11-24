@@ -1,0 +1,4 @@
+Operaattorin BGP:stä oppimat reitit:
+203.0.113.0/24 via 198.51.100.1
+Hylätyt (suodatetut) reitit:
+0.0.0.0/0

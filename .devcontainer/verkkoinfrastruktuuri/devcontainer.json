@@ -4,18 +4,19 @@
     "dockerfile": "../Dockerfile",
     "context": "..",
     "args": {
-      "LISAPAKETIT": "iproute2 iputils-ping tcpdump nftables dnsmasq frr wireguard-tools bridge-utils curl"
+      "LISAPAKETIT": "shellcheck iproute2 iputils-ping procps tcpdump nftables dnsmasq-base bird2 wireguard-tools wireguard-go busybox socat dnsutils openssh-client openssh-server snmp snmpd softflowd nfdump freeradius freeradius-utils",
+      "PIP_PAKETIT": "ruff mypy"
     }
   },
   "runArgs": [
-    "--cap-add=NET_ADMIN",
-    "--cap-add=NET_RAW"
+    "--privileged"
   ],
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/verkkoinfrastruktuuri/esimerkit",
   "customizations": {
     "vscode": {
       "extensions": [
-        "timonwong.shellcheck"
+        "timonwong.shellcheck",
+        "ms-python.python"
       ]
     }
   }

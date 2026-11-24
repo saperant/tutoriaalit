@@ -1,0 +1,5 @@
+tyoasema -> 203.0.113.2:443: ulkoinen näkee asiakkaan 203.0.113.1
+tyoasema -> 10.0.20.80:22: ssh näkee asiakkaan 10.0.10.20
+internet -> 203.0.113.1:80: www näkee asiakkaan 203.0.113.2
+internet -> 10.0.20.80:22: estetty
+palvelin -> 10.0.10.20:22: estetty

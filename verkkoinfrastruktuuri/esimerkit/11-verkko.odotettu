@@ -1,0 +1,29 @@
+solmu r1
+ns r1 sysctl -qw net.ipv4.ip_forward=1
+solmu k-toimisto
+ns k-toimisto ip link add br0 type bridge
+ns k-toimisto ip link set dev br0 up
+linkki r1 toimisto k-toimisto r1
+ns k-toimisto ip link set dev r1 master br0
+ns r1 ip addr add 10.30.10.1/24 dev toimisto
+solmu k-palvelimet
+ns k-palvelimet ip link add br0 type bridge
+ns k-palvelimet ip link set dev br0 up
+linkki r1 palvelimet k-palvelimet r1
+ns k-palvelimet ip link set dev r1 master br0
+ns r1 ip addr add 10.30.20.1/24 dev palvelimet
+solmu tyoasema
+linkki tyoasema eth0 k-toimisto tyoasema
+ns k-toimisto ip link set dev tyoasema master br0
+ns tyoasema ip addr add 10.30.10.10/24 dev eth0
+ns tyoasema ip route add default via 10.30.10.1
+solmu tulostin
+linkki tulostin eth0 k-toimisto tulostin
+ns k-toimisto ip link set dev tulostin master br0
+ns tulostin ip addr add 10.30.10.20/24 dev eth0
+ns tulostin ip route add default via 10.30.10.1
+solmu tiedosto
+linkki tiedosto eth0 k-palvelimet tiedosto
+ns k-palvelimet ip link set dev tiedosto master br0
+ns tiedosto ip addr add 10.30.20.10/24 dev eth0
+ns tiedosto ip route add default via 10.30.20.1

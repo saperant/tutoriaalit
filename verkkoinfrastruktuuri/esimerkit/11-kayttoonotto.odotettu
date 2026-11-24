@@ -1,0 +1,6 @@
+suunnitelmassa 29 komentoa
+tyoasema -> 10.30.20.10: ok
+tiedosto -> 10.30.10.20: ok
+virhe: palvelimet: 10.30.0.0/16 menee päällekkäin segmentin toimisto kanssa
+virhe: tulostin: 10.30.10.10 on jo käytössä
+muutos hylättiin

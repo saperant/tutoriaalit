@@ -1,0 +1,9 @@
+asiakas:
+osoite 10.40.0.161/24, yhdyskäytävä 10.40.0.1, nimipalvelin 10.40.0.1
+verkkotunnus toimisto.lan, vuokra 43200 s
+käynnistys: palvelin 10.40.0.1, tiedosto ipxe.efi
+tulostin:
+osoite 10.40.0.20/24, yhdyskäytävä 10.40.0.1, nimipalvelin 10.40.0.1
+käynnistyslataimen sisältö
+nas.toimisto.lan: 10.40.0.30
+tulostin.toimisto.lan: 10.40.0.20

@@ -1,0 +1,6 @@
+k1 -> k2: forwarding
+k1 -> k3: forwarding
+k2 -> k1: forwarding
+k2 -> k3: forwarding
+k3 -> k2: blocking
+k3 -> k1: forwarding

@@ -1,0 +1,8 @@
+liisa:
+  Access-Accept
+  VLAN 20
+vieras:
+  Access-Accept
+  VLAN 90
+liisa:
+  Access-Reject

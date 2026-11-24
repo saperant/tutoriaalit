@@ -1610,6 +1610,7 @@ laajuus = 5
 testaus = "Linuxin verkkonimiavaruudet (ip netns), nftables, dnsmasq ja FRRouting"
 roadmap = ["network-engineer"]
 amk = "Tietoverkkojen suunnittelu ja ylläpito"
+tutoriaali = "verkkoinfrastruktuuri"
 
 [[taito]]
 id = "tietoliikennetekniikka"

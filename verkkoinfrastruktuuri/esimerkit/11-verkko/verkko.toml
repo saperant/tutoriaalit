@@ -1,0 +1,29 @@
+# Toimipisteen verkko kuvauksena. Tämä tiedosto on totuuden lähde:
+# muutokset tehdään tähän, katselmoidaan ja otetaan käyttöön
+# koneellisesti.
+reititin = "r1"
+
+[[segmentti]]
+nimi = "toimisto"
+verkko = "10.30.10.0/24"
+yhdyskaytava = "10.30.10.1"
+
+[[segmentti]]
+nimi = "palvelimet"
+verkko = "10.30.20.0/24"
+yhdyskaytava = "10.30.20.1"
+
+[[laite]]
+nimi = "tyoasema"
+segmentti = "toimisto"
+osoite = "10.30.10.10"
+
+[[laite]]
+nimi = "tulostin"
+segmentti = "toimisto"
+osoite = "10.30.10.20"
+
+[[laite]]
+nimi = "tiedosto"
+segmentti = "palvelimet"
+osoite = "10.30.20.10"

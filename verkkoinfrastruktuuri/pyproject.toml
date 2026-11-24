@@ -1,0 +1,15 @@
+# Python-esimerkkien tarkistusasetukset (ruff ja mypy).
+[project]
+name = "verkkoinfrastruktuuri-esimerkit"
+version = "1.0.0"
+requires-python = ">=3.12"
+
+[tool.ruff]
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "UP", "SIM"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
