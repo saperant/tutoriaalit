@@ -1,0 +1,19 @@
+{
+  "name": "Numeeriset menetelmät: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "octave",
+      "PIP_PAKETIT": "sympy==1.14.0 numpy scipy==1.18.1 scipy-stubs==1.18.1.1 matplotlib ruff mypy pytest"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/numeeriset-menetelmat/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python"
+      ]
+    }
+  }
+}

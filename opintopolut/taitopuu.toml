@@ -370,6 +370,82 @@ roadmap = ["computer-science"]
 amk = "Todennäköisyyslaskenta ja tilastot"
 tutoriaali = "todennakoisyys"
 
+[[taito]]
+id = "matematiikan-perusteet"
+nimi = "Matematiikan perusteet ohjelmallisesti"
+alue = "matematiikka"
+kuvaus = "Lukion pitkän matematiikan keskeiset sisällöt avoimen lähdekoodin työkaluilla: symbolinen laskenta, numeriikka ja kuvaajat."
+edellyttaa = ["ohjelmoinnin-perusteet"]
+aiheet = [
+  "lausekkeet, yhtälöt ja epäyhtälöt symbolisesti (SymPy, Maxima)",
+  "funktiot ja kuvaajat (NumPy, Matplotlib)",
+  "eksponentti- ja logaritmifunktiot",
+  "trigonometria ja yksikköympyrä",
+  "vektorit ja analyyttinen geometria tasossa",
+  "lukujonot, summat ja induktio",
+]
+laajuus = 5
+testaus = "SymPy, NumPy ja Maxima, tulokset tarkistetaan symbolisesti ja numeerisesti"
+roadmap = []
+amk = "Insinöörimatematiikan perusteet"
+
+[[taito]]
+id = "analyysi"
+nimi = "Differentiaali- ja integraalilaskenta"
+alue = "matematiikka"
+kuvaus = "Raja-arvot, derivaatat, integraalit ja sarjat yhden ja usean muuttujan funktioille sekä niiden insinöörisovellukset."
+edellyttaa = ["matematiikan-perusteet"]
+aiheet = [
+  "raja-arvo ja jatkuvuus",
+  "derivaatta ja sen sovellukset: ääriarvot ja Newtonin menetelmä",
+  "integraali ja sen sovellukset",
+  "sarjat ja Taylorin polynomit",
+  "osittaisderivaatat ja gradientti",
+  "moninkertaiset integraalit",
+]
+laajuus = 5
+testaus = "SymPy ja Maxima, numeerinen tarkistus NumPylla ja SciPylla"
+roadmap = []
+amk = "Insinöörimatematiikka (differentiaali- ja integraalilaskenta)"
+
+[[taito]]
+id = "differentiaaliyhtalot"
+nimi = "Differentiaaliyhtälöt ja Laplace-muunnos"
+alue = "matematiikka"
+kuvaus = "Dynaamisten järjestelmien mallintaminen differentiaaliyhtälöillä ja niiden ratkaiseminen analyyttisesti ja numeerisesti."
+edellyttaa = ["analyysi", "lineaarialgebra"]
+aiheet = [
+  "ensimmäisen kertaluvun yhtälöt ja mallintaminen",
+  "lineaariset toisen kertaluvun yhtälöt ja värähtelijät",
+  "yhtälöryhmät, ominaisarvot ja tilaesitys",
+  "Laplace-muunnos ja siirtofunktio",
+  "stabiilisuus ja vaihetaso",
+  "numeeriset ratkaisijat",
+]
+laajuus = 5
+testaus = "SymPy, SciPy ja GNU Octave, analyyttiset ja numeeriset ratkaisut verrataan"
+roadmap = []
+amk = "Insinöörimatematiikka (differentiaaliyhtälöt)"
+
+[[taito]]
+id = "numeeriset-menetelmat"
+nimi = "Numeeriset menetelmät"
+alue = "matematiikka"
+kuvaus = "Laskennan virheet ja algoritmit, joilla yhtälöt, integraalit ja optimointitehtävät ratkaistaan tietokoneella."
+edellyttaa = ["analyysi", "lineaarialgebra"]
+aiheet = [
+  "pyöristysvirhe, katkaisuvirhe ja ehtoluku",
+  "epälineaaristen yhtälöiden ratkaiseminen",
+  "interpolointi ja pienimmän neliösumman sovitus",
+  "numeerinen derivointi ja integrointi",
+  "lineaariset yhtälöryhmät ja matriisihajotelmat",
+  "optimointi",
+]
+laajuus = 5
+testaus = "NumPy, SciPy ja GNU Octave, virheet verrataan teoreettisiin rajoihin"
+roadmap = []
+amk = "Numeeriset menetelmät"
+
 # ---------------------------------------------------------------------
 # Algoritmit ja tietorakenteet
 # ---------------------------------------------------------------------
@@ -801,6 +877,63 @@ roadmap = []
 amk = "Digitaalinen signaalinkäsittely"
 tutoriaali = "dsp-laitteisto"
 
+[[taito]]
+id = "elektroniikan-perusteet"
+nimi = "Elektroniikan perusteet ja SPICE"
+alue = "laitteisto"
+kuvaus = "Sähköpiirien perusteet ja komponentit sekä piirien simulointi SPICE-ohjelmalla."
+edellyttaa = ["matematiikan-perusteet"]
+aiheet = [
+  "jännite, virta, resistanssi ja teho",
+  "Kirchhoffin lait, solmu- ja silmukkamenetelmä",
+  "kondensaattori, kela ja RC- ja RL-piirien transientit",
+  "vaihtovirta, impedanssi ja osoittimet",
+  "diodit ja transistorit kytkimenä",
+  "SPICE-simulointi (ngspice)",
+]
+laajuus = 5
+testaus = "ngspice eräajona, tulokset verrataan käsin laskettuihin Pythonilla"
+roadmap = []
+amk = "Elektroniikan perusteet"
+
+[[taito]]
+id = "analogiaelektroniikka"
+nimi = "Analogiaelektroniikka"
+alue = "laitteisto"
+kuvaus = "Vahvistimet, suodattimet ja muuntimet, joilla analoginen maailma liitetään digitaalisiin järjestelmiin."
+edellyttaa = ["elektroniikan-perusteet", "differentiaaliyhtalot"]
+aiheet = [
+  "transistorivahvistimet ja toimintapiste",
+  "operaatiovahvistinkytkennät",
+  "aktiiviset suodattimet ja taajuusvaste",
+  "takaisinkytkentä ja stabiilisuus",
+  "AD- ja DA-muuntimet",
+  "kohina ja signaalin eheys",
+]
+laajuus = 5
+testaus = "ngspice eräajona, taajuusvasteet ja transientit verrataan malleihin"
+roadmap = []
+amk = "Analogiaelektroniikka"
+
+[[taito]]
+id = "kuvausstandardit"
+nimi = "Laitteiston kuvausstandardit (SystemRDL, IP-XACT)"
+alue = "laitteisto"
+kuvaus = "Rekisterien, komponenttien ja rajapintojen koneluettavat kuvaukset, joista RTL, ohjelmisto ja dokumentaatio tuotetaan."
+edellyttaa = ["soc-integraatio", "eda-skriptaus"]
+aiheet = [
+  "rekisterikuvaukset SystemRDL:llä",
+  "koodin, otsakkeiden ja dokumentaation generointi (PeakRDL)",
+  "IP-XACT (IEEE 1685): komponentit, väylärajapinnat ja muistikartat",
+  "CMSIS-SVD ja laitepuu ohjelmiston näkökulmasta",
+  "UVM-rekisterimalli ja verifiointi",
+  "yksi totuuden lähde työkaluketjussa",
+]
+laajuus = 5
+testaus = "systemrdl-compiler ja PeakRDL, generoitu RTL Verilatorilla, XML-tarkistukset"
+roadmap = []
+amk = "Digitaalisen järjestelmän suunnittelu"
+
 # ---------------------------------------------------------------------
 # Signaalinkäsittely ja radiot
 # ---------------------------------------------------------------------
@@ -1178,6 +1311,25 @@ testaus = "Vulkan-laskentavarjostimet (lavapipe), vertailu CPU-toteutukseen"
 roadmap = ["game-developer"]
 amk = "Rinnakkaislaskenta"
 tutoriaali = "gpu-laskenta"
+
+[[taito]]
+id = "konenako"
+nimi = "Konenäkö (OpenCV)"
+alue = "grafiikka"
+kuvaus = "Kuvien käsittely ja tulkinta: suodatus, piirteet, geometria ja kameramallit OpenCV:llä."
+edellyttaa = ["signaalit-ja-jarjestelmat"]
+aiheet = [
+  "digitaalinen kuva, väriavaruudet ja histogrammit",
+  "suodatus, reunat ja morfologia",
+  "piirteet ja niiden sovittaminen",
+  "geometriset muunnokset ja homografia",
+  "kameramalli, kalibrointi ja stereonäkö",
+  "segmentointi, seuranta ja koneoppimisen rajapinta",
+]
+laajuus = 5
+testaus = "OpenCV (Python ja C++), synteettiset testikuvat ja tunnetut ratkaisut"
+roadmap = []
+amk = "Konenäkö"
 
 # ---------------------------------------------------------------------
 # Tietoturva ja takaisinmallinnus
@@ -1951,7 +2103,7 @@ id = "grafiikkaohjelmoija"
 nimi = "Grafiikkaohjelmoija"
 kuvaus = "Toteuttaa renderöintiä ja GPU-laskentaa peleihin, visualisointiin ja simulaatioihin."
 tavoitteet = ["sateenseuranta", "gpu-laskenta"]
-valinnaiset = ["cpp-suorituskyky", "peliohjelmointi"]
+valinnaiset = ["cpp-suorituskyky", "peliohjelmointi", "konenako"]
 
 [[rooli]]
 id = "hajautettujen-kehittaja"
@@ -2022,3 +2174,10 @@ nimi = "Sovellusturvallisuuden asiantuntija"
 kuvaus = "Huolehtii, että ohjelmistot suunnitellaan, rakennetaan ja ajetaan turvallisesti: kehitysprosessista web-sovelluksiin ja palveluarkkitehtuuriin."
 tavoitteet = ["web-tietoturva", "turvallinen-kehitys", "palvelutietoturva"]
 valinnaiset = ["haavoittuvuudet", "verkkoinfrastruktuuri"]
+
+[[rooli]]
+id = "elektroniikkasuunnittelija"
+nimi = "Elektroniikkasuunnittelija"
+kuvaus = "Suunnittelee ja simuloi analogisia ja digitaalisia piirejä ja liittää ne mikrokontrollereihin ja ohjelmoitavaan logiikkaan."
+tavoitteet = ["analogiaelektroniikka", "mikrokontrollerit", "fpga-toteutus"]
+valinnaiset = ["oheislaitevaylat", "dsp", "numeeriset-menetelmat", "kuvausstandardit"]

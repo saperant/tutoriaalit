@@ -239,11 +239,29 @@ async function main() {
     "valinta säilyy uudelleenlatauksessa");
 
   // Nipun raahaaminen siirtää nippua, eikä nippuja jää päällekkäin.
-  const nippu = sivu.locator(".nippu").nth(4);
+  // Valitaan nippu, jonka alustaan osuu näkyvässä ikkunassa kohta, jossa
+  // ei ole taitoa: kartan kasvaessa kiinteä valinta voi jäädä ikkunan
+  // ulkopuolelle.
+  const tartunta = await sivu.$$eval(".nippu", (gs) => {
+    for (let i = 0; i < gs.length; i++) {
+      const r = gs[i].querySelector(".nippu-alusta").getBoundingClientRect();
+      for (const osuus of [0.12, 0.2, 0.3, 0.8, 0.88]) {
+        const x = r.x + r.width / 2;
+        const y = r.y + r.height * osuus;
+        if (x < 0 || y < 0 || x > innerWidth - 130 || y > innerHeight - 70) continue;
+        const e = document.elementFromPoint(x, y);
+        if (e && e.closest(".nippu") === gs[i] && !e.closest(".solmu")) {
+          return { i, x, y };
+        }
+      }
+    }
+    return null;
+  });
+  tarkista(tartunta !== null, "löytyi raahattava nippu");
+  const nippu = sivu.locator(".nippu").nth(tartunta ? tartunta.i : 0);
   const ennenX = Number(await nippu.getAttribute("data-x"));
-  const laatikko = await nippu.locator(".nippu-alusta").boundingBox();
-  const lx = laatikko.x + laatikko.width / 2;
-  const ly = laatikko.y + laatikko.height * 0.12;
+  const lx = tartunta ? tartunta.x : 0;
+  const ly = tartunta ? tartunta.y : 0;
   await sivu.mouse.move(lx, ly);
   await sivu.mouse.down();
   for (let i = 1; i <= 10; i++) await sivu.mouse.move(lx + 12 * i, ly + 6 * i);

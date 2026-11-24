@@ -1,0 +1,20 @@
+{
+  "name": "Konenäkö (OpenCV): esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "libopencv-dev",
+      "PIP_PAKETIT": "opencv-python-headless==5.1.0.95 numpy matplotlib ruff mypy pytest"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/konenako/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-vscode.cpptools"
+      ]
+    }
+  }
+}

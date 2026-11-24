@@ -1,0 +1,19 @@
+{
+  "name": "Elektroniikan perusteet ja SPICE: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "ngspice",
+      "PIP_PAKETIT": "numpy scipy==1.18.1 scipy-stubs==1.18.1.1 matplotlib ruff mypy pytest"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/elektroniikan-perusteet/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python"
+      ]
+    }
+  }
+}
