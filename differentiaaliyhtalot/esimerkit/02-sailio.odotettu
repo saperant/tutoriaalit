@@ -1,0 +1,6 @@
+x(t) = 8 - 8*exp(-t/40)
+tasapaino: 8 kg
+aikavakio: 40 min
+1 aikavakion jälkeen 63.2 % tasapainosta
+3 aikavakion jälkeen 95.0 % tasapainosta
+5 aikavakion jälkeen 99.3 % tasapainosta

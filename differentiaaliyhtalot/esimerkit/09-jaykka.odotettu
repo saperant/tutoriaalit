@@ -1,0 +1,5 @@
+RK45   askelia  3587, y(10) = -0.839614
+Radau  askelia    81, y(10) = -0.839615
+BDF    askelia   209, y(10) = -0.839615
+h = 0.0019: eksplisiittinen y(1) = 0.5416, implisiittinen 0.541647
+h = 0.0021: eksplisiittinen y(1) = -5.046e+19, implisiittinen 0.541479

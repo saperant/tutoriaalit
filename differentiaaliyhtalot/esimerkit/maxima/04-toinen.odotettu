@@ -1,0 +1,4 @@
+c = 1 : (%e^-(t/2)*sin((sqrt(15)*t)/2))/sqrt(15)+%e^-(t/2)*cos((sqrt(15)*t)/2)
+c = 4 : 2*t*%e^-(2*t)+%e^-(2*t)
+c = 5 : (4*%e^-t)/3-%e^-(4*t)/3
+pakotettu: y = %k1*sin(2*t)+%k2*cos(2*t)+cos(t)/3

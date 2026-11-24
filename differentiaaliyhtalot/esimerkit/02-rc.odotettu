@@ -1,0 +1,4 @@
+u_C(t) = U - U*exp(-t/(C*R))
+aikavakio: 1/1000 s = 1.0 ms
+kynnys ylittyy, kun t / RC = log(10/3)
+eli 1.204 ms = 1.204 tau

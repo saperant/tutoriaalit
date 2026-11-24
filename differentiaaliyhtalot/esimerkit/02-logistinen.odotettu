@@ -1,0 +1,6 @@
+eksponentiaalinen: N_0*exp(r*t)
+kaksinkertaistumisaika: log(2)/r
+logistinen: K*N_0*exp(r*t)/(K + N_0*exp(r*t) - N_0)
+raja-arvo t -> oo: K
+sijoitus yhtälöön: 0
+suurin kasvunopeus kohdassa N = K/2 arvo K*r/4

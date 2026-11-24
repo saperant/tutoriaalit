@@ -1,0 +1,4 @@
+integroiva tekijä: exp(2*t)
+käsin: (3*exp(t) - 3)*exp(-2*t)
+dsolve: (3 - 3*exp(-t))*exp(-t)
+sama: True

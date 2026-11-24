@@ -1,0 +1,4 @@
+w = 2: t*sin(2*t)/4
+w = 9/5: 25*cos(9*t/5)/19 - 25*cos(2*t)/19
+tulona: 50*sin(t/10)*sin(19*t/10)/19
+huojunnan jakso: 10*pi = 31.42 s

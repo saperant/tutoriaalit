@@ -1,0 +1,4 @@
+L{exp(-a t) sin(w t)} = w/(w^2+s^2+2*a*s+a^2)
+osamurrot: 1/(s+2)-2/(s+1)+2/s
+y(t) = (-2*%e^-t)+%e^-(2*t)+2
+desolve: y(t) = (-2*%e^-t)+%e^-(2*t)+2

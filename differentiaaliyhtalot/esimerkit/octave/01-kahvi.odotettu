@@ -1,0 +1,4 @@
+t = 10.0: ode45 64.9963, tarkka 64.9963
+t = 20.0: ode45 49.0533, tarkka 49.0533
+t = 30.0: ode45 38.8876, tarkka 38.8876
+60 C kohdalla: t = 12.68 min

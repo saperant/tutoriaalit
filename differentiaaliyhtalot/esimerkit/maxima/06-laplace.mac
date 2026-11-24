@@ -1,0 +1,14 @@
+/* Laplace-muunnos Maximalla: laplace, ilt ja desolve. */
+display2d: false$
+
+/* @alku laplace */
+print("L{exp(-a t) sin(w t)} =", laplace(exp(-a*t)*sin(w*t), t, s))$
+Y: (s^2 + 3*s + 4)/(s*(s + 1)*(s + 2))$
+print("osamurrot:", partfrac(Y, s))$
+print("y(t) =", ilt(Y, s, t))$
+/* desolve ratkaisee lineaarisen alkuarvotehtävän Laplace-muunnoksella. */
+atvalue(y(t), t = 0, 1)$
+atvalue('diff(y(t), t), t = 0, 0)$
+print("desolve:", desolve('diff(y(t), t, 2) + 3*'diff(y(t), t) + 2*y(t) = 4,
+                          y(t)))$
+/* @loppu laplace */

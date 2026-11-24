@@ -1,0 +1,12 @@
+/* Ensimmäisen kertaluvun yhtälöt Maximalla: ode2 ja ic1. */
+display2d: false$
+
+/* @alku ensimmainen */
+/* Jäähtyminen: T' = -k (T - Ty). */
+yleinen: ode2('diff(T, t) = -k*(T - Ty), T, t)$
+print("yleinen:", expand(yleinen))$
+print("alkuehto T(0) = T0:", expand(ic1(yleinen, t = 0, T = T0)))$
+/* Lineaarinen: y' + 2 y = 3 exp(-t), y(0) = 0. */
+lin: ic1(ode2('diff(y, t) + 2*y = 3*exp(-t), y, t), t = 0, y = 0)$
+print("lineaarinen:", expand(lin))$
+/* @loppu ensimmainen */

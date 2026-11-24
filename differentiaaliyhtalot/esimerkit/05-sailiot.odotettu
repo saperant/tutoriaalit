@@ -1,0 +1,5 @@
+ominaisarvot: [-1/5, -1/10]
+x1(t) = 5*exp(-t/10)
+x2(t) = -5*exp(-t/5) + 5*exp(-t/10)
+huippu hetkellä log(1024) = 6.931 min, 1.25 kg
+solve_ivp samassa hetkessä: 1.2500 kg

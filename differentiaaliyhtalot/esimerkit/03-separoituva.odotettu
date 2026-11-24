@@ -1,0 +1,5 @@
+integroitu: Eq(log(Y), C + T**2/2)
+dsolve: exp(t**2/2)
+tarkistus: (True, 0)
+y' = y^2: -1/(t - 1)
+raja-arvo t -> 1-: oo

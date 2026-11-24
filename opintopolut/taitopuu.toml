@@ -428,6 +428,7 @@ laajuus = 5
 testaus = "SymPy, SciPy ja GNU Octave, analyyttiset ja numeeriset ratkaisut verrataan"
 roadmap = []
 amk = "Insinöörimatematiikka (differentiaaliyhtälöt)"
+tutoriaali = "differentiaaliyhtalot"
 
 [[taito]]
 id = "numeeriset-menetelmat"

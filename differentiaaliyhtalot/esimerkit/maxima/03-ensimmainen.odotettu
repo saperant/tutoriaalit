@@ -1,0 +1,3 @@
+yleinen: T = %c*%e^-(k*t)+Ty
+alkuehto T(0) = T0: T = (-Ty*%e^-(k*t))+T0*%e^-(k*t)+Ty
+lineaarinen: y = 3*%e^-t-3*%e^-(2*t)

@@ -1,0 +1,7 @@
+H(s) = 100000000/(s**2 + 2000*s + 100000000)
+napa: -1000.0 -9949.9j
+napa: -1000.0 +9949.9j
+loppuarvo: 1
+huippu 1.7292 hetkellä 0.3157 ms
+scipy: huippu 1.7292 hetkellä 0.3160 ms
+zeta = 0.100, ylitys kaavasta 72.92 %

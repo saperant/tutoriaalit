@@ -1,0 +1,5 @@
+Y(s) = (s**2 + 3*s + 4)/(s*(s + 1)*(s + 2))
+osamurrot: 1/(s + 2) - 2/(s + 1) + 2/s
+y(t) = 2 - 2*exp(-t) + exp(-2*t)
+dsolve sama: True
+alkuarvo: 1  loppuarvo: 2

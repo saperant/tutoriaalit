@@ -1,0 +1,5 @@
+linearisoitu jakso: 2.0061 s
+  5 astetta: tarkka 2.0070 s, simuloitu 2.0070 s, linearisoinnin virhe  0.0 %
+ 30 astetta: tarkka 2.0410 s, simuloitu 2.0410 s, linearisoinnin virhe  1.7 %
+ 90 astetta: tarkka 2.3678 s, simuloitu 2.3678 s, linearisoinnin virhe 15.3 %
+170 astetta: tarkka 4.8935 s, simuloitu 4.8935 s, linearisoinnin virhe 59.0 %

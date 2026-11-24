@@ -1,0 +1,11 @@
+1                        -> 1/s
+t                        -> s**(-2)
+t**2                     -> 2/s**3
+exp(-a*t)                -> 1/(a + s)
+sin(omega*t)             -> omega/(omega**2 + s**2)
+cos(omega*t)             -> s/(omega**2 + s**2)
+t*exp(-a*t)              -> (a + s)**(-2)
+exp(-a*t)*sin(omega*t)   -> omega/(omega**2 + (a + s)**2)
+L{y'} = -4/(s**2 + 4)  s Y - y(0) = -4/(s**2 + 4)
+L{exp(-a t) cos(w t)} = (a + s)/(omega**2 + (a + s)**2)
+L{cos(w t)}, s -> s + a  = (a + s)/(omega**2 + (a + s)**2)

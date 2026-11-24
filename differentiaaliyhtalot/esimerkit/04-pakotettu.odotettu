@@ -1,0 +1,7 @@
+1/amplitudi^2 = omega**4 - 196*omega**2/25 + 16
+sama kuin (4 - w^2)^2 + (0,4 w)^2: True
+resonanssi w = [7*sqrt(2)/5] ~ [1.9799]
+w = 1.00: amplitudi 0.3304
+w = 1.98: amplitudi 1.2563
+w = 3.00: amplitudi 0.1945
+simuloitu amplitudi: 1.2563

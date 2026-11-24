@@ -1,0 +1,9 @@
+c = 1 (alivaimennettu, zeta = 1/4):
+  juuret: -1/2 - sqrt(15)*I/2 (kerta 1), -1/2 + sqrt(15)*I/2 (kerta 1)
+  y(t) = (sqrt(15)*sin(sqrt(15)*t/2)/15 + cos(sqrt(15)*t/2))*exp(-t/2)
+c = 4 (kriittinen, zeta = 1):
+  juuret: -2 (kerta 2)
+  y(t) = (2*t + 1)*exp(-2*t)
+c = 5 (ylivaimennettu, zeta = 5/4):
+  juuret: -4 (kerta 1), -1 (kerta 1)
+  y(t) = (4*exp(3*t) - 1)*exp(-4*t)/3

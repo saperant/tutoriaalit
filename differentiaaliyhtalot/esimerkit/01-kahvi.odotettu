@@ -1,0 +1,6 @@
+yleinen: T_0*exp(-k*t) + T_y - T_y*exp(-k*t)
+aika: log((T_0 - T_y)/(T_j - T_y))/k
+60 C kohdalla: t = 12.68 min
+t = 10.0: numeerinen 64.9963, tarkka 64.9963
+t = 20.0: numeerinen 49.0533, tarkka 49.0533
+t = 30.0: numeerinen 38.8876, tarkka 38.8876

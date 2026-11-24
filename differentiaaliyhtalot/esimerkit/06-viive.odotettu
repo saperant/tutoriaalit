@@ -1,0 +1,5 @@
+Heaviside(t - 1) * (1 - exp(1 - t))
+Heaviside(t - 3) * (exp(3 - t) - 1)
+t = 2: Laplace 0.6321, solve_ivp 0.6321
+t = 3: Laplace 0.8647, solve_ivp 0.8647
+t = 5: Laplace 0.1170, solve_ivp 0.1170

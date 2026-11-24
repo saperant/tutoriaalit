@@ -137,6 +137,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Integraatiotestaus ja Testcontainers | [`integraatiotestaus/`](integraatiotestaus/) | [integraatiotestaus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/integraatiotestaus.pdf) |
 | NoSQL-tietokannat | [`nosql/`](nosql/) | [nosql.pdf](https://saperant.github.io/tutoriaalit/materiaalit/nosql.pdf) |
 | Numeeriset menetelmät | [`numeeriset-menetelmat/`](numeeriset-menetelmat/) | [numeeriset-menetelmat.pdf](https://saperant.github.io/tutoriaalit/materiaalit/numeeriset-menetelmat.pdf) |
+| Differentiaaliyhtälöt ja Laplace-muunnos | [`differentiaaliyhtalot/`](differentiaaliyhtalot/) | [differentiaaliyhtalot.pdf](https://saperant.github.io/tutoriaalit/materiaalit/differentiaaliyhtalot.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

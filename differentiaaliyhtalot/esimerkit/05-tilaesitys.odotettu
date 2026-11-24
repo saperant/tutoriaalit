@@ -1,0 +1,6 @@
+ominaisarvot: {-1: 1, -4: 1}
+  lambda = -4: v = [-1/4, 1]
+  lambda = -1: v = [-1, 1]
+y(t) = 4*exp(-t)/3 - exp(-4*t)/3
+t = 1,5: SymPy 0.2966806295, SciPy 0.2966806295
+dsolve sama: True

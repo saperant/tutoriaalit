@@ -1,0 +1,5 @@
+J = [[0, 1], [-cos(theta), -1/2]]
+alas: jälki -1/2, det 1 -> stabiili
+  ominaisarvot: [-0.25 - 0.9682*I, -0.25 + 0.9682*I]
+ylös: jälki -1/2, det -1 -> satulapiste: epästabiili
+  ominaisarvot: [-1.281, 0.7808]

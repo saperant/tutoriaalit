@@ -1,0 +1,12 @@
+/* Toisen kertaluvun lineaariset yhtälöt Maximalla: ode2 ja ic2. */
+display2d: false$
+
+/* @alku toinen */
+for c in [1, 4, 5] do block([r],
+    r: ic2(ode2('diff(y, t, 2) + c*'diff(y, t) + 4*y = 0, y, t),
+           t = 0, y = 1, 'diff(y, t) = 0),
+    print("c =", c, ":", expand(rhs(r))))$
+/* Pakotettu värähtely: yksityisratkaisu ja homogeeninen osa yhdessä. */
+pakotettu: ode2('diff(y, t, 2) + 4*y = cos(t), y, t)$
+print("pakotettu:", pakotettu)$
+/* @loppu toinen */

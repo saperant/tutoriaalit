@@ -1,0 +1,4 @@
+rtol 1e-03: osuma 6.068276 s, nopeus 21.9432 m/s, 62 kutsua
+rtol 1e-06: osuma 6.069688 s, nopeus 21.9435 m/s, 116 kutsua
+rtol 1e-09: osuma 6.069689 s, nopeus 21.9435 m/s, 332 kutsua
+rajanopeus sqrt(g m/k) = 22.1472 m/s

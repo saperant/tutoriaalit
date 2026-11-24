@@ -1,0 +1,7 @@
+h =   0: N* =    0.00  f' = +0.500  epästabiili
+h =   0: N* = 1000.00  f' = -0.500  stabiili
+h =  60: N* =  139.44  f' = +0.361  epästabiili
+h =  60: N* =  860.56  f' = -0.361  stabiili
+h = 125: N* =  500.00  f' = +0.000  testi ei ratkaise
+h = 130: ei tasapainoa, kanta romahtaa
+suurin kestävä saalis rK/4 = 125

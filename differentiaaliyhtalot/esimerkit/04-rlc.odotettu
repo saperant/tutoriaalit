@@ -1,0 +1,6 @@
+auton jousitus m=400 kg c=4000 Ns/m k=40 kN/m:
+  f0 = 1.6 Hz, zeta = 0.500
+RLC L=10 mH R=20 Ohm C=1 uF:
+  f0 = 1591.5 Hz, zeta = 0.100
+RLC L=10 mH R=200 Ohm C=1 uF:
+  f0 = 1591.5 Hz, zeta = 1.000
