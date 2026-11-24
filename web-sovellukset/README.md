@@ -4,8 +4,8 @@ Selainsovellusten rakentaminen TypeScriptillä ja Reactilla:
 DOM ja tapahtumat, tila ja komponentit, lomakkeet ja reducer, efektit,
 verkko ja palvelimen data, reititys, testaus Vitestillä ja
 Playwrightilla, tietoturva sekä suorituskyky ja saavutettavuus.
-Valmis dokumentti: [web-sovellukset.pdf](web-sovellukset.pdf), pikaopas:
-[web-sovellukset-pikaopas.pdf](web-sovellukset-pikaopas.pdf).
+Valmis dokumentti: [web-sovellukset.pdf](https://saperant.github.io/tutoriaalit/materiaalit/web-sovellukset.pdf), pikaopas:
+[web-sovellukset-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/web-sovellukset-pikaopas.pdf).
 
 Esitiedot: taidot *TypeScript*, *HTML ja CSS* ja *Tietoverkot*.
 

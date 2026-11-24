@@ -1,7 +1,7 @@
 # Moderni C++
 
 Tiivis suomenkielinen johdatus C++11–C++23-standardien ohjelmointiin.
-Valmis dokumentti: [moderni-cpp.pdf](moderni-cpp.pdf).
+Valmis dokumentti: [moderni-cpp.pdf](https://saperant.github.io/tutoriaalit/materiaalit/moderni-cpp.pdf).
 
 ## Sisältö
 

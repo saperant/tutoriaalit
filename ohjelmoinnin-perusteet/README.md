@@ -4,9 +4,9 @@ Tiivis suomenkielinen johdatus ohjelmointiin lukijalle, joka ei ole
 ohjelmoinut aiemmin. Kielenä on Python 3.12. Esimerkit ratkaisevat
 pieniä oikeita tehtäviä, ja ne on kirjoitettu ammattimaisin tavoin:
 kuvaavat nimet, pienet funktiot, syötteen tarkistus ja testit.
-Valmiit dokumentit: [ohjelmoinnin-perusteet.pdf](ohjelmoinnin-perusteet.pdf)
+Valmiit dokumentit: [ohjelmoinnin-perusteet.pdf](https://saperant.github.io/tutoriaalit/materiaalit/ohjelmoinnin-perusteet.pdf)
 ja pikaopas
-[ohjelmoinnin-perusteet-pikaopas.pdf](ohjelmoinnin-perusteet-pikaopas.pdf).
+[ohjelmoinnin-perusteet-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/ohjelmoinnin-perusteet-pikaopas.pdf).
 
 ## Sisältö
 

@@ -4,29 +4,38 @@ from: markdown
 pdf-engine: xelatex
 filters:
   - ${.}/sisallyta.lua
+  - ${.}/ulkoasu.lua
 include-in-header:
   - ${.}/tyyli.tex
 top-level-division: chapter
 number-sections: true
 table-of-contents: true
 toc-depth: 2
-highlight-style: tango
+highlight-style: ${.}/korostus.theme
 variables:
   documentclass: scrreprt
   classoption:
     - a4paper
-    - 11pt
+    - fontsize=10pt
     - oneside
     - parskip=half
   lang: fi
   geometry:
-    - margin=25mm
-  mainfont: Latin Modern Roman
-  sansfont: Latin Modern Sans
-  monofont: DejaVu Sans Mono
+    - top=24mm
+    - bottom=26mm
+    - left=26mm
+    - right=26mm
+    - headsep=8mm
+  mainfont: Inter
+  mainfontoptions:
+    - Numbers=Lining
+  sansfont: Inter Display
+  monofont: JetBrains Mono
   monofontoptions:
-    - Scale=0.82
+    - Scale=0.84
   colorlinks: true
-  linkcolor: blue!50!black
-  urlcolor: blue!50!black
-  toccolor: black
+  linkcolor: korostus-tumma
+  urlcolor: korostus-tumma
+  filecolor: korostus-tumma
+  citecolor: korostus-tumma
+  toccolor: muste

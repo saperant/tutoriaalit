@@ -2,8 +2,8 @@
 
 Tiivis suomenkielinen opas Tcl 8.6:een EDA-työkalujen komentokielenä:
 korvaussäännöt, kokoelmat, virheenkäsittely, tapahtumasilmukka ja
-EDA-skriptauksen mallit. Valmis dokumentti: [tcl.pdf](tcl.pdf),
-pikaopas [tcl-pikaopas.pdf](tcl-pikaopas.pdf).
+EDA-skriptauksen mallit. Valmis dokumentti: [tcl.pdf](https://saperant.github.io/tutoriaalit/materiaalit/tcl.pdf),
+pikaopas [tcl-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/tcl-pikaopas.pdf).
 
 ## Sisältö
 

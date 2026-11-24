@@ -1,8 +1,8 @@
 # Java
 
 Tiivis suomenkielinen Java-tutoriaali ohjelmoinnin perusteet osaavalle
-(Java 21). Valmis dokumentti: [java.pdf](java.pdf), pikaopas:
-[java-pikaopas.pdf](java-pikaopas.pdf).
+(Java 21). Valmis dokumentti: [java.pdf](https://saperant.github.io/tutoriaalit/materiaalit/java.pdf), pikaopas:
+[java-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/java-pikaopas.pdf).
 
 ## Sisältö
 

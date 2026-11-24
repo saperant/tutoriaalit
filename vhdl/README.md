@@ -2,8 +2,8 @@
 
 Tiivis suomenkielinen opas synteesikelpoiseen VHDL-2008:aan ja
 itsetarkistaviin testipenkkeihin. Esimerkit simuloidaan GHDL 4.1:llä.
-Valmiit dokumentit: [vhdl.pdf](vhdl.pdf) ja pikaopas
-[vhdl-pikaopas.pdf](vhdl-pikaopas.pdf).
+Valmiit dokumentit: [vhdl.pdf](https://saperant.github.io/tutoriaalit/materiaalit/vhdl.pdf) ja pikaopas
+[vhdl-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/vhdl-pikaopas.pdf).
 
 ## Sisältö
 

@@ -2,8 +2,8 @@
 
 Tiivis suomenkielinen tutoriaali verkkosivujen rakenteesta ja
 ulkoasusta: semanttinen HTML, saavutettavuus ja moderni CSS-asettelu.
-Valmiit dokumentit: [html-css.pdf](html-css.pdf) ja pikaopas
-[html-css-pikaopas.pdf](html-css-pikaopas.pdf).
+Valmiit dokumentit: [html-css.pdf](https://saperant.github.io/tutoriaalit/materiaalit/html-css.pdf) ja pikaopas
+[html-css-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/html-css-pikaopas.pdf).
 
 ## Sisältö
 

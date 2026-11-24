@@ -43,7 +43,8 @@ RUN apt-get update \
         apt-get install -y --no-install-recommends \
             pandoc graphviz texlive-xetex texlive-latex-recommended \
             texlive-latex-extra texlive-fonts-recommended \
-            texlive-lang-european lmodern fonts-dejavu; \
+            texlive-lang-european lmodern fonts-dejavu fonts-inter \
+            fonts-jetbrains-mono; \
     fi \
     && if [ -n "$PIP_PAKETIT" ]; then \
         apt-get install -y --no-install-recommends python3-pip \

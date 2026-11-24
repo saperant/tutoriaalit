@@ -1,8 +1,8 @@
 # Rust
 
 Tiivis suomenkielinen Rust-tutoriaali C- ja C++-ohjelmoijalle (Rust
-1.80, painos 2021). Valmis dokumentti: [rust.pdf](rust.pdf), pikaopas:
-[rust-pikaopas.pdf](rust-pikaopas.pdf).
+1.80, painos 2021). Valmis dokumentti: [rust.pdf](https://saperant.github.io/tutoriaalit/materiaalit/rust.pdf), pikaopas:
+[rust-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/rust-pikaopas.pdf).
 
 ## Sisältö
 

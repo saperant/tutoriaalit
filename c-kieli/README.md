@@ -1,7 +1,7 @@
 # C-kieli
 
 Tiivis suomenkielinen johdatus C-ohjelmointiin C17- ja C23-standardien
-mukaan. Valmis dokumentti: [c-kieli.pdf](c-kieli.pdf).
+mukaan. Valmis dokumentti: [c-kieli.pdf](https://saperant.github.io/tutoriaalit/materiaalit/c-kieli.pdf).
 
 ## Sisältö
 

@@ -26,7 +26,9 @@ $(NIMI).pdf: taitopuu.toml metadata.yaml ../VISIO.md $(wildcard luvut/*.md) \
              $(wildcard $(YHTEISET)/*)
 	rm -rf $(RAKENNUS)
 	$(TAITOPUU) generoi taitopuu.toml $(RAKENNUS)
-	pandoc --defaults=$(YHTEISET)/pdf.yaml metadata.yaml \
+	pandoc --defaults=$(YHTEISET)/pdf.yaml \
+	    -V 'header-includes=$(shell python3 $(YHTEISET)/korostus.py opintopolut)' \
+	    metadata.yaml \
 	    ../VISIO.md luvut/01-johdanto.md $(RAKENNUS)/luvut/*.md \
 	    luvut/06-yllapito.md -o $@
 

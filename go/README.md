@@ -1,8 +1,8 @@
 # Go
 
 Tiivis suomenkielinen Go-tutoriaali ohjelmoinnin perusteet osaavalle
-(Go 1.23). Valmis dokumentti: [go.pdf](go.pdf), pikaopas:
-[go-pikaopas.pdf](go-pikaopas.pdf).
+(Go 1.23). Valmis dokumentti: [go.pdf](https://saperant.github.io/tutoriaalit/materiaalit/go.pdf), pikaopas:
+[go-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/go-pikaopas.pdf).
 
 ## Sisältö
 

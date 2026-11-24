@@ -4,8 +4,8 @@ HTTP-rajapintojen ja taustajärjestelmien toteutus Javalla ja Spring
 Bootilla: REST-rajapinnan suunnittelu, tietokanta ja migraatiot,
 samanaikaisuus ja idempotenssi, validointi ja virheet, todennus ja
 valtuutus, havainnointi ja testaus. Valmis dokumentti:
-[taustapalvelut.pdf](taustapalvelut.pdf), pikaopas:
-[taustapalvelut-pikaopas.pdf](taustapalvelut-pikaopas.pdf).
+[taustapalvelut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/taustapalvelut.pdf), pikaopas:
+[taustapalvelut-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/taustapalvelut-pikaopas.pdf).
 
 Esitiedot: taidot *Java*, *SQL ja relaatiotietokannat* ja *Tietoverkot*.
 

@@ -3,8 +3,8 @@
 Tiivis suomenkielinen opas Linuxin käyttöön komentoriviltä:
 tiedostot ja oikeudet, putket, tekstinkäsittely, prosessit, ympäristö,
 paketit ja palvelut sekä etäkäyttö. Esimerkit ajetaan GNU-työkaluilla
-Ubuntu 24.04:ssä. Valmiit dokumentit: [komentorivi.pdf](komentorivi.pdf)
-ja pikaopas [komentorivi-pikaopas.pdf](komentorivi-pikaopas.pdf).
+Ubuntu 24.04:ssä. Valmiit dokumentit: [komentorivi.pdf](https://saperant.github.io/tutoriaalit/materiaalit/komentorivi.pdf)
+ja pikaopas [komentorivi-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/komentorivi-pikaopas.pdf).
 
 Skriptien kirjoittaminen opetetaan erillisessä
 [Bash-skriptauksen tutoriaalissa](../bash/).

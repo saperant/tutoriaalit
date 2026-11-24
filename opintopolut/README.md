@@ -5,7 +5,7 @@
 
 Tutoriaalit muodostavat taitopuun: jokainen tutoriaali on yksi taito, ja taidot rakentuvat toistensa päälle. Roolit ovat ammattiprofiileja, joiden polku kulkee puun läpi.
 
-Taitoja on 87, yhteensä noin 382 op. Valmis PDF: [opintopolut.pdf](opintopolut.pdf). Taitopuun lähdetiedosto: [taitopuu.toml](taitopuu.toml).
+Taitoja on 87, yhteensä noin 382 op. Valmis PDF: [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf). Taitopuun lähdetiedosto: [taitopuu.toml](taitopuu.toml).
 
 ## Roolit
 

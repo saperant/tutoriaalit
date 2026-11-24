@@ -2,8 +2,8 @@
 
 Tiivis suomenkielinen johdatus tietomallinnukseen, kyselyihin,
 transaktioihin ja indekseihin. Esimerkit ajetaan SQLite 3.45:llä, ja
-erot PostgreSQL:ään kerrotaan. Valmiit dokumentit: [sql.pdf](sql.pdf)
-ja pikaopas [sql-pikaopas.pdf](sql-pikaopas.pdf).
+erot PostgreSQL:ään kerrotaan. Valmiit dokumentit: [sql.pdf](https://saperant.github.io/tutoriaalit/materiaalit/sql.pdf)
+ja pikaopas [sql-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/sql-pikaopas.pdf).
 
 ## Sisältö
 

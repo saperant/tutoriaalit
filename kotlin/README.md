@@ -1,8 +1,8 @@
 # Kotlin
 
 Tiivis suomenkielinen Kotlin-tutoriaali Javan osaavalle (Kotlin 2.4,
-JDK 21). Valmis dokumentti: [kotlin.pdf](kotlin.pdf), pikaopas:
-[kotlin-pikaopas.pdf](kotlin-pikaopas.pdf).
+JDK 21). Valmis dokumentti: [kotlin.pdf](https://saperant.github.io/tutoriaalit/materiaalit/kotlin.pdf), pikaopas:
+[kotlin-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/kotlin-pikaopas.pdf).
 
 ## Sisältö
 

@@ -35,13 +35,18 @@ testaa:
 	    $(MAKE) -C esimerkit -s -j4 && $(MAKE) -C esimerkit -s siivoa; \
 	fi
 
+# PDF:n korostusväri ja kansilehden alue taitopuusta (ks. korostus.py).
+KOROSTUS  := $(shell python3 $(YHTEISET)/korostus.py $(NIMI))
+
 pdf: $(NIMI).pdf $(NIMI)-pikaopas.pdf
 
 $(NIMI).pdf: metadata.yaml $(LUVUT) $(ESIMERKIT) $(wildcard $(YHTEISET)/*)
-	pandoc --defaults=$(YHTEISET)/pdf.yaml metadata.yaml $(LUVUT) -o $@
+	pandoc --defaults=$(YHTEISET)/pdf.yaml -V 'header-includes=$(KOROSTUS)' \
+	    metadata.yaml $(LUVUT) -o $@
 
 $(NIMI)-pikaopas.pdf: pikaopas.md $(ESIMERKIT) $(wildcard $(YHTEISET)/*)
-	pandoc --defaults=$(YHTEISET)/pikaopas.yaml pikaopas.md -o $@
+	pandoc --defaults=$(YHTEISET)/pikaopas.yaml -V 'header-includes=$(KOROSTUS)' \
+	    pikaopas.md -o $@
 
 siivoa:
 	rm -f $(NIMI).pdf $(NIMI)-pikaopas.pdf

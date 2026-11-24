@@ -3,8 +3,8 @@
 Tiivis suomenkielinen JavaScript-tutoriaali ohjelmoinnin perusteet
 osaavalle (ES2024, Node.js 22–24). Tyypit kirjoitetaan JSDoc-kommentteihin
 ja tarkistetaan TypeScript-kääntäjällä. Valmis dokumentti:
-[javascript.pdf](javascript.pdf), pikaopas:
-[javascript-pikaopas.pdf](javascript-pikaopas.pdf).
+[javascript.pdf](https://saperant.github.io/tutoriaalit/materiaalit/javascript.pdf), pikaopas:
+[javascript-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/javascript-pikaopas.pdf).
 
 ## Sisältö
 

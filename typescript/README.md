@@ -3,8 +3,8 @@
 Tiivis suomenkielinen TypeScript-tutoriaali JavaScriptiä osaavalle:
 tyyppijärjestelmä suunnittelun välineenä. Esimerkit on testattu
 TypeScript 7.0:lla tiukassa tilassa ja ajettu Node.js:llä, joka poistaa
-tyypit ajossa. Valmiit dokumentit: [typescript.pdf](typescript.pdf) ja
-pikaopas [typescript-pikaopas.pdf](typescript-pikaopas.pdf).
+tyypit ajossa. Valmiit dokumentit: [typescript.pdf](https://saperant.github.io/tutoriaalit/materiaalit/typescript.pdf) ja
+pikaopas [typescript-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/typescript-pikaopas.pdf).
 
 ## Sisältö
 

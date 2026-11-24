@@ -9,7 +9,7 @@ include-in-header:
   - ${.}/tyyli.tex
   - ${.}/pikaopas.tex
 number-sections: false
-highlight-style: tango
+highlight-style: ${.}/korostus.theme
 variables:
   documentclass: scrartcl
   classoption:
@@ -23,11 +23,13 @@ variables:
     - landscape
     - margin=11mm
     - columnsep=9mm
-  mainfont: Latin Modern Roman
-  sansfont: Latin Modern Sans
-  monofont: DejaVu Sans Mono
+  mainfont: Inter
+  mainfontoptions:
+    - Numbers=Lining
+  sansfont: Inter Display
+  monofont: JetBrains Mono
   monofontoptions:
-    - Scale=0.80
+    - Scale=0.84
   colorlinks: true
-  linkcolor: blue!50!black
-  urlcolor: blue!50!black
+  linkcolor: korostus-tumma
+  urlcolor: korostus-tumma

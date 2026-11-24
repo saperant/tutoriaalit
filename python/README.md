@@ -2,8 +2,8 @@
 
 Tiivis suomenkielinen johdatus idiomaattiseen ja ammattimaiseen
 Pythoniin ohjelmoinnin osaavalle. Esimerkit vaativat Python 3.12:n.
-Valmiit dokumentit: [python.pdf](python.pdf) ja pikaopas
-[python-pikaopas.pdf](python-pikaopas.pdf).
+Valmiit dokumentit: [python.pdf](https://saperant.github.io/tutoriaalit/materiaalit/python.pdf) ja pikaopas
+[python-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/python-pikaopas.pdf).
 
 ## Sisältö
 

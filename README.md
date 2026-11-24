@@ -17,7 +17,7 @@ Kokonaisuus koostuu kolmesta osasta:
 
 Taitopuu, roolipolut ja tutoriaalien tuotantojärjestys ovat hakemistossa
 [`opintopolut/`](opintopolut/)
-([opintopolut.pdf](opintopolut/opintopolut.pdf)).
+([opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf)).
 
 **Taitopuukartta** ([`sivusto/`](sivusto/)) on interaktiivinen
 verkkosivu, jolla taitopuuta voi tutkia: roolipolun voi valita
@@ -35,31 +35,34 @@ kiertävät muut niput. Taidolle voi antaa taitopuussa kentän `nippu`,
 jos alue halutaan jakaa useampaan nippuun.
 
 Jokaisessa tutoriaalissa on lisäksi muutaman sivun pikaopas
-(`<paketti>-pikaopas.pdf`) kokeneelle lukijalle.
+(`<paketti>-pikaopas.pdf`) kokeneelle lukijalle. PDF:t eivät ole
+versionhallinnassa: CI rakentaa ne jokaisesta muutoksesta ja julkaisee
+ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
+`make -C <paketti> pdf`.
 
 | Tutoriaali | Hakemisto | PDF |
 |------------|-----------|-----|
-| Ohjelmoinnin perusteet (Python) | [`ohjelmoinnin-perusteet/`](ohjelmoinnin-perusteet/) | [ohjelmoinnin-perusteet.pdf](ohjelmoinnin-perusteet/ohjelmoinnin-perusteet.pdf) |
-| Moderni C++ | [`moderni-cpp/`](moderni-cpp/) | [moderni-cpp.pdf](moderni-cpp/moderni-cpp.pdf) |
-| C-kieli | [`c-kieli/`](c-kieli/) | [c-kieli.pdf](c-kieli/c-kieli.pdf) |
-| Komentorivi ja Linux | [`komentorivi/`](komentorivi/) | [komentorivi.pdf](komentorivi/komentorivi.pdf) |
-| Python | [`python/`](python/) | [python.pdf](python/python.pdf) |
-| Bash-skriptaus | [`bash/`](bash/) | [bash.pdf](bash/bash.pdf) |
-| Rust | [`rust/`](rust/) | [rust.pdf](rust/rust.pdf) |
-| Java | [`java/`](java/) | [java.pdf](java/java.pdf) |
-| Kotlin | [`kotlin/`](kotlin/) | [kotlin.pdf](kotlin/kotlin.pdf) |
-| JavaScript | [`javascript/`](javascript/) | [javascript.pdf](javascript/javascript.pdf) |
-| TypeScript | [`typescript/`](typescript/) | [typescript.pdf](typescript/typescript.pdf) |
-| Go | [`go/`](go/) | [go.pdf](go/go.pdf) |
-| Tcl | [`tcl/`](tcl/) | [tcl.pdf](tcl/tcl.pdf) |
-| HTML ja CSS | [`html-css/`](html-css/) | [html-css.pdf](html-css/html-css.pdf) |
-| SQL ja relaatiotietokannat | [`sql/`](sql/) | [sql.pdf](sql/sql.pdf) |
-| Funktionaalinen ohjelmointi (Racket) | [`funktionaalinen-ohjelmointi/`](funktionaalinen-ohjelmointi/) | [funktionaalinen-ohjelmointi.pdf](funktionaalinen-ohjelmointi/funktionaalinen-ohjelmointi.pdf) |
-| Web-sovellukset | [`web-sovellukset/`](web-sovellukset/) | [web-sovellukset.pdf](web-sovellukset/web-sovellukset.pdf) |
-| Taustapalvelut | [`taustapalvelut/`](taustapalvelut/) | [taustapalvelut.pdf](taustapalvelut/taustapalvelut.pdf) |
-| RTL-suunnittelu (SystemVerilog) | [`rtl-suunnittelu/`](rtl-suunnittelu/) | [rtl-suunnittelu.pdf](rtl-suunnittelu/rtl-suunnittelu.pdf) |
-| RTL-suunnittelu VHDL:llä | [`vhdl/`](vhdl/) | [vhdl.pdf](vhdl/vhdl.pdf) |
-| Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](opintopolut/opintopolut.pdf) |
+| Ohjelmoinnin perusteet (Python) | [`ohjelmoinnin-perusteet/`](ohjelmoinnin-perusteet/) | [ohjelmoinnin-perusteet.pdf](https://saperant.github.io/tutoriaalit/materiaalit/ohjelmoinnin-perusteet.pdf) |
+| Moderni C++ | [`moderni-cpp/`](moderni-cpp/) | [moderni-cpp.pdf](https://saperant.github.io/tutoriaalit/materiaalit/moderni-cpp.pdf) |
+| C-kieli | [`c-kieli/`](c-kieli/) | [c-kieli.pdf](https://saperant.github.io/tutoriaalit/materiaalit/c-kieli.pdf) |
+| Komentorivi ja Linux | [`komentorivi/`](komentorivi/) | [komentorivi.pdf](https://saperant.github.io/tutoriaalit/materiaalit/komentorivi.pdf) |
+| Python | [`python/`](python/) | [python.pdf](https://saperant.github.io/tutoriaalit/materiaalit/python.pdf) |
+| Bash-skriptaus | [`bash/`](bash/) | [bash.pdf](https://saperant.github.io/tutoriaalit/materiaalit/bash.pdf) |
+| Rust | [`rust/`](rust/) | [rust.pdf](https://saperant.github.io/tutoriaalit/materiaalit/rust.pdf) |
+| Java | [`java/`](java/) | [java.pdf](https://saperant.github.io/tutoriaalit/materiaalit/java.pdf) |
+| Kotlin | [`kotlin/`](kotlin/) | [kotlin.pdf](https://saperant.github.io/tutoriaalit/materiaalit/kotlin.pdf) |
+| JavaScript | [`javascript/`](javascript/) | [javascript.pdf](https://saperant.github.io/tutoriaalit/materiaalit/javascript.pdf) |
+| TypeScript | [`typescript/`](typescript/) | [typescript.pdf](https://saperant.github.io/tutoriaalit/materiaalit/typescript.pdf) |
+| Go | [`go/`](go/) | [go.pdf](https://saperant.github.io/tutoriaalit/materiaalit/go.pdf) |
+| Tcl | [`tcl/`](tcl/) | [tcl.pdf](https://saperant.github.io/tutoriaalit/materiaalit/tcl.pdf) |
+| HTML ja CSS | [`html-css/`](html-css/) | [html-css.pdf](https://saperant.github.io/tutoriaalit/materiaalit/html-css.pdf) |
+| SQL ja relaatiotietokannat | [`sql/`](sql/) | [sql.pdf](https://saperant.github.io/tutoriaalit/materiaalit/sql.pdf) |
+| Funktionaalinen ohjelmointi (Racket) | [`funktionaalinen-ohjelmointi/`](funktionaalinen-ohjelmointi/) | [funktionaalinen-ohjelmointi.pdf](https://saperant.github.io/tutoriaalit/materiaalit/funktionaalinen-ohjelmointi.pdf) |
+| Web-sovellukset | [`web-sovellukset/`](web-sovellukset/) | [web-sovellukset.pdf](https://saperant.github.io/tutoriaalit/materiaalit/web-sovellukset.pdf) |
+| Taustapalvelut | [`taustapalvelut/`](taustapalvelut/) | [taustapalvelut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/taustapalvelut.pdf) |
+| RTL-suunnittelu (SystemVerilog) | [`rtl-suunnittelu/`](rtl-suunnittelu/) | [rtl-suunnittelu.pdf](https://saperant.github.io/tutoriaalit/materiaalit/rtl-suunnittelu.pdf) |
+| RTL-suunnittelu VHDL:llä | [`vhdl/`](vhdl/) | [vhdl.pdf](https://saperant.github.io/tutoriaalit/materiaalit/vhdl.pdf) |
+| Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet
 

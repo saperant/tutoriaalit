@@ -2,8 +2,8 @@
 
 Tiivis suomenkielinen johdatus synteesikelpoisen digitaalilogiikan
 kuvaamiseen SystemVerilogilla. Esitietona on taito *Digitaalitekniikka*.
-Valmis dokumentti: [rtl-suunnittelu.pdf](rtl-suunnittelu.pdf) ja
-pikaopas [rtl-suunnittelu-pikaopas.pdf](rtl-suunnittelu-pikaopas.pdf).
+Valmis dokumentti: [rtl-suunnittelu.pdf](https://saperant.github.io/tutoriaalit/materiaalit/rtl-suunnittelu.pdf) ja
+pikaopas [rtl-suunnittelu-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/rtl-suunnittelu-pikaopas.pdf).
 
 ## Sisältö
 

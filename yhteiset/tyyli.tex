@@ -1,46 +1,209 @@
-% Yhteiset LaTeX-tyylit tutoriaalien PDF-versioille.
+% Tutoriaalien yhteinen ulkoasu (XeLaTeX, KOMA-Script).
+%
+% Paketin korostusväri ja taitopuun alue tulevat Makefilestä:
+%   \def\korostusvari{2F5F9A}  \def\aluenimi{Ohjelmointikielet}
+% Oletuksena käytetään taitopuukartan perusväriä.
 
-% Pitkät koodirivit katkaistaan eikä niitä päästetä marginaaliin.
-\usepackage{fvextra}
-\DefineVerbatimEnvironment{Highlighting}{Verbatim}{
-  breaklines,breakanywhere,commandchars=\\\{\}}
+\providecommand\korostusvari{0D7A6C}
+\providecommand\aluenimi{Tutoriaalit}
 
-% Koodilohkoille vaalea tausta ja kehys.
+\usepackage{xcolor}
+\definecolor{korostus}{HTML}{\korostusvari}
+\colorlet{korostus-tumma}{korostus!80!black}
+\colorlet{korostus-vaalea}{korostus!8!white}
+\colorlet{korostus-pehmea}{korostus!20!white}
+\definecolor{muste}{HTML}{1F2A2E}
+\definecolor{hillitty}{HTML}{5B6B70}
+\definecolor{viiva}{HTML}{D9E0E3}
+\definecolor{koodintausta}{HTML}{F4F6F7}
+\definecolor{paatetausta}{HTML}{1E272B}
+\definecolor{paateteksti}{HTML}{DCE5E9}
+\definecolor{paateotsikko}{HTML}{8A9BA1}
+
+% --- Teksti ---------------------------------------------------------
+\color{muste}
+\linespread{1.13}
+\usepackage[document]{ragged2e}   % tasaamaton oikea reuna, tavutus säilyy
+\setlength{\RaggedRightParindent}{0pt}
+\usepackage{microtype}
+
+
+
+% Luettelot: korostusvärinen merkki ja tiiviit välit.
+\usepackage{enumitem}
+\setlist{itemsep=1pt, topsep=3pt, parsep=1pt}
+\setlist[itemize,1]{label={\color{korostus}\raisebox{0.15ex}{\small\textbullet}}}
+\setlist[itemize,2]{label={\color{korostus!60}\raisebox{0.15ex}{\scriptsize\textbullet}}}
+\setlist[enumerate,1]{label={\color{korostus}\sffamily\bfseries\arabic*.}}
+
+% --- Otsikot -----------------------------------------------------------
+\setkomafont{disposition}{\sffamily\bfseries\color{muste}}
+\ifdefined\chapter
+  \KOMAoptions{chapterprefix=true}
+  \RedeclareSectionCommand[beforeskip=0pt, afterskip=26pt,
+    innerskip=4pt,
+    font=\fontsize{26}{31}\selectfont\sffamily\bfseries\color{muste},
+    prefixfont=\fontsize{46}{46}\selectfont\sffamily\color{korostus}]{chapter}
+  \makeatletter
+  \renewcommand*{\chapterformat}{\two@digits{\value{chapter}}}
+  \renewcommand*{\chapterlinesformat}[3]{%
+    \ifstr{#1}{chapter}{%
+      \IfArgIsEmpty{#2}{}{#2\par\nobreak\vspace{2pt}}%
+      #3\par\nobreak\vspace{8pt}%
+      {\color{korostus}\rule{28mm}{2.2pt}}%
+    }{\@hangfrom{#2}{#3}}}
+  \makeatother
+\fi
+\RedeclareSectionCommand[beforeskip=-18pt plus -4pt, afterskip=6pt,
+  font=\fontsize{15}{19}\selectfont\sffamily\bfseries]{section}
+\RedeclareSectionCommand[beforeskip=-12pt plus -3pt, afterskip=3pt,
+  font=\fontsize{12}{15}\selectfont\sffamily\bfseries]{subsection}
+\RedeclareSectionCommand[beforeskip=-9pt plus -2pt, afterskip=2pt,
+  font=\normalsize\sffamily\bfseries]{subsubsection}
+\renewcommand*{\sectionformat}{{\color{korostus}\thesection}\enskip}
+\renewcommand*{\subsectionformat}{{\color{korostus}\thesubsection}\enskip}
+
+% Sisällysluettelo: luvut lihavoituina, sivunumerot korostusvärillä.
+\ifdefined\chapter
+  \RedeclareSectionCommand[tocentryformat=\sffamily\bfseries,
+    tocpagenumberformat=\sffamily\bfseries\color{korostus},
+    tocbeforeskip=7pt]{chapter}
+  \RedeclareSectionCommand[tocentryformat=\color{muste},
+    tocpagenumberformat=\color{hillitty}, tocdynnumwidth]{section}
+\fi
+
+% --- Sivun ylä- ja alaosa -----------------------------------------------
+\usepackage[headsepline=0.4pt, plainheadsepline=false]{scrlayer-scrpage}
+\addtokomafont{headsepline}{\color{viiva}}
+\setkomafont{pageheadfoot}{\footnotesize\sffamily\color{hillitty}}
+\setkomafont{pagenumber}{\footnotesize\sffamily\bfseries\color{korostus}}
+\clearpairofpagestyles
+\ifdefined\chapter
+  \automark[chapter]{chapter}
+  \renewcommand*{\chaptermarkformat}{\chapterformat\enskip}
+\else
+  \automark[section]{section}
+\fi
+\ihead{\headmark}
+\ohead{\pagemark}
+\cfoot[]{}
+
+% --- Huomautukset (Markdownin lainauslohko) ----------------------------
 \usepackage[most]{tcolorbox}
-\definecolor{koodintausta}{HTML}{F7F7F5}
-\definecolor{koodinreuna}{HTML}{D8D8D4}
-\renewenvironment{Shaded}{%
-  \begin{tcolorbox}[breakable, enhanced, colback=koodintausta,
-    colframe=koodinreuna, boxrule=0.4pt, arc=1pt,
-    left=4pt, right=4pt, top=2pt, bottom=2pt]}{\end{tcolorbox}}
-
-% Lainauslohkoja käytetään huomautuksiin.
-\usepackage{etoolbox}
-\definecolor{huomreuna}{HTML}{4A7AB0}
 \renewenvironment{quote}{%
-  \begin{tcolorbox}[breakable, enhanced, colback=white,
-    colframe=white, borderline west={2pt}{0pt}{huomreuna},
-    left=8pt, right=0pt, top=1pt, bottom=1pt, sharp corners]}%
+  \begin{tcolorbox}[breakable, enhanced, colback=korostus-vaalea,
+    colframe=korostus-vaalea, boxrule=0pt, arc=3pt,
+    borderline west={2.5pt}{0pt}{korostus},
+    left=10pt, right=8pt, top=5pt, bottom=5pt,
+    before skip=8pt, after skip=8pt]}%
   {\end{tcolorbox}}
 
-% Otsikot hieman hillitymmiksi.
-\addtokomafont{disposition}{\rmfamily}
-\ifdefined\chapter\addtokomafont{chapter}{\Huge}\fi
+% --- Koodi ----------------------------------------------------------------
+\usepackage{fvextra}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{
+  breaklines, breakanywhere, commandchars=\\\{\},
+  breaksymbolleft={\color{hillitty}\tiny\ensuremath{\hookrightarrow}}}
+\renewenvironment{Shaded}{%
+  \begin{tcolorbox}[breakable, enhanced, colback=koodintausta,
+    colframe=koodintausta, boxrule=0pt, arc=3pt,
+    borderline west={2pt}{0pt}{korostus!55},
+    left=8pt, right=6pt, top=4pt, bottom=4pt,
+    before skip=6pt, after skip=8pt]}{\end{tcolorbox}}
 
-% Taulukot eivät saa ylittää tekstialuetta.
-\usepackage{booktabs}
-
-% Ohjelmien tulosteet: valkoinen laatikko, harmaa reuna ja otsikko.
-\definecolor{tulostereuna}{HTML}{9A9A94}
+% Ohjelmien tulosteet päätteen näköisinä: tumma tausta ja otsikko.
 \newtcolorbox{tulostelaatikko}{breakable, enhanced jigsaw,
-  colback=white, colframe=tulostereuna, boxrule=0.4pt, arc=1pt,
-  left=4pt, right=4pt, top=2pt, bottom=2pt,
-  overlay unbroken and first={\node[anchor=north east, inner sep=2pt,
-    font=\scriptsize\sffamily\color{tulostereuna}]
-    at (frame.north east) {tuloste};}}
+  colback=paatetausta, colframe=paatetausta, boxrule=0pt, arc=3pt,
+  left=8pt, right=6pt, top=13pt, bottom=5pt,
+  before skip=6pt, after skip=8pt,
+  overlay unbroken and first={\node[anchor=north west, inner sep=0pt,
+    xshift=8pt, yshift=-4.5pt,
+    font=\fontsize{6.5}{7}\selectfont\sffamily\bfseries\color{paateotsikko}]
+    at (frame.north west) {TULOSTE};}}
 \DefineVerbatimEnvironment{tulosteverbatim}{Verbatim}{breaklines,
-  breakanywhere, fontsize=\small}
+  breakanywhere, fontsize=\small, formatcom=\color{paateteksti}}
 \newenvironment{tuloste}{\VerbatimEnvironment
   \begin{tulostelaatikko}\begin{tulosteverbatim}}%
   {\end{tulosteverbatim}\end{tulostelaatikko}}
+
+% --- Luvun lopun osiot (ks. ulkoasu.lua) ----------------------------------
+% Käytännössä: sävytetty paneeli, jossa korostusvärinen reuna.
+\newenvironment{kaytannossa}{%
+  \begin{tcolorbox}[breakable, enhanced, colback=korostus-vaalea,
+    colframe=korostus-vaalea, boxrule=0pt, arc=4pt,
+    borderline west={3pt}{0pt}{korostus},
+    left=12pt, right=10pt, top=6pt, bottom=6pt,
+    before skip=4pt, after skip=8pt]}%
+  {\end{tcolorbox}}
+% Itsearviointi: tarkistuslista laatikossa.
+\newenvironment{itsearviointi}{%
+  \begin{tcolorbox}[breakable, enhanced, colback=white,
+    colframe=korostus-pehmea, boxrule=1pt, arc=4pt,
+    left=10pt, right=10pt, top=6pt, bottom=6pt,
+    before skip=10pt, after skip=6pt,
+    title={\sffamily\bfseries Itsearviointi\hfill
+      \mdseries\footnotesize Osaatko nämä? Jos osaat, voit siirtyä
+      seuraavaan lukuun.},
+    coltitle=muste, colbacktitle=korostus-vaalea, attach title to upper=\par\vspace{4pt},
+    fonttitle=\normalsize]}%
+  {\end{tcolorbox}}
+\newlist{tarkistuslista}{itemize}{1}
+\setlist[tarkistuslista]{label={\color{korostus}\large$\square$},
+  leftmargin=18pt, itemsep=3pt, topsep=2pt}
+
+% --- Taulukot ---------------------------------------------------------
+\usepackage{booktabs}
+\usepackage{colortbl}
+\setlength{\aboverulesep}{2pt}
+\setlength{\belowrulesep}{3pt}
+\renewcommand{\toprule}{\arrayrulecolor{korostus}\specialrule{1.2pt}{0pt}{3pt}\arrayrulecolor{viiva}}
+\renewcommand{\bottomrule}{\arrayrulecolor{korostus}\specialrule{0.6pt}{3pt}{0pt}\arrayrulecolor{black}}
+\renewcommand{\midrule}{\arrayrulecolor{viiva}\specialrule{0.6pt}{2pt}{3pt}}
+\AtBeginEnvironment{longtable}{\small\sffamily}
+
+% --- Kansilehti ---------------------------------------------------------
+\usepackage{tikz}
+\makeatletter
+\renewcommand{\maketitle}{%
+  \begin{titlepage}
+  \thispagestyle{empty}
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[korostus] (current page.north west) rectangle
+      ([yshift=-118mm]current page.north east);
+    % Taitopuukartan ratoja muistuttava kuvio.
+    \begin{scope}[shift={([xshift=-38mm, yshift=-52mm]current page.north east)}]
+      \foreach \r/\o in {14/0.55, 26/0.35, 40/0.22, 56/0.14} {
+        \draw[white, opacity=\o, line width=0.8pt] (0,0) circle (\r mm);
+      }
+      \foreach \k/\r in {20/14, 140/14, 260/14, 60/26, 175/26, 300/26,
+                         15/40, 110/40, 205/40, 330/40, 80/56, 250/56} {
+        \fill[white, opacity=0.85] (\k:\r mm) circle (1.6mm);
+      }
+      \fill[white] (0,0) circle (3mm);
+    \end{scope}
+    \node[anchor=north west, inner sep=0pt, text width=150mm,
+      align=left, font=\sffamily\bfseries\footnotesize, text=white]
+      at ([xshift=24mm, yshift=-24mm]current page.north west)
+      {\MakeUppercase{\aluenimi}};
+    \node[anchor=south west, inner sep=0pt, text width=150mm,
+      align=left, text=white]
+      at ([xshift=24mm, yshift=-108mm]current page.north west)
+      {{\fontsize{40}{44}\selectfont\sffamily\bfseries\@title\par}
+       \ifx\@subtitle\@empty\else
+         \vspace{6pt}{\fontsize{14}{18}\selectfont\sffamily\@subtitle\par}%
+       \fi};
+    \node[anchor=south west, inner sep=0pt, text width=162mm,
+      align=left, font=\footnotesize\sffamily, text=hillitty]
+      at ([xshift=24mm, yshift=22mm]current page.south west)
+      {{\color{korostus}\bfseries Tutoriaalit}\enspace·\enspace
+       testattua oppimateriaalia suomeksi\enspace·\enspace\@date\par
+       \vspace{3pt}Lisenssi: Creative Commons Nimeä–JaaSamoin 4.0
+       (CC BY-SA 4.0)};
+  \end{tikzpicture}
+  \end{titlepage}}
+\makeatother
+
+% Pikaoppaissa (scrartcl) ei ole lukuja.
+\ifdefined\chapter\else
+  \renewcommand*{\sectionformat}{}
+\fi
 

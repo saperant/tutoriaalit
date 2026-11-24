@@ -1,8 +1,8 @@
 # Bash-skriptaus
 
 Tiivis suomenkielinen opas luotettavien Bash-skriptien kirjoittamiseen
-Bash 5.2:lla. Valmis dokumentti: [bash.pdf](bash.pdf), pikaopas
-[bash-pikaopas.pdf](bash-pikaopas.pdf).
+Bash 5.2:lla. Valmis dokumentti: [bash.pdf](https://saperant.github.io/tutoriaalit/materiaalit/bash.pdf), pikaopas
+[bash-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/bash-pikaopas.pdf).
 
 ## Sisältö
 

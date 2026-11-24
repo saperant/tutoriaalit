@@ -534,7 +534,8 @@ def readme(puu: Puu) -> str:
          "taito, ja taidot rakentuvat toistensa päälle. Roolit ovat "
          "ammattiprofiileja, joiden polku kulkee puun läpi.", "",
          f"Taitoja on {len(puu.taidot)}, yhteensä noin {op} op. "
-         "Valmis PDF: [opintopolut.pdf](opintopolut.pdf). "
+         "Valmis PDF: [opintopolut.pdf]"
+         "(https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf). "
          "Taitopuun lähdetiedosto: [taitopuu.toml](taitopuu.toml).", "",
          "## Roolit", "",
          "| Rooli | Tavoitteet | Taitoja | op |",

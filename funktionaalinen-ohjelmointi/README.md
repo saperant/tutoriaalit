@@ -6,9 +6,9 @@ muuttumaton data ja hahmontunnistus, makrot, laiska laskenta ja oma
 tulkki. Kielenä on Racket 8.10. Jokainen luku kertoo, missä sama malli
 näkyy Pythonissa, JavaScriptissä, Javassa, C++:ssa ja Rustissa.
 Valmiit dokumentit:
-[funktionaalinen-ohjelmointi.pdf](funktionaalinen-ohjelmointi.pdf) ja
+[funktionaalinen-ohjelmointi.pdf](https://saperant.github.io/tutoriaalit/materiaalit/funktionaalinen-ohjelmointi.pdf) ja
 pikaopas
-[funktionaalinen-ohjelmointi-pikaopas.pdf](funktionaalinen-ohjelmointi-pikaopas.pdf).
+[funktionaalinen-ohjelmointi-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/funktionaalinen-ohjelmointi-pikaopas.pdf).
 
 ## Sisältö
 

@@ -1,13 +1,28 @@
 % Pikaoppaan tiivistetty ulkoasu.
-\RedeclareSectionCommand[beforeskip=6pt,afterskip=2pt,font=\large\rmfamily\bfseries]{section}
-\RedeclareSectionCommand[beforeskip=4pt,afterskip=1pt,font=\normalsize\rmfamily\bfseries]{subsection}
+\RedeclareSectionCommand[beforeskip=7pt,afterskip=2pt,
+  font=\large\sffamily\bfseries\color{korostus-tumma}]{section}
+\RedeclareSectionCommand[beforeskip=4pt,afterskip=1pt,
+  font=\normalsize\sffamily\bfseries]{subsection}
 \setlength{\columnseprule}{0.3pt}
+\pagestyle{scrheadings}
+\clearpairofpagestyles
+\ofoot{\pagemark}
 \makeatletter
 \renewcommand{\maketitle}{%
-  {\noindent\Large\bfseries\@title\par}
-  {\noindent\small\@subtitle\par}\vspace{4pt}}
+  \begin{tcolorbox}[enhanced, colback=korostus, colframe=korostus,
+    arc=3pt, boxrule=0pt, left=8pt, right=8pt, top=6pt, bottom=6pt,
+    before skip=0pt, after skip=6pt]
+  {\color{white}\fontsize{6.5}{8}\selectfont\sffamily\bfseries
+    PIKAOPAS\enspace·\enspace\MakeUppercase{\aluenimi}\par}
+  \vspace{2pt}
+  {\color{white}\fontsize{17}{20}\selectfont\sffamily\bfseries\@title\par}
+  \ifx\@subtitle\@empty\else
+    {\color{white}\small\sffamily\@subtitle\par}%
+  \fi
+  \end{tcolorbox}}
 \makeatother
 \tcbset{before skip=2pt, after skip=3pt}
+\setlist{itemsep=0pt, topsep=1pt, parsep=0pt}
 
 % Kaksipalstaisessa tilassa longtable ei ole sallittu. Pikaoppaan
 % taulukot ovat lyhyitä, joten ne ladotaan tavallisina taulukoina.
