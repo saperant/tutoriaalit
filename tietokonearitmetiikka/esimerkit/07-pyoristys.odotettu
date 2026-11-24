@@ -1,0 +1,8 @@
+FE_TONEAREST  0.33333333333333331483
+FE_UPWARD     0.33333333333333337035
+FE_DOWNWARD   0.33333333333333331482
+FE_TOWARDZERO 0.33333333333333331482
+2.5                 round    3  rint    2  floor    2  trunc    2
+3.5                 round    4  rint    4  floor    3  trunc    3
+-2.5                round   -3  rint   -2  floor   -3  trunc   -2
+2.4999999999999996  round    2  rint    2  floor    2  trunc    2

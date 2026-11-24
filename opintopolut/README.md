@@ -63,7 +63,7 @@ flowchart LR
     kayttojarjestelmat["Käyttöjärjestelmät"]
     rinnakkaisohjelmointi["Rinnakkaisohjelmointi"]
     suorituskyky["Suorituskyvyn analyysi ja optimointi"]
-    tietokonearitmetiikka["Miten tietokone laskee"]
+    tietokonearitmetiikka["✓ Miten tietokone laskee"]
     virtualisointi["Virtualisointi"]
   end
   subgraph laitteisto["Laitteistosuunnittelu"]
@@ -331,7 +331,7 @@ flowchart LR
 |-------|---:|------------|------|
 | Digitaalitekniikka | 5 | Diskreetti matematiikka | suunniteltu |
 | Assembly | 5 | C-kieli, Digitaalitekniikka | suunniteltu |
-| Miten tietokone laskee | 3 | C-kieli | suunniteltu |
+| Miten tietokone laskee | 3 | C-kieli | [valmis](../tietokonearitmetiikka/) |
 | Objektitiedostot, linkitys ja ABI | 3 | Assembly | suunniteltu |
 | Tietokonearkkitehtuuri | 5 | Assembly | suunniteltu |
 | Käyttöjärjestelmät | 5 | Tietokonearkkitehtuuri | suunniteltu |

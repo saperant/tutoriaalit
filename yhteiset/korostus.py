@@ -38,7 +38,12 @@ def korostus(paketti: str) -> tuple[str, str]:
 
 def main() -> int:
     vari, alue = korostus(sys.argv[1]) if len(sys.argv) > 1 else OLETUS
-    print(f"\\def\\korostusvari{{{vari}}}\\def\\aluenimi{{{alue}}}")
+    # Alueen nimi ladotaan versaalein. Ääkköset kirjoitetaan XeTeXin
+    # ^^^^-merkintänä, koska pandoc voi tulkita komentoriviargumentin
+    # väärällä merkistöllä, jos ympäristön lokaali ei ole UTF-8.
+    nimi = "".join(c if ord(c) < 128 else f"^^^^{ord(c):04x}"
+                   for c in alue.upper())
+    print(f"\\def\\korostusvari{{{vari}}}\\def\\aluenimi{{{nimi}}}")
     return 0
 
 

@@ -1,0 +1,8 @@
+double 1                  ulp 2.22045e-16
+double 1000               ulp 1.13687e-13
+double 1000000            ulp 1.16415e-10
+double 9007199254740992   ulp 2
+float  1                  ulp 1.19209e-07
+float  1000               ulp 6.10352e-05
+float  16777216           ulp 2
+float: 32768.000 s, double: 86400.000 s

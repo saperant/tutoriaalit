@@ -1,0 +1,4 @@
+painot 4096 -> 1024 tavua
+syötteen skaala 0.00784, nollapiste -128
+suurin suhteellinen virhe 0.4%
+kertymän suurin itseisarvo 326812 > int16:n raja 32767: True

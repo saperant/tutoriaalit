@@ -1,0 +1,7 @@
+muoto         suurin pienin norm.   epsilon
+binary16       65504  6.10352e-05 0.0009766
+bfloat16  3.38953e+38  1.17549e-38  0.007812
+FP8 E5M2       57344  6.10352e-05      0.25
+FP8 E4M3         448     0.015625     0.125
+binary16 sama: True
+bfloat16 sama: True

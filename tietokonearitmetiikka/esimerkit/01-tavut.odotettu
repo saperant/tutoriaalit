@@ -1,0 +1,6 @@
+int32_t 1000           e8 03 00 00
+int32_t -1             ff ff ff ff
+uint16_t 443           bb 01
+float 0.1              cd cc cc 3d
+double 0.1             9a 99 99 99 99 99 b9 3f
+char[] UTF-8           c3 a4 c3 b6 00

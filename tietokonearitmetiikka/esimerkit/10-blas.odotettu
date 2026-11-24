@@ -1,0 +1,4 @@
+samat: True
+BLAS yli 50 kertaa nopeampi: True
+28800 14400 float32
+float32-ero alle 1e-4: True

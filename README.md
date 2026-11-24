@@ -63,6 +63,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Android-sovellukset | [`android-sovellukset/`](android-sovellukset/) | [android-sovellukset.pdf](https://saperant.github.io/tutoriaalit/materiaalit/android-sovellukset.pdf) |
 | Tietoturvan perusteet | [`tietoturvan-perusteet/`](tietoturvan-perusteet/) | [tietoturvan-perusteet.pdf](https://saperant.github.io/tutoriaalit/materiaalit/tietoturvan-perusteet.pdf) |
 | Kryptografia | [`kryptografia/`](kryptografia/) | [kryptografia.pdf](https://saperant.github.io/tutoriaalit/materiaalit/kryptografia.pdf) |
+| Miten tietokone laskee | [`tietokonearitmetiikka/`](tietokonearitmetiikka/) | [tietokonearitmetiikka.pdf](https://saperant.github.io/tutoriaalit/materiaalit/tietokonearitmetiikka.pdf) |
 | RTL-suunnittelu (SystemVerilog) | [`rtl-suunnittelu/`](rtl-suunnittelu/) | [rtl-suunnittelu.pdf](https://saperant.github.io/tutoriaalit/materiaalit/rtl-suunnittelu.pdf) |
 | RTL-suunnittelu VHDL:llä | [`vhdl/`](vhdl/) | [vhdl.pdf](https://saperant.github.io/tutoriaalit/materiaalit/vhdl.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |

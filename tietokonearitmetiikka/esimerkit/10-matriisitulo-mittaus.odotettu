@@ -1,0 +1,4 @@
+tulokset samat (ero < 1e-9): kyllä
+liukulukuoperaatioita 268 miljoonaa
+ikj vähintään 2 kertaa nopeampi kuin ijk: kyllä
+lohkottu vähintään 2 kertaa nopeampi kuin ijk: kyllä

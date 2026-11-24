@@ -1567,6 +1567,7 @@ laajuus = 3
 testaus = "C (GCC, Clang ja sanitoijat) ja Python (NumPy)"
 roadmap = ["computer-science"]
 amk = "Tietokonetekniikka"
+tutoriaali = "tietokonearitmetiikka"
 
 [[taito]]
 id = "virtualisointi"
