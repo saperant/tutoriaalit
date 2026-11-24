@@ -117,6 +117,7 @@ def testaa(tutoriaali: str) -> bool:
     print(f"== {tutoriaali}: make testaa kontissa", flush=True)
     tulos = subprocess.run(
         ["docker", "run", "--rm", *isantaverkko, *ajoymparisto,
+         *asetukset.get("runArgs", []),
          "-v", f"{JUURI}:/w", "-w", "/w", kuva,
          "make", "-C", tutoriaali, "testaa"])
     return tulos.returncode == 0

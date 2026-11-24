@@ -1,0 +1,19 @@
+{
+  "name": "Palveluarkkitehtuurit: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "openjdk-21-jdk-headless"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/palveluarkkitehtuurit/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vmware.vscode-boot-dev-pack",
+        "redhat.java"
+      ]
+    }
+  }
+}
