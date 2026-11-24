@@ -1,0 +1,16 @@
+yosys -c synteesi.tcl: paluuarvo 0
+  LEVEYS= 4: kiikkuja  5 (LEVEYS + 1: kyllä)
+  LEVEYS= 8: kiikkuja  9 (LEVEYS + 1: kyllä)
+  LEVEYS=16: kiikkuja 17 (LEVEYS + 1: kyllä)
+  solumäärä kasvaa leveyden mukana: kyllä
+  pisin polku ei lyhene: kyllä
+opetus-sta:
+  sta_kulku.tcl, LEVEYS=4, 10.0 ns: MET
+  sta_kulku.tcl, LEVEYS=8, 10.0 ns: MET
+  sta_kulku.tcl, LEVEYS=16, 10.0 ns: MET
+  sta_kulku.tcl, LEVEYS=4, 0.5 ns: VIOLATED
+  sta_rikki.tcl: paluuarvo 1
+  Error: invalid command name "report_timnig" (sta_rikki.tcl, rivi 5)
+yosys -c sieto.tcl: paluuarvo 0
+  ei saatu luettua laskuri_v2.sv, käytetään varaa
+  hierarkia tarkistettu, jatketaan synteesiin

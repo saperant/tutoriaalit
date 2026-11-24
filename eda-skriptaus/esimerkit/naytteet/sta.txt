@@ -1,0 +1,8 @@
+Ajoitusraportti (opetus-sta)
+Kello: clk  jakso 10.00 ns
+Lähtö: arvo[1] (kiikku)
+Loppu: yli (kiikku)
+Polun syvyys: 7
+  saapumisaika     1.61
+  vaadittu aika    9.88
+  slack            8.27 (MET)

@@ -1,0 +1,12 @@
+| Versio | Läpi | Ajoja | Osuus |
+|--------|------|-------|-------|
+| c1     | 8    | 8     | 100 % |
+| c2     | 8    | 8     | 100 % |
+| c3     | 4    | 8     | 50 %  |
+| c4     | 5    | 8     | 62 %  |
+
+ensimmäinen hylkäävä versio:
+  c3: VIRHE op=3 a=<n> b=<n> saatu=<n> odotettu=<n> (11 kertaa)
+
+epävakaat (sama versio ja siemen, eri tulos):
+  alu siemen 7 versiossa c4

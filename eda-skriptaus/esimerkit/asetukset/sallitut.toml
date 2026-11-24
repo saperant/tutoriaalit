@@ -1,0 +1,23 @@
+# Hyväksytyt lint-varoitukset. Jokaisella on peruste ja viimeinen
+# voimassaolopäivä; vanhentunut hyväksyntä kaataa laatuportin.
+
+[[sallittu]]
+koodi = "UNUSEDSIGNAL"
+tiedosto = "rtl/ohjain.sv"
+kuvio = "'testi'"
+peruste = "Tuotantotestin tulo kytketään vasta piirin ylätasolla."
+voimassa = 2027-06-30
+
+[[sallittu]]
+koodi = "UNUSEDSIGNAL"
+tiedosto = "rtl/ohjain.sv"
+kuvio = "'data'\\[7\\]"
+peruste = "Pariteettibitti otetaan käyttöön versiossa 2."
+voimassa = 2026-10-31
+
+[[sallittu]]
+koodi = "UNUSEDPARAM"
+tiedosto = "rtl/laskuri.sv"
+kuvio = "'LEVEYS'"
+peruste = "Vanha merkintä ajalta ennen parametrin käyttöönottoa."
+voimassa = 2027-01-31

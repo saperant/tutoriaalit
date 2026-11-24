@@ -1,0 +1,12 @@
+| Mittari          | Arvo | Arvio              |
+|------------------|------|--------------------|
+| solut            | 24   | OK                 |
+| kiikut           | 9    | OK                 |
+| slack (ns)       | 8.27 | OK                 |
+| simuloinnit      | 0/1  | VIRHE: hylättyjä   |
+| kattavuus        | 6/16 | VIRHE: aukkoja     |
+| lint-varoitukset | 4    | VIRHE: varoituksia |
+JSON-avaimet: ajoitus, kattavuus, lohko, resurssit, simuloinnit, varoitukset
+tyypit: {'$_AND_': 7, '$_DFFE_PN0P_': 9, '$_NOT_': 1, '$_XOR_': 7}
+HTML: 7 riviä, 3 korostettua
+sta_rikki.txt hylättiin: slack ei ole vaadittu - saapumisaika

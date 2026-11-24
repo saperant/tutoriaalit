@@ -1,0 +1,18 @@
+%Warning-WIDTHTRUNC: rtl/ohjain.sv:16:22: Operator ASSIGNDLY expects 4 bits on the Assign RHS, but Assign RHS's VARREF 'summa' generates 8 bits.
+                                        : ... note: In instance 'ohjain'
+   16 |     else        tila <= summa;
+      |                      ^~
+                     ... For warning description see https://verilator.org/warn/WIDTHTRUNC?v=5.020
+                     ... Use "/* verilator lint_off WIDTHTRUNC */" and lint_on around source to disable this message.
+%Warning-UNUSEDSIGNAL: rtl/ohjain.sv:6:22: Bits of signal are not used: 'data'[7]
+                                         : ... note: In instance 'ohjain'
+    6 |   input  logic [7:0] data,
+      |                      ^~~~
+%Warning-UNUSEDSIGNAL: rtl/ohjain.sv:7:22: Signal is not used: 'testi'
+                                         : ... note: In instance 'ohjain'
+    7 |   input  logic       testi,     
+      |                      ^~~~~
+%Warning-UNUSEDSIGNAL: rtl/ohjain.sv:10:15: Bits of signal are not used: 'summa'[7:4]
+                                          : ... note: In instance 'ohjain'
+   10 |   logic [7:0] summa;
+      |               ^~~~~

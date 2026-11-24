@@ -1,0 +1,34 @@
+/*
+ * Tuotettu tiedostosta asetukset/rekisterit.toml (vuo/rekisterit.py).
+ * Älä muokkaa käsin: muutokset tehdään kuvaukseen.
+ */
+#ifndef AJASTIN_REGS_H
+#define AJASTIN_REGS_H
+
+#define AJASTIN_PERUSOSOITE 0x40001000u
+
+/* CTRL: Ohjaus */
+#define AJASTIN_CTRL_OFFSET 0x00u
+#define AJASTIN_CTRL_EN_SHIFT 0u
+#define AJASTIN_CTRL_EN_MASK 0x00000001u
+#define AJASTIN_CTRL_IE_SHIFT 1u
+#define AJASTIN_CTRL_IE_MASK 0x00000002u
+#define AJASTIN_CTRL_JAKAJA_SHIFT 8u
+#define AJASTIN_CTRL_JAKAJA_MASK 0x0000FF00u
+
+/* STATUS: Tila */
+#define AJASTIN_STATUS_OFFSET 0x04u
+#define AJASTIN_STATUS_VALMIS_SHIFT 0u
+#define AJASTIN_STATUS_VALMIS_MASK 0x00000001u
+
+/* LASKURI: Laskurin arvo */
+#define AJASTIN_LASKURI_OFFSET 0x08u
+#define AJASTIN_LASKURI_ARVO_SHIFT 0u
+#define AJASTIN_LASKURI_ARVO_MASK 0x0000FFFFu
+
+/* VERTAA: Vertailuarvo */
+#define AJASTIN_VERTAA_OFFSET 0x0Cu
+#define AJASTIN_VERTAA_ARVO_SHIFT 0u
+#define AJASTIN_VERTAA_ARVO_MASK 0x0000FFFFu
+
+#endif /* AJASTIN_REGS_H */

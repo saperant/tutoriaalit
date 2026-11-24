@@ -1,0 +1,47 @@
+# Virheellinen kuvaus: tarkistin löytää kaikki virheet kerralla ennen
+# kuin mitään tuotetaan.
+
+[lohko]
+nimi = "rikki"
+perusosoite = 0x4000_2000
+leveys = 32
+
+[[rekisteri]]
+nimi = "CTRL"
+osoite = 0x00
+kuvaus = "Ohjaus"
+
+[[rekisteri.kentta]]
+nimi = "EN"
+bitit = [0, 0]
+paasy = "rw"
+kuvaus = "Käy"
+
+[[rekisteri.kentta]]
+nimi = "TILA"
+bitit = [3, 0]
+paasy = "rw"
+kuvaus = "Tila"
+
+[[rekisteri.kentta]]
+nimi = "RAJA"
+bitit = [40, 32]
+paasy = "rw"
+kuvaus = "Raja"
+
+[[rekisteri]]
+nimi = "DATA"
+osoite = 0x06
+kuvaus = "Data"
+
+[[rekisteri.kentta]]
+nimi = "ARVO"
+bitit = [3, 0]
+paasy = "wo"
+nollaus = 16
+kuvaus = "Arvo"
+
+[[rekisteri]]
+nimi = "data"
+osoite = 0x00
+kuvaus = "Data uudelleen"

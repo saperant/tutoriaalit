@@ -1,0 +1,68 @@
+# Tuotettu tiedostosta asetukset/ci.toml komennolla
+# python3 10-ci.py --kirjoita. Älä muokkaa käsin.
+name: laitteisto
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '17 2 * * *'
+
+jobs:
+  lint:
+    runs-on: ubuntu-24.04
+    container: ghcr.io/oma-organisaatio/eda-tyokalut:2026.11
+    defaults:
+      run:
+        working-directory: eda-skriptaus/esimerkit
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 aja_vuo.py --ajohak ajo lint
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: lint, path: eda-skriptaus/esimerkit/ajo}
+  toteutus:
+    runs-on: ubuntu-24.04
+    container: ghcr.io/oma-organisaatio/eda-tyokalut:2026.11
+    needs: [lint]
+    env:
+      LM_LICENSE_FILE: ${{ secrets.LM_LICENSE_FILE }}
+    defaults:
+      run:
+        working-directory: eda-skriptaus/esimerkit
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with: {name: lint, path: eda-skriptaus/esimerkit/ajo}
+      - run: python3 aja_vuo.py --ajohak ajo sta
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: toteutus, path: eda-skriptaus/esimerkit/ajo}
+  simulointi:
+    runs-on: ubuntu-24.04
+    container: ghcr.io/oma-organisaatio/eda-tyokalut:2026.11
+    defaults:
+      run:
+        working-directory: eda-skriptaus/esimerkit
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: eda-skriptaus/esimerkit/ajo
+          key: >-
+            simulointi-2026.11-${{ hashFiles(
+            'eda-skriptaus/esimerkit/rtl/**',
+            'eda-skriptaus/esimerkit/tb/**') }}
+      - run: python3 aja_vuo.py --ajohak ajo sim
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: simulointi, path: eda-skriptaus/esimerkit/ajo}
+  regressio:
+    runs-on: ubuntu-24.04
+    container: ghcr.io/oma-organisaatio/eda-tyokalut:2026.11
+    if: github.event_name == 'schedule'
+    defaults:
+      run:
+        working-directory: eda-skriptaus/esimerkit
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 07-regressio.py

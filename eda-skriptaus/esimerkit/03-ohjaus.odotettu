@@ -1,0 +1,6 @@
+yosys, puuttuva tiedosto: paluuarvo 1, ERROR-rivi lokissa: kyllä
+simulointi, viallinen ALU: paluuarvo 0, testin tulos virhe
+simulointi, jumi: paluuarvo -1, aikakatkaisu: kyllä
+verilator: virhe, virheitä 3, rajoitusilmoituksia: ei
+icarus   : virhe, virheitä 3, rajoitusilmoituksia: kyllä
+sama tulos ja kattavuus: kyllä

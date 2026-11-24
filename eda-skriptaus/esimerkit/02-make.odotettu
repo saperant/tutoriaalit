@@ -1,0 +1,11 @@
+make:
+  lint
+  synteesi
+  sta
+ilman muutoksia: ajan tasalla
+LEVEYS=16: ajan tasalla
+touch rtl/laskuri.sv: vanhentunut
+make:
+  lint
+  synteesi
+  sta

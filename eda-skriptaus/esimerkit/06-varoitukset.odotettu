@@ -1,0 +1,12 @@
+vakavuus: tyyli 3, varoitus 1
+uudet:
+  UNUSEDSIGNAL rtl/ohjain.sv:10
+  WIDTHTRUNC   rtl/ohjain.sv:16
+sallitut:
+  UNUSEDSIGNAL rtl/ohjain.sv:7
+vanhentuneet:
+  UNUSEDSIGNAL rtl/ohjain.sv:6
+tarpeettomat sallinnat:
+  UNUSEDPARAM  rtl/laskuri.sv ('LEVEYS')
+laatuportti: HYLÄTTY
+paluuarvo vuossa: 1

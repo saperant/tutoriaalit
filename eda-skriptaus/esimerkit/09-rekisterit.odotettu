@@ -1,0 +1,21 @@
+rekisterit_rikki.toml:
+  CTRL.TILA: menee päällekkäin toisen kentän kanssa
+  CTRL.RAJA: bitit [40:32] eivät mahdu 32 bittiin
+  DATA: osoite 0x6 ei ole 4 tavun rajalla
+  DATA.ARVO: tuntematon pääsy 'wo'
+  DATA.ARVO: nollausarvo 16 ei mahdu 4 bittiin
+  data: nimen on oltava isoin kirjaimin
+  data: osoite 0x0 on jo rekisterillä CTRL
+  data: ei kenttiä
+rekisterit.toml: 0 virhettä
+tuotettu/: ajan tasalla
+tuotettu/: lint puhdas
+  REKISTERITESTI OK 15 tarkistusta
+käsin muokattu kopio: poikkeaa ajastin_regs.sv
+käsin muokattu kopio: lint puhdas
+  VIRHE CTRL.JAKAJA lähtö nollauksessa
+  VIRHE CTRL nollausarvo
+  REKISTERITESTI EPÄONNISTUI 2 virhettä
+c/ajuri.c: käännös onnistui
+  CTRL   @ 0x40001000 = 0x00000503
+  VERTAA @ 0x4000100C = 0x000003E8

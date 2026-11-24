@@ -1,0 +1,10 @@
+| Työ        | Ajaa                    | Tarvitsee |
+|------------|-------------------------|-----------|
+| lint       | lint                    | -         |
+| toteutus   | sta                     | lint      |
+| simulointi | sim                     | -         |
+| regressio  | python3 07-regressio.py | -         |
+tarkistus: 0 virhettä
+ilman toteutuksen riippuvuutta:
+  toteutus: vaihe lint tulee työstä lint, joka puuttuu tarvitsee-listasta
+ci/laitteisto.yml: ajan tasalla

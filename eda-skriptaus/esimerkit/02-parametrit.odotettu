@@ -1,0 +1,5 @@
+leveys-16 leveys-4 leveys-8
+leveys-4: kiikkuja 5, ajoitus MET, vaiheita 3
+leveys-8: kiikkuja 9, ajoitus MET, vaiheita 3
+leveys-16: kiikkuja 17, ajoitus MET, vaiheita 3
+ajo.json: komennot, parametrit, tyokalut, vaiheet

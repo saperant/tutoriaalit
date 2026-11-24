@@ -74,7 +74,7 @@ flowchart LR
     fpga_toteutus["✓ FPGA-toteutus"]
     hlm_mallinnus["Korkean tason mallinnus (SystemC/TLM)"]
     arkkitehtuurin_tutkiminen["Arkkitehtuurin mallinnus ja suunnittelutilan tutkiminen"]
-    eda_skriptaus["EDA-työkaluketjujen automatisointi"]
+    eda_skriptaus["✓ EDA-työkaluketjujen automatisointi"]
     hls["Korkean tason synteesi"]
     dsp_laitteisto["DSP-algoritmien laitteistototeutus"]
     asic_toteutus["✓ ASIC-toteutus"]
@@ -346,7 +346,7 @@ flowchart LR
 | RTL-suunnittelu SystemVerilogilla | 5 | Digitaalitekniikka | [valmis](../rtl-suunnittelu/) |
 | RTL-suunnittelu VHDL:llä | 5 | Digitaalitekniikka | [valmis](../vhdl/) |
 | ASIC-toteutus | 5 | RTL-suunnittelu SystemVerilogilla | [valmis](../asic-toteutus/) |
-| EDA-työkaluketjujen automatisointi | 3 | Käännösjärjestelmät, testaus ja CI, Python työkaluohjelmointiin, RTL-suunnittelu SystemVerilogilla, Tcl | suunniteltu |
+| EDA-työkaluketjujen automatisointi | 3 | Käännösjärjestelmät, testaus ja CI, Python työkaluohjelmointiin, RTL-suunnittelu SystemVerilogilla, Tcl | [valmis](../eda-skriptaus/) |
 | FPGA-toteutus | 5 | RTL-suunnittelu SystemVerilogilla | [valmis](../fpga-toteutus/) |
 | Laitteiston verifiointi | 5 | Python työkaluohjelmointiin, RTL-suunnittelu SystemVerilogilla | [valmis](../verifiointi/) |
 | Lukujen esitys ja kiinteän pilkun aritmetiikka | 3 | Digitaalitekniikka, Miten tietokone laskee | [valmis](../kiintea-pilkku/) |

@@ -1,0 +1,12 @@
+| Testi     | Ajoja | Läpi | Virhe | Aikakatk. |
+|-----------|-------|------|-------|-----------|
+| alu_perus | 4     | 4    | 0     | 0         |
+| alu_vika  | 12    | 5    | 7     | 0         |
+| alu_jumi  | 1     | 0    | 0     | 1         |
+
+7 x VIRHE op=3 a=<n> b=<n> saatu=<n> odotettu=<n>
+    siemenet: 1 3 5 7 9 11 12
+1 x aikakatkaisu
+    siemenet: 1
+
+alu_perus, kattavuus yhdistettynä: 16/16 lokeroa, pienin osumamäärä 40

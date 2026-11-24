@@ -101,6 +101,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Algoritmit | [`algoritmit/`](algoritmit/) | [algoritmit.pdf](https://saperant.github.io/tutoriaalit/materiaalit/algoritmit.pdf) |
 | Kompleksiluvut ja Fourier-analyysi | [`signaalimatematiikka/`](signaalimatematiikka/) | [signaalimatematiikka.pdf](https://saperant.github.io/tutoriaalit/materiaalit/signaalimatematiikka.pdf) |
 | Renderöinnin perusteet | [`renderoinnin-perusteet/`](renderoinnin-perusteet/) | [renderoinnin-perusteet.pdf](https://saperant.github.io/tutoriaalit/materiaalit/renderoinnin-perusteet.pdf) |
+| EDA-työkaluketjujen automatisointi | [`eda-skriptaus/`](eda-skriptaus/) | [eda-skriptaus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/eda-skriptaus.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

@@ -1,0 +1,20 @@
+# Regression testilista. Jokainen testi ajetaan jokaisella siemenellä.
+# maarittelyt ovat Verilatorin makroja (-D), plusargit testipenkin
+# ajonaikaisia valitsimia.
+
+[[testi]]
+nimi = "alu_perus"
+siemenia = 4
+maara = 200
+
+[[testi]]
+nimi = "alu_vika"
+maarittelyt = ["VIKA"]
+siemenia = 12
+maara = 12
+
+[[testi]]
+nimi = "alu_jumi"
+siemenet = [1]
+plusargit = ["+jumita"]
+aikaraja = 2

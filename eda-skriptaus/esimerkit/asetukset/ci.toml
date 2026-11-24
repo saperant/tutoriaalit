@@ -1,0 +1,31 @@
+# CI-putken kuvaus. Työn kohde on vuon vaihe (aja_vuo.py), ja työ saa
+# tarvitsemiensa töiden ajohakemistot artefakteina. Tästä tuotetaan
+# ci/laitteisto.yml komennolla python3 10-ci.py --kirjoita.
+
+[putki]
+kuva = "ghcr.io/oma-organisaatio/eda-tyokalut:2026.11"
+yoajo = "17 2 * * *"
+
+[[tyo]]
+nimi = "lint"
+kohde = "lint"
+
+[[tyo]]
+nimi = "toteutus"
+kohde = "sta"
+tarvitsee = ["lint"]
+# Kaupallinen STA-työkalu tarvitsisi lisenssipalvelimen osoitteen.
+lisenssi = true
+
+[[tyo]]
+nimi = "simulointi"
+kohde = "sim"
+valimuisti = [
+  "eda-skriptaus/esimerkit/rtl/**",
+  "eda-skriptaus/esimerkit/tb/**",
+]
+
+[[tyo]]
+nimi = "regressio"
+komento = "python3 07-regressio.py"
+vain_yoajo = true

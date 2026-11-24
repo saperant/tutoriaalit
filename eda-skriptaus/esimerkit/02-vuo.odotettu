@@ -1,0 +1,8 @@
+| Muutos              | lint   | synteesi | sta      | kaannos | sim    |
+|---------------------|--------|----------|----------|---------|--------|
+| 1. ensimmäinen ajo  | AJETTU | AJETTU   | AJETTU   | AJETTU  | AJETTU |
+| 2. ei muutoksia     | -      | -        | -        | -       | -      |
+| 3. touch laskuri.sv | -      | -        | -        | -       | -      |
+| 4. kommentti alu.sv | -      | -        | -        | AJETTU  | -      |
+| 5. vain kohde sta   | -      | -        | -        |         |        |
+| 6. virhe laskuri.sv | VIRHE  | ohitettu | ohitettu | -       | -      |

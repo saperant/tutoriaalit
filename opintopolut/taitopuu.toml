@@ -754,6 +754,7 @@ laajuus = 3
 testaus = "Python, Tcl (tclsh), Yosys ja Verilator"
 roadmap = ["python", "devops"]
 amk = "Tuotekehityksen työkalut"
+tutoriaali = "eda-skriptaus"
 
 [[taito]]
 id = "hls"

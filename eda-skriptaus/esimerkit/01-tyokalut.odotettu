@@ -1,0 +1,9 @@
+verilator  lint ja simulointi           kyllä
+iverilog   toinen simulaattori          kyllä
+yosys      logiikkasynteesi             kyllä
+tclsh8.6   opetus-sta-työkalun tulkki   kyllä
+python3    vuo, jäsentimet ja koosteet  kyllä
+Kaikki työkalut löytyvät.
+taso 1: kaannos, lint
+taso 2: sim, synteesi
+taso 3: sta

@@ -1,0 +1,21 @@
+VIRHE op=3 a=138 b=203 saatu=203 odotettu=65
+VIRHE op=3 a=183 b=247 saatu=247 odotettu=64
+VIRHE op=3 a=221 b=158 saatu=223 odotettu=67
+KATTAVUUS op=0 a7=0 b7=0 osumia=0
+KATTAVUUS op=0 a7=0 b7=1 osumia=1
+KATTAVUUS op=0 a7=1 b7=0 osumia=0
+KATTAVUUS op=0 a7=1 b7=1 osumia=1
+KATTAVUUS op=1 a7=0 b7=0 osumia=0
+KATTAVUUS op=1 a7=0 b7=1 osumia=2
+KATTAVUUS op=1 a7=1 b7=0 osumia=0
+KATTAVUUS op=1 a7=1 b7=1 osumia=2
+KATTAVUUS op=2 a7=0 b7=0 osumia=0
+KATTAVUUS op=2 a7=0 b7=1 osumia=0
+KATTAVUUS op=2 a7=1 b7=0 osumia=0
+KATTAVUUS op=2 a7=1 b7=1 osumia=0
+KATTAVUUS op=3 a7=0 b7=0 osumia=3
+KATTAVUUS op=3 a7=0 b7=1 osumia=0
+KATTAVUUS op=3 a7=1 b7=0 osumia=0
+KATTAVUUS op=3 a7=1 b7=1 osumia=3
+TESTI EPÄONNISTUI 3 virhettä
+- tb/alu_tb.sv:55: Verilog $finish
