@@ -1,0 +1,5 @@
+yksi palvelin: saatavuus 0.9900
+kaksi rinnakkain, riippumattomat: 0.9999
+kaksi sarjassa (molemmat tarvitaan): 0.9801
+P(A ja B alhaalla) = 0.00505, P(A) P(B) = 0.00022
+saatavuus yhteisellä vikasyyllä: 0.9950

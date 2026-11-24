@@ -1,0 +1,10 @@
+P(X = 0) = 0.0498
+P(X = 3) = 0.2240
+P(X = 6) = 0.0504
+P(X = 9) = 0.0027
+P(X > 8) = 0.00380: noin 329 sekuntia vuorokaudessa
+n =     10: Bin P(X = 3) = 0.2668
+n =    100: Bin P(X = 3) = 0.2275
+n =  10000: Bin P(X = 3) = 0.2241
+Poisson:       P(X = 3) = 0.2240
+simulointi: keskiarvo 2.997, varianssi 3.006

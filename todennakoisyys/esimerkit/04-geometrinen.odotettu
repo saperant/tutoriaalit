@@ -1,0 +1,7 @@
+odotettu yritysmäärä 1/p = 3.333
+P(yli  1 yritystä) = (1 - p)^1 = 0.7000
+P(yli  3 yritystä) = (1 - p)^3 = 0.3430
+P(yli  5 yritystä) = (1 - p)^5 = 0.1681
+P(yli 10 yritystä) = (1 - p)^10 = 0.0282
+simulointi: keskiarvo 3.329, P(yli 10) = 0.0281
+5 epäonnistumisen jälkeen: keskiarvo 3.325

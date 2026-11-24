@@ -1,0 +1,6 @@
+10 henkilöä: P(sama syntymäpäivä) = 0.117
+23 henkilöä: P(sama syntymäpäivä) = 0.507
+50 henkilöä: P(sama syntymäpäivä) = 0.970
+simulointi, 23 henkilöä: 0.507
+32-bittiset tunnisteet: 50 % törmäysriski noin 77,163 tunnisteen kohdalla
+128-bittiset: noin 2.2e+19

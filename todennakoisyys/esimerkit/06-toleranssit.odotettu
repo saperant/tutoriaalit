@@ -1,0 +1,5 @@
+pahimman tapauksen poikkeama: +-10.00 ohmia
+tilastollinen (RSS, 3 sigma): +-3.16 ohmia
+simulointi: keskihajonta 1.052 (teoria 1.054)
+poikkeama yli RSS-rajan: 0.0026, yli 5 ohmia: 0.000002
+Var(C) = 0.2488, Var(F) = 0.8062, 1.8^2 Var(C) = 0.8062

@@ -1,0 +1,6 @@
+Tas(2, 5): keskiarvo 3.501 (teoria 3.500), varianssi 0.750 (teoria 0.750)
+Exp(3): keskiarvo 0.3338 s (teoria 0.3333), P(T > 1 s) = 0.0500 (teoria 0.0498)
+jo 0.5 s odotettu: jäljellä keskimäärin 0.3331 s
+P(|X - mu| < 1 sigma) = 0.6827 (teoria 0.6827)
+P(|X - mu| < 2 sigma) = 0.9542 (teoria 0.9545)
+P(|X - mu| < 3 sigma) = 0.9972 (teoria 0.9973)

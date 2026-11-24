@@ -1,0 +1,5 @@
+SNR = 99.7 = 19.99 dB (teoria 20.00 dB)
+N =  1: hajonta 0.1001 V (teoria 0.1000), SNR 19.99 dB
+N =  4: hajonta 0.0500 V (teoria 0.0500), SNR 26.02 dB
+N = 16: hajonta 0.0251 V (teoria 0.0250), SNR 31.99 dB
+N = 64: hajonta 0.0123 V (teoria 0.0125), SNR 38.20 dB

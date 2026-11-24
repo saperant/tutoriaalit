@@ -1,0 +1,5 @@
+N =   1: P(pyyntö hidas) = 1 - 0.99^1 = 0.010
+N =  10: P(pyyntö hidas) = 1 - 0.99^10 = 0.096
+N = 100: P(pyyntö hidas) = 1 - 0.99^100 = 0.634
+yksittäisen palvelimen p99 = 64 ms; kokonaispyynnön mediaani = 69 ms
+varapyynnöillä: mediaani 63 ms, lisäkuorma 5.0%

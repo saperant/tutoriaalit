@@ -1,0 +1,7 @@
+n =        10: keskiarvo 3.5000, virhe 0.0000
+n =       100: keskiarvo 3.5100, virhe 0.0100
+n =     1,000: keskiarvo 3.4930, virhe 0.0070
+n =    10,000: keskiarvo 3.5012, virhe 0.0012
+n =   100,000: keskiarvo 3.4974, virhe 0.0026
+n = 1,000,000: keskiarvo 3.4995, virhe 0.0005
+Cauchy:   -2.43    0.22    1.57

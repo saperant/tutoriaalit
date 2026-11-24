@@ -1,0 +1,9 @@
+keskiarvo   29.3 ms
+mediaani    20.1 ms
+p95         35.1 ms
+p99        398.7 ms
+p99.9      877.8 ms
+n =    100: p99-arvion 90 %:n vaihteluväli [   36,   633] ms
+n =   1000: p99-arvion 90 %:n vaihteluväli [  256,   511] ms
+n =  10000: p99-arvion 90 %:n vaihteluväli [  356,   443] ms
+mediaanien ero -1.61 ms, 95 %:n väli [-2.07, -1.07] ms

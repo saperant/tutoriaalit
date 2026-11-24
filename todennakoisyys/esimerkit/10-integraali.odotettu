@@ -1,0 +1,5 @@
+Monte Carlo: 0.74653 +- 0.00063 (tarkka 0.74682)
+ositettu:    0.74682 +- 0.000006
+d =  2: tilavuus 3.1369 (tarkka 3.1416)
+d =  5: tilavuus 5.2741 (tarkka 5.2638)
+d = 10: tilavuus 2.4397 (tarkka 2.5502)

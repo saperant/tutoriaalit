@@ -1,0 +1,6 @@
+jakaja n:     keskiarvo 3.208 (teoria 3.200)
+jakaja n - 1: keskiarvo 4.010 (teoria 4.000)
+ML-estimaatti: lambda = 0.001044 /h (MTBF 957 h, todellinen 1000 h)
+  lambda = 0.000522: log L = -402.87
+  lambda = 0.001044: log L = -393.21
+  lambda = 0.001567: log L = -397.94

@@ -89,6 +89,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Python työkaluohjelmointiin | [`python-tyokalut/`](python-tyokalut/) | [python-tyokalut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/python-tyokalut.pdf) |
 | Lineaarialgebra | [`lineaarialgebra/`](lineaarialgebra/) | [lineaarialgebra.pdf](https://saperant.github.io/tutoriaalit/materiaalit/lineaarialgebra.pdf) |
 | Assembly | [`assembly/`](assembly/) | [assembly.pdf](https://saperant.github.io/tutoriaalit/materiaalit/assembly.pdf) |
+| Todennäköisyys ja tilastot | [`todennakoisyys/`](todennakoisyys/) | [todennakoisyys.pdf](https://saperant.github.io/tutoriaalit/materiaalit/todennakoisyys.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

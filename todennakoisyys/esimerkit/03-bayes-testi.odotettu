@@ -1,0 +1,5 @@
+esiintyvyys  0.1%: P(sairas | +) = 0.019
+esiintyvyys  1.0%: P(sairas | +) = 0.167
+esiintyvyys 10.0%: P(sairas | +) = 0.687
+simulointi: 59258 positiivista, joista sairaita 0.168
+hälytys: P(oikea vika | hälytys) = 0.087

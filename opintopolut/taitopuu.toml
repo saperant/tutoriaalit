@@ -366,6 +366,7 @@ laajuus = 3
 testaus = "Python ja NumPy, pytest (kiinteä satunnaissiemen)"
 roadmap = ["computer-science"]
 amk = "Todennäköisyyslaskenta ja tilastot"
+tutoriaali = "todennakoisyys"
 
 # ---------------------------------------------------------------------
 # Algoritmit ja tietorakenteet
