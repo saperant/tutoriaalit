@@ -1,0 +1,11 @@
+/* Moninkertaiset integraalit Maximalla. */
+display2d: false$
+
+/* @alku moninkertaiset */
+print("massa:", integrate(integrate(1 + x*y, y, 0, 1), x, 0, 2))$
+print("kolmio:", integrate(integrate(exp(x^2), y, 0, x), x, 0, 1))$
+assume(R > 0)$
+print("ympyrä:", integrate(integrate(r, r, 0, R), t, 0, 2*%pi))$
+print("Gauss I^2:", integrate(integrate(exp(-r^2)*r, r, 0, inf),
+                              t, 0, 2*%pi))$
+/* @loppu moninkertaiset */

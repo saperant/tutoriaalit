@@ -1,0 +1,7 @@
+dh/dx = -40*x + 10*y ; dh/dy = 10*x - 80*y
+h_xy = 10 ; h_yx = 10
+grad h(1, 1) = [-30, -70] ; jyrkkyys 10*sqrt(58) = 76.16 m/km
+  itään: -30.00 m/km
+  koilliseen: -70.71 m/km
+  gradientin suuntaan: 76.16 m/km
+grad . tangentti = 0

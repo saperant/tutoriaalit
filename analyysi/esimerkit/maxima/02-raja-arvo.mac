@@ -1,0 +1,10 @@
+/* Raja-arvot Maximalla. */
+display2d: false$
+
+/* @alku raja */
+print("sin(x)/x:", limit(sin(x)/x, x, 0))$
+print("(1+1/n)^n:", limit((1 + 1/n)^n, n, inf))$
+print("1/x vasemmalta:", limit(1/x, x, 0, minus),
+      " oikealta:", limit(1/x, x, 0, plus))$
+print("(exp(x)-1-x)/x^2:", limit((exp(x) - 1 - x)/x^2, x, 0))$
+/* @loppu raja */

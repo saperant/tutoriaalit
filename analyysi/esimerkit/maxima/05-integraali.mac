@@ -1,0 +1,11 @@
+/* Integraalit Maximalla. */
+display2d: false$
+
+/* @alku integraali */
+print("x e^x:", integrate(x*exp(x), x))$
+print("x cos(x^2):", integrate(x*cos(x^2), x))$
+print("osamurrot:", partfrac((3*x + 5)/(x^2 - 2*x - 3), x))$
+print("sin 0..pi:", integrate(sin(x), x, 0, %pi))$
+print("1/x^2 1..inf:", integrate(1/x^2, x, 1, inf))$
+print("exp(-x^2):", integrate(exp(-x^2), x, minf, inf))$
+/* @loppu integraali */

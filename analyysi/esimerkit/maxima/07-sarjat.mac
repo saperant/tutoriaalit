@@ -1,0 +1,11 @@
+/* Sarjat ja Taylorin polynomit Maximalla. */
+display2d: false$
+
+/* @alku sarjat */
+simpsum: true$
+print("geometrinen:", sum((1/2)^k, k, 0, inf))$
+print("1/k^2:", sum(1/k^2, k, 1, inf))$
+print("sin x:", taylor(sin(x), x, 0, 7))$
+print("e^x:", taylor(exp(x), x, 0, 4))$
+print("ln(1+x):", taylor(log(1 + x), x, 0, 4))$
+/* @loppu sarjat */

@@ -1,0 +1,6 @@
+s(t) = -t**3/3 + 5*t**2
+v(t) = -t**2 + 10*t
+a(t) = 10 - 2*t
+suurin nopeus hetkellä [5] s, arvo 25
+numeerinen v(5) = 24.9967, tarkka 25
+matka 0..10 s: 500/3 = 500/3

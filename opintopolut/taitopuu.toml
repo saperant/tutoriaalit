@@ -408,6 +408,7 @@ laajuus = 5
 testaus = "SymPy ja Maxima, numeerinen tarkistus NumPylla ja SciPylla"
 roadmap = []
 amk = "Insinöörimatematiikka (differentiaali- ja integraalilaskenta)"
+tutoriaali = "analyysi"
 
 [[taito]]
 id = "differentiaaliyhtalot"

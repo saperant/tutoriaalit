@@ -1,0 +1,6 @@
+sqrt(101) = 10.04988, linearisointi 10.05000
+sqrt(110) = 10.48809, linearisointi 10.50000
+sqrt(150) = 12.24745, linearisointi 12.50000
+herkkyys L:n suhteen: 1/2
+herkkyys g:n suhteen: -1/2
+T: 2.0061 s -> 2.0260 s, muutos 0.995 %

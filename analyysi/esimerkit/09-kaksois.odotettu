@@ -1,0 +1,6 @@
+sisempi int dy = x/2 + 1
+massa = 3 kg
+sisempi dx: -sqrt(pi)*erfi(y)/2 + sqrt(pi)*erfi(1)/2
+sisempi dy: x*exp(x**2)
+dy dx: -1/2 + E/2 ; dx dy: -1/2 + E/2
+numeerisesti: 0.85914091

@@ -1,0 +1,12 @@
+/* Usean muuttujan derivaatat Maximalla. */
+display2d: false$
+
+/* @alku usea */
+h: 300 - 20*x^2 - 40*y^2 + 10*x*y$
+g: [diff(h, x), diff(h, y)]$
+print("gradientti:", g)$
+print("pisteessä (1,1):", subst([x = 1, y = 1], g))$
+f: x^3 - 3*x + y^2$
+print("kriittiset:", solve([diff(f, x), diff(f, y)], [x, y]))$
+print("Hessen matriisi:", hessian(f, [x, y]))$
+/* @loppu usea */

@@ -1,0 +1,4 @@
+F(x) = -cos(x) ; F'(x) = sin(x)
+int_0^pi sin x dx = 2 = 2
+G'(x) = exp(-x**2)
+G(x) = sqrt(pi)*erf(x)/2 (virhefunktio, ei alkeisfunktiona)

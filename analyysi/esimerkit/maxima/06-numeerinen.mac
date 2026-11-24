@@ -1,0 +1,11 @@
+/* Numeerinen integrointi Maximalla. */
+display2d: false$
+
+/* @alku numeerinen */
+/* quad_qags palauttaa [arvo, virhearvio, evaluointeja, virhekoodi]. */
+tulos: quad_qags(sin(x), x, 0, %pi)$
+print("quad_qags:", first(tulos), " virhekoodi:", last(tulos))$
+print("romberg:", romberg(sin(x), x, 0, %pi))$
+print("tehollisarvo:",
+      float(sqrt(integrate((325*sin(100*%pi*t))^2, t, 0, 1/50)*50)))$
+/* @loppu numeerinen */

@@ -1,0 +1,24 @@
+# Esimerkkien tarkistusasetukset (ruff ja mypy --strict).
+[project]
+name = "analyysi-esimerkit"
+version = "1.0.0"
+requires-python = ">=3.12"
+dependencies = [
+  "sympy==1.14.0", "numpy>=2.0", "scipy==1.18.1", "matplotlib>=3.8",
+]
+
+[tool.ruff]
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "UP", "SIM", "NPY"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+
+# SymPyssä ei ole tyyppitietoja (py.typed puuttuu), joten mypy käsittelee
+# sen oliot tyyppinä Any. Muu koodi tarkistetaan tiukasti.
+[[tool.mypy.overrides]]
+module = ["sympy", "sympy.*"]
+ignore_missing_imports = true

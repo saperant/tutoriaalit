@@ -1,0 +1,4 @@
+d/dx sin(x^2+1): 2*x*cos(x^2+1)
+tulo: u(x)*'diff(v(x),x,1)+v(x)*'diff(u(x),x,1)
+4. derivaatta: (x^4+16*x^3+72*x^2+96*x+24)*%e^x
+ympyrä: ['diff(y,x,1) = -x/y]

@@ -1,0 +1,6 @@
+int_1^oo x**(-2) dx = 1
+int_1^oo 1/x dx = oo
+int_0^1 1/sqrt(x) dx = 2
+int_0^oo exp(-x**2) dx = sqrt(pi)/2
+int_1^R 1/x^2 dx = 1 - 1/R -> 1
+quad: 0.886226925453 (arvio virheestä 7e-09), sqrt(pi)/2 = 0.886226925453

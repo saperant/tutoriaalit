@@ -1,0 +1,8 @@
+  n  puolisuunnikas  Simpson
+  4  -1.039e-01      +4.560e-03
+  8  -2.577e-02      +2.692e-04
+ 16  -6.430e-03      +1.659e-05
+ 32  -1.607e-03      +1.033e-06
+scipy trapezoid 1.9983933610
+scipy simpson   2.0000010334
+scipy quad      2.0000000000 (virhearvio 2e-14)

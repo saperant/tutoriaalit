@@ -1,0 +1,12 @@
+d/dx x**5 = 5*x**4
+d/dx sqrt(x) = 1/(2*sqrt(x))
+d/dx exp(3*x) = 3*exp(3*x)
+d/dx log(x) = 1/x
+d/dx sin(x) = cos(x)
+d/dx tan(x) = cos(x)**(-2)
+d/dx atan(x) = 1/(x**2 + 1)
+tulo: u(x)*Derivative(v(x), x) + v(x)*Derivative(u(x), x)
+osamäärä: (-u(x)*Derivative(v(x), x) + v(x)*Derivative(u(x), x))/v(x)**2
+yhdistetty: Derivative(u(v(x)), v(x))*Derivative(v(x), x)
+ketjusääntö oikein: True
+d^4/dx^4 x^4 e^x = (x**4 + 16*x**3 + 72*x**2 + 96*x + 24)*exp(x)

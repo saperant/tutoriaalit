@@ -1,0 +1,6 @@
+y' = -x/y
+pisteessä (3, 4): y' = -3/4
+tangentti: y = 25/4 - 3*x/4
+eksplisiittisesti y'(3) = -3/4
+lehden y' = (x**2 - 2*y)/(2*x - y**2)
+pisteessä (3, 3): -1

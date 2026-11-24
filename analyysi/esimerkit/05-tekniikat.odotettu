@@ -1,0 +1,8 @@
+osittain: (x - 1)*exp(x) ; tarkistus F' - f = 0
+sijoitus: sin(x**2)/2
+u-muodossa: sin(x**2)/2
+apart: -1/(2*(x + 1)) + 7/(2*(x - 3))
+integraali: 7*log(x - 3)/2 - log(x + 1)/2
+int sin(x)/x dx = Si(x)
+int exp(x)/x dx = Ei(x)
+int exp(-x**2) dx = sqrt(pi)*erf(x)/2

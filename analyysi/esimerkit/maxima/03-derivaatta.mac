@@ -1,0 +1,12 @@
+/* Derivaatat Maximalla. */
+display2d: false$
+
+/* @alku derivaatta */
+print("d/dx sin(x^2+1):", diff(sin(x^2 + 1), x))$
+print("tulo:", diff(u(x)*v(x), x))$
+print("4. derivaatta:", factor(diff(x^4*exp(x), x, 4)))$
+/* Implisiittinen: depends kertoo, että y riippuu x:stä. */
+depends(y, x)$
+yp: solve(diff(x^2 + y^2 = 25, x), diff(y, x))$
+print("ympyrä:", yp)$
+/* @loppu derivaatta */

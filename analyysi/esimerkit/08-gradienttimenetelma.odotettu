@@ -1,0 +1,5 @@
+askel 0.01: piste (1.53, -2), f = 0.281
+askel 0.05: piste (1, -2), f = 1.13e-08
+askel 0.09: piste (1, -2), f = 1.13e-16
+askel 0.11: piste (1, 5.797e+08), f = 3.36e+18
+BFGS: (1.0000, -2.0000), 7 kierrosta

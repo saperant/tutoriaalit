@@ -1,0 +1,5 @@
+Hessen matriisi: [[6*x, 0], [0, 2]]
+  (-1, 0): ominaisarvot [-6, 2] -> satulapiste
+  (1, 0): ominaisarvot [6, 2] -> minimi
+J = [[cos(theta), -r*sin(theta)], [sin(theta), r*cos(theta)]]
+det J = r

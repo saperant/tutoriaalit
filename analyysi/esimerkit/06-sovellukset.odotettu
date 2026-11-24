@@ -1,0 +1,7 @@
+leikkauspisteet: [0, 1] ; ala = 1/6
+keskiarvo 0 V; tehollisarvo 325*sqrt(2)/2 = 229.8 V
+työ 5 cm venytykseen: 1/2 J
+energia: 81000 J = 22.50 Wh
+int phi = 1
+P(|X| < 1) = erf(sqrt(2)/2) = 0.68269
+P(T > 2000) = exp(-2)

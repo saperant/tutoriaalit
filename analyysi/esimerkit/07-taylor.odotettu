@@ -1,0 +1,13 @@
+sin x = x - x**3/6 + x**5/120 - x**7/5040 + O(x**8)
+e^x   = 1 + x + x**2/2 + x**3/6 + x**4/24 + O(x**5)
+ln(1+x) = x - x**2/2 + x**3/3 - x**4/4 + O(x**5)
+1/(1-x) = 1 + x + x**2 + x**3 + x**4 + O(x**5)
+P5(x) = x**5/120 - x**3/6 + x
+x=0.5: virhe 1.54e-06, yläraja 1.55e-06
+x=1.0: virhe 1.96e-04, yläraja 1.98e-04
+x=2.0: virhe 2.40e-02, yläraja 2.54e-02
+x=3.0: virhe 3.84e-01, yläraja 4.34e-01
+kulma  1 astetta: sin-virhe 0.01%, cos-virhe 0.000%
+kulma  5 astetta: sin-virhe 0.13%, cos-virhe 0.000%
+kulma 10 astetta: sin-virhe 0.51%, cos-virhe 0.004%
+kulma 20 astetta: sin-virhe 2.06%, cos-virhe 0.066%

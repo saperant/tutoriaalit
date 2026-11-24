@@ -1,0 +1,4 @@
+sin(x)/x: 1
+(1+1/n)^n: %e
+1/x vasemmalta: minf  oikealta: inf
+(exp(x)-1-x)/x^2: 1/2

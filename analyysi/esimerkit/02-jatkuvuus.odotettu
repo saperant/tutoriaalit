@@ -1,0 +1,7 @@
+  vasemmalta 0, oikealta 0, arvo 0
+teho: True
+  vasemmalta 0, oikealta 10, arvo 10
+virhe: False
+sin(x)/x nollassa: nan
+  vasemmalta 1, oikealta 1, arvo 1
+sinc: True

@@ -1,0 +1,15 @@
+/* Derivaatan sovelluksia Maximalla: optimointi ja juuri. */
+display2d: false$
+
+/* @alku sovellukset */
+A(r) := 2*%pi*r^2 + 2*%pi*r*500/(%pi*r^2)$
+/* solve antaa myös kompleksiset juuret; valitaan reaalinen. */
+juuret: map(rhs, solve(diff(A(r), r) = 0, r))$
+r0: first(sublist(juuret, lambda([z], freeof(%i, z))))$
+print("tölkin säde:", r0, "=", float(r0))$
+print("toinen derivaatta:", float(subst(r0, r, diff(A(r), r, 2))))$
+/* Juuri: find_root tarvitsee välin, jolla merkki vaihtuu. */
+print("juuri:", find_root(x^3 - 2*x + 2, x, -3, 0))$
+/* Linearisointi: Taylorin polynomi astetta 1. */
+print("sqrt(x) kohdassa 100:", taylor(sqrt(x), x, 100, 1))$
+/* @loppu sovellukset */
