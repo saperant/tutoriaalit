@@ -5,9 +5,15 @@ on:
   push:
     branches: [main]
   pull_request:
+  # Viikoittain ja käsin käynnistettäessä testataan kaikki, jotta
+  # ympäristön muutokset (pakettipäivitykset) huomataan.
+  schedule:
+    - cron: "17 3 * * 1"
+  workflow_dispatch:
 
 permissions:
   contents: read
+  actions: read
 
 # Saman haaran ajot suoritetaan peräkkäin: käynnissä oleva ajo valmistuu,
 # ja odottamaan jää vain uusin ajo. Näin tiheät pushit eivät peruuta
@@ -17,7 +23,35 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Testataan vain paketit, jotka ovat muuttuneet viimeisimmän onnistuneen
+  # ajon jälkeen (ks. yhteiset/ci.py). Yhteisten tiedostojen muutos,
+  # viikkoajo ja käsin käynnistys testaavat kaikki.
+  muutokset:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      paketit: ${{ steps.muutokset.outputs.paketit }}
+      kontit: ${{ steps.muutokset.outputs.kontit }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: muutokset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          perusta=""
+          if [ "${{ github.event_name }}" = push ]; then
+            perusta=$(gh run list -R "${{ github.repository }}" \
+                --workflow tutoriaalit.yml --branch main --status success \
+                --limit 1 --json headSha -q '.[0].headSha' || true)
+          fi
+          echo "Perusta: ${perusta:-ei (testataan kaikki)}"
+          python3 yhteiset/ci.py muuttuneet ${perusta:+--perusta "$perusta"} \
+            | tee -a "$GITHUB_OUTPUT"
+
   testaa-ja-rakenna:
+    needs: muutokset
     runs-on: ubuntu-24.04
     timeout-minutes: 150
     steps:
@@ -110,12 +144,37 @@ jobs:
             "platforms;android-37.2" "build-tools;36.0.0" > /dev/null
 
       # PDF:t rakennetaan ensin, koska sivuston testi tarkistaa, että
-      # jokaisen valmiin tutoriaalin PDF on mukana.
+      # jokaisen valmiin tutoriaalin PDF on mukana. Muuttumattomien
+      # pakettien PDF:t palautetaan välimuistista (ks. yhteiset/ci.py).
+      - name: Palauta PDF-välimuisti
+        uses: actions/cache/restore@v4
+        with:
+          path: .pdf-valimuisti
+          key: pdf-${{ github.sha }}
+          restore-keys: pdf-
+
       - name: Rakenna PDF:t
-        run: make -k -j4 pdf
+        run: |
+          python3 yhteiset/ci.py pdf-palauta .pdf-valimuisti
+          make -k -j4 pdf
+
+      - name: Tallenna PDF-välimuisti
+        if: always()
+        run: python3 yhteiset/ci.py pdf-tallenna .pdf-valimuisti
+
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: .pdf-valimuisti
+          key: pdf-${{ github.sha }}
 
       - name: Testaa esimerkit, taitopuu ja sivusto
-        run: make testaa
+        run: |
+          if [ "${{ needs.muutokset.outputs.paketit }}" = kaikki ]; then
+            make testaa
+          else
+            make testaa TESTATTAVAT="${{ needs.muutokset.outputs.paketit }}"
+          fi
 
       - name: Rakenna sivusto
         run: make -C sivusto
@@ -147,26 +206,15 @@ jobs:
       - id: julkaisu
         uses: actions/deploy-pages@v4
 
-  kontit:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 5
-    outputs:
-      tutoriaalit: ${{ steps.lista.outputs.tutoriaalit }}
-    steps:
-      - uses: actions/checkout@v4
-      - id: lista
-        run: |
-          echo "tutoriaalit=$(python3 yhteiset/testaa_kontti.py --lista)" \
-            >> "$GITHUB_OUTPUT"
-
   kehityskontti:
-    needs: kontit
+    needs: muutokset
+    if: needs.muutokset.outputs.kontit != '[]'
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
-        tutoriaali: ${{ fromJSON(needs.kontit.outputs.tutoriaalit) }}
+        tutoriaali: ${{ fromJSON(needs.muutokset.outputs.kontit) }}
     steps:
       - uses: actions/checkout@v4
 

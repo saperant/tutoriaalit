@@ -17,3 +17,4 @@ obj_dir/
 
 # PDF:t ovat käännöstuotteita: CI rakentaa ja julkaisee ne.
 *.pdf
+.pdf-valimuisti/
