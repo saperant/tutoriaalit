@@ -1,0 +1,11 @@
+
+SETUP    S tietokanta
+    SETUP    M skeema
+        SETUP    F transaktio
+        luku04/test_laajuudet.py::test_lisays .
+        TEARDOWN F transaktio
+        SETUP    F transaktio
+        luku04/test_laajuudet.py::test_haku .
+        TEARDOWN F transaktio
+    TEARDOWN M skeema
+TEARDOWN S tietokanta

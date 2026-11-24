@@ -1,0 +1,3 @@
+kuva: integraatiotestaus-apukuva:1
+tila: 200
+runko: {'sku': 'XYZ-9', 'valuutta': 'EUR', 'hinta_snt': 450}

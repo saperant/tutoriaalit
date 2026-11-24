@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "varasto/hinta-v1",
+  "title": "Hintapalvelun vastaus, jota varastopalvelu käyttää",
+  "type": "object",
+  "required": ["sku", "hinta_snt", "valuutta"],
+  "properties": {
+    "sku": {"type": "string", "minLength": 1},
+    "hinta_snt": {"type": "integer", "minimum": 0},
+    "valuutta": {"enum": ["EUR"]}
+  }
+}

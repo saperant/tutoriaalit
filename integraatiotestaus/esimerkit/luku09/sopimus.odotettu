@@ -1,0 +1,4 @@
+tuottajan rajapinta 1: {'sku': 'ABC-1', 'valuutta': 'EUR', 'hinta_snt': 1990}
+  sopimus täyttyy
+tuottajan rajapinta 2: {'sku': 'ABC-1', 'valuutta': 'EUR', 'hinta': 19.9}
+  sopimusrike: 'hinta_snt' is a required property

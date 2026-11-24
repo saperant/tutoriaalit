@@ -2101,6 +2101,7 @@ laajuus = 5
 testaus = "pytest ja Testcontainers Dockerilla, Java-vertailu JUnitilla"
 roadmap = ["backend"]
 amk = "Ohjelmistotestaus"
+tutoriaali = "integraatiotestaus"
 
 [[taito]]
 id = "nosql"

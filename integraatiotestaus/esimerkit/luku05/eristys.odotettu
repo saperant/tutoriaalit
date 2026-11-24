@@ -1,0 +1,10 @@
+migraatiot: 001_tuotteet.sql, 002_varaukset.sql
+1. peruutus
+  testin aikana: 1
+  testin jälkeen: 0
+2. tyhjennys
+  testin aikana: 1
+  testin jälkeen: 0
+3. pohjasta
+  omassa kannassa: 1
+  omassa kannassa: 1

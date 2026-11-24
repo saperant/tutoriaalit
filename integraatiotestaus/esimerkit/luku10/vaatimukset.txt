@@ -1,0 +1,7 @@
+# Testien riippuvuudet lukittuina (pip install -r vaatimukset.txt).
+testcontainers==4.15.0
+sqlalchemy==2.1.9
+psycopg[binary]==3.3.9
+redis==8.2.0
+jsonschema==4.26.0
+pytest==9.1.1

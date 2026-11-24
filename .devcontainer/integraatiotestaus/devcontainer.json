@@ -4,14 +4,15 @@
     "dockerfile": "../Dockerfile",
     "context": "..",
     "args": {
-      "LISAPAKETIT": "docker.io postgresql-client",
-      "PIP_PAKETIT": "testcontainers==4.15.0 psycopg==3.3.9 psycopg-binary==3.3.9 sqlalchemy==2.1.9 redis==8.2.0 ruff mypy pytest"
+      "PIP_PAKETIT": "testcontainers==4.15.0 psycopg==3.3.9 psycopg-binary==3.3.9 sqlalchemy==2.1.9 redis==8.2.0 jsonschema==4.26.0 check-jsonschema==0.39.0 yamllint==1.38.0 ruff mypy pytest"
     }
   },
   "runArgs": [
-    "--network=host",
     "-v=/var/run/docker.sock:/var/run/docker.sock",
-    "-e=TESTCONTAINERS_HUB_IMAGE_NAME_PREFIX=mirror.gcr.io/"
+    "--add-host=host.docker.internal:host-gateway",
+    "-e=DOCKER_HOST=unix:///var/run/docker.sock",
+    "-e=TESTCONTAINERS_HOST_OVERRIDE=host.docker.internal",
+    "-e=TESTCONTAINERS_CONNECTION_MODE=docker_host"
   ],
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/integraatiotestaus/esimerkit",
   "customizations": {

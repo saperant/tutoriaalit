@@ -1,0 +1,8 @@
+virrassa: 2
+A luki viestin ja kaatui; odottaa kuittausta: 1
+B lukee uudet:
+  B käsitteli 102
+odottaa kuittausta: 1
+B ottaa A:n viestin haltuun:
+  B käsitteli 101
+odottaa kuittausta: 0

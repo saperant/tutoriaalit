@@ -1,0 +1,4 @@
+koe                   naiivi väärennös    PostgreSQL
+hae('abc-1')          ei löytynyt         löytyi
+'ABC-1' ja 'abc-1'    hyväksyttiin        SkuVarattu
+varauksen vyöhyke     ei ole              UTC

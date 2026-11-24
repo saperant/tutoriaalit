@@ -1,0 +1,6 @@
+koe                         SQLite          PostgreSQL
+liian pitkä sku             hyväksyttiin    virhe: StringDataRightTruncation
+tekstiä lukukenttään        hyväksyttiin    virhe: InvalidTextRepresentation
+LIKE ja kirjainkoko         1               False
+teksti '1' = luku 1         0               True
+lajittelu, NULL viimeisenä? None 1          1 None

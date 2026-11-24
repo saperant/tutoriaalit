@@ -1,0 +1,31 @@
+# Python-esimerkkien tarkistukset (ruff, mypy ja pytest).
+[tool.ruff]
+line-length = 78
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "N", "A", "RUF"]
+# S603/S607: esimerkit käynnistävät tunnettuja ohjelmia omilla
+# argumenteillaan. S310: urlopen avaa vain itse muodostettuja
+# http-osoitteita. S104: apukuvan palvelut kuuntelevat kontissa kaikkia
+# osoitteita, koska kontin verkko on eristetty. N818: poikkeusten nimet
+# ovat suomeksi (HintaVirhe).
+ignore = ["S603", "S607", "S310", "S104", "N818"]
+
+[tool.ruff.lint.per-file-ignores]
+"testit/*.py" = ["S101"]
+"luku*/test_*.py" = ["S101"]
+# Testien tunnukset ja salasanat ovat kertakäyttöisten konttien omia.
+"testiapu/*.py" = ["S105", "S106"]
+
+[tool.mypy]
+strict = true
+
+[[tool.mypy.overrides]]
+# jsonschemassa ei ole tyyppitietoja (types-jsonschema puuttuu CI:stä).
+module = ["jsonschema", "jsonschema.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+addopts = "-q -p no:cacheprovider"
+testpaths = ["testit"]

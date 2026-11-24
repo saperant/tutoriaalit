@@ -1,0 +1,38 @@
+# GitHub Actions: integraatiotestit Testcontainersilla.
+# Ubuntu-ajokoneessa Docker on valmiina, joten erillistä palvelua
+# (services:) ei tarvita: testit käynnistävät konttinsa itse.
+name: Integraatiotestit
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  testit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      TESTIKUVAT_PEILI: mirror.gcr.io/
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Riippuvuudet
+        run: pip install -r vaatimukset.txt
+      # Kuvat haetaan rinnakkain ennen testejä: latausaika ei kuulu
+      # testin aikarajaan, ja verkon vika näkyy omana vaiheenaan.
+      - name: Esihae konttikuvat
+        run: |
+          docker pull "${TESTIKUVAT_PEILI}library/postgres:16-alpine" &
+          docker pull "${TESTIKUVAT_PEILI}library/redis:7.2-alpine" &
+          wait
+      - name: Testit
+        run: pytest --junitxml=tulokset.xml
+      - name: Tallenna tulokset
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: testitulokset
+          path: tulokset.xml
