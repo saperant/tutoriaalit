@@ -1,0 +1,16 @@
+    u   tekseli  lähin  bilineaarinen
+0.000    -0.50  0.267          0.367
+0.125     0.00  0.267          0.267
+0.250     0.50  0.333          0.300
+0.375     1.00  0.333          0.333
+0.500     1.50  0.400          0.367
+0.625     2.00  0.400          0.400
+0.750     2.50  0.467          0.433
+0.875     3.00  0.467          0.467
+1.000     3.50  0.267          0.367
+
+mipmap 8 x 8 -shakkiruudusta:
+  8 x 8, ensimmäinen tekseli 0.000
+  4 x 4, ensimmäinen tekseli 0.500
+  2 x 2, ensimmäinen tekseli 0.500
+  1 x 1, ensimmäinen tekseli 0.500

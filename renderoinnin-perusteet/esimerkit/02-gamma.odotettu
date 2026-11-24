@@ -1,0 +1,12 @@
+lineaarinen  sRGB-tavu  naiivi tavu
+       0.00          0            0
+       0.01         25            3
+       0.05         63           13
+       0.18        118           46
+       0.50        188          128
+       1.00        255          255
+tavu 128 on lineaarisena 0.216
+keskiarvo tavuista: (128, 128, 0), kirkkaus 119
+keskiarvo valosta:  (188, 188, 0), kirkkaus 174
+02-gamma.ppm: 4621 tavua (otsikko 13 + 64 * 24 * 3)
+liuku          summa 3d583d45  peitto  1392/1536  kirkkaus 153

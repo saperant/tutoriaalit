@@ -1095,6 +1095,7 @@ laajuus = 5
 testaus = "C++-ohjelmistorasteroija, kuvien tarkistussummat"
 roadmap = ["game-developer"]
 amk = "Tietokonegrafiikka"
+tutoriaali = "renderoinnin-perusteet"
 
 [[taito]]
 id = "sateenseuranta"
