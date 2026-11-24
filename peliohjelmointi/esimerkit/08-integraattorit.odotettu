@@ -1,0 +1,4 @@
+energia / alkuenergia 10 s:n jälkeen (dt = 1/30 s):
+  Euler                lopussa 463023.729, suurin 463023.729
+  semi-implisiittinen  lopussa    0.913, suurin    1.118
+  Verlet               lopussa    0.997, suurin    1.000

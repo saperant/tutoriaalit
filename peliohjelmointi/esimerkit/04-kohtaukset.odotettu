@@ -1,0 +1,9 @@
+- -> valikko
+e -> peli (aika 0)
+- -> peli (aika 1)
+- -> peli (aika 2)
+p -> peli (aika 3) + [TAUKO]
+- -> peli (aika 3) + [TAUKO]
+- -> peli (aika 3) + [TAUKO]
+p -> peli (aika 3)
+- -> peli (aika 4)

@@ -1,0 +1,7 @@
+lepakko         x = 3.0, y = 2.0
+tykkimies       x = 0.0, y = 0.0
+lentävä ampuja  x = 6.0, y = 2.0
+tykkimies       ampui 3 kertaa
+lentävä ampuja  ampui 3 kertaa
+uusi indeksi 0 (sukupolvi 1), lepakko elossa: false
+vanhalla tunnisteella paikka: ei löydy

@@ -1,0 +1,6 @@
+pelaaja (2.5, 0.0): ei törmää
+pelaaja (1.6, 0.5): törmää, siirretään (2.0, 0.5)
+pelaaja (0.2, 3.5): törmää, siirretään (0.2, 4.0)
+pallo ja seinä: false
+pallo ja pallo: true
+etäisyys 1.70

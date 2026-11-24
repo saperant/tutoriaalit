@@ -1,0 +1,5 @@
+ruutu 0: Aloita [päällä] | Ääni + | pelissä false, ääni 5
+ruutu 1: Aloita [alas] | Ääni + | pelissä false, ääni 5
+ruutu 2: Aloita [päällä] | Ääni + | pelissä true, ääni 5
+ruutu 3: Aloita | Ääni + [alas] | pelissä true, ääni 5
+ruutu 4: Aloita | Ääni + [päällä] | pelissä true, ääni 6
