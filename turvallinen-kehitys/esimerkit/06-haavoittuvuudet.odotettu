@@ -1,0 +1,4 @@
+ESIM-2024-0003 jinja2 3.1.2: päivitä >= 3.1.4
+ESIM-2025-0004 pyyaml 6.0.2: ei korjausta: arvioi käyttö ja rajaa
+ESIM-2024-0001 requests 2.31.0: päivitä >= 2.32.0
+versiovertailu numeroina: 2.10 > 2.9: True | merkkijonoina: False

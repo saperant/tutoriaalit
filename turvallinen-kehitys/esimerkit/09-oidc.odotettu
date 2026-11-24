@@ -1,0 +1,10 @@
+ehto väljä:
+  julkaisu tuotantoympäristöön   saa oikeudet
+  pull request                   saa oikeudet
+  kokeiluhaara                   saa oikeudet
+  toinen repositorio             saa oikeudet
+ehto tiukka:
+  julkaisu tuotantoympäristöön   saa oikeudet
+  pull request                   -
+  kokeiluhaara                   -
+  toinen repositorio             -

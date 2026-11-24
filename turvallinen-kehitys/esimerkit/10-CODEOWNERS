@@ -1,0 +1,6 @@
+# Oletuksena kuka tahansa tiimistä katselmoi.
+*                       @yritys/kehittajat
+/src/todennus/          @yritys/tietoturva
+/src/maksut/            @yritys/maksut @yritys/tietoturva
+/.github/workflows/     @yritys/alusta
+requirements*.txt       @yritys/alusta

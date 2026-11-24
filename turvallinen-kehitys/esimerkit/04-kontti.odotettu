@@ -1,0 +1,7 @@
+huolimaton: 5 havaintoa
+  - kuvaa ei ole kiinnitetty tiivisteeseen: python:latest
+  - --privileged antaa kontille isäntäkoneen ytimen oikeudet
+  - Dockerin soketti kontissa = root isäntäkoneella
+  - salaisuus asetustiedostossa: API_TOKEN
+  - kehitys ajetaan root-käyttäjänä
+kiinnitetty: 0 havaintoa

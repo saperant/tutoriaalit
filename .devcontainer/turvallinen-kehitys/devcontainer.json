@@ -1,0 +1,20 @@
+{
+  "name": "Tietoturva kehitystyössä: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "shellcheck git",
+      "PIP_PAKETIT": "ruff mypy"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/turvallinen-kehitys/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "timonwong.shellcheck",
+        "ms-python.python"
+      ]
+    }
+  }
+}

@@ -1,0 +1,8 @@
+Requests       tunnettu paketti
+reqeusts       epäilyttävä: muistuttaa pakettia requests
+nunpy          epäilyttävä: muistuttaa pakettia numpy
+python-numpy   epäilyttävä: muistuttaa pakettia numpy
+djangoo        epäilyttävä: muistuttaa pakettia django
+PyYAML         tunnettu paketti
+urllib         epäilyttävä: muistuttaa pakettia urllib3
+pandas-extra   ei osumaa; arvioi ylläpitäjä, ikä ja lataukset

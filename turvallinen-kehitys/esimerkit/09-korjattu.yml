@@ -1,0 +1,23 @@
+name: Kommenttibotti
+on:
+  pull_request:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+
+jobs:
+  vastaa:
+    runs-on: ubuntu-24.04
+    permissions:
+      pull-requests: write
+    steps:
+      # Toiminnot kiinnitetty commitin tiivisteeseen (checkout v4.2.2).
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Tervehdi
+        env:
+          KOMMENTTI: ${{ github.event.comment.body }}
+        run: |
+          printf 'Kiitos: %s\n' "$KOMMENTTI"
+          make testaa

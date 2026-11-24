@@ -1801,6 +1801,7 @@ laajuus = 3
 testaus = "Git-koukut, salaisuusskannaus ja CI-putken tarkistukset"
 roadmap = ["devops", "cyber-security"]
 amk = "Ohjelmistoturvallisuus"
+tutoriaali = "turvallinen-kehitys"
 
 [[taito]]
 id = "web-tietoturva"

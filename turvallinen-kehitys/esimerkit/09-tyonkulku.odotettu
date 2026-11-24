@@ -1,0 +1,7 @@
+09-vaarallinen.yml: 5 havaintoa
+  ei permissions-osiota: oletusoikeudet voivat olla kirjoitusoikeudet
+  3: pull_request_target ajaa vieraan koodin pääsyllä salaisuuksiin
+  11: toimintoa ei kiinnitetty tiivisteeseen: actions/checkout@v4
+  14: toimintoa ei kiinnitetty tiivisteeseen: tj-actions/changed-files@v46
+  17: käyttäjän syöte suoraan komentoon (skriptin injektio)
+09-korjattu.yml: 0 havaintoa

@@ -1,0 +1,4 @@
+vaihe 1, vanha kelpaa: True
+vaihe 2, uusi kelpaa: True vanha kelpaa: True
+vaihe 3, uusi kelpaa: True vanha kelpaa: False
+muokattu tunniste kelpaa: False

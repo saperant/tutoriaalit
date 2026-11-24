@@ -1,0 +1,8 @@
+aino: src/raportit/vienti.py: voidaan yhdistää
+aino: src/maksut/kortti.py: voidaan yhdistää
+aino: src/todennus/salasana.py: estetty
+  - src/todennus/salasana.py: tarvitaan @yritys/tietoturva
+liisa: src/todennus/istunto.py: estetty
+  - ei hyväksyntää tekijän lisäksi
+  - src/todennus/istunto.py: tarvitaan @yritys/tietoturva
+matti: .github/workflows/ci.yml, requirements.txt: voidaan yhdistää
