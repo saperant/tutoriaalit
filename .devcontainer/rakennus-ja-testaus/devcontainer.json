@@ -1,0 +1,19 @@
+{
+  "name": "Käännösjärjestelmät, testaus ja CI: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "cmake ninja-build gcovr clang-tidy-20 cppcheck shellcheck git"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/rakennus-ja-testaus/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cmake-tools",
+        "ms-vscode.cpptools"
+      ]
+    }
+  }
+}

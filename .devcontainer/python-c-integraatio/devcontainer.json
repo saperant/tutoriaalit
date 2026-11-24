@@ -1,0 +1,20 @@
+{
+  "name": "Python ja C/C++ yhteen: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "python3-dev cmake",
+      "PIP_PAKETIT": "pybind11 nanobind numpy ruff mypy pytest"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/python-c-integraatio/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-vscode.cpptools"
+      ]
+    }
+  }
+}

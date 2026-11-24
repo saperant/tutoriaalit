@@ -1,0 +1,20 @@
+{
+  "name": "Laitteiston verifiointi: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "verilator iverilog yosys z3 boolector",
+      "PIP_PAKETIT": "cocotb ruff mypy pytest"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/verifiointi/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "mshr-h.veriloghdl",
+        "ms-python.python"
+      ]
+    }
+  }
+}
