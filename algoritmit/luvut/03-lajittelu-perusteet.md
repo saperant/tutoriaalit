@@ -72,6 +72,23 @@ lomitetaan yhteensä $n$ alkiota. Työtä on siis $\Theta(n \log n)$
 riippumatta syötteen järjestyksestä. Luvun 2 kasvumittaus näytti
 saman kokeellisesti.
 
+```{.dot otsikko="Lomituslajittelun rekursiopuu: jako alaspäin, lomitus ylöspäin"}
+digraph {
+  nodesep=0.15; ranksep=0.3;
+  node [shape=box, fontname="DejaVu Sans Mono", fontsize=9];
+  a [label="5 2 4 7 1 3 2 6"];
+  b [label="5 2 4 7"]; c [label="1 3 2 6"];
+  d [label="5 2"]; e [label="4 7"]; f [label="1 3"]; g [label="2 6"];
+  a -> b; a -> c; b -> d; b -> e; c -> f; c -> g;
+  node [fillcolor="#FFFFFF"];
+  d2 [label="2 5"]; e2 [label="4 7"]; f2 [label="1 3"]; g2 [label="2 6"];
+  b2 [label="2 4 5 7"]; c2 [label="1 2 3 6"];
+  a2 [label="1 2 2 3 4 5 6 7", penwidth=1.6];
+  d -> d2; e -> e2; f -> f2; g -> g2;
+  d2 -> b2; e2 -> b2; f2 -> c2; g2 -> c2; b2 -> a2; c2 -> a2;
+}
+```
+
 Hinta on $\Theta(n)$ lisämuistia aputaulukolle. Esimerkki varaa
 aputaulukon kerran ja antaa sen jokaiselle rekursiotasolle; jos
 jokainen kutsu varaisi omansa, varausten määrä olisi $\Theta(n)$ ja

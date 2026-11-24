@@ -158,6 +158,33 @@ turmele muuta muistia.
 | ei aluetta tai oikeus puuttuu | – | `SIGSEGV` |
 | tiedosto lyheni kartoituksen alta | – | `SIGBUS` |
 
+Taulukon tapaukset päätöspuuna, siinä järjestyksessä kuin ydin ne
+tutkii:
+
+```{.dot otsikko="Sivuvirheen käsittely"}
+digraph {
+  node [fontsize=9];
+  edge [fontsize=8];
+  virhe [label="sivuvirhe\n(osoite, luku/kirjoitus)"];
+  alue [label="kuuluuko osoite\njohonkin alueeseen?", shape=diamond, style=filled];
+  oik [label="salliiko alue\nkäytön?", shape=diamond, style=filled];
+  segv [label="SIGSEGV", fillcolor="#F2D4D4"];
+  cow [label="kirjoitus\nCOW-sivuun?", shape=diamond, style=filled];
+  kopio [label="kopioi kehys\ntai palauta oikeus"];
+  tausta [label="sivun lähde?", shape=diamond, style=filled];
+  nolla [label="nollattu\nkehys"]; tied [label="sivuvälimuisti\ntai levy"];
+  swap [label="heittovaihto-\nalue"];
+  valmis [label="päivitä sivutaulu,\njatka käskystä"];
+  virhe -> alue;
+  alue -> segv [label="ei"]; alue -> oik [label="kyllä"];
+  oik -> segv [label="ei"]; oik -> cow [label="kyllä"];
+  cow -> kopio [label="kyllä"]; cow -> tausta [label="ei"];
+  tausta -> nolla [label="anonyymi"]; tausta -> tied [label="tiedosto"];
+  tausta -> swap [label="sivutettu"];
+  kopio -> valmis; nolla -> valmis; tied -> valmis; swap -> valmis;
+}
+```
+
 Muistiin mahtumattomat sivut ydin voi kirjoittaa heittovaihtoalueelle
 (engl. swap) tai, jos sivu on muuttumaton tiedoston sivu, yksinkertaisesti
 hylätä. Se, mitkä sivut valitaan, on luvun 6 aihe.

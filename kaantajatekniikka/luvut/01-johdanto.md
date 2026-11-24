@@ -40,6 +40,32 @@ Kääntäjä jaetaan perinteisesti kolmeen osaan:
 | Takaosa | koodingenerointi | välikieli | assembly | 13 |
 | | rekisterien varaus | välikieli | rekisterit | 14 |
 
+```{.dot otsikko="Kide-kääntäjän vaiheet ja niiden väliesitykset"}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.55;
+  edge [fontsize=8];
+  lahde [label=".kide", shape=note, fillcolor="#FFFFFF"];
+  asm [label=".s", shape=note, fillcolor="#FFFFFF"];
+  subgraph cluster_etu { label="etuosa"; color="#D9E0E3";
+    {rank=same; sem [label="semanttinen\nanalyysi"];
+     jasennys [label="jäsennys"]; selaus;} }
+  subgraph cluster_keski { label="keskiosa"; color="#D9E0E3";
+    {rank=same; opt [label="SSA ja\noptimoinnit"];
+     alennus [label="alentaminen"];} }
+  subgraph cluster_taka { label="takaosa"; color="#D9E0E3";
+    {rank=same; varaus [label="rekisterien\nvaraus"];
+     koodi [label="koodin-\ngenerointi"];} }
+  lahde -> selaus [label="merkit"];
+  selaus -> jasennys [label="tokenit"];
+  jasennys -> sem [label="puu"];
+  sem -> alennus [label="puu"];
+  alennus -> opt [label="IR"];
+  opt -> koodi [label="IR"];
+  koodi -> varaus;
+  varaus -> asm;
+}
+```
+
 **Etuosa** (*front end*) tuntee lähdekielen: sen kieliopin, nimien
 näkyvyyden ja tyypit. Se hylkää virheelliset ohjelmat ja kertoo
 virheiden paikat. **Keskiosa** (*middle end*) käsittelee ohjelmaa

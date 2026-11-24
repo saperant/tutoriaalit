@@ -63,6 +63,22 @@ kolminkertaisesti epäsuorat lohkot, ja ext4 korvaa osoitinlistat
 *laajuuksilla* (engl. extents): alkulohko ja pituus kuvaavat kerralla
 pitkän yhtenäisen jakson.
 
+```{.dot otsikko="Inode ja lohkojen osoitus pikkufs:ssä"}
+digraph {
+  rankdir=LR;
+  node [shape=record];
+  inode [label="<o>inode|koko, linkit|<s0>suora 0|<s1>suora 1|…|<s9>suora 9|<e>epäsuora"];
+  ep [label="<o>epäsuora lohko|<o0>osoitin 0|<o1>osoitin 1|…|<o127>osoitin 127"];
+  d0 [label="data 0", shape=box]; d1 [label="data 1", shape=box];
+  d9 [label="data 9", shape=box];
+  d10 [label="data 10", shape=box]; d11 [label="data 11", shape=box];
+  d137 [label="data 137", shape=box];
+  inode:s0 -> d0; inode:s1 -> d1; inode:s9 -> d9;
+  inode:e -> ep:o;
+  ep:o0 -> d10; ep:o1 -> d11; ep:o127 -> d137;
+}
+```
+
 Funktio `lohko` muuntaa tiedoston sisäisen lohkonumeron levyn
 lohkonumeroksi ja varaa puuttuvan lohkon kirjoitettaessa. Se on
 tiedostojärjestelmän "sivutaulu":

@@ -94,6 +94,19 @@ jokainen lukukvoorumi ja jokainen kirjoituskvoorumi leikkaavat: ainakin
 yksi luvun vastanneista on kuitannut viimeisimmän valmiin kirjoituksen.
 Tyypillinen valinta on N = 3 ja R = W = 2.
 
+```{.dot otsikko="N = 3, W = 2, R = 2: kvoorumit leikkaavat ainakin yhdessä replikassa"}
+digraph {
+  rankdir=LR; nodesep=0.35;
+  edge [fontsize=8];
+  K [label="kirjoitus v2"]; Lu [label="luku"];
+  R1 [label="replika 1\nv2"]; R2 [label="replika 2\nv2", penwidth=1.6];
+  R3 [label="replika 3\nv1"];
+  K -> R1 [label="kuittaa"]; K -> R2 [label="kuittaa"];
+  K -> R3 [style=dashed, label="myöhässä"];
+  R2 -> Lu [label="v2"]; R3 -> Lu [label="v1"];
+}
+```
+
 Esimerkin replika säilyttää suurimman näkemänsä version:
 
 ```{.cpp tiedosto="esimerkit/04-kvoorumi.cpp" osa="replika"}

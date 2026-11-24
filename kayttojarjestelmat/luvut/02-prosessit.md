@@ -227,6 +227,32 @@ Linux käyttää molemmille samaa kirjainta. Tila luetaan
 kentässä 2 voi sisältää välilyöntejä ja sulkeita, joten esimerkin
 funktio `tila` hakee kirjaimen viimeisen sulkeen jälkeen.
 
+Tilojen väliset siirtymät ja niiden aiheuttajat:
+
+```{.dot otsikko="Prosessin tilat ja siirtymät (suluissa ps:n kirjain)"}
+digraph {
+  node [shape=ellipse];
+  nodesep=0.5;
+  uusi [label="luotu\n(fork)"];
+  valmis [label="ajovalmis\n(R)"];
+  ajossa [label="ajossa\n(R)"];
+  S [label="uni\n(S)"]; D [label="I/O-uni\n(D)"];
+  T [label="pysäytetty\n(T)"]; Z [label="zombi\n(Z)"];
+  uusi -> valmis;
+  valmis -> ajossa [label="vuorontaja valitsee"];
+  ajossa -> valmis [label="kvantti loppuu"];
+  ajossa -> S [label="odottaa"];
+  ajossa -> D [label="levy-I/O"];
+  S -> valmis [label="tapahtuma\ntai signaali"];
+  D -> valmis [label="I/O valmis"];
+  ajossa -> T [label="SIGSTOP"];
+  T -> valmis [label="SIGCONT"];
+  ajossa -> Z [label="exit"];
+  {rank=same; valmis; S; D;}
+  {rank=same; ajossa; T;}
+}
+```
+
 Esimerkki vie lapsen kaikkien tilojen läpi. Lapsi ensin laskee
 silmukassa, sitten nukkuu `pause`-kutsussa, vanhempi pysäyttää ja
 jatkaa sen ja lopulta lopettaa sen signaalilla. `waitid`-kutsun lippu

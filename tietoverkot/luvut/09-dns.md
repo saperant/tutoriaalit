@@ -20,6 +20,29 @@ juuresta alkaen ja tallentaa vastaukset välimuistiin tietueen
 *TTL*-ajan. Siksi DNS-muutos näkyy viiveellä: vanha tietue on
 välimuisteissa TTL:n loppuun asti.
 
+Rekursiivinen selvittäjä kulkee puun läpi ja palauttaa vastauksen
+stub-selvittäjälle (numerot kertovat järjestyksen):
+
+```{.dot otsikko="Nimen www.esim.fi selvitys välimuistin ollessa tyhjä"}
+digraph {
+  rankdir=LR; nodesep=0.35;
+  edge [fontsize=8];
+  stub [label="sovellus ja\nstub-selvittäjä"];
+  rek [label="rekursiivinen\nselvittäjä\n(välimuisti)"];
+  juuri [label="juuripalvelin\n."];
+  fi [label="fi-palvelin"];
+  esim [label="esim.fi:n\nauktoritatiivinen"];
+  stub -> rek [label="1 www.esim.fi A?"];
+  rek -> juuri [label="2"];
+  juuri -> rek [label="3 kysy fi:ltä", style=dashed];
+  rek -> fi [label="4"];
+  fi -> rek [label="5 kysy esim.fi:ltä", style=dashed];
+  rek -> esim [label="6"];
+  esim -> rek [label="7 A 192.0.2.80", style=dashed];
+  rek -> stub [label="8 vastaus, TTL", style=dashed];
+}
+```
+
 | Tietue | Sisältö |
 |--------|---------|
 | A, AAAA | IPv4- ja IPv6-osoite |

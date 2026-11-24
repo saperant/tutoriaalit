@@ -77,6 +77,23 @@ Vastaus tulee reitittimen osoitteeseen, ja taulusta reititin tietää,
 kenelle se kuuluu. Tätä kutsutaan nimillä NAT, NAPT, PAT tai
 *masquerade*.
 
+```{.dot otsikko="Laboratorion osoitteenmuunnos: lähdeosoite vaihtuu ja muunnos kirjataan"}
+digraph {
+  rankdir=LR; nodesep=0.4;
+  edge [fontsize=8];
+  A [label="A\n192.168.1.10"];
+  R [label="R (NAT)\nlan 192.168.1.1\nwan 203.0.113.5"];
+  P [label="P\n203.0.113.80"];
+  taulu [shape=note, fillcolor="#FFFFFF",
+         label="yhteystaulu:\n192.168.1.10 = 203.0.113.5\n(ICMP-tunniste)"];
+  A -> R [label="lähde 192.168.1.10"];
+  R -> P [label="lähde 203.0.113.5"];
+  P -> R [label="kohde 203.0.113.5", style=dashed];
+  R -> A [label="kohde 192.168.1.10", style=dashed];
+  R -> taulu [arrowhead=none, style=dotted];
+}
+```
+
 ```{.bash tiedosto="esimerkit/05-nat.sh" osa="nat"}
 ```
 

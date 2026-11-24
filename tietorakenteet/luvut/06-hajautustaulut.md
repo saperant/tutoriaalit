@@ -75,6 +75,17 @@ hyvä tavallisille avaimille, ei vihamielisille.
 Esimerkki laskee sanojen esiintymiä. Rajapinnassa avain on
 merkkijono ja arvo laskuri, ja kartta kopioi avaimen itselleen:
 
+```{.dot otsikko="Ketjutettu hajautustaulu: lokero osoittaa saman lokeron alkioiden listaan"}
+digraph {
+  rankdir=LR; nodesep=0.15; ranksep=0.4;
+  node [fontsize=9];
+  taulu [shape=record, label="<0>0|<1>1|<2>2|<3>3|<4>4|<5>5|<6>6|<7>7"];
+  a [label="\"ja\" 41"]; b [label="\"on\" 17"]; c [label="\"kissa\" 2"];
+  d [label="\"se\" 23"];
+  taulu:1 -> a -> b; taulu:4 -> c; taulu:6 -> d;
+}
+```
+
 ```{.c tiedosto="esimerkit/06-sanat/kartta.h"}
 ```
 

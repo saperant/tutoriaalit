@@ -90,6 +90,37 @@ kokonaisjärjestys, joka on yhteensopiva syy-seuraussuhteen kanssa.
 Edellisessä kokeessa B:n kirjoitus voitti aina Lamportin leimalla, koska
 B oli lukenut A:n leiman ennen kirjoitusta.
 
+Kolme prosessia ja kolme viestiä; luvut ovat Lamportin kellon arvoja
+tapahtumissa. Lähetys kasvattaa kelloa ja kantaa leiman viestissä,
+vastaanotto hyppää leiman yli. Kun vastaanotto ja seuraava lähetys
+osuvat samaan kohtaan, arvot on erotettu pilkulla: P2 saa m1:n
+arvolla 2 ja lähettää m2:n arvolla 3.
+
+```{.dot otsikko="Lamportin kellot kolmella prosessilla"}
+digraph {
+  nodesep=1.0; ranksep=0.32;
+  node [shape=point, width=0.04, color="#5B6B70"];
+  edge [arrowhead=none, style=dashed, color="#B8C4C8"];
+  t0 [shape=box, width=1, label="P1"];
+  t0 -> t0_0 -> t0_1 -> t0_2 -> t0_3;
+  t1 [shape=box, width=1, label="P2"];
+  t1 -> t1_0 -> t1_1 -> t1_2 -> t1_3;
+  t2 [shape=box, width=1, label="P3"];
+  t2 -> t2_0 -> t2_1 -> t2_2 -> t2_3;
+  {rank=same; t0_0; t1_0; t2_0;}
+  {rank=same; t0_1; t1_1; t2_1;}
+  {rank=same; t0_2; t1_2; t2_2;}
+  {rank=same; t0_3; t1_3; t2_3;}
+  {rank=same; t0; t1; t2;}
+  t0 -> t1 -> t2 [style=invis];
+  t0_0 -> t1_1 [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, label="m1, leima 1"];
+  t1_1 -> t2_2 [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, label="m2, leima 3"];
+  t2_2 -> t0_3 [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, label="m3, leima 5"];
+  t0_0 [xlabel="1"]; t1_1 [xlabel="2, 3"];
+  t2_2 [xlabel="4, 5"]; t0_3 [xlabel="6"];
+}
+```
+
 ## Vektorikello
 
 Vektorikello pitää laskurin jokaiselle solmulle. Solmu kasvattaa omaa

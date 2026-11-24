@@ -1,0 +1,41 @@
+digraph {
+  nodesep=0.15; ranksep=0.3;
+  node [shape=circle, width=0.4, fixedsize=true,
+        fontname="DejaVu Sans Mono"];
+  edge [arrowhead=none];
+  n0 [label="||"];
+  n1 [label="&&"];
+  n2 [label="<"];
+  n3 [label="-"];
+  n4 [label="-"];
+  n5 [label="1", style="filled", fillcolor="#FFFFFF"];
+  n4 -> n5;
+  n6 [label="2", style="filled", fillcolor="#FFFFFF"];
+  n4 -> n6;
+  n3 -> n4;
+  n7 [label="*"];
+  n8 [label="3", style="filled", fillcolor="#FFFFFF"];
+  n7 -> n8;
+  n9 [label="4", style="filled", fillcolor="#FFFFFF"];
+  n7 -> n9;
+  n3 -> n7;
+  n2 -> n3;
+  n10 [label="5", style="filled", fillcolor="#FFFFFF"];
+  n2 -> n10;
+  n1 -> n2;
+  n11 [label="!"];
+  n12 [label="=="];
+  n13 [label="6", style="filled", fillcolor="#FFFFFF"];
+  n12 -> n13;
+  n14 [label="7", style="filled", fillcolor="#FFFFFF"];
+  n12 -> n14;
+  n11 -> n12;
+  n1 -> n11;
+  n0 -> n1;
+  n15 [label=">="];
+  n16 [label="8", style="filled", fillcolor="#FFFFFF"];
+  n15 -> n16;
+  n17 [label="9", style="filled", fillcolor="#FFFFFF"];
+  n15 -> n17;
+  n0 -> n15;
+}

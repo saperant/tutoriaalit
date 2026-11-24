@@ -25,6 +25,22 @@ termiä, ja jos solmu näkee suuremman termin, se siirtyy siihen ja
 palaa seuraajaksi. Vanhentunut johtaja huomaa näin, että maailma on
 mennyt eteenpäin, ja sen viestit hylätään vanhan termin vuoksi.
 
+```{.dot otsikko="Raft-solmun roolit ja siirtymät"}
+digraph {
+  rankdir=LR; nodesep=0.5;
+  edge [fontsize=8];
+  node [shape=ellipse];
+  alku [shape=point, width=0.08];
+  S [label="seuraaja"]; E [label="ehdokas"]; J [label="johtaja"];
+  alku -> S [label="käynnistys"];
+  S -> E [label="vaaliaikaraja\numpeutuu"];
+  E -> E [label="aikaraja: uusi vaali,\ntermi + 1"];
+  E -> J [label="enemmistön äänet"];
+  E -> S [label="johtaja tai\nsuurempi termi"];
+  J -> S [label="suurempi termi"];
+}
+```
+
 Raft tallentaa pysyvästi vain kolme asiaa: nykyisen termin, kenelle
 solmu äänesti tällä termillä ja lokin. Kaikki muu (rooli, sitoutettu
 kohta, seuraajien edistyminen) rakennetaan uudelleen käynnistyksessä.

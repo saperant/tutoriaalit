@@ -98,6 +98,14 @@ Kaappauksen tulkinnassa järjestysnumerot näytetään suhteellisina:
 
 Liput: `S` = SYN, `.` = ACK, `P` = PSH (data perille heti), `F` = FIN.
 
+Sama kaappaus sekvenssikaaviona. Kaavio piirretään yllä olevasta
+tulosteesta, joten viestit ovat ne, jotka laboratoriossa kulkivat:
+kolmivaiheinen kättely, data kumpaankin suuntaan ja sulkeminen, jossa
+kumpikin puoli lähettää oman FIN-viestinsä.
+
+```{.dot tiedosto="kaaviot/07-kattely.dot" otsikko="TCP-yhteyden elinkaari kaappauksesta"}
+```
+
 1. **Kolmivaiheinen kättely**: SYN, SYN-ACK, ACK. Kumpikin osapuoli
    valitsee satunnaisen alkujärjestysnumeron (ISN) ja kuittaa toisen
    numeron +1. Kättely maksaa yhden edestakaisen viiveen (RTT) ennen

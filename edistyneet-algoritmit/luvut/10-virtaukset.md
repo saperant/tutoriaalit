@@ -73,6 +73,21 @@ saavutetaan. Kun lisäyspolkuja ei enää ole, $s$:stä jäännösverkossa
 saavutettavat solmut muodostavat $S$:n. Jokainen $S$:stä $T$:hen
 kulkeva kaari on täynnä, ja jokainen $T$:stä $S$:ään kulkeva on tyhjä.
 
+```{.dot otsikko="Maksimivirta 23 ja sen todistava minimileikkaus (virta/kapasiteetti; leikkauksen kaaret punaisina)"}
+digraph {
+  rankdir=LR; nodesep=0.4; ranksep=0.6;
+  edge [fontsize=8];
+  node [shape=circle, width=0.4, fixedsize=true];
+  subgraph cluster_S { label="S"; color="#D9E0E3"; s; a; c; d; }
+  subgraph cluster_T { label="T"; color="#D9E0E3"; b; t; }
+  s -> a [label="11/16"]; s -> c [label="12/13"];
+  a -> c [label="0/10"]; c -> a [label="1/4"]; c -> d [label="11/14"];
+  b -> c [label="0/9", style=dashed]; b -> t [label="19/20"];
+  edge [color="#B04848", penwidth=1.6];
+  a -> b [label="12/12"]; d -> b [label="7/7"]; d -> t [label="4/4"];
+}
+```
+
 ```{.cpp tiedosto="esimerkit/virtaus.hpp" osa="leikkaus"}
 ```
 

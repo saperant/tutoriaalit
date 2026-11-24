@@ -55,6 +55,31 @@ likimääräisinä kilometreinä:
 ```{.c tiedosto="esimerkit/12-dijkstra.c" osa="tieverkko"}
 ```
 
+Kartalla tieverkko ja Dijkstran löytämä lyhimpien reittien puu
+Helsingistä (lihavoidut tiet; luvut kilometreinä):
+
+```{.dot otsikko="Esimerkin tieverkko ja lyhimpien reittien puu"}
+graph {
+  layout=neato; overlap=false; splines=true;
+  edge [fontsize=8, color="#B8C4C8"];
+  node [shape=box, fontsize=9];
+  HKI [label="Helsinki", pos="4,0!"]; TKU [label="Turku", pos="0,0.6!"];
+  HML [label="Hämeenlinna", pos="2.8,1.5!"]; LTI [label="Lahti", pos="4.6,1.6!"];
+  KVL [label="Kouvola", pos="6.2,1.2!"]; TRE [label="Tampere", pos="2.3,3!"];
+  PRI [label="Pori", pos="0.2,3.3!"]; JKL [label="Jyväskylä", pos="4.2,4.4!"];
+  MLI [label="Mikkeli", pos="6.6,3.4!"]; KUO [label="Kuopio", pos="6.4,5.4!"];
+  TKU -- TRE [label="160"]; TKU -- PRI [label="140"];
+  LTI -- TRE [label="130"]; LTI -- MLI [label="125"];
+  TRE -- JKL [label="150"]; MLI -- KUO [label="160"];
+  JKL -- KUO [label="145"];
+  edge [color="#B04848", penwidth=1.8, fontcolor="#B04848"];
+  HKI -- HML [label="100"]; HKI -- LTI [label="105"];
+  HKI -- TKU [label="165"]; HKI -- KVL [label="135"];
+  HML -- TRE [label="75"]; TRE -- PRI [label="110"];
+  LTI -- JKL [label="170"]; KVL -- MLI [label="90"];
+}
+```
+
 ```{.tuloste tiedosto="esimerkit/12-dijkstra.odotettu"}
 ```
 

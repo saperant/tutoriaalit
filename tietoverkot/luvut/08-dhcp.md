@@ -15,6 +15,27 @@ virtuaaliverkko tekevät saman asian.
 | REQUEST | asiakas → kaikki | "Otan tämän palvelimen tarjouksen" |
 | ACK | palvelin → asiakas | Vahvistus ja vuokra-aika |
 
+```{.dot otsikko="DHCP:n neljä viestiä (DORA)"}
+digraph {
+  nodesep=1.6; ranksep=0.32;
+  node [shape=point, width=0.04, color="#5B6B70"];
+  edge [arrowhead=none, style=dashed, color="#B8C4C8"];
+  t0 [shape=box, width=1, label="asiakas"];
+  t0 -> t0_0 -> t0_1 -> t0_2 -> t0_3 -> t0_4;
+  t1 [shape=box, width=1, label="palvelin"];
+  t1 -> t1_0 -> t1_1 -> t1_2 -> t1_3 -> t1_4;
+  {rank=same; t0_0; t1_0;}
+  {rank=same; t0_1; t1_1;}
+  {rank=same; t0_2; t1_2;}
+  {rank=same; t0_3; t1_3;}
+  {rank=same; t0_4; t1_4;}
+  t0_0 -> t1_1 [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, label="DISCOVER (yleislähetys)"];
+  t1_1 -> t0_2 [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, label="OFFER 192.0.2.100"];
+  t0_2 -> t1_3 [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, label="REQUEST (yleislähetys)"];
+  t1_3 -> t0_4 [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, label="ACK, vuokra 3600 s"];
+}
+```
+
 Asiakkaalla ei ole vielä osoitetta, joten se lähettää lähdeosoitteesta
 `0.0.0.0` porttiin 67 yleislähetysosoitteeseen `255.255.255.255`.
 REQUEST lähetetään myös yleislähetyksenä, jotta muut palvelimet näkevät,

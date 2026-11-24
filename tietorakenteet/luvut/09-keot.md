@@ -30,6 +30,22 @@ vain vanhempia ja lapsia: sisarukset ja eri haarat ovat keskenään
 missä järjestyksessä tahansa. Juuri tämä löysyys tekee keosta halvan
 ylläpitää verrattuna hakupuuhun, jossa koko järjestys on määrätty.
 
+Sama keko puuna ja taulukkona. Taulukossa ei ole osoittimia, ja
+kaaret seuraavat indeksikaavoista:
+
+```{.dot otsikko="Binäärikeko puuna ja sama keko taulukkona"}
+digraph {
+  nodesep=0.25; ranksep=0.3;
+  node [shape=circle, width=0.42, fixedsize=true, fontsize=10];
+  k0 [label="1"]; k1 [label="3"]; k2 [label="2"]; k3 [label="7"];
+  k4 [label="4"]; k5 [label="5"];
+  k0 -> k1; k0 -> k2; k1 -> k3; k1 -> k4; k2 -> k5;
+  taulu [shape=record, fixedsize=false, width=3,
+         label="{0|1}|{1|3}|{2|2}|{3|7}|{4|4}|{5|5}"];
+  k3 -> taulu [style=invis];
+}
+```
+
 Esimerkki on ajastinjono. Vertailufunktio ratkaisee tasapelit
 tunnisteella, jotta ottojärjestys on aina määrätty:
 

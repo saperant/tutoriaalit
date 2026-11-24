@@ -57,6 +57,25 @@ josta VPN[0] valitsee lopullisen alkion. Jos taas R tai X on asetettu,
 alkio on **lehti** jo ensimmäisellä tasolla: se kuvaa 4 MiB:n
 **megasivun**. Alkion muoto ja apufunktiot:
 
+```{.dot otsikko="Sv32:n kaksitasoinen osoitteenmuunnos"}
+digraph {
+  nodesep=0.4; ranksep=0.45;
+  edge [fontsize=8];
+  node [shape=record];
+  va [label="{virtuaaliosoite|{<v1>VPN[1]|<v0>VPN[0]|<s>siirtymä}}"];
+  satp [label="satp", shape=box];
+  juuri [label="{<t>juuritaulu|…|<e>PTE (ei lehti)|…}"];
+  taso0 [label="{<t>2. tason taulu|…|<e>PTE (lehti): PPN|…}"];
+  pa [label="{fyysinen osoite|{<p>PPN|<s>siirtymä}}"];
+  satp -> juuri:t;
+  va:v1 -> juuri:e [label="indeksi"];
+  juuri:e -> taso0:t;
+  va:v0 -> taso0:e [label="indeksi"];
+  taso0:e -> pa:p;
+  va:s -> pa:s [label="sellaisenaan"];
+}
+```
+
 ```{.cpp tiedosto="esimerkit/08-sivutus.cpp" osa="pte"}
 ```
 

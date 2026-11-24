@@ -85,6 +85,19 @@ nykyisellä polulla olevat solmut:
 Esimerkki tarkistaa kaksi graafia: ketjun P0 → P1 → P2 → P3 ja
 kehän P0 → P1 → P2 → P0. Tuloste on luvun lopussa.
 
+```{.dot otsikko="Odotusgraafit: ketju ei lukkiudu, kehä lukkiutuu"}
+digraph {
+  rankdir=LR;
+  node [shape=circle];
+  subgraph cluster_ketju { label="ketju"; color="#D9E0E3";
+    a0 [label="P0"]; a1 [label="P1"]; a2 [label="P2"]; a3 [label="P3"];
+    a0 -> a1 -> a2 -> a3; }
+  subgraph cluster_keha { label="kehä = lukkiutuma"; color="#D9E0E3";
+    b0 [label="P0"]; b1 [label="P1"]; b2 [label="P2"];
+    b0 -> b1 -> b2; b2 -> b0 [color="#B04848", penwidth=1.4]; }
+}
+```
+
 Kun resurssia on useita kappaleita, sykli on välttämätön mutta ei
 riittävä ehto: jokin kehän resursseista voi vapautua kehän ulkopuolelta.
 Silloin käytetään pankkiirin turvallisuustarkistusta nykyisillä

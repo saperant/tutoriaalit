@@ -27,6 +27,20 @@ korjaavat tämän:
   Tason $k$ puussa on vähintään $2^k$ solmua, joten korkeus on
   enintään $\log_2 n$, vaikka polun tiivistystä ei käytettäisi.
 
+```{.dot otsikko="Polun tiivistys: find(e) liittää polun solmut suoraan juureen"}
+digraph {
+  nodesep=0.25; ranksep=0.35;
+  node [shape=circle, width=0.38, fixedsize=true, fontsize=10];
+  edge [dir=back];
+  subgraph cluster_ennen { label="ennen find(e)"; color="#D9E0E3";
+    a -> b; b -> c; c -> d; d -> e; a -> f; }
+  subgraph cluster_jalkeen { label="jälkeen"; color="#D9E0E3";
+    a2 [label="a"]; b2 [label="b"]; c2 [label="c"]; d2 [label="d"];
+    e2 [label="e"]; f2 [label="f"];
+    a2 -> b2; a2 -> c2; a2 -> d2; a2 -> e2; a2 -> f2; }
+}
+```
+
 Malliparametrit valitsevat parannukset erikseen, jotta niiden
 vaikutus voidaan mitata:
 

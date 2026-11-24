@@ -50,6 +50,12 @@ tärkeämpi, kuten Unixin nice-arvoissa:
 ```{.tuloste tiedosto="esimerkit/04-vuorontaja.odotettu"}
 ```
 
+Alla oleva kaavio näyttää samat aikajanat väreinä: kukin prosessi on
+oma värinsä, ja jokainen värin vaihto on kontekstinvaihto.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/04-vuorontaja.json" otsikko="Viisi vuorontajaa samalla kuormalla (simulaattorin aikajanat)"}
+```
+
 Aikajanalla kukin merkki on yksi aikayksikkö. Odotusaika on
 läpimenoaika vähennettynä suoritusajalla.
 

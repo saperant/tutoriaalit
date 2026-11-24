@@ -55,6 +55,13 @@ välit ja varaus 11 rekisterillä (`--vaihe=valit`):
 ```{.tuloste tiedosto="esimerkit/naytteet/valit-summa.txt"}
 ```
 
+Ajoituskaaviona näkyy, miksi tilapäisarvot voivat jakaa `s4`:n:
+niiden välit eivät mene päällekkäin. Vain `%5` ja `%6` elävät yhtä
+aikaa, joten `%6` saa oman rekisterinsä `s5`.
+
+```{.ajoituskaavio tiedosto="kaaviot/valit-summa.json" otsikko="Funktion summa elinvälit ja varatut rekisterit"}
+```
+
 Väliaikaiset `%3`–`%9` ovat lyhytikäisiä ja jakavat lähes kaikki `s4`:n. Pinoa ei
 tarvita. Kun rekistereitä on vain kaksi (`--rekistereita=2`), kolme
 koko silmukan ajan elävää arvoa joutuu pinoon:

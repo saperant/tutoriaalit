@@ -108,6 +108,13 @@ Presedenssin oikeellisuus testataan kultaisella tulosteella:
 ```{.tuloste tiedosto="esimerkit/naytteet/ast-presedenssi.txt"}
 ```
 
+Sama puu piirrettynä (vain muuttujan `b` alustuslauseke). Kaavio
+tuotetaan yllä olevasta tulosteesta, joten se on täsmälleen jäsentimen
+rakentama puu: syvemmällä oleva operaattori sitoo tiukemmin.
+
+```{.dot tiedosto="kaaviot/ast-presedenssi.dot" otsikko="Prattin jäsentimen tuottama syntaksipuu" leveys="55%"}
+```
+
 Prattin jäsennin on helppo laajentaa: uusi operaattori on yksi rivi
 sitovuustauluun. Jälkiliitteiset operaattorit (funktiokutsu,
 taulukon indeksi `a[i]`, kentän valinta `a.b`) käsitellään samassa

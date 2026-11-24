@@ -17,13 +17,18 @@ käsitelty taidossa *Digitaalitekniikka*. Tässä ne oletetaan valmiiksi.
 Kaikki käskyt kulkevat saman reitin, vaikka jokainen ei käytä jokaista
 osaa:
 
-```text
-        +----+   +-------+   +----------+   +-----+   +--------+
- PC --->| IM |-->| purku |-->| rekisteri|-->| ALU |-->| data-  |--+
-  ^     +----+   | + imm |   | tiedosto |   |     |   | muisti |  |
-  |              +-------+   +----------+   +-----+   +--------+  |
-  |                               ^                               |
-  +-- PC+4 / haaran kohde         +------- takaisinkirjoitus -----+
+```{.dot otsikko="Yksijaksoinen datapolku"}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.35;
+  edge [fontsize=8];
+  PC; IM [label="käsky-\nmuisti"]; purku [label="purku\n+ imm"];
+  RF [label="rekisteri-\ntiedosto"]; ALU [shape=invtrapezium];
+  DM [label="data-\nmuisti"];
+  PC -> IM -> purku -> RF -> ALU -> DM;
+  DM -> RF [label="takaisinkirjoitus", constraint=false, style=dashed];
+  ALU -> PC [label="PC+4 / haaran kohde", constraint=false,
+             style=dashed];
+}
 ```
 
 1. **Nouto** (IF): ohjelmalaskuri osoittaa käskymuistiin, käsky luetaan.

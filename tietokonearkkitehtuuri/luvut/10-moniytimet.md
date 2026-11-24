@@ -53,6 +53,29 @@ yhteistä väylää ja reagoivat muiden pyyntöihin:
 - **BusUpgr**: ydin kirjoittaa S-tilaiseen lohkoon. Data on jo
   paikallaan, joten riittää mitätöidä muut.
 
+Saman yhden rivin tilasiirtymät kaaviona. Yhtenäiset kaaret ovat oman
+ytimen tapahtumia, katkoviivat toisen ytimen väyläpyyntöjä, joita rivi
+nuuskii. Siirtymät M:stä vaativat lisäksi takaisinkirjoituksen:
+
+```{.dot otsikko="MESI-protokollan tilasiirtymät yhdelle riville"}
+digraph {
+  nodesep=0.9; ranksep=0.6;
+  edge [fontsize=8];
+  node [shape=circle, width=0.55, fixedsize=true];
+  I; {rank=same; E; S;} M;
+  I -> E [label="luku (yksin)"];
+  I -> S [label="luku (jaettu)"];
+  I -> M [label="kirjoitus"];
+  E -> M [label="kirjoitus"];
+  S -> M [label="kirjoitus\n(BusUpgr)"];
+  E -> S [label="BusRd", style=dashed];
+  M -> S [label="BusRd", style=dashed];
+  S -> I [label="BusRdX,\nBusUpgr", style=dashed];
+  E -> I [label="BusRdX", style=dashed];
+  M -> I [label="BusRdX", style=dashed];
+}
+```
+
 Protokolla koodina:
 
 ```{.cpp tiedosto="esimerkit/10-mesi.cpp" osa="protokolla"}

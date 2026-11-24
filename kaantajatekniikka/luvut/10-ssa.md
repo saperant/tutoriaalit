@@ -32,6 +32,12 @@ tavallisena välikielenä ja sitten SSA-muodossa:
 ```{.tuloste tiedosto="esimerkit/naytteet/ir-summa.txt"}
 ```
 
+Ohjausvuograafina sama funktio näyttää silmukan rakenteen: L1 on
+silmukan otsake, L4 hyppää takaisin siihen, ja L5 on ainoa poistuminen.
+
+```{.dot tiedosto="kaaviot/cfg-summa.dot" otsikko="Funktion summa ohjausvuograafi (kääntäjän tulosteesta)" leveys="55%"}
+```
+
 ```{.tuloste tiedosto="esimerkit/naytteet/ssa-summa.txt"}
 ```
 
@@ -79,6 +85,9 @@ mutta joita B ei itse aidosti dominoi.
 Esimerkkifunktion dominanssipuu ja rajat (`--vaihe=dominanssi`):
 
 ```{.tuloste tiedosto="esimerkit/naytteet/dominanssi-summa.txt"}
+```
+
+```{.dot tiedosto="kaaviot/dominanssi-summa.dot" otsikko="Dominaattoripuu: kunkin lohkon vanhempi on sen välitön dominaattori" leveys="30%"}
 ```
 
 L3 (jossa `s` kasvaa) ei dominoi L4:ää, koska L4:ään pääsee myös

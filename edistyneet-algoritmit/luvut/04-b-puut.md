@@ -25,6 +25,16 @@ Cormenin ym. määritelmässä B-puulla on *minimiaste* $t \ge 2$:
   avaimet ovat solmun avainten $i - 1$ ja $i$ välissä,
 - kaikki lehdet ovat samalla syvyydellä.
 
+```{.dot otsikko="B-puu, jonka minimiaste on t = 2: kaikki lehdet samalla syvyydellä"}
+digraph {
+  nodesep=0.2; ranksep=0.4;
+  node [shape=record, fontsize=10];
+  juuri [label="<a>|17|<b>|42|<c>"];
+  x [label="3|8|12"]; y [label="20|31"]; z [label="50|61|77"];
+  juuri:a -> x; juuri:b -> y; juuri:c -> z;
+}
+```
+
 Aste $t = 2$ antaa 2-3-4-puun, jonka binääriesitys on punamusta puu.
 Korkeus on enintään $\log_t \frac{n+1}{2}$: miljardi avainta ja
 $t = 500$ antavat korkeuden 4, ja ylimmät tasot pysyvät käytännössä

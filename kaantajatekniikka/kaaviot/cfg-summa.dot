@@ -1,0 +1,34 @@
+digraph {
+  ranksep=0.3;
+  node [shape=box, fontname="DejaVu Sans Mono",
+        fontsize=8];
+  L0 [label="L0:\l" +
+      "  s = 0\l" +
+      "  i = 1\l" +
+      "  jmp L1\l"];
+  L1 [label="L1:\l" +
+      "  %3 = le i, n\l" +
+      "  br %3, L2, L5\l"];
+  L2 [label="L2:\l" +
+      "  %4 = 3\l" +
+      "  %5 = rem i, %4\l" +
+      "  %6 = 0\l" +
+      "  %7 = eq %5, %6\l" +
+      "  br %7, L3, L4\l"];
+  L3 [label="L3:\l" +
+      "  s = add s, i\l" +
+      "  jmp L4\l"];
+  L4 [label="L4:\l" +
+      "  %9 = 1\l" +
+      "  i = add i, %9\l" +
+      "  jmp L1\l"];
+  L5 [label="L5:\l" +
+      "  ret s\l"];
+  L0 -> L1;
+  L1 -> L2 [label="tosi"];
+  L1 -> L5 [label="epätosi"];
+  L2 -> L3 [label="tosi"];
+  L2 -> L4 [label="epätosi"];
+  L3 -> L4;
+  L4 -> L1;
+}

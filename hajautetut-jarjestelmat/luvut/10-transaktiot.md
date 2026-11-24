@@ -28,6 +28,38 @@ koordinaattori on ehkä jo päättänyt sitoutua. Siksi valmistelu on
 kirjattava pysyvästi ennen ääntä, ja siksi osallistuja on äänen jälkeen
 koordinaattorin armoilla.
 
+```{.dot otsikko="Kaksivaiheinen sitoutuminen: valmistelu ja päätös"}
+digraph {
+  nodesep=1.0; ranksep=0.32;
+  node [shape=point, width=0.04, color="#5B6B70"];
+  edge [arrowhead=none, style=dashed, color="#B8C4C8"];
+  t0 [shape=box, width=1, label="koordinaattori"];
+  t0 -> t0_0 -> t0_1 -> t0_2 -> t0_3 -> t0_4 -> t0_5 -> t0_6;
+  t1 [shape=box, width=1, label="osallistuja A"];
+  t1 -> t1_0 -> t1_1 -> t1_2 -> t1_3 -> t1_4 -> t1_5 -> t1_6;
+  t2 [shape=box, width=1, label="osallistuja B"];
+  t2 -> t2_0 -> t2_1 -> t2_2 -> t2_3 -> t2_4 -> t2_5 -> t2_6;
+  {rank=same; t0_0; t1_0; t2_0;}
+  {rank=same; t0_1; t1_1; t2_1;}
+  {rank=same; t0_2; t1_2; t2_2;}
+  {rank=same; t0_3; t1_3; t2_3;}
+  {rank=same; t0_4; t1_4; t2_4;}
+  {rank=same; t0_5; t1_5; t2_5;}
+  {rank=same; t0_6; t1_6; t2_6;}
+  {rank=same; t0; t1; t2;}
+  t0 -> t1 -> t2 [style=invis];
+  t0_0 -> t1_1 [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, label="valmistaudu"];
+  t0_1 -> t2_2 [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, label="valmistaudu"];
+  t1_2 -> t0_3 [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, label="kyllä"];
+  t2_3 -> t0_4 [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, label="kyllä"];
+  t0_4 -> t1_5 [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, label="sitouta"];
+  t0_5 -> t2_6 [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, label="sitouta"];
+  t1_1 [xlabel="kirjaa valmistelu"];
+  t2_2 [xlabel="kirjaa valmistelu"];
+  t0_4 [xlabel="kirjaa päätös"];
+}
+```
+
 ```{.cpp tiedosto="esimerkit/10-2pc.cpp" osa="levy"}
 ```
 

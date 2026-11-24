@@ -97,6 +97,17 @@ ei ole suunnattua sykliä.
 ```{.c tiedosto="esimerkit/11-kaannos.c" osa="projekti"}
 ```
 
+```{.dot otsikko="Esimerkin riippuvuusgraafi: kaari kulkee edellytyksestä tulokseen"}
+digraph {
+  rankdir=LR; nodesep=0.25; ranksep=0.5;
+  node [fontname="DejaVu Sans Mono", fontsize=9];
+  "asetukset.h" -> "lista.o"; "asetukset.h" -> "main.o";
+  "lista.c" -> "lista.o"; "main.c" -> "main.o";
+  "lista.o" -> ohjelma; "main.o" -> ohjelma;
+  "testit.c" -> "testit.o"; "lista.o" -> testaa; "testit.o" -> testaa;
+}
+```
+
 Kahnin algoritmi pitää kirjaa jokaisen solmun käsittelemättömien
 edeltäjien määrästä (*tuloaste*). Solmut, joiden tuloaste on nolla,
 voidaan tehdä heti, ja ne laitetaan jonoon. Kun solmu otetaan jonosta,

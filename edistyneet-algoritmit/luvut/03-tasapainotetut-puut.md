@@ -33,6 +33,28 @@ osoittavat aina vasemmalle. Silloin jokaista 2-3-puuta vastaa
 täsmälleen yksi punamusta puu. Väri tallennetaan linkin alapään
 solmuun:
 
+Sama kolmen avaimen joukko 2-3-puuna ja vasemmalle kallistuvana
+punamustana puuna; punainen linkki yhdistää 3-solmun kaksi avainta:
+
+```{.dot otsikko="2-3-puu ja sitä vastaava LLRB-puu"}
+digraph {
+  nodesep=0.3; ranksep=0.35;
+  node [fontsize=10];
+  subgraph cluster_23 { label="2-3-puu"; color="#D9E0E3";
+    r [shape=record, label="E|J"];
+    l1 [shape=record, label="A|C"]; l2 [label="H", shape=box];
+    l3 [label="L", shape=box];
+    r -> l1; r -> l2; r -> l3; }
+  subgraph cluster_rb { label="LLRB-puu"; color="#D9E0E3";
+    node [shape=circle, width=0.4, fixedsize=true];
+    J -> E [color="#B04848", penwidth=2, label=" punainen", fontcolor="#B04848",
+            fontsize=8];
+    J -> Lb [arrowhead=normal]; Lb [label="L"];
+    E -> C; E -> Hb; Hb [label="H"];
+    C -> A [color="#B04848", penwidth=2]; }
+}
+```
+
 ```{.cpp tiedosto="esimerkit/punamusta.hpp" osa="kierrot"}
 ```
 

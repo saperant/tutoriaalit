@@ -21,6 +21,18 @@ listaa muutetaan.
 Esimerkki pitää tehtäviä prioriteettijärjestyksessä. Solmussa on data
 ja osoitin seuraavaan:
 
+```{.dot otsikko="Yksöislinkitetty lista: jokainen solmu osoittaa seuraavaan"}
+digraph {
+  rankdir=LR; nodesep=0.2;
+  node [shape=record, fontsize=9];
+  alku [label="alku", shape=plaintext, style=""];
+  a [label="{<d>prio 1 | <n>}"]; b [label="{<d>prio 3 | <n>}"];
+  c [label="{<d>prio 7 | <n>}"];
+  null [label="NULL", shape=plaintext, style=""];
+  alku -> a:d; a:n:c -> b:d; b:n:c -> c:d; c:n:c -> null;
+}
+```
+
 ```{.c tiedosto="esimerkit/04-lista.c" osa="solmu"}
 ```
 
@@ -66,6 +78,17 @@ tunnussolmun `seuraava` on ensimmäinen alkio ja `edellinen` viimeinen.
 Tyhjässä listassa tunnussolmu osoittaa itseensä. Koska jokaisella
 oikealla solmulla on aina edeltäjä ja seuraaja, irrotus ja lisäys ovat
 kahden rivin operaatioita ilman ainuttakaan `if`-lausetta.
+
+```{.dot otsikko="Kaksoislinkitetty rengas tunnussolmulla: tyhjässä listassa tunnus osoittaa itseensä"}
+digraph {
+  rankdir=LR; nodesep=0.3;
+  node [shape=box, fontsize=9];
+  T [label="tunnus", fillcolor="#FFFFFF"];
+  A; B; C;
+  T -> A -> B -> C -> T [label="seur"];
+  T -> C -> B -> A -> T [label="ed", style=dashed, constraint=false];
+}
+```
 
 Esimerkkinä on LRU-välimuisti (engl. least recently used). Välimuistiin
 mahtuu kolme sivua; kun se on täynnä, pisimpään käyttämättä ollut sivu

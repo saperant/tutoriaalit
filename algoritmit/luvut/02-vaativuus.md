@@ -143,6 +143,12 @@ $2 \cdot \log 8000 / \log 4000 \approx 2{,}17$, ja lisäyslajittelun 4,13
 on lähellä neliöllisen 4:ää. Lisäyslajittelun luvut ovat noin $n^2/4$,
 kuten keskimääräisen tapauksen analyysi ennustaa.
 
+Log-log-asteikolla kasvuluokka näkyy suoran kulmakertoimena:
+neliöllisen lisäyslajittelun suora on kaksi kertaa niin jyrkkä kuin
+lineaarihaun, ja binäärihaun lähes vaakasuora.
+
+![Vertailujen määrä syötteen koon funktiona (luvut yllä olevasta tulosteesta)](kuvat/kasvu.png){width=85%}
+
 Kokeen ja analyysin yhtäpitävyys on vahvempi todiste kuin kumpikaan
 yksin. Jos suhde olisi odotettua suurempi, toteutuksessa olisi
 todennäköisesti piilevä silmukka, esimerkiksi `strlen` silmukan

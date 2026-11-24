@@ -13,6 +13,15 @@ tapahtuu.
 
 Solmussa on avain ja kaksi lapsiosoitinta:
 
+```{.dot otsikko="Binäärihakupuu: vasemmassa alipuussa pienemmät, oikeassa suuremmat avaimet" leveys="50%"}
+digraph {
+  nodesep=0.3; ranksep=0.35;
+  node [shape=circle, width=0.4, fixedsize=true, fontsize=10];
+  8 -> 3; 8 -> 10; 3 -> 1; 3 -> 6; 6 -> 4; 6 -> 7; 10 -> 14; 14 -> 13;
+  n1 [shape=point, style=invis]; 10 -> n1 [style=invis];
+}
+```
+
 ```{.c tiedosto="esimerkit/08-hakupuu.c" osa="solmu"}
 ```
 

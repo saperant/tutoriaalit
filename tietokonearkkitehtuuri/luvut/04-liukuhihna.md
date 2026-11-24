@@ -85,6 +85,19 @@ edellinen käsky on vielä ID:ssä. Ilman kytkentää kierros vie
 21 jaksoa, ja jokainen silmukan käsky riippuu edellisestä: `add t2`
 tarvitsee `slli`:n tuloksen, `lw` `add`:n tuloksen ja niin edelleen.
 
+Samat kierrokset kaavioina, jotka tuotetaan yllä olevasta tulosteesta.
+Viivoitettu lohko on pysähdys. Ilman kytkentää jokainen käsky odottaa
+edellisen tulosta, kunnes se on kirjoitettu rekisteritiedostoon:
+
+```{.ajoituskaavio tiedosto="kaaviot/04-kytkenta-pois.json" otsikko="Silmukan kierros ilman eteenpäinkytkentää: 21 jaksoa"}
+```
+
+Kytkennän kanssa ainoa pysähdys on latauksen jälkeen (luku *Latauksen
+käyttö*), ja seuraava kierros alkaa haaran jälkeen:
+
+```{.ajoituskaavio tiedosto="kaaviot/04-kytkenta-paalla.json" otsikko="Sama kierros eteenpäinkytkennän kanssa: 14 jaksoa"}
+```
+
 Eteenpäinkytkentä (*forwarding*, *bypassing*) vie tuloksen suoraan
 ALU:n ulostulosta seuraavan käskyn ALU:n sisäänmenoon, ohi
 rekisteritiedoston. Laitteistossa se on kaksi multiplekseriä ALU:n

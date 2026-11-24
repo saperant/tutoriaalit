@@ -18,6 +18,22 @@ Hajautustaulu vastaa kysymykseen "onko sana sanastossa" yhtä nopeasti,
 mutta trie vastaa myös kysymyksiin "monta sanaa alkaa näin" ja "mitkä
 sanat alkavat näin aakkosjärjestyksessä".
 
+```{.dot otsikko="Trie sanoille kala, kalat, kana, koira ja koi; kaksoisreuna merkitsee sanan loppua" leveys="40%"}
+digraph {
+  nodesep=0.2; ranksep=0.28;
+  node [shape=circle, width=0.32, fixedsize=true, fontsize=9, label=""];
+  edge [fontsize=9, arrowsize=0.5];
+  r; k; ka; kal; kala [peripheries=2]; kalat [peripheries=2];
+  kan; kana [peripheries=2]; ko; koi [peripheries=2]; koir;
+  koira [peripheries=2];
+  r -> k [label="k"]; k -> ka [label="a"]; ka -> kal [label="l"];
+  kal -> kala [label="a"]; kala -> kalat [label="t"];
+  ka -> kan [label="n"]; kan -> kana [label="a"];
+  k -> ko [label="o"]; ko -> koi [label="i"]; koi -> koir [label="r"];
+  koir -> koira [label="a"];
+}
+```
+
 ```{.cpp tiedosto="esimerkit/09-trie.cpp" osa="lisays"}
 ```
 

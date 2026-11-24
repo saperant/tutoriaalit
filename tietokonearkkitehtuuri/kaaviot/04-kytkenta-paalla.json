@@ -1,0 +1,84 @@
+{
+ "signal": [
+  {
+   "name": "slli t2, t0, 2",
+   "wave": "34567z........",
+   "data": [
+    "IF",
+    "ID",
+    "EX",
+    "MEM",
+    "WB"
+   ]
+  },
+  {
+   "name": "add t2, s0, t2",
+   "wave": "z34567z.......",
+   "data": [
+    "IF",
+    "ID",
+    "EX",
+    "MEM",
+    "WB"
+   ]
+  },
+  {
+   "name": "lw t1, 0(t2)",
+   "wave": "z.34567z......",
+   "data": [
+    "IF",
+    "ID",
+    "EX",
+    "MEM",
+    "WB"
+   ]
+  },
+  {
+   "name": "add a0, a0, t1",
+   "wave": "z..34x567z....",
+   "data": [
+    "IF",
+    "ID",
+    "EX",
+    "MEM",
+    "WB"
+   ]
+  },
+  {
+   "name": "addi t0, t0, 1",
+   "wave": "z...3x4567z...",
+   "data": [
+    "IF",
+    "ID",
+    "EX",
+    "MEM",
+    "WB"
+   ]
+  },
+  {
+   "name": "blt t0, s1, 0x38",
+   "wave": "z....3x4567z..",
+   "data": [
+    "IF",
+    "ID",
+    "EX",
+    "MEM",
+    "WB"
+   ]
+  },
+  {
+   "name": "slli t2, t0, 2",
+   "wave": "z........34567",
+   "data": [
+    "IF",
+    "ID",
+    "EX",
+    "MEM",
+    "WB"
+   ]
+  }
+ ],
+ "config": {
+  "hscale": 0.62
+ }
+}

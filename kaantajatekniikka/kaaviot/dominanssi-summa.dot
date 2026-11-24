@@ -1,0 +1,10 @@
+digraph {
+  ranksep=0.3;
+  node [shape=circle, width=0.45, fixedsize=true];
+  L0;
+  L0 -> L1;
+  L1 -> L2;
+  L2 -> L3;
+  L2 -> L4;
+  L1 -> L5;
+}
