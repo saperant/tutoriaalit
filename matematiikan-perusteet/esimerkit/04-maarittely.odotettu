@@ -1,0 +1,8 @@
+sqrt(x - 1)  määrittely Interval(1, oo)
+             arvot      Interval(0, oo)
+1/(x^2 - 4)  määrittely Union(Interval.open(-oo, -2), Interval.open(-2, 2), Interval.open(2, oo))
+             arvot      Union(Interval(-oo, -1/4), Interval.open(0, oo))
+ln(3 - x)    määrittely Interval.open(-oo, 3)
+             arvot      Interval(-oo, oo)
+x^2 - 2x     määrittely Reals
+             arvot      Interval(-1, oo)

@@ -1,0 +1,22 @@
+/* Funktiot Maximalla: yhdistetty, käänteinen, paloittainen ja juuri. */
+display2d: false$
+
+/* @alku funktiot */
+f(x) := 2*x + 3$
+g(x) := x^2$
+print("f(g(x)) =", f(g(x)), " g(f(x)) =", expand(g(f(x))))$
+F(x) := 9/5*x + 32$
+kaanteinen: rhs(first(solve(y = F(x), x)))$
+print("F^-1(y) =", kaanteinen)$
+print("tarkistus:", ratsimp(F(kaanteinen)))$
+/* @loppu funktiot */
+
+/* @alku paloittain */
+hinta(k) := if k <= 300 then 5 + 8/100*k else 29 + 6/100*(k - 300)$
+print("hinnat:", map(lambda([k], float(hinta(k))), [0, 300, 1000]))$
+/* @loppu paloittain */
+
+/* @alku juuri */
+print("find_root:", find_root(x^3 - x - 2, x, 1, 2))$
+print("realroots:", float(realroots(x^3 - x - 2, 1e-12)))$
+/* @loppu juuri */

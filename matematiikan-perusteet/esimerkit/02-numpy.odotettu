@@ -1,0 +1,6 @@
+x: [0.  0.5 1.  1.5 2. ]
+y: [ 2.    0.75  0.   -0.25  0.  ]
+nollakohdat taulukossa: [1. 2.]
+f(t): [ 1.      0.4574 -0.2982 -0.6005]
+sama kuin käsin kirjoitettu: True
+isclose(0.1 + 0.2, 0.3): True

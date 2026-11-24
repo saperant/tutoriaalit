@@ -1,0 +1,7 @@
+sama yhtälö: True
+keskipiste (2, -3), säde 5
+y = x + 1: leikkaa [(-4, -3), (3, 4)]
+y = x + 5*sqrt(2): sivuaa [(-5*sqrt(2)/2, 5*sqrt(2)/2)]
+y = x + 8: ohittaa []
+tangentti: 3*x + 4*y - 25 = 0
+sivuaa: [(3, 4)]

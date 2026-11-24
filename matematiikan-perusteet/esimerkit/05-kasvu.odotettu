@@ -1,0 +1,8 @@
+solve antaa: -log(2)/(-log(53) + log(50))
+sama kuin ln 2 / ln 1.06: True
+likiarvo: 11.9 kuukautta
+nyrkkisääntö 70/6 = 11.67
+k = 0.058269, e^(12k) = 2.012196, 1.06^12 = 2.012196
+1 v:       2012 käyttäjää
+2 v:       4049 käyttäjää
+5 v:      32988 käyttäjää

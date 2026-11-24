@@ -1,0 +1,5 @@
+perusaskel n = 1: True
+induktioaskel n -> n + 1: True
+ensimmäinen vastaesimerkki: n = 40  arvo 1681 = {41: 2}
+2n^2 >= (n+1)^2, kun: Interval(1 + sqrt(2), oo)
+perusaskel 2^5 > 5^2: True

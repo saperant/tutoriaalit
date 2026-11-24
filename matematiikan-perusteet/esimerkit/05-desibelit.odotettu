@@ -1,0 +1,7 @@
+suhde       2: teho   +3.01 dB, amplitudi   +6.02 dB
+suhde      10: teho  +10.00 dB, amplitudi  +20.00 dB
+suhde     100: teho  +20.00 dB, amplitudi  +40.00 dB
+suhde     0.5: teho   -3.01 dB, amplitudi   -6.02 dB
+suhde   0.001: teho  -30.00 dB, amplitudi  -60.00 dB
+yhteensä +29.0 dB = amplitudi x28.18
+tarkistus: 20 lg 28.1838 = 29.0 dB

@@ -1,0 +1,7 @@
+suoraan: [53^t = 2*50^t]
+logaritmoituna: [t = log(2)/log(53/50)]
+e-kantainen: [t = log(2)/k]
+likiarvo: 11.89566104594188
+yhdistetty: log(x*y^2)
+laajennettu: log(y)+3*log(x)
+lg 1000 = 3.0

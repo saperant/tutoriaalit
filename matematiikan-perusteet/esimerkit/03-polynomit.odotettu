@@ -1,0 +1,10 @@
+tekijät: (x - 3)*(x + 2)*(2*x - 1)
+juuret ja kertaluvut: [(-2, 1), (1/2, 1), (3, 1)]
+p / (x - 3) = 2*x**2 + 3*x - 2  jakojäännös 0
+p(3) = 0 (jäännöslause: x - 3 on tekijä)
+supistettu: (x + 2)/(x - 3)
+alkuperäinen ei määritelty, kun x = [2, 3]
+supistettu kohdassa 2: -4
+alkuperäinen kohdassa 2: nan
+osamurrot: 3/(x + 2) + 2/(x - 1)
+takaisin: (5*x + 1)/((x - 1)*(x + 2))

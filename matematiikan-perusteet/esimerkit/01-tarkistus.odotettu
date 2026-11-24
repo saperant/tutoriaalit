@@ -1,0 +1,6 @@
+laajennettu: 4*x**2 + 12*x + 9
+erotus nolla: True
+erotus: 18 - 12*x
+eroaa kohdassa x = 1: 6
+ratkaisu: [9]
+sijoitus x = 9: True

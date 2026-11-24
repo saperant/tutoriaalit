@@ -1,0 +1,24 @@
+/* Trigonometria Maximalla. */
+display2d: false$
+
+/* @alku arvot */
+print("sin(%pi/6) =", sin(%pi/6), " cos(%pi/4) =", cos(%pi/4))$
+print("sin(2*%pi/3) =", sin(2*%pi/3))$
+/* @loppu arvot */
+
+/* @alku kaavat */
+print("trigexpand sin(2x):", trigexpand(sin(2*x)))$
+print("trigexpand sin(x+y):", trigexpand(sin(x + y)))$
+print("trigreduce sin(x)^2:", trigreduce(sin(x)^2))$
+print("tarkistus:", trigsimp(trigexpand(cos(2*x) - (1 - 2*sin(x)^2))))$
+/* @loppu kaavat */
+
+/* @alku yhtalot */
+/* solve antaa vain yhden ratkaisun ja varoittaa siitä. */
+r: solve(sin(x) = 1/2, x)$
+print("sin x = 1/2:", r)$
+/* Toinen ratkaisu jakson sisällä: pi - x0. Kaikki: + 2 pi n. */
+x0: rhs(first(r))$
+print("jakson ratkaisut:", [x0, %pi - x0])$
+print("tarkistus:", map(lambda([t], sin(t)), [x0, %pi - x0, x0 + 2*%pi]))$
+/* @loppu yhtalot */

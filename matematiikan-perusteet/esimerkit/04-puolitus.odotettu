@@ -1,0 +1,4 @@
+juuri 1.521379706, kierroksia 29
+ennuste: ceil(log2(1 / 2e-9)) = 29
+nsolve: 1.521379707
+virhe: f(a) ja f(b) ovat samanmerkkiset

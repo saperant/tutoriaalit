@@ -1,0 +1,9 @@
+ilman oletuksia: log(x*y)
+positiivisilla: log(xp) + log(yp)
+potenssi: 3*log(xp)
+yhdistäminen: log(xp*yp**2)
+log((-2)(-3)) = log(6)
+log(-2) + log(-3) = log(6) + 2*I*pi
+log2(n) = log(n)/log(2)
+log2(1024) = 10
+log10(2) = 0.301030

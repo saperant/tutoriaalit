@@ -1,0 +1,16 @@
+/* Vektorit ja analyyttinen geometria Maximalla. */
+display2d: false$
+
+/* @alku vektorit */
+a: [3, 4]$
+b: [4, -2]$
+print("a + b =", a + b, " a . b =", a . b)$
+print("|a| =", sqrt(a . a), " |b| =", sqrt(b . b))$
+print("kulma:", float(acos((a . b)/(sqrt(a . a)*sqrt(b . b)))*180/%pi))$
+/* @loppu vektorit */
+
+/* @alku leikkaukset */
+print("suorat:", solve([y = x/2 + 3/2, y = -2*x + 9], [x, y]))$
+print("ympyra ja suora:", solve([x^2 + y^2 = 25, y = x + 1], [x, y]))$
+print("sivuaa:", solve([x^2 + y^2 = 25, 3*x + 4*y = 25], [x, y]))$
+/* @loppu leikkaukset */

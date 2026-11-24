@@ -1,0 +1,11 @@
+|x - 2| = 3: {-1, 5}
+|x - 2| < 3: Interval.open(-1, 5)
+|2x + 1| >= 5: Union(Interval(-oo, -3), Interval(2, oo))
+x^2 - x - 6 > 0: Union(Interval.open(-oo, -2), Interval.open(3, oo))
+(x - 1)/(x + 2) <= 0: Interval.Lopen(-2, 1)
+x^2 + 1 > 0: Reals
+x = -3: ehto False, joukossa False
+x = -2: nimittäjä nolla, ei määritelty
+x = -1/2: ehto True, joukossa True
+x = 1: ehto True, joukossa True
+x = 2: ehto False, joukossa False

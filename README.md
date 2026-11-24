@@ -131,6 +131,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Laitteiston kuvausstandardit (SystemRDL, IP-XACT) | [`kuvausstandardit/`](kuvausstandardit/) | [kuvausstandardit.pdf](https://saperant.github.io/tutoriaalit/materiaalit/kuvausstandardit.pdf) |
 | Laiteohjelmiston takaisinmallinnus | [`laiteohjelmiston-takaisinmallinnus/`](laiteohjelmiston-takaisinmallinnus/) | [laiteohjelmiston-takaisinmallinnus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/laiteohjelmiston-takaisinmallinnus.pdf) |
 | Konenäkö (OpenCV) | [`konenako/`](konenako/) | [konenako.pdf](https://saperant.github.io/tutoriaalit/materiaalit/konenako.pdf) |
+| Matematiikan perusteet ohjelmallisesti | [`matematiikan-perusteet/`](matematiikan-perusteet/) | [matematiikan-perusteet.pdf](https://saperant.github.io/tutoriaalit/materiaalit/matematiikan-perusteet.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

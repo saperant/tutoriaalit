@@ -1,0 +1,8 @@
+tekijat: (x-3)*(x+2)*(2*x-1)
+jakolasku: [2*x^2+3*x-2,0]
+osamurrot: 3/(x+2)+2/(x-1)
+yleinen: [x = -(sqrt(b^2-4*a*c)+b)/(2*a),x = (sqrt(b^2-4*a*c)-b)/(2*a)]
+lineaarinen pari: [x = 2,y = 1]
+suorakulmio: [[x = 4,y = 3],[x = 3,y = 4]]
+|x - 2| < 3: [-1 < x,x < 5]
+x^2 - x - 6 > 0: [3 < x] or [x < -2]

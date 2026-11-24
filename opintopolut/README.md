@@ -49,7 +49,7 @@ flowchart LR
     lineaarialgebra["✓ Lineaarialgebra"]
     signaalimatematiikka["✓ Kompleksiluvut ja Fourier-analyysi"]
     todennakoisyys["✓ Todennäköisyys ja tilastot"]
-    matematiikan_perusteet["Matematiikan perusteet ohjelmallisesti"]
+    matematiikan_perusteet["✓ Matematiikan perusteet ohjelmallisesti"]
     analyysi["Differentiaali- ja integraalilaskenta"]
     differentiaaliyhtalot["Differentiaaliyhtälöt ja Laplace-muunnos"]
     numeeriset_menetelmat["Numeeriset menetelmät"]
@@ -334,7 +334,7 @@ flowchart LR
 |-------|---:|------------|------|
 | Diskreetti matematiikka | 5 | – | [valmis](../diskreetti-matematiikka/) |
 | Lineaarialgebra | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../lineaarialgebra/) |
-| Matematiikan perusteet ohjelmallisesti | 5 | Ohjelmoinnin perusteet (Python) | suunniteltu |
+| Matematiikan perusteet ohjelmallisesti | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../matematiikan-perusteet/) |
 | Todennäköisyys ja tilastot | 3 | Diskreetti matematiikka | [valmis](../todennakoisyys/) |
 | Differentiaali- ja integraalilaskenta | 5 | Matematiikan perusteet ohjelmallisesti | suunniteltu |
 | Kompleksiluvut ja Fourier-analyysi | 5 | Lineaarialgebra | [valmis](../signaalimatematiikka/) |

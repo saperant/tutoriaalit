@@ -1,0 +1,17 @@
+lauseke: -(x - y)**2 + (x + y)**2
+expand: 4*x*y
+sqrt(a**2): a  sqrt(x**2): sqrt(x**2)
+factor: (x - 3)*(x - 2)*(x - 1)
+cancel: (x - 1)/(x + 1)
+simplify: 1
+collect: x**2 + x*(y + 2) + 2*y
+f(4) = 4
+f(1/3) = -8/9
+f(sqrt(2)) = 2 - 3*sqrt(2)
+likiarvo: -2.2426407
+solve: [2, 3]
+solve, kaksi muuttujaa: [{x: 6, y: 4}]
+solveset R: EmptySet
+solveset C: {-I, I}
+g(1) = 0.30956
+nsolve: 0.739085133215161

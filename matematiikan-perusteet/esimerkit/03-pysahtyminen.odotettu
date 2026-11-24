@@ -1,0 +1,6 @@
+v(s) = [sqrt(a)*sqrt(a*t_r**2 + 2*s) - a*t_r]
+tarkka: -7 + sqrt(749) m/s
+likiarvo: 20.37 m/s = 73.3 km/h
+kuiva  a = 7 m/s^2:  73.3 km/h
+märkä  a = 3 m/s^2:  52.5 km/h
+jää    a = 1 m/s^2:  32.6 km/h

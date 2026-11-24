@@ -1,0 +1,24 @@
+/* Maximan perusteet: samat asiat kuin SymPyllä luvussa 2. */
+display2d: false$
+
+/* @alku muokkaus */
+p: x^3 - 6*x^2 + 11*x - 6$
+print("factor:", factor(p))$
+print("expand:", expand((x + y)^2 - (x - y)^2))$
+print("ratsimp:", ratsimp((x^2 - 1)/(x^2 + 2*x + 1)))$
+print("trigsimp:", trigsimp(sin(x)^2 + cos(x)^2))$
+/* @loppu muokkaus */
+
+/* @alku sijoitus */
+f(x) := x^2 - 3*x$
+print("f(4) =", f(4), " f(1/3) =", f(1/3))$
+print("likiarvo:", float(f(sqrt(2))))$
+print("tarkka 1/3 + 1/3 + 1/3 =", 1/3 + 1/3 + 1/3)$
+/* @loppu sijoitus */
+
+/* @alku ratkaisu */
+print("solve:", solve(x^2 - 5*x + 6, x))$
+print("pari:", solve([x + y = 10, x - y = 2], [x, y]))$
+print("kompleksiset:", solve(x^2 + 1, x))$
+print("find_root:", find_root(cos(x) - x, x, 0, 1))$
+/* @loppu ratkaisu */

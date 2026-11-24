@@ -1,0 +1,7 @@
+kulmakerroin: 1/2
+y = kx + b: x/2 + 3/2
+normaalimuoto: -2*x + 4*y - 6 = 0
+parametrimuoto: [4*t + 1, 2*t + 2]
+leikkauspiste: {x: 3, y: 3}
+kohtisuorassa: True
+etäisyys: 7*sqrt(5)/5 = 3.1305

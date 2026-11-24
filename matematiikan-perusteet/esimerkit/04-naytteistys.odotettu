@@ -1,0 +1,6 @@
+  100 pistettä: suurin |y| 0.000, näkyviä huippuja 0
+  101 pistettä: suurin |y| 1.000, näkyviä huippuja 1
+ 2000 pistettä: suurin |y| 1.000, näkyviä huippuja 99
+suurin hyppy x = 1.5692 ... 1.5724, pi/2 = 1.5708
+arvot hypyn molemmin puolin: 636 ja -636
+NaN-arvoja katkaisun jälkeen: 32

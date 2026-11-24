@@ -1,0 +1,9 @@
+a + b = [7, 2]  2a = [6, 8]
+|a| = 5  |b| = 2*sqrt(5)
+a . b = 4
+kulma: acos(2*sqrt(5)/25) = 79.7 astetta
+a:n projektio b:lle: [4/5, -2/5]
+kohtisuora osa: [11/5, 22/5]  pistetulo b:n kanssa: 0
+NumPy: |a| = 5.0, kulma 79.70 astetta
+kosini: 1.0000000000000002  arccos: nan
+rajattuna: 0.0

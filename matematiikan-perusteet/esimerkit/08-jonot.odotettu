@@ -1,0 +1,6 @@
+rekursio: [120, 160, 200, 240, 280, 320]
+suljettu: [120, 160, 200, 240, 280, 320]
+milloin yli 1000 Mt: 23
+koot: [16, 32, 64, 128, 256, 512, 1024]
+monesko koko riittää 10^6 alkiolle: 17
+rsolve: 2*3**n/3 - 1

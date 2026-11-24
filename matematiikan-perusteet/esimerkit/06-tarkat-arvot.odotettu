@@ -1,0 +1,11 @@
+   0 astetta = 0      rad: sin 0         cos 1
+  30 astetta = pi/6   rad: sin 1/2       cos sqrt(3)/2
+  45 astetta = pi/4   rad: sin sqrt(2)/2 cos sqrt(2)/2
+  60 astetta = pi/3   rad: sin sqrt(3)/2 cos 1/2
+  90 astetta = pi/2   rad: sin 1         cos 0
+ 120 astetta = 2*pi/3 rad: sin sqrt(3)/2 cos -1/2
+ 180 astetta = pi     rad: sin 0         cos -1
+math.sin(math.pi) = 1.2246467991473532e-16
+sp.sin(sp.pi) = 0
+math.cos(math.radians(60)) = 0.5000000000000001
+väärä yksikkö math.sin(30) = -0.988

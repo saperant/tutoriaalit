@@ -4,10 +4,11 @@
     "dockerfile": "../Dockerfile",
     "context": "..",
     "args": {
-      "LISAPAKETIT": "maxima octave",
+      "LISAPAKETIT": "maxima maxima-share octave",
       "PIP_PAKETIT": "sympy==1.14.0 numpy scipy==1.18.1 scipy-stubs==1.18.1.1 matplotlib ruff mypy pytest"
     }
   },
+  "runArgs": ["--security-opt=seccomp=unconfined"],
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/differentiaaliyhtalot/esimerkit",
   "customizations": {
     "vscode": {

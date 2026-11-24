@@ -4,10 +4,13 @@
     "dockerfile": "../Dockerfile",
     "context": "..",
     "args": {
-      "LISAPAKETIT": "maxima",
+      "LISAPAKETIT": "maxima maxima-share",
       "PIP_PAKETIT": "sympy==1.14.0 numpy matplotlib ruff mypy pytest"
     }
   },
+  "runArgs": [
+    "--security-opt=seccomp=unconfined"
+  ],
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/matematiikan-perusteet/esimerkit",
   "customizations": {
     "vscode": {

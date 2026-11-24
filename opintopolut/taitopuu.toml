@@ -388,6 +388,7 @@ laajuus = 5
 testaus = "SymPy, NumPy ja Maxima, tulokset tarkistetaan symbolisesti ja numeerisesti"
 roadmap = []
 amk = "Insinöörimatematiikan perusteet"
+tutoriaali = "matematiikan-perusteet"
 
 [[taito]]
 id = "analyysi"

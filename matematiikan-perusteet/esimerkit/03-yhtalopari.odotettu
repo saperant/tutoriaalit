@@ -1,0 +1,8 @@
+pari: {(2, 1)}
+ääretön: {(2 - y, y)}
+ei ratkaisua: EmptySet
+kolme tuntematonta: {(1, 2, 3)}
+sivut: 3 ja 4
+sivut: 4 ja 3
+leikkaus: (-4, -3)
+leikkaus: (3, 4)

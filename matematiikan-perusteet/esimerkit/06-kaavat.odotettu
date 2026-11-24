@@ -1,0 +1,7 @@
+sin(2x) = 2 sin x cos x                pätee
+cos(2x) = 1 - 2 sin^2 x                pätee
+sin(x+y) = sin x cos y + cos x sin y   pätee
+tan(2x) = 2 tan x                      EI päde
+tan-kaavan poikkeama: 217.3
+cos-kaavan poikkeama alle 1e-12: True
+tarkistus, pi/7: True

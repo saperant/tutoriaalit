@@ -1,0 +1,21 @@
+/* Yhtälöt, yhtälöparit ja epäyhtälöt Maximalla. */
+display2d: false$
+
+/* @alku polynomit */
+p: 2*x^3 - 3*x^2 - 11*x + 6$
+print("tekijat:", factor(p))$
+print("jakolasku:", divide(p, x - 3, x))$
+print("osamurrot:", partfrac((5*x + 1)/((x - 1)*(x + 2)), x))$
+/* @loppu polynomit */
+
+/* @alku yhtalot */
+print("yleinen:", solve(a*x^2 + b*x + c = 0, x))$
+print("lineaarinen pari:", linsolve([2*x + 3*y = 7, x - y = 1], [x, y]))$
+print("suorakulmio:", solve([2*x + 2*y = 14, x*y = 12], [x, y]))$
+/* @loppu yhtalot */
+
+/* @alku epayhtalot */
+load(fourier_elim)$
+print("|x - 2| < 3:", fourier_elim([abs(x - 2) < 3], [x]))$
+print("x^2 - x - 6 > 0:", fourier_elim([x^2 - x - 6 > 0], [x]))$
+/* @loppu epayhtalot */

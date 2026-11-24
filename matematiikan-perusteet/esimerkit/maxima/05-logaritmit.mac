@@ -1,0 +1,17 @@
+/* Eksponentti- ja logaritmifunktiot Maximalla. */
+display2d: false$
+
+/* @alku yhtalot */
+/* solve ei ratkaise eksponenttiyhtälöä suoraan ... */
+print("suoraan:", solve((53/50)^t = 2, t))$
+/* ... mutta logaritmin ottamisen jälkeen se on lineaarinen. */
+print("logaritmoituna:", solve(t*log(53/50) = log(2), t))$
+print("e-kantainen:", solve(exp(k*t) = 2, t))$
+print("likiarvo:", float(log(2)/log(1.06)))$
+/* @loppu yhtalot */
+
+/* @alku saannot */
+print("yhdistetty:", logcontract(log(x) + 2*log(y)))$
+print("laajennettu:", radcan(log(x^3*y)))$
+print("lg 1000 =", float(log(1000)/log(10)))$
+/* @loppu saannot */

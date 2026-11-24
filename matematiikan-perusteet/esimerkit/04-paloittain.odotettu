@@ -1,0 +1,7 @@
+    0 kWh:    5.00 eur
+  150 kWh:   17.00 eur
+  300 kWh:   29.00 eur
+  301 kWh:   29.06 eur
+ 1000 kWh:   71.00 eur
+raja-arvot kohdassa 300: 29 29 jatkuva: True
+50 eurolla: [650] kWh

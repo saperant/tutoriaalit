@@ -1,0 +1,5 @@
+R = 5.000, phi = 0.9273 rad = 53.13 astetta
+ero alle 1e-12: True
+symbolisesti: 3*sin(t) + 4*cos(t)
+jaksonaika T = 1/f = 20 ms, kulmataajuus 314.16 rad/s
+vaihe-ero aikana: 2.952 ms

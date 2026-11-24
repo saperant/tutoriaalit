@@ -1,0 +1,11 @@
+factor: (x-3)*(x-2)*(x-1)
+expand: 4*x*y
+ratsimp: (x-1)/(x+1)
+trigsimp: 1
+f(4) = 4  f(1/3) = -8/9
+likiarvo: -2.242640687119286
+tarkka 1/3 + 1/3 + 1/3 = 1
+solve: [x = 3,x = 2]
+pari: [[x = 6,y = 4]]
+kompleksiset: [x = -%i,x = %i]
+find_root: 0.7390851332151607
