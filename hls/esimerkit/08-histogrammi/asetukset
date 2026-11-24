@@ -1,0 +1,3 @@
+hist.cpp --top hist --ajoitus laskenta
+hist_vaara.cpp --top hist
+hist_kaksi.cpp --top hist

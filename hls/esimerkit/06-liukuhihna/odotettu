@@ -1,0 +1,23 @@
+# @alku ajo1
+$ minihls mac_putki.cpp --top mac --ajoitus kertolasku
+== ajoitus
+kertolasku: pituus 2, II 1, vaiheita 2
+    0  t2 = i (kierros)                              0.0 ns
+       t3 = a[t2]                                    1.5 ns
+       t4 = b[t2]                                    1.5 ns
+    1  t1 = s                                        0.0 ns
+       t5 = t3 * t4  [mul0]                          7.5 ns
+       t6 = t1 + t5                                  9.5 ns
+       s = t6
+minihls: mac, kellojakso 10 ns
+alue           kierr. pituus  II vaiheet latenssi toistot
+lohko1              1      1   1       1        1       1
+kertolasku          8      2   1       2        9       1
+lohko3              1      1   1       1        1       1
+latenssi 12 jaksoa (alueet 11, käynnistys 1)
+kertojia 1, summaimia 1, vertailuja 0, valintoja 0
+$ ./csim
+C-simulaatio: 4 tapausta, virheitä 0
+$ verilator: C/RTL-yhteissimulaatio
+RTL-simulaatio: 4 tapausta, latenssi 12 jaksoa, virheitä 0
+# @loppu ajo1

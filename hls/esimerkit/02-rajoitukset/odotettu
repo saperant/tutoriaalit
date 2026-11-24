@@ -1,0 +1,16 @@
+# @alku ajo1
+$ minihls jakolasku.cpp --top keskiarvo
+virhe: jakolasku.cpp: rivi 7: jakolasku ei ole tuettu
+# @loppu ajo1
+# @alku ajo2
+$ minihls while.cpp --top bitteja
+virhe: while.cpp: rivi 4: while ei ole tuettu (ohjausvuon oltava vakio)
+# @loppu ajo2
+# @alku ajo3
+$ minihls osoitin.cpp --top nollaa
+virhe: osoitin.cpp: rivi 2: osoitin ei ole tuettu: käytä taulukkoa
+# @loppu ajo3
+# @alku ajo4
+$ minihls indeksi.cpp --top viimeinen
+virhe: indeksi.cpp: rivi 3: indeksi 8 on taulukon x ulkopuolella
+# @loppu ajo4

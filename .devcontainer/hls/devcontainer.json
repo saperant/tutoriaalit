@@ -4,7 +4,7 @@
     "dockerfile": "../Dockerfile",
     "context": "..",
     "args": {
-      "LISAPAKETIT": "yosys verilator iverilog",
+      "LISAPAKETIT": "yosys verilator shellcheck",
       "PIP_PAKETIT": "ruff mypy"
     }
   },

@@ -1,0 +1,30 @@
+# @alku ajo1
+$ minihls matmul.cpp --top matmul
+minihls: matmul, kellojakso 10 ns
+alue           kierr. pituus  II vaiheet latenssi toistot
+sarake              4      6   4       2       20       4
+latenssi 81 jaksoa (alueet 80, käynnistys 1)
+sarake: II 4, pyydettiin 1, koska
+  a: lukuportti, 4 käyttöä
+kertojia 1, summaimia 10, vertailuja 0, valintoja 0
+$ ./csim
+C-simulaatio: 4 tapausta, virheitä 0
+$ verilator: C/RTL-yhteissimulaatio
+RTL-simulaatio: 4 tapausta, latenssi 81 jaksoa, virheitä 0
+# @loppu ajo1
+# @alku ajo2
+$ minihls matmul_jaettu.cpp --top matmul
+minihls: matmul, kellojakso 10 ns
+alue           kierr. pituus  II vaiheet latenssi toistot
+sarake              4      3   1       3        6       4
+latenssi 25 jaksoa (alueet 24, käynnistys 1)
+kertojia 4, summaimia 10, vertailuja 0, valintoja 0
+$ ./csim
+C-simulaatio: 4 tapausta, virheitä 0
+$ verilator: C/RTL-yhteissimulaatio
+RTL-simulaatio: 4 tapausta, latenssi 25 jaksoa, virheitä 0
+# @loppu ajo2
+# @alku ajo3
+$ minihls matmul_vaarin.cpp --top matmul
+virhe: matmul_vaarin.cpp: rivi 18: taulukon b pankki ei ole vakio
+# @loppu ajo3

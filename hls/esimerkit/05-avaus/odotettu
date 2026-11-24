@@ -1,0 +1,86 @@
+# @alku ajo1
+$ minihls mac.cpp --top mac
+minihls: mac, kellojakso 10 ns
+alue           kierr. pituus  II vaiheet latenssi toistot
+lohko1              1      1   1       1        1       1
+kertolasku          8      2   2       1       16       1
+lohko3              1      1   1       1        1       1
+latenssi 19 jaksoa (alueet 18, käynnistys 1)
+kertojia 1, summaimia 1, vertailuja 0, valintoja 0
+$ yosys: mac
+kertojat 1 (1 x 32 bittiä)
+summaimet ja vähentimet 3
+multiplekserit 87 bittiä
+kiikut 71 bittiä
+$ ./csim
+C-simulaatio: 4 tapausta, virheitä 0
+$ verilator: C/RTL-yhteissimulaatio
+RTL-simulaatio: 4 tapausta, latenssi 19 jaksoa, virheitä 0
+# @loppu ajo1
+# @alku ajo2
+$ minihls mac_2.cpp --top mac --ajoitus kertolasku
+== ajoitus
+kertolasku: pituus 3, II 3, vaiheita 1
+    0  t2 = i (kierros)                              0.0 ns
+       t3 = a[t2]                                    1.5 ns
+       t4 = b[t2]                                    1.5 ns
+       t7 = t2 + 1                                   2.0 ns
+    1  t1 = s                                        0.0 ns
+       t5 = t3 * t4  [mul0]                          7.5 ns
+       t6 = t1 + t5                                  9.5 ns
+       t8 = a[t7]                                    1.5 ns
+       t9 = b[t7]                                    1.5 ns
+    2  t10 = t8 * t9  [mul0]                         7.5 ns
+       t11 = t6 + t10                                9.5 ns
+       s = t11
+minihls: mac, kellojakso 10 ns
+alue           kierr. pituus  II vaiheet latenssi toistot
+lohko1              1      1   1       1        1       1
+kertolasku          4      3   3       1       12       1
+lohko3              1      1   1       1        1       1
+latenssi 15 jaksoa (alueet 14, käynnistys 1)
+kertojia 1, summaimia 3, vertailuja 0, valintoja 0
+$ yosys: mac
+kertojat 1 (1 x 32 bittiä)
+summaimet ja vähentimet 5
+multiplekserit 220 bittiä
+kiikut 106 bittiä
+$ ./csim
+C-simulaatio: 4 tapausta, virheitä 0
+$ verilator: C/RTL-yhteissimulaatio
+RTL-simulaatio: 4 tapausta, latenssi 15 jaksoa, virheitä 0
+# @loppu ajo2
+# @alku ajo3
+$ minihls mac_kaikki.cpp --top mac
+minihls: mac, kellojakso 10 ns
+alue           kierr. pituus  II vaiheet latenssi toistot
+lohko1              1      9   9       1        9       1
+latenssi 10 jaksoa (alueet 9, käynnistys 1)
+kertojia 1, summaimia 7, vertailuja 0, valintoja 0
+$ yosys: mac
+kertojat 1 (1 x 32 bittiä)
+summaimet ja vähentimet 8
+multiplekserit 554 bittiä
+kiikut 262 bittiä
+$ ./csim
+C-simulaatio: 4 tapausta, virheitä 0
+$ verilator: C/RTL-yhteissimulaatio
+RTL-simulaatio: 4 tapausta, latenssi 10 jaksoa, virheitä 0
+# @loppu ajo3
+# @alku ajo4
+$ minihls mac_jaettu.cpp --top mac
+minihls: mac, kellojakso 10 ns
+alue           kierr. pituus  II vaiheet latenssi toistot
+lohko1              1      4   4       1        4       1
+latenssi 5 jaksoa (alueet 4, käynnistys 1)
+kertojia 8, summaimia 7, vertailuja 0, valintoja 0
+$ yosys: mac
+kertojat 8 (8 x 32 bittiä)
+summaimet ja vähentimet 8
+multiplekserit 12 bittiä
+kiikut 292 bittiä
+$ ./csim
+C-simulaatio: 4 tapausta, virheitä 0
+$ verilator: C/RTL-yhteissimulaatio
+RTL-simulaatio: 4 tapausta, latenssi 5 jaksoa, virheitä 0
+# @loppu ajo4

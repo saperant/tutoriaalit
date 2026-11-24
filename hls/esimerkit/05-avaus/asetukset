@@ -1,0 +1,4 @@
+mac.cpp --top mac
+mac_2.cpp --top mac --ajoitus kertolasku
+mac_kaikki.cpp --top mac
+mac_jaettu.cpp --top mac

@@ -1,0 +1,39 @@
+# @alku ajo1
+$ minihls iir.cpp --top iir --kello 8
+minihls: iir, kellojakso 8 ns
+alue           kierr. pituus  II vaiheet latenssi toistot
+lohko1              1      1   1       1        1       1
+suodatus           16      4   2       2       34       1
+latenssi 36 jaksoa (alueet 35, käynnistys 1)
+suodatus: II 2, pyydettiin 1, koska
+  muuttuja tila
+kertojia 1, summaimia 2, vertailuja 0, valintoja 0
+$ ./csim
+C-simulaatio: 3 tapausta, virheitä 0
+$ verilator: C/RTL-yhteissimulaatio
+RTL-simulaatio: 3 tapausta, latenssi 36 jaksoa, virheitä 0
+# @loppu ajo1
+# @alku ajo2
+$ minihls iir_lyhyt.cpp --top iir --kello 8 --ajoitus suodatus
+== ajoitus
+suodatus: pituus 4, II 1, vaiheita 4
+    0  t3 = i (kierros)                              0.0 ns
+       t4 = x[t3]                                    1.5 ns
+    1  t5 = t4 * 77  [mul0]                          7.5 ns
+    2  t1 = tila                                     0.0 ns
+       t2 = t1 * 179  [mul1]                         6.0 ns
+       t6 = t2 + t5                                  8.0 ns
+       t7 = t6 >> 8                                  8.0 ns
+       tila = t7
+    3  y[t3] = t7
+minihls: iir, kellojakso 8 ns
+alue           kierr. pituus  II vaiheet latenssi toistot
+lohko1              1      1   1       1        1       1
+suodatus           16      4   1       4       19       1
+latenssi 21 jaksoa (alueet 20, käynnistys 1)
+kertojia 2, summaimia 1, vertailuja 0, valintoja 0
+$ ./csim
+C-simulaatio: 3 tapausta, virheitä 0
+$ verilator: C/RTL-yhteissimulaatio
+RTL-simulaatio: 3 tapausta, latenssi 21 jaksoa, virheitä 0
+# @loppu ajo2

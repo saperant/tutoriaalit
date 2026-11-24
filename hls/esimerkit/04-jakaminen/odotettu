@@ -1,0 +1,56 @@
+# @alku ajo1
+$ minihls diffeq.cpp --top diffeq
+minihls: diffeq, kellojakso 10 ns
+alue           kierr. pituus  II vaiheet latenssi toistot
+lohko1              1      1   1       1        1       1
+askel               4      3   3       1       12       1
+lohko3              1      1   1       1        1       1
+latenssi 15 jaksoa (alueet 14, käynnistys 1)
+kertojia 3, summaimia 4, vertailuja 0, valintoja 0
+$ yosys: diffeq
+kertojat 3 (3 x 32 bittiä)
+summaimet ja vähentimet 6
+multiplekserit 534 bittiä
+kiikut 295 bittiä
+$ ./csim
+C-simulaatio: 4 tapausta
+$ verilator: C/RTL-yhteissimulaatio
+RTL-simulaatio: 4 tapausta, latenssi 15 jaksoa, virheitä 0
+# @loppu ajo1
+# @alku ajo2
+$ minihls diffeq_1.cpp --top diffeq --ajoitus askel
+== ajoitus
+askel: pituus 6, II 6, vaiheita 1
+    0  t3 = x                                        0.0 ns
+       t4 = t3 + dx                                  2.0 ns
+       t6 = t3 * 3  [mul0]                           6.0 ns
+       x = t4
+    1  t5 = u                                        0.0 ns
+       t7 = t6 * t5  [mul0]                          6.0 ns
+    2  t8 = t7 * dx  [mul0]                          6.0 ns
+       t9 = t5 - t8                                  8.0 ns
+    3  t10 = y                                       0.0 ns
+       t11 = t10 * 3  [mul0]                         6.0 ns
+    4  t12 = t11 * dx  [mul0]                        6.0 ns
+       t13 = t9 - t12                                8.0 ns
+       u = t13
+    5  t14 = t5 * dx  [mul0]                         6.0 ns
+       t15 = t10 + t14                               8.0 ns
+       y = t15
+minihls: diffeq, kellojakso 10 ns
+alue           kierr. pituus  II vaiheet latenssi toistot
+lohko1              1      1   1       1        1       1
+askel               4      6   6       1       24       1
+lohko3              1      1   1       1        1       1
+latenssi 27 jaksoa (alueet 26, käynnistys 1)
+kertojia 1, summaimia 4, vertailuja 0, valintoja 0
+$ yosys: diffeq
+kertojat 1 (1 x 32 bittiä)
+summaimet ja vähentimet 6
+multiplekserit 600 bittiä
+kiikut 328 bittiä
+$ ./csim
+C-simulaatio: 4 tapausta
+$ verilator: C/RTL-yhteissimulaatio
+RTL-simulaatio: 4 tapausta, latenssi 27 jaksoa, virheitä 0
+# @loppu ajo2

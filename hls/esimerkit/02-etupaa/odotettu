@@ -1,0 +1,24 @@
+# @alku ajo1
+$ minihls luma.cpp --top luma --dfg
+== tietovuograafi: lohko1
+t0 = r * 77
+t1 = g * 150
+t2 = t0 + t1
+t3 = b * 29
+t4 = t2 + t3
+t5 = t4 >> 8
+t6 = t5 > 255
+t8 = t6 ? 255 : t5
+t9 = t8 < 0
+t11 = t9 ? 0 : t8
+return t11
+minihls: luma, kellojakso 10 ns
+alue           kierr. pituus  II vaiheet latenssi toistot
+lohko1              1      2   2       1        2       1
+latenssi 3 jaksoa (alueet 2, käynnistys 1)
+kertojia 3, summaimia 2, vertailuja 2, valintoja 2
+$ ./csim
+C-simulaatio: 12 tapausta, virheitä 0
+$ verilator: C/RTL-yhteissimulaatio
+RTL-simulaatio: 12 tapausta, latenssi 3 jaksoa, virheitä 0
+# @loppu ajo1

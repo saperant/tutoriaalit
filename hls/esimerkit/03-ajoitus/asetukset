@@ -1,0 +1,3 @@
+diffeq.cpp --top diffeq --asap askel
+diffeq.cpp --top diffeq --ajoitus askel
+diffeq.cpp --top diffeq --ajoitus askel --kello 20

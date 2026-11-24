@@ -1,0 +1,13 @@
+# @alku ajo1
+$ minihls mac.cpp --top mac
+minihls: mac, kellojakso 10 ns
+alue           kierr. pituus  II vaiheet latenssi toistot
+lohko1              1      1   1       1        1       1
+kertolasku          8      2   2       1       16       1
+lohko3              1      1   1       1        1       1
+latenssi 19 jaksoa (alueet 18, käynnistys 1)
+kertojia 1, summaimia 1, vertailuja 0, valintoja 0
+$ ./csim
+10-verifiointi/mac.cpp:9:11: runtime error: signed integer overflow:
+-1207312350 + -1879557714 cannot be represented in type 'int'
+# @loppu ajo1

@@ -778,6 +778,7 @@ laajuus = 5
 testaus = "avoimen lähdekoodin HLS-työkalu, Verilator"
 roadmap = []
 amk = "FPGA-suunnittelun syventävä opintojakso"
+tutoriaali = "hls"
 
 [[taito]]
 id = "dsp-laitteisto"

@@ -113,6 +113,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Verkko-ohjelmointi | [`verkko-ohjelmointi/`](verkko-ohjelmointi/) | [verkko-ohjelmointi.pdf](https://saperant.github.io/tutoriaalit/materiaalit/verkko-ohjelmointi.pdf) |
 | Reaaliaikakäyttöjärjestelmät | [`rtos/`](rtos/) | [rtos.pdf](https://saperant.github.io/tutoriaalit/materiaalit/rtos.pdf) |
 | Oheislaiteväylät | [`oheislaitevaylat/`](oheislaitevaylat/) | [oheislaitevaylat.pdf](https://saperant.github.io/tutoriaalit/materiaalit/oheislaitevaylat.pdf) |
+| Korkean tason synteesi | [`hls/`](hls/) | [hls.pdf](https://saperant.github.io/tutoriaalit/materiaalit/hls.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet
