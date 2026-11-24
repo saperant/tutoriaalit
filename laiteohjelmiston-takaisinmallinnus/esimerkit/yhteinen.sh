@@ -27,7 +27,7 @@ qemu() {
         -semihosting-config enable=on,target=native \
         -icount shift=3,align=off,sleep=off \
         -device loader,file="$1",addr=0 2>&1) || koodi=$?
-    printf '%s\n' "$tuloste" | grep -vE '^(qemu|R[0-9]| *$|XPSR|FPSCR)'
+    printf '%s\n' "$tuloste" | grep -vE '^(qemu|timeout|R[0-9]| *$|XPSR|FPSCR)'
     if printf '%s' "$tuloste" | grep -q fatal; then
         echo "paluuarvo lukittui"
     else
