@@ -1542,9 +1542,10 @@ aiheet = [
   "testaus",
 ]
 laajuus = 5
-testaus = "Gradle, yksikkötestit ja Robolectric"
+testaus = "Gradle, Lint, Robolectric ja Compose-testit JVM:llä"
 roadmap = ["android"]
 amk = "Mobiiliohjelmointi"
+tutoriaali = "android-sovellukset"
 
 [[taito]]
 id = "tietokonearitmetiikka"

@@ -72,6 +72,13 @@ jobs:
           key: riippuvuudet-${{ hashFiles('**/package-lock.json', '**/pom.xml', '**/*.gradle.kts', '**/gradle-wrapper.properties', '**/maven-wrapper.properties') }}
           restore-keys: riippuvuudet-
 
+      # Android-esimerkkien SDK-paketit; ajokoneen SDK:sta ne voivat puuttua.
+      - name: Asenna Android SDK -paketit
+        run: |
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" \
+            "platforms;android-37.2" "build-tools;36.0.0" > /dev/null
+
       - name: Testaa esimerkit, taitopuu ja sivusto
         run: make testaa
 

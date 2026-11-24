@@ -141,7 +141,7 @@ flowchart LR
     html_css["✓ HTML ja CSS"]
     web_sovellukset["✓ Web-sovellukset"]
     taustapalvelut["✓ Taustapalvelut"]
-    android_sovellukset["Android-sovellukset"]
+    android_sovellukset["✓ Android-sovellukset"]
   end
   komentorivi --> versionhallinta
   ohjelmoinnin_perusteet --> c_kieli
@@ -437,5 +437,5 @@ flowchart LR
 | HTML ja CSS | 3 | – | [valmis](../html-css/) |
 | SQL ja relaatiotietokannat | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../sql/) |
 | Taustapalvelut | 5 | Java, SQL ja relaatiotietokannat, Tietoverkot | [valmis](../taustapalvelut/) |
-| Android-sovellukset | 5 | Kotlin | suunniteltu |
+| Android-sovellukset | 5 | Kotlin | [valmis](../android-sovellukset/) |
 | Web-sovellukset | 5 | HTML ja CSS, Tietoverkot, TypeScript | [valmis](../web-sovellukset/) |
