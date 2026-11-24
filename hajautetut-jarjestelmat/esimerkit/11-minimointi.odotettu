@@ -1,0 +1,14 @@
+siemen 2 kaatuu, vikoja 30
+pienennetty 1 vikaan 8 kokeella:
+  2732-3308 ms: jako {1,3} | muut
+
+jalki pienennetylla vikaohjelmalla:
+   183 s2: ehdokas termilla 1
+   203 s2: johtaja termilla 1
+  2896 s1: ehdokas termilla 2
+  2897 s3: ehdokas termilla 2
+  3067 s3: ehdokas termilla 3
+  3298 s3: ehdokas termilla 4
+  3480 s1: ehdokas termilla 5
+  3505 s1: johtaja termilla 5
+rike: t=3510: termin 5 johtajalta puuttuu sitoutettu merkinta 81

@@ -1,0 +1,15 @@
+Suoritus siemenellä 7:
+    29 s0: vastaus 1
+    45 s0: vastaus 2
+    72 s0: vastaus 3
+    93 s0: vastaus 4
+   123 s0: aikakatkaisu 5
+   153 s0: aikakatkaisu 5
+   175 s0: vastaus 5
+
+siemen  valmis  uusinnat  kasitelty  kadonnut  monistettu
+     7     180         2          6         2           0
+     7     180         2          6         2           0
+     8     290         7          7         7           0
+     9     280         6         10         6           2
+    10     170         3          7         2           1

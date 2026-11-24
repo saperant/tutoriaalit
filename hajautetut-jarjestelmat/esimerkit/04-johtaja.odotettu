@@ -1,0 +1,6 @@
+keskiarvot 20 ajosta
+tila               johtaja kaatuu         seuraaja kaatuu
+                   kuitattu menetetty viive  kuitattu
+asynkroninen             97       5.0    30       150
+puolisynkroninen        101       0.0    54       153
+synkroninen              86       0.0    69        43

@@ -1,0 +1,11 @@
+N = 3, 10 % viesteista katoaa, 10 ajoa kutakin
+ R  W  R+W>N  vanhentuneet  lukuviive  kirjoitusviive
+ 1  1  ei           10.2 %      22 ms           23 ms
+ 1  2  ei            3.9 %      22 ms           41 ms
+ 2  2  kylla         0.0 %      33 ms           42 ms
+ 1  3  kylla         0.0 %      22 ms           78 ms
+ 3  1  kylla         0.0 %      41 ms           23 ms
+
+lukukorjaus, R = W = 2
+ei korjausta jaljessa olevia replikoita lopussa: 1 / 30
+korjaus      jaljessa olevia replikoita lopussa: 0 / 30

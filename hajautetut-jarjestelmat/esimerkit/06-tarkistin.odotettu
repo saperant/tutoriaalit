@@ -1,0 +1,6 @@
+perakkain                        linearisoituva: w1 r1
+lukuja kirjoituksen aikana       linearisoituva: r0 w1 r1
+uusi ja sitten vanha             EI
+vanha luku kirjoituksen jalkeen  EI
+kesken jaanyt kirjoitus          linearisoituva: w1 r1 r1
+kaksi kirjoittajaa               linearisoituva: w2 r2 w1 r1

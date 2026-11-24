@@ -1,0 +1,5 @@
+         onnistui jaon aikana  viive ilman jakoa  kuitattu
+tila       A (enem.) B (vahem.)     A ms   B ms  mutta kadonnut
+CP          24/24      0/3       22     96         0
+AP-LWW      25/25     25/25      21     19        73
+AP-CRDT     25/25     25/25      21     19         0

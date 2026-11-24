@@ -1,0 +1,13 @@
+   183 s4: ehdokas termilla 1
+   195 s4: johtaja termilla 1
+  1000 s4: kaatui
+  1182 s3: ehdokas termilla 2
+  1183 s1: ehdokas termilla 2
+  1337 s1: ehdokas termilla 3
+  1350 s1: johtaja termilla 3
+
+aikaraja      ensimmainen vaali    uusi vaali kaatumisen jalkeen
+              ka. ms   termeja     ka. ms   ei johtajaa
+150-300 ms     186      1.01        177             0
+150-160 ms     323      2.06        390             0
+150-150 ms       -         -          -           100

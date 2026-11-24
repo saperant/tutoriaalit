@@ -1050,6 +1050,7 @@ laajuus = 5
 testaus = "C++-toteutukset deterministisessä verkkosimulaattorissa"
 roadmap = ["system-design", "computer-science"]
 amk = "Hajautetut järjestelmät"
+tutoriaali = "hajautetut-jarjestelmat"
 
 [[taito]]
 id = "jarjestelmasuunnittelu"

@@ -1,0 +1,10 @@
+                  PN-laskuri replikoissa
+siemen  odotettu    r0    r1    r2    LWW  joukot samat
+     1         0     0     0     0      5  kylla
+     2         4     4     4     4      7  kylla
+     3       -11   -11   -11   -11     -6  kylla
+     4       -14   -14   -14   -14    -10  kylla
+     5       -14   -14   -14   -14     -6  kylla
+
+samanaikainen lisays ja poisto:
+a: maito, b: maito

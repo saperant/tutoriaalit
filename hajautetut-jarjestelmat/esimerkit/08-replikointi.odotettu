@@ -1,0 +1,14 @@
+ilman vikoja: 148 komentoa, 1 termi(a)
+
+esimerkki vikaohjelmasta (siemen 1):
+  143-309 ms: solmu 0 kaatuu
+  862-1046 ms: jako {1} | muut
+  1856-2107 ms: jako {2} | muut
+  2089-2372 ms: jako {3} | muut
+  2118-2190 ms: solmu 0 kaatuu
+  2144-2451 ms: jako {1,2} | muut
+  2565-3094 ms: jako {1} | muut
+  3789-3987 ms: solmu 0 kaatuu
+
+100 ajoa, 8 vikaa kussakin: 0 turvallisuusriketta
+keskimaarin 102 komentoa ja 3 termia ajossa
