@@ -1,0 +1,20 @@
+{
+  "name": "Haavoittuvuuksien analyysi ja hyödyntäminen: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "gdb radare2 strace ltrace binutils shellcheck",
+      "PIP_PAKETIT": "ruff mypy"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/haavoittuvuudet/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-python.python"
+      ]
+    }
+  }
+}
