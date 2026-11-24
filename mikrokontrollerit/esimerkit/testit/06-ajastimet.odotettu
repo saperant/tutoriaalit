@@ -1,0 +1,8 @@
+alku 0xfffffff0, nyt 0x00000005
+  nyt >= alku + 10:  ei
+  nyt - alku >= 10:  kyllä
+viive_ms(20) yli pyörähdyksen: valmis, laskuri pyörähti
+ajastin0: 10 keskeytystä, LED0=0
+yksi laukaisu, kuitattu heti: 1 käsittelykertaa
+yksi laukaisu, ei kuitattu:   1000 käsittelykertaa
+paluuarvo 0

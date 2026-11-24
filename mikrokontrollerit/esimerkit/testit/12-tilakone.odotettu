@@ -1,0 +1,15 @@
+ 420 ms  POIS -> PAALLA
+ 420 ms    LED0 = 1
+1020 ms  PAALLA -> VILKKU
+1270 ms    LED0 = 0
+1520 ms    LED0 = 1
+1770 ms    LED0 = 0
+2020 ms    LED0 = 1
+2170 ms  VILKKU -> POIS
+2170 ms    LED0 = 0
+2620 ms  POIS -> PAALLA
+2620 ms    LED0 = 1
+4020 ms  PAALLA -> POIS
+4020 ms    LED0 = 0
+jonon ylivuotoja 0
+paluuarvo 0

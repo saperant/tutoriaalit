@@ -1,0 +1,8 @@
+käynnistys 1 (virrankytkentä)
+  alustettu = 0, nollattu = 0, vakio = 7
+  alustettu: RAM 0x20000000, alkuarvo: flash, vakio: flash
+  .data 4 tavua, .bss 4 tavua, pino 4096 tavua
+  muutetaan: alustettu = 43, nollattu = 7; reset
+käynnistys 2 (ohjelmallinen reset)
+  alustettu = 43, nollattu = 7, vakio = 7
+paluuarvo 0

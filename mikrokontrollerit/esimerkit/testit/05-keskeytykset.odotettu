@@ -1,0 +1,25 @@
+1) kolme keskeytystä odottaa yhtä aikaa
+  ISPR = 0x0000e000
+  IRQ14 alkaa ja päättyy (prioriteetti 1, IPSR 30)
+  IRQ13 alkaa (prioriteetti 2, IPSR 29)
+  IRQ13 päättyy (prioriteetti 2, IPSR 29)
+  IRQ15 alkaa ja päättyy (prioriteetti 3, IPSR 31)
+2) käsittelijä laukaisee kaksi muuta
+  IRQ13 alkaa (prioriteetti 2, IPSR 29)
+    IRQ14 alkaa ja päättyy (prioriteetti 1, IPSR 30)
+    IRQ15 odottaa: kyllä
+  IRQ13 päättyy (prioriteetti 2, IPSR 29)
+  IRQ15 alkaa ja päättyy (prioriteetti 3, IPSR 31)
+3) sama prioriteetti ei keskeytä
+  IRQ13 alkaa (prioriteetti 2, IPSR 29)
+    IRQ15 odottaa: kyllä
+  IRQ13 päättyy (prioriteetti 2, IPSR 29)
+  IRQ14 alkaa ja päättyy (prioriteetti 2, IPSR 30)
+  IRQ15 alkaa ja päättyy (prioriteetti 3, IPSR 31)
+4) BASEPRI = 2: prioriteetit 2..7 peitetty
+  IRQ14 alkaa ja päättyy (prioriteetti 1, IPSR 30)
+  IRQ13 odottaa: kyllä
+  IRQ13 alkaa (prioriteetti 2, IPSR 29)
+  IRQ13 päättyy (prioriteetti 2, IPSR 29)
+  BASEPRI = 0
+paluuarvo 0

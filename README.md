@@ -103,6 +103,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Renderöinnin perusteet | [`renderoinnin-perusteet/`](renderoinnin-perusteet/) | [renderoinnin-perusteet.pdf](https://saperant.github.io/tutoriaalit/materiaalit/renderoinnin-perusteet.pdf) |
 | EDA-työkaluketjujen automatisointi | [`eda-skriptaus/`](eda-skriptaus/) | [eda-skriptaus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/eda-skriptaus.pdf) |
 | Korkean tason mallinnus (SystemC/TLM) | [`hlm-mallinnus/`](hlm-mallinnus/) | [hlm-mallinnus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/hlm-mallinnus.pdf) |
+| Mikrokontrollerit ja bare-metal-ohjelmointi | [`mikrokontrollerit/`](mikrokontrollerit/) | [mikrokontrollerit.pdf](https://saperant.github.io/tutoriaalit/materiaalit/mikrokontrollerit.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

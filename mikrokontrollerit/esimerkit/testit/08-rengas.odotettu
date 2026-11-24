@@ -1,0 +1,10 @@
+> led 1
+> tila
+LED0=1, luettu 11 tavua, ylivuotoja 0
+> vilkuta
+tuntematon komento 'vilkuta'
+> led 0
+> tila
+LED0=0, luettu 30 tavua, ylivuotoja 0
+> loppu
+paluuarvo 0

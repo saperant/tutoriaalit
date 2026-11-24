@@ -1,0 +1,29 @@
+1) luku kuvaamattomasta osoitteesta
+  HardFault, PC = vika_luku
+    HFSR.FORCED: eskaloitunut, vikakäsittelijä pois
+    PRECISERR: väylävirhe, tarkka osoite
+    BFARVALID: BFAR sisältää osoitteen
+    BFAR = 0x50000000
+2) sama, vikakäsittelijät sallittu
+  BusFault, PC = vika_luku
+    PRECISERR: väylävirhe, tarkka osoite
+    BFARVALID: BFAR sisältää osoitteen
+    BFAR = 0x50000000
+3) jako nollalla: 0
+4) jako nollalla, DIV_0_TRP
+  UsageFault, PC = vika_jako
+    DIVBYZERO: jako nollalla
+5) tuntematon käsky
+  UsageFault, PC = vika_kasky
+    UNDEFINSTR: tuntematon käsky
+6) hyppy parilliseen osoitteeseen
+  UsageFault, PC = parillinen_kohde
+    INVSTATE: Thumb-bitti nolla
+7) kirjoitus MPU:n suojaamaan muistiin (0x20000000)
+   luku onnistuu: 0
+  MemManage, PC = vika_kirjoitus
+    DACCVIOL: muistisuojaus esti datan käsittelyn
+    MMARVALID: MMFAR sisältää osoitteen
+    MMFAR = 0x20000004
+kaikki viat käsitelty
+paluuarvo 0

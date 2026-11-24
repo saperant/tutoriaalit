@@ -1,0 +1,46 @@
+Reset_Handler () at kaynnistys.c:77
+77  void Reset_Handler(void) {
+--- resetin jälkeen
+Reset_Handler in section .text
+$1 = 0x20001018
+0x0 <vektorit>:  0x20001018
+Reset_Handler + 1 in section .text
+$2 = 0x410fc231
+--- katkopiste
+Breakpoint 1 at ...: file main.c, line 17.
+
+Breakpoint 1, keskiarvo (taulukko=0x20000000 <naytteet>, n=8) at main.c:17
+17      for (unsigned i = 0; i <= n; i++) {   /* VIRHE: pitäisi olla < */
+#0  keskiarvo (taulukko=0x20000000 <naytteet>, n=8) at main.c:17
+#1  ... in main () at main.c:26
+$3 = {100, 102, 98, 101, 99, 100, 103, 97}
+--- ehdollinen katkopiste silmukkaan
+Breakpoint 2 at ...: file main.c, line 18.
+
+Breakpoint 2, keskiarvo (taulukko=0x20000000 <naytteet>, n=8) at main.c:18
+18          summa += taulukko[i];
+$4 = 7
+$5 = 97
+
+Breakpoint 2, keskiarvo (taulukko=0x20000000 <naytteet>, n=8) at main.c:18
+18          summa += taulukko[i];
+$6 = 8
+$7 = 5000
+raja in section .data
+--- funktion loppuun
+... in main () at main.c:26
+26      uint32_t tulos = keskiarvo(naytteet, 8);
+Value returned is $8 = 725
+--- vahtipiste
+Hardware watchpoint 3: viimeisin
+
+Hardware watchpoint 3: viimeisin
+
+Old value = 0
+New value = 725
+main () at main.c:28
+28      tulosta("keskiarvo %u, raja %u\n", (unsigned)tulos, (unsigned)raja);
+Breakpoint 4 at ...: file semihost.c, line 8.
+
+Breakpoint 4, lopeta (koodi=0) at semihost.c:8
+8  _Noreturn void lopeta(int koodi) {

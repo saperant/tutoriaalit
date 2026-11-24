@@ -1,0 +1,6 @@
+led 1
+tila
+vilkuta
+led 0
+tila
+loppu

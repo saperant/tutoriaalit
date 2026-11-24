@@ -895,6 +895,7 @@ laajuus = 5
 testaus = "arm-none-eabi-gcc, QEMU (Cortex-M)"
 roadmap = []
 amk = "Mikrokontrollerit / Sulautettu ohjelmointi"
+tutoriaali = "mikrokontrollerit"
 
 [[taito]]
 id = "oheislaitevaylat"

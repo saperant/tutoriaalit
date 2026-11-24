@@ -1,0 +1,10 @@
+alku: LED1=0 LED0=0
+LED1 päälle: LED1=1 LED0=0
+vaihto: LED1=0 LED0=1
+LED0 pois: LED1=0 LED0=0
+makro: LED1=1 LED0=1
+bit-band: LED1=0 LED0=1
+bit-band-osoite LED1:lle 0x42500004
+ilman volatilea: B
+volatilella:     AB
+paluuarvo 0

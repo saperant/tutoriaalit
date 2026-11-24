@@ -1,0 +1,9 @@
+suojaamatta:        1 (odotettu 101)
+PRIMASK:            101
+sisäkkäin, sokea:   1
+LDREX/STREX:        101, 2 yritystä
+__atomic_fetch_add: 1
+suojaamatta:  0x00000001_ffffffff
+toistaen:     0x00000001_00000000
+  2 yritystä
+paluuarvo 0
