@@ -1,0 +1,11 @@
+rtl/fifo.sv, 1 ajoa
+  rivit     2/2   100.0 %
+  haarat    8/8   100.0 %
+  bitit    29/63   46.0 %
+kattamatta:
+  bitti din: 2 3 5 6 7
+  bitti dout: 2 3 5 6 7
+  bitti muisti[0]: 0 1 2 3 5 6 7
+  bitti muisti[1]: 1 2 3 5 6 7
+  bitti muisti[2]: 0 2 3 5 6 7
+  bitti muisti[3]: 2 3 5 6 7

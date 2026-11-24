@@ -675,6 +675,7 @@ laajuus = 5
 testaus = "Verilator, cocotb, SymbiYosys"
 roadmap = []
 amk = "Digitaalisuunnittelun syventävä opintojakso"
+tutoriaali = "verifiointi"
 
 [[taito]]
 id = "fpga-toteutus"

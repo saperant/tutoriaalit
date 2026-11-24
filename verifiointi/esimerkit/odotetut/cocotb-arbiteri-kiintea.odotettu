@@ -1,0 +1,9 @@
+satunnainen (siemen 1): 198 myöntöä, 46 virhettä
+  pyyntöjä yhtä aikaa    100.0 %
+  myönnön saaja          100.0 %
+kuormitus: 40 myöntöä, 33 virhettä
+  pyyntöjä yhtä aikaa     40.0 % aukot: 1, 2, 3
+  myönnön saaja           25.0 % aukot: p1, p2, p3
+läpi 0, kaatui 2
+  KAATUI satunnainen: [malli] jakso 4: myonto=0001, malli 0010
+  KAATUI kuormitus: [malli] jakso 3: myonto=0001, malli 0010

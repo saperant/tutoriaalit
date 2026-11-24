@@ -1,0 +1,20 @@
+ohjattu: 10 jaksoa, 4 lukua, 8 virhettä
+  tayttoaste              66.7 % aukot: taysi
+  toimenpide              50.0 % aukot: lepo, push+pop
+  tila*toimenpide         33.3 % aukot: tyhja*lepo, tyhja*push+pop,
+    osittain*lepo, osittain*push+pop, taysi*lepo, taysi*push, taysi*pop,
+    taysi*push+pop
+satunnaistettu (siemen 1): 500 jaksoa, 229 lukua, 470 virhettä
+  tayttoaste              66.7 % aukot: taysi
+  toimenpide             100.0 %
+  tila*toimenpide         66.7 % aukot: taysi*lepo, taysi*push, taysi*pop,
+    taysi*push+pop
+kulmat: 264 jaksoa, 100 lukua, 242 virhettä
+  tayttoaste              66.7 % aukot: taysi
+  toimenpide              75.0 % aukot: lepo
+  tila*toimenpide         41.7 % aukot: tyhja*lepo, tyhja*push, osittain*lepo,
+    taysi*lepo, taysi*push, taysi*pop, taysi*push+pop
+läpi 0, kaatui 3
+  KAATUI ohjattu: taysi=1, mallissa 3
+  KAATUI satunnaistettu: taysi=1, mallissa 3
+  KAATUI kulmat: taysi=1, mallissa 3

@@ -1,0 +1,12 @@
+fifo: tila bmc, syvyys 10, makrot: BUGI_TAYSI
+BMC failed!
+Assert failed in fifo: rtl/fifo.sv:74
+  > assert (taysi == (maara == $bits(maara)'(SYVYYS)));
+Status: FAILED
+jälki:
+  askel rst push pop maara tyhja taysi
+      0   1    0   1     0     1     0
+      1   0    1   1     0     1     0
+      2   0    1   0     1     0     0
+      3   0    1   0     2     0     0
+      4   0    1   1     3     0     1

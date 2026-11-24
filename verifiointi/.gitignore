@@ -1,0 +1,2 @@
+# Ruffin välimuisti (esimerkit/Makefile käyttää valitsinta --no-cache).
+.ruff_cache/

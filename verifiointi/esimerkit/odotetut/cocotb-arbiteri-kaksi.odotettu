@@ -1,0 +1,9 @@
+satunnainen (siemen 1): 200 myöntöä, 2 virhettä
+  pyyntöjä yhtä aikaa    100.0 %
+  myönnön saaja          100.0 %
+kuormitus: 40 myöntöä, 42 virhettä
+  pyyntöjä yhtä aikaa     40.0 % aukot: 1, 2, 3
+  myönnön saaja            0.0 % aukot: p0, p1, p2, p3
+läpi 0, kaatui 2
+  KAATUI satunnainen: [yksikuuma] jakso 173: myonto=0011
+  KAATUI kuormitus: [yksikuuma] jakso 2: myonto=0011

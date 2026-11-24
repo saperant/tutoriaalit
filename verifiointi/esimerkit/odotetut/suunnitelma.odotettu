@@ -1,0 +1,22 @@
+F1  Data luetaan samassa järjestyksessä kuin se kirjoitettiin
+    tarkistus  ok        03-penkki/testipenkki.sv#malli.pop_front()
+    tarkistus  ok        pythonpenkit/fifo_ymparisto.py#class Tulostaulu
+    kattavuus  ok        pythonpenkit/fifo_ymparisto.py#"tila*toimenpide"
+F2  Kirjoitus täyteen jonoon hylätään
+    tarkistus  ok        rtl/fifo.sv#$past(push && taysi && !pop)
+    kattavuus  ok        rtl/fifo.sv#cover (taysi && pop && push)
+F3  Luku tyhjästä jonosta hylätään
+    tarkistus  ok        06-sva/fifo_sva.sv#a_tyhja_luku
+    tarkistus  ok        rtl/fifo.sv#$past(pop && tyhja && !push)
+    kattavuus  ok        pythonpenkit/test_fifo.py#async def kulmat
+F4  Liput tyhja ja taysi vastaavat määrää
+    tarkistus  ok        06-sva/fifo_sva.sv#a_liput
+    tarkistus  ok        rtl/fifo.sv#assert (taysi ==
+    kattavuus  ok        pythonpenkit/fifo_ymparisto.py#"tayttoaste"
+F5  Samanaikainen kirjoitus ja luku säilyttää määrän
+    tarkistus  ok        06-sva/fifo_sva.sv#a_samanaikainen
+    kattavuus  ok        06-sva/fifo_sva.sv#c_taysi_samanaikainen
+F6  Nollaus kesken käytön tyhjentää jonon
+    AUKKO: ei kohdetta tarkistus
+    AUKKO: ei kohdetta kattavuus
+6 vaatimusta, 2 aukkoa, 0 rikkinäistä viitettä

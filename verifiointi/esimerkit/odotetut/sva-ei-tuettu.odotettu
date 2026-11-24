@@ -1,0 +1,13 @@
+%Error-UNSUPPORTED: 06-sva/ei_tuettu.sv:5:20: Unsupported: ## range cycle
+    delay range expression
+    5 |         pyynto |-> ##[1:3] kuittaus);
+      |                    ^~
+                    ... For error description see
+    https://verilator.org/warn/UNSUPPORTED?v=5.020
+%Error-UNSUPPORTED: 06-sva/ei_tuettu.sv:5:28: Unsupported: ## (in sequence
+    expression)
+    5 |         pyynto |-> ##[1:3] kuittaus);
+      |                            ^~~~~~~~
+%Error: Exiting due to 2 error(s)
+        ... See the manual at https://verilator.org/verilator_doc.html for
+    more assistance.

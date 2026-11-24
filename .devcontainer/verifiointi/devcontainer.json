@@ -4,8 +4,8 @@
     "dockerfile": "../Dockerfile",
     "context": "..",
     "args": {
-      "LISAPAKETIT": "verilator iverilog yosys z3 boolector",
-      "PIP_PAKETIT": "cocotb ruff mypy pytest"
+      "LISAPAKETIT": "verilator iverilog yosys z3",
+      "PIP_PAKETIT": "cocotb==2.1.0 ruff mypy pytest"
     }
   },
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/verifiointi/esimerkit",

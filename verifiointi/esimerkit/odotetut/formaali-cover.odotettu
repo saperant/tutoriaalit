@@ -1,0 +1,20 @@
+fifo: tila cover, syvyys 10, makrot: ei
+Reached cover statement at rtl/fifo.sv:90 in step 5.
+Reached cover statement at rtl/fifo.sv:91 in step 5.
+Status: PASSED
+jälki 0:
+  askel rst push pop maara tyhja taysi
+      0   1    0   0     0     1     0
+      1   0    1   0     0     1     0
+      2   0    1   0     1     0     0
+      3   0    1   0     2     0     0
+      4   0    1   0     3     0     0
+      5   0    0   0     4     0     1
+jälki 1:
+  askel rst push pop maara tyhja taysi
+      0   1    0   0     0     1     0
+      1   0    1   0     0     1     0
+      2   0    1   0     1     0     0
+      3   0    1   0     2     0     0
+      4   0    1   0     3     0     0
+      5   0    1   1     4     0     1

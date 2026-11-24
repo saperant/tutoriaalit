@@ -1,0 +1,24 @@
+vikamatriisi: kaatuneet siemenet / 5
+fifo                         ohjattu  satunnaistettu          kulmat
+  ehjä                             -               -               -
+  BUGI_TYHJA                       -             4/5             5/5
+  BUGI_SAMANAIKAINEN               -             5/5               -
+  BUGI_TAYSI                     5/5             5/5             5/5
+arbiteri                 satunnainen       kuormitus
+  ehjä                             -               -
+  BUGI_KIINTEA                   5/5             5/5
+  BUGI_KAKSI                     4/5             5/5
+
+epäonnistumiset ryhmiteltyinä (4 ryhmää):
+   10 x arbiteri: [malli] jakso #: myonto=#, malli #
+        toista: --vika BUGI_KIINTEA --siemen 1 --testit kuormitus
+        viat: BUGI_KIINTEA
+    9 x arbiteri: [yksikuuma] jakso #: myonto=#
+        toista: --vika BUGI_KAKSI --siemen 1 --testit kuormitus
+        viat: BUGI_KAKSI
+   14 x fifo: maara=#, mallissa #
+        toista: --vika BUGI_TYHJA --siemen 1 --testit kulmat
+        viat: BUGI_SAMANAIKAINEN, BUGI_TYHJA
+   15 x fifo: taysi=#, mallissa #
+        toista: --vika BUGI_TAYSI --siemen 1 --testit kulmat
+        viat: BUGI_TAYSI

@@ -1,0 +1,14 @@
+arbiteri: tila bmc, syvyys 12, makrot: BUGI_KIINTEA
+BMC failed!
+Assert failed in arbiteri: rtl/arbiteri.sv:68 (3 kertaa)
+  > always_comb if (!alku) assert (odotus <= 3'd4);
+Status: FAILED
+jälki:
+  askel rst pyynto myonto reilu[1].odotus
+      0   1   0010   0000               0
+      1   0   1111   0000               0
+      2   0   1111   0001               1
+      3   0   1111   0001               2
+      4   0   1111   0001               3
+      5   0   1110   0001               4
+      6   0   1111   0010               5

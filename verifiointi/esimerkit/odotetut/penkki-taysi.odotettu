@@ -1,0 +1,8 @@
+VIRHE 175: taysi=1, mallissa 3
+VIRHE 195: taysi=1, mallissa 3
+VIRHE 225: taysi=1, mallissa 3
+siemen 1: 918 kirjoitusta, 916 lukua, 1985 virhettä
+[20025] %Error: testipenkki.sv:102: Assertion failed in TOP.testipenkki:
+    tulostaulu löysi virheitä
+%Error: 03-penkki/testipenkki.sv:102: Verilog $stop
+Aborting...

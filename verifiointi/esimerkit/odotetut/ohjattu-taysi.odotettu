@@ -1,0 +1,7 @@
+VIRHE 50: määrä on 4
+VIRHE 80: arvo 3
+ohjattu testi: 2 virhettä
+[90] %Error: testipenkki.sv:46: Assertion failed in TOP.testipenkki: testi
+    epäonnistui
+%Error: 01-ohjattu/testipenkki.sv:46: Verilog $stop
+Aborting...

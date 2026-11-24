@@ -1,0 +1,10 @@
+arbiteri: tila bmc, syvyys 12, makrot: BUGI_KAKSI
+BMC failed!
+Assert failed in arbiteri: rtl/arbiteri.sv:54
+  > always_comb if (!alku) assert ($onehot0(myonto));
+Status: FAILED
+jälki:
+  askel rst pyynto myonto reilu[1].odotus
+      0   1   0100   0000               0
+      1   0   1111   0000               0
+      2   1   0100   0011               1

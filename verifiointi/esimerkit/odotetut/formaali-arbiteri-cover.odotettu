@@ -1,0 +1,4 @@
+arbiteri: tila cover, syvyys 10, makrot: ei
+Reached cover statement at rtl/arbiteri.sv:69 in step 5.
+Reached cover statement at rtl/arbiteri.sv:69 in step 8. (3 kertaa)
+Status: PASSED

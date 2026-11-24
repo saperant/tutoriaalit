@@ -1,0 +1,46 @@
+# FIFOn verifiointisuunnitelma (luku 2). Jokainen vaatimus kertoo,
+# mikä tarkistus sen todentaa ja mikä kattavuuskohde osoittaa, että
+# tilanne todella syntyi. Viite on muotoa tiedosto#teksti: työkalu
+# tarkistaa, että teksti löytyy tiedostosta.
+
+[[vaatimus]]
+id = "F1"
+kuvaus = "Data luetaan samassa järjestyksessä kuin se kirjoitettiin"
+tarkistukset = [
+    "03-penkki/testipenkki.sv#malli.pop_front()",
+    "pythonpenkit/fifo_ymparisto.py#class Tulostaulu",
+]
+kattavuus = ["pythonpenkit/fifo_ymparisto.py#\"tila*toimenpide\""]
+
+[[vaatimus]]
+id = "F2"
+kuvaus = "Kirjoitus täyteen jonoon hylätään"
+tarkistukset = ["rtl/fifo.sv#$past(push && taysi && !pop)"]
+kattavuus = ["rtl/fifo.sv#cover (taysi && pop && push)"]
+
+[[vaatimus]]
+id = "F3"
+kuvaus = "Luku tyhjästä jonosta hylätään"
+tarkistukset = [
+    "06-sva/fifo_sva.sv#a_tyhja_luku",
+    "rtl/fifo.sv#$past(pop && tyhja && !push)",
+]
+kattavuus = ["pythonpenkit/test_fifo.py#async def kulmat"]
+
+[[vaatimus]]
+id = "F4"
+kuvaus = "Liput tyhja ja taysi vastaavat määrää"
+tarkistukset = ["06-sva/fifo_sva.sv#a_liput", "rtl/fifo.sv#assert (taysi =="]
+kattavuus = ["pythonpenkit/fifo_ymparisto.py#\"tayttoaste\""]
+
+[[vaatimus]]
+id = "F5"
+kuvaus = "Samanaikainen kirjoitus ja luku säilyttää määrän"
+tarkistukset = ["06-sva/fifo_sva.sv#a_samanaikainen"]
+kattavuus = ["06-sva/fifo_sva.sv#c_taysi_samanaikainen"]
+
+[[vaatimus]]
+id = "F6"
+kuvaus = "Nollaus kesken käytön tyhjentää jonon"
+tarkistukset = []
+kattavuus = []
