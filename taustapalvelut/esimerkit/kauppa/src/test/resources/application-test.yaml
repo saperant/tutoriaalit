@@ -1,0 +1,6 @@
+# @alku testiprofiili
+# Profiili test: tuotannon migraatioiden päälle testiaineisto.
+spring:
+  flyway:
+    locations: classpath:db/migration, classpath:db/testidata
+# @loppu testiprofiili

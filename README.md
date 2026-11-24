@@ -55,6 +55,8 @@ Jokaisessa tutoriaalissa on lisäksi muutaman sivun pikaopas
 | HTML ja CSS | [`html-css/`](html-css/) | [html-css.pdf](html-css/html-css.pdf) |
 | SQL ja relaatiotietokannat | [`sql/`](sql/) | [sql.pdf](sql/sql.pdf) |
 | Funktionaalinen ohjelmointi (Racket) | [`funktionaalinen-ohjelmointi/`](funktionaalinen-ohjelmointi/) | [funktionaalinen-ohjelmointi.pdf](funktionaalinen-ohjelmointi/funktionaalinen-ohjelmointi.pdf) |
+| Web-sovellukset | [`web-sovellukset/`](web-sovellukset/) | [web-sovellukset.pdf](web-sovellukset/web-sovellukset.pdf) |
+| Taustapalvelut | [`taustapalvelut/`](taustapalvelut/) | [taustapalvelut.pdf](taustapalvelut/taustapalvelut.pdf) |
 | RTL-suunnittelu (SystemVerilog) | [`rtl-suunnittelu/`](rtl-suunnittelu/) | [rtl-suunnittelu.pdf](rtl-suunnittelu/rtl-suunnittelu.pdf) |
 | RTL-suunnittelu VHDL:llä | [`vhdl/`](vhdl/) | [vhdl.pdf](vhdl/vhdl.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](opintopolut/opintopolut.pdf) |

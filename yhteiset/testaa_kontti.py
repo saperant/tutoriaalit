@@ -45,10 +45,19 @@ def luottava_konteksti(dockerfile: Path, konteksti: Path, varmenne: Path,
     """Kopio rakennuskontekstista, jonka Dockerfile luottaa varmenteeseen."""
     uusi = tmp / "konteksti"
     shutil.copytree(konteksti, uusi)
-    shutil.copy(varmenne, uusi / "ymparisto-ca.crt")
+    # Yksi varmenne tiedostoa kohden: JDK:n varmennevaraston päivitys
+    # tuo tiedostosta vain ensimmäisen varmenteen.
+    hak = uusi / "ymparisto-ca"
+    hak.mkdir()
+    teksti = varmenne.read_text("utf-8")
+    loppu = "-----END CERTIFICATE-----"
+    for i, osa in enumerate(teksti.split(loppu)[:-1]):
+        alku = osa.find("-----BEGIN CERTIFICATE-----")
+        (hak / f"ymparisto-{i:03}.crt").write_text(
+            osa[alku:] + loppu + "\n", "utf-8")
     rivit = dockerfile.read_text("utf-8").splitlines(keepends=True)
     lisays = (
-        "COPY ymparisto-ca.crt /usr/local/share/ca-certificates/\n"
+        "COPY ymparisto-ca/ /usr/local/share/ca-certificates/ymparisto/\n"
         "RUN update-ca-certificates\n"
         f"ENV PIP_CERT={OLETUSVARMENNE} "
         f"REQUESTS_CA_BUNDLE={OLETUSVARMENNE} "
@@ -57,6 +66,9 @@ def luottava_konteksti(dockerfile: Path, konteksti: Path, varmenne: Path,
         if rivi.startswith("FROM "):
             rivit.insert(i + 1, lisays)
             break
+    # JDK:n varmennevarasto syntyy vasta paketteja asennettaessa, joten
+    # varmenteet päivitetään vielä lopuksi (esim. Mavenia varten).
+    rivit.append("\nRUN update-ca-certificates -f > /dev/null\n")
     uusi_dockerfile = uusi / "Dockerfile.testi"
     uusi_dockerfile.write_text("".join(rivit), "utf-8")
     return uusi_dockerfile, uusi
@@ -70,6 +82,20 @@ def testaa(tutoriaali: str) -> bool:
     konteksti = (konfiguraatio.parent / rakennus.get("context", ".")).resolve()
     kuva = f"tutoriaalit-{tutoriaali}"
 
+    # Välityspalvelin annetaan sekä rakennukselle että testiajolle, jossa
+    # paketinhallinta (npm, Maven, Gradle) lataa projektien riippuvuudet.
+    # Java-työkalut lukevat välityspalvelimen JAVA_TOOL_OPTIONS-muuttujasta.
+    valitys = [a for a in VALITYS if a in os.environ]
+    isantaverkko = []
+    if any("127.0.0.1" in os.environ[a] or "localhost" in os.environ[a]
+           for a in valitys):
+        # Paikallinen välityspalvelin näkyy vain isäntäkoneen verkossa.
+        isantaverkko = ["--network=host"]
+    ajoymparisto = []
+    for avain in [*valitys, "JAVA_TOOL_OPTIONS"]:
+        if avain in os.environ:
+            ajoymparisto += ["-e", f"{avain}={os.environ[avain]}"]
+
     with tempfile.TemporaryDirectory() as tmp:
         varmenne = ymparistön_varmenne()
         if varmenne:
@@ -79,13 +105,9 @@ def testaa(tutoriaali: str) -> bool:
                    "-f", str(dockerfile)]
         for avain, arvo in rakennus.get("args", {}).items():
             komento += ["--build-arg", f"{avain}={arvo}"]
-        valitys = [a for a in VALITYS if a in os.environ]
         for avain in valitys:
             komento += ["--build-arg", f"{avain}={os.environ[avain]}"]
-        if any("127.0.0.1" in os.environ[a] or "localhost" in os.environ[a]
-               for a in valitys):
-            # Paikallinen välityspalvelin näkyy vain isäntäkoneen verkossa.
-            komento.append("--network=host")
+        komento += isantaverkko
         komento.append(str(konteksti))
         print(f"== {tutoriaali}: rakennetaan kuva {kuva}", flush=True)
         if subprocess.run(komento, stdout=subprocess.DEVNULL).returncode:
@@ -94,7 +116,8 @@ def testaa(tutoriaali: str) -> bool:
 
     print(f"== {tutoriaali}: make testaa kontissa", flush=True)
     tulos = subprocess.run(
-        ["docker", "run", "--rm", "-v", f"{JUURI}:/w", "-w", "/w", kuva,
+        ["docker", "run", "--rm", *isantaverkko, *ajoymparisto,
+         "-v", f"{JUURI}:/w", "-w", "/w", kuva,
          "make", "-C", tutoriaali, "testaa"])
     return tulos.returncode == 0
 

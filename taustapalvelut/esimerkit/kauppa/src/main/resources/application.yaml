@@ -1,0 +1,39 @@
+# @alku asetukset
+spring:
+  application:
+    name: kauppa
+  datasource:
+    # H2 muistissa PostgreSQL-yhteensopivana. Tuotannossa osoite on
+    # PostgreSQL:n, ja salasana tulee ympäristömuuttujasta.
+    url: jdbc:h2:mem:kauppa;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE
+    hikari:
+      maximum-pool-size: 10      # yhteysallas, ks. luku 5
+  data:
+    jdbc:
+      dialect: postgresql        # SQL kuten tuotannon PostgreSQL:lle
+  mvc:
+    problemdetails:
+      enabled: true              # Springin virheet RFC 9457 -muodossa
+  threads:
+    virtual:
+      enabled: true              # pyynnöt virtuaalisäikeissä
+
+kauppa:
+  maksimirivit: 20
+  sivun-enimmaiskoko: 100
+  sallitut-alkuperat:
+    - http://localhost:5173
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics
+  endpoint:
+    health:
+      show-details: when-authorized
+
+logging:
+  pattern:
+    correlation: "[%X{korrelaatio:-}] "
+# @loppu asetukset

@@ -1497,9 +1497,10 @@ aiheet = [
   "tietoturva selaimessa: XSS, CSP ja CORS",
 ]
 laajuus = 5
-testaus = "Playwright ja node:test"
+testaus = "Vitest ja Playwright"
 roadmap = ["frontend", "react"]
 amk = "Web-sovelluskehitys"
+tutoriaali = "web-sovellukset"
 
 [[taito]]
 id = "taustapalvelut"
@@ -1516,9 +1517,10 @@ aiheet = [
   "integraatiotestaus",
 ]
 laajuus = 5
-testaus = "JUnit, Spring Boot -testit ja upotettu tietokanta"
+testaus = "JUnit, Spring Boot -testit ja upotettu H2-tietokanta"
 roadmap = ["backend", "spring-boot"]
 amk = "Palvelinohjelmointi"
+tutoriaali = "taustapalvelut"
 
 [[taito]]
 id = "android-sovellukset"

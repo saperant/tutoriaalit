@@ -120,8 +120,8 @@ flowchart LR
   subgraph sovellukset["Sovelluskehitys"]
     sql["✓ SQL ja relaatiotietokannat"]
     html_css["✓ HTML ja CSS"]
-    web_sovellukset["Web-sovellukset"]
-    taustapalvelut["Taustapalvelut"]
+    web_sovellukset["✓ Web-sovellukset"]
+    taustapalvelut["✓ Taustapalvelut"]
     android_sovellukset["Android-sovellukset"]
   end
   komentorivi --> versionhallinta
@@ -374,6 +374,6 @@ flowchart LR
 |-------|---:|------------|------|
 | HTML ja CSS | 3 | – | [valmis](../html-css/) |
 | SQL ja relaatiotietokannat | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../sql/) |
-| Taustapalvelut | 5 | Java, SQL ja relaatiotietokannat, Tietoverkot | suunniteltu |
+| Taustapalvelut | 5 | Java, SQL ja relaatiotietokannat, Tietoverkot | [valmis](../taustapalvelut/) |
 | Android-sovellukset | 5 | Kotlin | suunniteltu |
-| Web-sovellukset | 5 | HTML ja CSS, Tietoverkot, TypeScript | suunniteltu |
+| Web-sovellukset | 5 | HTML ja CSS, Tietoverkot, TypeScript | [valmis](../web-sovellukset/) |

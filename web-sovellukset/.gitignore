@@ -1,0 +1,4 @@
+# Esimerkkiprojektin käännöstuotteet ja testiraportit
+esimerkit/dist/
+esimerkit/test-results/
+esimerkit/playwright-report/
