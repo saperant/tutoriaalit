@@ -34,8 +34,10 @@ LDIF-muodossa:
 ```
 
 Esimerkki käynnistää OpenLDAP-palvelimen (`slapd`) tilapäishakemistoon
-vapaaseen porttiin. Ubuntun AppArmor-profiili sallii slapd:lle
-hakemiston `/var/tmp`, joten tilapäishakemisto luodaan sinne:
+vapaaseen porttiin. Ubuntun AppArmor-profiili rajaa järjestelmän
+`slapd`-ohjelman tiedostot sen omiin hakemistoihin. Profiili liittyy
+ohjelman polkuun, joten harjoitus ajaa ohjelmasta kopion; tuotannossa
+käytetään järjestelmän palvelua ja sen profiilia:
 
 ```{.bash tiedosto="esimerkit/06-ldap/main.sh" osa="kaynnistys"}
 ```

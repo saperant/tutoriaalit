@@ -2,8 +2,7 @@
 # Pieni LDAP-hakemisto: OpenLDAP käynnistetään tilapäishakemistoon
 # vapaaseen porttiin, ja sinne lisätään käyttäjät ja ryhmä. Sitten
 # haetaan tietoja, tarkistetaan kirjautuminen ja kokeillaan
-# pääsynhallintaa. Hakemisto on /var/tmp:ssä, koska Ubuntun
-# AppArmor-profiili sallii slapd:lle sen.
+# pääsynhallintaa.
 set -euo pipefail
 export LC_ALL=C
 lahde=$(cd "$(dirname "$0")" && pwd)
@@ -22,12 +21,21 @@ sed "s|TIETOKANTA|$tyo/tietokanta|" "$lahde/slapd.conf" \
 portti=$(python3 -c 'import socket; s = socket.socket(); s.bind(("", 0))
 print(s.getsockname()[1])')
 url=ldap://127.0.0.1:$portti
-slapd -f "$tyo/slapd.conf" -h "$url" -d 0 2> "$tyo/slapd.log" &
+# Ubuntun AppArmor-profiili rajaa /usr/sbin/slapd:n polut järjestelmän
+# hakemistoihin. Profiili liittyy ohjelman polkuun, joten harjoituksessa
+# ajetaan kopio; tuotannossa käytetään järjestelmän palvelua.
+cp "$(command -v slapd)" "$tyo/slapd"
+"$tyo/slapd" -f "$tyo/slapd.conf" -h "$url" -d 0 2> "$tyo/slapd.log" &
 pid=$!
-for _ in $(seq 50); do
+for _ in $(seq 100); do
     ldapsearch -x -H "$url" -s base -b '' > /dev/null 2>&1 && break
     sleep 0.1
 done
+if ! ldapsearch -x -H "$url" -s base -b '' > /dev/null 2>&1; then
+    echo "slapd ei käynnistynyt:" >&2
+    cat "$tyo/slapd.log" >&2
+    exit 1
+fi
 # @loppu kaynnistys
 
 # Salasanat tallennetaan suolattuina tiivisteinä ({SSHA}).
