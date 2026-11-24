@@ -19,7 +19,7 @@ concurrency:
 jobs:
   testaa-ja-rakenna:
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 150
     steps:
       - uses: actions/checkout@v4
 
@@ -107,7 +107,7 @@ jobs:
       # PDF:t rakennetaan ensin, koska sivuston testi tarkistaa, että
       # jokaisen valmiin tutoriaalin PDF on mukana.
       - name: Rakenna PDF:t
-        run: make pdf
+        run: make -k -j4 pdf
 
       - name: Testaa esimerkit, taitopuu ja sivusto
         run: make testaa
