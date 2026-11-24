@@ -939,6 +939,7 @@ laajuus = 5
 testaus = "FreeRTOS: POSIX-portti ja QEMU"
 roadmap = []
 amk = "Reaaliaikajärjestelmät"
+tutoriaali = "rtos"
 
 [[taito]]
 id = "embedded-linux"

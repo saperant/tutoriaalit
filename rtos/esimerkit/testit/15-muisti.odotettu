@@ -1,0 +1,13 @@
+keko: 4096 tavua, kaksi tehtavaa vei 1232 (TCB 104 + pino 512)
+  0 tuottaja: viesti 1, lohkoja vapaana 2
+  0 tuottaja: viesti 2, lohkoja vapaana 1
+  0 tuottaja: viesti 3, lohkoja vapaana 0
+  2 kuluttaja: 1 mittaus
+  2 tuottaja: viesti 4, lohkoja vapaana 0
+  4 kuluttaja: 2 tila
+  4 tuottaja: viesti 5, lohkoja vapaana 0
+  6 kuluttaja: 3 mittaus
+  8 kuluttaja: 4 tila
+ 10 kuluttaja: 5 mittaus
+ 20 valmis, lohkoja vapaana 3, keosta vapaana 2864 tavua
+paluuarvo 0

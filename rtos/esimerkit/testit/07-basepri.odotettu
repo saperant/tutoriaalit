@@ -1,0 +1,10 @@
+kriittinen osio alkaa
+  nopea keskeytys (prioriteetti 2) ajetaan heti
+  hidas odottaa: kylla
+kriittinen osio paattyy
+  hidas keskeytys (prioriteetti 6) antaa semaforin
+tehtava sai semaforin
+nopea keskeytys kutsuu ydinta:
+  nopea keskeytys (prioriteetti 2) ajetaan heti
+VAITE: prio >= configMAX_SYSCALL_INTERRUPT_PRIORITY (portti_tarkista_isr)
+paluuarvo 96

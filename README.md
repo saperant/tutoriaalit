@@ -111,6 +111,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Signaalit ja järjestelmät | [`signaalit-ja-jarjestelmat/`](signaalit-ja-jarjestelmat/) | [signaalit-ja-jarjestelmat.pdf](https://saperant.github.io/tutoriaalit/materiaalit/signaalit-ja-jarjestelmat.pdf) |
 | Edistyneet algoritmit ja tietorakenteet | [`edistyneet-algoritmit/`](edistyneet-algoritmit/) | [edistyneet-algoritmit.pdf](https://saperant.github.io/tutoriaalit/materiaalit/edistyneet-algoritmit.pdf) |
 | Verkko-ohjelmointi | [`verkko-ohjelmointi/`](verkko-ohjelmointi/) | [verkko-ohjelmointi.pdf](https://saperant.github.io/tutoriaalit/materiaalit/verkko-ohjelmointi.pdf) |
+| Reaaliaikakäyttöjärjestelmät | [`rtos/`](rtos/) | [rtos.pdf](https://saperant.github.io/tutoriaalit/materiaalit/rtos.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

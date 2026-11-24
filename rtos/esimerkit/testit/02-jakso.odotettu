@@ -1,0 +1,12 @@
+kierros  tavoite  vTaskDelay  DelayUntil  myohassa
+      0        0           2           3         3
+      1       10          13          16         6
+      2       20          26          23         3
+      3       30          37          33         3
+      4       40          48          44         4
+      5       50          61          53         3
+      6       60          72          65         5
+      7       70          83          73         3
+vTaskDelay: 7 jaksoa vei 81 tikkia (tavoite 70)
+vTaskDelayUntil: myohassa 3..6 tikkia, huojunta 3
+paluuarvo 0

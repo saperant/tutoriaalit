@@ -1,0 +1,8 @@
+  1 lahettaja: 3 ilmoitusta kummallekin
+  1 kerralla: ulTaskNotifyTake palautti 3
+  2 yksitellen: ulTaskNotifyTake palautti 3
+  3 yksitellen: ulTaskNotifyTake palautti 2
+  4 yksitellen: ulTaskNotifyTake palautti 1
+  8 kerralla: ei ilmoituksia
+ 10 yksitellen: ei ilmoituksia
+paluuarvo 0

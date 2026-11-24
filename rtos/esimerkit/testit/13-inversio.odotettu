@@ -1,0 +1,14 @@
+  0 matala varasi vaylan
+  1 korkea tarvitsee vaylan
+  2 keski alkaa
+  8 keski valmis
+ 10 matala vapauttaa (prioriteetti nyt 1)
+ 10 korkea sai vaylan, odotti 9 tikkia
+ 11 matala valmis (prioriteetti 1)
+
+tikki     0         1
+          01234567890123
+korkea    ..........#...
+keski     ..######......
+matala    ##......##....
+paluuarvo 0

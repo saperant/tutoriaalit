@@ -1,0 +1,13 @@
+  1 T2 pyytaa tulostinta
+  1 T2 tulostaa (vapaana 1)
+  1 T1 pyytaa tulostinta
+  1 T1 tulostaa (vapaana 0)
+  2 T3 pyytaa tulostinta
+  3 T4 pyytaa tulostinta
+  5 T4 tulostaa (vapaana 0)
+  5 T1 vapautti tulostimen
+  7 T3 tulostaa (vapaana 0)
+  7 T2 vapautti tulostimen
+  8 T4 vapautti tulostimen
+ 10 T3 vapautti tulostimen
+paluuarvo 0

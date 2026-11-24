@@ -1,0 +1,17 @@
+  5 laukaisija: keskeytys 1 (vaihto heti)
+  5   ISR: naytteen 1 kuittaus
+  5   kasittelija: nayte 1, viive 0 tikkia
+  5 laukaisija jatkaa
+ 10 laukaisija: keskeytys 2 (vaihto heti)
+ 10   ISR: naytteen 2 kuittaus
+ 10   kasittelija: nayte 2, viive 0 tikkia
+ 10 laukaisija jatkaa
+ 15 laukaisija: keskeytys 3 (ei vaihtoa)
+ 15   ISR: naytteen 3 kuittaus
+ 15 laukaisija jatkaa
+ 16   kasittelija: nayte 3, viive 1 tikkia
+ 20 laukaisija: keskeytys 4 (ei vaihtoa)
+ 20   ISR: naytteen 4 kuittaus
+ 20 laukaisija jatkaa
+ 21   kasittelija: nayte 4, viive 1 tikkia
+paluuarvo 0

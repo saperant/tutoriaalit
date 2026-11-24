@@ -1,0 +1,17 @@
+tikki     0         1         2
+          012345678901234567890123456789
+T1        #...#...#...#...#...#...#...#.
+T2        .##...##.....##...##.....##...
+T3        ...#.#...###...#.#...###...#.#
+
+kayttoaste U = 0.983, Liu-Layland-raja = 0.779
+vasteaika-analyysi:
+  T1: R = 1  -> kiintopiste 1 <= 4
+  T2: R = 2 -> 3  -> kiintopiste 3 <= 6
+  T3: R = 4 -> 7 -> 10 -> 11  > 10: maaraaika ylittyy
+
+tehtava   C   T  R(analyysi)  R(havaittu)  myohassa
+T1        1   4            1            1         0
+T2        2   6            3            3         0
+T3        4  10      ylittyy           12         2
+paluuarvo 0

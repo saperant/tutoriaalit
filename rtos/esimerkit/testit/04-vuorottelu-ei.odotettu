@@ -1,0 +1,10 @@
+  4 A valmis
+  8 B valmis
+ 12 C valmis
+
+tikki     0         1
+          01234567890123
+A         ####..........
+B         ....####......
+C         ........####..
+paluuarvo 0

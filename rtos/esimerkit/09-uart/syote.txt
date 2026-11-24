@@ -1,0 +1,5 @@
+tehtavat
+kaiku Kide toimii
+hukatut
+nollaa
+lopeta

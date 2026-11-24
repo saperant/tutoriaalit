@@ -1,0 +1,30 @@
+main: IPSR=0 CONTROL=0 pino=MSP
+ping: kehys 64 tavua pinon huipun alla
+  r4 = 04040404
+  r5 = 05050505
+  r6 = 06060606
+  r7 = 07070707
+  r8 = 08080808
+  r9 = 09090909
+  r10 = 0a0a0a0a
+  r11 = 0b0b0b0b
+  r0 = parametri "ping"
+  r1 = 01010101
+  r2 = 02020202
+  r3 = 03030303
+  r12 = 12121212
+  lr = kide_tehtava_palasi
+  pc = ping_pong
+  xpsr = 01000000
+tehtava: IPSR=0 CONTROL=2 pino=PSP
+keskeytys: IPSR=29 CONTROL=0 pino=MSP
+keskeytys: EXC_RETURN=fffffffd
+ping 0
+pong 0
+ping 1
+pong 1
+ping 2
+pong 2
+ping: valittu 4 kertaa
+pong: valittu 4 kertaa
+paluuarvo 0

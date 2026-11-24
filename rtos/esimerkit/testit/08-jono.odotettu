@@ -1,0 +1,25 @@
+  0 tuottaja: nayte 1 jonoon (1 jonossa)
+  2 tuottaja: nayte 2 jonoon (1 jonossa)
+  3 kuluttaja: nayte 1 (otettu 0) arvo -9
+  4 tuottaja: nayte 3 jonoon (1 jonossa)
+  6 tuottaja: nayte 4 jonoon (2 jonossa)
+  6 kuluttaja: nayte 2 (otettu 2) arvo -6
+  8 tuottaja: nayte 5 jonoon (2 jonossa)
+  9 kuluttaja: nayte 3 (otettu 4) arvo -1
+ 10 tuottaja: nayte 6 jonoon (2 jonossa)
+ 12 tuottaja: nayte 7 jonoon (3 jonossa)
+ 12 kuluttaja: nayte 4 (otettu 6) arvo 6
+ 14 tuottaja: nayte 8 jonoon (3 jonossa)
+ 15 kuluttaja: nayte 5 (otettu 8) arvo 15
+ 16 tuottaja: nayte 9 jonoon (3 jonossa)
+ 18 kuluttaja: nayte 6 (otettu 10) arvo 26
+ 18 tuottaja: nayte 10 jonoon (3 jonossa)
+ 21 tuottaja: jono taynna, nayte 11 hylatty
+ 21 kuluttaja: nayte 7 (otettu 12) arvo 39
+ 22 tuottaja: nayte 12 jonoon (3 jonossa)
+ 24 kuluttaja: nayte 8 (otettu 14) arvo 54
+ 27 kuluttaja: nayte 9 (otettu 16) arvo 71
+ 30 kuluttaja: nayte 10 (otettu 18) arvo 90
+ 33 kuluttaja: nayte 12 (otettu 22) arvo 134
+ 53 kuluttaja: ei naytteita 20 tikkiin, lopetus
+paluuarvo 0
