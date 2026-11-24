@@ -61,10 +61,12 @@ test("SSRF: esikatselu ei pääse sisäverkon palveluun", async (t) => {
   assert.equal(await esikatseluHaavoittuva(julkinen.url),
                "salainen-avain");
 
-  // Testissä sisäverkko on 127.0.0.1; oletuslista estäisi kaiken
-  // loopbackin, myös "julkisen" palvelimen.
+  // Testissä sisäverkko on 127.0.0.1 ja ::1 (localhost voi ratketa
+  // kumpaan tahansa); oletuslista estäisi kaiken loopbackin, myös
+  // "julkisen" palvelimen.
   const estetyt = new BlockList();
   estetyt.addAddress("127.0.0.1");
+  estetyt.addAddress("::1", "ipv6");
   const portti = new URL(sisainen.url).port;
   for (const kohde of [sisainen.url, `http://2130706433:${portti}/`,
                        `http://localhost:${portti}/`, "file:///etc/passwd",
