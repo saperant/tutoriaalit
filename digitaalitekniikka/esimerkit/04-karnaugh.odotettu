@@ -1,0 +1,7 @@
+ab\cd  00  01  11  10
+  00    .   .   1   1
+  01    .   1   1   .
+  11    x   x   x   x
+  10    .   .   x   x
+ryhmä b'c  kattaa ruudut [2, 3, 10, 11]
+ryhmä bd   kattaa ruudut [5, 7, 13, 15]

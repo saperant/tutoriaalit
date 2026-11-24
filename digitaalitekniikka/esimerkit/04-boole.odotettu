@@ -1,0 +1,9 @@
+De Morgan (ab)' = a'+b'         pätee
+osittelu a(b+c) = ab+ac         pätee
+osittelu a+bc = (a+b)(a+c)      pätee
+absorptio a+ab = a              pätee
+konsensus ab+a'c+bc = ab+a'c    pätee
+
+enemmistö: mintermit [3, 5, 6, 7]
+  kanoninen: a'bc + ab'c + abc' + abc
+  sievennetty: ab + ac + bc (sama)

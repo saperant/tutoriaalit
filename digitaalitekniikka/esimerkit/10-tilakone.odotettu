@@ -1,0 +1,9 @@
+d1 = q0·x' + q1·q0'·x
+d0 = x
+z  = q1·q0
+logiikka vs. taulu: 0 virhettä 8 rivistä
+
+jakso  0 1 2 3 4 5 6 7 8 9
+syöte  1 0 1 1 0 1 0 1 0 0
+Mealy  0 0 1 0 0 1 0 1 0 0
+Moore  0 0 0 1 0 0 1 0 1 0

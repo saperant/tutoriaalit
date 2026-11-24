@@ -1,0 +1,8 @@
+16-bittinen summain yhdessä jaksossa:
+  kriittinen polku 1340 ps: a0 → x0 → t0 → c1 … c15 → t15 → c16
+  jakso >= 50 + 1340 + 30 = 1420 ps  =>  f_max = 704 MHz
+  pitoajan marginaali 50 + 60 - 20 = 90 ps
+sama kahtena liukuhihnavaiheena:
+  kriittinen polku 700 ps: a8 → x8 → t8 → c9 … c15 → t15 → c16
+  jakso >= 50 + 700 + 30 = 780 ps  =>  f_max = 1282 MHz
+  pitoajan marginaali 50 + 60 - 20 = 90 ps

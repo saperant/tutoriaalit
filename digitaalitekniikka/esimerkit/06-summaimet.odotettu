@@ -1,0 +1,5 @@
+bittejä  ripple-carry  lookahead (4 bitin lohkot)
+      4             8          4
+      8            16          6
+     16            32         10
+     32            64         18

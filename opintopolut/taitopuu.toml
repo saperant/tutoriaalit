@@ -465,6 +465,7 @@ laajuus = 5
 testaus = "Python-mallit ja Verilator-simulaatiot"
 roadmap = ["computer-science"]
 amk = "Digitaalitekniikka"
+tutoriaali = "digitaalitekniikka"
 
 [[taito]]
 id = "assembly"

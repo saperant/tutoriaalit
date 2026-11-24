@@ -1,0 +1,10 @@
+a b |  AND   OR  XOR NAND  NOR XNOR
+0 0 |    0    0    0    1    1    1
+0 1 |    0    1    1    1    0    0
+1 0 |    0    1    1    1    0    0
+1 1 |    1    1    0    0    0    1
+
+AND NAND-porteista: oikein
+OR NAND-porteista: oikein
+XOR NAND-porteista: oikein
+NOT NAND-portista: oikein
