@@ -19,8 +19,26 @@
 #   KOTLIN          Kotlin-kääntäjän versio, esim. "2.4.21" (vaatii
 #                   LISAPAKETIT-listaan JDK:n)
 
-FROM mcr.microsoft.com/devcontainers/base:ubuntu-24.04
+FROM mcr.microsoft.com/devcontainers/base:ubuntu-24.04 AS yhteinen
 
+ENV ANDROID_HOME=/opt/android-sdk
+ENV NODE_PATH=/usr/local/lib/node_modules \
+    PLAYWRIGHT_BROWSERS_PATH=/opt/playwright
+
+# Kaikille kehityskonteille yhteinen kerros ensin, jotta se jaetaan
+# kuvien kesken ja CI:n välimuisti osuu siihen.
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+        --no-install-recommends \
+        make gcc-14 g++-14 clang-20 libclang-rt-20-dev gdb python3 \
+        curl ca-certificates xz-utils unzip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Paketin oma osa. Rakennusargumentit esitellään vasta yhteisen kerroksen
+# jälkeen, koska Docker käyttää niitä seuraavien RUN-käskyjen
+# välimuistiavaimissa.
+FROM yhteinen
 ARG KIRJOITTAMINEN=false
 ARG LISAPAKETIT=""
 ARG PIP_PAKETIT=""
@@ -29,16 +47,12 @@ ARG NPM_PAKETIT=""
 ARG KOTLIN=""
 ARG PLAYWRIGHT=""
 ARG ANDROID_SDK=""
-ENV ANDROID_HOME=/opt/android-sdk
-ENV NODE_PATH=/usr/local/lib/node_modules \
-    PLAYWRIGHT_BROWSERS_PATH=/opt/playwright
 
 RUN apt-get update \
     && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get install -y --no-install-recommends \
-        make gcc-14 g++-14 clang-20 libclang-rt-20-dev gdb python3 \
-        curl ca-certificates xz-utils unzip \
-        $LISAPAKETIT \
+    && if [ -n "$LISAPAKETIT" ]; then \
+        apt-get install -y --no-install-recommends $LISAPAKETIT; \
+    fi \
     && if [ "$KIRJOITTAMINEN" = "true" ]; then \
         apt-get install -y --no-install-recommends \
             pandoc graphviz texlive-xetex texlive-latex-recommended \

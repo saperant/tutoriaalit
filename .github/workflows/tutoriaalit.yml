@@ -218,5 +218,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Kuvien kerrokset GitHub Actionsin välimuistiin (ks.
+      # yhteiset/testaa_kontti.py): buildx ja välimuistin tunnisteet.
+      - uses: docker/setup-buildx-action@v3
+      - uses: crazy-max/ghaction-github-runtime@v3
+
       - name: Testaa tutoriaali omassa kehityskontissaan
+        env:
+          KONTTI_VALIMUISTI: gha
         run: python3 yhteiset/testaa_kontti.py ${{ matrix.tutoriaali }}

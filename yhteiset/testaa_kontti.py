@@ -103,6 +103,24 @@ def testaa(tutoriaali: str) -> bool:
                 dockerfile, konteksti, varmenne, Path(tmp))
         komento = ["docker", "build", "-q", "-t", kuva,
                    "-f", str(dockerfile)]
+        if os.environ.get("KONTTI_VALIMUISTI") == "gha":
+            # CI:ssä kerrokset tallennetaan GitHub Actionsin välimuistiin:
+            # yhteinen vaihe (Dockerfilen "yhteinen") jaetaan kaikkien
+            # kuvien kesken ja paketin oma kerros säilyy, kunnes paketin
+            # kehityskontti muuttuu.
+            subprocess.run(
+                ["docker", "buildx", "build", "-q", "--target", "yhteinen",
+                 "-f", str(dockerfile),
+                 "--cache-from", "type=gha,scope=kontti-yhteinen",
+                 "--cache-to", "type=gha,mode=max,scope=kontti-yhteinen",
+                 str(konteksti)],
+                stdout=subprocess.DEVNULL, check=False)
+            komento = ["docker", "buildx", "build", "--load", "-q",
+                       "-t", kuva, "-f", str(dockerfile),
+                       "--cache-from", f"type=gha,scope=kontti-{tutoriaali}",
+                       "--cache-from", "type=gha,scope=kontti-yhteinen",
+                       "--cache-to",
+                       f"type=gha,mode=min,scope=kontti-{tutoriaali}"]
         for avain, arvo in rakennus.get("args", {}).items():
             komento += ["--build-arg", f"{avain}={arvo}"]
         for avain in valitys:
