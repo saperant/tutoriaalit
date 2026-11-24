@@ -1,0 +1,2 @@
+solve    suhteellinen jäännös alle 1e-12
+inv @ b  suhteellinen jäännös yli 1e-12

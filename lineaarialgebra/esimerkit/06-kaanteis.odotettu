@@ -1,0 +1,5 @@
+A^-1 = [[0.5, -0.5], [0.0, 1.0]]
+piste [3. 2.] -> kuva [8. 2.] -> takaisin [3. 2.]
+A·A^-1 = I: True
+NumPy sama: True
+singulaarinen: matriisilla ei ole käänteismatriisia

@@ -1,0 +1,7 @@
+skaalaus 2 × 3         det =  6.000  ala ×6.000, suunta säilyy
+kierto 40°             det =  1.000  ala ×1.000, suunta säilyy
+leikkaus               det =  1.000  ala ×1.000, suunta säilyy
+peilaus x-akselin yli  det = -1.000  ala ×1.000, suunta kääntyy
+litistys suoralle      det =  0.000  ala ×0.000, suunta litistyy
+3×3: 18.000, NumPy 18.000
+det(BB) = det(B)²: True

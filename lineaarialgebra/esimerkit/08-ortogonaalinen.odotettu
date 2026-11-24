@@ -1,0 +1,7 @@
+Q^T Q = I: True
+pituus säilyy: True
+pistetulo säilyy: True
+det Q = 1.000000
+   1000 ruutua: virhe pieni
+ 100000 ruutua: virhe kasvanut
+korjauksen jälkeen virhe < 1e-12: True

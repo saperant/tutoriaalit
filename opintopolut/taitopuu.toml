@@ -328,6 +328,7 @@ laajuus = 5
 testaus = "Python ja NumPy, pytest"
 roadmap = ["game-developer"]
 amk = "Insinöörimatematiikka: lineaarialgebra"
+tutoriaali = "lineaarialgebra"
 
 [[taito]]
 id = "signaalimatematiikka"

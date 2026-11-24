@@ -1,0 +1,6 @@
+klassinen  ‖Q^T Q − I‖ yli 0.1
+modifioitu ‖Q^T Q − I‖ alle 1e-6
+R on yläkolmio: True
+QR = A: True
+Q^T Q = I: True
+|R| = [[5.0, 2.2], [0.0, 2.04]]

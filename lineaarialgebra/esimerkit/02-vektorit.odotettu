@@ -1,0 +1,7 @@
+loppupaikka: (2.00, 5.00)
+puolet matkasta: (1.00, 2.50)
+linnuntie (L2):       5.385 m
+korttelimatka (L1):   7.000 m
+suurin poikkeama (L∞): 5.000 m
+yksikkövektori: (0.37, 0.93) pituus 1.000
+NumPy: ['5.385', '7.000', '5.000']

@@ -1,0 +1,6 @@
+u = 0.5026 V + 9.914 mV/°C · T
+normaaliyhtälöt = QR: True
+np.linalg.lstsq sama: True
+suurin poikkeama: 7.1 mV
+jäännös kohtisuorassa sarakkeita vastaan: True
+jännite 0.85 V -> 35.0 °C

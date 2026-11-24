@@ -1,0 +1,10 @@
+u @ v                      4.0
+np.cross(u, v)             [2.0, 3.0, -4.0]
+np.linalg.norm(u)          3.0
+A @ b                      [6.0, 8.0]
+A.T                        [[4.0, 2.0], [1.0, 3.0]]
+np.linalg.solve(A, b)      [0.1, 0.6]
+np.linalg.det(A)           10.0
+np.linalg.matrix_rank(A)   2.0
+np.linalg.eigvals(A)       [2.0, 5.0]
+np.linalg.cond(A)          2.618

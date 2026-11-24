@@ -1,0 +1,7 @@
+suurin ominaisarvo 1.000000 (21 kierrosta)
+  etusivu   31.5%
+  tuotteet  36.2%
+  ohjeet    18.6%
+  kassa     13.6%
+np.linalg.eig sama: True
+|λ2| = 0.251: virhe pienenee kertoimella 0.251 kierrosta kohti

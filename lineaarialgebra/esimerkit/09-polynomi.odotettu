@@ -1,0 +1,6 @@
+aste  1: virhe opetusdatassa 0.534, uusissa pisteissä 0.466
+aste  3: virhe opetusdatassa 0.123, uusissa pisteissä 0.067
+aste  5: virhe opetusdatassa 0.072, uusissa pisteissä 0.040
+aste 11: virhe opetusdatassa 0.000, uusissa pisteissä 0.279
+aste 3: cond(V) ~1e2, cond(V^T V) ~1e4
+aste 7: cond(V) ~1e5, cond(V^T V) ~1e10

@@ -1,0 +1,8 @@
+e1, e2, e3  aste 3: kanta
+u, v, u+v   aste 2: riippuvia
+u, v, w     aste 3: kanta
+takaisinmuunnos: [[1.0, 1.0, -1.0], [1.0, 0.0, 1.0], [1.0, -1.0, -1.0]]
+valkoinen Y=1.000 Co= 0.000 Cg= 0.000
+punainen  Y=0.250 Co= 0.500 Cg=-0.250
+oranssi   Y=0.500 Co= 0.500 Cg= 0.000
+koordinaatit kannassa B: [2.0, -1.0] -> B·c = [3.0, 1.0]

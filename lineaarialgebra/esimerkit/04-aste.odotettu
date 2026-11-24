@@ -1,0 +1,3 @@
+b = (6, 14, 20): äärettömästi ratkaisuja (1 vapaata muuttujaa)
+b = (6, 14, 21): ei ratkaisua (aste A = 2, aste [A|b] = 3)
+täysiasteinen:  yksikäsitteinen ratkaisu (aste 2 = n)

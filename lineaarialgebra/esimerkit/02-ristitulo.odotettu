@@ -1,0 +1,4 @@
+normaali [0.0, 0.0, 1.0], pinta-ala 6.0
+etupinta: n·(kamera-p) =   5.0 -> piirretään
+takapinta: n·(kamera-p) =  -5.0 -> karsitaan
+NumPy sama: True

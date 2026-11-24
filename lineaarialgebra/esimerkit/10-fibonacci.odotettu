@@ -1,0 +1,5 @@
+A^10 = [[89, 55], [55, 34]] -> F(10) = 55
+ominaisarvot: [-0.618034, 1.618034]
+kultainen leikkaus φ = 1.618034
+F(1..12): [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144]
+liukuluku menee väärin ensimmäisen kerran: n = 71
