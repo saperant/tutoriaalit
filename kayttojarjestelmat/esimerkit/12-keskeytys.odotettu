@@ -1,0 +1,2 @@
+ilman lippua:  read = -1, errno EINTR
+SA_RESTART:    read = 1, luettiin '!'

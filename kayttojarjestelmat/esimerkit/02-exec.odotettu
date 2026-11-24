@@ -1,0 +1,6 @@
+sh sai argumentin hei
+sh: päättyi, koodi 0
+exec epäonnistui: ENOENT
+ei-tallaista: päättyi, koodi 127
+pause: signaali SIGKILL
+posix_spawnp: päättyi, koodi 3

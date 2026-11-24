@@ -1,0 +1,7 @@
+kova linkki: sama inode kyllä, linkkejä 2
+stat(symbolinen): tavallinen, sama inode kyllä
+lstat(symbolinen): symbolinen linkki, koko 16 = strlen("alkuperainen.txt")
+unlink: kova.txt linkkejä 1, data tallessa
+symbolinen linkki roikkuu: ENOENT
+hak: . .. a b c
+harva tiedosto: koko 1048577, levyllä alle 64 KiB: kyllä

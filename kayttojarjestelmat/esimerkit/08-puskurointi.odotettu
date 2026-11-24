@@ -1,0 +1,4 @@
+täysi puskuri 4096   kutsuja     3, tavuja 10000
+täysi puskuri 65536  kutsuja     1, tavuja 10000
+rivipuskuri          kutsuja   100, tavuja 10000
+ei puskuria          kutsuja 10000, tavuja 10000

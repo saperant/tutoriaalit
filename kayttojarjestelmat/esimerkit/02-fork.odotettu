@@ -1,0 +1,7 @@
+lapsi: laskuri = 11
+vanhempi: laskuri = 10
+lapsi päättyi koodilla 7
+lapsi 2: koodi 12
+lapsi 1: koodi 11
+lapsi 0: koodi 10
+wait ilman lapsia: ECHILD

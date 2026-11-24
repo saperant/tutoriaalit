@@ -555,6 +555,7 @@ laajuus = 5
 testaus = "C, POSIX-rajapinnat, sanitoijat"
 roadmap = ["linux", "computer-science"]
 amk = "Käyttöjärjestelmät"
+tutoriaali = "kayttojarjestelmat"
 
 [[taito]]
 id = "rinnakkaisohjelmointi"

@@ -1,0 +1,6 @@
+        aikajana           odotus ka. läpimeno ka. keskeytyksiä
+FCFS    AAAAAAABBBBCDDDD         4.75         8.75            0
+SJF     AAAAAAACBBBBDDDD         4.00         8.00            0
+SRTF    AABBCBBDDDDAAAAA         3.00         7.00            2
+RR q=2  AABBAACBBDDAADDA         5.00         9.00            5
+PRIO    AABBBBDDDDAAAAAC         5.00         9.00            1

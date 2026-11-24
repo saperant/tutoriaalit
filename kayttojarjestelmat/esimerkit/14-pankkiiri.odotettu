@@ -1,0 +1,7 @@
+ketju: ei syklejä
+rengas: lukkiutuma P0 -> P1 -> P2 -> P0
+alkutila: turvallinen, järjestys: P1 P3 P0 P2 P4
+P1 pyytää (1,0,2): myönnetty
+P4 pyytää (3,3,0): odottaa
+P0 pyytää (0,2,0): odottaa
+lopputila: turvallinen, järjestys: P1 P3 P0 P2 P4

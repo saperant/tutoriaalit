@@ -1,0 +1,4 @@
+PUTKI ON TAVUVIRTA
+ILMAN VIESTIRAJOJA
+kirjoitus ilman lukijaa: EPIPE
+PIPE_BUF = 4096: enintään näin suuri kirjoitus on atominen

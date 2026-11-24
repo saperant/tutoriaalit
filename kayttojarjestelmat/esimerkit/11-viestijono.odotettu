@@ -1,0 +1,7 @@
+jonossa 4 viestiä
+täysi jono: EAGAIN
+prioriteetti 5: kiireellinen
+prioriteetti 3: normaali
+prioriteetti 1: tavallinen
+prioriteetti 1: toinen tavallinen
+tyhjä jono: EAGAIN

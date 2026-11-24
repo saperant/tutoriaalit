@@ -1,0 +1,5 @@
+write-kääre
+syscall(SYS_write)
+getpid() == syscall(SYS_getpid): kyllä
+open palautti -1, errno = ENOENT: No such file or directory
+close(12345) = -1, errno = EBADF

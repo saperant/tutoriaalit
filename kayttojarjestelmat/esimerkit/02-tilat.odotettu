@@ -1,0 +1,6 @@
+laskee:     R
+odottaa:    S
+pysäytetty: T (WIFSTOPPED 1)
+jatkaa:     S (WIFCONTINUED 1)
+zombi:      Z (SIGTERM)
+korjattu:   -

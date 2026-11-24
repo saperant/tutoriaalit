@@ -1,0 +1,9 @@
+A, B ja C sekunnin ajan:
+  A nice  0 paino 1024:  430 ms (43.0 %)
+  B nice  0 paino 1024:  429 ms (42.9 %)
+  C nice  5 paino  335:  141 ms (14.1 %)
+D (nice -5) mukaan:
+  A nice  0 paino 1024:  186 ms (18.6 %)
+  B nice  0 paino 1024:  186 ms (18.6 %)
+  C nice  5 paino  335:   61 ms ( 6.1 %)
+  D nice -5 paino 3121:  567 ms (56.7 %)

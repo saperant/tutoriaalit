@@ -1,0 +1,7 @@
+varattu 512 sivua, muistissa 0
+kosketettu 256 sivua, muistissa 256
+sivuvirheitä vähintään 256: kyllä
+MADV_DONTNEED: muistissa 0, p[0] = 0
+yksityinen näkee: "jaettu kirjoitus"
+tiedostossa: "jaettu kirjoitus"
+yksityinen: "yksityinen"

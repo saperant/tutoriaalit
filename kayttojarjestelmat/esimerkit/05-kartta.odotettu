@@ -1,0 +1,5 @@
+main (koodi)       r-xp  ohjelmatiedosto
+vakio (.rodata)    r--p  ohjelmatiedosto
+muuttuja (.data)   rw-p  ohjelmatiedosto
+mmap               rw-p  anonyymi
+mprotect           r--p  anonyymi

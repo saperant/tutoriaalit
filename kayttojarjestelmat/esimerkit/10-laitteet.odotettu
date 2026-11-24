@@ -1,0 +1,7 @@
+/dev/null     merkkilaite, pää 1, ali 3
+/dev/zero     merkkilaite, pää 1, ali 5
+/dev/full     merkkilaite, pää 1, ali 7
+/dev/urandom  merkkilaite, pää 1, ali 9
+null: kirjoitus 6, luku 0 (tiedoston loppu)
+zero: luettiin 16 tavua, nollia 16
+full: kirjoitus epäonnistui, ENOSPC

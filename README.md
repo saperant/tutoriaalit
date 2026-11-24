@@ -104,6 +104,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | EDA-työkaluketjujen automatisointi | [`eda-skriptaus/`](eda-skriptaus/) | [eda-skriptaus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/eda-skriptaus.pdf) |
 | Korkean tason mallinnus (SystemC/TLM) | [`hlm-mallinnus/`](hlm-mallinnus/) | [hlm-mallinnus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/hlm-mallinnus.pdf) |
 | Mikrokontrollerit ja bare-metal-ohjelmointi | [`mikrokontrollerit/`](mikrokontrollerit/) | [mikrokontrollerit.pdf](https://saperant.github.io/tutoriaalit/materiaalit/mikrokontrollerit.pdf) |
+| Käyttöjärjestelmät | [`kayttojarjestelmat/`](kayttojarjestelmat/) | [kayttojarjestelmat.pdf](https://saperant.github.io/tutoriaalit/materiaalit/kayttojarjestelmat.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

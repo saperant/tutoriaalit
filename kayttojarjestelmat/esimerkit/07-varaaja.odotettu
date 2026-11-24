@@ -1,0 +1,20 @@
+== first fit
+a ja c pois:   V320 K64 V128 K64 V448
+               vapaata 896, suurin 448, ulkoinen pirstoutuminen 50 %
+varaa(100):    K128 V192 K64 V128 K64 V448
+               vapaata 768, suurin 448, ulkoinen pirstoutuminen 42 %
+varaa(280):    K128 V192 K64 V128 K64 K304 V144
+               vapaata 464, suurin 192, ulkoinen pirstoutuminen 59 %
+varaa(400):    EPÄONNISTUI
+kaikki pois:   V1024
+               vapaata 1024, suurin 1024, ulkoinen pirstoutuminen 0 %
+== best fit
+a ja c pois:   V320 K64 V128 K64 V448
+               vapaata 896, suurin 448, ulkoinen pirstoutuminen 50 %
+varaa(100):    V320 K64 K128 K64 V448
+               vapaata 768, suurin 448, ulkoinen pirstoutuminen 42 %
+varaa(280):    K320 K64 K128 K64 V448
+               vapaata 448, suurin 448, ulkoinen pirstoutuminen 0 %
+varaa(400):    onnistui
+kaikki pois:   V1024
+               vapaata 1024, suurin 1024, ulkoinen pirstoutuminen 0 %

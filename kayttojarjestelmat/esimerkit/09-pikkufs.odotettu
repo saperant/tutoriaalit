@@ -1,0 +1,39 @@
+alusta levy.img                    ok
+liitä                              ok
+mkdir /docs                        ok
+kirjoita /docs/muistio.txt         ok
+kirjoita /iso.bin (6000 tavua)     ok
+linkki /docs/muistio.txt /m        ok
+/:
+  .              inode  1  hak  linkkejä 3    160 tavua
+  ..             inode  1  hak  linkkejä 3    160 tavua
+  docs           inode  2  hak  linkkejä 2     96 tavua
+  iso.bin        inode  4  tds  linkkejä 1   6000 tavua
+  m              inode  3  tds  linkkejä 2     28 tavua
+/docs:
+  .              inode  2  hak  linkkejä 2     96 tavua
+  ..             inode  1  hak  linkkejä 3    160 tavua
+  muistio.txt    inode  3  tds  linkkejä 2     28 tavua
+vapaana: 27/31 inodea, 105/121 datalohkoa
+liitä uudelleen                    ok
+/m (28 tavua): Ydin hallitsee laitteistoa.
+/iso.bin: 6000 tavua, sisältö sama
+mkdir /docs                        EEXIST
+poista /docs                       ENOTEMPTY
+lue /ei-ole                        ENOENT
+kirjoita /m/x                      ENOTDIR
+linkki /docs /d2                   EPERM
+poista /docs/muistio.txt           ok
+poista /docs                       ok
+poista /iso.bin                    ok
+/:
+  .              inode  1  hak  linkkejä 2    160 tavua
+  ..             inode  1  hak  linkkejä 2    160 tavua
+  m              inode  3  tds  linkkejä 1     28 tavua
+vapaana: 29/31 inodea, 119/121 datalohkoa
+tarkistus: 0 virhettä
+tarkistus ja korjaus:
+  inode 1: linkkejä 7, viittauksia 2
+  lohko 100: bittikartta 1, käytössä 0
+  2 virhettä
+uusi tarkistus: 0 virhettä

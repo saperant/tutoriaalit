@@ -1,0 +1,4 @@
+säie 0: toinen lukko ETIMEDOUT (lukkiutuma)
+säie 1: toinen lukko ETIMEDOUT (lukkiutuma)
+ERRORCHECK-mutex uudelleen: EDEADLK
+vapautus ilman lukitusta: EPERM

@@ -1,0 +1,5 @@
+ilman estoa: käsittelijä ajettiin 1 kerran
+estettynä: SIGUSR1 odottaa kyllä, käsittelijä ajettu 0
+eston poiston jälkeen: SIGUSR1 1 kerran, SIGRTMIN 3 kertaa
+viimeisen reaaliaikaisen signaalin arvo: 102
+SIGUSR2 ohitettiin, prosessi elää
