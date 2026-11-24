@@ -71,6 +71,26 @@ ollut paikallaan vähintään kaksi vastaanottajan jaksoa. Kättely on
 hidas, sillä yksi siirto vie useita jaksoja molemmilla kelloilla, mutta
 se toimii mille tahansa kellosuhteelle.
 
+Alla oleva kaavio näyttää yhden siirron vaiheet periaatteena. Kaavio
+ei ole tietyn kellon tahdissa: kukin `_t`-signaali on toisen alueen
+kellolla tahdistettu kopio, joka seuraa alkuperäistä parin jakson
+viiveellä.
+
+```{.ajoituskaavio otsikko="Nelivaiheinen kättely kellotusalueiden välillä"}
+{"signal": [
+  ["Lähettäjä",
+    {"name": "pito", "wave": "x=..........x", "data": ["arvo"]},
+    {"name": "pyynto", "wave": "01.....0....."},
+    {"name": "kuittaus_t", "wave": "0....1.....0."}
+  ],
+  {},
+  ["Vastaanottaja",
+    {"name": "pyynto_t", "wave": "0..1.....0..."},
+    {"name": "kuittaus", "wave": "0...1.....0.."}
+  ]
+], "config": {"hscale": 0.8}}
+```
+
 Testipenkissä kellot ovat 100 MHz ja noin 27 MHz, eikä niillä ole
 yhteistä jaksoa:
 
@@ -90,6 +110,34 @@ kaikki bitit vaihtuvat, ja tahdistin voi napata minkä tahansa
 välimuodon. Osoittimet muunnetaan siksi *Gray-koodiksi*, jossa
 peräkkäiset arvot eroavat vain yhdellä bitillä. Tahdistettu Gray-
 osoitin on aina joko vanha tai uusi arvo:
+
+```{.dot otsikko="Asynkronisen FIFOn rakenne: vain Gray-osoittimet ylittävät rajan"}
+digraph {
+  rankdir=LR; nodesep=0.35; ranksep=0.7; newrank=true;
+  subgraph cluster_k { label="kirjoituskello"; style=dashed;
+    kos [label="kirjoitusosoitin\n(binääri + Gray)"];
+    taynna [label="täynnä?", shape=diamond];
+  }
+  subgraph cluster_l { label="lukukello"; style=dashed;
+    los [label="lukuosoitin\n(binääri + Gray)"];
+    tyhja [label="tyhjä?", shape=diamond];
+  }
+  muisti [label="kaksiporttinen\nmuisti", penwidth=2];
+  t1 [label="2 kiikkua"];
+  t2 [label="2 kiikkua"];
+  { rank=same; kos; taynna; }
+  { rank=same; muisti; t1; t2; }
+  { rank=same; los; tyhja; }
+  kos -> muisti [label="data"];
+  muisti -> los [label="data"];
+  kos -> t1 [label="Gray"];
+  t1 -> tyhja;
+  taynna -> t2 [dir=back];
+  t2 -> los [dir=back, label="Gray"];
+  kos -> taynna [constraint=false];
+  los -> tyhja [constraint=false];
+}
+```
 
 ```{.systemverilog tiedosto="esimerkit/10-asynk-fifo/asynk_fifo.sv" osa="gray"}
 ```

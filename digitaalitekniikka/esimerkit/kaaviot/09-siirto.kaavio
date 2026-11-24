@@ -1,0 +1,17 @@
+// lahde: 09-laskurit.sv
+// vcd: --kello clk --signaalit sarja,q0,q1,q2,q3 --jaksot 9
+// Näytteet otetaan kellon laskevalla reunalla: silloin jakson syöte ja
+// rekisterien uudet arvot ovat asettuneet.
+module kaavio;
+  wire clk   = ~tb.clk;
+  wire sarja = tb.sarja;
+  wire q0    = tb.siirto[0];
+  wire q1    = tb.siirto[1];
+  wire q2    = tb.siirto[2];
+  wire q3    = tb.siirto[3];
+  testipenkki tb ();
+  initial begin
+    $dumpfile("kaavio.vcd");
+    $dumpvars(1, kaavio);
+  end
+endmodule

@@ -73,6 +73,32 @@ tulos kirjoitetaan rekisteriin ja PC kasvaa:
 ```{.tuloste tiedosto="esimerkit/12-datapolku.odotettu"}
 ```
 
+Kokonaisuus on piirretty alle. Ainoat tilaa säilyttävät osat ovat
+PC-rekisteri ja rekisteritiedosto (paksu reunus); kaikki muu on
+kombinaatiologiikkaa, jonka läpi signaali kulkee yhden jakson aikana.
+
+```{.dot otsikko="Yksijaksoinen datapolku: tilaelementit ja kombinaatiologiikka"}
+digraph {
+  rankdir=TB; nodesep=0.35; ranksep=0.35;
+  PC [label="PC", penwidth=2];
+  plus [label="+1", shape=circle, width=0.45, fixedsize=true];
+  ROM [label="ohjelmamuisti"];
+  DEK [label="dekoodaus"];
+  RF [label="rekisteritiedosto", penwidth=2];
+  ALU [label="ALU (a + b)"];
+  MUX [label="tulosmux", shape=invtrapezium, style=filled];
+  PC -> ROM; PC -> plus; plus -> PC;
+  ROM -> DEK;
+  DEK -> RF [label=" lukuportit"];
+  RF -> ALU [label=" a, b"];
+  DEK -> MUX [label=" vakio (LI)"];
+  ALU -> MUX [label=" ADD"];
+  RF -> MUX [label=" a (MOV)"];
+  MUX -> RF [label=" kirjoitus", constraint=false];
+  { rank=same; PC; plus; }
+}
+```
+
 Tämä on yksijaksoisen suorittimen ydin. Siitä puuttuu hyppykäskyt
 (PC:n seuraava arvo multiplekserin kautta), datamuisti (lataus ja
 tallennus) ja liukuhihna. Ne ovat taidon *Tietokonearkkitehtuuri*

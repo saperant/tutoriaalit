@@ -1,0 +1,15 @@
+// lahde: 07-liukuhihna.sv
+// vcd: --kello clk --signaalit sisaan_kelv,v1,ulos_kelv --alku 1 --jaksot 14
+// Näytteet otetaan kellon laskevalla reunalla: silloin jakson syötteet
+// ja rekisterien uudet arvot ovat asettuneet.
+module kaavio;
+  wire clk         = ~tb.clk;
+  wire sisaan_kelv = tb.sisaan_kelv;
+  wire v1          = tb.u_mac.v1;
+  wire ulos_kelv   = tb.ulos_kelv;
+  testipenkki tb ();
+  initial begin
+    $dumpfile("kaavio.vcd");
+    $dumpvars(1, kaavio);
+  end
+endmodule

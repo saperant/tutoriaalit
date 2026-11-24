@@ -60,6 +60,14 @@ mahdollisuutta jättää myös alkion leveys auki:
 ```{.tuloste tiedosto="esimerkit/07-pwm.odotettu"}
 ```
 
+Alla oleva kaavio on piirretty samasta simulaatiosta. Yhteinen laskuri
+kiertää kuusitoista arvoa, ja kukin kanava on ylhäällä niin monta
+jaksoa kuin sen pulssisuhde on. Lähdöt ovat rekistereitä, joten ne
+seuraavat laskuria yhden jakson viiveellä.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/07-pwm.json" otsikko="Neljän kanavan PWM: pulssisuhteet 0, 4, 8 ja 15 kuudestoistaosaa"}
+```
+
 Testipenkki esittelee signaalin `suhteet_t(0 to 3)(3 downto 0)`: neljä
 kanavaa, neljän bitin tarkkuus. Arkkitehtuurin vakio `LEVEYS` luetaan
 attribuutilla `suhteet'element'length`, ja `assert` tarkistaa, että

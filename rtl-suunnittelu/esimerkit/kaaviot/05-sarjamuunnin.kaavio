@@ -1,0 +1,17 @@
+// lahde: 05-sarjamuunnin.sv
+// vcd: --kello clk --signaalit kelvollinen,bitti,laskuri,tavu,valmis --alku 1 --jaksot 10
+// Näytteet otetaan kellon laskevalla reunalla: silloin jakson syötteet
+// ja rekisterien uudet arvot ovat asettuneet.
+module kaavio;
+  wire       clk         = ~tb.clk;
+  wire       kelvollinen = tb.kelvollinen;
+  wire       bitti       = tb.bitti;
+  wire [2:0] laskuri     = tb.u_sr.laskuri;
+  wire [7:0] tavu        = tb.tavu;
+  wire       valmis      = tb.valmis;
+  testipenkki tb ();
+  initial begin
+    $dumpfile("kaavio.vcd");
+    $dumpvars(1, kaavio);
+  end
+endmodule

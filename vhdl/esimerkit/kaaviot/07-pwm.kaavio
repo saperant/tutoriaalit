@@ -1,0 +1,32 @@
+-- lahde: 07-pwm.vhd
+-- vcd: --kello kaavio.clk --signaalit kaavio.laskuri[3:0]=laskuri,kaavio.k0=kanava0,kaavio.k1=kanava1,kaavio.k2=kanava2,kaavio.k3=kanava3 --alku 1 --jaksot 17
+-- Näytteet otetaan kellon laskevalla reunalla: silloin rekisterien uudet
+-- arvot ovat asettuneet.
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity kaavio is
+end entity kaavio;
+
+architecture sim of kaavio is
+  signal clk            : std_logic;
+  signal laskuri        : unsigned(3 downto 0);
+  signal k0, k1, k2, k3 : std_logic;
+begin
+  tb : entity work.testipenkki;
+
+  kytkenta : block
+    alias clk_tb is << signal .kaavio.tb.clk : std_logic >>;
+    alias lahdot is << signal .kaavio.tb.lahdot : std_logic_vector(0 to 3) >>;
+    alias laskuri_dut is
+      << signal .kaavio.tb.dut.laskuri : unsigned(3 downto 0) >>;
+  begin
+    clk     <= not clk_tb;
+    laskuri <= laskuri_dut;
+    k0      <= lahdot(0);
+    k1      <= lahdot(1);
+    k2      <= lahdot(2);
+    k3      <= lahdot(3);
+  end block kytkenta;
+end architecture sim;

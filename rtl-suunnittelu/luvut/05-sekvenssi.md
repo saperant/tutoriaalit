@@ -49,6 +49,14 @@ oikeat puolet luetaan ennen päivitystä. Kun kahdeksas bitti tulee,
 laskuri on 7, ja `valmis` nousee samalla reunalla, kun viimeinen bitti
 siirtyy paikalleen.
 
+Alla oleva kaavio on piirretty testipenkin simulaatiosta (testipenkki
+lähettää tavun A5 vähiten merkitsevä bitti ensin). Jokainen bitti
+tulee rekisterin yläpäähän ja valuu jakso jaksolta alaspäin, ja
+`valmis` on ylhäällä täsmälleen sen jakson, jolla `tavu` on valmis.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/05-sarjamuunnin.json" otsikko="Sarja–rinnakkaismuunnin vastaanottaa tavun A5"}
+```
+
 ## Reunantunnistus
 
 Signaalin muutos tunnistetaan vertaamalla sitä yhden jakson viivästettyyn

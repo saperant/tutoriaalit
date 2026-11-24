@@ -29,6 +29,37 @@ S2 (nähty 10) ja S3 (nähty 101, lähtö 1). Mealyn koneessa riittää
 kolme, koska viimeinen 1 tuottaa lähdön suoraan siirtymällä. Tilakaavio
 kirjoitetaan tauluksi, josta jokainen siirtymä näkyy:
 
+```{.dot otsikko="Mooren kone: lähtö on tilan ominaisuus (S3/1)"}
+digraph {
+  rankdir=LR; nodesep=0.3;
+  start [shape=point, width=0.08, style=filled, fillcolor="#1F2A2E"];
+  S0 [label="S0/0", shape=circle, width=0.7, fixedsize=true];
+  S1 [label="S1/0", shape=circle, width=0.7, fixedsize=true];
+  S2 [label="S2/0", shape=circle, width=0.7, fixedsize=true];
+  S3 [label="S3/1", shape=doublecircle, width=0.7, fixedsize=true];
+  start -> S0;
+  S0 -> S0 [label="0"]; S0 -> S1 [label="1"];
+  S1 -> S1 [label="1"]; S1 -> S2 [label="0"];
+  S2 -> S3 [label="1"]; S2 -> S0 [label="0"];
+  S3 -> S1 [label="1"]; S3 -> S2 [label="0"];
+}
+```
+
+```{.dot otsikko="Mealyn kone: lähtö on siirtymän ominaisuus (syöte/lähtö)"}
+digraph {
+  rankdir=LR; nodesep=0.3;
+  start [shape=point, width=0.08, style=filled, fillcolor="#1F2A2E"];
+  A [shape=circle, width=0.55, fixedsize=true];
+  B [shape=circle, width=0.55, fixedsize=true];
+  C [shape=circle, width=0.55, fixedsize=true];
+  start -> A;
+  A -> A [label="0/0"]; A -> B [label="1/0"];
+  B -> B [label="1/0"]; B -> C [label="0/0"];
+  C -> B [label="1/1"]; C -> A [label="0/0"];
+}
+```
+
+
 ```{.python tiedosto="esimerkit/10-tilakone.py" osa="taulut"}
 ```
 
@@ -91,6 +122,13 @@ kirjoitetaan erikseen:
 ```
 
 ```{.tuloste tiedosto="esimerkit/10-tunnistin.odotettu"}
+```
+
+Sama ero näkyy simulaation aaltomuodossa alla. Mealy-lähtö nousee
+jaksossa, jossa syötteen viimeinen 1 on linjalla, ja Moore-lähtö vasta
+seuraavassa jaksossa, kun tila on päivittynyt.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/10-tunnistin.json" otsikko="Sekvenssin 101 tunnistus: Mealy-lähtö jaksoa Moore-lähtöä aikaisemmin"}
 ```
 
 Laitteisto käyttäytyy täsmälleen kuten Python-malli. Testipenkki

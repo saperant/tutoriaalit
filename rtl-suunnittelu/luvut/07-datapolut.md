@@ -66,6 +66,14 @@ joten testi kestää liukuhihnan muutokset.
 ```{.tuloste tiedosto="esimerkit/07-liukuhihna.odotettu"}
 ```
 
+Kelvollisuusbittien kulku näkyy alla olevassa kaaviossa testipenkin
+alusta. Kukin syöte etenee vaiheen jaksossa, ja syötteen tauot
+(`sisaan_kelv = 0`) kulkevat liukuhihnan läpi kuplina samalla
+viiveellä kuin data.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/07-liukuhihna.json" otsikko="Kelvollisuusbitit kulkevat kaksivaiheisen liukuhihnan läpi"}
+```
+
 Tässä liukuhihnassa ei ole vastapainetta: jokainen tulos otetaan vastaan.
 Jos kuluttaja voi pysäyttää virran (`valmis = 0`), jokaiseen vaiheeseen
 tarvitaan kelvollinen/valmis-kättely ja usein *skid-puskuri*, joka

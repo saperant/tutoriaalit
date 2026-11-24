@@ -25,6 +25,26 @@ tai virtauksenohjaus: herätteiden ei tarvitse tietää, milloin
 vastaava tulos tulee ulos. Odotetut tulokset kulkevat niiden välillä
 jonossa.
 
+```{.dot otsikko="Testipenkin osat ja tiedon kulku"}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.45;
+  kello [label="kello ja\nnollaus"];
+  herate [label="herätteet"];
+  dut [label="testattava\nlohko", penwidth=2];
+  malli [label="malli"];
+  jono [label="jono", shape=box, style="filled"];
+  tarkistin [label="tarkistin"];
+  valvoja [label="valvoja"];
+  kello -> dut; herate -> dut [label="tulot"];
+  herate -> malli [label="samat tulot"];
+  malli -> jono [label="odotetut"];
+  dut -> tarkistin [label="lähdöt"];
+  jono -> tarkistin;
+  tarkistin -> valvoja [label="virheet"];
+  herate -> valvoja [label="valmis", style=dashed];
+}
+```
+
 ## Esimerkki: liukuva keskiarvo
 
 Testattava lohko laskee neljän viimeisen näytteen keskiarvon.
@@ -146,6 +166,12 @@ Kun tarkistus pysähtyy, syy etsitään aaltomuodoista:
 ghdl -r --std=08 testipenkki --wave=aallot.ghw   # GTKWave, Surfer
 ghdl -r --std=08 testipenkki --vcd=aallot.vcd    # yleinen VCD-muoto
 ```
+
+VCD on tekstimuotoinen, joten sitä voi käsitellä myös ohjelmallisesti.
+Tämän kirjan ajoituskaaviot on tuotettu juuri näin: esimerkkien
+`Makefile` ajaa testipenkin `--vcd`-valitsimella ja muuntaa valitut
+signaalit kaavioksi. Kun koodi muuttuu, kaavion tarkistus huomaa
+eron, joten kuva ja koodi eivät pääse erkaantumaan.
 
 Paketin `std.textio` proseduurit `readline` ja `read` lukevat
 syötevektoreita ja odotettuja tuloksia tiedostosta. Näin malli voi olla

@@ -1,0 +1,43 @@
+-- lahde: 05-kvadratuuri.vhd
+-- vcd: --kello kaavio.askel --signaalit kaavio.a=a,kaavio.b=b,kaavio.asento[15:0]=asento --kanta d --jaksot 15
+-- Kooderin kanavat vaihtuvat neljän kellojakson välein. Näyte otetaan
+-- kerran askelta kohden juuri ennen seuraavaa vaihtoa, kun tahdistin on
+-- päästänyt muutoksen läpi ja asento on päivittynyt.
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity kaavio is
+end entity kaavio;
+
+architecture sim of kaavio is
+  signal askel  : std_logic := '0';
+  signal a, b   : std_logic;
+  signal asento : signed(15 downto 0);
+begin
+  tb : entity work.testipenkki;
+
+  kytkenta : block
+    alias a_tb is << signal .kaavio.tb.a : std_logic >>;
+    alias b_tb is << signal .kaavio.tb.b : std_logic >>;
+    alias asento_tb is << signal .kaavio.tb.asento : signed(15 downto 0) >>;
+    alias ajossa is << signal .kaavio.tb.ajossa : boolean >>;
+  begin
+    a      <= a_tb;
+    b      <= b_tb;
+    asento <= asento_tb;
+
+    -- Näytteenottokello: nouseva reuna hetkillä 25 ns + k * 40 ns.
+    naytteet : process
+    begin
+      wait for 5 ns;
+      while ajossa loop
+        askel <= '0';
+        wait for 20 ns;
+        askel <= '1';
+        wait for 20 ns;
+      end loop;
+      wait;
+    end process naytteet;
+  end block kytkenta;
+end architecture sim;

@@ -1,0 +1,17 @@
+// lahde: 08-fifo/fifo.sv 08-fifo/testipenkki.sv
+// vcd: --kello clk --signaalit kirjoita,lue,maara,taynna,tyhja --kanta d --alku 1 --jaksot 16
+// Näytteet otetaan kellon laskevalla reunalla. maara on jonon pituus
+// osoittimien erotuksena.
+module kaavio;
+  wire       clk     = ~tb.clk;
+  wire       kirjoita = tb.kirjoita;
+  wire       lue      = tb.lue;
+  wire [3:0] maara    = tb.u_fifo.k_os - tb.u_fifo.l_os;
+  wire       taynna   = tb.taynna;
+  wire       tyhja    = tb.tyhja;
+  testipenkki tb ();
+  initial begin
+    $dumpfile("kaavio.vcd");
+    $dumpvars(1, kaavio);
+  end
+endmodule

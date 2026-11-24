@@ -51,8 +51,14 @@ putoaa nollaan, termi $bs$ sammuu ennen kuin $a\bar{s}$ syttyy:
 ```{.tuloste tiedosto="esimerkit/07-hasardi.odotettu"}
 ```
 
-Lähtöön syntyy kahden aikayksikön nollapiikki (*glitch*). Tämä on
-*staattinen 1-hasardi*: lähdön pitäisi pysyä ykkösenä, mutta se käy
+Lähtöön syntyy kahden aikayksikön nollapiikki (*glitch*). Alla oleva
+kuva näyttää saman aaltomuotona: invertterin viiveen ajan kumpikin
+tulotermi on nolla. Alin rivi on konsensustermillä korjattu lähtö.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/07-hasardi.json" otsikko="Staattinen 1-hasardi multiplekserissä (yksi ruutu on yksi aikayksikkö)"}
+```
+
+Tämä on *staattinen 1-hasardi*: lähdön pitäisi pysyä ykkösenä, mutta se käy
 nollassa. Hasardi korjataan lisäämällä konsensustermi $ab$, joka on
 looginen seuraus kahdesta muusta (luku 4) mutta pitää lähdön ylhäällä
 siirtymän ajan. Turha termi Boolen algebran kannalta on tarpeellinen

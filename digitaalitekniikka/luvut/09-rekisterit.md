@@ -46,6 +46,14 @@ sarjaväylien (UART, SPI, I2C) ja serdes-lähetinvastaanottimien perusta:
 ```{.systemverilog tiedosto="esimerkit/09-laskurit.sv" osa="siirto"}
 ```
 
+Alla oleva kaavio on piirretty esimerkin simulaatiosta (testipenkki
+näytetään jäljempänä). Jokainen bitti näkyy seuraavassa kiikussa yhtä jaksoa
+myöhemmin, joten neljän jakson jälkeen syötteen neljä viimeistä bittiä
+ovat rinnakkain lähdössä `q`.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/09-siirto.json" otsikko="Siirtorekisterin bitit simulaatiosta"}
+```
+
 ## Rengas- ja Johnson-laskuri
 
 Rengaslaskuri kiertää yhtä ykköstä. Sen tila on valmiiksi one-hot, joten

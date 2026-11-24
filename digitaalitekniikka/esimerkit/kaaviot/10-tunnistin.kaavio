@@ -1,0 +1,15 @@
+// lahde: 10-tunnistin.sv
+// vcd: --kello clk --signaalit x,mealy,moore --jaksot 10
+// Näytteet otetaan kellon laskevalla reunalla: silloin jakson syöte ja
+// rekisterien uudet arvot ovat asettuneet.
+module kaavio;
+  wire clk   = ~tb.clk;
+  wire x     = tb.x;
+  wire mealy = tb.z_mealy;
+  wire moore = tb.z_moore;
+  testipenkki tb ();
+  initial begin
+    $dumpfile("kaavio.vcd");
+    $dumpvars(1, kaavio);
+  end
+endmodule

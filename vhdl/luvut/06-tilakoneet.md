@@ -35,6 +35,26 @@ jälkeen bitin keskeltä bittiajan välein:
 ```{.vhdl tiedosto="esimerkit/06-uart-rx/sarjavastaanotin.vhd" osa="prosessi"}
 ```
 
+Tilakaavio tiivistää prosessin. Jokaisessa tilassa ajastin laskee
+nollaan, ja siirtymä tapahtuu vasta sitten (paitsi lepotilasta, joka
+reagoi heti aloitusbitin reunaan).
+
+```{.dot otsikko="UART-vastaanottimen tilakone"}
+digraph {
+  rankdir=LR; nodesep=0.4;
+  LEPO [shape=circle, width=0.95, fixedsize=true];
+  ALOITUS [shape=circle, width=0.95, fixedsize=true];
+  DATA [shape=circle, width=0.95, fixedsize=true];
+  LOPETUS [shape=circle, width=0.95, fixedsize=true];
+  LEPO -> ALOITUS [label="rx = 0"];
+  ALOITUS -> DATA [label="puoliväli,\nrx = 0"];
+  ALOITUS -> LEPO [label="puoliväli, rx = 1\n(häiriöpiikki)"];
+  DATA -> DATA [label="bittiaika,\nbitti < 7"];
+  DATA -> LOPETUS [label="bittiaika,\nbitti = 7"];
+  LOPETUS -> LEPO [label="bittiaika: valmis\ntai kehysvirhe"];
+}
+```
+
 Tilakone on kirjoitettu *yhden prosessin* tyyliin: tilasiirtymät ja
 lähdöt ovat samassa kellotetussa prosessissa, ja kaikki lähdöt ovat
 rekistereitä. Rakenteen yksityiskohdat:

@@ -22,6 +22,25 @@ ovat vakioita, toteuttaa minkä tahansa $n$ muuttujan funktion, kun
 muuttujat kytketään valintaan. FPGA:n hakutaulu (LUT) on juuri tämä:
 pieni muisti ja multiplekseri.
 
+Suuremman multiplekserin voi koota pienemmistä. Alla neljän tulon
+multiplekseri on puu kahden tulon multipleksereistä: alempi
+valintabitti $s_0$ valitsee kummastakin parista, ja ylempi $s_1$
+valitsee parien välillä.
+
+```{.dot otsikko="Neljän tulon multiplekseri kahden tulon multipleksereistä"}
+digraph {
+  rankdir=LR; nodesep=0.15; ranksep=0.5;
+  d0 [shape=plaintext, style=""]; d1 [shape=plaintext, style=""];
+  d2 [shape=plaintext, style=""]; d3 [shape=plaintext, style=""];
+  y [shape=plaintext, style=""];
+  m0 [label="mux\nvalinta s0", shape=box, style="rounded,filled"];
+  m1 [label="mux\nvalinta s0", shape=box, style="rounded,filled"];
+  m2 [label="mux\nvalinta s1", shape=box, style="rounded,filled"];
+  d0 -> m0; d1 -> m0; d2 -> m1; d3 -> m1;
+  m0 -> m2; m1 -> m2; m2 -> y;
+}
+```
+
 ## Dekooderi ja kooderi
 
 Dekooderi muuttaa $k$-bittisen koodin $2^k$ lähdöstä yhdeksi aktiiviseksi

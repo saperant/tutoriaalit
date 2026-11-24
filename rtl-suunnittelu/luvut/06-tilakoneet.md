@@ -29,6 +29,21 @@ Lähetin on tilakone, jossa on neljä tilaa ja kaksi laskuria: jakson
 sisäinen laskuri mittaa bittiajan ja bittilaskuri kertoo, monesko
 databitti on menossa.
 
+```{.dot otsikko="UART-lähettimen tilakone"}
+digraph {
+  rankdir=LR; nodesep=0.4;
+  LEPO [shape=circle, width=0.8, fixedsize=true];
+  ALKU [shape=circle, width=0.8, fixedsize=true];
+  DATA [shape=circle, width=0.8, fixedsize=true];
+  LOPPU [shape=circle, width=0.8, fixedsize=true];
+  LEPO -> ALKU [label="kelvollinen"];
+  ALKU -> DATA [label="bitti ohi"];
+  DATA -> DATA [label="bitti ohi,\nbitti < 7"];
+  DATA -> LOPPU [label="bitti ohi,\nbitti = 7"];
+  LOPPU -> LEPO [label="bitti ohi"];
+}
+```
+
 Kaksiprosessityylissä tilakone jaetaan kahteen lohkoon. Kombinatorinen
 lohko laskee kaikkien rekisterien seuraavat arvot (`_d`), ja kellotettu
 lohko tallentaa ne (`_q`). Jälkiliitteet kertovat lukijalle heti,
@@ -75,6 +90,16 @@ kättely onnistuu:
 ```
 
 ```{.tuloste tiedosto="esimerkit/06-uart-tx.odotettu"}
+```
+
+Alla oleva kaavio on piirretty samasta simulaatiosta, mutta näyte on
+otettu kerran bittiajassa bitin keskeltä, kuten vastaanotin tekee.
+Ensimmäinen merkki on R (52 heksana, 0101 0010), joka kulkee linjalla
+vähiten merkitsevä bitti ensin. Tila on numeroina: 1 = `ALKU`,
+2 = `DATA` ja 3 = `LOPPU`. Kaavion lopussa seuraavan merkin
+aloitusbitti alkaa heti lopetusbitin jälkeen.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/06-uart-tx.json" otsikko="UART-kehys: aloitusbitti, kahdeksan databittiä ja lopetusbitti"}
 ```
 
 ## Yksiprosessityyli: värähtelyn vaimennin

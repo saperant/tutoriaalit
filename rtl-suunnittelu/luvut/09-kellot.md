@@ -78,6 +78,20 @@ nollaus vapautuu hetkellä 23, keskellä jaksoa. Tahdistettu nollaus
 vapautuu toisella nousevalla reunalla, hetkellä 35. Jokaisella
 kellotusalueella on oma tahdistimensa.
 
+Alla oleva kaavio näyttää saman puolen jakson tarkkuudella: ulkoinen
+vapautus voi tulla milloin tahansa, mutta piirin sisäinen `rst_n`
+vapautuu aina kellon reunalla. Päälle kytkeytyminen on silti
+välitöntä, koska ketjun kiikkujen nollaus on asynkroninen.
+
+```{.ajoituskaavio otsikko="Nollauksen tahdistin: välitön kytkentä, tahdistettu vapautus"}
+{"signal": [
+  {"name": "clk", "wave": "lhlhlhlhlhlh"},
+  {"name": "rst_n_ulk", "wave": "0...1......."},
+  {"name": "ketju[0]", "wave": "0....1......"},
+  {"name": "rst_n", "wave": "0......1...."}
+], "config": {"hscale": 0.8}}
+```
+
 ## Mitä nollataan
 
 Nollaus maksaa: jokainen nollattava kiikku on kytkettävä nollausverkkoon,

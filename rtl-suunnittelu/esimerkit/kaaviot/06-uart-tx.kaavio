@@ -1,0 +1,19 @@
+// lahde: 06-uart-tx/uart_tx.sv 06-uart-tx/testipenkki.sv
+// vcd: --kello bittiaika --signaalit tx,tila,bitti --kanta d --jaksot 11
+// Näytteet otetaan kerran bittiajassa bitin keskeltä (bittiaika on
+// kymmenen kellojaksoa), jotta koko kehys mahtuu kaavioon.
+module kaavio;
+  logic       bittiaika = 1'b0;
+  wire        tx    = tb.tx;
+  wire  [1:0] tila  = tb.u_tx.tila_q;
+  wire  [2:0] bitti = tb.u_tx.bitti_q;
+  testipenkki tb ();
+  initial begin
+    #25;
+    while (tb.kaynnissa) #50 bittiaika = ~bittiaika;
+  end
+  initial begin
+    $dumpfile("kaavio.vcd");
+    $dumpvars(1, kaavio);
+  end
+endmodule

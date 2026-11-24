@@ -70,6 +70,14 @@ jaksolla mallia vasten:
 ```{.tuloste tiedosto="esimerkit/08-fifo.odotettu"}
 ```
 
+Alla oleva kaavio näyttää testipenkin ensimmäiset jaksot, kun tuottaja
+on kuluttajaa nopeampi. Jonon pituus (osoittimien erotus) kasvaa
+kahdeksaan, `taynna` nousee, ja sen jälkeen kirjoituspyynnöt eivät enää
+mene perille, vaikka `kirjoita` on ylhäällä.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/08-fifo.json" otsikko="FIFO täyttyy: jonon pituus ja liput"}
+```
+
 Tämä testipenkki on ensimmäinen, joka mittaa testin laatua:
 yhteenveto kertoo, kuinka monta jaksoa jono oli täynnä ja tyhjä. Jos
 kumpikaan luku olisi nolla, rajatapaus olisi jäänyt testaamatta.

@@ -85,6 +85,19 @@ reunan jälkeen.
 | $t_h$ | syötteen vakaus reunan jälkeen | 0–30 ps |
 | $t_{cq}$ | viive reunasta lähtöön | 30–80 ps |
 
+Alla oleva kuva näyttää ikkunan aikajanalla. Syötteen on oltava vakaa
+koko ikkunan $t_{su} + t_h$ ajan reunan ympärillä, ja uusi arvo näkyy
+lähdössä vasta viiveen $t_{cq}$ jälkeen.
+
+```{.ajoituskaavio otsikko="Asetus- ja pitoaika kellon nousevan reunan ympärillä"}
+{"signal": [
+  {"name": "clk", "wave": "l......h......"},
+  {"name": "d", "wave": "x...=......x..", "data": ["vakaa"]},
+  {"name": "ikkuna", "wave": "z...2..3...z..", "data": ["t_su", "t_h"]},
+  {"name": "q", "wave": "=.........=...", "data": ["vanha", "uusi"]}
+], "config": {"hscale": 0.7}}
+```
+
 Jos syöte muuttuu ikkunan sisällä, kiikun sisäinen salpa jää
 tasapainopisteen lähelle, kuten SR-salpa edellä: lähtö voi olla
 hetken välitasolla tai heilahdella ennen kuin se asettuu.
@@ -120,6 +133,24 @@ lähtö menee suoraan toiseen kiikkuun, MTBF on tunteja. Kahden kiikun
 *tahdistin* antaa lähes kokonaisen lisäjakson, ja vikaväli kasvaa
 miljooniin vuosiin. Siksi jokainen asynkroninen syöte kulkee kahden
 (nopeissa piireissä kolmen) kiikun ketjun läpi ennen käyttöä.
+
+Alla oleva kuva näyttää tapahtumat. Asynkroninen syöte muuttuu juuri
+kellon reunalla, joten ensimmäinen kiikku jää hetkeksi välitilaan
+(merkitty tuntemattomana). Se ehtii ratketa ennen seuraavaa reunaa,
+jolla toinen kiikku näytteistää jo vakaan arvon. Ratkeamisen suunta on
+satunnainen: jos ensimmäinen kiikku olisi ratkennut nollaan, muutos
+olisi näkynyt yhtä jaksoa myöhemmin, mutta toinen kiikku ei näe
+välitilaa kummassakaan tapauksessa.
+
+```{.ajoituskaavio otsikko="Kahden kiikun tahdistin: välitila ratkeaa ennen kuin sitä käytetään"}
+{"signal": [
+  {"name": "clk", "wave": "lhlhlhlhlhlh"},
+  {"name": "asynk", "wave": "0....1......"},
+  {"name": "ff1", "wave": "0....x1....."},
+  {"name": "ff2", "wave": "0......1...."}
+], "config": {"hscale": 0.8}}
+```
+
 Monibittisten arvojen siirto kellotusalueelta toiselle on oma
 aiheensa (*RTL-suunnittelu*, kellotusalueiden ylitys).
 

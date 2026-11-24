@@ -8,6 +8,12 @@ Käyttö:
     python3 yhteiset/kaaviot.py vcd SIMULAATIO.vcd --kello clk \\
         --signaalit valid,ready,data [--alku 0] [--jaksot 12] > kaavio.json
 
+VCD-muuntimen muut valitsimet: --reuna laskeva, --naytteistys ennen
+(arvo juuri ennen reunaa), --alkureuna (kello on 1 jo alussa),
+--piilota-kello, --kanta h|d|b ja --luettelo tila=LEPO:LUKU:KIRJ
+(väylän arvot nimillä). Tuloste on sisennettyä JSONia, joten rivit
+pysyvät lyhyinä.
+
 Pandoc-suodatin kaaviot.lua kutsuu kahta ensimmäistä muotoa, kun
 Markdownissa on koodilohko `.ajoituskaavio` tai `.dot`. Kolmas muoto
 tuottaa ajoituskaavion simulaation VCD-tiedostosta, joten paketin testi
@@ -96,8 +102,8 @@ def piirra_ajoitus(maaritys: dict[str, Any], ulos: str) -> None:
     nimet = {f.name for f in font_manager.fontManager.ttflist}
     if "Inter" in nimet:
         perhe = "Inter"
-    if "JetBrains Mono" in nimet:
-        mono = "JetBrains Mono"
+    # JetBrains Monon ligatuurit muuttaisivat nimen kuten "a |-> b"
+    # nuolimerkiksi, joten signaalien nimissä käytetään DejaVu Sans Monoa.
     plt.rcParams.update({"font.family": perhe, "svg.hashsalt": "kaavio"})
 
     korostus = korostusvari()
@@ -135,7 +141,7 @@ def piirra_ajoitus(maaritys: dict[str, Any], ulos: str) -> None:
     V = 0.20                   # reunan vinous (osuus jaksosta)
     nimileveys = max([len(str(s.get("name", ""))) for _, s, _ in rivit
                       if s is not None] + [len(r or "") for _, _, r in rivit
-                                           if r]) * 0.13 + 0.5
+                                           if r]) * 0.16 + 0.5
     otsikko = maaritys.get("head", {}).get("text")
     yla = 0.6 if otsikko else 0.12
     ala = len(rivit) * 0.9 + 0.02
@@ -169,7 +175,8 @@ def piirra_ajoitus(maaritys: dict[str, Any], ulos: str) -> None:
             continue
         ax.text(-0.15, yk, str(s.get("name", "")), ha="right", va="center",
                 fontsize=8, color=MUSTE, family=mono)
-        merkit = jaksot(s["wave"], int(s.get("period", 1)))
+        period = int(s.get("period", 1))
+        merkit = jaksot(s["wave"], period)
         data = [str(d) for d in s.get("data", [])]
         if isinstance(s.get("data"), str):
             data = s["data"].split()
@@ -199,11 +206,13 @@ def piirra_ajoitus(maaritys: dict[str, Any], ulos: str) -> None:
                             zorder=6)
                 continue
             if m in "pnPN":
-                n = round((loppu - a) / L)
+                # Kellojakson pituus on signaalin period-arvo.
+                P = L * period
+                n = max(1, round((loppu - a) / P))
                 for j in range(n):
-                    x0 = a + j * L
+                    x0 = a + j * P
                     eka, toka = (yy, ya) if m in "pP" else (ya, yy)
-                    ax.plot([x0, x0, x0 + L / 2, x0 + L / 2, x0 + L],
+                    ax.plot([x0, x0, x0 + P / 2, x0 + P / 2, x0 + P],
                             [toka, eka, eka, toka, toka], **vk)
                     if m in "PN":
                         ax.annotate("", xy=(x0, yk + 0.12),
@@ -273,14 +282,21 @@ def piirra_dot(lahde: str, ulos: str) -> None:
     korostus = korostusvari()
     pääte = Path(ulos).suffix.lstrip(".").lower() or "pdf"
     perhe = "Inter"
-    args = ["dot", f"-T{pääte}",
-            f"-Gfontname={perhe}", f"-Nfontname={perhe}",
-            f"-Efontname={perhe}", "-Gfontsize=10", "-Nfontsize=10",
-            "-Efontsize=9", f"-Gcolor={MUSTE}", f"-Ncolor={MUSTE}",
-            f"-Ecolor={HILLITTY}", "-Nstyle=rounded,filled",
-            f"-Nfillcolor={sekoita(korostus, 0.12)}", "-Nshape=box",
-            "-Npenwidth=0.8", "-Epenwidth=0.8", "-Earrowsize=0.6",
-            "-Gbgcolor=transparent", "-o", ulos]
+    # Oletukset lisätään kaavion alkuun eikä komentoriville, jotta
+    # kaavion omat graph/node/edge-rivit voivat ohittaa ne.
+    oletukset = (
+        f'graph [fontname="{perhe}", fontsize=10, color="{MUSTE}", '
+        f'bgcolor="transparent"]; '
+        f'node [fontname="{perhe}", fontsize=10, color="{MUSTE}", '
+        f'style="rounded,filled", fillcolor="{sekoita(korostus, 0.12)}", '
+        f'shape=box, penwidth=0.8]; '
+        f'edge [fontname="{perhe}", fontsize=9, color="{HILLITTY}", '
+        f'penwidth=0.8, arrowsize=0.6]; ')
+    kohta = lahde.find("{")
+    if kohta < 0:
+        raise SystemExit("kaaviot.py: dot-kaaviossa ei ole aaltosulkua")
+    lahde = lahde[:kohta + 1] + oletukset + lahde[kohta + 1:]
+    args = ["dot", f"-T{pääte}", "-o", ulos]
     tulos = subprocess.run(args, input=lahde.encode("utf-8"),
                            capture_output=True, check=False)
     if tulos.returncode != 0:
@@ -373,6 +389,8 @@ def muotoile(arvo: str, leveys: int, kanta: str) -> str:
     n = int(arvo, 2)
     if kanta == "d":
         return str(n)
+    if kanta == "b":
+        return f"{n:0{leveys}b}"
     numerot = max(1, (leveys + 3) // 4)
     return f"{n:0{numerot}X}"
 
@@ -386,9 +404,24 @@ def vcd_kaavioksi(argv: list[str]) -> None:
     p.add_argument("--alku", type=int, default=0,
                    help="ensimmäinen näytettävä kellojakso (nousevat reunat)")
     p.add_argument("--jaksot", type=int, default=12)
-    p.add_argument("--kanta", choices=["h", "d"], default="h",
-                   help="väylien arvot heksana (h) tai kymmenjärjestelmässä (d)")
+    p.add_argument("--kanta", choices=["h", "d", "b"], default="h",
+                   help="väylien arvot heksana (h), kymmenjärjestelmässä (d) "
+                        "tai binäärinä (b)")
+    p.add_argument("--reuna", choices=["nouseva", "laskeva"],
+                   default="nouseva", help="näytteistävä kellon reuna")
+    p.add_argument("--piilota-kello", action="store_true",
+                   help="näytteistyskelloa ei piirretä kaavioon")
+    p.add_argument("--luettelo", action="append", default=[],
+                   metavar="SIGNAALI=NIMI0:NIMI1:...",
+                   help="näyttää väylän arvot nimillä (luettelotyyppi)")
     p.add_argument("--otsikko")
+    p.add_argument("--naytteistys", choices=["jalkeen", "ennen"],
+                   default="jalkeen",
+                   help="arvo kellon nousevan reunan jälkeen (oletus) tai "
+                        "juuri ennen sitä")
+    p.add_argument("--alkureuna", action="store_true",
+                   help="lasketaan nousevaksi reunaksi myös kellon arvo 1 "
+                        "simulaation alussa (esim. yosys-smtbmc:n jäljet)")
     a = p.parse_args(argv)
     nimet, muutokset = lue_vcd(a.vcd)
 
@@ -403,13 +436,23 @@ def vcd_kaavioksi(argv: list[str]) -> None:
                          f"kaaviot.py: nimi {nimi!r} on moniselitteinen: {osumat}")
 
     kt, _ = hae(a.kello)
+    uusi, vanha = ("1", "0") if a.reuna == "nouseva" else ("0", "1")
     nousut = [t for (t, v), (_, ed) in zip(muutokset[kt][1:], muutokset[kt])
-              if v == "1" and ed == "0"]
+              if v == uusi and ed == vanha]
+    if a.alkureuna and muutokset[kt] and muutokset[kt][0][1] == uusi:
+        nousut.insert(0, muutokset[kt][0][0])
     if len(nousut) < a.alku + a.jaksot:
         raise SystemExit("kaaviot.py: VCD:ssä on liian vähän kellojaksoja")
     hetket = nousut[a.alku:a.alku + a.jaksot]
-    signaalit: list[dict[str, Any]] = [{"name": a.kello.split(".")[-1],
-                                        "wave": "p" + "." * (a.jaksot - 1)}]
+    signaalit: list[dict[str, Any]] = []
+    if not a.piilota_kello:
+        signaalit.append({"name": a.kello.split(".")[-1],
+                          "wave": ("p" if a.reuna == "nouseva" else "n")
+                          + "." * (a.jaksot - 1)})
+    luettelot: dict[str, list[str]] = {}
+    for maare in a.luettelo:
+        nimi, _, arvot = maare.partition("=")
+        luettelot[nimi] = arvot.split(":")
     for maare in a.signaalit.split(","):
         nimi, _, naytto = maare.partition("=")
         tunniste, leveys = hae(nimi)
@@ -418,7 +461,12 @@ def vcd_kaavioksi(argv: list[str]) -> None:
         edellinen = None
         for t in hetket:
             # Arvo kellon nousun jälkeen (rekisteröity arvo näkyy jaksolla).
-            arvo = muotoile(arvo_hetkella(muutokset[tunniste], t), leveys, a.kanta)
+            hetki = t - 1 if a.naytteistys == "ennen" else t
+            raaka = arvo_hetkella(muutokset[tunniste], hetki)
+            arvo = muotoile(raaka, leveys, a.kanta)
+            if nimi in luettelot and arvo not in ("x", "z"):
+                n = int(raaka, 2)
+                arvo = luettelot[nimi][n] if n < len(luettelot[nimi]) else arvo
             if arvo == edellinen:
                 aalto += "."
             elif leveys == 1 or arvo in ("x", "z"):
@@ -434,8 +482,9 @@ def vcd_kaavioksi(argv: list[str]) -> None:
     tulos: dict[str, Any] = {"signal": signaalit}
     if a.otsikko:
         tulos["head"] = {"text": a.otsikko}
-    json.dump(tulos, sys.stdout, ensure_ascii=False, indent=None,
-              separators=(", ", ": "))
+    # Sama muoto kuin `python3 -m json.tool --indent 1`: rivit pysyvät
+    # lyhyinä, joten tiedoston voi näyttää kirjassa sellaisenaan.
+    json.dump(tulos, sys.stdout, indent=1)
     sys.stdout.write("\n")
 
 

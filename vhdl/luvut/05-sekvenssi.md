@@ -61,6 +61,14 @@ taakse:
 ```{.tuloste tiedosto="esimerkit/05-kvadratuuri.odotettu"}
 ```
 
+Alla oleva kaavio on piirretty saman simulaation aaltomuodoista,
+yksi sarake askelta kohden. Eteenpäin pyöriessä A johtaa B:tä
+neljänneksen jaksolla, ja jokainen reuna kummassa tahansa kanavassa on
+yksi askel. Lopussa järjestys kääntyy, B johtaa, ja asento pienenee.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/05-kvadratuuri.json" otsikko="Kvadratuurikanavat ja dekoodattu asento, yksi sarake askelta kohden"}
+```
+
 Kello luodaan rinnakkaisella sijoituksella `clk <= not clk after
 JAKSO / 2 when ajossa;`. Kun testi asettaa `ajossa`-signaalin
 epätodeksi, kello pysähtyy, tapahtumat loppuvat ja simulointi päättyy
@@ -79,6 +87,19 @@ etenee näin:
 3. Jos jokin signaali muuttui, siitä riippuvat prosessit herätetään,
    ja palataan kohtaan 1 samalla simulointiajan hetkellä.
 
+```{.dot otsikko="Simulointikierros: deltasyklit toistuvat samalla hetkellä, kunnes mikään ei muutu"}
+digraph {
+  rankdir=TB; nodesep=0.5; ranksep=0.3;
+  aika [label="aika etenee seuraavaan tapahtumaan"];
+  suoritus [label="herätetyt prosessit suoritetaan (vanhat arvot)"];
+  paivitys [label="ajastetut signaalit päivitetään yhtä aikaa"];
+  muuttui [label="muuttuiko jokin?", shape=diamond];
+  aika -> suoritus -> paivitys -> muuttui;
+  muuttui -> suoritus [label=" kyllä: uusi deltasykli"];
+  muuttui -> aika [label=" ei"];
+}
+```
+
 Yksi kierros on *deltasykli*. Samalla simulointihetkellä voi olla monta
 deltasykliä, ja aika etenee vasta, kun mikään ei enää muutu. Tämä
 takaa, että kaikki kiikut näytteistävät reunalla tulonsa ennen kuin
@@ -89,8 +110,8 @@ sudenkuoppansa, jotka esitellään alla.
 
 ## Signaali ja muuttuja
 
-| | Signaali `s <= x;` | Muuttuja `v := x;` |
-|-|-------------------|-------------------|
+| Ominaisuus | Signaali `s <= x;` | Muuttuja `v := x;` |
+|---------------------|-----------------------|-----------------------|
 | Missä esitellään | arkkitehtuurissa, paketissa, porttina | prosessissa tai aliohjelmassa |
 | Milloin arvo muuttuu | deltasyklin lopussa | heti |
 | Näkyvyys | kaikille prosesseille | vain omalle prosessille |
