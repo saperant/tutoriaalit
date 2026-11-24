@@ -1,0 +1,19 @@
+{
+  "name": "Skaalautuvien järjestelmien suunnittelu: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "haproxy redis-server postgresql-16 shellcheck",
+      "PIP_PAKETIT": "ruff mypy pytest"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/jarjestelmasuunnittelu/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python"
+      ]
+    }
+  }
+}
