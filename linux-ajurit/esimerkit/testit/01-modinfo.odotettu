@@ -1,0 +1,15 @@
+description:    Mittausarvojen tilasto muille moduuleille
+license:        GPL
+depends:
+name:           tilasto
+vermagic:       6.8.12-tutoriaali SMP mod_unload aarch64
+parm:           nimi:tilaston nimi lokiriveillä (charp)
+parm:           raja:varoitusraja, oltava > 0 (int)
+
+description:    Esimerkki toisen moduulin viemän symbolin käytöstä
+license:        GPL
+depends:        tilasto
+name:           mittaus
+vermagic:       6.8.12-tutoriaali SMP mod_unload aarch64
+parm:           arvot:kirjattavat arvot pilkuin eroteltuina (array of int)
+

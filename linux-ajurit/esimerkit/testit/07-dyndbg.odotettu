@@ -1,0 +1,19 @@
+# @alku vaiheet
+# lataa vika.ko
+  loki: vika: loading out-of-tree module taints kernel.
+# kirjoita /sys/kernel/debug/vika/laske 1
+  loki: vika: summa 40
+# kirjoita /proc/dynamic_debug/control func vika_summa +p
+# kirjoita /sys/kernel/debug/vika/laske 1
+  loki: vika: tulo = 21
+  loki: vika: meno = 19
+  loki: vika: summa 40
+# kirjoita /proc/dynamic_debug/control module vika -p
+# poista vika
+# lataa vika.ko dyndbg=+p
+# kirjoita /sys/kernel/debug/vika/laske 1
+  loki: vika: tulo = 21
+  loki: vika: meno = 19
+  loki: vika: summa 40
+# @loppu vaiheet
+paluuarvo 0

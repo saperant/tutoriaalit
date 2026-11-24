@@ -1,0 +1,12 @@
+# Dynaaminen debug: pr_debug-rivit päälle ja pois ajon aikana.
+suodata vika:
+# @alku vaiheet
+lataa vika.ko
+kirjoita /sys/kernel/debug/vika/laske 1
+kirjoita /proc/dynamic_debug/control func vika_summa +p
+kirjoita /sys/kernel/debug/vika/laske 1
+kirjoita /proc/dynamic_debug/control module vika -p
+poista vika
+lataa vika.ko dyndbg=+p
+kirjoita /sys/kernel/debug/vika/laske 1
+# @loppu vaiheet

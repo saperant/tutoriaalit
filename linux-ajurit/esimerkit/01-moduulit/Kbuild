@@ -1,0 +1,3 @@
+# Kbuild: kaksi moduulia samasta hakemistosta. modpost ratkaisee
+# mittaus.ko:n viittauksen tilasto.ko:n vientiin ja kirjaa riippuvuuden.
+obj-m := tilasto.o mittaus.o

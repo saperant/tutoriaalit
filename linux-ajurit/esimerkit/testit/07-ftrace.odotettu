@@ -1,0 +1,14 @@
+# @alku vaiheet
+# lataa vika.ko
+  loki: vika: loading out-of-tree module taints kernel.
+# kirjoita /sys/kernel/tracing/set_ftrace_filter :mod:vika
+# kirjoita /sys/kernel/tracing/current_tracer function
+# kirjoita /sys/kernel/debug/vika/laske 1
+  loki: vika: summa 40
+# kirjoita /sys/kernel/tracing/tracing_on 0
+# lue /sys/kernel/tracing/trace
+  vika_kirjoita <-full_proxy_write
+  vika_laske <-vika_kirjoita
+  vika_summa.constprop.0 <-vika_laske
+# @loppu vaiheet
+paluuarvo 0

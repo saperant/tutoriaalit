@@ -1,0 +1,37 @@
+# @alku riippuvuus
+# lataa mittaus.ko arvot=3,5
+  virhe: No such file or directory
+  loki: mittaus: loading out-of-tree module taints kernel.
+  loki: mittaus: Unknown symbol tilasto_kirjaa (err -2)
+# lataa tilasto.ko raja=0
+  virhe: Invalid argument
+  loki: tilasto: raja=0 ei kelpaa
+# lataa tilasto.ko nimi=keittio raja=10
+  loki: tilasto: keittio: valmis, raja 10
+# lataa mittaus.ko arvot=3,15,8
+  loki: tilasto: keittio: mittaus ylitti rajan: 15 > 10
+  loki: mittaus: kirjattiin 3 arvoa
+# @loppu riippuvuus
+# @alku sysfs
+# lue /sys/module/tilasto/parameters/raja
+  10
+# kirjoita /sys/module/tilasto/parameters/raja 4
+# lue /sys/module/tilasto/parameters/raja
+  4
+# lue /sys/module/mittaus/parameters/arvot
+  3,15,8
+# listaa /sys/module/tilasto/holders
+  mittaus
+# lue /sys/module/tilasto/refcnt
+  1
+# @loppu sysfs
+# @alku poisto
+# poista tilasto
+  virhe: Resource temporarily unavailable
+# poista mittaus
+# poista tilasto
+  loki: tilasto: keittio: 3 arvoa, pienin 3, suurin 15
+# lue /proc/sys/kernel/tainted
+  4096
+# @loppu poisto
+paluuarvo 0

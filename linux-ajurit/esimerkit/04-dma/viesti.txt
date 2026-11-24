@@ -1,0 +1,1 @@
+Tervehdys isännältä: tämä teksti kulki fw_cfg-laitteen DMA:lla.

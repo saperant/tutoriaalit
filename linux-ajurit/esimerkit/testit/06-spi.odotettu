@@ -1,0 +1,33 @@
+# @alku ohjain
+# lataa vspi.ko
+  loki: vspi: loading out-of-tree module taints kernel.
+  loki: vspi vspi: ohjain spi0
+# listaa /sys/bus/spi/devices
+  spi0.0
+# lue /sys/bus/spi/devices/spi0.0/modalias
+  spi:tutor-muisti
+# @loppu ohjain
+# @alku ajuri
+# lataa muisti.ko
+  loki: tutor-muisti spi0.0: muistipiiri 5a 01 08, 256 tavua
+# aja /bin/heksa /sys/bus/spi/devices/spi0.0/sisalto 32
+0000  ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff  ................
+0010  ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff  ................
+# kirjoita /sys/bus/spi/devices/spi0.0/sisalto lampotila=21
+# aja /bin/heksa /sys/bus/spi/devices/spi0.0/sisalto 32
+0000  6c 61 6d 70 6f 74 69 6c 61 3d 32 31 ff ff ff ff  lampotila=21....
+0010  ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff  ................
+# @loppu ajuri
+# @alku dyndbg
+# kirjoita /proc/dynamic_debug/control module vspi +p
+# aja /bin/heksa /sys/bus/spi/devices/spi0.0/sisalto 4
+0000  6c 61 6d 70  lamp
+  loki: tutor-muisti spi0.0: CS valittu
+  loki: tutor-muisti spi0.0: siirto 2 tavua tx
+  loki: tutor-muisti spi0.0: siirto 4 tavua rx
+  loki: tutor-muisti spi0.0: CS vapautettu, 6 tavua
+# kirjoita /proc/dynamic_debug/control module vspi -p
+# @loppu dyndbg
+# poista muisti
+# poista vspi
+paluuarvo 0

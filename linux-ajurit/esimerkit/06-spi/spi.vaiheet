@@ -1,0 +1,20 @@
+# SPI: ohjelmallinen ohjain, simuloitu muistipiiri ja sen ajuri.
+suodata vspi tutor-muisti spi
+# @alku ohjain
+lataa vspi.ko
+listaa /sys/bus/spi/devices
+lue /sys/bus/spi/devices/spi0.0/modalias
+# @loppu ohjain
+# @alku ajuri
+lataa muisti.ko
+aja /bin/heksa /sys/bus/spi/devices/spi0.0/sisalto 32
+kirjoita /sys/bus/spi/devices/spi0.0/sisalto lampotila=21
+aja /bin/heksa /sys/bus/spi/devices/spi0.0/sisalto 32
+# @loppu ajuri
+# @alku dyndbg
+kirjoita /proc/dynamic_debug/control module vspi +p
+aja /bin/heksa /sys/bus/spi/devices/spi0.0/sisalto 4
+kirjoita /proc/dynamic_debug/control module vspi -p
+# @loppu dyndbg
+poista muisti
+poista vspi

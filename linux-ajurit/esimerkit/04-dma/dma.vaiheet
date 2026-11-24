@@ -1,0 +1,9 @@
+# fw_cfg-laitteen DMA: tiedosto isännältä vieraan muistiin.
+suodata tutor-fwcfg
+# @alku vaiheet
+lataa fwcfg.ko
+lue /sys/kernel/debug/fwcfg/sisalto
+poista fwcfg
+lataa fwcfg.ko tiedosto=opt/puuttuu
+listaa /sys/bus/platform/drivers/tutor-fwcfg
+# @loppu vaiheet

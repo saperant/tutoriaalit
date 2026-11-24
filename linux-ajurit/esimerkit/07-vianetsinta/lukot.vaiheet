@@ -1,0 +1,7 @@
+# Tarkistimet: lukkojärjestyksen rikkominen ja mutex spinlockin sisällä.
+suodata vika: BUG: in_atomic WARNING: init/1 but ->
+# @alku vaiheet
+lataa vika.ko
+kirjoita /sys/kernel/debug/vika/jarjestys 1
+kirjoita /sys/kernel/debug/vika/nuku 1
+# @loppu vaiheet

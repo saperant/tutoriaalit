@@ -1,0 +1,22 @@
+# Moduulien lataus, parametrit ja riippuvuudet.
+suodata tilasto: mittaus: suljettu:
+# @alku riippuvuus
+lataa mittaus.ko arvot=3,5
+lataa tilasto.ko raja=0
+lataa tilasto.ko nimi=keittio raja=10
+lataa mittaus.ko arvot=3,15,8
+# @loppu riippuvuus
+# @alku sysfs
+lue /sys/module/tilasto/parameters/raja
+kirjoita /sys/module/tilasto/parameters/raja 4
+lue /sys/module/tilasto/parameters/raja
+lue /sys/module/mittaus/parameters/arvot
+listaa /sys/module/tilasto/holders
+lue /sys/module/tilasto/refcnt
+# @loppu sysfs
+# @alku poisto
+poista tilasto
+poista mittaus
+poista tilasto
+lue /proc/sys/kernel/tainted
+# @loppu poisto

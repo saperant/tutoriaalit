@@ -1,0 +1,50 @@
+# @alku sidonta
+# lue /sys/bus/platform/devices/9010000.herateajastin/modalias
+  of:NherateajastinT(null)Ctutoriaalit,herateajastin
+# lataa herate.ko
+  loki: herate: loading out-of-tree module taints kernel.
+  loki: herate 9010000.herateajastin: keittion-ajastin: PL031, oletusviive 2 s
+# listaa /sys/bus/platform/drivers/herate
+  9010000.herateajastin
+  bind
+  module
+  uevent
+  unbind
+# @loppu sidonta
+# @alku keskeytys
+# aja /bin/heratetesti 2
+luku ennen herätystä: Resource temporarily unavailable
+herätys 1
+# lue /proc/interrupts herate
+   14:          1 GIC-0  34 Level     9010000.herateajastin
+# @loppu keskeytys
+# @alku jakso
+# kirjoita /sys/devices/platform/9010000.herateajastin/jakso 1
+# aja /bin/heratetesti 1 3
+luku ennen herätystä: Resource temporarily unavailable
+herätys 2
+herätys 3
+herätys 4
+# kirjoita /sys/devices/platform/9010000.herateajastin/jakso 0
+# lue /sys/devices/platform/9010000.herateajastin/heratyksia
+  4
+# lue /sys/kernel/debug/9010000.herateajastin/rekisterit
+  RTCDR    ...
+  RTCMR    ...
+  RTCIMSC  0x00000000
+  RTCMIS   0x00000000
+# @loppu jakso
+# @alku irrotus
+# kirjoita /sys/bus/platform/drivers/herate/unbind 9010000.herateajastin
+  loki: herate 9010000.herateajastin: irrotettu, keskeytyksia 4
+# listaa /sys/bus/platform/drivers/herate
+  bind
+  module
+  uevent
+  unbind
+# kirjoita /sys/bus/platform/drivers/herate/bind 9010000.herateajastin
+  loki: herate 9010000.herateajastin: keittion-ajastin: PL031, oletusviive 2 s
+# poista herate
+  loki: herate 9010000.herateajastin: irrotettu, keskeytyksia 0
+# @loppu irrotus
+paluuarvo 0

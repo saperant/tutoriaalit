@@ -1,0 +1,10 @@
+# Merkkilaiteajuri: laitenumerot, laitetiedostot ja käyttäjätilan testi.
+suodata jono:
+# @alku vaiheet
+lataa jono.ko maara=2 koko=64
+listaa /sys/class/jono
+lue /sys/class/jono/jono0/uevent
+aja /bin/jonotesti
+poista jono
+listaa /sys/class/jono
+# @loppu vaiheet

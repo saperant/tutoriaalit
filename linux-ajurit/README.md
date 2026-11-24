@@ -1,0 +1,63 @@
+# Linux-laiteajurit
+
+Tiivis suomenkielinen tutoriaali Linux-ytimen laiteajureiden
+kirjoittamisesta: moduulit, merkkilaitteet, platform-ajurit ja laitepuu,
+keskeytykset ja lukitus, DMA, I2C- ja SPI-ajurit, sysfs ja debugfs sekä
+ytimen vianetsintä. Valmiit dokumentit:
+[linux-ajurit.pdf](https://saperant.github.io/tutoriaalit/materiaalit/linux-ajurit.pdf)
+ja pikaopas
+[linux-ajurit-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/linux-ajurit-pikaopas.pdf).
+
+## Sisältö
+
+1. Johdanto – ydintilan ohjelmointi, laboratorio, testit initinä
+2. Ytimen moduulit – Kbuild, parametrit, symbolien vienti,
+   riippuvuudet, viittauslaskenta, lisenssi ja tahrat
+3. Merkkilaiteajurit – laitenumerot, `cdev`, `file_operations`, estävä
+   luku, `poll`, `ioctl`, misc-laitteet
+4. Platform-ajurit ja laitepuu – ajurimalli, `compatible`, rekisterit,
+   `probe`, `devm`, sitominen ja irrotus
+5. Keskeytykset ja lukitus – keskeytyksen polku, ylä- ja alapuolisko,
+   työjonot, lukot konteksteittain
+6. DMA ytimessä – DMA-maski, koherentti muisti, virtauskuvaus,
+   välimuistin koherenssi, dmaengine
+7. I2C-ajurit – alijärjestelmä, SMBus, regmap, hwmon, `i2c-stub`
+8. SPI-ajurit – siirrot ja viestit, ohjaimen ja laitteen ajuri, spidev
+9. sysfs ja debugfs – attribuutit, binääriattribuutit, debugfs,
+   rajapinnan valinta
+10. Ytimen vianetsintä – lokitasot, dynaaminen debug, ftrace,
+    kaatumisilmoitus, lockdep ja muut tarkistimet
+11. Lopuksi – nyrkkisäännöt, oikeaan laitteeseen, lähteet
+
+## Esimerkit
+
+Esimerkit ovat hakemistossa `esimerkit/`. Sen Makefile kääntää
+ARM64-ytimen Ubuntun ytimen lähteistä (kerran, välimuistiin
+`~/.cache/tutoriaalit/linux-ajurit`), kääntää moduulit ja staattiset
+testiohjelmat, kokoaa jokaiselle testille oman initramfs-arkiston,
+käynnistää sen QEMU:n virt-koneessa ja vertaa tulosteen tiedostoon
+`esimerkit/testit/<testi>.odotettu`. Jokaisen testijärjestelmän init on
+vaiheajuri `esimerkit/kayttaja/ajo.c`, joka suorittaa testin
+`.vaiheet`-tiedoston komennot.
+
+Laitteet ovat QEMU:n virt-koneen omia: PL031-reaaliaikakello
+(platform-ajuri ja keskeytykset) ja fw_cfg (DMA). I2C-väylän tarjoaa
+ytimen testimoduuli `i2c-stub`, ja SPI-ohjain ja sen muistipiiri ovat
+tämän tutoriaalin ohjelmallisia malleja. Ympäristö
+(`esimerkit/ymparisto/`) on kopioitu tutoriaalista *Sulautettu Linux*,
+ja ytimeen on lisätty fragmentti `ajurit.config`.
+
+## Rakentaminen
+
+```text
+make testaa   # rakenne ja esimerkit (esimerkit/Makefile)
+make pdf      # tutoriaali ja pikaopas
+```
+
+Tarvitaan `linux-source-6.8.0`, `gcc`, `gcc-aarch64-linux-gnu`,
+`libc6-dev-arm64-cross`, `qemu-system-arm`, `device-tree-compiler`,
+`flex`, `bison`, `bc`, `libssl-dev`, `libelf-dev`, `cpio`, `kmod` ja
+ShellCheck. Ensimmäinen ajo purkaa ytimen lähteet ja kääntää ytimen,
+mikä kestää useita minuutteja ja vie noin 2 Gt levyä; sen jälkeen
+kaikki testit kestävät alle minuutin. Kehityskontissa
+(`.devcontainer/linux-ajurit`) paketit ovat valmiina.

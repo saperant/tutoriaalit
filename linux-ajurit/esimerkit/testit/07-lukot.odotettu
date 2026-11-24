@@ -1,0 +1,15 @@
+# @alku vaiheet
+# lataa vika.ko
+  loki: vika: loading out-of-tree module taints kernel.
+# kirjoita /sys/kernel/debug/vika/jarjestys 1
+  loki: WARNING: possible circular locking dependency detected
+  loki: init/1 is trying to acquire lock:
+  loki: but task is already holding lock:
+  loki: -> #1 (laite){+.+.}-{3:3}:
+  loki: -> #0 (asetukset){+.+.}-{3:3}:
+# kirjoita /sys/kernel/debug/vika/nuku 1
+  loki: BUG: sleeping function called from invalid context at
+      kernel/locking/mutex.c:586
+  loki: in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 1, name: init
+# @loppu vaiheet
+paluuarvo 0

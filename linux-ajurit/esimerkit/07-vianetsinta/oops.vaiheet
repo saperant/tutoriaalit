@@ -1,0 +1,8 @@
+# NULL-osoittimen käyttö ajurissa: kaatumisilmoitus (oops).
+suodata vika: Unable Internal Modules CPU: pc lr Call ~vika_ ~full_proxy
+# @alku vaiheet
+lataa vika.ko
+aja /bin/kirjoita /sys/kernel/debug/vika/kaada 1
+lue /proc/sys/kernel/tainted
+kirjoita /sys/kernel/debug/vika/laske 1
+# @loppu vaiheet

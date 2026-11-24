@@ -1,0 +1,11 @@
+# lataa herate.ko
+  loki: herate: loading out-of-tree module taints kernel.
+  loki: herate 9010000.herateajastin: keittion-ajastin: PL031, oletusviive 2 s
+# aja /bin/heratetesti 1
+luku ennen herätystä: Resource temporarily unavailable
+ei herätystä 4 sekunnissa
+  paluuarvo 1
+  loki: herate 9010000.herateajastin: keskeytys ei saapunut ajassa, RTCRIS=1
+# lue /sys/devices/platform/9010000.herateajastin/heratyksia
+  0
+paluuarvo 0

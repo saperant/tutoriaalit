@@ -1,0 +1,24 @@
+# @alku vaiheet
+# lataa vika.ko
+  loki: vika: loading out-of-tree module taints kernel.
+# aja /bin/kirjoita /sys/kernel/debug/vika/kaada 1
+  signaali SEGV
+  loki: Unable to handle kernel NULL pointer dereference at virtual address
+      0000000000000008
+  loki: Internal error: Oops: 0000000096000006 [#1] SMP
+  loki: Modules linked in: vika(O)
+  loki: CPU: 0 PID: ... Comm: kirjoita Tainted: G           O      
+      6.8.12-tutoriaali #1
+  loki: pc : vika_lue_viimeisin+... [vika]
+  loki: lr : vika_kirjoita+... [vika]
+  loki: Call trace:
+  loki:  vika_lue_viimeisin+... [vika]
+  loki:  full_proxy_write+...
+# lue /proc/sys/kernel/tainted
+  4224
+# kirjoita /sys/kernel/debug/vika/laske 1
+  loki: vika: summa 40
+# @loppu vaiheet
+paluuarvo 0
+faddr2line:
+  vika.c:45

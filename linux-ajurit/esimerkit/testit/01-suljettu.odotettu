@@ -1,0 +1,3 @@
+ERROR: modpost: GPL-incompatible module suljettu.ko uses GPL-only symbol
+    'tilasto_kirjaa'
+paluuarvo 2

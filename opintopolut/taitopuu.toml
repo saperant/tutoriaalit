@@ -986,6 +986,7 @@ laajuus = 5
 testaus = "QEMU: ajurit ladataan ja testataan käynnistetyssä järjestelmässä"
 roadmap = ["linux"]
 amk = "Laiteajurit"
+tutoriaali = "linux-ajurit"
 
 # ---------------------------------------------------------------------
 # Verkot ja hajautetut järjestelmät

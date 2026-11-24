@@ -1,0 +1,5 @@
+# Virheenjäljitystieto (-g) moduuliin, jotta faddr2line osaa muuntaa
+# kaatumisilmoituksen osoitteen lähdekoodin riviksi. Ydin itse on
+# käännetty ilman sitä.
+ccflags-y := -g
+obj-m := vika.o

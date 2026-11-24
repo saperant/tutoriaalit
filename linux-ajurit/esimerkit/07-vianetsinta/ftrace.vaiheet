@@ -1,0 +1,10 @@
+# ftrace: moduulin funktiokutsujen jäljitys.
+suodata vika:
+# @alku vaiheet
+lataa vika.ko
+kirjoita /sys/kernel/tracing/set_ftrace_filter :mod:vika
+kirjoita /sys/kernel/tracing/current_tracer function
+kirjoita /sys/kernel/debug/vika/laske 1
+kirjoita /sys/kernel/tracing/tracing_on 0
+lue /sys/kernel/tracing/trace
+# @loppu vaiheet

@@ -1,0 +1,30 @@
+# I2C: i2c-stub tarjoaa väylän ja piirien rekisterit.
+suodata i2c-stub tutor-lampo lm75 i2c
+# @alku vayla
+lataa i2c-stub.ko chip_addr=0x48,0x49,0x4a
+lue /sys/bus/i2c/devices/i2c-0/name
+aja /bin/i2c-aseta /dev/i2c-0 0x49 0x0f 0x5a
+aja /bin/i2c-aseta /dev/i2c-0 0x49 0x00 2150
+aja /bin/i2c-aseta /dev/i2c-0 0x49 0x01 1
+# @loppu vayla
+# @alku ajuri
+lataa lampo.ko
+kirjoita /sys/bus/i2c/devices/i2c-0/new_device tutor-lampo 0x49
+kirjoita /sys/bus/i2c/devices/i2c-0/new_device tutor-lampo 0x4a
+listaa /sys/bus/i2c/devices
+listaa /sys/bus/i2c/drivers/tutor-lampo
+# @loppu ajuri
+# @alku hwmon
+lue /sys/class/hwmon/hwmon0/name
+lue /sys/class/hwmon/hwmon0/temp1_input
+kirjoita /sys/class/hwmon/hwmon0/temp1_max 30000
+lue /sys/class/hwmon/hwmon0/temp1_max
+# @loppu hwmon
+# @alku lm75
+aja /bin/i2c-aseta /dev/i2c-0 0x48 0x00 0x8019
+kirjoita /sys/bus/i2c/devices/i2c-0/new_device lm75 0x48
+lue /sys/class/hwmon/hwmon1/name
+lue /sys/class/hwmon/hwmon1/temp1_input
+# @loppu lm75
+kirjoita /sys/bus/i2c/devices/i2c-0/delete_device 0x49
+poista lampo

@@ -91,7 +91,7 @@ flowchart LR
     oheislaitevaylat["✓ Oheislaiteväylät"]
     rtos["✓ Reaaliaikakäyttöjärjestelmät"]
     embedded_linux["✓ Sulautettu Linux"]
-    linux_ajurit["Linux-laiteajurit"]
+    linux_ajurit["✓ Linux-laiteajurit"]
   end
   subgraph hajautetut["Verkot ja hajautetut järjestelmät"]
     tietoverkot["✓ Tietoverkot"]
@@ -373,7 +373,7 @@ flowchart LR
 | Oheislaiteväylät | 3 | Mikrokontrollerit ja bare-metal-ohjelmointi | [valmis](../oheislaitevaylat/) |
 | Reaaliaikakäyttöjärjestelmät | 5 | Käyttöjärjestelmät, Mikrokontrollerit ja bare-metal-ohjelmointi | [valmis](../rtos/) |
 | Sulautettu Linux | 5 | Käyttöjärjestelmät, Käännösjärjestelmät, testaus ja CI | [valmis](../embedded-linux/) |
-| Linux-laiteajurit | 5 | Oheislaiteväylät, Sulautettu Linux | suunniteltu |
+| Linux-laiteajurit | 5 | Oheislaiteväylät, Sulautettu Linux | [valmis](../linux-ajurit/) |
 
 ### Verkot ja hajautetut järjestelmät
 

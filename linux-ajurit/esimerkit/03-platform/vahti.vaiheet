@@ -1,0 +1,5 @@
+# Väärä keskeytysnumero laitepuussa: herätys ei tule perille.
+suodata herate
+lataa herate.ko
+aja /bin/heratetesti 1
+lue /sys/devices/platform/9010000.herateajastin/heratyksia

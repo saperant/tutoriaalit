@@ -1,0 +1,24 @@
+# Platform-ajuri: laitepuun solmu, probe, keskeytykset ja sysfs.
+suodata herate 9010000.herateajastin
+# @alku sidonta
+lue /sys/bus/platform/devices/9010000.herateajastin/modalias
+lataa herate.ko
+listaa /sys/bus/platform/drivers/herate
+# @loppu sidonta
+# @alku keskeytys
+aja /bin/heratetesti 2
+lue /proc/interrupts herate
+# @loppu keskeytys
+# @alku jakso
+kirjoita /sys/devices/platform/9010000.herateajastin/jakso 1
+aja /bin/heratetesti 1 3
+kirjoita /sys/devices/platform/9010000.herateajastin/jakso 0
+lue /sys/devices/platform/9010000.herateajastin/heratyksia
+lue /sys/kernel/debug/9010000.herateajastin/rekisterit
+# @loppu jakso
+# @alku irrotus
+kirjoita /sys/bus/platform/drivers/herate/unbind 9010000.herateajastin
+listaa /sys/bus/platform/drivers/herate
+kirjoita /sys/bus/platform/drivers/herate/bind 9010000.herateajastin
+poista herate
+# @loppu irrotus

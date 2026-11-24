@@ -1,0 +1,31 @@
+# @alku vaiheet
+# lataa jono.ko maara=2 koko=64
+  loki: jono: loading out-of-tree module taints kernel.
+  loki: jono: 2 laitetta, 64 tavua kukin
+# listaa /sys/class/jono
+  jono0
+  jono1
+# lue /sys/class/jono/jono0/uevent
+  MAJOR=254
+  MINOR=0
+  DEVNAME=jono0
+# aja /bin/jonotesti
+luku tyhjästä: -1 (Resource temporarily unavailable)
+poll: kirjoitettavissa
+kirjoitettiin 13 tavua
+tila: 13/64 tavua
+poll: luettavissa kirjoitettavissa
+luettiin 13 tavua: lampotila 21
+kirjoitus osoitteesta 16: -1 (Bad address)
+tuntematon ioctl: -1 (Inappropriate ioctl for device)
+täyteen: 64 tavua, sitten Resource temporarily unavailable
+poll: luettavissa
+tila: 0/64 tavua
+vanhempi kirjoittaa
+lapsi heräsi: kello 12
+# poista jono
+  loki: jono: poistettu
+# listaa /sys/class/jono
+  virhe: /sys/class/jono: No such file or directory
+# @loppu vaiheet
+paluuarvo 0

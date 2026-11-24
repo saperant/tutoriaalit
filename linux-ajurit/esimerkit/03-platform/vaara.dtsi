@@ -1,0 +1,7 @@
+// Virheellinen laitepuu: keskeytyksen numero on väärä (SPI 3 eikä 2).
+// Liitetään herate.dtsi:n perään; dtc yhdistää saman polun solmut.
+/ {
+    herateajastin@9010000 {
+        interrupts = <0x00 0x03 0x04>;
+    };
+};

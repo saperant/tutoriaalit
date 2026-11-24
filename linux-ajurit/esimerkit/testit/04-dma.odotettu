@@ -1,0 +1,19 @@
+# @alku vaiheet
+# lataa fwcfg.ko
+  loki: tutor-fwcfg 9020000.fw-cfg: laitepuussa dma-coherent: on
+  loki: tutor-fwcfg 9020000.fw-cfg: opt/tutoriaalit/viesti: valitsin 0x0029,
+      69 tavua
+# lue /sys/kernel/debug/fwcfg/sisalto
+  Tervehdys isännältä: tämä teksti kulki fw_cfg-laitteen DMA:lla.
+# poista fwcfg
+# lataa fwcfg.ko tiedosto=opt/puuttuu
+  loki: tutor-fwcfg 9020000.fw-cfg: laitepuussa dma-coherent: on
+  loki: tutor-fwcfg 9020000.fw-cfg: error -2: opt/puuttuu puuttuu
+  loki: tutor-fwcfg: probe of 9020000.fw-cfg failed with error -2
+# listaa /sys/bus/platform/drivers/tutor-fwcfg
+  bind
+  module
+  uevent
+  unbind
+# @loppu vaiheet
+paluuarvo 0

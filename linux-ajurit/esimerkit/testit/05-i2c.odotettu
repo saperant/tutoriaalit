@@ -1,0 +1,53 @@
+# @alku vayla
+# lataa i2c-stub.ko chip_addr=0x48,0x49,0x4a
+  loki: i2c-stub: Virtual chip at 0x48
+  loki: i2c-stub: Virtual chip at 0x49
+  loki: i2c-stub: Virtual chip at 0x4a
+# lue /sys/bus/i2c/devices/i2c-0/name
+  SMBus stub driver
+# aja /bin/i2c-aseta /dev/i2c-0 0x49 0x0f 0x5a
+# aja /bin/i2c-aseta /dev/i2c-0 0x49 0x00 2150
+# aja /bin/i2c-aseta /dev/i2c-0 0x49 0x01 1
+# @loppu vayla
+# @alku ajuri
+# lataa lampo.ko
+# kirjoita /sys/bus/i2c/devices/i2c-0/new_device tutor-lampo 0x49
+  loki: tutor-lampo 0-0049: anturi osoitteessa 0x49 (SMBus stub driver)
+  loki: i2c i2c-0: new_device: Instantiated device tutor-lampo at 0x49
+# kirjoita /sys/bus/i2c/devices/i2c-0/new_device tutor-lampo 0x4a
+  loki: tutor-lampo 0-004a: error -19: tunniste 0x0000
+  loki: i2c i2c-0: new_device: Instantiated device tutor-lampo at 0x4a
+# listaa /sys/bus/i2c/devices
+  0-0049
+  0-004a
+  i2c-0
+# listaa /sys/bus/i2c/drivers/tutor-lampo
+  0-0049
+  bind
+  module
+  uevent
+  unbind
+# @loppu ajuri
+# @alku hwmon
+# lue /sys/class/hwmon/hwmon0/name
+  tutorlampo
+# lue /sys/class/hwmon/hwmon0/temp1_input
+  21500
+# kirjoita /sys/class/hwmon/hwmon0/temp1_max 30000
+# lue /sys/class/hwmon/hwmon0/temp1_max
+  30000
+# @loppu hwmon
+# @alku lm75
+# aja /bin/i2c-aseta /dev/i2c-0 0x48 0x00 0x8019
+# kirjoita /sys/bus/i2c/devices/i2c-0/new_device lm75 0x48
+  loki: lm75 0-0048: hwmon1: sensor 'lm75'
+  loki: i2c i2c-0: new_device: Instantiated device lm75 at 0x48
+# lue /sys/class/hwmon/hwmon1/name
+  lm75
+# lue /sys/class/hwmon/hwmon1/temp1_input
+  25500
+# @loppu lm75
+# kirjoita /sys/bus/i2c/devices/i2c-0/delete_device 0x49
+  loki: i2c i2c-0: delete_device: Deleting device tutor-lampo at 0x49
+# poista lampo
+paluuarvo 0
