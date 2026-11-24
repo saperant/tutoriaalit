@@ -60,6 +60,18 @@ jobs:
           npm install --no-save playwright@1.63.0
           npx playwright install --with-deps chromium
 
+      # Projektiesimerkkien (npm, Maven, Gradle) ladatut riippuvuudet.
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            ~/.m2/repository
+            ~/.m2/wrapper
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: riippuvuudet-${{ hashFiles('**/package-lock.json', '**/pom.xml', '**/*.gradle.kts', '**/gradle-wrapper.properties', '**/maven-wrapper.properties') }}
+          restore-keys: riippuvuudet-
+
       - name: Testaa esimerkit, taitopuu ja sivusto
         run: make testaa
 

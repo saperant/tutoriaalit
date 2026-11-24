@@ -45,6 +45,12 @@ def lukujen_otsikot(hakemisto: Path) -> list[str]:
     return otsikot
 
 
+# Käännöstuotteet ja ladatut riippuvuudet eivät kuulu esimerkkipakettiin.
+OHITETTAVAT = {"bin", "obj_dir", "target", "build", "dist", "node_modules",
+               ".gradle", "compiled", "__pycache__", "test-results",
+               ".pytest_cache", ".mypy_cache"}
+
+
 def esimerkkipaketti(juuri: Path, tutoriaali: str, kohde: Path) -> bool:
     """Pakkaa tutoriaalin esimerkit ja devcontainer-konfiguraation."""
     esimerkit = juuri / tutoriaali / "esimerkit"
@@ -65,10 +71,10 @@ def esimerkkipaketti(juuri: Path, tutoriaali: str, kohde: Path) -> bool:
             "Reopen in Container*. Kontissa on valmiina kääntäjät ja "
             "debuggeri, ja esimerkit käännetään automaattisesti.\n\n"
             "## Käyttö ilman konttia\n\n"
-            "```text\n"
-            "make            # kääntää kaikki esimerkit hakemistoon bin/\n"
-            "make aja-01-hei # kääntää ja ajaa yhden esimerkin\n"
-            "```\n\n"
+            "Tarvittavat työkalut ja versiot on lueteltu tiedostossa "
+            "`.devcontainer/devcontainer.json`. Jos kansiossa on "
+            "Makefile, `make` rakentaa ja testaa esimerkit; muuten "
+            "esimerkit ajetaan yksitellen tutoriaalin ohjeiden mukaan.\n\n"
             "Lisenssi: CC BY-SA 4.0.\n")
 
     kohde.parent.mkdir(parents=True, exist_ok=True)
@@ -80,8 +86,8 @@ def esimerkkipaketti(juuri: Path, tutoriaali: str, kohde: Path) -> bool:
             z.writestr(tieto, data)
 
         for polku in sorted(esimerkit.rglob("*")):
-            if polku.is_file() and "bin" not in polku.relative_to(
-                    esimerkit).parts:
+            if polku.is_file() and not OHITETTAVAT.intersection(
+                    polku.relative_to(esimerkit).parts):
                 lisaa(polku.relative_to(esimerkit).as_posix(),
                       polku.read_bytes())
         lisaa(".devcontainer/devcontainer.json",

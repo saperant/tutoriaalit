@@ -1,0 +1,21 @@
+{
+  "name": "Web-sovellukset: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "fonts-dejavu-core",
+      "NODEJS": "24.22.3",
+      "PLAYWRIGHT": "1.63.0"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/web-sovellukset/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "ms-playwright.playwright"
+      ]
+    }
+  }
+}

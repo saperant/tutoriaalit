@@ -1,0 +1,19 @@
+{
+  "name": "Taustapalvelut: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "openjdk-21-jdk-headless sqlite3"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/taustapalvelut/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vmware.vscode-boot-dev-pack",
+        "redhat.java"
+      ]
+    }
+  }
+}

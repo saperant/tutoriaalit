@@ -4,7 +4,10 @@
 Käyttö:  python3 yhteiset/testaa_esimerkit.py --kieli KIELI <hakemisto>
 
 Kielet: c, cpp, python, python-perus, bash, rust, go, java, kotlin,
-javascript, typescript, html, tcl, racket, sql, systemverilog, vhdl.
+javascript, typescript, html, tcl, racket, sql, systemverilog, vhdl
+sekä projekti (npm-, Maven- ja Gradle-projektit, jotka esimerkkihakemiston
+Makefile rakentaa ja testaa; testaaja tarkistaa vain tekstin viittaukset ja
+rivien pituudet).
 
 Esimerkki on joko yksittäinen lähdetiedosto `esimerkit/<nimi>.<pääte>`
 tai hakemisto `esimerkit/<nimi>/`, jonka lähdetiedostot muodostavat yhden
@@ -67,6 +70,7 @@ KOODIKIELET = {
     "c", "cpp", "c++", "python", "bash", "sh", "rust", "go", "java",
     "kotlin", "javascript", "js", "typescript", "ts", "tcl", "racket",
     "scheme", "sql", "verilog", "systemverilog", "vhdl", "html", "css",
+    "tsx", "jsx",
 }
 
 LOHKO = re.compile(r"^```\s*\{?([^}\n]*)\}?\s*$")
@@ -306,6 +310,7 @@ KIELET: dict[str, Kieli] = {
                     "-Mdir", str(a.tyohak / "obj"), "-o", "ohjelma",
                     *map(str, a.lahteet)]],
         lambda a: [str(a.tyohak / "obj" / "ohjelma")]),)),
+    "projekti": Kieli((), (), "", ()),
     "vhdl": Kieli((".vhd",), (), "testipenkki.vhd", (Toteutus(
         "ghdl", ("ghdl",), ghdl_tarkistus, ghdl_ajo),)),
 }
@@ -454,7 +459,7 @@ def tarkista_rivit(tiedosto: Path) -> list[str]:
     vaatimuksesta sarkain, ja se lasketaan neljäksi merkiksi."""
     virheet = []
     nimi = tiedosto.relative_to(tiedosto.parent.parent)
-    sarkaimet = tiedosto.suffix == ".go"
+    sarkaimet = tiedosto.suffix in (".go", ".mk") or tiedosto.name == "Makefile"
     for nro, rivi in enumerate(tiedosto.read_text("utf-8").splitlines(), 1):
         pituus = len(rivi.expandtabs(4))
         if pituus > MAKSIMIPITUUS:
@@ -585,6 +590,26 @@ def testaa(kieli: Kieli, esimerkki: Esimerkki, valittu: Valittu,
     return virheet
 
 
+def tarkista_projekti(juuri: Path) -> int:
+    """Profiili projekti: esimerkit ovat oikeita projekteja (npm, Maven,
+    Gradle), jotka esimerkkihakemiston Makefile rakentaa ja testaa. Tässä
+    tarkistetaan vain, että tekstin koodi tulee tiedostoista ja että
+    näytetyt tiedostot mahtuvat PDF:n leveyteen."""
+    virheet, viitatut = tarkista_markdown(juuri)
+    for tiedosto in sorted(viitatut):
+        if tiedosto.exists():
+            virheet += tarkista_rivit(tiedosto)
+    if not (juuri / "esimerkit" / "Makefile").exists():
+        virheet.append("projekti: esimerkit/Makefile puuttuu")
+    if virheet:
+        print("\n".join(virheet))
+        print(f"\nVIRHEITÄ: {len(virheet)}")
+        return 1
+    print(f"OK: {len(viitatut)} tekstissä näytettyä tiedostoa; "
+          "esimerkit testaa esimerkit/Makefile.")
+    return 0
+
+
 def main() -> int:
     jasennin = argparse.ArgumentParser(
         description="Testaa tutoriaalin koodiesimerkit.")
@@ -594,6 +619,8 @@ def main() -> int:
 
     kieli = KIELET[argumentit.kieli]
     juuri = argumentit.hakemisto.resolve()
+    if not kieli.toteutukset:
+        return tarkista_projekti(juuri)
     esimerkit = etsi_esimerkit(kieli, juuri / "esimerkit")
     valitut = valitse(kieli)
     print(f"Kieli {argumentit.kieli}, työkalut:",

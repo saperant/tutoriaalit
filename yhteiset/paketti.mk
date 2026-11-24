@@ -17,7 +17,10 @@ RAKENNE   ?= kieli
 LUVUT     := $(sort $(wildcard luvut/*.md))
 ESIMERKIT := $(shell find esimerkit -type f -not -path '*/bin/*' \
                   -not -path '*/obj_dir/*' -not -path '*/target/*' \
-                  -not -path '*/compiled/*' -not -path '*/__pycache__/*')
+                  -not -path '*/compiled/*' -not -path '*/__pycache__/*' \
+                  -not -path '*/node_modules/*' -not -path '*/build/*' \
+                  -not -path '*/dist/*' -not -path '*/.gradle/*' \
+                  -not -path '*/test-results/*')
 
 .PHONY: kaikki testaa pdf siivoa
 
