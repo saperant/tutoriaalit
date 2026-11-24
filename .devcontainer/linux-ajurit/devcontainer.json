@@ -1,0 +1,20 @@
+{
+  "name": "Linux-laiteajurit: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "gcc bzip2 linux-source-6.8.0 gcc-aarch64-linux-gnu libc6-dev-arm64-cross qemu-system-arm qemu-user u-boot-qemu u-boot-tools device-tree-compiler flex bison bc libssl-dev libelf-dev cpio kmod e2fsprogs shellcheck",
+      "PIP_PAKETIT": "ruff mypy"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/linux-ajurit/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-python.python"
+      ]
+    }
+  }
+}
