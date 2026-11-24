@@ -1823,6 +1823,7 @@ laajuus = 5
 testaus = "Playwright ja Node-palvelimet; haavoittuva ja korjattu versio rinnakkain"
 roadmap = ["cyber-security", "backend"]
 amk = "Web-sovellusten tietoturva"
+tutoriaali = "web-tietoturva"
 
 [[taito]]
 id = "sulautettujen-tietoturva"

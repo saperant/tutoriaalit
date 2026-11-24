@@ -1,0 +1,15 @@
+{
+  "name": "web-tietoturva-esimerkit",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "tyypit": "tsc --noEmit -p .",
+    "testit": "make testit",
+    "e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@types/node": "24.19.2",
+    "typescript": "7.0.2"
+  }
+}

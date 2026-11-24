@@ -119,7 +119,7 @@ flowchart LR
     laiteohjelmiston_takaisinmallinnus["Laiteohjelmiston takaisinmallinnus"]
     kryptografia["✓ Kryptografia"]
     turvallinen_kehitys["✓ Tietoturva kehitystyössä"]
-    web_tietoturva["Web-sovellusten tietoturva"]
+    web_tietoturva["✓ Web-sovellusten tietoturva"]
     sulautettujen_tietoturva["Sulautettujen järjestelmien tietoturva"]
     palvelutietoturva["Palveluarkkitehtuurin tietoturva"]
   end
@@ -408,7 +408,7 @@ flowchart LR
 | Kryptografia | 5 | Diskreetti matematiikka, Python, Tietoturvan perusteet | [valmis](../kryptografia/) |
 | Tietoturva kehitystyössä | 3 | Tietoturvan perusteet, Versionhallinta (Git) | [valmis](../turvallinen-kehitys/) |
 | Palveluarkkitehtuurin tietoturva | 3 | Kryptografia, Palveluarkkitehtuurit | suunniteltu |
-| Web-sovellusten tietoturva | 5 | Tietoturvan perusteet, Web-sovellukset | suunniteltu |
+| Web-sovellusten tietoturva | 5 | Tietoturvan perusteet, Web-sovellukset | [valmis](../web-tietoturva/) |
 | Sulautettujen järjestelmien tietoturva | 3 | Kryptografia, Mikrokontrollerit ja bare-metal-ohjelmointi | suunniteltu |
 | Takaisinmallinnus | 5 | Käyttöjärjestelmät, Objektitiedostot, linkitys ja ABI, Tietoturvan perusteet | suunniteltu |
 | Haavoittuvuuksien analyysi ja hyödyntäminen | 5 | Takaisinmallinnus | suunniteltu |

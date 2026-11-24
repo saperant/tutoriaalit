@@ -188,7 +188,8 @@
     \node[anchor=south west, inner sep=0pt, text width=150mm,
       align=left, text=white]
       at ([xshift=24mm, yshift=-108mm]current page.north west)
-      {{\fontsize{40}{44}\selectfont\sffamily\bfseries\@title\par}
+      {{\fontsize{40}{44}\selectfont\sffamily\bfseries
+        \hyphenpenalty=10000\exhyphenpenalty=10000\@title\par}
        \ifx\@subtitle\@empty\else
          \vspace{6pt}{\fontsize{14}{18}\selectfont\sffamily\@subtitle\par}%
        \fi};
