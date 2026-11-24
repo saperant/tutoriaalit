@@ -9,8 +9,9 @@ on:
 permissions:
   contents: read
 
-# Uusi ajo peruu saman haaran keskeneräisen ajon, jotta vanhentunut ajo
-# ei voi julkaista sivustoa uudemman päälle.
+# Saman haaran ajot suoritetaan peräkkäin: käynnissä oleva ajo valmistuu,
+# ja odottamaan jää vain uusin ajo. Näin tiheät pushit eivät peruuta
+# jokaista ajoa, eikä vanhempi ajo voi julkaista sivustoa uudemman päälle.
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
