@@ -690,6 +690,7 @@ laajuus = 5
 testaus = "Yosys ja nextpnr: synteesi- ja ajoitusraporttien tarkistus"
 roadmap = []
 amk = "FPGA-suunnittelu"
+tutoriaali = "fpga-toteutus"
 
 [[taito]]
 id = "hlm-mallinnus"

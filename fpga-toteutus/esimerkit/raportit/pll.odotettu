@@ -1,0 +1,4 @@
+== pll
+kantoketjun soluja (SB_CARRY): 24
+PLL (SB_PLL40_PAD): 1
+Fmax clk_48 yli 48 MHz: kyllä

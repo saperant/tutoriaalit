@@ -1,0 +1,3 @@
+# iCEBreaker: 12 MHz:n kide ja punainen ledi (aktiivinen alhaalla).
+set_io -nowarn clk   35
+set_io -nowarn led_n 11

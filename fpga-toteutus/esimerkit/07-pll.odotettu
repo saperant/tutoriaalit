@@ -1,0 +1,4 @@
+jakso 1: nollaus=1 laskuri=0 led_n=1
+jakso 2: nollaus=0 laskuri=0 led_n=1
+jakso 3: nollaus=0 laskuri=1 led_n=1
+jakso 4: nollaus=0 laskuri=2 led_n=1

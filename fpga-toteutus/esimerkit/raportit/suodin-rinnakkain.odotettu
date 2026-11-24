@@ -1,0 +1,5 @@
+== suodin-rinnakkain
+kantoketjun soluja (SB_CARRY): 16
+DSP-lohkoja (SB_MAC16): 4
+logiikkasoluja alle 150: kyllä
+Fmax clk yli 12 MHz: kyllä

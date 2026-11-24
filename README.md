@@ -90,6 +90,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Lineaarialgebra | [`lineaarialgebra/`](lineaarialgebra/) | [lineaarialgebra.pdf](https://saperant.github.io/tutoriaalit/materiaalit/lineaarialgebra.pdf) |
 | Assembly | [`assembly/`](assembly/) | [assembly.pdf](https://saperant.github.io/tutoriaalit/materiaalit/assembly.pdf) |
 | Todennäköisyys ja tilastot | [`todennakoisyys/`](todennakoisyys/) | [todennakoisyys.pdf](https://saperant.github.io/tutoriaalit/materiaalit/todennakoisyys.pdf) |
+| FPGA-toteutus | [`fpga-toteutus/`](fpga-toteutus/) | [fpga-toteutus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/fpga-toteutus.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

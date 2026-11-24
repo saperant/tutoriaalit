@@ -1,0 +1,4 @@
+== kaksi-kelloa
+kantoketjun soluja (SB_CARRY): 8
+Fmax clk_k yli 48 MHz: kyllä
+Fmax clk_l yli 48 MHz: kyllä
