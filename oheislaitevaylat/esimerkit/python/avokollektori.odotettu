@@ -1,0 +1,16 @@
+A B -> vayla
+0 0 -> 0
+0 1 -> 0
+1 0 -> 0
+1 1 -> 1
+
+tila                Cb pF   Rp min   Rp max
+Standard 100 kHz       50     967R   23604R
+Standard 100 kHz      200     967R    5901R
+Standard 100 kHz      400     967R    2951R
+Fast 400 kHz           50     967R    7081R
+Fast 400 kHz          200     967R    1770R
+Fast 400 kHz          400     967R     885R  ei ratkaisua
+Fast+ 1 MHz            50     145R    2833R
+Fast+ 1 MHz           200     145R     708R
+Fast+ 1 MHz           550     145R     258R

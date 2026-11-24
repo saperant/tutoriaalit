@@ -1,0 +1,9 @@
+alustus: ok
+skannaus 0x08..0x77: 48 50
+asetus 00 (ok)
+alaraja 4b00 = 75.0 C
+ylaraja 5000 = 80.0 C
+ylaraja := 85.5 C (ok)
+ylaraja 5580 = 85.5 C
+luku osoitteesta 49: osoitetta ei kuitattu
+paluuarvo 0

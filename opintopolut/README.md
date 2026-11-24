@@ -88,7 +88,7 @@ flowchart LR
   end
   subgraph sulautetut["Sulautetut järjestelmät"]
     mikrokontrollerit["✓ Mikrokontrollerit ja bare-metal-ohjelmointi"]
-    oheislaitevaylat["Oheislaiteväylät"]
+    oheislaitevaylat["✓ Oheislaiteväylät"]
     rtos["✓ Reaaliaikakäyttöjärjestelmät"]
     embedded_linux["Sulautettu Linux"]
     linux_ajurit["Linux-laiteajurit"]
@@ -370,7 +370,7 @@ flowchart LR
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
 | Mikrokontrollerit ja bare-metal-ohjelmointi | 5 | Objektitiedostot, linkitys ja ABI, Tietokonearkkitehtuuri | [valmis](../mikrokontrollerit/) |
-| Oheislaiteväylät | 3 | Mikrokontrollerit ja bare-metal-ohjelmointi | suunniteltu |
+| Oheislaiteväylät | 3 | Mikrokontrollerit ja bare-metal-ohjelmointi | [valmis](../oheislaitevaylat/) |
 | Reaaliaikakäyttöjärjestelmät | 5 | Käyttöjärjestelmät, Mikrokontrollerit ja bare-metal-ohjelmointi | [valmis](../rtos/) |
 | Sulautettu Linux | 5 | Käyttöjärjestelmät, Käännösjärjestelmät, testaus ja CI | suunniteltu |
 | Linux-laiteajurit | 5 | Oheislaiteväylät, Sulautettu Linux | suunniteltu |

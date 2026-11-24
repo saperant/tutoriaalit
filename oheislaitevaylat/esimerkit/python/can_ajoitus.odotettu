@@ -1,0 +1,5 @@
+kello   nopeus   BRP  TQ  TSEG1 TSEG2 SJW  naytepiste
+  8 MHz  1000k     1   8     5     2   2     75.0 %  (1 vaihtoehtoa)
+ 16 MHz   500k     2  16    13     2   2     87.5 %  (2 vaihtoehtoa)
+ 40 MHz   500k     5  16    13     2   2     87.5 %  (4 vaihtoehtoa)
+ 40 MHz   125k    20  16    13     2   2     87.5 %  (4 vaihtoehtoa)

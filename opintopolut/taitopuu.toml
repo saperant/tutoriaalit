@@ -920,6 +920,7 @@ laajuus = 3
 testaus = "QEMU ja emuloidut oheislaitteet, protokollamallit Pythonilla"
 roadmap = []
 amk = "Sulautetut järjestelmät"
+tutoriaali = "oheislaitevaylat"
 
 [[taito]]
 id = "rtos"

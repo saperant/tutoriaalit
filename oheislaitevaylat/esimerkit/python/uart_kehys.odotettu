@@ -1,0 +1,14 @@
+0x4b = 01001011, muoto 8N1:
+   ____    ________    ____        ____    ________
+TX     |___|       |___|   |_______|   |___|
+       S   d0  d1  d2  d3  d4  d5  d6  d7  E
+
+0x4b = 01001011, muoto 8E1:
+   ____    ________    ____        ____        ________
+TX     |___|       |___|   |_______|   |_______|
+       S   d0  d1  d2  d3  d4  d5  d6  d7  P   E
+
+ehja                           0x4f, 0x4b
+hairio d2:ssa                  0x4b (pariteetti), 0x4b
+katko (break)                  0x00 (kehys)
+lyhyt piikki lepotilassa       -

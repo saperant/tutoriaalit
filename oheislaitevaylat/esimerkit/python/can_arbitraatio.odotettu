@@ -1,0 +1,6 @@
+bitti   0123456789012345
+0x65a   01..............  luopuu bitilla 1
+0x123   0001001000110000  voittaa
+0x12f   000100101.......  luopuu bitilla 8
+vayla   0001001000110000
+vaylalle paasee 0x123; muut yrittavat uudelleen kehyksen jalkeen

@@ -1,0 +1,21 @@
+tunniste                 MOSI 9f 00 00 00
+                         MISO ff ef 40 18
+ohjelmointi ilman WREN   MOSI 02 00 10 00 58 59
+luku: ei muuttunut       MOSI 03 00 10 00 00 00
+                         MISO ff ff ff ff ff ff
+salli kirjoitus          MOSI 06
+ohjelmoi 10fe: ABCD      MOSI 02 00 10 fe 41 42 ..
+valmis 3 kyselyn jalkeen
+luku 10fe..10ff          MOSI 03 00 10 fe 00 00
+                         MISO ff ff ff ff 41 42
+luku 1000..1001          MOSI 03 00 10 00 00 00
+                         MISO ff ff ff ff 43 44
+salli kirjoitus          MOSI 06
+tyhjenna sektori 1000    MOSI 20 00 10 00
+valmis 6 kyselyn jalkeen
+luku 1000..1001          MOSI 03 00 10 00 00 00
+                         MISO ff ff ff ff ff ff
+
+kolme 8-bittista siirtorekisteria ketjussa
+lahetetty 01        -> laitteet 01 00 00
+lahetetty 01 02 03  -> laitteet 03 02 01

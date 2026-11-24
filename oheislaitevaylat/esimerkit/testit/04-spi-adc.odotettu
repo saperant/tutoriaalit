@@ -1,0 +1,7 @@
+SCK 961538 Hz (CPSDVSR 2, SCR 12), moodi 0
+itsetesti ok: 12 tavua silmukan kautta
+kanava 0: koodi   0 =    0 mV
+kanava 1: koodi 127 = 1016 mV
+kanava 2: koodi 200 = 1600 mV
+kanava 3: koodi 255 = 2040 mV
+paluuarvo 0

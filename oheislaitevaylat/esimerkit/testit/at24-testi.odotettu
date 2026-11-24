@@ -1,0 +1,11 @@
+kirjoitus 05..0e sivun yli         ok
+  siirtoja 10, joista kiirekyselyja 6
+  muisti 00..0f: ff ff ff ff ff 6c 61 69 74 65 2d 30 30 34 32 ff
+luku 05..0e                        ok
+hidas piiri                        kirjoitus ei valmistu
+piiri hylkaa toisen tavun          vaylavirhe
+luku f8..ff                        ok
+luku f8..100                       alueen ulkopuolella
+puuttuva piiri                     ei vastaa
+kaikki ok
+paluuarvo 0

@@ -1,0 +1,10 @@
+yritys  TEC  tila
+     1    8  error active
+    15  120  error active
+    16  128  error passive
+    32  256  bus-off
+128 x 11 resessiivista bittia: TEC 0, error active
+
+virhe joka  7. kehyksessa: 875 kehyksen jalkeen TEC 256, bus-off
+virhe joka  9. kehyksessa: 900 kehyksen jalkeen TEC   8, error active
+virhe joka 13. kehyksessa: 900 kehyksen jalkeen TEC   5, error active

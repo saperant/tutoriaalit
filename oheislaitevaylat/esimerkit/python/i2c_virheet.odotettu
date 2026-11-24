@@ -1,0 +1,14 @@
+isannat kohteisiin 48 ja 4a:
+  vaylalla: S 48W A 00 A 11 A P
+  isanta A: siirto valmis
+  isanta B: 4a: havisi arbitraation
+isannat kohteisiin 48 ja 48:
+  vaylalla: S 48W A 00 A 11 A P
+  isanta A: siirto valmis
+  isanta B: 48: havisi arbitraation
+
+isanta nollautuu kesken luvun: S 50W A 00 A Sr 50R A
+vayla: SCL 1, SDA 0 (laite lahettaa yha)
+uusi isanta: P S 50W A 01 A Sr 50R A 5a N P
+vapautus: 4 kellojaksoa
+50: luettu 5a

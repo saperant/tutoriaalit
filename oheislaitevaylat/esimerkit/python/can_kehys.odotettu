@@ -1,0 +1,17 @@
+kehys: tunniste 0x123, data 00 ff
+  SOF   0
+  ID    00100100011
+  RTR   0
+  IDE   0
+  r0    0
+  DLC   0010
+  DATA  0000000011111111
+  CRC   110001111100110
+bitteja ennen taytetta 50, taytteen jalkeen 55 (5 taytebittia)
+  0001001000110000011000001000011111011111000011111000110
+                   ^      ^         ^     ^        ^
+
+ehja: tunniste 0x123, data 00 ff
+bitti  8 kaantyi: CRC-virhe
+bitti 30 kaantyi: vaara pituus
+bitti 40 kaantyi: taytevirhe (kuusi samaa bittia kohdassa 40)

@@ -1,0 +1,8 @@
+vastaus 1: kaiku 'hei'
+vastaus 2: summa 256
+vastaus 3: NAK, syy CRC
+vastaus 4: NAK, syy COBS
+vastaus 5: NAK, syy pituus
+vastaus 6: NAK, syy komento
+vastaus 7: kaiku 'taas'
+vastaus 8: loppu

@@ -1,0 +1,6 @@
+kirjoitus 05..0e: ok
+00: 00 00 00 00 00 6c 61 69 74 65 2d 30 30 34 32 00
+luku: ok "laite-0042"
+luku f8..100: alueen ulkopuolella
+kirjoitus osoitteeseen 51: ei vastaa
+paluuarvo 0

@@ -1,0 +1,21 @@
+S 48W A 01 A Sr 48R A 60 N P
+S 48W A 02 A Sr 48R A 4b A 00 N P
+S 49R N P
+S 48W A 01 A 40 A P
+48: luettu 60
+48: luettu 4b 00
+49: NACK
+asetusrekisteri nyt 0x40
+
+ensimmainen siirto alusta, osoitetavu 0x90 (48W) ja ACK:
+    ___   __  __  __  __  __  __  __  __  __  __
+SCL    |__| |_| |_| |_| |_| |_| |_| |_| |_| |_|
+    _   ____        ____                _
+SDA  |__|   |_______|   |_______________||______
+
+laite venyttaa kelloa kuittauksen jalkeen:
+S 48W A 01 A Sr 48R A 60 N P
+    __  __  __           __  __  __  __  __  __  __  __  __
+SCL   |_| |_| |__________| |_| |_| |_| |_| |_| |_| |_| |_| |________
+              _                                        _____
+SDA __________||_______________________________________|    |_______

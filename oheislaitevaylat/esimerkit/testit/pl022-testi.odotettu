@@ -1,0 +1,12 @@
+SCK 12500000 Hz -> 12500000 Hz (CPSDVSR   2, SCR   0)
+SCK 10000000 Hz ->  6250000 Hz (CPSDVSR   2, SCR   1)
+SCK  1000000 Hz ->   961538 Hz (CPSDVSR   2, SCR  12)
+SCK   400000 Hz ->   390625 Hz (CPSDVSR   2, SCR  31)
+SCK     1000 Hz ->     1000 Hz (CPSDVSR 100, SCR 249)
+SCK      300 Hz ->        0 Hz (CPSDVSR   0, SCR   0)
+alustus: moodi 3, 8 bittia               ok
+alustus: moodi 4 hylataan                ok
+20 yhden tavun siirtoa muistisivun kautta ok
+jumiutunut lohko: aikaraja               ok
+kaikki ok
+paluuarvo 0
