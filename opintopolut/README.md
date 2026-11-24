@@ -100,7 +100,7 @@ flowchart LR
     jarjestelmasuunnittelu["Skaalautuvien järjestelmien suunnittelu"]
     kontit_ja_pilvi["Säiliöt ja pilvi-infrastruktuuri"]
     verkkoinfrastruktuuri["✓ Verkkoinfrastruktuuri"]
-    tietoliikennetekniikka["Tietoliikennetekniikka"]
+    tietoliikennetekniikka["✓ Tietoliikennetekniikka"]
     palvelinymparistot["Palvelinympäristöt"]
     palveluarkkitehtuurit["✓ Palveluarkkitehtuurit"]
   end
@@ -384,7 +384,7 @@ flowchart LR
 | Verkkoinfrastruktuuri | 5 | Tietoverkot | [valmis](../verkkoinfrastruktuuri/) |
 | Palvelinympäristöt | 5 | Säiliöt ja pilvi-infrastruktuuri, Verkkoinfrastruktuuri | suunniteltu |
 | Palveluarkkitehtuurit | 5 | Säiliöt ja pilvi-infrastruktuuri, Taustapalvelut | [valmis](../palveluarkkitehtuurit/) |
-| Tietoliikennetekniikka | 5 | Python työkaluohjelmointiin, Tietoverkot, Todennäköisyys ja tilastot | suunniteltu |
+| Tietoliikennetekniikka | 5 | Python työkaluohjelmointiin, Tietoverkot, Todennäköisyys ja tilastot | [valmis](../tietoliikennetekniikka/) |
 | Verkko-ohjelmointi | 5 | Käyttöjärjestelmät, Tietoverkot | suunniteltu |
 | Hajautetut järjestelmät | 5 | Algoritmit, Rinnakkaisohjelmointi, Verkko-ohjelmointi | suunniteltu |
 | Skaalautuvien järjestelmien suunnittelu | 5 | Hajautetut järjestelmät, SQL ja relaatiotietokannat | suunniteltu |

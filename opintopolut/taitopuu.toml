@@ -1632,6 +1632,7 @@ laajuus = 5
 testaus = "Python-simulaatiot (NumPy)"
 roadmap = ["network-engineer", "computer-science"]
 amk = "Tietoliikennetekniikka"
+tutoriaali = "tietoliikennetekniikka"
 
 [[taito]]
 id = "palvelinymparistot"

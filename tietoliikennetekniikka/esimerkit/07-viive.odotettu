@@ -1,0 +1,10 @@
+1500 tavun paketti Helsingistä Frankfurtiin:
+  koti (100 Mbit/s)  siirto  0.120 ms  eteneminen 0.010 ms  jono 0.50 ms
+  runko (10 Gbit/s)  siirto  0.001 ms  eteneminen 8.000 ms  jono 0.10 ms
+  konesali (1 Gbit)  siirto  0.012 ms  eteneminen 0.003 ms  jono 0.00 ms
+  yhteensä 8.81 ms
+64 tavun paketti Helsingistä Frankfurtiin:
+  koti (100 Mbit/s)  siirto  0.005 ms  eteneminen 0.010 ms  jono 0.50 ms
+  runko (10 Gbit/s)  siirto  0.000 ms  eteneminen 8.000 ms  jono 0.10 ms
+  konesali (1 Gbit)  siirto  0.001 ms  eteneminen 0.003 ms  jono 0.00 ms
+  yhteensä 8.68 ms

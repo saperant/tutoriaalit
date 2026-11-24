@@ -1,0 +1,8 @@
+Wi-Fi         50 m: SNR   29.0 dB (vaadittu  25.0) ok
+Wi-Fi        500 m: SNR    9.0 dB (vaadittu  25.0) ei
+Wi-Fi       5000 m: SNR  -11.0 dB (vaadittu  25.0) ei
+Wi-Fi      50000 m: SNR  -31.0 dB (vaadittu  25.0) ei
+LoRa SF12     50 m: SNR   54.8 dB (vaadittu -20.0) ok
+LoRa SF12    500 m: SNR   34.8 dB (vaadittu -20.0) ok
+LoRa SF12   5000 m: SNR   14.8 dB (vaadittu -20.0) ok
+LoRa SF12  50000 m: SNR   -5.2 dB (vaadittu -20.0) ok

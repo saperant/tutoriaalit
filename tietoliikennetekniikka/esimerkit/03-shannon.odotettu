@@ -1,0 +1,11 @@
+kanava                 B (kHz)  SNR  C (kbit/s) bit/s/Hz
+puhelinlinja               3.1   30        30.9     9.97
+Wi-Fi 20 MHz           20000.0   25    166187.5     8.31
+Wi-Fi 20 MHz, heikko   20000.0    5     41147.5     2.06
+5G 100 MHz            100000.0   20    665821.1     6.66
+M= 2: Nyquist   6.2 kbit/s
+M= 4: Nyquist  12.4 kbit/s
+M=16: Nyquist  24.8 kbit/s
+M=32: Nyquist  31.0 kbit/s
+M=64: Nyquist  37.2 kbit/s
+Shannon:  30.9 kbit/s

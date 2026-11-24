@@ -1,0 +1,8 @@
+käytettävissä 14.0 dB
+ 10 km: vaimennus  5.00 dB  ok
+ 20 km: vaimennus  9.00 dB  ok
+ 30 km: vaimennus 13.00 dB  ok
+ 40 km: vaimennus 17.00 dB  EI RIITÄ
+ 10 km: levenemä    17 ps, yläraja noin  14.7 Gbit/s
+ 40 km: levenemä    68 ps, yläraja noin   3.7 Gbit/s
+ 80 km: levenemä   136 ps, yläraja noin   1.8 Gbit/s

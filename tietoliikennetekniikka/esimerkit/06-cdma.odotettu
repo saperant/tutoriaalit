@@ -1,0 +1,3 @@
+käyttäjä 1: korrelaatio [ 1.23 -0.69  1.27  1.24] -> [ 1 -1  1  1] oikein: True
+käyttäjä 2: korrelaatio [-0.5  -1.24  1.1  -1.49] -> [-1 -1  1 -1] oikein: True
+käyttäjä 3: korrelaatio [ 1.04  0.95 -0.91  0.36] -> [ 1  1 -1  1] oikein: True

@@ -1,0 +1,5 @@
+data [1 0 1 1] koodisana [1 0 1 1 0 1 0]
+virhe bitissä 5, korjattu: [1 0 1 1]
+lohkovirheiden osuus:
+p=0.01: ilman koodia 3.9e-02, Hamming 2.0e-03 (simuloitu 1.9e-03)
+p=0.001: ilman koodia 4.0e-03, Hamming 2.1e-05 (simuloitu 3.0e-05)

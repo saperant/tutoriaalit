@@ -1,0 +1,7 @@
+  d (m)   2,4 GHz   5,5 GHz
+      1     40.0      47.2
+     10     60.0      67.2
+    100     80.0      87.2
+   1000    100.0     107.2
+teho alle -10 dB: simuloitu 0.096, teoria 0.095
+teho alle -20 dB: simuloitu 0.010, teoria 0.010

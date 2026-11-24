@@ -1,0 +1,5 @@
+TDM-kehykset: [a1|b1|c1] [a2|b2|c2] [a3|b3|c3]
+erotettu: {'A': 'a1a2a3', 'B': 'b1b2b3', 'C': 'c1c2c3'}
+FDM-kanava A (50 Hz): amplitudi 1.000
+FDM-kanava B (120 Hz): amplitudi 0.500
+FDM-kanava C (200 Hz): amplitudi 0.250

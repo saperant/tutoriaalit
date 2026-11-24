@@ -1,0 +1,10 @@
+ µ   väli (kHz)  aikaväli (ms)  symboli (µs)  RB (kHz)
+ 0           15         1.0000         66.67       180
+ 1           30         0.5000         33.33       360
+ 2           60         0.2500         16.67       720
+ 3          120         0.1250          8.33      1440
+ 4          240         0.0625          4.17      2880
+ 20 MHz, 15 kHz: 106 RB =  19.1 MHz (95% kaistasta)
+ 20 MHz, 30 kHz:  51 RB =  18.4 MHz (92% kaistasta)
+100 MHz, 30 kHz: 273 RB =  98.3 MHz (98% kaistasta)
+100 MHz, 60 kHz: 135 RB =  97.2 MHz (97% kaistasta)

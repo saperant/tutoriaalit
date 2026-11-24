@@ -1,0 +1,5 @@
+koodi        tasoa/bitti     DC vaihtoja   pisin
+NRZ                1.00  -0.33        1      32
+NRZI               1.00  -0.67       16      32
+Manchester         2.00  +0.00       94       2
+4B5B + NRZI        1.25  -0.07       47       2
