@@ -1157,6 +1157,7 @@ laajuus = 3
 testaus = "C ja Python, sanitoijat"
 roadmap = ["cyber-security"]
 amk = "Tietoturvan perusteet"
+tutoriaali = "tietoturvan-perusteet"
 
 [[taito]]
 id = "takaisinmallinnus"
@@ -1775,6 +1776,7 @@ laajuus = 5
 testaus = "Python (cryptography, hashlib) ja OpenSSL-komentorivi"
 roadmap = ["cyber-security"]
 amk = "Kryptografia"
+tutoriaali = "kryptografia"
 
 [[taito]]
 id = "turvallinen-kehitys"

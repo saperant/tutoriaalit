@@ -1,0 +1,5 @@
+aino   budjetti 2027  sisäverkko  True  säännöt täyttyvät
+aino   budjetti 2027  kotiverkko  False luottamuksellinen vain sisäverkosta
+pekka  budjetti 2027  sisäverkko  False selvitystaso ei riitä
+aino   inventaario    sisäverkko  False eri osasto
+pekka  inventaario    kotiverkko  True  omistaja

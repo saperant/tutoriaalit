@@ -1,0 +1,3 @@
+Tietokanta(osoite='db.sisainen:5432', salasana=Salaisuus('********'))
+pituus: 11
+käynnistys keskeytyy: ympäristömuuttuja KANTA_SALASANA puuttuu

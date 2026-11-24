@@ -1,0 +1,4 @@
+INFO ilman suodatinta: POST /kirjaudu?kayttaja=aino&salasana=kesa2026
+INFO pyyntö: POST /kirjaudu?kayttaja=aino&salasana=[PEITETTY]
+INFO otsake: Authorization: Bearer [PEITETTY]
+INFO maksu kortilla 4111********1111 hylättiin

@@ -1,0 +1,4 @@
+oikea salasana: True
+väärä salasana: False
+samat tiivisteet samasta salasanasta: False
+parametrit tallessa: ['scrypt', '16384', '8', '1']

@@ -35,7 +35,8 @@ jobs:
             shellcheck bats openssh-client verilator sqlite3 tcl8.6 ghdl racket \
             rustc-1.80 cargo-1.80 rust-1.80-clippy golang-1.23-go \
             openjdk-21-jdk-headless
-          pip install --break-system-packages ruff mypy pytest
+          pip install --break-system-packages ruff mypy pytest \
+            numpy cryptography==50.0.1
 
       - uses: actions/setup-node@v4
         with:

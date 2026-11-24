@@ -103,6 +103,7 @@
 \DefineVerbatimEnvironment{Highlighting}{Verbatim}{
   breaklines, breakanywhere, commandchars=\\\{\},
   breaksymbolleft={\color{hillitty}\tiny\ensuremath{\hookrightarrow}}}
+\ifdefined\Shaded\else\newenvironment{Shaded}{}{}\fi
 \renewenvironment{Shaded}{%
   \begin{tcolorbox}[breakable, enhanced, colback=koodintausta,
     colframe=koodintausta, boxrule=0pt, arc=3pt,
@@ -206,4 +207,3 @@
 \ifdefined\chapter\else
   \renewcommand*{\sectionformat}{}
 \fi
-

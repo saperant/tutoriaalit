@@ -1,0 +1,3 @@
+palvelu.example: TLSv1.3, TLS_AES_256_GCM_SHA384, vastaus 'hei, asiakas'
+huijaus.example: hylätty: Hostname mismatch
+palvelu.example: hylätty: unable to get local issuer certificate

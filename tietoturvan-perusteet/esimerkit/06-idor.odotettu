@@ -1,0 +1,4 @@
+haavoittuva: Lasku(numero=1002, asiakas='pekka', summa=4500)
+korjattu: Lasku(numero=1001, asiakas='aino', summa=120)
+korjattu: 404 (1002)
+korjattu: 404 (9999)

@@ -1,0 +1,6 @@
+VIRHE: debug päällä tuotannossa (pinojäljet näkyvät)
+VIRHE: TLS-varmenteiden tarkistus pois päältä
+VIRHE: CORS sallii kaikki alkuperät
+VIRHE: ylläpitoliittymä kuuntelee kaikkia verkkoja
+VIRHE: oletussalasana tunnuksella admin
+oletusasetukset: []

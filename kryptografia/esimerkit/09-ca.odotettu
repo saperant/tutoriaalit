@@ -1,0 +1,7 @@
+subject=CN = palvelu.example
+issuer=O = Esimerkki Oy, CN = Esimerkki Oy Root CA
+X509v3 Subject Alternative Name: 
+    DNS:palvelu.example
+palvelu.crt: OK
+palvelu.crt: OK
+palvelu.crt: ei kelpaa toisen CA:n kanssa

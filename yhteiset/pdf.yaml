@@ -32,6 +32,7 @@ variables:
   sansfont: Inter Display
   monofont: JetBrains Mono
   monofontoptions:
+    - Contextuals=NoAlternate
     - Scale=0.84
   colorlinks: true
   linkcolor: korostus-tumma

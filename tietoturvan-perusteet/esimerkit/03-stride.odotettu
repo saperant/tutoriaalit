@@ -1,0 +1,28 @@
+Selain → API (HTTPS) [luottamusraja]
+  - peukalointi (tampering)
+  - tietovuoto (information disclosure)
+  - palvelunesto (denial of service)
+API → maksupalvelu [luottamusraja]
+  - peukalointi (tampering)
+  - tietovuoto (information disclosure)
+  - palvelunesto (denial of service)
+Asiakas (selain)
+  - väärä henkilöllisyys (spoofing)
+  - kiistäminen (repudiation)
+Verkkokauppa-API
+  - väärä henkilöllisyys (spoofing)
+  - peukalointi (tampering)
+  - kiistäminen (repudiation)
+  - tietovuoto (information disclosure)
+  - palvelunesto (denial of service)
+  - oikeuksien korotus (elevation of privilege)
+Tilaustietokanta
+  - peukalointi (tampering)
+  - kiistäminen (repudiation)
+  - tietovuoto (information disclosure)
+  - palvelunesto (denial of service)
+API → tietokanta
+  - peukalointi (tampering)
+  - tietovuoto (information disclosure)
+  - palvelunesto (denial of service)
+Uhkia yhteensä: 21

@@ -1,0 +1,16 @@
+# Esimerkkien tarkistusasetukset. Säännöt S (flake8-bandit) etsivät
+# tyypillisiä tietoturvavirheitä staattisesti (ks. luku Injektiot).
+[project]
+name = "tietoturvan-perusteet-esimerkit"
+version = "1.0.0"
+requires-python = ">=3.12"
+
+[tool.ruff]
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "UP", "SIM", "S"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true

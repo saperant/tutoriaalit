@@ -1,0 +1,6 @@
+aino    asiakas:lue        True
+aino    lasku:hyvita       False
+liisa   lasku:hyvita       True
+pekka   kayttaja:hallitse  False
+vieras  tilaus:lue         False
+Liisan oikeudet: ['asiakas:lue', 'lasku:hyvita', 'lasku:lue', 'tilaus:lue']

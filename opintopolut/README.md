@@ -113,11 +113,11 @@ flowchart LR
     moninpelit["Reaaliaikaiset moninpelit"]
   end
   subgraph tietoturva["Tietoturva ja takaisinmallinnus"]
-    tietoturvan_perusteet["Tietoturvan perusteet"]
+    tietoturvan_perusteet["✓ Tietoturvan perusteet"]
     takaisinmallinnus["Takaisinmallinnus"]
     haavoittuvuudet["Haavoittuvuuksien analyysi ja hyödyntäminen"]
     laiteohjelmiston_takaisinmallinnus["Laiteohjelmiston takaisinmallinnus"]
-    kryptografia["Kryptografia"]
+    kryptografia["✓ Kryptografia"]
     turvallinen_kehitys["Tietoturva kehitystyössä"]
     web_tietoturva["Web-sovellusten tietoturva"]
     sulautettujen_tietoturva["Sulautettujen järjestelmien tietoturva"]
@@ -404,8 +404,8 @@ flowchart LR
 
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
-| Tietoturvan perusteet | 3 | Ohjelmoinnin perusteet (Python), Tietoverkot | suunniteltu |
-| Kryptografia | 5 | Diskreetti matematiikka, Python, Tietoturvan perusteet | suunniteltu |
+| Tietoturvan perusteet | 3 | Ohjelmoinnin perusteet (Python), Tietoverkot | [valmis](../tietoturvan-perusteet/) |
+| Kryptografia | 5 | Diskreetti matematiikka, Python, Tietoturvan perusteet | [valmis](../kryptografia/) |
 | Tietoturva kehitystyössä | 3 | Tietoturvan perusteet, Versionhallinta (Git) | suunniteltu |
 | Palveluarkkitehtuurin tietoturva | 3 | Kryptografia, Palveluarkkitehtuurit | suunniteltu |
 | Web-sovellusten tietoturva | 5 | Tietoturvan perusteet, Web-sovellukset | suunniteltu |

@@ -6,8 +6,18 @@ PDF:ssä (ks. tyyli.tex):
 - `## Itsearviointi` ja sitä seuraava luettelo ladotaan tarkistuslistaksi
   laatikkoon. Otsikko ei tule sisällysluetteloon.
 
-Muissa muodoissa suodatin ei tee mitään.
+Lisäksi lainausmerkit ladotaan suomen tapaan (”…”). Osioiden
+ulkoasu koskee vain LaTeX-muotoa.
 ]]
+
+-- Suomen lainausmerkit: ”lainaus” ja ’sisäkkäinen lainaus’.
+function Quoted(el)
+  local merkki = el.quotetype == "DoubleQuote" and "”" or "’"
+  local tulos = pandoc.List({ pandoc.Str(merkki) })
+  tulos:extend(el.content)
+  tulos:insert(pandoc.Str(merkki))
+  return tulos
+end
 
 local function teksti(otsikko)
   return pandoc.utils.stringify(otsikko.content)

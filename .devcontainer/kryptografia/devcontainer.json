@@ -4,8 +4,8 @@
     "dockerfile": "../Dockerfile",
     "context": "..",
     "args": {
-      "LISAPAKETIT": "openssl",
-      "PIP_PAKETIT": "cryptography ruff mypy"
+      "LISAPAKETIT": "openssl shellcheck",
+      "PIP_PAKETIT": "cryptography==50.0.1 ruff mypy"
     }
   },
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/kryptografia/esimerkit",

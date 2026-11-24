@@ -1,0 +1,5 @@
+muoto: $argon2id$v=19$m=19456,t=2,p=1$...
+oikea salasana: True
+väärä salasana: False
+sama salasana, eri tiiviste: True
+vanha tiiviste päivitetään: True
