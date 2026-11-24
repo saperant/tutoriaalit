@@ -489,6 +489,7 @@ laajuus = 5
 testaus = "GNU as, QEMU (RISC-V), natiivi x86-64"
 roadmap = ["computer-science"]
 amk = "Tietokonetekniikka"
+tutoriaali = "assembly"
 
 [[taito]]
 id = "tietokonearkkitehtuuri"

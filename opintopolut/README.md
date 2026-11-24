@@ -57,7 +57,7 @@ flowchart LR
   end
   subgraph jarjestelmat["Tietokonejärjestelmät"]
     digitaalitekniikka["✓ Digitaalitekniikka"]
-    assembly["Assembly"]
+    assembly["✓ Assembly"]
     tietokonearkkitehtuuri["Tietokonearkkitehtuuri"]
     binaarit_ja_linkitys["Objektitiedostot, linkitys ja ABI"]
     kayttojarjestelmat["Käyttöjärjestelmät"]
@@ -330,7 +330,7 @@ flowchart LR
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
 | Digitaalitekniikka | 5 | Diskreetti matematiikka | [valmis](../digitaalitekniikka/) |
-| Assembly | 5 | C-kieli, Digitaalitekniikka | suunniteltu |
+| Assembly | 5 | C-kieli, Digitaalitekniikka | [valmis](../assembly/) |
 | Miten tietokone laskee | 3 | C-kieli | [valmis](../tietokonearitmetiikka/) |
 | Objektitiedostot, linkitys ja ABI | 3 | Assembly | suunniteltu |
 | Tietokonearkkitehtuuri | 5 | Assembly | suunniteltu |

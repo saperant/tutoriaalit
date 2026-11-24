@@ -1,0 +1,8 @@
+0000000000000000 <kaksinkertaista>:
+   0:    48 8d 04 3f              lea    (%rdi,%rdi,1),%rax
+   4:    c3                       ret
+
+0000000000000005 <summaa>:
+   5:    48 89 f8                 mov    %rdi,%rax
+   8:    48 01 f0                 add    %rsi,%rax
+   b:    c3                       ret

@@ -4,7 +4,7 @@
     "dockerfile": "../Dockerfile",
     "context": "..",
     "args": {
-      "LISAPAKETIT": "gcc-riscv64-linux-gnu qemu-user binutils"
+      "LISAPAKETIT": "gcc-riscv64-linux-gnu libc6-dev-riscv64-cross qemu-user binutils"
     }
   },
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/assembly/esimerkit",

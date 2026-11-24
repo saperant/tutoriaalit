@@ -1,0 +1,11 @@
+0000000000000000 <kaksinkertaista>:
+   0:    952a                    add    a0,a0,a0
+   2:    8082                    ret
+
+0000000000000004 <summaa>:
+   4:    952e                    add    a0,a0,a1
+   6:    8082                    ret
+
+0000000000000008 <summaa_pitka>:
+   8:    00b50533              add    a0,a0,a1
+   c:    00008067              ret

@@ -1,0 +1,11 @@
+taulukon_summa: 20
+tilauksen_arvo: 37.50, asiakas 4021
+laske(0, 12, 5) = 17
+laske(1, 12, 5) = 7
+laske(2, 12, 5) = 60
+laske(3, 12, 5) = 4
+laske(4, 12, 5) = 13
+laske(5, 12, 5) = 9
+laske(6, 12, 5) = 384
+laske(7, 12, 5) = 0
+listan_summa: 60

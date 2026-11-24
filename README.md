@@ -88,6 +88,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Diskreetti matematiikka | [`diskreetti-matematiikka/`](diskreetti-matematiikka/) | [diskreetti-matematiikka.pdf](https://saperant.github.io/tutoriaalit/materiaalit/diskreetti-matematiikka.pdf) |
 | Python työkaluohjelmointiin | [`python-tyokalut/`](python-tyokalut/) | [python-tyokalut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/python-tyokalut.pdf) |
 | Lineaarialgebra | [`lineaarialgebra/`](lineaarialgebra/) | [lineaarialgebra.pdf](https://saperant.github.io/tutoriaalit/materiaalit/lineaarialgebra.pdf) |
+| Assembly | [`assembly/`](assembly/) | [assembly.pdf](https://saperant.github.io/tutoriaalit/materiaalit/assembly.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet
