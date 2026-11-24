@@ -411,6 +411,7 @@ laajuus = 5
 testaus = "C ja C++, sanitoijat, vertailu tunnettuihin tuloksiin"
 roadmap = ["datastructures-and-algorithms", "computer-science"]
 amk = "Tietorakenteet ja algoritmit"
+tutoriaali = "algoritmit"
 
 [[taito]]
 id = "edistyneet-algoritmit"

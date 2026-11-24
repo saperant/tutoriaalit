@@ -1,0 +1,4 @@
+alku:     C1 A2 B3 A4 C5 B6 A7 C8
+lomitus:  A2 A4 A7 B3 B6 C1 C5 C8
+valinta:  A2 A4 A7 B6 B3 C1 C5 C8
+satunnaistesti: 500 taulukkoa, 0 virhettä

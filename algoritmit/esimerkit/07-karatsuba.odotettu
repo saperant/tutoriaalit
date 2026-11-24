@@ -1,0 +1,6 @@
+     n      koulu  karatsuba   suhde sama tulos
+    16        256        144    1.78 kyllä
+    64       4096       1296    3.16 kyllä
+   256      65536      11664    5.62 kyllä
+  1024    1048576     104976    9.99 kyllä
+  4096   16777216     944784   17.76 kyllä

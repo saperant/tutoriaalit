@@ -1,0 +1,8 @@
+sääntö         pitkä lyhyt
+aikaisin loppu     3     2
+aikaisin alku      1     2
+lyhin              3     1
+optimi             3     2
+500/500 optimaalisia  aikaisin loppu
+409/500 optimaalisia  aikaisin alku
+488/500 optimaalisia  lyhin

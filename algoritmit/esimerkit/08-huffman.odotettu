@@ -1,0 +1,11 @@
+syöte: 1423 tavua, 37 eri tavuarvoa
+merkki määrä  koodi
+'a'      156  011
+' '      143  001
+'t'      123  1111
+'i'      120  1101
+'e'       95  1010
+'n'       81  1000
+keskimäärin 4.375 bittiä/merkki, entropia 4.336
+pakattu.huf: 970 tavua (otsikko 191, data 779), 68.2 %
+purettu: sama kuin syöte

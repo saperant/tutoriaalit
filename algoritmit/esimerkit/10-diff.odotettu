@@ -1,0 +1,13 @@
+  [palvelin]
+  osoite = 0.0.0.0
+- portti = 8080
++ portti = 8443
++ tls = kylla
+  lokitaso = info
+  # tietokanta
+  [tietokanta]
+  nimi = kurssit
+- yhteyksia = 10
++ yhteyksia = 25
++ aikakatkaisu = 30
+ennallaan 6, poistettu 2, lisätty 4

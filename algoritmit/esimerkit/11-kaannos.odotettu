@@ -1,0 +1,6 @@
+käännösjärjestys:
+asetukset.h lista.c main.c testit.c lista.o
+main.o testit.o ohjelma testaa
+syklin jälkeen järjestykseen mahtuu 4/9
+sykli: lista.o -> ohjelma -> asetukset.h -> lista.o
+satunnaistesti: 1000 graafia (662 syklisiä), 0 virhettä

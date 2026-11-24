@@ -1,0 +1,24 @@
+Algoritmi on tarkka ohje, joka ratkaisee tehtävän äärellisessä
+määrässä askelia. Sama tehtävä voidaan ratkaista monella tavalla,
+ja tavat eroavat siinä, kuinka paljon aikaa ja muistia ne kuluttavat
+syötteen kasvaessa. Lajittelu, haku ja lyhimmät reitit ovat tuttuja
+esimerkkejä, mutta samat ajatukset toistuvat kaikkialla: kääntäjä
+järjestää käännösyksiköt riippuvuuksien mukaan, versionhallinta
+etsii kahden tiedoston pisimmän yhteisen osajonon, ja pakkausohjelma
+antaa yleisille merkeille lyhyet koodit ja harvinaisille pitkät.
+
+Ahne algoritmi tekee joka askeleella sen valinnan, joka näyttää
+juuri nyt parhaalta, eikä koskaan peru sitä. Usein ahneus johtaa
+harhaan, mutta joissakin tehtävissä se tuottaa todistettavasti
+parhaan ratkaisun. Huffmanin koodi on tällainen tapaus: kaksi
+harvinaisinta merkkiä yhdistetään toistuvasti yhdeksi solmuksi,
+kunnes jäljellä on yksi puu. Puun lehtiin johtavat polut ovat
+merkkien koodit, eikä mikään koodi ole toisen alkuosa, joten bitit
+voidaan purkaa yksiselitteisesti ilman erottimia.
+
+Dynaaminen ohjelmointi puolestaan jakaa tehtävän päällekkäisiin
+osatehtäviin ja tallentaa niiden ratkaisut taulukkoon, jotta samaa
+työtä ei tehdä kahdesti. Reppuongelma, editointietäisyys ja pisin
+yhteinen osajono ratkeavat tällä tavalla neliöllisessä ajassa,
+vaikka kaikkien vaihtoehtojen läpikäynti veisi eksponentiaalisesti
+aikaa.

@@ -1,0 +1,6 @@
+ 275 km  Helsinki -> Lahti -> Jyväskylä
+ 385 km  Helsinki -> Kouvola -> Mikkeli -> Kuopio
+ 285 km  Helsinki -> Hämeenlinna -> Tampere -> Pori
+vertailu Bellman-Fordiin: 200 graafia, 0 virhettä
+negatiivinen kaari: D:hen Dijkstra 3, Bellman-Ford 2
+negatiivinen sykli: Bellman-Ford havaitsee

@@ -1,0 +1,4 @@
+lisäys ja lomitus samat: kyllä
+lisäys vähintään 10 kertaa hitaampi kuin lomitus: kyllä
+qsort ja kantaluku samat: kyllä
+kantaluku vähintään 2 kertaa nopeampi kuin qsort: kyllä

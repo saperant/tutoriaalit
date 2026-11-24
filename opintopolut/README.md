@@ -51,7 +51,7 @@ flowchart LR
   end
   subgraph algoritmit["Algoritmit ja tietorakenteet"]
     tietorakenteet["✓ Tietorakenteet"]
-    algoritmit["Algoritmit"]
+    algoritmit["✓ Algoritmit"]
     edistyneet_algoritmit["Edistyneet algoritmit ja tietorakenteet"]
     kaantajatekniikka["Kääntäjätekniikka"]
   end
@@ -321,7 +321,7 @@ flowchart LR
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
 | Tietorakenteet | 5 | C-kieli, Diskreetti matematiikka | [valmis](../tietorakenteet/) |
-| Algoritmit | 5 | Tietorakenteet | suunniteltu |
+| Algoritmit | 5 | Tietorakenteet | [valmis](../algoritmit/) |
 | Edistyneet algoritmit ja tietorakenteet | 5 | Algoritmit | suunniteltu |
 | Kääntäjätekniikka | 5 | Algoritmit, Assembly, Funktionaalinen ohjelmointi (Racket) | suunniteltu |
 
