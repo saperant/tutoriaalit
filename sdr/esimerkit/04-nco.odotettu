@@ -1,0 +1,5 @@
+taajuusresoluutio fs / 2^32 = 0.212 mHz
+123456.7 Hz: askel 581406238, todellinen 123456.7000 Hz
+taulukko 2^8: SFDR  47.8 dBc (nyrkkisaanto 6,02 x 8 =  48.2 dB)
+taulukko 2^10: SFDR  59.3 dBc (nyrkkisaanto 6,02 x 10 =  60.2 dB)
+taulukko 2^12: SFDR  71.8 dBc (nyrkkisaanto 6,02 x 12 =  72.2 dB)

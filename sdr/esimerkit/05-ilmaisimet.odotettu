@@ -1,0 +1,9 @@
+   10 kHz: polaari  +0.00 %, kvadratuuri  -1.26 %
+   50 kHz: polaari  +0.00 %, kvadratuuri -28.77 %
+   75 kHz: polaari  +0.00 %, kvadratuuri -57.45 %
+  100 kHz: polaari  +0.00 %, kvadratuuri -86.34 %
+moduloiva    1 kHz: vaste 1.0000 =  0.00 dB
+moduloiva   15 kHz: vaste 0.9929 = -0.06 dB
+moduloiva   19 kHz: vaste 0.9886 = -0.10 dB
+moduloiva   38 kHz: vaste 0.9549 = -0.40 dB
+moduloiva   57 kHz: vaste 0.9003 = -0.91 dB

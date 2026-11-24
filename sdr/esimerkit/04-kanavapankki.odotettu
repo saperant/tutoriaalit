@@ -1,0 +1,10 @@
+polyfaasi vs. suora: sama (ero < 1e-9)
+kanava 0 (   +0 kHz):  -84 dB
+kanava 1 ( +100 kHz):    0 dB
+kanava 2 ( +200 kHz):  -85 dB
+kanava 3 ( +300 kHz):  -20 dB
+kanava 4 ( -400 kHz):  -85 dB
+kanava 5 ( -300 kHz):  -86 dB
+kanava 6 ( -200 kHz):  -40 dB
+kanava 7 ( -100 kHz):  -86 dB
+kertolaskuja tulonaytetta kohti: suora 128, polyfaasi 16 + FFT 1.5

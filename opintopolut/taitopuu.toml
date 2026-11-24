@@ -883,6 +883,7 @@ laajuus = 5
 testaus = "tallennetut ja simuloidut IQ-tiedostot, Python ja C++"
 roadmap = []
 amk = "Radiotekniikka"
+tutoriaali = "sdr"
 
 # ---------------------------------------------------------------------
 # Sulautetut järjestelmät

@@ -1,0 +1,20 @@
+kohinalattia -95 dB/Hz, resoluutio 223 Hz
+ 97.544 MHz #                             1 dB
+ 97.601 MHz #                             2 dB
+ 97.658 MHz ############                 24 dB
+ 97.715 MHz ##############               29 dB
+ 97.772 MHz #############                26 dB
+ 97.829 MHz ###                           7 dB
+ 97.886 MHz #########                    18 dB
+ 97.943 MHz                               1 dB
+ 98.000 MHz #                             1 dB
+ 98.057 MHz ###########                  23 dB
+ 98.114 MHz ######################       45 dB
+ 98.171 MHz #########################    50 dB
+ 98.228 MHz #######################      46 dB
+ 98.285 MHz ###########                  23 dB
+ 98.342 MHz                               1 dB
+ 98.399 MHz #                             1 dB
+signaali   97.750 MHz, leveys  144 kHz, teho  -20 dB
+signaali   97.940 MHz, leveys    0 kHz, teho  -50 dB
+signaali   98.199 MHz, leveys  210 kHz, teho    0 dB

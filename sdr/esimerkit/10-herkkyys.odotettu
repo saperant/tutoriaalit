@@ -1,0 +1,13 @@
+kohinaluku 3 dB:
+  FM-yleisradio mono       200.0 kHz   -106 dBm
+  GFSK 38 kbit/s            38.0 kHz   -113 dBm
+  kapea FM, puhe            12.5 kHz   -118 dBm
+  kantoaallon havainto       0.1 kHz   -145 dBm
+kohinaluku 8 dB:
+  FM-yleisradio mono       200.0 kHz   -101 dBm
+  GFSK 38 kbit/s            38.0 kHz   -108 dBm
+  kapea FM, puhe            12.5 kHz   -113 dBm
+  kantoaallon havainto       0.1 kHz   -140 dBm
+RTL-SDR       2.40 MS/s:    4.8 MB/s, USB 2.0:aan mahtuu
+HackRF One   20.00 MS/s:   40.0 MB/s, USB 2.0:aan mahtuu
+PlutoSDR     61.44 MS/s:  245.8 MB/s, USB 2.0:aan ei mahdu

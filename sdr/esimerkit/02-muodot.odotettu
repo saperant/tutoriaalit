@@ -1,0 +1,4 @@
+cu8      2 tavua/nayte,   4.8 MB/s 2,4 MS/s:lla, kvantisointi SQNR  40.7 dB
+ci16_le  4 tavua/nayte,   9.6 MB/s 2,4 MS/s:lla, kvantisointi SQNR  64.0 dB
+cf32_le  8 tavua/nayte,  19.2 MB/s 2,4 MS/s:lla, kvantisointi SQNR 152.0 dB
+kohina.sigmf-data: 4096 naytetta, 433.92 MHz, cf32_le

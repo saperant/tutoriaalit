@@ -84,7 +84,7 @@ flowchart LR
     signaalit_ja_jarjestelmat["✓ Signaalit ja järjestelmät"]
     dsp["✓ Digitaalinen signaalinkäsittely"]
     tiedonsiirto["✓ Digitaalinen tiedonsiirto"]
-    sdr["Ohjelmistoradio"]
+    sdr["✓ Ohjelmistoradio"]
   end
   subgraph sulautetut["Sulautetut järjestelmät"]
     mikrokontrollerit["✓ Mikrokontrollerit ja bare-metal-ohjelmointi"]
@@ -363,7 +363,7 @@ flowchart LR
 | Signaalit ja järjestelmät | 5 | Kompleksiluvut ja Fourier-analyysi, Python työkaluohjelmointiin | [valmis](../signaalit-ja-jarjestelmat/) |
 | Digitaalinen signaalinkäsittely | 5 | C-kieli, Signaalit ja järjestelmät | [valmis](../dsp/) |
 | Digitaalinen tiedonsiirto | 5 | Digitaalinen signaalinkäsittely, Todennäköisyys ja tilastot | [valmis](../tiedonsiirto/) |
-| Ohjelmistoradio | 5 | Digitaalinen tiedonsiirto | suunniteltu |
+| Ohjelmistoradio | 5 | Digitaalinen tiedonsiirto | [valmis](../sdr/) |
 
 ### Sulautetut järjestelmät
 

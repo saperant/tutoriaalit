@@ -1,0 +1,7 @@
+ 8 bittia: SQNR  49.1 dB (teoria 6,02 N + 1,76 =  49.9 dB)
+12 bittia: SQNR  73.0 dB (teoria 6,02 N + 1,76 =  74.0 dB)
+16 bittia: SQNR  97.1 dB (teoria 6,02 N + 1,76 =  98.1 dB)
+8 bit: heikko -70 dBFS, lattia -93 dBFS/bin, erotus 22 dB
+aani   -6 dBFS: suurin harhalahto  -65.0 dBFS, SFDR  59.0 dB
+aani   +0 dBFS: suurin harhalahto  -68.6 dBFS, SFDR  68.6 dB
+aani   +3 dBFS: suurin harhalahto  -16.4 dBFS, SFDR  17.7 dB

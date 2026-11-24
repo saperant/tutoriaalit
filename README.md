@@ -125,6 +125,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Hajautetut järjestelmät | [`hajautetut-jarjestelmat/`](hajautetut-jarjestelmat/) | [hajautetut-jarjestelmat.pdf](https://saperant.github.io/tutoriaalit/materiaalit/hajautetut-jarjestelmat.pdf) |
 | DSP-algoritmien laitteistototeutus | [`dsp-laitteisto/`](dsp-laitteisto/) | [dsp-laitteisto.pdf](https://saperant.github.io/tutoriaalit/materiaalit/dsp-laitteisto.pdf) |
 | Linux-laiteajurit | [`linux-ajurit/`](linux-ajurit/) | [linux-ajurit.pdf](https://saperant.github.io/tutoriaalit/materiaalit/linux-ajurit.pdf) |
+| Ohjelmistoradio | [`sdr/`](sdr/) | [sdr.pdf](https://saperant.github.io/tutoriaalit/materiaalit/sdr.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet
