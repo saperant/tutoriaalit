@@ -1,0 +1,5 @@
+== L1-datahutia ja kaskyja hiukkasta kohden, 10000 ==
+  aos                           1.4 D1mr
+  soa                           0.3 D1mr
+  aos                           7.0 Ir
+  soa                          10.0 Ir

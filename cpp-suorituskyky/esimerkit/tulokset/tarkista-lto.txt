@@ -1,0 +1,10 @@
+== Kutsuja hinta_ensin_erillinen-funktioon konekoodissa ==
+  lto-ei     16
+  lto-kylla  0
+== Kaskyja tuotetta kohden lajittelussa, 1000 tuotetta ==
+  lto-ei:
+  erillinen                   176.0 Ir
+  inline                       83.2 Ir
+  lto-kylla:
+  erillinen                    83.2 Ir
+  inline                       83.2 Ir

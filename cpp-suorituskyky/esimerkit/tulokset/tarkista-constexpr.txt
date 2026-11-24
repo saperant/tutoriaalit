@@ -1,0 +1,2 @@
+== Symbolit: taulukko on, sen laskeva funktio ei ==
+r crc_taulukko

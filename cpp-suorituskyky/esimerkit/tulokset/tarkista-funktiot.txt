@@ -1,0 +1,4 @@
+== Kaskyja alkiota kohden, 1000 alkiota ==
+  malli                         7.0 Ir
+  osoitin                      11.0 Ir
+  function                     17.0 Ir

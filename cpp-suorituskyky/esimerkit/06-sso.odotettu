@@ -1,0 +1,8 @@
+sizeof(std::string) = 32
+  pituus   0: varauksia 0, kapasiteetti 15
+  pituus  15: varauksia 0, kapasiteetti 15
+  pituus  16: varauksia 1, kapasiteetti 16
+  pituus  22: varauksia 1, kapasiteetti 22
+  pituus  23: varauksia 1, kapasiteetti 23
+  pituus 100: varauksia 1, kapasiteetti 100
+1000 tunnistetta: varauksia 1

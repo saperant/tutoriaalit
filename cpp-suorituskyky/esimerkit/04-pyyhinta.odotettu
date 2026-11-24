@@ -1,0 +1,13 @@
+std::function<double(double)>:
+  lambda ilman sieppausta            0
+  sieppaa double (8 tavua)           0
+  sieppaa taulukon (32 tavua)        1
+  sieppaa viittauksen taulukkoon     0
+  kopio isosta                       1
+  siirto isosta                      0
+std::move_only_function<double(double)>:
+  sieppaa taulukon (32 tavua)        1
+std::any:
+  int                                0
+  std::array<int, 4>                 1
+  lyhyt std::string                  1

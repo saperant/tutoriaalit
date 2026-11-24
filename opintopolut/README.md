@@ -132,7 +132,7 @@ flowchart LR
     typescript["✓ TypeScript"]
     tcl["✓ Tcl"]
     funktionaalinen_ohjelmointi["✓ Funktionaalinen ohjelmointi (Racket)"]
-    cpp_suorituskyky["C++:n suorituskyky"]
+    cpp_suorituskyky["✓ C++:n suorituskyky"]
     c_asm_integraatio["✓ C ja assembly yhteen"]
     python_c_integraatio["✓ Python ja C/C++ yhteen"]
   end
@@ -428,7 +428,7 @@ flowchart LR
 | TypeScript | 3 | JavaScript | [valmis](../typescript/) |
 | C ja assembly yhteen | 2 | Assembly | [valmis](../c-asm-integraatio/) |
 | Python ja C/C++ yhteen | 3 | Moderni C++, Python työkaluohjelmointiin | [valmis](../python-c-integraatio/) |
-| C++:n suorituskyky | 3 | Moderni C++, Suorituskyvyn analyysi ja optimointi | suunniteltu |
+| C++:n suorituskyky | 3 | Moderni C++, Suorituskyvyn analyysi ja optimointi | [valmis](../cpp-suorituskyky/) |
 
 ### Sovelluskehitys
 

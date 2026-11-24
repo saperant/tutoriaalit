@@ -1,0 +1,6 @@
+== Kaskyja kuviota kohden, 1000 kuviota ==
+  virtuaali                    14.0 Ir
+  variant                       9.0 Ir
+  avoin                        12.0 Ir
+  final                         8.0 Ir
+  crtp                          8.0 Ir

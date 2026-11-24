@@ -1,0 +1,7 @@
+== summa_avoin: vertailu, suora polku ja epasuora kutsu ==
+lea    0xf3d(%rip),%r12        # 58c0 <Ympyra::pinta_ala() const>
+call   *%rax
+== summa_final: kertolaskut silmukassa, ei kutsuja ==
+mulsd  %xmm3,%xmm0
+mulsd  %xmm1,%xmm0
+addsd  %xmm0,%xmm2

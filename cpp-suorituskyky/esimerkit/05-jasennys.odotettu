@@ -1,0 +1,3 @@
+poikkeus: summa 499500, virheita 0; expected: summa 499500, virheita 0
+poikkeus: summa 0, virheita 1000; expected: summa 0, virheita 1000
+ylivuoto tunnistettu: kylla

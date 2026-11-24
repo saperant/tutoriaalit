@@ -1,0 +1,9 @@
+== Esikasitellyn koodin rivit otsaketta kohden ==
+  <cstdio>        456 rivia
+  <vector>      20508 rivia
+  <string>      23262 rivia
+  <algorithm>   24025 rivia
+  <format>      47208 rivia
+  <iostream>    49521 rivia
+  <ranges>      38136 rivia
+  <print>       47268 rivia

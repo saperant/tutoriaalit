@@ -1439,6 +1439,7 @@ laajuus = 3
 testaus = "C++, toiminnallisuus testataan; mittaukset raportoidaan suuntaa-antavina"
 roadmap = ["cpp"]
 amk = "Ohjelmien optimointi"
+tutoriaali = "cpp-suorituskyky"
 
 [[taito]]
 id = "c-asm-integraatio"

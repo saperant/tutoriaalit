@@ -116,6 +116,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Korkean tason synteesi | [`hls/`](hls/) | [hls.pdf](https://saperant.github.io/tutoriaalit/materiaalit/hls.pdf) |
 | Arkkitehtuurin mallinnus ja suunnittelutilan tutkiminen | [`arkkitehtuurin-tutkiminen/`](arkkitehtuurin-tutkiminen/) | [arkkitehtuurin-tutkiminen.pdf](https://saperant.github.io/tutoriaalit/materiaalit/arkkitehtuurin-tutkiminen.pdf) |
 | GPU-laskenta | [`gpu-laskenta/`](gpu-laskenta/) | [gpu-laskenta.pdf](https://saperant.github.io/tutoriaalit/materiaalit/gpu-laskenta.pdf) |
+| C++:n suorituskyky | [`cpp-suorituskyky/`](cpp-suorituskyky/) | [cpp-suorituskyky.pdf](https://saperant.github.io/tutoriaalit/materiaalit/cpp-suorituskyky.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

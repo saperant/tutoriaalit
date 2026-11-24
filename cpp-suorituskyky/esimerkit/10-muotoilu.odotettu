@@ -1,0 +1,6 @@
+  snprintf       merkkeja 7098, varauksia 0
+  to_chars       merkkeja 7098, varauksia 0
+  format_to_n    merkkeja 7098, varauksia 0
+  format         merkkeja 7098, varauksia 0
+  to_string      merkkeja 7098, varauksia 0
+  ostringstream  merkkeja 7098, varauksia 0

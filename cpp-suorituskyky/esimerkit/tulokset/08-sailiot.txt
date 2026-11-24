@@ -1,0 +1,4 @@
+100000 hakua, 1000000 avainta
+  map                          150.370 ms +- 12.483
+  litea                         32.272 ms +-  5.506  4.7 x nopeampi
+  unordered_map                  4.194 ms +-  0.862  35.9 x nopeampi

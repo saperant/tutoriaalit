@@ -1,0 +1,5 @@
+== Kaskyja sanaa kohden, 20000 sanaa ==
+  v1                         1200.8 Ir
+  v2                          693.9 Ir
+  v3                          537.3 Ir
+  v4                          343.7 Ir

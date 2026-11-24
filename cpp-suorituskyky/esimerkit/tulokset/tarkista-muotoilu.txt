@@ -1,0 +1,7 @@
+== Kaskyja muunnosta kohden, 1000 lukua ==
+  snprintf                    577.9 Ir
+  to_chars                     51.9 Ir
+  format_to_n                 294.4 Ir
+  format                      362.4 Ir
+  to_string                   168.4 Ir
+  ostringstream              1231.5 Ir

@@ -1,0 +1,5 @@
+kapasiteetit: 1 2 4 8 16 32 64 128 256 512 1024
+ilman reservea: varauksia 11, tavuja 8188
+reserve(1000):  varauksia 1, tavuja 4000
+a + b + c:      varauksia 3
+reserve+append: varauksia 1

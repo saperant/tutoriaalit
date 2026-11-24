@@ -1,0 +1,5 @@
+== Kaskyja jasennysta kohden, 1000 rivia ==
+  poikkeus-ok                 128.7 Ir
+  expected-ok                 136.7 Ir
+  poikkeus-virhe            13931.1 Ir
+  expected-virhe              129.0 Ir

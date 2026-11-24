@@ -1,0 +1,11 @@
+  (alku)                       rakennettu 0, kopioitu 0, siirretty 0
+  push_back(Seurattava{...})   rakennettu 1, kopioitu 0, siirretty 1
+  emplace_back("b")            rakennettu 1, kopioitu 0, siirretty 0
+  (olemassa oleva)             rakennettu 1, kopioitu 0, siirretty 0
+  push_back(olemassa)          rakennettu 0, kopioitu 1, siirretty 0
+  emplace_back(olemassa)       rakennettu 0, kopioitu 1, siirretty 0
+  push_back(std::move(...))    rakennettu 0, kopioitu 0, siirretty 1
+  try_emplace, uusi avain      rakennettu 1, kopioitu 0, siirretty 0
+  try_emplace, avain on jo     rakennettu 0, kopioitu 0, siirretty 0
+  insert, avain on jo          rakennettu 1, kopioitu 0, siirretty 1
+vektorissa 5, kartassa eka

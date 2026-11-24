@@ -1,0 +1,4 @@
+std::vector<std::string>: kenttia 51, varauksia 47
+pmr ja pinopuskuri:       kenttia 51, varauksia 0
+std::map:  alkioita 500, varauksia 1000
+pmr::map:  alkioita 500, varauksia 8, poolin pyyntoja 8

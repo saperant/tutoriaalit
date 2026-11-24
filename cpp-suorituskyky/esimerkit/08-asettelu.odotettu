@@ -1,0 +1,4 @@
+Huono 32, Hyva 16 tavua
+std::optional<double> 16, std::variant<int, double> 16
+1000 Huono-oliota 32000 tavua, Hyva-oliota 16000 tavua
+liput[0] = 1, tavuja noin 128

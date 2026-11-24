@@ -1,0 +1,7 @@
+kokonaisluku merkkijonoksi, ns/kutsu (paras 5:sta)
+  snprintf          40.9 ns
+  to_chars           4.9 ns
+  format_to_n       22.7 ns
+  format            35.4 ns
+  to_string         26.2 ns
+  ostringstream    185.3 ns

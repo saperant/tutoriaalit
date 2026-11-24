@@ -1,0 +1,5 @@
+== Kaskyja kierrosta kohden: keskiarvo 1000 alkiosta ==
+  hylatty                       0.2 Ir
+  pidetty                    2518.2 Ir
+  vakio                         3.5 Ir
+  piilotettu                   27.4 Ir
