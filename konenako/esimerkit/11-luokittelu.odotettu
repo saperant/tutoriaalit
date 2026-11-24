@@ -1,0 +1,10 @@
+testi, sama jakauma: osuvuus 1.00
+  sekaannusmatriisi (rivi = oikea, sarake = ennuste):
+    kolmio    57    0    0
+    nelio      0   57    0
+    ympyra     0    0   86
+testi, pienet muodot: osuvuus 0.62
+  sekaannusmatriisi (rivi = oikea, sarake = ennuste):
+    kolmio    56    0    0
+    nelio      4   68    0
+    ympyra    22   50    0

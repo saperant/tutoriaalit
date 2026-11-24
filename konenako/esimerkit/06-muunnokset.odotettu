@@ -1,0 +1,8 @@
+A =
+      0.866   -0.500   20.000
+      0.500    0.866   30.000
+käänteismuunnos palauttaa pisteet: True
+INTER_NEAREST   PSNR täyden kierroksen jälkeen  21.1 dB
+INTER_LINEAR    PSNR täyden kierroksen jälkeen  19.7 dB
+INTER_CUBIC     PSNR täyden kierroksen jälkeen  23.6 dB
+INTER_LANCZOS4  PSNR täyden kierroksen jälkeen  25.0 dB

@@ -1,0 +1,5 @@
+tunnettuja kulmia 30
+Harris: kulma-alueita 30
+Shi-Tomasi: kulmia 30
+  kokonaislukupikselit: virhe 1.06 px
+  cornerSubPix:         virhe 0.11 px

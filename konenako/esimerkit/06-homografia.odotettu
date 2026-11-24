@@ -1,0 +1,5 @@
+kuvan piste (230, 255) on arkilla kohdassa (100.9, 168.6) mm
+oma DLT = getPerspectiveTransform: True
+väärien osuus 30 %
+pienin neliösumma: kulmavirhe yli 10 px True
+RANSAC: kulmavirhe alle 2 px True, oikeiksi luokitellut väärät 0

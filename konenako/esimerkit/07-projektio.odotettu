@@ -1,0 +1,7 @@
+[0.0, 0.0, 0.0] mm -> ( 320.0,  240.0) px
+[300.0, -200.0, 100.0] mm -> ( 442.3,  161.8) px
+projectPoints sama: True
+2 x koko ja 2 x etäisyys sama kuva: True
+ideaali (320.0, 240.0) -> vääristynyt (320.0, 240.0), siirtymä  0.0 px
+ideaali (400.0, 240.0) -> vääristynyt (399.8, 240.0), siirtymä  0.2 px
+ideaali (640.0, 480.0) -> vääristynyt (621.6, 466.2), siirtymä 23.0 px

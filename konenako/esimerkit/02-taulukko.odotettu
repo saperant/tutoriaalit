@@ -1,0 +1,10 @@
+muoto (120, 160, 3), tyyppi uint8, tavuja 57600
+kuva[30, 50] = [255, 0, 0]
+kuva[50, 30] = [0, 0, 0]
+näkymän muutos näkyy kuvassa: [0, 0, 255]
+kopion muutos ei näy kuvassa: [0, 0, 255]
+NumPy  a + b: [[44, 4]]
+OpenCV add  : [[255, 255]]
+NumPy  b - a: [[156, 16]]
+OpenCV sub  : [[0, 0]]
+float + clip: [[255, 255]]

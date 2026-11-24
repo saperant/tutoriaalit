@@ -1,0 +1,7 @@
+alkuperäinen   min  82  max 154  keskihajonta  16.3  tasoja  71
+venytys        min   0  max 255  keskihajonta  57.7  tasoja  71
+tasoitus       min   0  max 255  keskihajonta  72.2  tasoja  62
+CLAHE          min  75  max 175  keskihajonta  18.2  tasoja 101
+gamma 0.5: keskiarvo  43.6
+gamma 1.0: keskiarvo  88.4
+gamma 2.2: keskiarvo 149.2

@@ -1,0 +1,5 @@
+filter2D on korrelaatio, ero omaan: 1136.5
+käännetyllä ytimellä sama kuin oma: True
+REFLECT_101   16.67  20.00  30.00  33.33
+REPLICATE     13.33  20.00  30.00  36.67
+CONSTANT 0    10.00  20.00  30.00  23.33

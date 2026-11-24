@@ -1,0 +1,4 @@
+blob: (1, 3, 224, 224) float32
+kanavien keskiarvot: 0.784 0.000 0.000
+jäljelle jäi (100, 100, 80, 60), varmuus 0.91, IoU oikeaan 0.95
+jäljelle jäi (300, 200, 50, 50), varmuus 0.85, IoU oikeaan 0.85

@@ -1,0 +1,9 @@
+Otsun kynnys: 123
+alueita taustan lisäksi: 6
+  ( 60.0,  60.0)  ala 1513 px  -> pieni
+  (250.0,  60.0)  ala 1514 px  -> pieni
+  (150.0,  70.0)  ala 2817 px  -> iso
+  ( 80.0, 170.0)  ala 2819 px  -> iso
+  (270.0, 175.0)  ala 2818 px  -> iso
+  (180.0, 170.0)  ala 1513 px  -> pieni
+suurin pinta-alan virhe: 0.5 %

@@ -1,0 +1,5 @@
+huippu taajuudella (kx, ky) = (12, 5) jaksoa/kuva
+raitojen normaalin suunta 22.6 astetta
+INTER_NEAREST  huippu  8 jaksoa, vaihtelu  90.2
+INTER_LINEAR   huippu  8 jaksoa, vaihtelu  50.1
+INTER_AREA     huippu  8 jaksoa, vaihtelu  19.4

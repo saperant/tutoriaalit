@@ -1,0 +1,6 @@
+sigma 2.0: ydin 13 x 13, summa 1.000
+1D-ytimen keskiosa: 0.121 0.176 0.200 0.176 0.121
+2D-ytimen aste: 1
+sepFilter2D = filter2D: True
+GaussianBlur = filter2D: True
+kertolaskuja: 2D 10 140 000, erotettu 1 560 000

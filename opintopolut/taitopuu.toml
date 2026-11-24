@@ -1331,6 +1331,7 @@ laajuus = 5
 testaus = "OpenCV (Python ja C++), synteettiset testikuvat ja tunnetut ratkaisut"
 roadmap = []
 amk = "Konenäkö"
+tutoriaali = "konenako"
 
 # ---------------------------------------------------------------------
 # Tietoturva ja takaisinmallinnus

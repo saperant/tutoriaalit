@@ -1,0 +1,9 @@
+lauta löytyi 10 kuvasta 10:stä
+uudelleenprojektiovirhe alle 0,1 px: True
+  fx: arvio     800, oikea     800, virhe alle 2: True
+  fy: arvio     800, oikea     800, virhe alle 2: True
+  cx: arvio     320, oikea     320, virhe alle 2: True
+  cy: arvio     240, oikea     240, virhe alle 2: True
+  k1: arvio   -0.25, oikea   -0.25, virhe alle 0.02: True
+  k2: arvio    0.10, oikea    0.08, virhe alle 0.1: True
+solvePnP: etäisyys   572 mm (oikea   572 mm), kiertovirhe alle 0,1 astetta True
