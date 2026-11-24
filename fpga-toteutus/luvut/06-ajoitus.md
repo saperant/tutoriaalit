@@ -12,6 +12,25 @@ Polku alkaa kiikun kellosta ja päättyy seuraavan kiikun tuloon:
 
 $$t_{\text{kello}\to\text{lähtö}} + \sum (t_{\text{LUT}} + t_{\text{reititys}}) + t_{\text{asetus}} \le T_{\text{kello}}$$
 
+Kuvassa sama ehto aikajanalla: `Q` on lähtökiikun lähtö ja `D`
+kohdekiikun tulo. Lähtökiikku vaihtaa arvonsa hieman kellon nousevan
+reunan jälkeen ($t_{\text{kello}\to\text{lähtö}}$).
+Uusi arvo kulkee logiikan ja reitityksen läpi kohdekiikun tuloon, ja
+tulon on oltava vakaa asetusajan verran ennen seuraavaa reunaa. Aika,
+joka jää yli, on polun jousto (slack); negatiivinen jousto on
+ajoitusvirhe.
+
+```{.ajoituskaavio otsikko="Asetusajan ehto: data lähtee reunalla 1 ja sen on oltava perillä asetusaikaa ennen reunaa 2 (yksi merkki on neljännesjakso)"}
+{"signal": [
+  {"name": "kello", "wave": "lh.l.h.l.h"},
+  {"name": "reuna", "wave": "z3...4...5", "data": ["1", "2", "3"]},
+  {"name": "Q", "wave": "=.=.......", "data": ["vanha", "uusi"]},
+  {"name": "D", "wave": "=..x=.....", "data": ["vanha", "uusi"]},
+  {"name": "asetus", "wave": "0...10...."},
+  {"name": "jousto", "wave": "z..z6z....", "data": ["+"]}
+]}
+```
+
 iCE40:ssä LUT:n viive on alle nanosekunnin, mutta reititys LUT:ien
 välillä vie usein enemmän: tyypillisesti 50–70 % polun viiveestä on
 johtimissa. Siksi FPGA:lla *logiikkatasojen määrä* (montako LUT:ia
@@ -54,6 +73,16 @@ kaksivaiheinen antaa saman tuloksen jaksoa myöhemmin:
 ```
 
 ```{.tuloste tiedosto="esimerkit/06-liukuhihna.odotettu"}
+```
+
+Ajoituskaavio on piirretty saman testipenkin simulaatiosta (`make -C
+esimerkit kaavio`). Sarakkeessa näkyy arvo kellon nousevan reunan
+jälkeen. Yksivaiheisen version tulo `tulo1` ilmestyy sarakkeen
+myöhemmin kuin tulot `a` ja `b`, ja kaksivaiheisen version `tulo2`
+vielä sarakkeen sen jälkeen: tulokset ovat samat, mutta latenssi on
+jakson pidempi.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/liukuhihna.json" otsikko="Yksi- ja kaksivaiheinen kertoja simulaatiosta"}
 ```
 
 Vuo ajaa molemmat versiot ja lisäksi yksivaiheisen version

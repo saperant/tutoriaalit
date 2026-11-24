@@ -48,14 +48,19 @@ kun sisältö on voimassa, ja vastaanottaja nostaa READY-signaalin, kun
 se voi ottaa sen vastaan. Siirto tapahtuu sillä kellojaksolla, jolla
 molemmat ovat ylhäällä.
 
-```text
-jakso      1    2    3    4    5
-ARVALID    0    1    1    1    0
-ARADDR     -    A    A    A    -     osoite pysyy samana
-ARREADY    0    0    0    1    0     kättely jaksolla 4
-RVALID     0    0    0    0    1
-RREADY     1    1    1    1    1     data siirtyy jaksolla 5
+```{.ajoituskaavio otsikko="Lukusiirto: osoitteen kättely jaksolla 4, data siirtyy jaksolla 5"}
+{"signal": [
+  {"name": "ACLK", "wave": "P...."},
+  {"name": "ARVALID", "wave": "01..0"},
+  {"name": "ARADDR", "wave": "x=..x", "data": ["A"]},
+  {"name": "ARREADY", "wave": "0..10"},
+  {"name": "RVALID", "wave": "0...1"},
+  {"name": "RREADY", "wave": "1...."}
+]}
 ```
+
+Kaaviossa jakso 1 on vasemmalla. Osoite pysyy samana, kunnes kättely
+tapahtuu jaksolla 4, jolla sekä `ARVALID` että `ARREADY` ovat ylhäällä.
 
 Määrittelyn tärkeimmät säännöt ovat:
 

@@ -149,6 +149,15 @@ sen seuraavalla askeleella, joten jäljessä on vielä askel 4.
 ```{.tuloste tiedosto="esimerkit/odotetut/formaali-samanaikainen.odotettu"}
 ```
 
+Sama jälki ajoituskaaviona näyttää vian syyn yhdellä silmäyksellä.
+Kaavio on piirretty ratkaisijan tuottamasta VCD-tiedostosta (`make
+formaali-kaavio`), ja se alkaa askeleesta 1: askel 0 on nollaus.
+Askeleella 2 jonoon kirjoitetaan ja siitä luetaan, joten määrän pitäisi
+pysyä yhdessä, mutta askeleella 3 se on 2.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/vastaesimerkki.json" otsikko="Vastaesimerkki viasta BUGI_SAMANAIKAINEN, askeleet 1–4"}
+```
+
 Vertaa vastaesimerkkejä simulaation tuloksiin. Ohjattu testi ei
 löytänyt tätä vikaa lainkaan, ja satunnaistesti löysi sen, koska
 generaattori sattui tuottamaan samanaikaisia toimenpiteitä. Formaali

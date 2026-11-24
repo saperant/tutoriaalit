@@ -49,6 +49,32 @@ module testipenkki;
   end
   // @loppu vastaanotin
 
+`ifdef JALJITYS
+  // Kirjan ajoituskaaviot (make kaaviot): APB-sillalle tuleva AXI4-Lite-
+  // väylä ja sillalta UARTille lähtevä APB. Rakenteiden kentät tuodaan
+  // omiksi johdoikseen, jotta aaltomuodossa ne ovat erillisiä signaaleja.
+  /* verilator lint_off UNUSEDSIGNAL */
+  wire        awvalid = u_soc.orja_m[1].awvalid;
+  wire        awready = u_soc.orja_s[1].awready;
+  wire [31:0] awaddr  = u_soc.orja_m[1].awaddr;
+  wire        wvalid  = u_soc.orja_m[1].wvalid;
+  wire        wready  = u_soc.orja_s[1].wready;
+  wire [31:0] wdata   = u_soc.orja_m[1].wdata;
+  wire        bvalid  = u_soc.orja_s[1].bvalid;
+  wire        bready  = u_soc.orja_m[1].bready;
+  wire        psel    = u_soc.apb_m[0].psel;
+  wire        penable = u_soc.apb_m[0].penable;
+  wire        pwrite  = u_soc.apb_m[0].pwrite;
+  wire [11:0] paddr   = u_soc.apb_m[0].paddr;
+  wire [31:0] pwdata  = u_soc.apb_m[0].pwdata;
+  wire        pready  = u_soc.apb_s[0].pready;
+  /* verilator lint_on UNUSEDSIGNAL */
+  initial begin
+    $dumpfile("build/jalki.vcd");
+    $dumpvars(1, testipenkki);
+  end
+`endif
+
   always @(posedge kello)
     if (lopeta) begin
       if (paluukoodi != 8'd0)

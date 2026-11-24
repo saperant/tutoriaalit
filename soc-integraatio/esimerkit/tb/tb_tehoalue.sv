@@ -16,6 +16,14 @@ module tb_tehoalue;
                    .sisainen, .vaihe);
 
   initial forever #5 kello = ~kello;
+
+`ifdef JALJITYS
+  // Aaltomuoto kirjan ajoituskaaviota varten (Makefilen kaaviokohde).
+  initial begin
+    $dumpfile("build/tehoalue.vcd");
+    $dumpvars(0, tb_tehoalue);
+  end
+`endif
   initial #15 nollaus_n = 1'b1;
 
   always @(posedge kello) begin

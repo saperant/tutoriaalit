@@ -46,4 +46,12 @@ module testipenkki;
         if (virheita != 0) $error("testi epäonnistui");
     end
     // @loppu testi
+
+`ifdef JALJITYS
+    // Aaltomuoto kirjan ajoituskaaviota varten (make kaavio-ohjattu).
+    initial begin
+        $dumpfile("rakennus/kaavio-ohjattu.vcd");
+        $dumpvars(0, testipenkki);
+    end
+`endif
 endmodule

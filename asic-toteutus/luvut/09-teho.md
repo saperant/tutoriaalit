@@ -61,6 +61,12 @@ gate, ICG) salpaa sallinnan, kun kello on alhaalla:
 ```{.tuloste tiedosto="esimerkit/09-portitus.odotettu"}
 ```
 
+Kaavio on piirretty saman testipenkin simulaatiosta nanosekunnin
+tarkkuudella (`make -C esimerkit`):
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/portitus.json" otsikko="JA-portti ja ICG simulaatiosta, 0–40 ns"}
+```
+
 JA-portti tuottaa 3 ns:n ja 2 ns:n pulssit, ICG vain täysiä 5 ns:n
 pulsseja. Kirjastoissa ICG on valmis solu, ja synteesityökalu lisää
 sen automaattisesti, kun rekisteriryhmällä on yhteinen sallinta.

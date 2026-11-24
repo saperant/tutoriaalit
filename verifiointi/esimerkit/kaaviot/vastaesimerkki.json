@@ -1,0 +1,38 @@
+{
+ "signal": [
+  {
+   "name": "clk",
+   "wave": "p..."
+  },
+  {
+   "name": "rst",
+   "wave": "0.10"
+  },
+  {
+   "name": "push",
+   "wave": "1.01"
+  },
+  {
+   "name": "pop",
+   "wave": "01.0"
+  },
+  {
+   "name": "maara",
+   "wave": "====",
+   "data": [
+    "0",
+    "1",
+    "2",
+    "0"
+   ]
+  },
+  {
+   "name": "tyhja",
+   "wave": "10.1"
+  },
+  {
+   "name": "taysi",
+   "wave": "0..."
+  }
+ ]
+}

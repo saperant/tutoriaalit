@@ -82,6 +82,22 @@ ei ole logiikkaa, joten pitoaika on tiukimmillaan:
 ```{.python tiedosto="esimerkit/04-pito.py" osa="vinous"}
 ```
 
+Kuvassa kiikku A lähettää ja kiikku B vastaanottaa. B:n kello
+saapuu vinouden verran myöhemmin. A:n uusi arvo ehtii B:n tuloon ennen
+kuin B:n pitoaika omalla, myöhästyneellä reunallaan on ohi, joten B
+näytteistää väärän arvon. Yksi merkki on neljännes kellojaksosta.
+
+```{.ajoituskaavio otsikko="Pitorike: vastaanottajan kello myöhästyy vinouden verran"}
+{"signal": [
+  {"name": "kello A", "wave": "l.h.l.h."},
+  {"name": "kello B", "wave": "l..h.l.h"},
+  {"name": "A:n Q", "wave": "=..=....", "data": ["vanha", "uusi"]},
+  {"name": "B:n D", "wave": "=..=....", "data": ["vanha", "uusi"]},
+  {"name": "B:n pito", "wave": "0..10..."},
+  {"name": "rike", "wave": "z..5z...", "data": ["!"]}
+]}
+```
+
 Vinous siirtää aikaa: asetusmarginaali kasvaa täsmälleen sen verran
 kuin pitomarginaali pienenee. Positiivista vinousta käytetään
 tarkoituksella pitkien polkujen nopeuttamiseen (useful skew), kun

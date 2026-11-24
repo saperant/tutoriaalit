@@ -30,7 +30,8 @@ VFLAGS := --binary -Wall --assert -j 2
 .PHONY: kaikki generoitu generoi siivoa $(addprefix aja-,$(OHJELMAT))
 
 kaikki: generoitu $(OHJELMAT:%=$(RAKENNUS)/%.ok) \
-        $(RAKENNUS)/tarkistin.ok $(RAKENNUS)/tehoalue.ok
+        $(RAKENNUS)/tarkistin.ok $(RAKENNUS)/tehoalue.ok \
+        $(RAKENNUS)/kaavio.ok
 
 # Generoitujen tiedostojen on vastattava kuvauksia.
 generoitu:
@@ -100,6 +101,47 @@ $(RAKENNUS)/tehoalue.ok: rtl/tehoalue.sv tb/tb_tehoalue.sv \
 	$(RAKENNUS)/tehoalue/Vtb_tehoalue \
 	    | grep -v 'Verilog \$$finish' > $(RAKENNUS)/tehoalue.tuloste
 	diff -u odotettu/tehoalue.odotettu $(RAKENNUS)/tehoalue.tuloste
+	@touch $@
+
+# Kirjan ajoituskaavio (luku 5) tuotetaan käynnistysohjelman
+# simulaatiosta: ensimmäinen kirjoitus UARTiin AXI4-Lite-puolelta
+# APB-puolelle. Tulos verrataan tiedostoon kaaviot/uart-kirjoitus.json;
+# PAIVITA=1 kirjoittaa sen uudelleen.
+KAAVIO := python3 ../../yhteiset/kaaviot.py vcd
+AXI_S := awvalid=AWVALID,awready=AWREADY,awaddr=AWADDR,wvalid=WVALID
+AXI_S := $(AXI_S),wready=WREADY,wdata=WDATA,bvalid=BVALID,bready=BREADY
+APB_S := psel=PSEL,penable=PENABLE,pwrite=PWRITE,paddr=PADDR
+APB_S := $(APB_S),pwdata=PWDATA,pready=PREADY
+TEHO_S := sammuta,kaynnista,vaihe,eristys,kello_paalla,virta
+TEHO_S := $(TEHO_S),alue_nollaus_n,sisainen,lahto
+$(RAKENNUS)/kaavio.ok: $(RTL) tb/testipenkki.sv $(RAKENNUS)/kaynnistys.hex \
+                       kaaviot/uart-kirjoitus.json kaaviot/tehoalue.json \
+                       rtl/tehoalue.sv tb/tb_tehoalue.sv
+	MAKEFLAGS= verilator $(VFLAGS) --trace -DJALJITYS \
+	    --top-module testipenkki -Mdir $(RAKENNUS)/jalki -o Vtestipenkki \
+	    $(RTL) tb/testipenkki.sv > $(RAKENNUS)/jalki.log
+	$(RAKENNUS)/jalki/Vtestipenkki +ohjelma=$(RAKENNUS)/kaynnistys.hex \
+	    > /dev/null
+	$(KAAVIO) $(RAKENNUS)/jalki.vcd --kello kello --alku 161 --jaksot 8 \
+	    --signaalit $(AXI_S),$(APB_S) \
+	    | python3 -m json.tool --indent 1 --no-ensure-ascii \
+	    > $(RAKENNUS)/uart-kirjoitus.json
+	rm -f $(RAKENNUS)/jalki.vcd
+	if [ "$(PAIVITA)" = 1 ]; then \
+	    cp $(RAKENNUS)/uart-kirjoitus.json kaaviot/; fi
+	diff -u kaaviot/uart-kirjoitus.json $(RAKENNUS)/uart-kirjoitus.json
+	MAKEFLAGS= verilator $(VFLAGS) --trace -DJALJITYS \
+	    --top-module tb_tehoalue \
+	    -Mdir $(RAKENNUS)/tehojalki -o Vtb_tehoalue rtl/tehoalue.sv \
+	    tb/tb_tehoalue.sv > $(RAKENNUS)/tehojalki.log
+	$(RAKENNUS)/tehojalki/Vtb_tehoalue > /dev/null
+	$(KAAVIO) $(RAKENNUS)/tehoalue.vcd --kello kello --alku 8 --jaksot 16 \
+	    --signaalit $(TEHO_S) \
+	    | python3 -m json.tool --indent 1 --no-ensure-ascii \
+	    > $(RAKENNUS)/tehoalue.json
+	rm -f $(RAKENNUS)/tehoalue.vcd
+	if [ "$(PAIVITA)" = 1 ]; then cp $(RAKENNUS)/tehoalue.json kaaviot/; fi
+	diff -u kaaviot/tehoalue.json $(RAKENNUS)/tehoalue.json
 	@touch $@
 
 .PRECIOUS: $(RAKENNUS)/%.elf $(RAKENNUS)/%.hex

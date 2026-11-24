@@ -18,6 +18,30 @@ Siinä on
 - **kantologiikka** (carry, `SB_CARRY`): nopea, erillinen reitti
   summaimen muistibitille viereiseen soluun.
 
+Kuvassa on solun rakenne. Kiikun ohi kulkeva reitti tekee solusta
+kombinatorisen, ja kantoketju jatkuu suoraan viereiseen soluun
+reititysverkon ohi.
+
+```{.dot otsikko="iCE40:n logiikkasolu (ICESTORM_LC): LUT4, kantologiikka ja kiikku"}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.4;
+  tulot [label="I0 I1 I2 I3", shape=plaintext, style=""];
+  lut [label="LUT4\n16 bitin muisti"];
+  carry [label="SB_CARRY"];
+  ff [label="kiikku\n(sallinta, nollaus)"];
+  mux [label="valitsin", shape=trapezium, orientation=270];
+  ulos [label="O", shape=plaintext, style=""];
+  cin [label="kanto sisään\n(edellinen solu)", shape=plaintext, style=""];
+  cout [label="kanto ulos\n(seuraava solu)", shape=plaintext, style=""];
+  ohjaus [label="kello, sallinta,\nnollaus (yhteiset\nkoko lohkolle)", shape=plaintext, style=""];
+  tulot -> lut; tulot -> carry [label="I1, I2"];
+  cin -> carry; carry -> cout;
+  cin -> lut [label="I3:n tilalle", style=dashed];
+  lut -> ff; lut -> mux [label="ohitus"]; ff -> mux; mux -> ulos;
+  ohjaus -> ff [style=dashed];
+}
+```
+
 Kahdeksan solua muodostaa logiikkalohkon (PLB), jonka solut jakavat
 kellon, sallinnan ja nollauksen. Siksi samassa lohkossa voivat olla
 vain kiikut, joilla on samat ohjaussignaalit. Suunnittelu, jossa

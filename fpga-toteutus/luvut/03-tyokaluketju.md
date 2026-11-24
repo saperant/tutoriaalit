@@ -20,6 +20,24 @@ tutkimiseen, mutta tuotannossa ja CI:ssä vuo ajetaan komentoriviltä.
 4. **Lataus** (`iceprog`). Bittivirta kirjoitetaan kortin
    SPI-flashiin tai suoraan piirille.
 
+Kuvassa on sama vuo tiedostoina: jokainen vaihe lukee edellisen
+tuloksen ja kirjoittaa omansa, joten Make voi ajaa vain ne vaiheet,
+joiden syötteet ovat muuttuneet.
+
+```{.dot otsikko="iCE40:n avoin työkaluketju tiedostoineen"}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.35;
+  sv [label="vilkku.sv", shape=note]; pcf [label="icebreaker.pcf", shape=note];
+  yosys [label="Yosys\nsynth_ice40"]; nextpnr [label="nextpnr-ice40"];
+  icepack; iceprog; kortti [label="kortti", shape=box3d, style=""];
+  raportti [label="raportti", shape=note, style=""];
+  sv -> yosys; yosys -> nextpnr [label="vilkku.json"];
+  pcf -> nextpnr; nextpnr -> icepack [label="vilkku.asc"];
+  icepack -> iceprog [label="vilkku.bin"]; iceprog -> kortti;
+  nextpnr -> raportti [style=dashed];
+}
+```
+
 ## Bittivirta Makella
 
 Vaiheet ovat tiedostomuunnoksia, joten Make sopii niiden ajamiseen:

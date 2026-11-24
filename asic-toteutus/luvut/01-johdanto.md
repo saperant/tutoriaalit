@@ -35,6 +35,31 @@ seuraavaa:
 | Sign-off | lopullinen GDSII | DRC, LVS, STA, IR, EM |
 | Tapeout ja valmistus | kiekot, kotelointi | tuotantotesti |
 
+Vuo ei ole suora putki. Kun tarkistus epäonnistuu, palataan
+aiempaan vaiheeseen, kuten kuvan katkoviivat näyttävät: ajoitusrike
+sijoittelun jälkeen voi vaatia uutta synteesiä tai jopa RTL:n
+muutosta, ja jokainen kierros on sitä kalliimpi, mitä myöhemmin se
+alkaa.
+
+```{.dot otsikko="ASIC-vuon vaiheet ja tyypilliset paluut taaksepäin"}
+digraph {
+  rankdir=TB; nodesep=0.3; ranksep=0.35;
+  rtl [label="RTL"]; syn [label="synteesi"]; dft [label="DFT"];
+  fp [label="pohjapiirros"]; pl [label="sijoittelu"];
+  cts [label="kellopuu"]; rt [label="reititys"]; so [label="sign-off"];
+  gds [label="GDSII", shape=note, style=""];
+  {rank=same; rtl; syn; dft; fp}
+  {rank=same; pl; cts; rt; so; gds}
+  rtl -> syn -> dft -> fp;
+  fp -> pl;
+  pl -> cts -> rt -> so -> gds;
+  edge [style=dashed, color="#B04848", fontcolor="#B04848"];
+  so -> pl [label="ajoitus"];
+  pl -> syn [label="ruuhka"];
+  syn -> rtl [label="ei ajoitu"];
+}
+```
+
 Tavoitteet ilmaistaan lyhenteellä PPA: teho (power), suorituskyky
 (performance) ja pinta-ala (area). Ne vetävät eri suuntiin: nopeampi
 summain on suurempi (luku 3), ja kellon portitus säästää tehoa mutta

@@ -16,14 +16,20 @@ yhteisiä:
 
 Jokainen siirto kestää vähintään kaksi kellojaksoa:
 
-```text
-jakso      1        2        3
-           SETUP    ACCESS   (seuraava siirto tai vapaa)
-PSEL       1        1        0
-PENABLE    0        1        0
-PADDR      A        A        -
-PREADY     -        1        -     siirto päättyy jaksolla 2
+```{.ajoituskaavio otsikko="Kaksi APB-siirtoa: ensimmäinen ilman odotustiloja, toinen yhdellä odotustilalla"}
+{"signal": [
+  {"name": "PCLK", "wave": "P......"},
+  {"name": "vaihe", "wave": "34z344z", "data": ["SETUP", "ACCESS", "SETUP", "ACCESS", "ACCESS"]},
+  {"name": "PSEL", "wave": "1.01..0"},
+  {"name": "PENABLE", "wave": "010.1.0"},
+  {"name": "PADDR", "wave": "=.x=..x", "data": ["A", "B"]},
+  {"name": "PREADY", "wave": "x1x.01x"}
+]}
 ```
+
+Ensimmäinen siirto päättyy jaksolla 2, koska orja vastaa `PREADY`llä
+heti. Toisessa siirrossa orja pitää `PREADY`n alhaalla yhden jakson, ja
+ACCESS-vaihe kestää kaksi jaksoa.
 
 1. **SETUP**: isäntä asettaa osoitteen, suunnan, datan ja `PSEL`-
    signaalin.
@@ -55,6 +61,18 @@ siirron, tekee sen APB:n kahdella vaiheella ja palauttaa vastauksen.
 Osoitteen bitit 15–12 valitsevat oheislaitteen:
 
 ```{.systemverilog tiedosto="esimerkit/rtl/apb_silta.sv" osa="apb"}
+```
+
+Alla oleva kaavio on piirretty käynnistysohjelman simulaatiosta
+(`make -C esimerkit`). Siinä on ohjelman ensimmäinen kirjoitus UARTin
+lähetysrekisteriin: merkki `P` (0x50) osoitteeseen 0x10000000. AXI-
+puolella osoite ja data hyväksytään samalla jaksolla. Silta aloittaa
+APB-siirron seuraavalla jaksolla (SETUP), UART vastaa ACCESS-vaiheessa
+heti, ja silta palauttaa AXI-vastauksen (`BVALID`) vasta sen jälkeen.
+Yksi kirjoitus oheislaitteeseen kestää siis neljä jaksoa, kun RAMiin
+kirjoitus kestää yhden.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/uart-kirjoitus.json" otsikko="Kirjoitus UARTiin simulaatiosta: AXI4-Lite-siirto sillalle ja APB-siirto UARTille"}
 ```
 
 Silta myös muuntaa virheet: `PSLVERR` muuttuu AXI:n SLVERR-vastaukseksi

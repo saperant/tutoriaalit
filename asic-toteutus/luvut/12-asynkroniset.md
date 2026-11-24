@@ -16,6 +16,19 @@ pyynnön, vastaanottaja nostaa kuittauksen, lähettäjä laskee pyynnön ja
 vastaanottaja kuittauksen. Kaksivaiheisessa kättelyssä jokainen
 siirtymä on tapahtuma, ja paluu nollaan säästetään.
 
+```{.ajoituskaavio otsikko="Nelivaiheinen kättely: data on voimassa pyynnön noususta kuittauksen nousuun"}
+{"signal": [
+  {"name": "data", "wave": "x=..x.=..x", "data": ["D1", "D2"]},
+  {"name": "pyynto", "wave": "0.1.0..1.0"},
+  {"name": "kuittaus", "wave": "0..1.0..1."},
+  {"name": "vaihe", "wave": "z3456z3456", "data": ["1", "2", "3", "4", "1", "2", "3", "4"]}
+]}
+```
+
+Kaaviossa ei ole kelloa: sarakkeet ovat vain tapahtumien järjestys.
+Vaiheet 1–4 ovat pyynnön nousu, kuittauksen nousu, pyynnön lasku ja
+kuittauksen lasku.
+
 Mullerin C-elementti on asynkronisen suunnittelun perusportti: sen
 lähtö seuraa tuloja, kun ne ovat samat, ja muuten muistaa arvonsa.
 

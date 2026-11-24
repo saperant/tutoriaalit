@@ -16,15 +16,29 @@ teollisuuden vallitseva tapa rakentaa testipenkkejä ASIC-projekteissa.
 
 ## Rakenne
 
-```text
-uvm_test
- └── uvm_env
-      ├── uvm_agent (aktiivinen)
-      │    ├── uvm_sequencer  <── uvm_sequence (uvm_sequence_item)
-      │    ├── uvm_driver
-      │    └── uvm_monitor ──── analyysiportti ──┐
-      ├── uvm_scoreboard  <──────────────────────┤
-      └── uvm_subscriber (kattavuus)  <──────────┘
+```{.dot otsikko="UVM-ympäristön rakenne. Laatikot ovat sisäkkäisiä komponentteja, nuolet transaktioiden ja signaalien kulkua."}
+digraph {
+  rankdir=LR; nodesep=0.35; ranksep=0.35;
+  node [fontname="JetBrains Mono", fontsize=9];
+  edge [fontname="Inter"];
+  sekvenssi [label="uvm_sequence\n(uvm_sequence_item)", style="rounded,dashed"];
+  dut [label="DUT", shape=box3d, style="", fontname="Inter"];
+  subgraph cluster_test { label="uvm_test"; fontsize=9; style=rounded; color="#5B6B70";
+    subgraph cluster_env { label="uvm_env"; style=rounded;
+      subgraph cluster_agent { label="uvm_agent (aktiivinen)"; style=rounded;
+        uvm_sequencer; uvm_driver; uvm_monitor;
+      }
+      uvm_scoreboard;
+      kattavuus [label="uvm_subscriber\n(kattavuus)"];
+    }
+  }
+  sekvenssi -> uvm_sequencer;
+  uvm_sequencer -> uvm_driver;
+  uvm_driver -> dut [label=" signaalit"];
+  dut -> uvm_monitor [label=" signaalit"];
+  uvm_monitor -> uvm_scoreboard [label=" analyysiportti"];
+  uvm_monitor -> kattavuus;
+}
 ```
 
 | UVM-luokka | Tehtävä |

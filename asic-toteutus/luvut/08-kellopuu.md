@@ -30,6 +30,26 @@ pitkä, ja H-puuna, jonka haarautumiskohdissa on puskurit.
 ```{.tuloste tiedosto="esimerkit/08-kellopuu.odotettu"}
 ```
 
+Kuvassa on puskuroidun H-puun rakenne kahdella tasolla. Jokaisen
+kiikkuryhmän polku juuresta on yhtä pitkä ja kulkee yhtä monen
+puskurin läpi, joten viiveet ovat samat.
+
+```{.dot otsikko="Puskuroitu H-puu: symmetriset polut kellolähteestä 16 kiikulle"}
+digraph {
+  rankdir=TB; nodesep=0.2; ranksep=0.3;
+  lahde [label="kellolähde\n(PLL)"];
+  node [shape=invtriangle, label="", width=0.3, height=0.25];
+  p1; p2a; p2b; p3a; p3b; p3c; p3d;
+  node [shape=box, style="rounded,filled", width=0.6, height=0.3,
+        fontsize=9];
+  k1 [label="4 kiikkua"]; k2 [label="4 kiikkua"];
+  k3 [label="4 kiikkua"]; k4 [label="4 kiikkua"];
+  lahde -> p1; p1 -> p2a; p1 -> p2b;
+  p2a -> p3a; p2a -> p3b; p2b -> p3c; p2b -> p3d;
+  p3a -> k1; p3b -> k2; p3c -> k3; p3d -> k4;
+}
+```
+
 Ketju on lyhin, mutta sen vinous on 119 ps, mikä syö suoraan
 pitomarginaalia (luku 4). H-puun symmetria poistaa vinouden, mutta
 pitkä, kuormitettu johdin on hidas. Puskurit erottavat alapuolisen

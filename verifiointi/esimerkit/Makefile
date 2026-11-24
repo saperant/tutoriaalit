@@ -32,11 +32,11 @@ FORMAALIT := formaali-bmc $(addprefix formaali-,$(FIFOVIAT)) \
              formaali-induktio formaali-invariantti formaali-cover \
              formaali-arbiteri formaali-arbiteri-kiintea \
              formaali-arbiteri-kaksi
-MUUT := suunnitelma regressio laatu
+MUUT := suunnitelma regressio laatu kaavio-ohjattu
 
 KOHTEET := $(SV_KOHTEET) $(COCOTB_KOHTEET) $(FORMAALIT) $(MUUT)
 
-.PHONY: kaikki siivoa $(KOHTEET)
+.PHONY: kaikki siivoa formaali-kaavio $(KOHTEET)
 kaikki: $(KOHTEET)
 
 # sv NIMI VALITSIMET LÄHTEET: kääntää Verilatorilla hakemistoon
@@ -75,6 +75,28 @@ siemenet:
 	@$(VERTAA) odotetut/siemen-2.odotettu -- $(RAKENNUS)/$@/sim +siemen=2
 	@$(VERTAA) odotetut/siemen-2.odotettu -- $(RAKENNUS)/$@/sim +siemen=2
 	@$(VERTAA) odotetut/siemen-3.odotettu -- $(RAKENNUS)/$@/sim +siemen=3
+
+# Kirjan ajoituskaavio tuotetaan simulaation aaltomuodosta ja verrataan
+# versionhallinnassa olevaan tiedostoon kaaviot/NIMI.json; PAIVITA=1
+# kirjoittaa sen uudelleen. kaavio NIMI VCD (VCD poistetaan lopuksi)
+# JSON muotoillaan riveittäin, jotta rivit pysyvät lyhyinä.
+KAAVIOT := python3 ../../yhteiset/kaaviot.py vcd
+MUOTOILE := python3 -m json.tool --indent 1 --no-ensure-ascii
+define kaavio
+	@$(MUOTOILE) $(RAKENNUS)/$(1).json > $(RAKENNUS)/$(1).muotoiltu
+	@mv $(RAKENNUS)/$(1).muotoiltu $(RAKENNUS)/$(1).json
+	@if [ "$(PAIVITA)" = 1 ]; then cp $(RAKENNUS)/$(1).json kaaviot/$(1).json; fi
+	@diff -u kaaviot/$(1).json $(RAKENNUS)/$(1).json && echo "OK: kaavio $(1)"
+	@rm -f $(2)
+endef
+
+kaavio-ohjattu:
+	$(call sv,$@,--binary --trace -DJALJITYS,$(FIFO) 01-ohjattu/testipenkki.sv)
+	@$(RAKENNUS)/$@/sim > /dev/null
+	@$(KAAVIOT) $(RAKENNUS)/$@.vcd --kello clk --jaksot 9 \
+	    --signaalit rst,push,din,pop,dout,maara,tyhja,taysi \
+	    > $(RAKENNUS)/ohjattu.json
+	$(call kaavio,ohjattu,$(RAKENNUS)/$@.vcd)
 
 # --- Luku 5: koodikattavuus -----------------------------------------
 # Verilatorin --binary ei kirjoita kattavuutta, joten käytetään omaa
@@ -139,6 +161,16 @@ formaali-bmc:
 $(addprefix formaali-,$(FIFOVIAT)): formaali-%:
 	@$(VERTAA) odotetut/$@.odotettu --virhe -- $(FIFO_F) --syvyys 10 \
 	    -D BUGI_$(shell echo $* | tr a-z A-Z) $(JALKI)
+
+# Vastaesimerkin jälki ajoituskaaviona (luku 8).
+formaali-samanaikainen: formaali-kaavio
+JALKI_VCD := $(RAKENNUS)/formaali/fifo-bmc-bugi_samanaikainen/jalki.vcd
+formaali-kaavio:
+	@$(FIFO_F) --syvyys 10 -D BUGI_SAMANAIKAINEN > /dev/null || true
+	@$(KAAVIOT) $(JALKI_VCD) --jaksot 4 \
+	    --kello clk --signaalit rst,push,pop,maara,tyhja,taysi \
+	    > $(RAKENNUS)/vastaesimerkki.json
+	$(call kaavio,vastaesimerkki,$(JALKI_VCD))
 
 formaali-induktio:
 	@$(VERTAA) odotetut/$@.odotettu --virhe -- $(FIFO_F) --tila prove \

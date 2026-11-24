@@ -82,6 +82,15 @@ vasta lopuksi eristys poistetaan. Testipenkki käy sekvenssin läpi:
 ```{.tuloste tiedosto="esimerkit/odotettu/tehoalue.odotettu"}
 ```
 
+Saman ajon ajoituskaavio näyttää järjestyksen yhdellä silmäyksellä.
+Vaiheet ovat ohjaimen tilan numeroita: 0 PAALLA, 1 ERISTA, 2
+KELLO_POIS, 3 POIS, 4 VIRTA_PAALLE, 5 NOLLAUS ja 6 VAPAUTA. Kun virta
+katkeaa, alueen sisäinen arvo muuttuu mielivaltaiseksi (`A5`), mutta
+eristetty lähtö `lahto` pysyy nollassa.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/tehoalue.json" otsikko="Tehoalueen sammutus ja käynnistys simulaatiosta"}
+```
+
 Tulosteesta näkyvät tehoalueiden perussäännöt:
 
 - Eristys nousee ennen kuin kello pysähtyy ja virta katkeaa, joten

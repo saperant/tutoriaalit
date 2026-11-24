@@ -18,8 +18,8 @@ RAPORTIT := vilkku kertyma muisti-synk muisti-komb kertoja-dsp \
             siemenet pll kaksi-kelloa suodin-rinnakkain suodin-jaettu \
             debug
 
-.PHONY: kaikki tyokalut siivoa $(RAPORTIT)
-kaikki: tyokalut $(RAPORTIT)
+.PHONY: kaikki tyokalut siivoa kaavio $(RAPORTIT)
+kaikki: tyokalut $(RAPORTIT) kaavio
 
 # Apuohjelmien laatu, jos työkalut ovat asennettuina.
 tyokalut:
@@ -29,6 +29,25 @@ tyokalut:
 	    mypy --strict --no-error-summary tyokalut/raportti.py; fi
 	@if command -v shellcheck > /dev/null; then \
 	    shellcheck tyokalut/vuo.sh; fi
+
+# Luvun 6 ajoituskaavio tuotetaan liukuhihnan simulaatiosta ja verrataan
+# tiedostoon kaaviot/liukuhihna.json (PAIVITA=1 kirjoittaa sen uudelleen).
+KAAVIO := python3 ../../yhteiset/kaaviot.py vcd
+kaavio:
+	@mkdir -p $(R)/kaavio
+	@verilator --binary --trace -DJALJITYS --top-module testipenkki \
+	    -Mdir $(R)/kaavio -o sim 06-liukuhihna/kertoja_lh.sv \
+	    06-liukuhihna/testipenkki.sv > $(R)/kaavio.loki 2>&1 \
+	    || { cat $(R)/kaavio.loki; false; }
+	@$(R)/kaavio/sim > /dev/null
+	@$(KAAVIO) $(R)/liukuhihna.vcd --kello clk --jaksot 7 --kanta d \
+	    --signaalit a,b,yksi.tulo=tulo1,kaksi.tulo=tulo2 \
+	    | python3 -m json.tool --indent 1 --no-ensure-ascii \
+	    > $(R)/liukuhihna.json
+	@rm -f $(R)/liukuhihna.vcd
+	@if [ "$(PAIVITA)" = 1 ]; then cp $(R)/liukuhihna.json kaaviot/; fi
+	@diff -u kaaviot/liukuhihna.json $(R)/liukuhihna.json
+	@echo "OK: kaavio liukuhihna"
 
 # Tiivistelmä verrataan odotettuun: $(call vertaa,nimi)
 vertaa = diff -u raportit/$(1).odotettu $(R)/$(1).tulos

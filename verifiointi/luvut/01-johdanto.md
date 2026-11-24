@@ -147,6 +147,16 @@ Ehjä FIFO läpäisee testin:
 ```{.tuloste tiedosto="esimerkit/odotetut/ohjattu.odotettu"}
 ```
 
+Alla oleva ajoituskaavio on piirretty saman ajon aaltomuodosta (`make
+kaavio-ohjattu`). Kukin sarake on yksi kellojakso, ja arvot näkyvät
+sellaisina kuin ne ovat nousevan reunan jälkeen. Siksi `maara` kasvaa
+samassa sarakkeessa, jossa `push` on ylhäällä: kirjoitus hyväksyttiin
+sarakkeen alun reunalla. `dout` näyttää jonon ensimmäisen arvon heti,
+koska lukupää näkyy suoraan lähdössä.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/ohjattu.json" otsikko="Ohjattu testi simulaatiosta: neljä kirjoitusta ja neljä lukua"}
+```
+
 Kun FIFO käännetään makrolla `BUGI_TAYSI`, testi löytää vian kahdesta
 kohdasta: määrä jää kolmeen, koska neljäs kirjoitus hylättiin, ja
 neljäs luettu arvo on väärä. Lopun `$error` saa Verilatorin

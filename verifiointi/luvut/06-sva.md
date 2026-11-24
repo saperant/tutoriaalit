@@ -42,6 +42,27 @@ rakenteet ovat:
 | `a ##[1:3] b` | `b` 1–3 jaksoa `a`:n jälkeen |
 | `b[*3]` | `b` kolmella peräkkäisellä jaksolla |
 
+Kuvassa näkyy implikaatioiden ero. Kumpikin väite tarkistetaan
+jokaisella nousevalla reunalla, ja kahdella alimmalla rivillä näkyy,
+millä jaksoilla väite todella tarkistaa jotain (muualla esiehto ei
+toteudu, ja väite on tyhjästi tosi): rivi `samalla` kuvaa `|->`-väitettä
+ja rivi `seuraavalla` `|=>`-väitettä. Jakson 2 esiehto `a` velvoittaa
+`|->`-väitteessä `b`:n samalla jaksolla 2 ja `|=>`-väitteessä
+seuraavalla jaksolla 3. Jakso 5 täyttää `|->`-väitteen mutta rikkoo
+`|=>`-väitteen, koska `b` on alhaalla jaksolla 6.
+
+```{.ajoituskaavio otsikko="Implikaatiot `a |-> b` ja `a |=> b`: esiehto ja sen velvoittama jakso"}
+{"signal": [
+  {"name": "clk", "wave": "P.......", "period": 1},
+  {"name": "jakso", "wave": "========", "data": ["0", "1", "2", "3", "4", "5", "6", "7"]},
+  {"name": "a", "wave": "0.10.10."},
+  {"name": "b", "wave": "0.1.010."},
+  {},
+  {"name": "samalla", "wave": "z.3z.3z.", "data": ["OK", "OK"]},
+  {"name": "seuraavalla", "wave": "z..3z.5z", "data": ["OK", "VIRHE"]}
+]}
+```
+
 Implikaation vasen puoli on *esiehto* (antecedent). Kun esiehto ei
 toteudu, ominaisuus on tyhjästi tosi (vacuous). Väite, jonka esiehto
 ei toteudu koskaan, ei siis koskaan epäonnistu, mutta ei myöskään

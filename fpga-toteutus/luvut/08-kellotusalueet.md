@@ -131,8 +131,20 @@ viiveet tarkistetaan silmämääräisesti.
 ## Metastabiiliuden todennäköisyys
 
 Kahden kiikun tahdistin ei poista metastabiiliutta vaan tekee siitä
-epätodennäköistä. Keskimääräinen aika vikojen välillä (MTBF) kasvaa
+epätodennäköistä. Kuvassa toisen kellon tahdissa muuttuva `tulo`
+vaihtuu juuri kohdekellon `kello_k` reunan kohdalla. Ensimmäinen kiikku jää hetkeksi määrittelemättömään tilaan
+ja asettuu jompaankumpaan arvoon. Toinen kiikku näytteistää sen vasta
+seuraavalla reunalla, jolloin se on ehtinyt asettua. Keskimääräinen aika vikojen välillä (MTBF) kasvaa
 eksponentiaalisesti sen ajan funktiona, jonka kiikku saa asettua:
+
+```{.ajoituskaavio otsikko="Kahden kiikun tahdistin: metastabiilius jää ensimmäiseen kiikkuun"}
+{"signal": [
+  {"name": "kello_k", "wave": "p....."},
+  {"name": "tulo", "wave": "0.1..."},
+  {"name": "kiikku1", "wave": "0.x1.."},
+  {"name": "kiikku2", "wave": "0...1."}
+]}
+```
 
 $$\text{MTBF} = \frac{e^{t_r / \tau}}{T_0 \, f_{\text{kello}} \, f_{\text{data}}}$$
 

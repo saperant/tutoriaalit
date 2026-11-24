@@ -12,6 +12,14 @@ module testipenkki;
 
   initial while (kaynnissa) #5 clk = ~clk;
 
+`ifdef JALJITYS
+  // Aaltomuoto kirjan ajoituskaaviota varten (make kaavio).
+  initial begin
+    $dumpfile("rakennus/liukuhihna.vcd");
+    $dumpvars(0, testipenkki);
+  end
+`endif
+
   initial begin
     // @alku tarkistus
     for (int i = 0; i < 40; i++) begin

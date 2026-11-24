@@ -9,17 +9,20 @@ osikseen, joista kukin tekee yhden asian.
 
 ## Osat
 
-```text
-          +-------------+   transaktiot   +-------+   signaalit   +-----+
-testi --> | generaattori| --------------> | ajuri | ------------> |     |
-          +-------------+                 +-------+               | DUT |
-                                          +---------+  signaalit  |     |
-                         +--------------- | monitori| <---------- |     |
-                         |  havainnot     +---------+             +-----+
-                         v
-                  +-------------+   ennuste   +-----------------+
-                  | tulostaulu  | <---------- | referenssimalli |
-                  +-------------+             +-----------------+
+```{.dot otsikko="Kerroksellisen testipenkin osat. Vain ajuri ja monitori tuntevat signaalit."}
+digraph {
+  rankdir=LR; nodesep=0.35; ranksep=0.45;
+  testi [shape=plaintext, style=""];
+  dut [label="DUT", shape=box3d, style=""];
+  testi -> generaattori;
+  generaattori -> ajuri [label="transaktiot"];
+  ajuri -> dut [label="signaalit"];
+  dut -> monitori [label="signaalit"];
+  monitori -> tulostaulu [label="havainnot"];
+  monitori -> referenssimalli [label="havainnot"];
+  referenssimalli -> tulostaulu [label="ennuste"];
+  {rank=same; ajuri; monitori}
+}
 ```
 
 | Osa | Tehtävä | Tietää liitännästä |

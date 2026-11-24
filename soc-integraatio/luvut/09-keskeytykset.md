@@ -115,6 +115,29 @@ keskeytykset voivat olla viestejä (MSI) kuten PCIe:ssä.
 
 ## Kokonaisuus
 
+Kuvassa on keskeytyksen polku lähteestä ytimen käsittelijään ja
+kuittaukseen. Väylät eivät ole polulla: keskeytys kulkee omia
+johtojaan, ja vain kuittaus tehdään rekisterikirjoituksina.
+
+```{.dot otsikko="Ulkoisen keskeytyksen polku Pikku-SoC:ssä"}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.35;
+  gpio [label="GPIO\nREUNAT & SALLI"];
+  dma [label="DMA\nVALMIS"];
+  plic [label="PLIC\nodottavat, prioriteetit,\nkynnys"];
+  ydin [label="ydin\nmip.MEIP & mie.MEIE\n& mstatus.MIE"];
+  kasittelija [label="käsittelijä\n(mtvec)"];
+  clint [label="CLINT\nmtime >= mtimecmp"];
+  gpio -> plic [label="lähde 1"];
+  dma -> plic [label="lähde 2"];
+  plic -> ydin [label="MEIP"];
+  clint -> ydin [label="MTIP"];
+  ydin -> kasittelija [label="ansa"];
+  kasittelija -> plic [label="CLAIM/COMPLETE", style=dashed, constraint=false];
+  kasittelija -> gpio [label="kuittaa REUNAT", style=dashed, constraint=false];
+}
+```
+
 Pääohjelma sallii keskeytykset ensin lähteittäin (`mie`) ja sitten
 yleisesti (`mstatus.MIE`):
 

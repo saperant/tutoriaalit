@@ -9,21 +9,22 @@ siirrot isännältä oikealle orjalle osoitteen perusteella.
 
 ## Pikku-SoC:n lohkokaavio
 
-```text
-  ┌──────┐   ┌───────┐
-  │ ydin │──▶│ silta │───┐
-  └──────┘   └───────┘   │           AXI4-Lite
-  ┌──────┐               ▼
-  │ DMA  │─────────▶┌────────┐──▶ RAM (16 KiB)
-  └──────┘          │ kytkin │
-                    └────────┘──▶ APB-silta
-                                    ├──▶ UART
-                                    ├──▶ SYSCON
-                                    ├──▶ GPIO ──────── keskeytys ─┐
-                                    ├──▶ DMA:n rekisterit ── kesk.─┤
-                                    ├──▶ CLINT ── MTIP ──▶ ydin    │
-                                    └──▶ PLIC ◀────────────────────┘
-                                           └── MEIP ──▶ ydin
+```{.dot otsikko="Pikku-SoC:n lohkokaavio. Yhtenäiset nuolet ovat väyliä isännältä orjalle, katkoviivat keskeytysjohtoja."}
+digraph {
+  rankdir=LR; nodesep=0.25; ranksep=0.4;
+  ydin; silta; dma_m [label="DMA\n(AXI-isäntä)"];
+  kytkin [label="kytkin\n(AXI4-Lite)"];
+  ram [label="RAM\n16 KiB"]; apb [label="APB-silta"];
+  uart [label="UART"]; syscon [label="SYSCON"]; gpio [label="GPIO"];
+  dma_r [label="DMA:n\nrekisterit"]; clint [label="CLINT"]; plic [label="PLIC"];
+  ydin -> silta; silta -> kytkin [label="AXI4-Lite"]; dma_m -> kytkin;
+  kytkin -> ram; kytkin -> apb;
+  apb -> uart; apb -> syscon; apb -> gpio; apb -> dma_r; apb -> clint;
+  apb -> plic [label="APB"];
+  edge [style=dashed, constraint=false];
+  gpio -> plic; dma_r -> plic;
+  clint -> ydin [label="MTIP"]; plic -> ydin [label="MEIP"];
+}
 ```
 
 Kaaviossa näkyy kolme järjestelmäpiirien yleistä piirrettä:
