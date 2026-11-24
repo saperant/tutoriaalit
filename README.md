@@ -64,6 +64,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Tietoturvan perusteet | [`tietoturvan-perusteet/`](tietoturvan-perusteet/) | [tietoturvan-perusteet.pdf](https://saperant.github.io/tutoriaalit/materiaalit/tietoturvan-perusteet.pdf) |
 | Kryptografia | [`kryptografia/`](kryptografia/) | [kryptografia.pdf](https://saperant.github.io/tutoriaalit/materiaalit/kryptografia.pdf) |
 | Miten tietokone laskee | [`tietokonearitmetiikka/`](tietokonearitmetiikka/) | [tietokonearitmetiikka.pdf](https://saperant.github.io/tutoriaalit/materiaalit/tietokonearitmetiikka.pdf) |
+| Virtualisointi | [`virtualisointi/`](virtualisointi/) | [virtualisointi.pdf](https://saperant.github.io/tutoriaalit/materiaalit/virtualisointi.pdf) |
 | Tietoverkot | [`tietoverkot/`](tietoverkot/) | [tietoverkot.pdf](https://saperant.github.io/tutoriaalit/materiaalit/tietoverkot.pdf) |
 | Verkkoinfrastruktuuri | [`verkkoinfrastruktuuri/`](verkkoinfrastruktuuri/) | [verkkoinfrastruktuuri.pdf](https://saperant.github.io/tutoriaalit/materiaalit/verkkoinfrastruktuuri.pdf) |
 | Tietoliikennetekniikka | [`tietoliikennetekniikka/`](tietoliikennetekniikka/) | [tietoliikennetekniikka.pdf](https://saperant.github.io/tutoriaalit/materiaalit/tietoliikennetekniikka.pdf) |

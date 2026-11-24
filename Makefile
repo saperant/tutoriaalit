@@ -1,5 +1,7 @@
 # Rakentaa ja testaa kaikki tutoriaalit.
-TUTORIAALIT := $(patsubst %/Makefile,%,$(wildcard */Makefile))
+# Sivusto kokoaa muiden hakemistojen PDF:t ja esimerkit, joten se
+# käsitellään viimeisenä.
+TUTORIAALIT := $(filter-out sivusto,$(patsubst %/Makefile,%,$(wildcard */Makefile))) sivusto
 
 .PHONY: kaikki testaa pdf
 kaikki testaa pdf:

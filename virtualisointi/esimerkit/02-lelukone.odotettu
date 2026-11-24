@@ -1,0 +1,4 @@
+suoraan raudalla   tuloste: 0   | IF lopussa 1 | ansoja 0
+trap-and-emulate   tuloste: 1   | IF lopussa 0 | ansoja 3
+binaarikaannos     tuloste: 0   | IF lopussa 1 | ansoja 5
+laitteistotuki     tuloste: 0   | IF lopussa 1 | ansoja 2

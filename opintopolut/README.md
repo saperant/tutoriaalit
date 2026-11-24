@@ -64,7 +64,7 @@ flowchart LR
     rinnakkaisohjelmointi["Rinnakkaisohjelmointi"]
     suorituskyky["Suorituskyvyn analyysi ja optimointi"]
     tietokonearitmetiikka["✓ Miten tietokone laskee"]
-    virtualisointi["Virtualisointi"]
+    virtualisointi["✓ Virtualisointi"]
   end
   subgraph laitteisto["Laitteistosuunnittelu"]
     kiintea_pilkku["Lukujen esitys ja kiinteän pilkun aritmetiikka"]
@@ -337,7 +337,7 @@ flowchart LR
 | Käyttöjärjestelmät | 5 | Tietokonearkkitehtuuri | suunniteltu |
 | Suorituskyvyn analyysi ja optimointi | 3 | Algoritmit, Tietokonearkkitehtuuri | suunniteltu |
 | Rinnakkaisohjelmointi | 5 | Käyttöjärjestelmät, Moderni C++ | suunniteltu |
-| Virtualisointi | 3 | Käyttöjärjestelmät | suunniteltu |
+| Virtualisointi | 3 | Käyttöjärjestelmät | [valmis](../virtualisointi/) |
 
 ### Laitteistosuunnittelu
 

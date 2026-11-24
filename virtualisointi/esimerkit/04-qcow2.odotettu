@@ -1,0 +1,9 @@
+image: kone1.qcow2
+backing file: perus.qcow2
+image: perus.qcow2
+  alkaen 0, pituus 0x100000: tiedostossa perus.qcow2
+  alkaen 0x100000, pituus 0x100000: tiedostossa kone1.qcow2
+onnistuneita lukuja: 2
+vedos: ennen-paivitysta
+palautettu: alku on taas peruskuvan dataa
+commit: kerroksen data on nyt peruskuvassa

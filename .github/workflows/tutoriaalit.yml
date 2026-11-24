@@ -39,7 +39,8 @@ jobs:
             shellcheck bats openssh-client verilator sqlite3 tcl8.6 ghdl racket \
             tcpdump dnsmasq-base bind9-dnsutils nftables bird2 \
             wireguard-tools wireguard-go busybox socat snmp snmpd \
-            softflowd nfdump freeradius freeradius-utils \
+            softflowd nfdump freeradius freeradius-utils qemu-system-x86 \
+            qemu-utils \
             rustc-1.80 cargo-1.80 rust-1.80-clippy golang-1.23-go \
             openjdk-21-jdk-headless
           pip install --break-system-packages ruff mypy pytest \
@@ -87,11 +88,16 @@ jobs:
           "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" \
             "platforms;android-37.2" "build-tools;36.0.0" > /dev/null
 
+      # PDF:t rakennetaan ensin, koska sivuston testi tarkistaa, että
+      # jokaisen valmiin tutoriaalin PDF on mukana.
+      - name: Rakenna PDF:t
+        run: make pdf
+
       - name: Testaa esimerkit, taitopuu ja sivusto
         run: make testaa
 
-      - name: Rakenna PDF:t ja sivusto
-        run: make pdf && make -C sivusto
+      - name: Rakenna sivusto
+        run: make -C sivusto
 
       - name: Tallenna PDF:t
         uses: actions/upload-artifact@v4

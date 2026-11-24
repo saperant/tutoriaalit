@@ -1589,6 +1589,7 @@ laajuus = 3
 testaus = "QEMU (TCG), unshare ja cgroups konttiympäristössä"
 roadmap = ["linux", "devops"]
 amk = "Virtualisointi"
+tutoriaali = "virtualisointi"
 
 [[taito]]
 id = "verkkoinfrastruktuuri"

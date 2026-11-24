@@ -1,0 +1,10 @@
+# Python-esimerkkien tarkistusasetukset.
+[tool.ruff]
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "UP", "SIM"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true

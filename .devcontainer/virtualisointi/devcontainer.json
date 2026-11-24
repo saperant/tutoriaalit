@@ -1,0 +1,26 @@
+{
+  "name": "Virtualisointi: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "qemu-system-x86 qemu-utils libcap2-bin shellcheck",
+      "PIP_PAKETIT": "ruff mypy"
+    }
+  },
+  "runArgs": [
+    "--cap-add=SYS_ADMIN",
+    "--security-opt=seccomp=unconfined",
+    "--security-opt=apparmor=unconfined"
+  ],
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/virtualisointi/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-python.python",
+        "timonwong.shellcheck"
+      ]
+    }
+  }
+}

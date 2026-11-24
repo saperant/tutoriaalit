@@ -33,7 +33,8 @@ verkkonimiavaruuksilla. Valmiit dokumentit:
 (Python: ruff ja mypy --strict; Bash: ShellCheck). Verkkonimiavaruuksia
 käyttävät esimerkit vaativat pääkäyttäjän oikeudet ja käynnistävät
 itsensä tarvittaessa `sudo -n`:llä. Kehityskontissa
-(`.devcontainer/tietoverkot`) on kaikki työkalut ja tarvittavat
-oikeudet (`NET_ADMIN`, `NET_RAW`, `SYS_ADMIN`).
+(`.devcontainer/tietoverkot`) on kaikki työkalut, ja se ajetaan
+etuoikeutettuna (`--privileged`), koska nimiavaruudet vaativat
+liitostoimintoja, joita isännän AppArmor muuten estää.
 
 Lisenssi: CC BY-SA 4.0.

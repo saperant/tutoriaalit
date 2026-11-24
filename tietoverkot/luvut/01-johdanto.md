@@ -59,8 +59,11 @@ verkkopinossa kuin fyysisessä verkossa, joten kaikki, mitä tässä näkee,
 pätee oikeisiin laitteisiin.
 
 Esimerkit tarvitsevat pääkäyttäjän oikeudet. Kontissa tarvitaan
-oikeudet `NET_ADMIN`, `NET_RAW` ja `SYS_ADMIN` (nimiavaruuden luonti on
-liitostoiminto), ja kehityskontin asetukset antavat ne. Jokainen
+lisäksi oikeudet `NET_ADMIN`, `NET_RAW` ja `SYS_ADMIN` (nimiavaruuden
+luonti on liitostoiminto), ja isännän AppArmor-profiili voi estää
+liitokset, joten kehityskontti ajetaan etuoikeutettuna
+(`--privileged`). Tee niin vain omalla koneellasi ja harjoituksia
+varten. Jokainen
 esimerkki luo nimiavaruutensa itse, siivoaa ne lopuksi (`trap … EXIT`)
 ja käynnistää itsensä `sudo`:lla, jos oikeuksia ei ole.
 

@@ -1,0 +1,4 @@
+root: chown onnistui
+ilman CAP_CHOWN: chown: changing ownership of 'tiedosto': Operation not permitted
+portti 80: lupa evätty
+portti 80: sidottu

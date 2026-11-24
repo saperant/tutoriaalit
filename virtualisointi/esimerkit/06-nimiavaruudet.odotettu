@@ -1,0 +1,8 @@
+UTS: konenimi vieras
+UTS: isännän nimi ennallaan
+PID: oma PID 1, prosessit: /proc/1
+NET: liitännät lo
+MNT: sisällä sisalla
+MNT: ulkona 0 tiedostoa
+nsenter: kohteen konenimi taustalla
+nsenter: eri UTS-nimiavaruus kuin isännällä
