@@ -1,0 +1,9 @@
+1 received
+1 received
+--- A:n ARP-taulu
+192.0.2.2 02:00:00:00:00:02
+192.0.2.3 02:00:00:00:00:03
+--- kytkimen oppimat osoitteet
+02:00:00:00:00:01 portti1
+02:00:00:00:00:02 portti2
+02:00:00:00:00:03 portti3

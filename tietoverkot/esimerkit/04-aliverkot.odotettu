@@ -1,0 +1,13 @@
+            aliverkko        maski           lähetysosoite  koneita
+koko alue   10.20.0.0/22     255.255.252.0   10.20.3.255     1022
+toimisto    10.20.0.0/23     255.255.254.0   10.20.1.255      510
+tuotanto    10.20.2.0/25     255.255.255.128 10.20.2.127      126
+vieraat     10.20.2.128/26   255.255.255.192 10.20.2.191       62
+palvelimet  10.20.2.192/27   255.255.255.224 10.20.2.223       30
+reitinvalit 10.20.2.224/30   255.255.255.252 10.20.2.227        2
+10.20.2.77 kuuluu aliverkkoon: tuotanto
+10.1.2.3     yksityinen=True  maailmanlaajuinen=False
+172.16.5.4   yksityinen=True  maailmanlaajuinen=False
+192.168.1.1  yksityinen=True  maailmanlaajuinen=False
+169.254.1.1  yksityinen=True  maailmanlaajuinen=False
+8.8.8.8      yksityinen=False maailmanlaajuinen=True

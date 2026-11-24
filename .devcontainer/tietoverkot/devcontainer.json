@@ -4,19 +4,21 @@
     "dockerfile": "../Dockerfile",
     "context": "..",
     "args": {
-      "LISAPAKETIT": "iproute2 iputils-ping tcpdump dnsutils netcat-openbsd curl",
+      "LISAPAKETIT": "iproute2 iputils-ping tcpdump dnsmasq-base bind9-dnsutils nftables openssl shellcheck",
       "PIP_PAKETIT": "ruff mypy"
     }
   },
   "runArgs": [
     "--cap-add=NET_ADMIN",
-    "--cap-add=NET_RAW"
+    "--cap-add=NET_RAW",
+    "--cap-add=SYS_ADMIN"
   ],
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/tietoverkot/esimerkit",
   "customizations": {
     "vscode": {
       "extensions": [
-        "ms-python.python"
+        "ms-python.python",
+        "timonwong.shellcheck"
       ]
     }
   }

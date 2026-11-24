@@ -1,0 +1,10 @@
+192.0.2.80
+nas.koti.example.
+192.0.2.20
+10 posti.koti.example.
+"v=spf1 mx -all"
+nas.koti.example.
+status: NXDOMAIN
+vastaus NOERROR, tietueita 2
+  kuvat.koti.example       300 CNAME nas.koti.example
+  nas.koti.example         300 A     192.0.2.20

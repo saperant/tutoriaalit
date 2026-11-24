@@ -1,0 +1,6 @@
+--- ilman NAT:ia
+ei vastausta
+IP 192.168.1.10 > 203.0.113.80: ICMP echo request
+--- NAT päällä
+vastaus
+IP 203.0.113.5 > 203.0.113.80: ICMP echo request

@@ -1,0 +1,12 @@
+1. ei reittiä
+A -> B: ei yhteyttä
+2. reitit, mutta R ei välitä paketteja
+A -> B: ei yhteyttä
+3. välitys päällä
+A -> B: vastaus
+ttl=63
+default via 192.0.2.1 dev eth0 
+192.0.2.0/24 dev eth0 proto kernel scope link src 192.0.2.10 
+198.51.100.20 via 192.0.2.1 dev eth0 src 192.0.2.10 uid 0 
+192.0.2.0/24 dev lan proto kernel scope link src 192.0.2.1 
+198.51.100.0/24 dev wan proto kernel scope link src 198.51.100.1 

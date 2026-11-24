@@ -1,0 +1,21 @@
+{
+  "kuluttaja": "myynti",
+  "tuottaja": "varasto",
+  "vuorovaikutukset": [
+    {
+      "kuvaus": "tunnetun tuotteen saldo",
+      "tila": "kahvinkeittimiä on kolme",
+      "pyynto": {"metodi": "GET", "polku": "/saldo/kahvinkeitin"},
+      "vastaus": {
+        "tila": 200,
+        "runko": {"tuote": "kahvinkeitin", "saldo": 3}
+      }
+    },
+    {
+      "kuvaus": "tuntematon tuote",
+      "tila": "teekeitintä ei ole",
+      "pyynto": {"metodi": "GET", "polku": "/saldo/teekeitin"},
+      "vastaus": {"tila": 404, "runko": {"status": 404}}
+    }
+  ]
+}

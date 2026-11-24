@@ -1,0 +1,6 @@
+A kysyy ARP:lla B:n osoitetta            -> portit [2, 3, 4]
+B vastaa A:lle                           -> portit [1]
+A lähettää B:lle                         -> portit [2]
+A lähettää C:lle, jota ei vielä tunneta  -> portit [2, 3, 4]
+A lähettää B:lle pitkän tauon jälkeen    -> portit [2, 3, 4]
+02:00:00:00:00:0a  portti 1

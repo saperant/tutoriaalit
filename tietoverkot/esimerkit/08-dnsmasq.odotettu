@@ -1,0 +1,18 @@
+OFFER xid=0x3903f326 mac=02:00:00:00:00:0b
+  osoite 192.0.2.100
+  aliverkon maski 255.255.255.0
+  reititin 192.0.2.1
+  nimipalvelin 192.0.2.53
+  palvelin 192.0.2.1
+  vuokra 3600 s
+ACK xid=0x3903f326 mac=02:00:00:00:00:0b
+  osoite 192.0.2.100
+  aliverkon maski 255.255.255.0
+  reititin 192.0.2.1
+  nimipalvelin 192.0.2.53
+  palvelin 192.0.2.1
+  vuokra 3600 s
+192.0.2.100/24 192.0.2.1
+eth0@if2         UP             192.0.2.100/24 
+default via 192.0.2.1 dev eth0 
+vuokra: 02:00:00:00:00:0b 192.0.2.100

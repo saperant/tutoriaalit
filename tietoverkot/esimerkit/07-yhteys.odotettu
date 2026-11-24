@@ -1,0 +1,6 @@
+TCP luki: MITTAUS 1;MITTAUS 2;MITTAUS 3;
+UDP luki: mittaus 1;
+UDP luki: mittaus 2;
+UDP luki: mittaus 3;
+TCP suljettuun porttiin: yhteys torjuttu (RST)
+UDP suljettuun porttiin: ICMP port unreachable

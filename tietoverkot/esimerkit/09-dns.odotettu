@@ -1,0 +1,8 @@
+kysely 34 tavua:
+  12 34 01 00 00 01 00 00 00 00 00 00 03 77 77 77
+  04 6b 6f 74 69 07 65 78 61 6d 70 6c 65 00 00 01
+  00 01
+vastaus 66 tavua, nimi pakattuna osoittimella c0 0c
+vastaus NOERROR, tietueita 2
+  www.koti.example         300 A     192.0.2.80
+  www.koti.example         300 A     192.0.2.81

@@ -1,0 +1,5 @@
+--- kuuntelevat TCP-portit (-tlnH)
+LISTEN 127.0.0.1:8080
+--- UDP-portit
+UNCONN 0.0.0.0:5353
+PORTTI

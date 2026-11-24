@@ -1,0 +1,3 @@
+72 tavua: IPv6-otsake 40 + ICMPv6 32
+IPv6 fe80::ff:fe00:a > ff02::1:ff00:b hyppyraja 255
+ICMPv6 tyyppi 135: kuka on fe80::ff:fe00:b? kerro 02:00:00:00:00:0a (summa ok)

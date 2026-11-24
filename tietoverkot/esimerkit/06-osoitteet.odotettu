@@ -1,0 +1,12 @@
+2001:db8::ff00:42:8329   dokumentaatio
+2001:db8::1:0:0:1        dokumentaatio
+fe80::1                  linkkipaikallinen
+fd12:3456:789a::1        yksityinen (ULA)
+ff02::1                  ryhmälähetys
+::1                      silmukka
+2001:0db8:0000:0000:0000:0000:0000:0001
+MAC 02:00:00:00:00:0a
+linkkipaikallinen fe80::ff:fe00:a
+SLAAC-osoite      2001:db8:10:20:0:ff:fe00:a
+NDP-kyselyryhmä   ff02::1:ff00:a  MAC 33:33:ff:00:00:0a
+käänteinen nimi   a.0.0.0.0.0.e.f.f.f.0.…

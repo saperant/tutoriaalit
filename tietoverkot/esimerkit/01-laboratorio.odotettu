@@ -1,0 +1,5 @@
+lo               DOWN           00:00:00:00:00:00 <LOOPBACK> 
+eth0@if2         UP             02:00:00:00:00:0a <BROADCAST,MULTICAST,UP,LOWER_UP> 
+eth0@if2         UP             192.0.2.1/24 
+3 packets transmitted, 3 received
+192.0.2.2 lladdr 02:00:00:00:00:0b REACHABLE 

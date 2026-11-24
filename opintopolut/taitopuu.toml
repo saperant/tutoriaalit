@@ -978,6 +978,7 @@ laajuus = 5
 testaus = "verkkonimiavaruudet ja paikalliset palvelimet"
 roadmap = ["network-engineer", "computer-science"]
 amk = "Tietoverkot"
+tutoriaali = "tietoverkot"
 
 [[taito]]
 id = "verkko-ohjelmointi"
@@ -1673,6 +1674,7 @@ laajuus = 5
 testaus = "Spring Boot -palvelut, upotettu viestinvälitin ja sopimustestit"
 roadmap = ["backend", "system-design"]
 amk = "Ohjelmistoarkkitehtuurit"
+tutoriaali = "palveluarkkitehtuurit"
 
 [[taito]]
 id = "asic-toteutus"

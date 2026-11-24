@@ -1,0 +1,12 @@
+# @alku asetukset
+spring:
+  application:
+    name: viestit
+  datasource:
+    url: jdbc:h2:mem:viestit;DB_CLOSE_DELAY=-1
+  artemis:
+    mode: embedded            # välittäjä sovelluksen sisällä
+    embedded:
+      queues: varasto.komennot,maksut.komennot,myynti.vastaukset,DLQ
+      topics: tilaukset.tapahtumat
+# @loppu asetukset

@@ -1,0 +1,9 @@
+HEI
+asiakas  > palvelin [S]   seq 0 data 0
+palvelin > asiakas  [S.]  seq 0 ack 1 data 0
+asiakas  > palvelin [.]   ack 1 data 0
+asiakas  > palvelin [P.]  seq 1 ack 1 data 3
+palvelin > asiakas  [P.]  seq 1 ack 4 data 3
+asiakas  > palvelin [F.]  seq 4 ack 4 data 0
+palvelin > asiakas  [F.]  seq 4 ack 5 data 0
+asiakas  > palvelin [.]   ack 5 data 0

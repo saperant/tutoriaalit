@@ -1,0 +1,11 @@
+== vika 1: väärä aliverkon maski
+RTNETLINK answers: Network is unreachable
+eth0@if2         UP             192.0.2.10/32 
+== vika 2: oletusyhdyskäytävää ei ole olemassa
+ping S: ei vastausta
+198.51.100.80 via 192.0.2.254 dev eth0 src 192.0.2.10 uid 0 
+192.0.2.254 dev eth0 INCOMPLETE 
+== vika 3: palvelimelta puuttuu paluureitti
+ping S: ei vastausta
+RTNETLINK answers: Network is unreachable
+ping S: vastaus

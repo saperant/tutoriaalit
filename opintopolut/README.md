@@ -94,7 +94,7 @@ flowchart LR
     linux_ajurit["Linux-laiteajurit"]
   end
   subgraph hajautetut["Verkot ja hajautetut järjestelmät"]
-    tietoverkot["Tietoverkot"]
+    tietoverkot["✓ Tietoverkot"]
     verkko_ohjelmointi["Verkko-ohjelmointi"]
     hajautetut_jarjestelmat["Hajautetut järjestelmät"]
     jarjestelmasuunnittelu["Skaalautuvien järjestelmien suunnittelu"]
@@ -102,7 +102,7 @@ flowchart LR
     verkkoinfrastruktuuri["Verkkoinfrastruktuuri"]
     tietoliikennetekniikka["Tietoliikennetekniikka"]
     palvelinymparistot["Palvelinympäristöt"]
-    palveluarkkitehtuurit["Palveluarkkitehtuurit"]
+    palveluarkkitehtuurit["✓ Palveluarkkitehtuurit"]
   end
   subgraph grafiikka["Tietokonegrafiikka"]
     renderoinnin_perusteet["Renderöinnin perusteet"]
@@ -379,11 +379,11 @@ flowchart LR
 
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
-| Tietoverkot | 5 | Komentorivi ja Linux | suunniteltu |
+| Tietoverkot | 5 | Komentorivi ja Linux | [valmis](../tietoverkot/) |
 | Säiliöt ja pilvi-infrastruktuuri | 5 | Tietoverkot | suunniteltu |
 | Verkkoinfrastruktuuri | 5 | Tietoverkot | suunniteltu |
 | Palvelinympäristöt | 5 | Säiliöt ja pilvi-infrastruktuuri, Verkkoinfrastruktuuri | suunniteltu |
-| Palveluarkkitehtuurit | 5 | Säiliöt ja pilvi-infrastruktuuri, Taustapalvelut | suunniteltu |
+| Palveluarkkitehtuurit | 5 | Säiliöt ja pilvi-infrastruktuuri, Taustapalvelut | [valmis](../palveluarkkitehtuurit/) |
 | Tietoliikennetekniikka | 5 | Python työkaluohjelmointiin, Tietoverkot, Todennäköisyys ja tilastot | suunniteltu |
 | Verkko-ohjelmointi | 5 | Käyttöjärjestelmät, Tietoverkot | suunniteltu |
 | Hajautetut järjestelmät | 5 | Algoritmit, Rinnakkaisohjelmointi, Verkko-ohjelmointi | suunniteltu |

@@ -1,0 +1,6 @@
+Frag needed and DF set (mtu = 1400)
+mtu 1400
+1 received
+1 received
+offset 0, flags [+], proto ICMP (1), length 1396
+offset 1376, flags [none], proto ICMP (1), length 124

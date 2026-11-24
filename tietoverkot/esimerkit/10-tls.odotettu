@@ -1,0 +1,4 @@
+api.example: hyväksytty, TLSv1.3, TLS_AES_256_GCM_SHA384, SAN ['api.example']
+  salattu tervehdys
+www.example: hylätty: Hostname mismatch, certificate is not valid for 'www.example'.
+api.example: hylätty: unable to get local issuer certificate
