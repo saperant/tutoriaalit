@@ -1,0 +1,5 @@
+FIR symmetrinen: True
+FIR ryhmäviive:  10.00  10.00  10.00  10.00 näytettä
+IIR ryhmäviive:   3.22   5.02   1.88   0.86 näytettä
+FIR: verhokäyrän huippu siirtyi 10 näytettä, ryhmäviive 10.0
+IIR: verhokäyrän huippu siirtyi 5 näytettä, ryhmäviive 5.0

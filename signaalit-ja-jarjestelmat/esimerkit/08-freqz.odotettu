@@ -1,0 +1,11 @@
+   f/Hz    |H|     dB   vaihe/aste
+     10 1.0000   0.00    -7.86
+     50 0.9729  -0.24   -42.12
+    100 0.7071  -3.01   -90.00
+    200 0.1961 -14.15  -141.67
+    400 0.0111 -39.06  -171.41
+   10 Hz: mitattu 1.0000    -7.86 astetta
+   50 Hz: mitattu 0.9729   -42.12 astetta
+  100 Hz: mitattu 0.7071   -90.00 astetta
+  200 Hz: mitattu 0.1961  -141.67 astetta
+  400 Hz: mitattu 0.0111  -171.41 astetta

@@ -1,0 +1,5 @@
+w = 0.000: |H| freqz   0.3017, etäisyyksistä   0.3017
+w = 0.600: |H| freqz   0.0000, etäisyyksistä   0.0000
+w = 1.200: |H| freqz   5.2277, etäisyyksistä   5.2277
+w = 2.000: |H| freqz   1.7534, etäisyyksistä   1.7534
+w = 3.142: |H| freqz   1.4827, etäisyyksistä   1.4827

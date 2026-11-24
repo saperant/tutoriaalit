@@ -4,7 +4,7 @@
     "dockerfile": "../Dockerfile",
     "context": "..",
     "args": {
-      "PIP_PAKETIT": "numpy scipy==1.18.1 scipy-stubs==1.18.1.1 ruff mypy"
+      "PIP_PAKETIT": "numpy scipy==1.18.1 scipy-stubs==1.18.1.1 ruff mypy pytest"
     }
   },
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/signaalit-ja-jarjestelmat/esimerkit",

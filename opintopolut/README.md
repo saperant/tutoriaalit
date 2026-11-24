@@ -81,7 +81,7 @@ flowchart LR
     soc_integraatio["✓ SoC-integraatio"]
   end
   subgraph signaalit["Signaalinkäsittely ja radiot"]
-    signaalit_ja_jarjestelmat["Signaalit ja järjestelmät"]
+    signaalit_ja_jarjestelmat["✓ Signaalit ja järjestelmät"]
     dsp["Digitaalinen signaalinkäsittely"]
     tiedonsiirto["Digitaalinen tiedonsiirto"]
     sdr["Ohjelmistoradio"]
@@ -360,7 +360,7 @@ flowchart LR
 
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
-| Signaalit ja järjestelmät | 5 | Kompleksiluvut ja Fourier-analyysi, Python työkaluohjelmointiin | suunniteltu |
+| Signaalit ja järjestelmät | 5 | Kompleksiluvut ja Fourier-analyysi, Python työkaluohjelmointiin | [valmis](../signaalit-ja-jarjestelmat/) |
 | Digitaalinen signaalinkäsittely | 5 | C-kieli, Signaalit ja järjestelmät | suunniteltu |
 | Digitaalinen tiedonsiirto | 5 | Digitaalinen signaalinkäsittely, Todennäköisyys ja tilastot | suunniteltu |
 | Ohjelmistoradio | 5 | Digitaalinen tiedonsiirto | suunniteltu |

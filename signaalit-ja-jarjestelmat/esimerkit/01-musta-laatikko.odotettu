@@ -1,0 +1,5 @@
+h[0..5] = 0.2000 0.1600 0.1280 0.1024 0.0819 0.0655
+ennuste osuu: True
+   1 Hz: mitattu vahvistus 0.963, laskettu |H| 0.963
+  10 Hz: mitattu vahvistus 0.340, laskettu |H| 0.340
+  40 Hz: mitattu vahvistus 0.117, laskettu |H| 0.117

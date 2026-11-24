@@ -1,0 +1,3 @@
+periodogrammi taso 0.994 x teoria, hajonta 1.010, huippu 125.0 Hz
+welch 1024    taso 0.993 x teoria, hajonta 0.069, huippu 125.0 Hz
+teoria 2.0e-05 V^2/Hz, Welchin taajuusväli 0.977 Hz

@@ -1,0 +1,6 @@
+sinc-interpolointi: suurin virhe 0.0008
+nollannen asteen pito: suurin virhe 1.4838
+  pidon vahvistus  50 Hz:lla 0.984
+  pidon vahvistus 180 Hz:lla 0.800
+  pidon vahvistus 250 Hz:lla 0.637
+fs = 300 Hz: suurin virhe 0.9586 (180 Hz -> 120 Hz)

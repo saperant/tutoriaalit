@@ -1,0 +1,8 @@
+ikkuna     keila/välit sivukeila/dB vahvistus
+boxcar            2.00        -13.3     1.000
+hann              4.00        -31.5     0.500
+hamming           4.00        -42.4     0.540
+blackman          6.00        -58.1     0.420
+boxcar    taso 160 Hz:n kohdalla  -35.2 dB, tausta 130..150 Hz  -33.2 dB
+hann      taso 160 Hz:n kohdalla  -60.3 dB, tausta 130..150 Hz  -74.3 dB
+blackman  taso 160 Hz:n kohdalla  -60.1 dB, tausta 130..150 Hz  -82.1 dB

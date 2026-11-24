@@ -1,0 +1,7 @@
+EMA alfa=0.1  max|p| 0.9000 stabiili    |h[499]|  1.47e-24
+resonaattori  max|p| 0.9747 stabiili    |h[499]|  5.73e-06
+summain       max|p| 1.0000 rajalla     |h[499]|  1.00e+00
+epävakaa      max|p| 1.0954 epästabiili |h[499]|  2.56e+18
+suurin kertoimen muutos 4.9e-05
+suora muoto: max|p| 0.9603 -> 1.0969
+3 toisen asteen lohkoa: max|p| -> 0.9603

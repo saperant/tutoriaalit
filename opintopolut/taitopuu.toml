@@ -818,6 +818,7 @@ laajuus = 5
 testaus = "Python ja NumPy/SciPy, pytest"
 roadmap = []
 amk = "Signaalit ja järjestelmät"
+tutoriaali = "signaalit-ja-jarjestelmat"
 
 [[taito]]
 id = "dsp"

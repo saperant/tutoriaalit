@@ -1,0 +1,14 @@
+   3000 Hz -> näkyy  3000 Hz
+   7000 Hz -> näkyy  3000 Hz
+  13000 Hz -> näkyy  3000 Hz
+  10000 Hz -> näkyy     0 Hz
+   5000 Hz -> näkyy  5000 Hz
+  24400 Hz -> näkyy  4400 Hz
+cos 3 kHz:  1.00 -0.31 -0.81  0.81  0.31 -1.00  0.31  0.81
+cos 7 kHz:  1.00 -0.31 -0.81  0.81  0.31 -1.00  0.31  0.81
+sin 7 kHz:  0.00 -0.95  0.59  0.59 -0.95  0.00  0.95 -0.59
+cos samat: True
+sin 7 kHz = -sin 3 kHz: True
+näytteistetty   3000 Hz: spektrin huippu  3000 Hz
+näytteistetty   7000 Hz: spektrin huippu  3000 Hz
+näytteistetty  13000 Hz: spektrin huippu  3000 Hz

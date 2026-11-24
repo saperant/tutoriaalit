@@ -1,0 +1,6 @@
+a =  0.5: energia    1.3333, kaava 1/(1-a^2) =    1.3333
+a =  0.9: energia    5.2632, kaava 1/(1-a^2) =    5.2632
+a = 0.99: energia   50.2513, kaava 1/(1-a^2) =   50.2513
+M =     10: teho u[n] 0.5238, teho 3cos 4.7143, energia u[n]      11
+M =    100: teho u[n] 0.5025, teho 3cos 4.5224, energia u[n]     101
+M =  10000: teho u[n] 0.5000, teho 3cos 4.5002, energia u[n]   10001

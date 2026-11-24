@@ -1,0 +1,8 @@
+kehyksiä 126, taajuusväli 31.25 Hz, aikaväli 16.0 ms
+t = 0.256 s: huippu  437.5 Hz, oikea  430.4 Hz
+t = 0.752 s: huippu  875.0 Hz, oikea  876.8 Hz
+t = 1.248 s: huippu 1312.5 Hz, oikea 1323.2 Hz
+t = 1.744 s: huippu 1781.2 Hz, oikea 1769.6 Hz
+ikkuna   64: napsahdus    5.0 ms, sävel  250.0 Hz
+ikkuna  256: napsahdus   17.0 ms, sävel   62.5 Hz
+ikkuna 1024: napsahdus   63.0 ms, sävel   15.6 Hz

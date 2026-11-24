@@ -1,0 +1,7 @@
+järjestelmä lineaar. aikainv. kausaal.
+keskiarvo3      True     True     True
+nelio          False     True     True
+aikapaino       True    False     True
+edistys         True     True    False
+summain         True     True     True
+poikkeama      False     True     True

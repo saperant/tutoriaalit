@@ -1,0 +1,3 @@
+oma == lfilter: True
+impulssivaste:  0.100  0.250  0.205  0.053 -0.015 -0.018 -0.006  0.001
+FIR (a = [1]) on konvoluutio: True

@@ -1,0 +1,7 @@
+taajuusväli fs/N = 10 Hz
+100.0 Hz: huippu 100 Hz, amplitudi 1.000, kolmessa välissä 100.0 %
+102.5 Hz: huippu 100 Hz, amplitudi 0.908, kolmessa välissä  93.5 %
+104.9 Hz: huippu 100 Hz, amplitudi 0.637, kolmessa välissä  85.1 %
+N =  25 (fs/N =   40 Hz): huippuja 1
+N =  50 (fs/N =   20 Hz): huippuja 2
+N = 100 (fs/N =   10 Hz): huippuja 2

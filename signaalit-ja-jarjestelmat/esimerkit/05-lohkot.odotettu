@@ -1,0 +1,3 @@
+overlap-add == kokonaan: True
+lfilter + zi == kokonaan: True
+ilman tilaa: suurin virhe 0.78, virheet vain 30 ensimmäisessä: True

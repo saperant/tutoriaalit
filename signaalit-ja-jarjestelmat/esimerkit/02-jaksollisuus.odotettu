@@ -1,0 +1,10 @@
+f =  1/8 jaksoa/näyte: jakso  8 näytettä, toistuu True
+f =  3/8 jaksoa/näyte: jakso  8 näytettä, toistuu True
+f = 3/10 jaksoa/näyte: jakso 10 näytettä, toistuu True
+f =  5/4 jaksoa/näyte: jakso  4 näytettä, toistuu True
+cos(n): lähin paluu arvoon 1 on 1.8e-09 päässä, ei jaksoa
+f =  0.1:  1.00  0.81  0.31 -0.31 -0.81 -1.00 -0.81 -0.31
+f =  1.1:  1.00  0.81  0.31 -0.31 -0.81 -1.00 -0.81 -0.31
+f =  0.9:  1.00  0.81  0.31 -0.31 -0.81 -1.00 -0.81 -0.31
+f = -0.1:  1.00  0.81  0.31 -0.31 -0.81 -1.00 -0.81 -0.31
+suurin erottuva taajuus 0.5 jaksoa/näyte = pi rad/näyte (3.1416)

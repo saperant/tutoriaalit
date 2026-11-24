@@ -1,0 +1,6 @@
+fftconvolve == convolve: True
+oaconvolve == convolve: True
+Nh =     8: suora     80,000  FFT  1,441,792  suora voittaa
+Nh =    32: suora    320,000  FFT  1,441,792  suora voittaa
+Nh =   128: suora  1,280,000  FFT  1,441,792  suora voittaa
+Nh =  1024: suora 10,240,000  FFT  1,441,792  FFT voittaa

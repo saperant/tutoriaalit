@@ -1,0 +1,4 @@
+r =  0.99: taajuus  440.0 Hz, |h| alussa     2.81, lopussa  2.53e-34
+r = 0.999: taajuus  440.0 Hz, |h| alussa     2.90, lopussa  1.19e-03
+r =   1.0: taajuus  440.0 Hz, |h| alussa     2.95, lopussa  2.95e+00
+r = 1.001: taajuus  440.0 Hz, |h| alussa     3.54, lopussa  8.61e+03

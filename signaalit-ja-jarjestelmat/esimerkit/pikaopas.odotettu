@@ -1,0 +1,5 @@
+sos == ba: True  stabiili: True
+|H| dB: 0.0 -3.0 -28.0  ryhmäviive 50 Hz: 4.66 näytettä
+pituudet: F 2001, P 257, xd 1000, c 4063, y3 4000, y4 100
+nollia 4, k 4.82e-03
+fk[1] = 0.25 Hz, fw[1] = 1.953 Hz, tila 4 lukua
