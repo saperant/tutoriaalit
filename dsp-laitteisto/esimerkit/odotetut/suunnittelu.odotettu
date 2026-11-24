@@ -1,0 +1,14 @@
+FIR, signal.firwin(8, 0.5), Q1.15:
+ k  liukuluku   koodi  heksana
+ 0  -0.005164    -169  ff57
+ 1  -0.022883    -750  fd12
+ 2  +0.096756    3170  0c62
+ 3  +0.431291   14133  3735
+ 4  +0.431291   14133  3735
+ 5  +0.096756    3170  0c62
+ 6  -0.022883    -750  fd12
+ 7  -0.005164    -169  ff57
+summa 32768 = 1.0000, itseisarvojen summa 36444
+SOS-lohko 0: (312, 624, 312, -24243, 9107), DC-vahvistus 1.0000
+SOS-lohko 1: (359, 717, 359, -27869, 12919), DC-vahvistus 1.0007
+OK: malli/kertoimet.py vastaa suunnittelua

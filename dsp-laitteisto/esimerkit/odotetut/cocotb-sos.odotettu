@@ -1,0 +1,9 @@
+impulssi: 25 näytettä bittitarkasti, saturaatio vaikuttaa 0
+askel: 144 näytettä bittitarkasti, saturaatio vaikuttaa 130
+satunnainen: 1600 näytettä bittitarkasti, saturaatio vaikuttaa 0
+  f/fs = 0.0156: malli    0.0 dB, RTL    0.0 dB
+  f/fs = 0.0508: malli   -3.3 dB, RTL   -3.3 dB
+  f/fs = 0.1250: malli  -33.4 dB, RTL  -33.4 dB
+  f/fs = 0.2500: malli  -64.0 dB, RTL  -64.0 dB
+taajuusvaste: 2048 näytettä bittitarkasti
+läpi 4, kaatui 0

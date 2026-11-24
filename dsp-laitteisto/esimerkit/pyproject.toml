@@ -1,0 +1,16 @@
+# Python-esimerkkien tarkistukset (ruff, mypy ja pytest).
+[tool.ruff]
+line-length = 78
+src = [".", "penkit"]
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "N", "A", "RUF"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["malli", "virta"]
+
+[tool.mypy]
+strict = true
+mypy_path = ["penkit"]
+explicit_package_bases = true

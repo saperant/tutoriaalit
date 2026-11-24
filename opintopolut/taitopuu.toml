@@ -799,6 +799,7 @@ laajuus = 5
 testaus = "Python-referenssi, cocotb ja Verilator"
 roadmap = []
 amk = "Digitaalinen signaalinkäsittely"
+tutoriaali = "dsp-laitteisto"
 
 # ---------------------------------------------------------------------
 # Signaalinkäsittely ja radiot

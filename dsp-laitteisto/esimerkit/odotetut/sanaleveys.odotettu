@@ -1,0 +1,11 @@
+ulostulo   keskivirhe   SNR
+pyöristys  -0.002 LSB   62.2 dB
+katkaisu   -0.499 LSB   56.2 dB
+
+32 kerrointa, kerroinbitit -> suurin vahvistus estokaistalla
+ 8 bittiä:    -34.4 dB
+10 bittiä:    -43.1 dB
+12 bittiä:    -53.4 dB
+14 bittiä:    -64.6 dB
+16 bittiä:    -63.6 dB
+liukuluku:    -63.4 dB

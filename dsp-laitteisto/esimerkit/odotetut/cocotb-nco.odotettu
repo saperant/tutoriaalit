@@ -1,0 +1,5 @@
+tasainen: 4096 näytettä bittitarkasti
+  taajuus 0.01562 fs, huippu lokerossa 64/4096, SFDR 81 dB
+epatasainen: 4096 näytettä bittitarkasti
+  taajuus 0.04000 fs, huippu lokerossa 164/4096, SFDR 59 dB
+läpi 2, kaatui 0

@@ -1,0 +1,4 @@
+== cordic-iter
+kantoketjun soluja (SB_CARRY): 144
+logiikkasoluja alle 800: kyllä
+Fmax clk yli 25 MHz: kyllä

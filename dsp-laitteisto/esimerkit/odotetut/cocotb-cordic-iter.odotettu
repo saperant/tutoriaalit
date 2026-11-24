@@ -1,0 +1,6 @@
+rotaatio: 315 näytettä bittitarkasti
+  suurin virhe cos/sin: 14.5 LSB (Q3.17)
+vektori: 308 näytettä bittitarkasti
+  suurin virhe kulma: 11.2 LSB (2**-18 kierrosta)
+  suurin virhe pituus: 8.2 LSB (Q3.17)
+läpi 2, kaatui 0

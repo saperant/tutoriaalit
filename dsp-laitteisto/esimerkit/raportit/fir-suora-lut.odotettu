@@ -1,0 +1,5 @@
+== fir-suora-lut
+kantoketjun soluja (SB_CARRY): 169
+logiikkasoluja yli 1200: kyllä
+Fmax clk yli 18 MHz: kyllä
+Fmax clk alle 30 MHz: kyllä

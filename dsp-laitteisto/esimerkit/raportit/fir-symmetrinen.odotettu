@@ -1,0 +1,4 @@
+== fir-symmetrinen
+kantoketjun soluja (SB_CARRY): 90
+DSP-lohkoja (SB_MAC16): 4
+logiikkasoluja alle 450: kyllä

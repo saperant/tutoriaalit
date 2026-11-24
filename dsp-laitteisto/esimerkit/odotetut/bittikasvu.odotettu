@@ -1,0 +1,5 @@
+tulo: 12 + 16 = 28 bittiä
+summa, mitkä tahansa 8 kerrointa: 28 + log2(8) = 31 bittiä
+summa näillä kertoimilla: [-74635474, 74602706] -> 28 bittiä
+pyöristetty ulostulo: [-2278, 2277] -> 13 bittiä, sallittu (-2048, 2047)
+kertoimien itseisarvojen summa 1.1122 = suurin vahvistus

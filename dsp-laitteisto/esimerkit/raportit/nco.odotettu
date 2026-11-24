@@ -1,0 +1,5 @@
+== nco
+kantoketjun soluja (SB_CARRY): 33
+lohko-RAM (SB_RAM40_4K): 1
+logiikkasoluja alle 200: kyllä
+Fmax clk yli 55 MHz: kyllä

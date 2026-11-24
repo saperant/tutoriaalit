@@ -123,6 +123,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Sulautettu Linux | [`embedded-linux/`](embedded-linux/) | [embedded-linux.pdf](https://saperant.github.io/tutoriaalit/materiaalit/embedded-linux.pdf) |
 | Digitaalinen tiedonsiirto | [`tiedonsiirto/`](tiedonsiirto/) | [tiedonsiirto.pdf](https://saperant.github.io/tutoriaalit/materiaalit/tiedonsiirto.pdf) |
 | Hajautetut järjestelmät | [`hajautetut-jarjestelmat/`](hajautetut-jarjestelmat/) | [hajautetut-jarjestelmat.pdf](https://saperant.github.io/tutoriaalit/materiaalit/hajautetut-jarjestelmat.pdf) |
+| DSP-algoritmien laitteistototeutus | [`dsp-laitteisto/`](dsp-laitteisto/) | [dsp-laitteisto.pdf](https://saperant.github.io/tutoriaalit/materiaalit/dsp-laitteisto.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

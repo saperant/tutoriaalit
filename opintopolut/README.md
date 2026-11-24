@@ -76,7 +76,7 @@ flowchart LR
     arkkitehtuurin_tutkiminen["✓ Arkkitehtuurin mallinnus ja suunnittelutilan tutkiminen"]
     eda_skriptaus["✓ EDA-työkaluketjujen automatisointi"]
     hls["✓ Korkean tason synteesi"]
-    dsp_laitteisto["DSP-algoritmien laitteistototeutus"]
+    dsp_laitteisto["✓ DSP-algoritmien laitteistototeutus"]
     asic_toteutus["✓ ASIC-toteutus"]
     soc_integraatio["✓ SoC-integraatio"]
   end
@@ -353,7 +353,7 @@ flowchart LR
 | Korkean tason mallinnus (SystemC/TLM) | 5 | Lukujen esitys ja kiinteän pilkun aritmetiikka, Moderni C++, Tietokonearkkitehtuuri | [valmis](../hlm-mallinnus/) |
 | SoC-integraatio | 5 | RTL-suunnittelu SystemVerilogilla, Tietokonearkkitehtuuri | [valmis](../soc-integraatio/) |
 | Arkkitehtuurin mallinnus ja suunnittelutilan tutkiminen | 5 | Korkean tason mallinnus (SystemC/TLM), Suorituskyvyn analyysi ja optimointi, Todennäköisyys ja tilastot | [valmis](../arkkitehtuurin-tutkiminen/) |
-| DSP-algoritmien laitteistototeutus | 5 | Digitaalinen signaalinkäsittely, FPGA-toteutus, Laitteiston verifiointi, Lukujen esitys ja kiinteän pilkun aritmetiikka | suunniteltu |
+| DSP-algoritmien laitteistototeutus | 5 | Digitaalinen signaalinkäsittely, FPGA-toteutus, Laitteiston verifiointi, Lukujen esitys ja kiinteän pilkun aritmetiikka | [valmis](../dsp-laitteisto/) |
 | Korkean tason synteesi | 5 | FPGA-toteutus, Korkean tason mallinnus (SystemC/TLM) | [valmis](../hls/) |
 
 ### Signaalinkäsittely ja radiot

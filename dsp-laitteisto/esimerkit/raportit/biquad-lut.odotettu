@@ -1,0 +1,4 @@
+== biquad-lut
+kantoketjun soluja (SB_CARRY): 102
+Fmax clk yli 10 MHz: kyllä
+Fmax clk alle 18 MHz: kyllä

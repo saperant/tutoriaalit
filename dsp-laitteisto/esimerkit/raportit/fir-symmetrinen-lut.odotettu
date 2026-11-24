@@ -1,0 +1,4 @@
+== fir-symmetrinen-lut
+kantoketjun soluja (SB_CARRY): 156
+logiikkasoluja alle 1200: kyllä
+Fmax clk yli 22 MHz: kyllä

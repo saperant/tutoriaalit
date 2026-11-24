@@ -1,0 +1,4 @@
+== biquad
+kantoketjun soluja (SB_CARRY): 51
+DSP-lohkoja (SB_MAC16): 5
+logiikkasoluja alle 450: kyllä
