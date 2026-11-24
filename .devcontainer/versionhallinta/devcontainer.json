@@ -1,0 +1,18 @@
+{
+  "name": "Versionhallinta (Git): esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "git shellcheck"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/versionhallinta/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "timonwong.shellcheck"
+      ]
+    }
+  }
+}

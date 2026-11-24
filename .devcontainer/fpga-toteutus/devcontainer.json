@@ -1,0 +1,19 @@
+{
+  "name": "FPGA-toteutus: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "yosys nextpnr-ice40 fpga-icestorm verilator iverilog",
+      "PIP_PAKETIT": "ruff mypy"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/fpga-toteutus/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "mshr-h.veriloghdl"
+      ]
+    }
+  }
+}

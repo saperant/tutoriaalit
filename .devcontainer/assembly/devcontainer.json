@@ -1,0 +1,18 @@
+{
+  "name": "Assembly: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "gcc-riscv64-linux-gnu qemu-user binutils"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/assembly/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools"
+      ]
+    }
+  }
+}

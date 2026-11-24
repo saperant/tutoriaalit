@@ -1,0 +1,19 @@
+{
+  "name": "Pythonin työkalut: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "PIP_PAKETIT": "numpy matplotlib ruff mypy pytest"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/python-tyokalut/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "charliermarsh.ruff"
+      ]
+    }
+  }
+}
