@@ -1,0 +1,19 @@
+{
+  "name": "Mikrokontrollerit ja bare-metal-ohjelmointi: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "gcc-arm-none-eabi libnewlib-arm-none-eabi qemu-system-arm gdb-multiarch"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/mikrokontrollerit/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "marus25.cortex-debug"
+      ]
+    }
+  }
+}
