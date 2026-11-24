@@ -10,7 +10,7 @@ Käyttö:
 
 VCD-muuntimen muut valitsimet: --reuna laskeva, --naytteistys ennen
 (arvo juuri ennen reunaa), --alkureuna (kello on 1 jo alussa),
---piilota-kello, --kanta h|d|b ja --luettelo tila=LEPO:LUKU:KIRJ
+--piilota-kello, --kanta h|d|s|b, --hscale ja --luettelo tila=LEPO:LUKU:KIRJ
 (väylän arvot nimillä). Tuloste on sisennettyä JSONia, joten rivit
 pysyvät lyhyinä.
 
@@ -391,6 +391,9 @@ def muotoile(arvo: str, leveys: int, kanta: str) -> str:
         return str(n)
     if kanta == "b":
         return f"{n:0{leveys}b}"
+    if kanta == "s":
+        # Kahden komplementti: ylin bitti on etumerkki.
+        return str(n - (1 << leveys) if n >> (leveys - 1) else n)
     numerot = max(1, (leveys + 3) // 4)
     return f"{n:0{numerot}X}"
 
@@ -404,9 +407,11 @@ def vcd_kaavioksi(argv: list[str]) -> None:
     p.add_argument("--alku", type=int, default=0,
                    help="ensimmäinen näytettävä kellojakso (nousevat reunat)")
     p.add_argument("--jaksot", type=int, default=12)
-    p.add_argument("--kanta", choices=["h", "d", "b"], default="h",
-                   help="väylien arvot heksana (h), kymmenjärjestelmässä (d) "
-                        "tai binäärinä (b)")
+    p.add_argument("--kanta", choices=["h", "d", "s", "b"], default="h",
+                   help="väylien arvot heksana (h), kymmenjärjestelmässä (d), "
+                        "etumerkillisinä (s) tai binäärinä (b)")
+    p.add_argument("--hscale", type=float,
+                   help="jakson leveyskerroin kaaviossa (config.hscale)")
     p.add_argument("--reuna", choices=["nouseva", "laskeva"],
                    default="nouseva", help="näytteistävä kellon reuna")
     p.add_argument("--piilota-kello", action="store_true",
@@ -482,6 +487,8 @@ def vcd_kaavioksi(argv: list[str]) -> None:
     tulos: dict[str, Any] = {"signal": signaalit}
     if a.otsikko:
         tulos["head"] = {"text": a.otsikko}
+    if a.hscale:
+        tulos["config"] = {"hscale": a.hscale}
     # Sama muoto kuin `python3 -m json.tool --indent 1`: rivit pysyvät
     # lyhyinä, joten tiedoston voi näyttää kirjassa sellaisenaan.
     json.dump(tulos, sys.stdout, indent=1)

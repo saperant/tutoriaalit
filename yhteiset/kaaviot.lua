@@ -42,12 +42,18 @@ local function piirra(laji, lahde, paate)
   local polku = valimuisti .. "/" .. pandoc.sha1(laji .. "\0" .. lahde) ..
       "." .. paate
   if not olemassa(polku) then
+    -- Kirjoitetaan ensin väliaikaistiedostoon ja siirretään se paikalleen:
+    -- rinnakkaiset käännökset eivät näe puolivalmista kaaviota.
+    local valiaikainen = polku .. "." .. tostring(math.random(1, 1e9)) ..
+        "." .. paate
     local ok, virhe = pcall(pandoc.pipe, "python3",
-        { piirtaja, laji, polku }, lahde)
+        { piirtaja, laji, valiaikainen }, lahde)
     if not ok then
+      os.remove(valiaikainen)
       error("kaaviot.lua: " .. laji .. "-kaavion piirtäminen epäonnistui: " ..
             tostring(virhe))
     end
+    os.rename(valiaikainen, polku)
   end
   return polku
 end
