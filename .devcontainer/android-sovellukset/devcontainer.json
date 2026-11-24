@@ -1,0 +1,20 @@
+{
+  "name": "Android-sovellukset: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "openjdk-21-jdk-headless",
+      "ANDROID_SDK": "platforms;android-36 build-tools;36.0.0 platform-tools"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/android-sovellukset/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "fwcd.kotlin",
+        "vscjava.vscode-gradle"
+      ]
+    }
+  }
+}

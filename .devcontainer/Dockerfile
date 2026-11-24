@@ -12,6 +12,10 @@
 #   NPM_PAKETIT     globaalit npm-paketit, esim. "typescript@7.0.2"
 #   PLAYWRIGHT      Playwrightin versio; asentaa myös Chromiumin (vaatii
 #                   NODEJS-argumentin)
+#   ANDROID_SDK     Android SDK -paketit, esim. "platforms;android-36
+#                   build-tools;36.0.0" (vaatii JDK:n). Rakentaminen
+#                   hyväksyy Android SDK:n lisenssiehdot:
+#                   https://developer.android.com/studio/terms
 #   KOTLIN          Kotlin-kääntäjän versio, esim. "2.4.21" (vaatii
 #                   LISAPAKETIT-listaan JDK:n)
 
@@ -24,6 +28,8 @@ ARG NODEJS=""
 ARG NPM_PAKETIT=""
 ARG KOTLIN=""
 ARG PLAYWRIGHT=""
+ARG ANDROID_SDK=""
+ENV ANDROID_HOME=/opt/android-sdk
 ENV NODE_PATH=/usr/local/lib/node_modules \
     PLAYWRIGHT_BROWSERS_PATH=/opt/playwright
 
@@ -63,6 +69,15 @@ RUN if [ -n "$NODEJS" ]; then \
     && if [ -n "$KOTLIN" ]; then \
         curl -fsSL -o /tmp/kotlin.zip "https://github.com/JetBrains/kotlin/releases/download/v$KOTLIN/kotlin-compiler-$KOTLIN.zip" \
         && unzip -q /tmp/kotlin.zip -d /opt && rm /tmp/kotlin.zip; \
+    fi \
+    && if [ -n "$ANDROID_SDK" ]; then \
+        curl -fsSL -o /tmp/sdk.zip https://dl.google.com/android/repository/commandlinetools-linux-16111833_latest.zip \
+        && mkdir -p "$ANDROID_HOME/cmdline-tools" \
+        && unzip -q /tmp/sdk.zip -d /tmp/sdk && rm /tmp/sdk.zip \
+        && mv /tmp/sdk/cmdline-tools "$ANDROID_HOME/cmdline-tools/latest" \
+        && yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null \
+        && "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" $ANDROID_SDK > /dev/null \
+        && chmod -R a+rwX "$ANDROID_HOME"; \
     fi
 
 # Ubuntun versioidut Go- ja Rust-työkalut omista hakemistoistaan sekä
