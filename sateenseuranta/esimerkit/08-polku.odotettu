@@ -1,0 +1,17 @@
+vertailu 128     summa c1d1eb67  keskiarvo 0.1058
+menetelmä    näytteitä  RMSE    keskiarvo  säteitä/näyte
+naiivi               4  0.7419     0.1342           2.07
+NEE                  4  0.0488     0.1064           3.06
+naiivi              16  0.3290     0.1230           2.06
+NEE                 16  0.0282     0.1058           3.03
+NEE, valo näkyy  summa b2b2587c  keskiarvo 0.2092
+|
+|    ::--++*=-=-:
+|    ----+#*+====
+|    -==+*##**=+=
+|    -==*####*++=
+|    --=***##*+=-
+|    ---==*++==--
+|    :--.:*=-----
+|    -=--=***+++=
+|      ..  ..

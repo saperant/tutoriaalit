@@ -1,0 +1,12 @@
+pallo edestä            t = 4.000000
+pallo sisältä           t = 1.000000
+pallo, tmax = 3         ohi
+pallo sivuun            ohi
+taso z = 2              t = 7.000000
+taso takana             ohi
+kolmio keskeltä         t = 5.000000
+kolmio kärjen ohi       ohi
+laatikko edestä         t = 4.000000
+laatikko, reunan taso   t = 4.000000
+laatikko sisältä        t = 0.000000
+satunnaistesti: 3592 osumaa, 0 eroa, 0 reunalla

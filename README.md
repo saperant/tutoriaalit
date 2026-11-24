@@ -105,6 +105,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Korkean tason mallinnus (SystemC/TLM) | [`hlm-mallinnus/`](hlm-mallinnus/) | [hlm-mallinnus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/hlm-mallinnus.pdf) |
 | Mikrokontrollerit ja bare-metal-ohjelmointi | [`mikrokontrollerit/`](mikrokontrollerit/) | [mikrokontrollerit.pdf](https://saperant.github.io/tutoriaalit/materiaalit/mikrokontrollerit.pdf) |
 | Käyttöjärjestelmät | [`kayttojarjestelmat/`](kayttojarjestelmat/) | [kayttojarjestelmat.pdf](https://saperant.github.io/tutoriaalit/materiaalit/kayttojarjestelmat.pdf) |
+| Säteenseuranta ja fysikaalinen valaistus | [`sateenseuranta/`](sateenseuranta/) | [sateenseuranta.pdf](https://saperant.github.io/tutoriaalit/materiaalit/sateenseuranta.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

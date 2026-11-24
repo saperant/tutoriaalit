@@ -1,0 +1,12 @@
+kolmioita 3072
+keskikohta solmuja  3327, syvyys 21
+SAH        solmuja  3447, syvyys 15
+raakahaku        summa 8aa3feb9  keskiarvo 0.4316
+    säteeltä: 0.0 laatikkoa, 3072.0 kolmiota
+BVH keskikohta   summa 8aa3feb9  keskiarvo 0.4316
+    säteeltä: 19.4 laatikkoa, 1.7 kolmiota
+BVH SAH          summa 8aa3feb9  keskiarvo 0.4316
+    säteeltä: 18.1 laatikkoa, 1.9 kolmiota
+satunnaiset säteet: 0 eroa raakahakuun
+    keskikohta 18.4 laatikkoa, 1.2 kolmiota
+    SAH        15.7 laatikkoa, 1.4 kolmiota

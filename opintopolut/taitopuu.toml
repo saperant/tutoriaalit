@@ -1119,6 +1119,7 @@ laajuus = 5
 testaus = "C++, kiinteä satunnaissiemen, kuvien vertailu toleranssilla"
 roadmap = ["game-developer"]
 amk = "Tietokonegrafiikan syventävä opintojakso"
+tutoriaali = "sateenseuranta"
 
 [[taito]]
 id = "gpu-ohjelmointi"
