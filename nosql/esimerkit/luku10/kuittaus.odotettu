@@ -1,0 +1,5 @@
+w=1: kuitattu=True
+w=majority: kuitattu=True
+w=2 yhden solmun joukossa: WriteConcernError
+tallessa silti: 1
+majority-kirjoitus nakyy majority-luvulle: 1

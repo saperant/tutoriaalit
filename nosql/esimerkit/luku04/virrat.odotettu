@@ -1,0 +1,5 @@
+a sai: ['T1', 'T2']
+b sai: ['T3', 'T4']
+kuittaamatta: 2 kuluttajalla: ['b']
+a otti haltuun: ['T3', 'T4']
+kuittaamatta: 0

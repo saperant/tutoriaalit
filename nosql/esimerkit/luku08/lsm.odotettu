@@ -1,0 +1,6 @@
+tiedostoja: 7 memtable: 3
+tuote:04 = hinta=44
+tuote:07 = None
+luettuja tiedostoja: 1 bloom ohitti: 1
+kompaktoinnin jalkeen tiedostoja: 1 avaimia: 19
+kirjoitusvahvistus ennen kompaktointia: 1.5, jalkeen: 2.5

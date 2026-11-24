@@ -1,0 +1,6 @@
+normalisoitu (3 taulua): ('T1', 'aino', 'Otsalamppu', 2)
+normalisoitu (3 taulua): ('T1', 'aino', 'Retkikeitin', 1)
+dokumentti, 1 haku: ['keitin', 'lamppu']
+lamppuja myyty, normalisoitu: (3,)
+lamppuja myyty, dokumentti: (3,)
+nimi muuttui kaikkialle: [('LED-otsalamppu',)]

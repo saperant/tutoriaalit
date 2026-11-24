@@ -1,0 +1,4 @@
+ei tallennusta: 0/1000 tilausta tallessa
+RDB, save 60 1: 0/1000 tilausta tallessa
+AOF everysec, kaatuminen 1,5 s myohemmin: 1000/1000 tilausta tallessa
+AOF always: 1000/1000 tilausta tallessa

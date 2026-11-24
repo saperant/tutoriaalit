@@ -1,0 +1,29 @@
+# Python-esimerkkien tarkistukset (ruff, mypy ja pytest).
+[tool.ruff]
+line-length = 78
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "N", "A", "RUF"]
+# N818: poikkeusten nimet ovat suomeksi (EiRiita).
+# S101: testit käyttävät assertia. S311: satunnaisluvut ovat
+# testidataa, eivät salausta. S608: kyselyt rakennetaan vain esimerkin
+# omista vakioista, ei käyttäjän syötteestä.
+ignore = ["S311", "S608", "N818"]
+
+[tool.ruff.lint.per-file-ignores]
+"testit/*.py" = ["S101"]
+
+[tool.mypy]
+strict = true
+
+# Tietokanta-asiakkaista vain osalla on tyyppitiedot. redis-py:n
+# tyypit kattavat sekä tavallisen että asynkronisen asiakkaan, joten
+# paluuarvot ovat liian väljiä; sitä käsitellään tyypittömänä.
+[[tool.mypy.overrides]]
+module = ["cassandra.*", "testcontainers.*", "redis.*"]
+ignore_missing_imports = true
+follow_imports = "skip"
+
+[tool.pytest.ini_options]
+addopts = "-q -p no:cacheprovider"

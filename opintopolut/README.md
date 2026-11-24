@@ -152,7 +152,7 @@ flowchart LR
     taustapalvelut["✓ Taustapalvelut"]
     android_sovellukset["✓ Android-sovellukset"]
     integraatiotestaus["✓ Integraatiotestaus ja Testcontainers"]
-    nosql["NoSQL-tietokannat"]
+    nosql["✓ NoSQL-tietokannat"]
   end
   komentorivi --> versionhallinta
   ohjelmoinnin_perusteet --> c_kieli
@@ -475,5 +475,5 @@ flowchart LR
 | Taustapalvelut | 5 | Java, SQL ja relaatiotietokannat, Tietoverkot | [valmis](../taustapalvelut/) |
 | Android-sovellukset | 5 | Kotlin | [valmis](../android-sovellukset/) |
 | Integraatiotestaus ja Testcontainers | 5 | Python työkaluohjelmointiin, SQL ja relaatiotietokannat, Säiliöt ja pilvi-infrastruktuuri | [valmis](../integraatiotestaus/) |
-| NoSQL-tietokannat | 5 | SQL ja relaatiotietokannat, Säiliöt ja pilvi-infrastruktuuri | suunniteltu |
+| NoSQL-tietokannat | 5 | SQL ja relaatiotietokannat, Säiliöt ja pilvi-infrastruktuuri | [valmis](../nosql/) |
 | Web-sovellukset | 5 | HTML ja CSS, Tietoverkot, TypeScript | [valmis](../web-sovellukset/) |

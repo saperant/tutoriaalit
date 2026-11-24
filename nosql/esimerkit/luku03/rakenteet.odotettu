@@ -1,0 +1,8 @@
+varasto: 14
+kayttaja: [('kaupunki', 'Oulu'), ('nimi', 'Aino'), ('tilauksia', '1')]
+historia: ['katsoi:99', 'osti:42', 'katsoi:17']
+yhteiset tagit: ['kevyt', 'retkeily']
+1. otsalamppu 340
+2. makuupussi 245
+3. teltta 210
+teltan sija (0 = paras): 2

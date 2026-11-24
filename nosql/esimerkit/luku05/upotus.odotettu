@@ -1,0 +1,4 @@
+T1 yhdella haulla, summa: 107.0
+T1: {'tuote': 'Retkikeitin', 'kpl': 1}
+T1: {'tuote': 'Otsalamppu', 'kpl': 2}
+tilausdokumentin koko alle 1 kt: True

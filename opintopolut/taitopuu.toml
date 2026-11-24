@@ -2121,6 +2121,7 @@ laajuus = 5
 testaus = "oikeat tietokannat konteissa, Python-asiakkaat ja pytest"
 roadmap = ["backend"]
 amk = "Tietokannat (jatkokurssi)"
+tutoriaali = "nosql"
 
 # ---------------------------------------------------------------------
 # Roolit

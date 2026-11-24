@@ -1,0 +1,4 @@
+kaksi myyntia, varasto: 9
+DECR, varasto: 8
+A: EXEC hylattiin, avain muuttui
+varasto: 0

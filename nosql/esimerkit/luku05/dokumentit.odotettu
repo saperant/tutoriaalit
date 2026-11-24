@@ -1,0 +1,6 @@
+tuotteita: 4
+retkeily < 200: {'nimi': 'Retkikeitin', 'hinta': 49.0}
+retkeily < 200: {'nimi': 'Makuupussi', 'hinta': 139.0}
+paino <= 1200 g: ['keitin', 'pussi']
+upsert loi uuden: kompassi
+lamppu: {'nimi': 'Otsalamppu', 'hinta': 24.0, 'arviot': [{'tahtia': 5}]}

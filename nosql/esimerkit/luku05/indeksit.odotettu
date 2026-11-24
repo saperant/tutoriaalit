@@ -1,0 +1,4 @@
+COLLSCAN | luettu 10000 | palautettu 200
+IXSCAN -> FETCH | luettu 200 | palautettu 200
+IXSCAN -> FETCH | luettu 2000 | palautettu 334
+IXSCAN -> FETCH | luettu 334 | palautettu 334

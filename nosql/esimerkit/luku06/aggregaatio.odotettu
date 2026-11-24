@@ -1,0 +1,5 @@
+{'kpl': 1, 'euroa': 299.0, 'kaupunki': 'Turku', 'tuote': 'teltta'}
+{'kpl': 3, 'euroa': 139.0, 'kaupunki': 'Oulu', 'tuote': 'keitin'}
+{'kpl': 1, 'euroa': 139.0, 'kaupunki': 'Oulu', 'tuote': 'pussi'}
+{'kpl': 3, 'euroa': 87.0, 'kaupunki': 'Oulu', 'tuote': 'lamppu'}
+kanta-asiakkaat: ['aino']
