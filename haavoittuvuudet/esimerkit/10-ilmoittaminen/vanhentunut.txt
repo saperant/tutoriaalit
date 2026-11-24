@@ -1,0 +1,3 @@
+# Virheellinen: Expires puuttuu ja yhteystieto on pelkkä nimi.
+Contact: Tietoturvatiimi
+Policy: https://example.org/tietoturva/julkistuskaytanto

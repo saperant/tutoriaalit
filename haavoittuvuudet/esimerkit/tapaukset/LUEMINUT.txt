@@ -1,0 +1,3 @@
+Tapaustutkimusten koodiotteet (luku 10). Otteet ovat lyhyitä,
+yksinkertaistettuja lainauksia julkaistuista korjauksista tai niiden
+periaatteita kuvaavaa pseudokoodia. Niitä ei käännetä eikä ajeta.

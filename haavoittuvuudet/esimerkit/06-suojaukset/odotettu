@@ -1,0 +1,31 @@
+== suojausten tarkistus
+# @alku t1
+ohjelma   PIE    NX     kanari  RELRO       FORTIFY  CET
+heikko    ei     ei     ei      ei          ei       ei
+oletus    kyllä  kyllä  kyllä   täysi       ei       kyllä
+vahva     kyllä  kyllä  kyllä   täysi       kyllä    kyllä
+# @loppu t1
+== ASLR
+# @alku t2
+PIE-ohjelma:
+  keko: vaihtelee
+  libc: vaihtelee
+  ohjelma: vaihtelee
+  pino: vaihtelee
+kiinteäosoitteinen ohjelma:
+  keko: vaihtelee
+  libc: vaihtelee
+  ohjelma: kiinteä
+  pino: vaihtelee
+# @loppu t2
+== NX
+# @alku t3
+paluuarvo 139 (SIGSEGV)
+pinossa olevaa dataa suoritettiin
+# @loppu t3
+== FORTIFY_SOURCE
+# @alku t4
+tunnus: aino
+paluuarvo 134 (SIGABRT)
+glibc: *** buffer overflow detected ***
+# @loppu t4

@@ -1,0 +1,5 @@
+# Variaatioanalyysi: kertolaskut, joiden tulos levenee vasta jälkikäteen.
+Checks: >
+  -*,
+  bugprone-implicit-widening-of-multiplication-result,
+  bugprone-misplaced-widening-cast

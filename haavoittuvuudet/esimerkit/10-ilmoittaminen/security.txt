@@ -1,0 +1,10 @@
+# Haavoittuvuuksien ilmoittaminen (RFC 9116). Tiedosto julkaistaan
+# osoitteessa https://example.org/.well-known/security.txt
+Contact: mailto:tietoturva@example.org
+Contact: https://example.org/tietoturva/ilmoita
+Expires: 2027-06-30T23:59:59Z
+Encryption: https://example.org/tietoturva/pgp-avain.txt
+Preferred-Languages: fi, en
+Policy: https://example.org/tietoturva/julkistuskaytanto
+Acknowledgments: https://example.org/tietoturva/kiitokset
+Canonical: https://example.org/.well-known/security.txt

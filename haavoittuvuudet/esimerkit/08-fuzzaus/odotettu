@@ -1,0 +1,28 @@
+== kierros 1: alkuperäinen jäsennin
+# @alku t1
+löydös tallennettu: loydos-1
+UBSan: tlv.c:23: index N out of bounds for type 'char[16]'
+# @loppu t1
+== minimointi
+# @alku t2
+minimoitu syöte on lyhyempi
+UBSan: tlv.c:23: index N out of bounds for type 'char[16]'
+# @loppu t2
+== kierros 2: nimen tarkistus korjattu
+# @alku t3
+löydös tallennettu: loydos-2
+UBSan: tlv.c:42: index N out of bounds for type 'const char *const[4]'
+# @loppu t3
+== kierros 3: molemmat korjattu
+# @alku t4
+ei löydöksiä; korpus kasvoi uusilla syötteillä
+# @loppu t4
+== regressiotestit
+# @alku t5
+regressiotestit: 4 syötettä, ei kaatumisia
+# @loppu t5
+== AFL++
+# @alku t6
+AFL++ löysi kaatuvan syötteen
+syöte kaatuu myös sanitoijakäännöksessä
+# @loppu t6

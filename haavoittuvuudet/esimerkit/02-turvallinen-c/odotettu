@@ -1,0 +1,46 @@
+== koon laskenta
+# @alku t1
+n = 1000
+  naiivi:      16000 tavua
+  tarkistettu: 16000 tavua
+n = 1152921504606846977
+  naiivi:      16 tavua
+  tarkistettu: ylivuoto, varaus hylätään
+käyttö: koko N
+paluuarvo 2
+# @loppu t1
+== etumerkillinen pituus
+# @alku t2
+dataa 5 tavua
+paluuarvo 1
+ASan: negative-size-param
+  kohta: pura (pituus.c:25)
+  muuttuja: kehys
+kehys hylätty
+paluuarvo 1
+# @loppu t2
+== etumerkillinen ylivuoto
+# @alku t3
+paluuarvo 1
+UBSan: summa.c:20: signed integer overflow: 2147483640 + 16 cannot be
+    represented in type 'int'
+kokonaispituus: -1
+# @loppu t3
+== kääntäjän varoitukset
+# @alku t4
+rivi 23 [-Wconversion]
+rivi 24 [-Wsign-compare]
+rivi 25 [-Wsign-conversion]
+# @loppu t4
+== GCC:n staattinen analyysi
+# @alku t5
+rivi 37 [-Wanalyzer-double-free, CWE-415]
+# @loppu t5
+== clang-tidy
+# @alku t6
+rivi 23 [bugprone-narrowing-conversions]
+rivi 28 [bugprone-misplaced-operator-in-strlen-in-alloc]
+rivi 32 [clang-analyzer-security.insecureAPI.strcpy]
+rivi 36 [cert-err33-c]
+rivi 38 [cert-err34-c]
+# @loppu t6

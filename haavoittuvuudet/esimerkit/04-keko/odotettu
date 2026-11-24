@@ -1,0 +1,48 @@
+== kääntäjän varoitus
+# @alku t1
+rivi 50 [-Wuse-after-free]
+# @loppu t1
+== ASan: ylivuoto
+# @alku t2
+paluuarvo 1
+ASan: heap-buffer-overflow
+  WRITE of size 37
+  kohta: ylivuoto (istunnot.c:36)
+  alue: 16 tavun varaus, 0 tavua lopun jälkeen
+  varattu: ylivuoto (istunnot.c:31)
+# @loppu t2
+== ASan: vapautettu
+# @alku t3
+paluuarvo 1
+ASan: heap-use-after-free
+  READ of size 2
+  kohta: vapautettu (istunnot.c:50)
+  alue: 24 tavun varaus, 0 tavua alueen sisällä
+  vapautettu: vapautettu (istunnot.c:49)
+  varattu: avaa (istunnot.c:16)
+# @loppu t3
+== ASan: tupla
+# @alku t4
+paluuarvo 1
+ASan: attempting double-free
+  kohta: tupla (istunnot.c:78)
+  alue: 24 tavun varaus, 0 tavua alueen sisällä
+  vapautettu: tupla (istunnot.c:76)
+  varattu: avaa (istunnot.c:16)
+# @loppu t4
+== keon metatiedot
+# @alku t5
+> kentta: koko-kenttä 0x21
+> seuraava: koko-kenttä 0x21
+> seuraava alkaa 32 tavua kentän jälkeen
+> kopioinnin jälkeen seuraavan koko-kenttä: b'hdu kent'
+# @loppu t5
+== muistin uudelleenkäyttö
+# @alku t6
+sama muisti uudelleen: kyllä
+# @loppu t6
+== glibc: kaksoisvapautus
+# @alku t7
+paluuarvo 134 (SIGABRT)
+glibc: free(): double free detected in tcache 2
+# @loppu t7

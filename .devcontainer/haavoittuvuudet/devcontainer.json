@@ -1,10 +1,10 @@
 {
-  "name": "Haavoittuvuuksien analyysi ja hyödyntäminen: esimerkit",
+  "name": "Haavoittuvuuksien analyysi ja torjunta: esimerkit",
   "build": {
     "dockerfile": "../Dockerfile",
     "context": "..",
     "args": {
-      "LISAPAKETIT": "gdb radare2 strace ltrace binutils shellcheck",
+      "LISAPAKETIT": "gdb strace binutils shellcheck clang-tidy-20 lld-20 afl++ gcc-aarch64-linux-gnu",
       "PIP_PAKETIT": "ruff mypy"
     }
   },

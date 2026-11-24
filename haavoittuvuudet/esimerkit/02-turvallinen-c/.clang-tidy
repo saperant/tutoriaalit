@@ -1,0 +1,8 @@
+# clang-tidyn tarkistukset tälle hakemistolle. Annex K -funktioita
+# (memcpy_s) ehdottava tarkistus on pois, koska glibc ei tarjoa niitä.
+Checks: >
+  -*,
+  bugprone-*,
+  cert-*,
+  clang-analyzer-*,
+  -clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling

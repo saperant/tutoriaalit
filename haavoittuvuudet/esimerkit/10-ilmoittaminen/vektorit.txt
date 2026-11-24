@@ -1,0 +1,10 @@
+# Vektori ja kuvaus. Kaksi ensimmäistä tarkistavat laskun: kaikki
+# vaikutukset korkeita verkon yli ilman oikeuksia on 9,8, pelkkä
+# luottamuksellisuuden menetys samoin ehdoin 7,5.
+CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H  tarkistus: 9.8
+CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N  tarkistus: 7.5
+CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H  TLV-palvelu kaatuu
+CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H  TLV, ohjausvuo mahdollinen
+CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H  kuvatiedosto avataan
+CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N  lokin muotoilu vuotaa
+CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H  murtautuu hiekkalaatikosta

@@ -127,6 +127,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Linux-laiteajurit | [`linux-ajurit/`](linux-ajurit/) | [linux-ajurit.pdf](https://saperant.github.io/tutoriaalit/materiaalit/linux-ajurit.pdf) |
 | Ohjelmistoradio | [`sdr/`](sdr/) | [sdr.pdf](https://saperant.github.io/tutoriaalit/materiaalit/sdr.pdf) |
 | Skaalautuvien järjestelmien suunnittelu | [`jarjestelmasuunnittelu/`](jarjestelmasuunnittelu/) | [jarjestelmasuunnittelu.pdf](https://saperant.github.io/tutoriaalit/materiaalit/jarjestelmasuunnittelu.pdf) |
+| Haavoittuvuuksien analyysi ja torjunta | [`haavoittuvuudet/`](haavoittuvuudet/) | [haavoittuvuudet.pdf](https://saperant.github.io/tutoriaalit/materiaalit/haavoittuvuudet.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

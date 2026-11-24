@@ -1,0 +1,30 @@
+== AddressSanitizer
+# @alku t1
+tervetuloa
+paluuarvo 1
+ASan: stack-buffer-overflow
+  WRITE of size 1
+  kohta: lue_rivi (tunnus.c:13)
+  muuttuja: tunnus
+# @loppu t1
+== pinokanari
+# @alku t2
+paluuarvo 134 (SIGABRT)
+glibc: *** stack smashing detected ***
+> kanarin alin tavu: 0x00
+> kanari ennallaan: False
+> kanarin paikalla nyt: b'AAAAAAAA'
+# @loppu t2
+== ilman kanaria
+# @alku t3
+paluuarvo 139 (SIGSEGV)
+> puskurin koko: 16 tavua
+> puskurin alusta paluuosoitteeseen: 24 tavua
+> pysähtyi käskyyn: ret
+> paluuosoite pinossa: b'AAAAAAAA'
+# @loppu t3
+== korjattu rajapinta
+# @alku t4
+tunnus hylätty: liian pitkä
+paluuarvo 1
+# @loppu t4

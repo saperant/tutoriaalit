@@ -1,0 +1,48 @@
+== AddressSanitizer: kaatumiskohta
+# @alku t1
+kuva 640 x 480 luettu
+paluuarvo 1
+ASan: heap-buffer-overflow
+  WRITE of size 65536
+  kohta: tayta (kuva.c:42)
+  alue: 65536 tavun varaus, 0 tavua lopun jälkeen
+  varattu: varaa (kuva.c:32)
+# @loppu t1
+== raakaraportti siistittynä
+# @alku t2
+=================================================================
+==PID==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x... at pc
+      0x... bp 0x... sp 0x...
+WRITE of size 65536 at 0x... thread T0
+    #1 0x... in tayta kuva.c:42
+    #2 0x... in main kuva.c:60
+
+0x... is located 0 bytes after 65536-byte region [0x...,0x...)
+allocated by thread T0 here:
+    #1 0x... in varaa kuva.c:32
+    #2 0x... in main kuva.c:55
+
+Shadow bytes around the buggy address:
+  0x...: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x...:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x...: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+# @loppu t2
+== UndefinedBehaviorSanitizer: juurisyy
+# @alku t3
+paluuarvo 1
+UBSan: kuva.c:30: signed integer overflow: 65536 * 65537 cannot be
+    represented in type 'int'
+# @loppu t3
+== regressiotestit korjatulle versiolle
+# @alku t4
+ok    tavallinen kuva
+ok    kertolasku ylivuotaa
+ok    negatiivinen leveys
+ok    nollakorkeus
+ok    yläraja ylittyy
+# @loppu t4
+== variaatioanalyysi: sama virhe muualla
+# @alku t5
+pienoiskuva.c: rivi 6 [bugprone-implicit-widening-of-multiplication-result]
+taulukko.c: rivi 6 [bugprone-implicit-widening-of-multiplication-result]
+# @loppu t5

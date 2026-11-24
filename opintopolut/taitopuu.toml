@@ -1395,6 +1395,7 @@ laajuus = 5
 testaus = "eristetyt harjoituskohteet, fuzzaus kiinteillä siemenillä"
 roadmap = ["cyber-security"]
 amk = "Kyberturvallisuuden syventävä opintojakso"
+tutoriaali = "haavoittuvuudet"
 
 [[taito]]
 id = "laiteohjelmiston-takaisinmallinnus"

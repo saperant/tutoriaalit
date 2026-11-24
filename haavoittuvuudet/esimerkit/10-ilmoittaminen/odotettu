@@ -1,0 +1,18 @@
+== CVSS 3.1 -peruspisteet
+# @alku t1
+ 9.8 kriittinen tarkistus: 9.8
+ 7.5 korkea     tarkistus: 7.5
+ 7.5 korkea     TLV-palvelu kaatuu
+ 8.1 korkea     TLV, ohjausvuo mahdollinen
+ 7.8 korkea     kuvatiedosto avataan
+ 5.5 keskitaso  lokin muotoilu vuotaa
+ 9.9 kriittinen murtautuu hiekkalaatikosta
+# @loppu t1
+== security.txt
+# @alku t2
+security.txt: ok
+vanhentunut.txt: virheitä
+  Contact ei ole URI: Tietoturvatiimi
+  Expires on annettava täsmälleen kerran
+paluuarvo 1
+# @loppu t2

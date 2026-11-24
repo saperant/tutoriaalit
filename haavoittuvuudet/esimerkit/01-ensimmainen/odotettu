@@ -1,0 +1,19 @@
+== tavallinen syöte
+# @alku t1
+Aino             2
+Veikko           1
+# @loppu t1
+== pitkä nimi
+# @alku t2
+paluuarvo 1
+ASan: heap-buffer-overflow
+  WRITE of size 25
+  kohta: kirjaa (vieraskirja.c:42)
+  alue: 20 tavun varaus, 0 tavua lopun jälkeen
+  varattu: kirjaa (vieraskirja.c:31)
+# @loppu t2
+== korjattu versio
+# @alku t3
+hylätty: Maria-Kristiina Virt...
+Aino             1
+# @loppu t3

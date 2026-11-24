@@ -1,0 +1,22 @@
+== CFI: tyyppisekaannus epäsuorassa kutsussa
+# @alku t1
+hei, aino
+212 F = 100 C
+paluuarvo 1
+UBSan: lisaosat.c:52: control flow integrity check for type 'int (const char
+    *)' failed during indirect function call
+# @loppu t1
+== x86-64: CET-merkinnät
+# @alku t2
+ endbr64
+ call *%rax
+ ret
+x86 feature: IBT, SHSTK
+# @loppu t2
+== AArch64: PAC ja BTI
+# @alku t3
+ hint 25 // paciasp
+ blr x2
+ hint 29 // autiasp
+ ret
+# @loppu t3

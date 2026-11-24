@@ -1,0 +1,23 @@
+== kääntäjän varoitus
+# @alku t1
+rivi 13 [-Wformat-security]
+# @loppu t1
+== tavallinen viesti
+# @alku t2
+[loki] kirjautuminen onnistui: aino
+# @loppu t2
+== muotoilumerkit viestissä
+# @alku t3
+[loki] arvot: X X X
+istuntoavain näkyy lokissa
+# @loppu t3
+== FORTIFY_SOURCE ja %n
+# @alku t4
+paluuarvo 134 (SIGABRT)
+glibc: *** %n in writable segment detected ***
+# @loppu t4
+== korjattu
+# @alku t5
+[loki] tallenna %n
+istuntoavain ei näy lokissa
+# @loppu t5
