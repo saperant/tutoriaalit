@@ -1,0 +1,9 @@
+  bitti 7: koe 10000000 = 1.6500 V -> 0
+  bitti 6: koe 01000000 = 0.8250 V -> 1
+  bitti 5: koe 01100000 = 1.2375 V -> 0
+  bitti 4: koe 01010000 = 1.0312 V -> 1
+  bitti 3: koe 01011000 = 1.1344 V -> 1
+  bitti 2: koe 01011100 = 1.1859 V -> 1
+  bitti 1: koe 01011110 = 1.2117 V -> 1
+  bitti 0: koe 01011111 = 1.2246 V -> 1
+koodi 95 = 01011111, LSB 12.89 mV, kvantisointivirhe 9.39 mV

@@ -1,0 +1,23 @@
+* Esimerkkien operaatiovahvistinmallit. Makromalli kuvaa vahvistimen
+* käyttäytymistä liittimistä katsottuna, ei sisäistä rakennetta.
+*
+* OPAMP: yksinapainen malli. Tulon transkonduktanssi GM syöttää
+* rajoitetun virran (tanh) RC-kuormaan, josta saadaan avoimen silmukan
+* vahvistus AOL, vahvistus-kaistanleveystulo GBW ja nousunopeus SR =
+* IMAX / CA. Lähtö leikkautuu MARG volttia syöttöjännitteiden sisäpuolelle
+* (MARG = 0,05 vastaa rail-to-rail-lähtöä) ja sillä on lähtöresistanssi
+* ROUT. VOS on tulon offsetjännite ja FP2 toinen napa (oletuksena niin
+* korkealla, ettei se vaikuta).
+.subckt OPAMP inp inn out vcc vee params: AOL=1e5 GBW=1Meg SR=1e6
++ MARG=1.5 ROUT=50 VOS=0 FP2=1e12
+.param GM=1m RA={AOL/GM} CA={GM/(6.283185307*GBW)} IMAX={SR*CA}
+B1 0 n1 I = {IMAX}*tanh({GM}*(v(inp)+{VOS}-v(inn))/{IMAX})
+R1 n1 0 {RA}
+C1 n1 0 {CA}
+* Toinen napa puskurin RC-suodattimena (1 ohm ja 1/(2 pi FP2)).
+E2 n3 0 n1 0 1
+R2 n3 n4 1
+C2 n4 0 {1/(6.283185307*FP2)}
+B2 n2 0 V = min(max(v(n4), v(vee)+{MARG}), v(vcc)-{MARG})
+Ro n2 out {ROUT}
+.ends

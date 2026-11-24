@@ -1,0 +1,8 @@
+vaadittu vaimennus 74.0 dB taajuudella 44 kHz
+  n = 1:  20.9 dB
+  n = 2:  41.7 dB
+  n = 3:  62.5 dB
+  n = 4:  83.3 dB  riittää
+  n = 5: 104.1 dB  riittää
+  n = 6: 125.0 dB  riittää
+4-kertaisella ylinäytteistyksellä riittää n = 3

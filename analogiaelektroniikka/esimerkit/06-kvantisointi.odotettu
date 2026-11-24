@@ -1,0 +1,4 @@
+  N = 6        simuloitu    37.7 dB   laskettu    37.9 dB   ok
+  N = 8        simuloitu    49.8 dB   laskettu    49.9 dB   ok
+  N = 10       simuloitu    61.9 dB   laskettu    62.0 dB   ok
+  N = 12       simuloitu    73.8 dB   laskettu    74.0 dB   ok

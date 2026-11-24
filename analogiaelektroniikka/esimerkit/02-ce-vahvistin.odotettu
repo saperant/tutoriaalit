@@ -1,0 +1,4 @@
+g_m = 51.0 mS, r_pi = 2078 ohm, R_tulo = 1660 ohm
+  |A|          simuloitu        147   laskettu        150   ok
+  f_ala        simuloitu    82.7 Hz   laskettu    80.9 Hz   ok
+ylärajataajuus (SPICE): 6.5 MHz

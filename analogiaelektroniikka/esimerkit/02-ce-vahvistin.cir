@@ -1,0 +1,26 @@
+* Yhteisemitterivahvistin: toimintapiste kuten 02-toimintapiste.cir,
+* emitterivastus ohitettu kondensaattorilla, tulo ja lähtö
+* kytketty kondensaattoreilla, kuormana 10 kohm.
+.include transistorit.lib
+Vcc vcc 0 DC 12
+Vs s 0 DC 0 AC 1
+Rs s in 50
+Cin in b 10u
+R1 vcc b 47k
+R2 b 0 10k
+Rc vcc c 4.7k
+Re e 0 1k
+Ce e 0 100u
+Cout c out 10u
+RL out 0 10k
+Q1 c b e QNPN
+.control
+op
+print @q1[ic]
+ac dec 50 1 100Meg
+meas ac a_kesk FIND vdb(out) AT=10k
+let raja = a_kesk - 3.0103
+meas ac f_ala WHEN vdb(out)=raja RISE=1
+meas ac f_yla WHEN vdb(out)=raja FALL=1
+.endc
+.end

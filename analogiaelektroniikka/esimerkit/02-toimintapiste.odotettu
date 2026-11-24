@@ -1,0 +1,5 @@
+U_th = 2.105 V, R_th = 8.25 kohm
+I_c = 1.314 mA, U_CE = 4.50 V
+  I_c          simuloitu    1.32 mA   laskettu    1.31 mA   ok
+  U_CE         simuloitu     4.47 V   laskettu     4.50 V   ok
+aktiivinen alue: kyllä

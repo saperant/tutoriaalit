@@ -1,0 +1,23 @@
+* Tasonsiirto AD-muuntimelle: anturin +-1 V -> 0,15 ... 3,15 V,
+* yksi 3,3 V:n syöttö ja rail-to-rail-vahvistin. Ei-invertoiva
+* summaaja: tulo ja 1,1 V:n referenssi summautuvat plus-tuloon
+* vastusten R1 ja R2 kautta, vahvistus 1 + R4/R3.
+.include operaatiovahvistimet.lib
+.param UIN=0
+Vcc vcc 0 DC 3.3
+Vref ref 0 DC 1.1
+Vin in 0 DC {UIN}
+R1 in p 10k
+R2 ref p 10k
+X1 p n out vcc 0 OPAMP MARG=0.05
+R3 n 0 10k
+R4 out n 20k
+.control
+foreach u -1 0 1
+  alterparam UIN = $u
+  reset
+  op
+  print v(out)
+end
+.endc
+.end

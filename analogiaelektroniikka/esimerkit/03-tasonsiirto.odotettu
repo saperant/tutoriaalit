@@ -1,0 +1,4 @@
+R4 = 20 kohm, U_ref = 1.10 V, alue 0.15 ... 3.15 V
+  u_in = -1 V  simuloitu     150 mV   laskettu     150 mV   ok
+  u_in = +0 V  simuloitu     1.65 V   laskettu     1.65 V   ok
+  u_in = +1 V  simuloitu     3.15 V   laskettu     3.15 V   ok

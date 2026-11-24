@@ -1,0 +1,3 @@
+ilman ohitusta noin 1.01 V, ohituksella noin 50 mV
+  ilman        simuloitu     1.01 V   laskettu     1.01 V   ok
+  ohituksella  simuloitu    50.4 mV   laskettu    50.0 mV   ok

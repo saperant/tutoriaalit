@@ -1,0 +1,19 @@
+* Invertoiva integraattori: +-1 V:n kanttiaalto (1 kHz) muuttuu
+* kolmioaalloksi. Rinnakkainen 1 Mohm rajoittaa tasavahvistuksen.
+.include operaatiovahvistimet.lib
+Vp vcc 0 DC 12
+Vn vee 0 DC -12
+Vin in 0 PULSE(-1 1 0 1u 1u 499u 1m)
+R1 in inn 10k
+C1 inn out 10n IC=0
+Rf inn out 1Meg
+X1 0 inn out vcc vee OPAMP AOL=1e5 GBW=1Meg SR=0.5e6
+.control
+tran 1u 60m uic
+meas tran ylin MAX v(out) FROM=58m TO=60m
+meas tran alin MIN v(out) FROM=58m TO=60m
+* Jakson jälkipuoliskolla tulo on -1 V ja lähtö nousee.
+meas tran u1 FIND v(out) AT=58.6m
+meas tran u2 FIND v(out) AT=58.9m
+.endc
+.end

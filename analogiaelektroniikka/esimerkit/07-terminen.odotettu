@@ -1,0 +1,4 @@
+1 kohm: 4.07 nV/sqrt(Hz), kT/C 1 nF: 2.04 uV rms
+  tiheys       simuloitu 4.07 nV/rtHz   laskettu 4.07 nV/rtHz   ok
+  R = 1k       simuloitu    2.04 uV   laskettu    2.04 uV   ok
+  R = 100k     simuloitu    2.04 uV   laskettu    2.04 uV   ok

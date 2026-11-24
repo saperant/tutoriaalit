@@ -1,0 +1,21 @@
+* Ohituskondensaattori: logiikkapiiri ottaa 100 mA:n virtapiikin
+* (nousuaika 2 ns, kesto 20 ns). Syöttö kulkee johtimen kautta, jossa on
+* 20 nH induktanssia ja 0,1 ohm resistanssia. Ensimmäisessä piirissä ei
+* ole ohitusta, toisessa 100 nF:n kondensaattori (ESL 1 nH, ESR 20 mohm)
+* aivan piirin vieressä.
+Vs vs 0 DC 3.3
+L1 vs a1 20n
+R1 a1 p1 0.1
+I1 p1 0 PULSE(0 0.1 10n 2n 2n 20n 200n)
+L2 vs a2 20n
+R2 a2 p2 0.1
+I2 p2 0 PULSE(0 0.1 10n 2n 2n 20n 200n)
+Cb p2 b1 100n
+Lb b1 b2 1n
+Rb b2 0 0.02
+.control
+tran 0.05n 100n
+meas tran ilman MIN v(p1) FROM=5n TO=40n
+meas tran kanssa MIN v(p2) FROM=5n TO=40n
+.endc
+.end

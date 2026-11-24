@@ -1,0 +1,5 @@
+G = 21, A_cm = 5.00e-04, CMRR = 92.5 dB
+  U_ulos       simuloitu     210 mV   laskettu     210 mV   ok
+sovitettu: U_cm:n muutos 2,5 V siirtää lähtöä 0.0 uV
+  A_cm         simuloitu     0.0005   laskettu     0.0005   ok
+  CMRR         simuloitu    92.5 dB   laskettu    92.5 dB   ok

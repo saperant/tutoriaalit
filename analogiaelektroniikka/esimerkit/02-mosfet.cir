@@ -1,0 +1,19 @@
+* Yhteislähdevahvistin: MOSFET kyllästysalueella, nieluvastus 10 kohm,
+* lähdevastus ohitettu kondensaattorilla, hila jakajasta.
+.model NVAHV NMOS(LEVEL=1 VTO=1.0 KP=2m LAMBDA=0.01)
+Vdd vdd 0 DC 12
+Vs s 0 DC 0 AC 1
+Cin s g 1u
+R1 vdd g 1Meg
+R2 g 0 220k
+Rd vdd d 10k
+Rs l 0 1k
+Cs l 0 100u
+M1 d g l l NVAHV
+.control
+op
+print @m1[id] v(g) v(l) v(d)
+ac lin 1 10k 10k
+print vm(d)
+.endc
+.end

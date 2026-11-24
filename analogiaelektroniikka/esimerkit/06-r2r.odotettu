@@ -1,0 +1,6 @@
+  koodi 1      simuloitu     156 mV   laskettu     156 mV   ok
+  koodi 7      simuloitu     1.09 V   laskettu     1.09 V   ok
+  koodi 8      simuloitu     1.25 V   laskettu     1.25 V   ok
+  koodi 15     simuloitu     2.34 V   laskettu     2.34 V   ok
+MSB-vastus +1 %: pahin DNL -0.075 LSB koodien 7 ja 8 välissä
+MSB-vastus +5 %: pahin DNL -0.366 LSB koodien 7 ja 8 välissä

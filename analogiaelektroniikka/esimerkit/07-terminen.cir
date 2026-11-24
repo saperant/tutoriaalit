@@ -1,0 +1,20 @@
+* Vastuksen terminen kohina ja RC-suodattimen kT/C-kohina.
+* Kaksi suodatinta, joissa sama C mutta eri R.
+.param R=1k
+Vin in 0 DC 0 AC 1
+R1 in out {R}
+C1 out 0 1n
+.control
+noise v(out) Vin dec 50 1 10G
+setplot noise1
+print onoise_spectrum[0]
+setplot noise2
+print onoise_total
+setplot const
+alterparam R = 100k
+reset
+noise v(out) Vin dec 50 0.01 10G
+setplot noise4
+print onoise_total
+.endc
+.end

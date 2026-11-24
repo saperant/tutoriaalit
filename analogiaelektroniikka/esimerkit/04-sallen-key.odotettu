@@ -1,0 +1,6 @@
+C1 = 20 nF, C2 = 10 nF, R = 11254 ohm
+  f_c          simuloitu   1.00 kHz   laskettu   1.00 kHz   ok
+  |H| 100 Hz   simuloitu          1   laskettu          1   ok
+  |H| 1000 Hz  simuloitu      0.707   laskettu      0.707   ok
+  |H| 10000 Hz simuloitu       0.01   laskettu       0.01   ok
+  vaihe 1 kHz  simuloitu  -90.0 deg   laskettu  -90.0 deg   ok

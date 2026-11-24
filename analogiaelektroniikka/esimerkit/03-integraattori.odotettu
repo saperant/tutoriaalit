@@ -1,0 +1,3 @@
+kulmakerroin 10 V/ms, huipusta huippuun 5.0 V
+  du/dt        simuloitu  9.98 kV/s   laskettu  10.0 kV/s   ok
+  U_hh         simuloitu     4.99 V   laskettu     5.00 V   ok

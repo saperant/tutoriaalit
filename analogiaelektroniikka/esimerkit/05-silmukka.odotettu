@@ -1,0 +1,9 @@
+C_L = 0.001 nF:
+  ylitys       simuloitu   9.53 MHz   laskettu   9.53 MHz   ok
+  vaihevara    simuloitu   72.2 deg   laskettu   72.2 deg   ok
+C_L = 1 nF:
+  ylitys       simuloitu   5.17 MHz   laskettu   5.17 MHz   ok
+  vaihevara    simuloitu   21.9 deg   laskettu   21.9 deg   ok
+C_L = 4.7 nF:
+  ylitys       simuloitu   2.55 MHz   laskettu   2.55 MHz   ok
+  vaihevara    simuloitu   9.99 deg   laskettu   9.99 deg   ok

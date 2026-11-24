@@ -1,0 +1,3 @@
+ideaali -1.0000 V, äärellisellä A_ol:lla -0.99989 V
+  U_ulos       simuloitu    -1.00 V   laskettu    -1.00 V   ok
+  U_tulo-      simuloitu    10.0 uV   laskettu    10.0 uV   ok

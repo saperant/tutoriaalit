@@ -1,0 +1,3 @@
+  Butterworth  simuloitu     0.0432   laskettu     0.0432   ok
+  Bessel       simuloitu    0.00433   laskettu    0.00433   ok
+nousuaika 10-90 %: Butterworth 342 us, Bessel 435 us

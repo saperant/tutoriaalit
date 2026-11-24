@@ -1,0 +1,6 @@
+  vahvistimen jännitekohina         10.00 nV/sqrt(Hz)
+  vahvistimen virtakohina R_s:ssä   10.00 nV/sqrt(Hz)
+  lähteen terminen kohina           12.87 nV/sqrt(Hz)
+  yhteensä (neliösumma)             19.12 nV/sqrt(Hz)
+tulon kohina kaistalla 2.70 uV rms, lähdössä 0.270 mV rms
+SNR 51.4 dB

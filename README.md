@@ -138,6 +138,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | NoSQL-tietokannat | [`nosql/`](nosql/) | [nosql.pdf](https://saperant.github.io/tutoriaalit/materiaalit/nosql.pdf) |
 | Numeeriset menetelmät | [`numeeriset-menetelmat/`](numeeriset-menetelmat/) | [numeeriset-menetelmat.pdf](https://saperant.github.io/tutoriaalit/materiaalit/numeeriset-menetelmat.pdf) |
 | Differentiaaliyhtälöt ja Laplace-muunnos | [`differentiaaliyhtalot/`](differentiaaliyhtalot/) | [differentiaaliyhtalot.pdf](https://saperant.github.io/tutoriaalit/materiaalit/differentiaaliyhtalot.pdf) |
+| Analogiaelektroniikka | [`analogiaelektroniikka/`](analogiaelektroniikka/) | [analogiaelektroniikka.pdf](https://saperant.github.io/tutoriaalit/materiaalit/analogiaelektroniikka.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

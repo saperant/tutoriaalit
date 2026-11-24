@@ -1,0 +1,21 @@
+* Ei-invertoiva vahvistin kolmella vahvistuksella: suljetun silmukan
+* kaistanleveys on GBW / (1 + R2/R1).
+.include operaatiovahvistimet.lib
+.param R2=9k
+Vp vcc 0 DC 12
+Vn vee 0 DC -12
+Vin in 0 DC 0 AC 1
+X1 in fb out vcc vee OPAMP AOL=1e5 GBW=1Meg
+R2 out fb {R2}
+R1 fb 0 1k
+.control
+foreach r 0.001 9k 99k
+  alterparam R2 = $r
+  reset
+  ac dec 50 10 100Meg
+  meas ac a0 FIND vdb(out) AT=10
+  let raja = a0 - 3.0103
+  meas ac f3 WHEN vdb(out)=raja FALL=1
+end
+.endc
+.end

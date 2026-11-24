@@ -1,0 +1,16 @@
+* Näytteenotto ja pito: kytkin (päällä 100 ohm) lataa 1 nF:n
+* pitokondensaattorin. Tulo nousee hetkellä 0 arvoon 1 V, kytkin
+* sulkeutuu hetkellä 10 ns ja aukeaa 2 us myöhemmin. Puskuri lukee
+* kondensaattoria ilman kuormaa.
+.model KYTKIN SW(RON=100 ROFF=1T VT=0.5 VH=0.1)
+Vin in 0 DC 1
+Vohj ohj 0 PULSE(0 1 10n 1n 1n 2u 10u)
+S1 in c ohj 0 KYTKIN
+Ch c 0 1n IC=0
+Rvuoto c 0 1T
+.control
+tran 1n 3u uic
+meas tran t_asettuu TRIG v(ohj) VAL=0.5 RISE=1 TARG v(c) VAL=0.999878 RISE=1
+meas tran u_pito FIND v(c) AT=2.9u
+.endc
+.end

@@ -1,0 +1,3 @@
+f0: keskiarvo 1000 Hz, hajonta 1.26 %, väli 969 ... 1031 Hz
+f-3dB: keskiarvo 1001 Hz, hajonta 1.92 %, väli 946 ... 1054 Hz
+  hajonta f0   simuloitu     0.0126   laskettu      0.012   ok

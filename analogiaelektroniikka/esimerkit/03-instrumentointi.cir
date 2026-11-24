@@ -1,0 +1,41 @@
+* Kolmen operaatiovahvistimen instrumentointivahvistin. Anturi antaa
+* 10 mV:n erojännitteen 2,5 V:n yhteismuotoisen jännitteen päällä.
+* Vahvistus 1 + 2 R / Rg = 21. Erovahvistimen yksi vastus voi poiketa
+* suhteellisesti EPS (vastusten epäsovitus).
+.include operaatiovahvistimet.lib
+.param EPS=0 UCM=2.5
+Vp vcc 0 DC 12
+Vn vee 0 DC -12
+Vcm cm 0 DC {UCM}
+Vd1 inp cm DC 0.005
+Vd2 inn cm DC -0.005
+* Tuloasteet: kumpikin tulo puskuroidaan ja vahvistetaan Rg:n kautta.
+X1 inp a1 o1 vcc vee OPAMP AOL=1e6 GBW=10Meg MARG=0.05
+X2 inn a2 o2 vcc vee OPAMP AOL=1e6 GBW=10Meg MARG=0.05
+Rf1 o1 a1 10k
+Rg a1 a2 1k
+Rf2 o2 a2 10k
+* Erovahvistin, vahvistus 1.
+R3 o2 m 10k
+R4 m out 10k
+R5 o1 p 10k
+R6 p 0 {10k*(1+EPS)}
+X3 p m out vcc vee OPAMP AOL=1e6 GBW=10Meg MARG=0.05
+.control
+op
+print v(out)
+alterparam UCM = 0
+reset
+op
+print v(out)
+alterparam EPS = 0.001
+alterparam UCM = 2.5
+reset
+op
+print v(out)
+alterparam UCM = 0
+reset
+op
+print v(out)
+.endc
+.end

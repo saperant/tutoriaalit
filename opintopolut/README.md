@@ -83,7 +83,7 @@ flowchart LR
     hls["✓ Korkean tason synteesi"]
     dsp_laitteisto["✓ DSP-algoritmien laitteistototeutus"]
     elektroniikan_perusteet["✓ Elektroniikan perusteet ja SPICE"]
-    analogiaelektroniikka["Analogiaelektroniikka"]
+    analogiaelektroniikka["✓ Analogiaelektroniikka"]
     kuvausstandardit["✓ Laitteiston kuvausstandardit (SystemRDL, IP-XACT)"]
     asic_toteutus["✓ ASIC-toteutus"]
     soc_integraatio["✓ SoC-integraatio"]
@@ -383,7 +383,7 @@ flowchart LR
 | FPGA-toteutus | 5 | RTL-suunnittelu SystemVerilogilla | [valmis](../fpga-toteutus/) |
 | Laitteiston verifiointi | 5 | Python työkaluohjelmointiin, RTL-suunnittelu SystemVerilogilla | [valmis](../verifiointi/) |
 | Lukujen esitys ja kiinteän pilkun aritmetiikka | 3 | Digitaalitekniikka, Miten tietokone laskee | [valmis](../kiintea-pilkku/) |
-| Analogiaelektroniikka | 5 | Differentiaaliyhtälöt ja Laplace-muunnos, Elektroniikan perusteet ja SPICE | suunniteltu |
+| Analogiaelektroniikka | 5 | Differentiaaliyhtälöt ja Laplace-muunnos, Elektroniikan perusteet ja SPICE | [valmis](../analogiaelektroniikka/) |
 | Korkean tason mallinnus (SystemC/TLM) | 5 | Lukujen esitys ja kiinteän pilkun aritmetiikka, Moderni C++, Tietokonearkkitehtuuri | [valmis](../hlm-mallinnus/) |
 | SoC-integraatio | 5 | RTL-suunnittelu SystemVerilogilla, Tietokonearkkitehtuuri | [valmis](../soc-integraatio/) |
 | Arkkitehtuurin mallinnus ja suunnittelutilan tutkiminen | 5 | Korkean tason mallinnus (SystemC/TLM), Suorituskyvyn analyysi ja optimointi, Todennäköisyys ja tilastot | [valmis](../arkkitehtuurin-tutkiminen/) |

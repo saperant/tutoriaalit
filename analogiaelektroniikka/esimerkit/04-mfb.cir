@@ -1,0 +1,20 @@
+* Multiple feedback -alipäästö (MFB), vahvistus -1, Butterworth,
+* fc = 1 kHz. Kaikki vastukset R; C1 solmusta a maahan, C2 lähdöstä
+* invertoivaan tuloon.
+.include operaatiovahvistimet.lib
+.param R=7.503k C1=45n C2=10n
+Vp vcc 0 DC 12
+Vn vee 0 DC -12
+Vin in 0 DC 0 AC 1
+R1 in a {R}
+R2 a out {R}
+R3 a m {R}
+C1 a 0 {C1}
+C2 m out {C2}
+X1 0 m out vcc vee OPAMP AOL=1e5 GBW=10Meg
+.control
+ac dec 100 10 100k
+meas ac f3 WHEN vdb(out)=-3.0103 FALL=1
+meas ac g10k FIND vm(out) AT=10k
+.endc
+.end

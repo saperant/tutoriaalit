@@ -1,0 +1,27 @@
+* Seuraajaksi kytketty kaksinapainen operaatiovahvistin, kuormana
+* kondensaattori CL. Silmukkavahvistus mitataan katkaisemalla silmukka
+* vaihtovirralle: suuri kela välittää tasajännitteen (toimintapiste
+* pysyy), suuri kondensaattori syöttää testisignaalin invertoivaan tuloon.
+* Silmukkavahvistus T = -v(out) / v(inn).
+.include operaatiovahvistimet.lib
+.param CL=1p
+Vp vcc 0 DC 12
+Vn vee 0 DC -12
+X1 0 inn out vcc vee OPAMP AOL=1e5 GBW=10Meg FP2=30Meg ROUT=50
+CL out 0 {CL}
+Lkatko out inn 1k
+Ckatko t inn 1k
+Vt t 0 DC 0 AC 1
+.control
+foreach c 1p 1n 4.7n
+  alterparam CL = $c
+  reset
+  ac dec 200 1k 1G
+  let T = -v(out)/v(inn)
+  let Tdb = db(T)
+  let Tvaihe = 180/pi*cph(T)
+  meas ac fc WHEN Tdb=0 FALL=1
+  meas ac vaihe FIND Tvaihe WHEN Tdb=0 FALL=1
+end
+.endc
+.end

@@ -1,0 +1,5 @@
+osoittaja: -R2
+nimittäjä: C1*C2*R1*R2*R3*s**2 + R1 + s*(C2*R1*R2 + C2*R1*R3 + C2*R2*R3)
+f0 = 1000.0 Hz, Q = 0.707
+  f_c          simuloitu   1.00 kHz   laskettu   1.00 kHz   ok
+  |H| 10 kHz   simuloitu       0.01   laskettu       0.01   ok

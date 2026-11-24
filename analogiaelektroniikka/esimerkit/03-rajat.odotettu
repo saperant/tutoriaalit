@@ -1,0 +1,4 @@
+  perinteinen  simuloitu    -3.50 V   laskettu    -3.50 V   ok
+  rail-to-rail simuloitu    -4.95 V   laskettu    -4.95 V   ok
+  t 10-90 %    simuloitu    12.8 us   laskettu    12.8 us   ok
+  offset ulos  simuloitu     202 mV   laskettu     202 mV   ok

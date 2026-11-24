@@ -1,0 +1,20 @@
+* Seuraajan askelvaste 1 nF:n kuormalla: suoraan kytkettynä ja
+* 47 ohmin eristysvastuksen kautta (takaisinkytkentä vahvistimen
+* lähdöstä, kuorma vastuksen takana). Askel on pieni ja nousunopeus
+* suuri, jotta vaste on lineaarinen eikä nousunopeuden rajoittama.
+.include operaatiovahvistimet.lib
+Vp vcc 0 DC 12
+Vn vee 0 DC -12
+Vin in 0 PULSE(0 0.01 0.5u 1n 1n 20u 40u)
+X1 in o1 o1 vcc vee OPAMP AOL=1e5 GBW=10Meg FP2=30Meg ROUT=50 SR=100e6
+C1 o1 0 1n
+X2 in o2 o2 vcc vee OPAMP AOL=1e5 GBW=10Meg FP2=30Meg ROUT=50 SR=100e6
+Riso o2 kuorma 47
+C2 kuorma 0 1n
+.control
+tran 2n 6u
+meas tran suora MAX v(o1)
+meas tran eristetty MAX v(kuorma)
+wrdata askelvaste.dat v(o1) v(kuorma)
+.endc
+.end

@@ -1,0 +1,26 @@
+* Emitteriseuraaja: vahvistus lähes 1, pieni lähtöresistanssi.
+* Lähtöresistanssi mitataan kuormittamalla lähtöä: vahvistus ilman
+* kuormaa ja 100 ohmin kuormalla.
+.include transistorit.lib
+.param RL=1Meg
+Vcc vcc 0 DC 12
+Vs s 0 DC 0 AC 1
+Rs s in 1k
+Cin in b 10u
+R1 vcc b 22k
+R2 b 0 27k
+Re e 0 2.2k
+Cout e out 100u
+RL out 0 {RL}
+Q1 vcc b e QNPN
+.control
+op
+print @q1[ic]
+ac lin 1 1k 1k
+print vm(out)
+alterparam RL = 100
+reset
+ac lin 1 1k 1k
+print vm(out)
+.endc
+.end

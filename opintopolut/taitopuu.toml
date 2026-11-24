@@ -919,6 +919,7 @@ laajuus = 5
 testaus = "ngspice eräajona, taajuusvasteet ja transientit verrataan malleihin"
 roadmap = []
 amk = "Analogiaelektroniikka"
+tutoriaali = "analogiaelektroniikka"
 
 [[taito]]
 id = "kuvausstandardit"

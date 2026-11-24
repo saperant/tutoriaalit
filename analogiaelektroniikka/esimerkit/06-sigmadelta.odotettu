@@ -1,0 +1,7 @@
+OSR  16: SNR kaistalla  26.5 dB
+OSR  32: SNR kaistalla  35.1 dB
+  parannus     simuloitu    8.61 dB   laskettu    9.00 dB   ok
+OSR  64: SNR kaistalla  44.2 dB
+  parannus     simuloitu    9.08 dB   laskettu    9.00 dB   ok
+OSR 128: SNR kaistalla  53.4 dB
+  parannus     simuloitu    9.24 dB   laskettu    9.00 dB   ok

@@ -1,0 +1,3 @@
+tau = 100 ns, asettuminen 12 bittiin vaatii 9.0 tau = 901 ns
+  t_asettuu    simuloitu     901 ns   laskettu     901 ns   ok
+pitojännite kytkimen avauduttua: 1.0000 V

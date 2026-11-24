@@ -1,0 +1,14 @@
+* Invertoiva vahvistin: 100 mV:n tulo, vahvistus -R2/R1 = -10.
+* Operaatiovahvistin on yksinapainen makromalli (operaatiovahvistimet.lib).
+.include operaatiovahvistimet.lib
+Vp vcc 0 DC 12
+Vn vee 0 DC -12
+Vin in 0 DC 0.1
+R1 in inn 10k
+R2 inn out 100k
+X1 0 inn out vcc vee OPAMP AOL=1e5 GBW=1Meg
+.control
+op
+print v(out) v(inn)
+.endc
+.end

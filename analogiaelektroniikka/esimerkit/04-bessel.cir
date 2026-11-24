@@ -1,0 +1,23 @@
+* Askelvaste: Butterworth (Q = 0,707) ja Bessel (Q = 0,577),
+* molemmat Sallen-Key-rakenteella ja samalla kulmataajuudella 1 kHz.
+* C1 = 4 Q^2 C2, R = 1 / (2 pi f0 sqrt(C1 C2)).
+Vin in 0 PULSE(0 1 0.1m 1n 1n 10m 20m)
+R1b in ab 11.254k
+R2b ab bb 11.254k
+C1b ab ob 20n
+C2b bb 0 10n
+Eb ob 0 bb 0 1
+R1s in as 13.783k
+R2s as bs 13.783k
+C1s as os 13.333n
+C2s bs 0 10n
+Es os 0 bs 0 1
+.control
+tran 1u 3m
+meas tran huippu_b MAX v(ob)
+meas tran huippu_s MAX v(os)
+meas tran t_b TRIG v(ob) VAL=0.1 RISE=1 TARG v(ob) VAL=0.9 RISE=1
+meas tran t_s TRIG v(os) VAL=0.1 RISE=1 TARG v(os) VAL=0.9 RISE=1
+wrdata askel.dat v(ob) v(os)
+.endc
+.end

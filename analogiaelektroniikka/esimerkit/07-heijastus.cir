@@ -1,0 +1,18 @@
+* Heijastukset siirtolinjassa: 50 ohmin linja, viive 5 ns.
+* Kolme tapausta: 1) lähde 50 ohm, pää auki, 2) lähde 10 ohm, pää auki,
+* 3) lähde 10 ohm, pää päätetty 50 ohmilla.
+Vs s 0 PULSE(0 2 1n 0.1n 0.1n 200n 400n)
+Rs1 s a1 50
+T1 a1 0 b1 0 Z0=50 TD=5n
+RL1 b1 0 1G
+Rs2 s a2 10
+T2 a2 0 b2 0 Z0=50 TD=5n
+RL2 b2 0 1G
+Rs3 s a3 10
+T3 a3 0 b3 0 Z0=50 TD=5n
+RL3 b3 0 50
+.control
+tran 0.02n 60n
+wrdata heijastus.dat v(b1) v(b2) v(b3)
+.endc
+.end

@@ -1,0 +1,14 @@
+* Yhteisemitterivahvistimen toimintapiste: jännitteenjakaja kannalle ja
+* emitterivastus, joka vakauttaa kollektorivirran.
+.include transistorit.lib
+Vcc vcc 0 DC 12
+R1 vcc b 47k
+R2 b 0 10k
+Rc vcc c 4.7k
+Re e 0 1k
+Q1 c b e QNPN
+.control
+op
+print @q1[ic] @q1[ib] v(c) v(e) v(b)
+.endc
+.end

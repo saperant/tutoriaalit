@@ -1,0 +1,11 @@
+* Esimerkkien transistorimallit. Parametrit ovat tyypillisiä arvoja,
+* eivät minkään valmistajan takuuarvoja.
+* Pienitehoinen NPN-transistori (2N3904:n kaltainen):
+.model QNPN NPN(IS=6.7f BF=200 VAF=74 IKF=67m ISE=6.7f NE=1.26 BR=0.74
++ RB=10 RC=1 CJE=4.5p CJC=3.6p TF=300p TR=240n)
+* Logiikkatason N-kanavainen teho-MOSFET (yksinkertainen taso 1 -malli):
+* kynnysjännite 1,6 V, R_DS(on) noin 60 mohm, kun U_GS = 3,3 V.
+.model NLOG NMOS(LEVEL=1 VTO=1.6 KP=10 LAMBDA=0.01 CGSO=1n CGDO=200p)
+* CMOS-invertterin transistorit (taso 1, 1,8 V:n prosessin kaltainen):
+.model NCMOS NMOS(LEVEL=1 VTO=0.45 KP=200u LAMBDA=0.05)
+.model PCMOS PMOS(LEVEL=1 VTO=-0.45 KP=80u LAMBDA=0.05)
