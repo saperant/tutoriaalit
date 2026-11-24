@@ -107,7 +107,7 @@ flowchart LR
   subgraph grafiikka["Tietokonegrafiikka"]
     renderoinnin_perusteet["Renderöinnin perusteet"]
     sateenseuranta["Säteenseuranta ja fysikaalinen valaistus"]
-    gpu_ohjelmointi["GPU-ohjelmointi: OpenGL ja Vulkan"]
+    gpu_ohjelmointi["✓ GPU-ohjelmointi: OpenGL ja Vulkan"]
     gpu_laskenta["GPU-laskenta"]
     peliohjelmointi["✓ Peliohjelmointi"]
     moninpelit["Reaaliaikaiset moninpelit"]
@@ -396,7 +396,7 @@ flowchart LR
 | Peliohjelmointi | 5 | Lineaarialgebra, Moderni C++ | [valmis](../peliohjelmointi/) |
 | Renderöinnin perusteet | 5 | Lineaarialgebra, Moderni C++ | suunniteltu |
 | Säteenseuranta ja fysikaalinen valaistus | 5 | Algoritmit, Renderöinnin perusteet, Todennäköisyys ja tilastot | suunniteltu |
-| GPU-ohjelmointi: OpenGL ja Vulkan | 5 | Renderöinnin perusteet, Rinnakkaisohjelmointi | suunniteltu |
+| GPU-ohjelmointi: OpenGL ja Vulkan | 5 | Renderöinnin perusteet, Rinnakkaisohjelmointi | [valmis](../gpu-ohjelmointi/) |
 | Reaaliaikaiset moninpelit | 3 | Peliohjelmointi, Verkko-ohjelmointi | suunniteltu |
 | GPU-laskenta | 3 | GPU-ohjelmointi: OpenGL ja Vulkan, Suorituskyvyn analyysi ja optimointi | suunniteltu |
 

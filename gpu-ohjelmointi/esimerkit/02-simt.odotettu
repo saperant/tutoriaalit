@@ -1,0 +1,4 @@
+i < 32 (ryhmän raja): 44 käskyä, kaistojen käyttöaste 100.0 %
+i < 16              : 64 käskyä, kaistojen käyttöaste  68.8 %
+i % 2 == 0          : 84 käskyä, kaistojen käyttöaste  52.4 %
+i != 7              : 64 käskyä, kaistojen käyttöaste  68.8 %

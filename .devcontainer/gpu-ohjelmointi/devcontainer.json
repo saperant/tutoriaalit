@@ -1,0 +1,18 @@
+{
+  "name": "GPU-ohjelmointi: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "libegl-dev libopengl-dev libgl1-mesa-dri libegl-mesa0 mesa-vulkan-drivers libvulkan-dev vulkan-validationlayers vulkan-tools glslc glslang-tools spirv-tools"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/gpu-ohjelmointi/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools"
+      ]
+    }
+  }
+}

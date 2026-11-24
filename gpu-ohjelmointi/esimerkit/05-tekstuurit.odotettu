@@ -1,0 +1,6 @@
+suurennus, rivi 16 joka 8. pikseli:
+  lähin:         0   0   0   0 255 255 255 255
+  lineaarinen:   4   4   8  70 131 193 251 251
+pienennys, rivin 16 pienin ja suurin arvo:
+  ilman mip-tasoja: 0–0
+  mip-tasoilla:     128–128

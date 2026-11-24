@@ -1,0 +1,5 @@
+este ei: tulos 0x2A2A2A2A, ilmoitukset: SYNC-HAZARD-READ-AFTER-WRITE
+este on : tulos 0x2A2A2A2A, ilmoitukset: ei yhtään
+lähetetty, GPU odottaa; semaforin arvo 0
+CPU nosti 1, GPU valmis: arvo 2, tulos 0x07070707
+validointi-ilmoituksia: 0

@@ -1119,6 +1119,7 @@ laajuus = 5
 testaus = "Mesa (llvmpipe, lavapipe) ilman näytönohjainta, kuvien vertailu"
 roadmap = ["game-developer"]
 amk = "Peliohjelmointi / grafiikkaohjelmointi"
+tutoriaali = "gpu-ohjelmointi"
 
 [[taito]]
 id = "gpu-laskenta"
