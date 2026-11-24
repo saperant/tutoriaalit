@@ -1,0 +1,59 @@
+-- Aikasarja PostgreSQL:ssä: koosteet aikaväleittäin, liukuva keskiarvo,
+-- aukkojen täyttö ja viimeisin arvo.
+-- @alku taulu
+CREATE TABLE mittaus (
+    anturi text        NOT NULL,
+    aika   timestamptz NOT NULL,
+    arvo   double precision NOT NULL,
+    PRIMARY KEY (anturi, aika)
+);
+-- @loppu taulu
+-- Kolme tuntia minuutin välein kahdelta anturilta; anturilta b
+-- puuttuu 20 minuuttia (katkos klo 13.10-13.30).
+INSERT INTO mittaus
+SELECT a, t, round((20 + 5 * sin(n / 30.0) + (a = 'b')::int)::numeric, 1)
+FROM unnest(ARRAY['a', 'b']) AS a,
+     generate_series(0, 179) AS n,
+     LATERAL (SELECT timestamptz '2026-11-24 12:00+00'
+                     + n * interval '1 minute') AS g(t)
+WHERE NOT (a = 'b' AND t >= '2026-11-24 13:10+00'
+                   AND t <  '2026-11-24 13:30+00');
+
+-- @alku kooste
+SELECT date_bin('30 minutes', aika, timestamptz '2026-01-01 00:00+00')
+           AS valin_alku,
+       count(*) AS n, round(avg(arvo)::numeric, 2) AS ka,
+       min(arvo) AS pienin, max(arvo) AS suurin
+FROM mittaus
+WHERE anturi = 'a'
+GROUP BY valin_alku
+ORDER BY valin_alku;
+-- @loppu kooste
+
+-- @alku liukuva
+SELECT aika, arvo,
+       round(avg(arvo) OVER (ORDER BY aika
+                             ROWS BETWEEN 4 PRECEDING AND CURRENT ROW)
+             ::numeric, 2) AS ka_5min
+FROM mittaus
+WHERE anturi = 'a' AND aika < '2026-11-24 12:06+00'
+ORDER BY aika;
+-- @loppu liukuva
+
+-- @alku aukot
+SELECT v.alku, count(m.aika) AS n
+FROM generate_series(timestamptz '2026-11-24 13:00+00',
+                     timestamptz '2026-11-24 13:50+00',
+                     interval '10 minutes') AS v(alku)
+LEFT JOIN mittaus AS m
+       ON m.anturi = 'b'
+      AND m.aika >= v.alku AND m.aika < v.alku + interval '10 minutes'
+GROUP BY v.alku
+ORDER BY v.alku;
+-- @loppu aukot
+
+-- @alku viimeisin
+SELECT DISTINCT ON (anturi) anturi, aika, arvo
+FROM mittaus
+ORDER BY anturi, aika DESC;
+-- @loppu viimeisin

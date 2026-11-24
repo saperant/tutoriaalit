@@ -44,7 +44,31 @@ liukuhihnassa. Sen hinta ja vaihtoehdot käsitellään luvussa 8.
 ## Suora muoto
 
 Suorassa muodossa näytteet kulkevat viivelinjassa, jokaisella
-viivelinjan paikalla on oma kertoja, ja tulot lasketaan yhteen.
+viivelinjan paikalla on oma kertoja, ja tulot lasketaan yhteen. Alla
+oleva kuva näyttää rakenteen neljällä kertoimella ilman
+liukuhihnarekistereitä:
+
+```{.dot otsikko="Suoran muodon FIR: viivelinja, kertojat ja summainketju"}
+digraph {
+  rankdir=LR; nodesep=0.35; ranksep=0.4;
+  node [width=0.45, height=0.35];
+  x [label="x[n]", shape=plaintext, style=""];
+  y [label="y[n]", shape=plaintext, style=""];
+  d1 [label="z⁻¹"]; d2 [label="z⁻¹"]; d3 [label="z⁻¹"];
+  m0 [label="×h₀", shape=circle]; m1 [label="×h₁", shape=circle];
+  m2 [label="×h₂", shape=circle]; m3 [label="×h₃", shape=circle];
+  s1 [label="+", shape=circle]; s2 [label="+", shape=circle];
+  s3 [label="+", shape=circle];
+  x -> d1 -> d2 -> d3;
+  x -> m0; d1 -> m1; d2 -> m2; d3 -> m3;
+  m0 -> s1; m1 -> s1; s1 -> s2; m2 -> s2; s2 -> s3; m3 -> s3;
+  s3 -> y;
+  { rank=same; x; m0; } { rank=same; d1; m1; s1; }
+  { rank=same; d2; m2; s2; } { rank=same; d3; m3; s3; }
+}
+```
+
+Esimerkin suodin on sama rakenne kahdeksalla kertoimella.
 Datapolku on kolmivaiheinen liukuhihna:
 
 ```{.systemverilog tiedosto="esimerkit/rtl/fir_suora.sv" osa="datapolku"}
@@ -78,6 +102,28 @@ z_i[n] = h_i x[n] + z_{i+1}[n-1], \qquad
 y[n] = h_0 x[n] + z_1[n-1].$$
 
 ```{.systemverilog tiedosto="esimerkit/rtl/fir_transponoitu.sv" osa="datapolku"}
+```
+
+Alla oleva kuva näyttää saman neljän kertoimen suotimen transponoituna.
+Viiveet ovat nyt summainten välissä, ja jokainen kertoja saa saman
+näytteen.
+
+```{.dot otsikko="Transponoitu FIR: osasummat kulkevat rekisteriketjussa"}
+digraph {
+  rankdir=LR; nodesep=0.35; ranksep=0.4;
+  node [width=0.45, height=0.35];
+  x [label="x[n]", shape=plaintext, style=""];
+  y [label="y[n]", shape=plaintext, style=""];
+  m3 [label="×h₃", shape=circle]; m2 [label="×h₂", shape=circle];
+  m1 [label="×h₁", shape=circle]; m0 [label="×h₀", shape=circle];
+  z3 [label="z⁻¹"]; z2 [label="z⁻¹"]; z1 [label="z⁻¹"];
+  s2 [label="+", shape=circle]; s1 [label="+", shape=circle];
+  s0 [label="+", shape=circle];
+  x -> m3; x -> m2; x -> m1; x -> m0;
+  m3 -> z3 -> s2; m2 -> s2; s2 -> z2 -> s1; m1 -> s1;
+  s1 -> z1 -> s0; m0 -> s0; s0 -> y;
+  { rank=same; m3; m2; m1; m0; }
+}
 ```
 
 Rekisterien välissä on yksi kertoja ja yksi summain, suotimen

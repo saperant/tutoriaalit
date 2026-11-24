@@ -1,0 +1,36 @@
+-- Sama tehtävä MariaDB:llä.
+-- @alku taulu
+CREATE TABLE tuote (
+    id         INT AUTO_INCREMENT PRIMARY KEY,
+    koodi      VARCHAR(40) NOT NULL UNIQUE,
+    hinta      INT NOT NULL,
+    aktiivinen BOOLEAN NOT NULL DEFAULT TRUE   -- = TINYINT(1)
+);
+-- @loppu taulu
+-- @alku lisays
+INSERT INTO tuote (koodi, hinta) VALUES ('kahvi', 590), ('tee', 450)
+RETURNING id, koodi;
+-- @loppu lisays
+-- @alku upsert
+INSERT INTO tuote (koodi, hinta) VALUES ('tee', 480)
+ON DUPLICATE KEY UPDATE hinta = VALUE(hinta);
+-- @loppu upsert
+-- @alku sivutus
+SELECT koodi, hinta, aktiivinen FROM tuote
+ORDER BY koodi
+OFFSET 1 ROWS FETCH FIRST 1 ROW ONLY;
+-- @loppu sivutus
+-- @alku aika
+CREATE TABLE tapahtuma (
+    aika        TIMESTAMP NOT NULL,   -- muunnetaan istunnon vyöhykkeeseen
+    paikallinen DATETIME  NOT NULL    -- tallennetaan sellaisenaan
+);
+SET time_zone = '+00:00';
+INSERT INTO tapahtuma VALUES ('2026-11-24 12:00:00',
+                              '2026-11-24 12:00:00');
+SET time_zone = '+02:00';
+SELECT aika, paikallinen FROM tapahtuma;
+-- @loppu aika
+-- @alku eristys
+SELECT @@tx_isolation;   -- MariaDB 11.1+: @@transaction_isolation
+-- @loppu eristys

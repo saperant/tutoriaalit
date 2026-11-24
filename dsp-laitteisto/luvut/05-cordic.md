@@ -111,6 +111,30 @@ uusi syöte otetaan vasta sen jälkeen.
 
 ## Liukuhihnoitettu toteutus
 
+Alla oleva kuva vertaa rakenteita: iteratiivinen toteutus kierrättää
+tilaa saman vaiheen läpi, liukuhihnoitettu kopioi vaiheen jokaiselle
+kierrokselle.
+
+```{.dot otsikko="Iteratiivinen ja liukuhihnoitettu CORDIC"}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.35;
+  node [height=0.4];
+  subgraph cluster_lh { label="liukuhihnoitettu"; fontsize=9;
+    style="rounded,dashed"; color="#9aa7ab";
+    la [label="x, y, z", shape=plaintext, style=""];
+    v0 [label="vaihe 0\nsiirto 0"]; v1 [label="vaihe 1\nsiirto 1"];
+    vd [label="…", shape=plaintext, style=""];
+    v15 [label="vaihe 15\nsiirto 15"];
+    la -> v0 -> v1 -> vd -> v15; }
+  subgraph cluster_iter { label="iteratiivinen"; fontsize=9;
+    style="rounded,dashed"; color="#9aa7ab";
+    ia [label="x, y, z", shape=plaintext, style=""];
+    iv [label="kiertovaihe\nsiirto i, kulma[i]"];
+    ir [label="rekisterit"];
+    ia -> iv -> ir; ir -> iv [label=" i = 0…15", constraint=false]; }
+}
+```
+
 Liukuhihnoitetussa CORDICissa jokainen kierros on oma vaiheensa.
 Siirron määrä on vaiheessa vakio, joten siirto on pelkkää johdotusta,
 ja kulma on vakio. Vaiheita on 16 ja jokaisessa kolme summainta, mutta

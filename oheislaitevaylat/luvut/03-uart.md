@@ -24,6 +24,13 @@ vanhemmissa protokollissa.
 ```{.tuloste tiedosto="esimerkit/python/uart_kehys.odotettu"}
 ```
 
+Sama kehys muodossa 8E1 näkyy alla olevassa kuvassa sellaisena kuin
+logiikka-analysaattori sen näyttäisi. Kaavio tuotetaan samasta mallista
+kuin yllä oleva tuloste, ja testi tarkistaa, että ne pysyvät samoina.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/uart-kehys.json" otsikko="Tavu 0x4B muodossa 8E1 mallista tuotettuna"}
+```
+
 Tavu `0x4B` lähtee linjalle järjestyksessä 1, 1, 0, 1, 0, 0, 1, 0, eli
 bittijärjestys on käänteinen siihen, miten luku kirjoitetaan.
 Parillinen pariteetti (E) täydentää ykkösten määrän parilliseksi.

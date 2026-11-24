@@ -93,7 +93,15 @@ loppuvat; `sc_start(100, SC_NS)` simuloisi 100 ns.
 Nollaus on voimassa toiseen laskevaan reunaan 15 ns asti, joten laskuri
 kasvaa ensimmäisen kerran 20 ns:n nousevalla reunalla. Laskenta pysähtyy 90 ns:n
 jälkeen kahden jakson ajaksi, ja 190 ns:n kohdalla arvo kiertää 15:stä
-nollaan ja ylivuoto näkyy yhden jakson ajan. Viimeinen rivi `Info:` on
+nollaan ja ylivuoto näkyy yhden jakson ajan. Alla oleva kuva näyttää
+samat signaalit aaltoina 210 ns:n ajalta. Se on piirretty samojen
+moduulien VCD-tiedostosta (ks. seuraava kappale),
+ja testi tarkistaa, että kuva vastaa simulaatiota.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/laskuri.json" otsikko="Laskurin signaalit SystemC:n VCD-tiedostosta"}
+```
+
+Viimeinen rivi `Info:` on
 simulaattorin oma ilmoitus `sc_stop`-kutsusta. Ilmoitukset kulkevat
 raportointijärjestelmän `sc_report_handler` kautta, ja niiden toiminnon
 voi vaihtaa (luku 12 vaimentaa tämän).

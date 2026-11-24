@@ -1,0 +1,20 @@
+ id | koodi 
+----+-------
+  1 | kahvi
+  2 | tee
+(2 rows)
+
+ koodi | hinta | aktiivinen 
+-------+-------+------------
+ tee   |   480 | t
+(1 row)
+
+          aika          |     paikallinen     
+------------------------+---------------------
+ 2026-11-24 14:00:00+02 | 2026-11-24 12:00:00
+(1 row)
+
+ transaction_isolation 
+-----------------------
+ read committed
+(1 row)

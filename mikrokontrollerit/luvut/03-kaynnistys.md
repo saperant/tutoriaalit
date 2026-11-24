@@ -48,6 +48,24 @@ mahdollinen oletus: laite jähmettyy, eikä mikään kerro miksi.
 
 ## C-ajoympäristön alustus
 
+Alla oleva kuva näyttää koko käynnistyksen nollauksesta `main`iin.
+Prosessori lukee vektoritaulusta itse vain kaksi sanaa; kaikki muu on
+käynnistyskoodin tehtävää.
+
+```{.dot otsikko="Käynnistys nollauksesta mainiin"}
+digraph {
+  rankdir=TB; nodesep=0.4; ranksep=0.3;
+  nollaus [label="nollaus", shape=plaintext, style=""];
+  sp [label="laitteisto: SP := vektoritaulu[0]"];
+  pc [label="laitteisto: PC := vektoritaulu[1]\n(Reset_Handler)"];
+  data [label="Reset_Handler: kopioi .data\nflashista RAMiin"];
+  bss [label="Reset_Handler: nollaa .bss"];
+  main [label="main()", style="rounded,filled,bold"];
+  loppu [label="palasi mainista:\nikuinen silmukka", style="rounded,dashed"];
+  nollaus -> sp -> pc -> data -> bss -> main -> loppu;
+}
+```
+
 C-standardi lupaa ohjelmalle kolme asiaa, jotka käynnistyskoodin on
 toteutettava ennen `main`ia:
 

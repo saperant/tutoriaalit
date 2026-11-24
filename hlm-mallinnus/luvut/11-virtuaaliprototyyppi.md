@@ -19,6 +19,21 @@ käskytason simulaattori (ISS).
 | sarjaportti | `Uart` | `0x1000_0000` |
 | ajastin | `Ajastin`, 100 MHz | `0x1000_1000` |
 
+```{.dot otsikko="Virtuaaliprototyypin rakenne"}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.6;
+  cpu [label="Prosessori\nRV32I, LT"];
+  lataaja [label="Lataaja\ndebug-kirjoitukset"];
+  vayla [label="Vayla\nviive 5 ns", style="rounded,filled,bold"];
+  ram [label="RAM 64 kt\nviive 20 ns"];
+  uart [label="Uart"];
+  ajastin [label="Ajastin\n100 MHz"];
+  lataaja -> vayla; cpu -> vayla;
+  vayla -> ram; vayla -> uart; vayla -> ajastin;
+  cpu -> ram [label="DMI", style=dashed, constraint=false];
+}
+```
+
 Oikeassa virtuaaliprototyypissä prosessorimalli on valmis ja nopea ISS,
 kuten QEMU, Spike, Imperas-mallit tai toimittajan oma malli, ja ohjelma
 on ristikääntäjällä käännetty ELF-tiedosto. Tässä prosessori on noin

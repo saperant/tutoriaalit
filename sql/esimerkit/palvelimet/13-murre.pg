@@ -1,0 +1,35 @@
+-- Sama tehtävä PostgreSQL:llä.
+-- @alku taulu
+CREATE TABLE tuote (
+    id         integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    koodi      text NOT NULL UNIQUE,
+    hinta      integer NOT NULL,
+    aktiivinen boolean NOT NULL DEFAULT true
+);
+-- @loppu taulu
+-- @alku lisays
+INSERT INTO tuote (koodi, hinta) VALUES ('kahvi', 590), ('tee', 450)
+RETURNING id, koodi;
+-- @loppu lisays
+-- @alku upsert
+INSERT INTO tuote (koodi, hinta) VALUES ('tee', 480)
+ON CONFLICT (koodi) DO UPDATE SET hinta = excluded.hinta;
+-- @loppu upsert
+-- @alku sivutus
+SELECT koodi, hinta, aktiivinen FROM tuote
+ORDER BY koodi
+OFFSET 1 ROWS FETCH FIRST 1 ROW ONLY;
+-- @loppu sivutus
+-- @alku aika
+CREATE TABLE tapahtuma (
+    aika        timestamptz NOT NULL,   -- ajanhetki, tallennetaan UTC:nä
+    paikallinen timestamp   NOT NULL    -- seinäkelloaika ilman vyöhykettä
+);
+INSERT INTO tapahtuma VALUES ('2026-11-24 12:00:00+00',
+                              '2026-11-24 12:00:00');
+SET TIME ZONE 'Europe/Helsinki';
+SELECT aika, paikallinen FROM tapahtuma;
+-- @loppu aika
+-- @alku eristys
+SHOW transaction_isolation;
+-- @loppu eristys

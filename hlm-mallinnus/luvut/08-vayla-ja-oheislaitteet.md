@@ -19,6 +19,23 @@ väylädekooderissa ja verifioinnin rekisterimallissa. Isoissa projekteissa
 se generoidaan yhdestä lähteestä, esimerkiksi IP-XACT- tai
 SystemRDL-kuvauksesta (taito *SoC-integraatio*).
 
+Alla oleva kuva näyttää esimerkin rakenteen: väylä purkaa osoitteen
+kartan mukaan ja välittää transaktion oikealle kohteelle osoite
+kohteen omaan osoiteavaruuteen siirrettynä.
+
+```{.dot otsikko="Esimerkin TLM-järjestelmä: aloittaja, väylä ja kohteet"}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.6;
+  ohjelmisto [label="Ohjelmisto\n(aloittaja)"];
+  vayla [label="Vayla\nosoitteen purku", style="rounded,filled,bold"];
+  ram [label="RAM\n0x0000_0000\n64 kt"];
+  uart [label="UART\n0x1000_0000"];
+  ajastin [label="Ajastin\n0x1000_1000"];
+  ohjelmisto -> vayla [label="b_transport"];
+  vayla -> ram; vayla -> uart; vayla -> ajastin;
+}
+```
+
 ## Väylämalli
 
 Väylän kohdesocket `multi_passthrough_target_socket` ottaa vastaan

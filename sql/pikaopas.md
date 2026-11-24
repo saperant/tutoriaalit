@@ -132,16 +132,32 @@ Avainsivutus (vakiohintainen sivu, ei toistoja eikä aukkoja):
   (`selectinload`, `prefetch_related`).
 - Testaa samalla tietokannalla kuin tuotannossa.
 
-# SQLite vs. PostgreSQL
+# Murre-erot
 
-| Asia | SQLite | PostgreSQL |
-|------|--------|------------|
-| Avain | `INTEGER PRIMARY KEY` | `bigint GENERATED ALWAYS AS IDENTITY` |
-| Totuusarvo | 0 / 1 | `boolean` |
-| Aika | ISO-teksti, `date()`, `julianday()` | `timestamptz`, `interval` |
-| Muotoilu | `printf('%.2f', x)` | `to_char`, `format` |
-| Sarja | rekursiivinen CTE | `generate_series` |
-| Paljas sarake `GROUP BY`:ssä | sallittu (vaarallinen) | virhe |
-| Välisummat | `UNION ALL` | `ROLLUP`, `GROUPING SETS` |
-| Viiteavaimet | `PRAGMA foreign_keys = ON` | aina |
-| Samanaikaisuus | yksi kirjoittaja | MVCC, rivilukot |
+| Asia | SQLite | PostgreSQL | MariaDB |
+|------|--------|------------|---------|
+| Avain | `INTEGER PRIMARY KEY` | `GENERATED ALWAYS AS IDENTITY` | `AUTO_INCREMENT` |
+| Totuusarvo | 0 / 1 | `boolean` | `BOOLEAN` = `TINYINT(1)` |
+| Ajanhetki | ISO-teksti | `timestamptz` | `TIMESTAMP` (vyöhyke istunnosta) |
+| Upsert | `ON CONFLICT` | `ON CONFLICT` | `ON DUPLICATE KEY UPDATE` |
+| `RETURNING` | kyllä | kyllä | `INSERT`, `DELETE` |
+| Sivutus | `LIMIT`/`OFFSET` | myös `FETCH FIRST` | myös `FETCH FIRST` |
+| `7 / 2` | 3 | 3 | 3.5000 |
+| `'a' = 'A'` | epätosi | epätosi | tosi (`_ci`-vertailu) |
+| Merkkijonojen yhdistys | kaksi pystyviivaa | kaksi pystyviivaa | `CONCAT`; pystyviivat ovat TAI |
+| NULL nousevassa | ensin | viimeisenä | ensin |
+| Sarja | rekursiivinen CTE | `generate_series` | `seq_1_to_n` |
+| Eristystaso | sarjallistuva | read committed | repeatable read |
+| Viiteavaimet | `PRAGMA foreign_keys = ON` | aina | aina (InnoDB) |
+| Samanaikaisuus | yksi kirjoittaja | MVCC, rivilukot | MVCC, rivi- ja välilukot |
+
+# Aikasarjat ja rajapinnat
+
+- Väli: `date_bin('15 min', aika, alku)`; aukot: `generate_series` +
+  `LEFT JOIN`; viimeisin: `DISTINCT ON (anturi) ... ORDER BY aika DESC`.
+- Iso aikasarja: osiointi aikavälin mukaan, BRIN-indeksi, säilytysaika
+  `DETACH PARTITION` + `DROP`; TimescaleDB automatisoi.
+- Tasot: ajuri (DB-API, JDBC) → tietovarasto (DAO) →
+  kyselynrakentaja (SQLAlchemy Core, jOOQ) → ORM (SQLAlchemy, JPA).
+- ORM: työyksikkö, identiteettikartta, laiska lataus → N+1;
+  korjaus `selectinload`. Lokita tuotettu SQL kehityksessä.

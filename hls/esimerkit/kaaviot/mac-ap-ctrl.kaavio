@@ -1,0 +1,32 @@
+// lahde: 01-mac/mac.v
+// vcd: --kello clk --signaalit ap_start,ap_idle,a_ce0,a_address0,ap_done,ap_return --alku 1 --jaksot 22 --kanta d --naytteistys ennen
+// 01-mac:n tuottama RTL yhdellä kutsulla: ap_ctrl_hs-kättely ja
+// ap_memory-luvut. Muisti vastaa seuraavalla jaksolla (lukuviive 1)
+// kuten tuotettu testipenkki. a = 1..8 ja b = 1, joten tulos on 36.
+// Arvot näytetään juuri ennen kellon nousevaa reunaa.
+module kaavio;
+  logic clk = 1'b0, rst = 1'b1, ap_start = 1'b0;
+  wire ap_done, ap_idle, ap_ready;
+  wire [2:0] a_address0, b_address0;
+  wire a_ce0, b_ce0;
+  logic signed [31:0] a_q0 = '0, b_q0 = '0;
+  wire signed [31:0] ap_return;
+  mac dut (.*);
+  always #5 clk = ~clk;
+  always @(posedge clk) begin
+    if (a_ce0) a_q0 <= 32'(a_address0) + 1;
+    if (b_ce0) b_q0 <= 1;
+  end
+  initial begin
+    $dumpfile("kaavio.vcd");
+    $dumpvars(1, kaavio);
+    repeat (2) @(posedge clk);
+    rst <= 1'b0;
+    @(posedge clk);
+    ap_start <= 1'b1;
+    @(posedge clk);
+    ap_start <= 1'b0;
+    repeat (25) @(posedge clk);
+    $finish;
+  end
+endmodule

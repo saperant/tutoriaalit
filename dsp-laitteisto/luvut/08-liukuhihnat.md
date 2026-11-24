@@ -103,6 +103,16 @@ on tarkka:
 ```{.tuloste tiedosto="esimerkit/odotetut/cocotb-fir-jaettu.odotettu"}
 ```
 
+Alla oleva ajoituskaavio on simuloitu tästä RTL:stä. Näytteen ja
+tuloksen paikalla on niiden järjestysnumero. Kahdeksan vaihetta
+kuluu laskentaan, ja `s_ready` nousee vain levossa. Toisen tuloksen
+kohdalla vastaanottaja pitää `m_readyn` alhaalla: `m_valid` pysyy
+ylhäällä, tulos odottaa, eikä uutta näytettä oteta vastaan ennen
+kuin tulos on luettu.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/fir-jaettu.json" otsikko="Aikamultipleksoitu FIR simulaatiosta: laskenta ja vastapaine"}
+```
+
 Testipenkki ei tiedä, että suodin ottaa näytteen vastaan vain joka
 yhdeksännellä jaksolla. Se näkee vain `s_ready`-signaalin, joka on
 nollassa laskennan ajan. Vastapaine on siis sama mekanismi, joka

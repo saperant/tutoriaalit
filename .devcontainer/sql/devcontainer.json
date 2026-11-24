@@ -4,8 +4,8 @@
     "dockerfile": "../Dockerfile",
     "context": "..",
     "args": {
-      "LISAPAKETIT": "sqlite3",
-      "PIP_PAKETIT": "ruff mypy"
+      "LISAPAKETIT": "sqlite3 postgresql-16 mariadb-server mariadb-client openjdk-21-jdk-headless",
+      "PIP_PAKETIT": "ruff mypy sqlalchemy==2.1.9 psycopg==3.3.9 psycopg-binary==3.3.9 pymysql==1.2.4"
     }
   },
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/sql/esimerkit",

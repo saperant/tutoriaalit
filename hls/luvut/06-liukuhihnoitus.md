@@ -39,6 +39,18 @@ Ajoitus on sama kuin liukuhihnattomana, mutta kierrokset limittyvät:
 | vaihe 0: lue a[i], b[i] | i=0 | i=1 | i=2 | i=3 | i=4 | ... | |
 | vaihe 1: s += tulo | | i=0 | i=1 | i=2 | i=3 | ... | i=7 |
 
+Sama ero näkyy simuloidusta RTL:stä. Alla olevista kuvista ensimmäinen
+on johdannon liukuhihnaton pistetulo ja toinen sama liukuhihnoitettuna,
+molemmat samalla syötteellä. Muistin luku `a_ce0` on liukuhihnattomassa
+versiossa ylhäällä joka toisella jaksolla, liukuhihnoitetussa joka
+jaksolla, ja `ap_done` nousee seitsemän jaksoa aiemmin.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/mac-ap-ctrl.json" otsikko="Pistetulo ilman liukuhihnaa (II = 2) simulaatiosta"}
+```
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/mac-putki.json" otsikko="Pistetulo liukuhihnoitettuna (II = 1) simulaatiosta"}
+```
+
 Kahdeksan kierrosta vievät 9 jaksoa 16:n sijaan. Koko funktion latenssi
 laski 19 jaksosta 12 jaksoon, ja ero kasvaa kierrosmäärän mukana:
 1 000 kierroksella 2 003 jaksosta 1 004 jaksoon. Liukuhihnan täyttyminen

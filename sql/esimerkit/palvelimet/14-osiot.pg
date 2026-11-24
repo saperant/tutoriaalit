@@ -1,0 +1,45 @@
+-- Osiointi aikavälin mukaan, osioiden karsinta, BRIN-indeksi ja
+-- säilytysaika vanhan osion poistolla.
+-- @alku osiot
+CREATE TABLE loki (
+    aika  timestamptz NOT NULL,
+    taso  smallint    NOT NULL,
+    viesti text       NOT NULL
+) PARTITION BY RANGE (aika);
+
+CREATE TABLE loki_2026_09 PARTITION OF loki
+    FOR VALUES FROM ('2026-09-01+00') TO ('2026-10-01+00');
+CREATE TABLE loki_2026_10 PARTITION OF loki
+    FOR VALUES FROM ('2026-10-01+00') TO ('2026-11-01+00');
+CREATE TABLE loki_2026_11 PARTITION OF loki
+    FOR VALUES FROM ('2026-11-01+00') TO ('2026-12-01+00');
+-- @loppu osiot
+
+INSERT INTO loki
+SELECT timestamptz '2026-09-01+00' + n * interval '1 minute',
+       n % 4, 'tapahtuma ' || n
+FROM generate_series(0, 129599) AS n;     -- 90 vuorokautta
+
+-- @alku karsinta
+EXPLAIN (COSTS OFF)
+SELECT count(*) FROM loki WHERE aika >= '2026-11-10+00';
+-- @loppu karsinta
+
+-- @alku brin
+CREATE INDEX loki_aika_brin  ON loki_2026_11 USING brin (aika);
+CREATE INDEX loki_aika_btree ON loki_2026_11 (aika);
+SELECT c.relname AS indeksi,
+       pg_relation_size(c.oid) / 8192 AS sivuja
+FROM pg_class AS c
+WHERE c.relname IN ('loki_aika_brin', 'loki_aika_btree')
+ORDER BY c.relname;
+-- @loppu brin
+
+-- @alku sailytys
+ALTER TABLE loki DETACH PARTITION loki_2026_09;
+DROP TABLE loki_2026_09;
+SELECT tableoid::regclass AS osio, count(*) AS riveja
+FROM loki
+GROUP BY osio
+ORDER BY osio;
+-- @loppu sailytys

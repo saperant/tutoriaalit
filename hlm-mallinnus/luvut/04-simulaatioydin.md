@@ -25,6 +25,28 @@ Simulaattori (*scheduler*) toistaa seuraavaa kierrosta:
 4. **Ajan siirto.** Kun ajettavia ei enää ole, aika siirtyy
    aikaisimpaan ajastettuun ilmoitukseen ja kierros alkaa alusta.
 
+Alla oleva kuva näyttää kierroksen silmukkana. Sisempi silmukka on
+delta-sykli, joka ei kuluta aikaa; ulompi siirtää simulaatioaikaa.
+
+```{.dot otsikko="Simulaatioytimen kierros: delta-syklit ja ajan siirto"}
+digraph {
+  rankdir=TB; nodesep=0.5; ranksep=0.35;
+  alustus [label="alustus\n(prosessit kerran)"];
+  arviointi [label="1. arviointi\najettavat prosessit"];
+  paivitys [label="2. päivitys\nkanavien uudet arvot näkyviin"];
+  delta [label="3. delta-ilmoitukset\nodottajat ajettaviksi", shape=diamond,
+         style="filled", height=0.8];
+  aika [label="4. ajan siirto\nseuraava ajastettu ilmoitus", shape=diamond,
+        style="filled", height=0.8];
+  loppu [label="loppu", shape=plaintext, style=""];
+  alustus -> arviointi -> paivitys -> delta;
+  delta -> arviointi [label=" ajettavia:\n delta-sykli"];
+  delta -> aika [label=" ei ajettavia"];
+  aika -> arviointi [label=" aika etenee"];
+  aika -> loppu [label=" ei ilmoituksia\n tai sc_stop()"];
+}
+```
+
 Ennen ensimmäistä kierrosta on *alustusvaihe*, jossa kaikki prosessit
 paitsi `dont_initialize()`-merkityt ajetaan kerran. Simulointi päättyy,
 kun ajastettuja ilmoituksia ei ole jäljellä, kun `sc_start`ille annettu

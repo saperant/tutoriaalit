@@ -1,0 +1,26 @@
+-- SQLite
+SELECT asiakas.nimi, sum(tilaus.summa) AS yhteensa
+FROM asiakas
+JOIN tilaus ON tilaus.asiakas_id = asiakas.id
+GROUP BY asiakas.id, asiakas.nimi
+HAVING sum(tilaus.summa) >= ?
+ORDER BY yhteensa DESC, asiakas.nimi
+LIMIT ? OFFSET ?
+-- PostgreSQL
+SELECT asiakas.nimi, sum(tilaus.summa) AS yhteensa
+FROM asiakas
+JOIN tilaus ON tilaus.asiakas_id = asiakas.id
+GROUP BY asiakas.id, asiakas.nimi
+HAVING sum(tilaus.summa) >= %(param_1)s::INTEGER
+ORDER BY yhteensa DESC, asiakas.nimi
+LIMIT %(param_2)s::INTEGER
+-- MariaDB
+SELECT asiakas.nimi, sum(tilaus.summa) AS yhteensa
+FROM asiakas
+INNER JOIN tilaus ON tilaus.asiakas_id = asiakas.id
+GROUP BY asiakas.id, asiakas.nimi
+HAVING sum(tilaus.summa) >= %s
+ORDER BY yhteensa DESC, asiakas.nimi
+LIMIT %s
+Aino: 120
+Liisa: 120

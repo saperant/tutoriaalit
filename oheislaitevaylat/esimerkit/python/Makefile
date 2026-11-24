@@ -8,9 +8,14 @@ ESIMERKIT := avokollektori uart_kehys uart_nopeus spi_moodit \
              can_arbitraatio can_virheet can_ajoitus
 export PYTHONDONTWRITEBYTECODE := 1
 
-.PHONY: kaikki tarkista testit siivoa $(ESIMERKIT)
+.PHONY: kaikki tarkista testit kaaviot siivoa $(ESIMERKIT)
 
-kaikki: tarkista testit $(ESIMERKIT)
+kaikki: tarkista testit kaaviot $(ESIMERKIT)
+
+# Kirjan ajoituskaaviot (../kaaviot/*.json) tuotetaan malleista;
+# muutos mallissa paljastuu tässä. Päivitys: aaltokaaviot.py kirjoita.
+kaaviot:
+	$(PYTHON) aaltokaaviot.py tarkista ../kaaviot
 
 tarkista:
 	ruff check --no-cache --quiet .

@@ -3,6 +3,7 @@
 Käyttö:
     python3 -m minihls ydin.cpp --top nimi [--kello 10] [--ulos hak]
                        [--dfg] [--asap] [--ajoitus] [--paine]
+                       [--dot ALUE]   (vain ajoitettu graafi dot-kielellä)
 """
 
 from __future__ import annotations
@@ -17,7 +18,7 @@ from .dfg import Jako, Rakentaja, Silmukkatieto
 from .jasennin import jasenna
 from .muunnokset import Lehti, Ulompi, alueet, avaa, luetut
 from .puu import Funktio, KaannosVirhe, Pragma
-from .raportti import ajoitus, asap_alap, dfg, yhteenveto
+from .raportti import ajoitus, asap_alap, dfg, dot, yhteenveto
 from .sidonta import Lehtiajoitus, sido_kertojat
 from .testipenkki import testipenkki
 from .verilog import Tuottaja
@@ -139,6 +140,7 @@ def paaohjelma(argumentit: list[str]) -> int:
         jasentaja.add_argument(valitsin, nargs="?", const="*",
                                metavar="ALUE")
     jasentaja.add_argument("--paine", action="store_true")
+    jasentaja.add_argument("--dot", metavar="ALUE")
     a = jasentaja.parse_args(argumentit)
     try:
         funktiot = {f.nimi: f for f in jasenna(a.lahde.read_text("utf-8"))}
@@ -153,6 +155,12 @@ def paaohjelma(argumentit: list[str]) -> int:
     except KaannosVirhe as virhe:
         print(f"virhe: {a.lahde.name}: {virhe}")
         return 1
+    if a.dot is not None:
+        # Kirjan kaavioita varten: pelkkä dot-kieli, ei raporttia.
+        for x in lehdet:
+            if x.nimi == a.dot:
+                print("\n".join(dot(x, kertojat)))
+        return 0
     for x in lehdet:
         if a.dfg in ("*", x.nimi):
             tulosta(f"tietovuograafi: {x.nimi}", dfg(x.g))

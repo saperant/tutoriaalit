@@ -61,6 +61,24 @@ millisekuntia riittää, eikä ihminen huomaa viivettä.
 ```{.c tiedosto="esimerkit/12-tilakone/tila.c" osa="kasittele"}
 ```
 
+Alla oleva kuva näyttää tilakoneen siirtymät.
+
+```{.dot otsikko="Valon tilakone"}
+digraph {
+  rankdir=LR; nodesep=0.5; ranksep=0.8;
+  node [shape=circle, width=0.95, fixedsize=true];
+  alku [shape=point, width=0.08, style=filled, fillcolor="#1F2A2E"];
+  POIS; PAALLA; VILKKU;
+  alku -> POIS;
+  POIS -> PAALLA [label="lyhyt"];
+  PAALLA -> VILKKU [label="lyhyt"];
+  VILKKU -> POIS [label="lyhyt"];
+  PAALLA -> POIS [label="pitkä", style=dashed];
+  VILKKU -> POIS [label="pitkä", style=dashed];
+  VILKKU -> VILKKU [label="tikki: LED\nvaihtuu"];
+}
+```
+
 Tilakoneella ei ole omaa kelloa. Aika tulee tapahtuman mukana
 parametrina `nyt`, ja sekin vertaillaan etumerkittömällä erotuksella.
 Siksi testi voi syöttää tilakoneelle minkä tahansa aikasarjan.

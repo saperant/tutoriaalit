@@ -1,0 +1,11 @@
+ jako | isot_pienet | loppuvali | yhdistys 
+------+-------------+-----------+----------
+    3 | f           | f         | ab
+(1 row)
+
+  x   
+------
+    1
+    2
+ NULL
+(3 rows)

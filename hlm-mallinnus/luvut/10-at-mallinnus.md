@@ -94,6 +94,12 @@ vastaanottaja käsitteli vaiheen. Pyynnöt menevät liukuhihnaan 10 ns:n
 välein, ja vastaukset palaavat samassa tahdissa 50 ns:n viiveellä.
 Neljä kirjoitusta valmistuu 80 ns:ssa. LT-aloittaja odottaa jokaisen
 vastauksen ennen seuraavaa pyyntöä, joten sama työ vie 4 × 50 = 200 ns.
+Alla oleva kuva on piirretty tästä lokista: AT-pyynnöt ja -vastaukset
+limittyvät, LT-siirrot ovat peräkkäin.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/at-vaiheet.json" otsikko="AT-vaiheet ja sama työ LT-tyylillä esimerkin lokista"}
+```
+
 Ero on sama, joka erottaa liukuhihnoitetun väylän yksinkertaisesta,
 ja juuri tämän eron mittaamiseen AT-malleja tarvitaan.
 

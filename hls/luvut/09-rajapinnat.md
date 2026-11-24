@@ -35,6 +35,15 @@ seuraava kutsu alkaa ennen kuin edellinen on valmis.
 | `ap_idle` | 1 | 0 | 0 | ... | 0 | 1 |
 | `ap_done` | 0 | 0 | 0 | ... | 1 | 0 |
 
+Alla oleva kuva näyttää saman kättelyn johdannon pistetulon simuloidusta
+RTL:stä. Kutsuja antaa yhden jakson `ap_start`-pulssin, ydin lukee
+muistia `ap_memory`-liitännän kautta (osoite ja `a_ce0`, data
+seuraavalla jaksolla), ja `ap_done` on ylhäällä yhden jakson, jolloin
+`ap_return` on voimassa.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/mac-ap-ctrl.json" otsikko="ap_ctrl_hs ja ap_memory pistetulon RTL:ssä"}
+```
+
 Vitis HLS:n mukaan `ap_start` pidetään ylhäällä, kunnes `ap_ready`
 nousee; minihls lukee sen vain lepotilassa, joten yhden jakson pulssi
 riittää. Skalaarin protokolla `ap_none` ei sisällä kättelyä: kutsujan on

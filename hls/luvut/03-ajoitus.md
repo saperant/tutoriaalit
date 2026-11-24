@@ -91,6 +91,16 @@ vähennyslaskua, ja viimeinen valmistuu täsmälleen jakson lopussa
 (10,0 ns). Muuttujien lukeminen (`t3 = x`) ei vie aikaa: arvo tulee
 rekisteristä jakson alussa.
 
+Alla oleva kuva on sama ajoitus tietovuograafina. minihls tuottaa sen
+valitsimella `--dot askel`, ja testi tarkistaa, että kuva vastaa
+ajoitusta. Jokainen sarake on yksi kellojakso, nuolet ovat
+datariippuvuuksia, ja katkoviivat ovat silmukan kantamia riippuvuuksia
+(etäisyys `d` kierrosta): seuraava kierros lukee `x`:n, `y`:n ja
+`u`:n uudet arvot.
+
+```{.dot tiedosto="esimerkit/kaaviot/diffeq-askel.dot" otsikko="Differentiaaliyhtälön silmukan ajoitettu tietovuograafi"}
+```
+
 Samalla jaksolla on kolme kertolaskua, joten tarvitaan kolme kertojaa
 (`mul0`–`mul2`). Kertojat ovat kalliita: 32-bittinen kertoja vie
 FPGA:lla kolme–neljä DSP-lohkoa tai yli tuhat LUTia. Seuraava luku

@@ -1,0 +1,73 @@
+{
+ "signal": [
+  [
+   "moodi 0",
+   {
+    "name": "CS",
+    "wave": "hl................h"
+   },
+   {
+    "name": "SCK",
+    "wave": "l.hlhlhlhlhlhlhlhl."
+   },
+   {
+    "name": "MOSI",
+    "wave": "h..l.h.l...h.l.h..."
+   },
+   {
+    "name": "MISO",
+    "wave": "hl...h.......l...h."
+   },
+   {
+    "name": "näyte",
+    "wave": "z.=.=.=.=.=.=.=.=..",
+    "data": [
+     "0",
+     "0",
+     "1",
+     "1",
+     "1",
+     "1",
+     "0",
+     "0"
+    ]
+   }
+  ],
+  [
+   "moodi 3",
+   {
+    "name": "CS",
+    "wave": "hl................h"
+   },
+   {
+    "name": "SCK",
+    "wave": "h.lhlhlhlhlhlhlhlh."
+   },
+   {
+    "name": "MOSI",
+    "wave": "h...l.h.l...h.l.h.."
+   },
+   {
+    "name": "MISO",
+    "wave": "h.l...h.......l...h"
+   },
+   {
+    "name": "näyte",
+    "wave": "z..=.=.=.=.=.=.=.=.",
+    "data": [
+     "0",
+     "0",
+     "1",
+     "1",
+     "1",
+     "1",
+     "0",
+     "0"
+    ]
+   }
+  ]
+ ],
+ "config": {
+  "hscale": 0.7
+ }
+}

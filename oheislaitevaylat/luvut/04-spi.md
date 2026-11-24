@@ -66,6 +66,14 @@ Aaltojen alla ovat bitit, jotka isäntä luki MISO-linjalta. Moodit 0 ja
 lepotasosta, samoin moodit 1 ja 2. Moni laite, kuten useimmat
 flash-muistit, hyväksyy siksi kummankin parin moodit.
 
+Alla oleva kuva piirtää saman mallin aallot rinnakkain. Näyterivi
+osoittaa, millä reunalla isäntä lukee kunkin bitin: kummassakin
+moodissa nousevalla, vaikka moodi 3 aloittaa kellon ylhäältä ja
+asettaa datan laskevalla reunalla.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/spi-moodit.json" otsikko="Sama siirto SPI-moodeissa 0 ja 3"}
+```
+
 Väärän moodin oire näkyy tulosteen lopussa, ja se on hankala:
 
 ```{.python tiedosto="esimerkit/python/spi_moodit.py" osa="ristiin"}

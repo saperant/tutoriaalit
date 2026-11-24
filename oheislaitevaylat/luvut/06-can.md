@@ -122,7 +122,13 @@ poikkeaa väylästä.
 
 Tunniste `0x65A` luopuu jo ensimmäisellä tunnistebitillä. `0x12F` ja
 `0x123` kulkevat rinnakkain kahdeksan bittiä, ja ensimmäinen ero
-ratkaisee. Arbitraatiosta seuraa kaksi suunnittelusääntöä. Ensinnäkin
+ratkaisee. Alla oleva kuva näyttää saman arbitraation aaltoina:
+hävinnyt solmu jättää lähtönsä resessiiviseksi (1) ja jää
+kuuntelemaan, eikä väylän tila muutu sen takia lainkaan.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/can-arbitraatio.json" otsikko="Kolmen solmun arbitraatio: väylä on johdotettu JA"}
+```
+ Arbitraatiosta seuraa kaksi suunnittelusääntöä. Ensinnäkin
 kahden solmun ei pidä koskaan lähettää samaa tunnistetta: ne
 etenisivät rinnakkain arbitraation ohi, ja ero datassa olisi
 bittivirhe (malli nostaa siitä virheen). Toiseksi tunniste on

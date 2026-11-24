@@ -1,0 +1,12 @@
+// jOOQ: tyyppiturvallinen SQL Javassa. Luokat TUOTE ja TuoteRecord
+// generoidaan tietokannan skeemasta (jOOQ-codegen). Ote ei käänny ilman
+// jOOQ-kirjastoa ja generoitua koodia, joten sitä ei testata tässä
+// paketissa.
+// @alku jooq
+List<TuoteRecord> halvimmat = ctx
+    .selectFrom(TUOTE)
+    .where(TUOTE.HINTA.lt(500))      // sarakkeen tyyppi tarkistetaan:
+    .orderBy(TUOTE.HINTA, TUOTE.KOODI) // HINTA.lt("x") ei käänny
+    .limit(10)
+    .fetch();
+// @loppu jooq

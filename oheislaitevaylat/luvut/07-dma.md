@@ -78,7 +78,27 @@ kun kaikki sanat on siirretty:
 
 Kuvaajaketju kokoaa viestin kolmesta erillisestä palasta ilman
 yhtään prosessorin kopiota. Vain viimeisessä kuvaajassa on
-keskeytysbitti, joten valmistumisesta ilmoitetaan kerran:
+keskeytysbitti, joten valmistumisesta ilmoitetaan kerran. Alla oleva
+kuva näyttää ketjun rakenteen: jokainen kuvaaja kertoo lähteen,
+kohteen, seuraavan kuvaajan ja ohjaussanan.
+
+```{.dot otsikko="Kolmen kuvaajan ketju kokoaa viestin yhteen puskuriin"}
+digraph {
+  rankdir=TB; nodesep=0.4; ranksep=0.45;
+  kanava [label="kanava 0 (rekisterit)"];
+  k0 [label="kuvaaja 0\nlähde: otsake\nkohde: viesti+0\nkoko 8"];
+  k1 [label="kuvaaja 1\nlähde: arvo\nkohde: viesti+8\nkoko 7"];
+  k2 [label="kuvaaja 2\nlähde: loppu\nkohde: viesti+15\nkoko 2, keskeytys"];
+  viesti [label="viesti: MITTAUS 1600 mV\\r\\n", shape=box,
+          style="filled", fillcolor="white"];
+  { rank=same; k0; k1; k2; }
+  kanava -> k0 [label=" 1. kuvaaja"];
+  k0 -> k1 [label="seuraava"];
+  k1 -> k2 [label="seuraava"];
+  k0 -> viesti [style=dashed]; k1 -> viesti [style=dashed];
+  k2 -> viesti [style=dashed];
+}
+```
 
 ```{.c tiedosto="esimerkit/07-dma/main.c" osa="ketju"}
 ```

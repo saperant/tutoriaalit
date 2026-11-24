@@ -1,0 +1,6 @@
+näytteitä: 1000
+erojen erot nollia: 940 / 998
+aikaleimat: 1.6 bittiä/näyte
+arvot XOR-koodilla: 47.7 bittiä/näyte
+arvot kymmenyksinä, delta-of-delta: 5.8 bittiä/näyte
+pakkaussuhde: 2.6

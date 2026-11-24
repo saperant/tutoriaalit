@@ -17,6 +17,26 @@ ajurit kerroksiksi ja testataan ne isäntäkoneella.
 | Laiteajuri | `at24.c` | laitteen protokollan (sivut, kirjoitusjakso) | väyläohjainta |
 | Sovellus | `06-eeprom/main.c` | mitä tallennetaan | väylää |
 
+Alla oleva kuva näyttää samat kerrokset riippuvuuksina. Nuoli
+tarkoittaa ”käyttää”. Laiteajuri riippuu vain väylärajapinnasta, joten
+sen alle voi vaihtaa toisen ohjaimen tai isäntätestin mallin.
+
+```{.dot otsikko="EEPROM-esimerkin ajurikerrokset"}
+digraph {
+  rankdir=TB; nodesep=0.35; ranksep=0.35;
+  sovellus [label="sovellus\n06-eeprom/main.c"];
+  at24 [label="laiteajuri\nat24.c"];
+  i2c [label="väylärajapinta\ni2c.h", style="rounded,filled,bold"];
+  sbcon [label="väyläohjain\ni2c_sbcon.c"];
+  malli [label="testimalli\nisanta/at24_testi.c", style="rounded,dashed"];
+  rek [label="rekisterit\nmps2.h: sbcon_t"];
+  sovellus -> at24 -> i2c;
+  i2c -> sbcon [label=" laitteessa"];
+  i2c -> malli [label=" isäntätestissä"];
+  sbcon -> rek;
+}
+```
+
 Rajapinta on kerrosten välinen sopimus. I2C:n rajapinta on yksi
 funktio, joka tekee yhden siirron. Se on tarpeeksi yleinen kaikille
 rekisterilaitteille ja tarpeeksi pieni toteutettavaksi millä tahansa

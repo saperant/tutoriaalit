@@ -1,0 +1,18 @@
+                                  QUERY PLAN                                  
+------------------------------------------------------------------------------
+ Aggregate
+   ->  Seq Scan on loki_2026_11 loki
+         Filter: (aika >= '2026-11-10 00:00:00+00'::timestamp with time zone)
+(3 rows)
+
+     indeksi     | sivuja 
+-----------------+--------
+ loki_aika_brin  |      3
+ loki_aika_btree |    117
+(2 rows)
+
+     osio     | riveja 
+--------------+--------
+ loki_2026_10 |  44640
+ loki_2026_11 |  41760
+(2 rows)

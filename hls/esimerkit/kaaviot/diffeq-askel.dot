@@ -1,0 +1,48 @@
+digraph {
+  rankdir=LR; nodesep=0.12; ranksep=0.5;
+  node [fontsize=9, height=0.3, margin="0.06,0.03"];
+  j0 [label="jakso 0", shape=plaintext, style=""];
+  { rank=same; j0; t3; t4; t5; t6; t10; t11; t14; t15; t17; t18; }
+  t3 [label="t3 = x"];
+  t4 [label="t4 = t3 + dx"];
+  t5 [label="t5 = u"];
+  t6 [label="t6 = t3 * 3\n[mul0]"];
+  t10 [label="t10 = y"];
+  t11 [label="t11 = t10 * 3\n[mul1]"];
+  t14 [label="t14 = t5 * dx\n[mul2]"];
+  t15 [label="t15 = t10 + t14"];
+  t17 [label="x = t4"];
+  t18 [label="y = t15"];
+  j1 [label="jakso 1", shape=plaintext, style=""];
+  { rank=same; j1; t7; t12; }
+  t7 [label="t7 = t6 * t5\n[mul0]"];
+  t12 [label="t12 = t11 * dx\n[mul1]"];
+  j2 [label="jakso 2", shape=plaintext, style=""];
+  { rank=same; j2; t8; t9; t13; t16; }
+  t8 [label="t8 = t7 * dx\n[mul0]"];
+  t9 [label="t9 = t5 - t8"];
+  t13 [label="t13 = t9 - t12"];
+  t16 [label="u = t13"];
+  j0 -> j1 [style=invis];
+  j1 -> j2 [style=invis];
+  t3 -> t4;
+  t3 -> t6;
+  t6 -> t7;
+  t5 -> t7;
+  t7 -> t8;
+  t5 -> t9;
+  t8 -> t9;
+  t10 -> t11;
+  t11 -> t12;
+  t9 -> t13;
+  t12 -> t13;
+  t5 -> t14;
+  t10 -> t15;
+  t14 -> t15;
+  t13 -> t16;
+  t4 -> t17;
+  t15 -> t18;
+  t16 -> t5 [style=dashed, constraint=false, label=" d=1"];
+  t17 -> t3 [style=dashed, constraint=false, label=" d=1"];
+  t18 -> t10 [style=dashed, constraint=false, label=" d=1"];
+}

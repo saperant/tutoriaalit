@@ -35,8 +35,11 @@ SYNTEESIT := $(addprefix synteesi-,$(FIRIT) fir-suora-lut \
                fir-transponoitu-lut fir-symmetrinen-lut fir-jaettu-lut \
                polyfaasi biquad biquad-lut cic cordic-iter cordic-lh nco)
 
+# --- Kirjan ajoituskaaviot simulaatiosta ------------------------------
+KAAVIOT := $(patsubst kaaviot/%.kaavio,kaavio-%,$(wildcard kaaviot/*.kaavio))
+
 KOHTEET := $(MUUT) $(ANALYYSIT) $(COCOTB_KOHTEET) $(VIAT) \
-           $(VERILATOR_KOHTEET) $(SYNTEESIT)
+           $(VERILATOR_KOHTEET) $(SYNTEESIT) $(KAAVIOT)
 
 .PHONY: kaikki siivoa $(KOHTEET)
 kaikki: $(KOHTEET)
@@ -200,6 +203,30 @@ synteesi-cordic-lh:
 synteesi-nco:
 	$(call synteesi,nco,kaare,$(KAARE),,--solut-alle 200 --fmax-yli 55,\
 	    TOTEUTUS=2)
+
+# Kirjan ajoituskaaviot (kaaviot/*.json) simuloidaan Verilatorilla
+# tiedoston kaaviot/<nimi>.kaavio kääreestä ja verrataan tallennettuun.
+# Otsakerivit kertovat lähteet ja yhteiset/kaaviot.py:n valitsimet.
+# PAIVITA=1 kirjoittaa kaavion uudelleen.
+KAAVIOTYOKALU := $(abspath ../../yhteiset/kaaviot.py)
+$(KAAVIOT): kaavio-%:
+	@mkdir -p $(RAKENNUS)/kaavio-$*
+	@cp kaaviot/$*.kaavio $(RAKENNUS)/kaavio-$*/kaavio.sv
+	@verilator --binary --trace --top-module kaavio -Wno-fatal -Irtl \
+	    -Mdir $(RAKENNUS)/kaavio-$*/obj -o sim \
+	    $$(sed -n 's#^// lahde: ##p' kaaviot/$*.kaavio) \
+	    $(RAKENNUS)/kaavio-$*/kaavio.sv > $(RAKENNUS)/kaavio-$*/loki 2>&1 \
+	    || { cat $(RAKENNUS)/kaavio-$*/loki; exit 1; }
+	@cd $(RAKENNUS)/kaavio-$* && timeout 60 ./obj/sim > /dev/null \
+	    || { echo "kaavion $* simulointi epäonnistui"; exit 1; }
+	@python3 $(KAAVIOTYOKALU) vcd $(RAKENNUS)/kaavio-$*/kaavio.vcd \
+	    $$(sed -n 's#^// vcd: ##p' kaaviot/$*.kaavio) \
+	    > $(RAKENNUS)/kaavio-$*/kaavio.json
+	@if [ "$(PAIVITA)" = 1 ]; then \
+	    cp $(RAKENNUS)/kaavio-$*/kaavio.json kaaviot/$*.json; fi
+	@diff -u kaaviot/$*.json $(RAKENNUS)/kaavio-$*/kaavio.json \
+	    || { echo "kaavio $* ei vastaa simulaatiota (PAIVITA=1)"; exit 1; }
+	@echo "OK: kaavio $*"
 
 siivoa:
 	rm -rf $(RAKENNUS)

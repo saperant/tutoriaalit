@@ -22,6 +22,27 @@ näytteen yli:
 $$H(z) = \left( \frac{1 - z^{-RM}}{1 - z^{-1}} \right)^N
 = \left( \sum_{k=0}^{RM-1} z^{-k} \right)^N.$$
 
+Alla oleva kuva näyttää kolmiasteisen CIC-desimaattorin: integraattorit
+toimivat sisääntulon taajuudella, ja kammat toimivat desimoinnin
+jälkeen $R$ kertaa hitaammin.
+
+```{.dot otsikko="Kolmiasteinen CIC-desimaattori"}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.3;
+  node [width=0.5, height=0.35];
+  x [label="x[n]", shape=plaintext, style=""];
+  y [label="y[m]", shape=plaintext, style=""];
+  i1 [label="∫"]; i2 [label="∫"]; i3 [label="∫"];
+  r [label="↓R", shape=circle];
+  c1 [label="1 − z⁻ᴹ"]; c2 [label="1 − z⁻ᴹ"]; c3 [label="1 − z⁻ᴹ"];
+  x -> i1 -> i2 -> i3 -> r -> c1 -> c2 -> c3 -> y;
+  subgraph cluster_nopea { label="sisääntulon taajuus"; fontsize=9;
+    style="rounded,dashed"; color="#9aa7ab"; i1; i2; i3; }
+  subgraph cluster_hidas { label="ulostulon taajuus"; fontsize=9;
+    style="rounded,dashed"; color="#9aa7ab"; c1; c2; c3; }
+}
+```
+
 Rakenteessa ei ole yhtään kertojaa eikä kerrointa, ja sen voi
 toteuttaa millä tahansa desimointisuhteella samalla määrällä
 summaimia. Siksi CIC on desimointiketjun ensimmäinen vaihe

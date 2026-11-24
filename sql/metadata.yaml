@@ -1,6 +1,6 @@
 ---
 title: SQL ja relaatiotietokannat
-subtitle: Tiivis johdatus tietomallinnukseen ja kyselyihin SQLitellä
+subtitle: Tietomallinnus, kyselyt ja sovelluskäyttö SQLitellä, PostgreSQL:llä ja MariaDB:llä
 date: Marraskuu 2026
 lang: fi
 rights: >

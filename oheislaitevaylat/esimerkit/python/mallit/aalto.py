@@ -10,6 +10,7 @@ pystyviiva merkitsee tason muutosta:
 
 from collections.abc import Sequence
 from dataclasses import dataclass, field
+from typing import Any
 
 LEVEYS = 64  # aika-askelia riviä kohti ennen rivitystä
 
@@ -40,6 +41,29 @@ class Aalto:
                      if alku <= t < loppu}
         return Aalto(self.nimet, self.naytteet[alku:loppu], merkinnat)
     # @loppu aalto
+
+    def wavedrom(self, merkintarivi: str = "") -> list[dict[str, Any]]:
+        """Signaalit WaveDromin muodossa (ks. yhteiset/kaaviot.py): yksi
+        aaltomerkki aika-askelta kohti. Jos merkintarivi on annettu,
+        merkinnät tulevat sen nimiseksi datariviksi."""
+        tulos: list[dict[str, Any]] = []
+        for i, nimi in enumerate(self.nimet):
+            aalto = ""
+            edellinen: int | None = None
+            for n in self.naytteet:
+                aalto += "." if n[i] == edellinen else ("h" if n[i] else "l")
+                edellinen = n[i]
+            tulos.append({"name": nimi, "wave": aalto})
+        if merkintarivi:
+            aalto, data = "", []
+            for t in range(len(self.naytteet)):
+                if t in self.merkinnat:
+                    aalto += "="
+                    data.append(self.merkinnat[t])
+                else:
+                    aalto += "." if aalto else "z"
+            tulos.append({"name": merkintarivi, "wave": aalto, "data": data})
+        return tulos
 
     def piirra(self, askel: int = 2, leveys: int = LEVEYS) -> str:
         """Piirtää aallon; askel on merkkiä aika-askelta kohti. Pitkät

@@ -41,6 +41,17 @@ Sovellus:
 16. Parametrit aina; tunnisteet sallittujen luettelosta.
 17. Ei kyselyitä silmukassa (N+1).
 18. Skeema migraatioilla versionhallinnassa.
+19. SQL yhteen paikkaan tietovarastoon; ORM tavalliseen CRUDiin, SQL
+    raportteihin ja joukkomuutoksiin.
+20. Testit samalla tietokantajärjestelmällä kuin tuotanto.
+
+Järjestelmät ja aikasarjat:
+
+21. Tyypit, järjestys ja aikavyöhyke auki; älä luota järjestelmän
+    oletuksiin (jakolasku, vertailu, NULLien paikka).
+22. Ajanhetket aikavyöhykkeellisinä ja UTC:nä.
+23. Aikasarja ensin relaatiokantaan: aika avaimessa, osiointi aikavälin
+    mukaan, BRIN; säilytysaika osioita poistamalla.
 
 ## Lähteet ja jatkolukeminen
 
@@ -66,6 +77,20 @@ Sovellus:
 - **OWASP SQL Injection Prevention Cheat Sheet**
   (<https://cheatsheetseries.owasp.org>) on injektion torjunnan
   tarkistuslista.
+
+- **MariaDB Knowledge Base** (<https://mariadb.com/kb/>) ja **MySQL
+  Reference Manual** (<https://dev.mysql.com/doc/>) kertovat
+  murteiden ja InnoDB:n yksityiskohdat, kuten lukitukset ja
+  lajittelujärjestykset.
+- **TimescaleDB:n dokumentaatio** (<https://docs.timescale.com>)
+  esittelee hypertaulut ja jatkuvat koosteet. Aikasarjojen pakkauksen
+  perusartikkeli on Pelkonen ym., *Gorilla: A Fast, Scalable, In-Memory
+  Time Series Database* (VLDB 2015).
+- **SQLAlchemyn dokumentaatio** (<https://docs.sqlalchemy.org>) ja sen
+  ORM-opas selittävät työyksikön, identiteettikartan ja latausstrategiat.
+  **jOOQ** (<https://www.jooq.org>) ja Martin Fowlerin *Patterns of
+  Enterprise Application Architecture* (2002), josta nimet *unit of
+  work*, *identity map* ja *data mapper* ovat peräisin.
 
 ### Työkalut
 

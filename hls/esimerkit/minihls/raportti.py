@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from .ajoitus import alap, asap, yksikkopituus
-from .dfg import Dfg, Operandi, Solmu, Vakaa, Vakio
+from .dfg import Dfg, Operandi, Solmu, Vakaa, Vakio, Viite, operandit
 from .sidonta import Lehtiajoitus
 
 
@@ -87,6 +87,36 @@ def ajoitus(lehti: Lehtiajoitus, kertojat: dict[int, int]) -> list[str]:
                 "tallenna", "kirjoita", "palauta", "kirjoita_virta") else ""
             rivit.append(f"{alku}  {kuvaus(s) + lisa:<44}{aika:>8}".rstrip())
     return rivit
+
+
+# @alku dot
+def dot(lehti: Lehtiajoitus, kertojat: dict[int, int]) -> list[str]:
+    """Ajoitettu tietovuograafi Graphvizin dot-kielellä: yksi sarake
+    jaksoa kohti, kertojan numero solmussa ja silmukan kantamat
+    riippuvuudet katkoviivoina."""
+    rivit = ["digraph {", "  rankdir=LR; nodesep=0.12; ranksep=0.5;",
+             '  node [fontsize=9, height=0.3, margin="0.06,0.03"];']
+    for jakso in range(lehti.t.pituus):
+        solmut = [s for _, s in sorted(lehti.g.solmut.items())
+                  if lehti.t.jakso[s.id] == jakso]
+        nimet = " ".join(f"t{s.id};" for s in solmut)
+        rivit.append(f'  j{jakso} [label="jakso {jakso}", shape=plaintext,'
+                     ' style=""];')
+        rivit.append(f"  {{ rank=same; j{jakso}; {nimet} }}")
+        for s in solmut:
+            lisa = f"\\n[mul{kertojat[s.id]}]" if s.id in kertojat else ""
+            rivit.append(f'  t{s.id} [label="{kuvaus(s)}{lisa}"];')
+    rivit += [f"  j{j} -> j{j + 1} [style=invis];"
+              for j in range(lehti.t.pituus - 1)]
+    for s in sorted(lehti.g.solmut.values(), key=lambda x: x.id):
+        for o in operandit(s):
+            if isinstance(o, Viite):
+                rivit.append(f"  t{o.solmu} -> t{s.id};")
+    for k in lehti.g.kantavat:
+        rivit.append(f"  t{k.lahto} -> t{k.kohde} [style=dashed, "
+                     f'constraint=false, label=" d={k.etaisyys}"];')
+    return [*rivit, "}"]
+# @loppu dot
 
 
 # @alku yhteenveto

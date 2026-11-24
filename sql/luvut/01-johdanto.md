@@ -53,7 +53,9 @@ Muut ratkaisut ovat perusteltuja, kun
 
 Yleinen virhe on valita dokumenttitietokanta siksi, että skeematon
 tallennus tuntuu alussa joustavalta. Skeema on silloin olemassa
-sovelluskoodissa, jossa sen eheyttä ei valvo kukaan.
+sovelluskoodissa, jossa sen eheyttä ei valvo kukaan. Avain-arvo-,
+dokumentti-, leveäsarake- ja graafitietokannat esitellään taidossa
+*NoSQL-tietokannat*, ja aikasarjoja käsitellään luvussa 14.
 
 ## Toteutukset ja tämän tutoriaalin valinta
 
@@ -74,7 +76,11 @@ Tutoriaalin esimerkit ajetaan **SQLite 3.45:llä**. Perusteet:
   älypuhelimessa ja selaimessa ja sopii sovelluksen omaksi
   tietokannaksi, testeihin ja tiedostomuodoksi.
 
-Erot PostgreSQL:ään kerrotaan siellä, missä ne vaikuttavat. Olennaisimmat:
+Luvut 13–15 ajavat esimerkkejä myös oikeilla PostgreSQL- ja
+MariaDB-palvelimilla: ne vertailevat järjestelmiä, käsittelevät
+aikasarjoja ja sovelluksen tietokantarajapintoja (tietovarasto,
+kyselynrakentaja ja ORM). Erot PostgreSQL:ään kerrotaan siellä, missä
+ne vaikuttavat. Olennaisimmat:
 
 | Asia | SQLite 3.45 | PostgreSQL |
 |------|-------------|------------|

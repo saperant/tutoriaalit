@@ -25,6 +25,23 @@ läpi:
 3. **Prosessori** ottaa keskeytyksen vastaan, ellei PRIMASK, BASEPRI
    tai meneillään oleva yhtä kiireellinen käsittelijä estä.
 
+Alla oleva kuva näyttää samat portit ja sen, mihin keskeytys pysähtyy,
+jos jokin niistä on kiinni.
+
+```{.dot otsikko="Keskeytyksen polku oheislaitteesta käsittelijään"}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.35;
+  laite [label="oheislaite\nsyy + sallinta"];
+  nvic [label="NVIC\nodottava, ISER,\nprioriteetti"];
+  cpu [label="prosessori\nPRIMASK, BASEPRI,\naktiivinen taso"];
+  kas [label="käsittelijä", style="rounded,filled,bold"];
+  laite -> nvic [label="linja"];
+  nvic -> cpu [label="pyyntö"];
+  cpu -> kas [label="pinoaminen"];
+  kas -> laite [label="kuittaus", style=dashed, constraint=false];
+}
+```
+
 Kun käsittelijä alkaa, linja muuttuu odottavasta *aktiiviseksi*. Jos
 oheislaite pitää linjaa yhä ylhäällä käsittelijän päättyessä,
 keskeytys tulee heti uudelleen odottavaksi. Siksi käsittelijän on
@@ -139,7 +156,24 @@ funktioita.
 
 Cortex-M3 ja -M4 aloittavat käsittelijän ensimmäisen käskyn 12
 kellojaksoa keskeytyksen jälkeen, Cortex-M0+ 15:ssä; ketjutettu
-siirtymä vie kuusi jaksoa. Luvut pätevät, kun muisti on nollaodotus-
+siirtymä vie kuusi jaksoa. Alla oleva periaatekuva näyttää kaksi
+keskeytystä, joista toinen tulee odottavaksi ensimmäisen käsittelijän
+aikana. Prosessori ei palaa pääohjelmaan välillä vaan siirtyy suoraan
+toiseen käsittelijään (*tail-chaining*), koska rekisterit ovat jo
+pinossa.
+
+```{.ajoituskaavio otsikko="Keskeytyksen viive ja ketjutettu siirtymä (Cortex-M3, periaate)"}
+{"signal": [
+  {"name": "IRQ A", "wave": "01....0............."},
+  {"name": "IRQ B", "wave": "0......1....0......."},
+  {"name": "suoritus", "wave": "2.3..4...5.4...3..2.",
+   "data": ["main", "pinoaminen", "käsittelijä A", "ketju",
+            "käsittelijä B", "palautus", "main"]},
+  {"name": "pinossa", "wave": "0..1...........0...."}
+], "config": {"hscale": 0.85}}
+```
+
+ Luvut pätevät, kun muisti on nollaodotus-
 tilainen. Todellista viivettä pidentävät flashin odotustilat,
 meneillään oleva monijaksoinen käsky ja ennen kaikkea kriittiset
 osiot: jos pääohjelma pitää keskeytyksiä kiellettyinä 50 mikro-
