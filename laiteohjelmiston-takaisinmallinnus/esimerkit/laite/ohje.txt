@@ -1,0 +1,83 @@
+LT-100 lampotilaloggeri - kayttoohje (versio 2.4)
+
+Laite mittaa lampotilaa kymmenen kertaa sekunnissa, suodattaa
+mittaukset liukuvalla keskiarvolla ja kirjaa keskiarvon lokiin
+0,8 sekunnin valein. Loki siirretaan huoltotyokaluun sarjaportin
+kautta (115200 bit/s, 8N1).
+
+Sarjakonsolin komennot:
+
+  ohje     nayttaa komennot
+  versio   nayttaa ohjelmistoversion
+  tila     nayttaa laitteen nimen, sarjanumeron ja lokin koon
+  aja      aja <ms>: mittaa ja kirjaa annetun ajan
+  siirra   siirtaa lokin huoltotyokalulle kehyksina
+  kehys    kasittelee huoltotyokalun lahettaman kehyksen
+  sammuta  sammuttaa laitteen
+
+Huoltotyokalu asettaa laitteen kellon ja nimen kehyksilla. Laitteen
+nimi voi olla enintaan 15 merkkia pitka.
+
+Kalibrointi tehdaan tehtaalla. Kalibrointikerroin ja -siirto
+tallennetaan laitteen asetuslohkoon, eika niita voi muuttaa
+sarjakonsolista.
+
+Ohjelmistopaivitys: lataa paivityspaketti (.lt1) huoltotyokalulla.
+Laite tarkistaa paketin tarkisteen ennen kaynnistysta. Ala katkaise
+virtaa paivityksen aikana.
+
+Takuu ei kata laitteita, joiden ohjelmistoa on muutettu.
+
+Vianetsinta:
+
+  Laite ei kaynnisty         Tarkista virtalahde (5 V, 200 mA).
+                             Jos sarjakonsoli nayttaa rivin
+                             "boot: sovellus hylatty", ohjelmisto
+                             on vioittunut: lataa paivitys uudelleen.
+  Lukemat ovat vaaria         Anturi voi olla likainen tai vaurioitunut.
+                             Kalibrointi tarkistetaan huollossa.
+  Loki on tyhja               Laite kirjaa vasta, kun mittausta on
+                             ajettu vahintaan 0,8 sekuntia.
+  Siirto katkeaa              Kayta enintaan 3 metrin kaapelia ja
+                             tarkista, etta tyokalun nopeus on
+                             115200 bit/s.
+
+Tekniset tiedot:
+
+  Mittausalue                -40 ... +85 astetta
+  Tarkkuus                   +-0,3 astetta (0 ... +50 astetta)
+  Resoluutio                 0,01 astetta
+  Lokin koko                 32 tietuetta (rengaspuskuri)
+  Sarjaportti                115200 bit/s, 8 databittia, ei pariteettia
+  Kayttojannite              4,5 ... 5,5 V
+  Kotelointi                 IP54
+
+Muutoshistoria:
+
+  2.4.1  Lokin siirron kehyksiin lisatty tarkiste. Suodatusta
+         muutettu. Korjattu nimen asettamisen virhe pitkilla nimilla
+         (osittain).
+  2.4.0  Liukuva keskiarvo neljasta naytteesta. Uusi komento "tila".
+  2.3.2  Kellon asetus huoltotyokalusta.
+  2.3.0  Uusi kaynnistyslatain (1.2), joka tarkistaa sovelluksen
+         tarkisteen ennen kaynnistysta.
+  2.2.0  Lokin siirto kehyksina. Vanha tekstimuotoinen siirto
+         poistettu.
+  2.1.0  Ensimmainen julkinen versio.
+
+Kalibrointipisteet (tehdas):
+
+  piste  viite    raaka   virhe
+  1      -20,00   -19,71  +0,29
+  2        0,00     0,12  +0,12
+  3       20,00    19,87  -0,13
+  4       40,00    39,58  -0,42
+  5       60,00    59,22  -0,78
+  6       80,00    78,95  -1,05
+
+Huolto: ota yhteytta valmistajan huoltopalveluun. Ala avaa koteloa;
+sisalla ei ole kayttajan huollettavia osia. Laitteen sarjanumero on
+pohjakilvessa ja nakyy komennolla "tila".
+
+Havittaminen: laite sisaltaa elektroniikkaa, ja se on vietava
+sahko- ja elektroniikkaromun keraykseen.

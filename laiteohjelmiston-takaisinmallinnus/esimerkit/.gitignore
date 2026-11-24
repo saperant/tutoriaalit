@@ -1,0 +1,7 @@
+build/
+*.bin
+*.elf
+*.hex
+*.srec
+viite.elf
+kirjasto.json

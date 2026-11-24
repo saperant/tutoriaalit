@@ -1,0 +1,78 @@
+# @alku s1
+== funktiot vektoritaulusta ja bl-kutsuista
+funktioita 15
+# @loppu s1
+# @alku s2
+== funktiot, kun mukana ovat myös funktio-osoittimet
+funktioita 46
+osoite   koko käskyjä kutsuu kutsujia
+0x10180    68      18      2        0
+0x101c4    24       6      2        0
+0x101dc    20       5      2       10
+0x101f0    92      31      6        1
+0x1024c    48      18      0        2
+0x1027c    24       6      1        0
+0x10294    40      14      1        0
+0x102bc    16       5      1        0
+0x102cc    12       4      1        0
+0x102d8    52      17      5        0
+0x1030c    88      35      3        0
+0x10364    40      13      2        0
+0x1038c    40      14      4        0
+0x103b4   160      56      3        0
+0x10454   168      62      3        1
+0x104fc    44      18      1        2
+0x10528    24       7      1        3
+0x10540   108      38      6        1
+0x105ac    76      25      0        1
+0x105f8   150      72      0        1
+0x1068e    34      17      1        1
+0x106b0    44      14      0        1
+0x106dc    12       4      0        1
+0x106e8    16       6      0        1
+0x106f8   132      48      4        2
+0x1077c   140      56      2        1
+0x10808     8       2      0        1
+0x10810   224      80      5        1
+0x108f0    40      13      0        0
+0x10918    88      30      3        0
+0x10970    68      20      1        0
+0x109b4    60      23      0        1
+0x109f0    12       3      0        2
+0x109fc    96      32      0        1
+0x10a5c    48      20      0        2
+0x10a8c    14       6      0        1
+0x10a9a    14       6      0        7
+0x10aa8   116      46      2        1
+0x10b1c    18       7      1        6
+0x10b2e    62      26      2        1
+0x10b6c   240     105      4        8
+0x10c5c    36      11      0        3
+0x10c80   160      62      0        1
+0x10d20   236     103      0        2
+0x10e0c   140      58      0        1
+0x10e98   442     141      0        1
+# @loppu s2
+# @alku s3
+== allekirjoitukset viiteohjelmasta
+7 allekirjoitusta: memcmp, memcpy, memset, strchr, strcmp, strlen, strncmp
+0x10c80: memset
+0x10d20: memcpy
+0x10e0c: strncmp
+0x10e98: strcmp
+# @loppu s3
+# @alku s4
+== tunnetut vakiot
+0x105ac: 0xc6ef3720 TEA/XTEA (delta * 32)
+0x109fc: 0xedb88320 CRC-32 (heijastettu polynomi, zlib/Ethernet)
+0x10a5c: 0x1021 CRC-16/CCITT (polynomi)
+# @loppu s4
+# @alku s5
+== tarkistus symbolitaulusta
+ELF:n funktioita 46, löydettiin 46, oikein 46
+  0x10c80 memset: oikein (memset)
+  0x10d20 memcpy: oikein (memcpy)
+  0x109fc crc32: oikein (crc32)
+  0x105ac xtea_pura: oikein (xtea_pura)
+  0x10a5c crc16_ccitt: oikein (crc16_ccitt)
+# @loppu s5

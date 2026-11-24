@@ -1,0 +1,62 @@
+# @alku s1
+== sovelluksen Reset_Handler (vektori 1: 0x10181)
+00010180  b508       push    {r3, lr}
+00010182  4a0b       ldr     r2, [pc, #0x2c]    ; =0x112ec
+00010184  4b0b       ldr     r3, [pc, #0x2c]    ; =0x20000000
+00010186  490c       ldr     r1, [pc, #0x30]    ; =0x20000014
+00010188  428b       cmp     r3, r1
+0001018a  d308       blo     #0x1019e
+0001018c  2100       movs    r1, #0
+0001018e  4b0b       ldr     r3, [pc, #0x2c]    ; =0x20000014
+00010190  4a0b       ldr     r2, [pc, #0x2c]    ; =0x20000540
+00010192  4293       cmp     r3, r2
+00010194  d308       blo     #0x101a8
+00010196  f000 f82b  bl      #0x101f0
+0001019a  f000 fd5f  bl      #0x10c5c
+0001019e  f852 0b04  ldr     r0, [r2], #4
+000101a2  f843 0b04  str     r0, [r3], #4
+000101a6  e7ef       b       #0x10188
+000101a8  f843 1b04  str     r1, [r3], #4
+000101ac  e7f1       b       #0x10192
+# @loppu s1
+# @alku s2
+== literaalivaranto Reset_Handlerin perässä
+101b0  000112ec       70380   4844     1  ....
+101b4  20000000   536870912      0  8192  ...
+101b8  20000014   536870932     20  8192  ...
+101bc  20000014   536870932     20  8192  ...
+101c0  20000540   536872256   1344  8192  @..
+# @loppu s2
+# @alku s3
+== radare2: funktio 0x104fc
+/ 40: fcn.000104fc ();
+|           0x000104fc      push {r4, lr}
+|           0x000104fe      mov.w r4, 0x3f000
+|           0x00010502      ldr r3, [0x00010524]  ; [0x10524:4]=0x54455341
+|           0x00010504      ldr r2, [r4]
+|           0x00010506      cmp r2, r3
+|       ,=< 0x00010508      bne 0x10520
+|       |   0x0001050a      ldrh r1, [r4, 6]
+|       |   0x0001050c      cmp r1, 0x30
+|      ,==< 0x0001050e      bne 0x10520
+|      ||   0x00010510      mov r0, r4
+|      ||   0x00010512      bl fcn.000109fc
+|      ||   0x00010516      ldr r3, [r4, 0x30]
+|      ||   0x00010518      subs r3, r3, r0
+|      ||   0x0001051a      rsbs r0, r3, 0
+|      ||   0x0001051c      adcs r0, r3
+|     .---> 0x0001051e      pop {r4, pc}
+|     :``-> 0x00010520      movs r0, 0
+\     `===< 0x00010522      b 0x1051e
+# @loppu s3
+# @alku s4
+== kutsuttu funktio 0x109c0: alku
+000109c0  d300       blo     #0x109c4
+000109c2  bdf8       pop     {r3, r4, r5, r6, r7, pc}
+000109c4  2703       movs    r7, #3
+000109c6  3364       adds    r3, #0x64
+000109c8  4d08       ldr     r5, [pc, #0x20]    ; =0x112c0
+000109ca  6023       str     r3, [r4]
+000109cc  6820       ldr     r0, [r4]
+000109ce  686a       ldr     r2, [r5, #4]
+# @loppu s4

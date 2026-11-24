@@ -1,0 +1,74 @@
+# @alku s1
+== heksavedos: alku
+00000000: 4c54 3150 0100 2000 6400 544c 0104 0200  LT1P.. .d.TL....
+00000010: 0300 0000 0000 0000 4bd6 1206 cc18 0000  ........K.......
+00000020: 0100 0000 0001 0100 0012 0000 b27a c06e  .............z.n
+00000030: 0200 0000 00f0 0300 0001 0000 fab6 c96e  ...............n
+00000040: 0301 0000 ffff ffff 7b05 0000 bd78 54c5  ........{....xT.
+00000050: 4015 0020 8101 0100 c501 0100 c501 0100  @.. ............
+# @loppu s1
+# @alku s2
+== entropia 512 tavun lohkoissa
+000000 5.17 #####################
+000200 6.21 #########################
+000400 6.55 ##########################
+000600 6.26 #########################
+000800 6.34 #########################
+000a00 6.47 ##########################
+000c00 6.31 #########################
+000e00 6.15 #########################
+001000 4.78 ###################
+001200 4.92 ####################
+001400 7.54 ##############################   pakattu tai salattu?
+001600 7.64 ###############################  pakattu tai salattu?
+001800 6.97 ############################
+# @loppu s2
+# @alku s3
+== merkkijonot (siirtymä, teksti)
+    fa4 VIKA: poikkeus %u
+    fb7 VIKA: pinon suojaus laukesi
+    fd4 asetukset puuttuvat, oletukset kaytossa
+   1006 LT-100 sovellus %s
+   1031 nimi %s, sarja %s, aika %u ms, tietueita %u
+   1071 ajettu %u ms
+   1089 tuntematon komento: %s
+   10a6 nayta komennot
+# @loppu s3
+# @alku s4
+== otsakkeen sanat
+0000  5031544c  1345410124  21580 20529  LT1P
+0004  00200001     2097153      1    32  .. .
+0008  4c540064  1280573540    100 19540  d.TL
+000c  00020401      132097   1025     2  ....
+0010  00000003           3      3     0  ....
+0014  00000000           0      0     0  ....
+0018  0612d64b   101897803  54859  1554  K...
+001c  000018cc        6348   6348     0  ....
+0020  00000001           1      1     0  ....
+0024  00010100       65792    256     1  ....
+0028  00001200        4608   4608     0  ....
+002c  6ec07ab2  1858108082  31410 28352  .z.n
+0030  00000002           2      2     0  ....
+0034  0003f000      258048  61440     3  ....
+0038  00000100         256    256     0  ....
+003c  6ec9b6fa  1858713338  46842 28361  ...n
+0040  00000103         259    259     0  ....
+0044  ffffffff  4294967295  65535 65535  ....
+0048  0000057b        1403   1403     0  {...
+004c  c55478bd  3310647485  30909 50516  .xT.
+0x0018 = 0612d64b: crc32(koko (kenttä nollana))
+0x002c = 6ec07ab2: crc32(sovellus)
+0x003c = 6ec9b6fa: crc32(asetukset)
+0x004c = c55478bd: crc32(resurssit purettuna)
+# @loppu s4
+# @alku s5
+== purku ja uudelleenkokoaminen
+laite 0x4c540064, versio 2.4.1, allekirjoitus 0 tavua
+  sovellus    0x10100  4608 tavua raaka ->  4608 tavua, CRC 6ec07ab2
+  asetukset   0x3f000   256 tavua raaka ->   256 tavua, CRC 6ec9b6fa
+  resurssit         -  1403 tavua zlib  ->  3217 tavua, CRC c55478bd
+uusi.lt1 on tavulleen sama
+LT-100 lampotilaloggeri - kayttoohje (versio 2.4)
+
+Laite mittaa lampotilaa kymmenen kertaa sekunnissa, suodattaa
+# @loppu s5

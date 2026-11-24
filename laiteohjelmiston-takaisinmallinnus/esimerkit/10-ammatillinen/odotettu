@@ -1,0 +1,51 @@
+# @alku s1
+== suodatusfunktion prologi: 2.4.1 vs 2.4.0
+0x105f8:
+  push    {r7}
+  sub     sp, #0x2c
+0x105f8:
+  push    {r4, r5, r6, r7, lr}
+  movs    r5, #0
+  mov     ip, r0
+  mov     r0, r5
+  subs    r3, #2
+  cmp     r5, r1
+# @loppu s1
+# @alku s2
+== kaskymaara emuloimalla
+A: paluu 99, 754 kaskya
+B: paluu 99, 292 kaskya
+sama tulos, A kayttaa 2.6x kaskyja
+# @loppu s2
+# @alku s3
+== rikkoutunut kaannos: vektoritaulu puuttuu
+ 0 pino (MSP)  0x4a0bb508
+ 1 Reset       0x490c4b0b
+ 2 NMI         0xd308428b
+ 3 HardFault   0x4b0b2100  VIRHE: Thumb-bitti puuttuu
+eri käsittelijöitä: 3
+QEMU:
+LT-100 boot 1.2
+boot: sovellus 2.4.1 ok
+paluuarvo lukittui
+# @loppu s3
+# @alku s4
+== tietoturva-auditointi: lokin siirron NIMI-kehys
+> kehys 02184141414141414141414141414141414141414141414141417efb
+VIKA: pinon suojaus laukesi
+# @loppu s4
+# @alku s5
+== tietoturva-auditointi: allekirjoittamaton paivitys
+otsakkeen allekirjoituskentta (0x10014):
+10014  00000000           0      0     0  ....
+nykyinen kaynnistyslatain:
+LT-100 boot 1.2
+boot: sovellus 2.4.1 ok
+> sammuta
+sammutetaan
+paluuarvo 0
+korjattu kaynnistyslatain + allekirjoittamaton sovellus:
+LT-100 boot 1.2
+boot: sovellus hylatty (5)
+paluuarvo 15
+# @loppu s5

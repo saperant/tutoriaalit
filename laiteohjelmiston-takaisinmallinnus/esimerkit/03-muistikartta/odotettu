@@ -1,0 +1,52 @@
+# @alku s1
+== käytetyt alueet (ei 0xFF)
+0x00000..0x0035c     860 tavua
+0x10000..0x10018      24 tavua
+0x10100..0x11300    4608 tavua
+0x3f000..0x3f034      52 tavua
+# @loppu s1
+# @alku s2
+== vektoritaulu osoitteessa 0
+ 0 pino (MSP)  0x20001408
+ 1 Reset       0x000000a1
+ 2 NMI         0x00000041
+ 3 HardFault   0x00000041
+eri käsittelijöitä: 2
+# @loppu s2
+# @alku s3
+== otsake 0x10000 ja vektoritaulu 0x10100
+00010000: 4c54 4150 6400 544c 0104 0200 0012 0000  LTAPd.TL........
+00010010: b27a c06e 0000 0000                      .z.n....
+ 0 pino (MSP)  0x20001540
+ 1 Reset       0x00010181
+ 2 NMI         0x000101c5
+ 3 HardFault   0x000101c5
+eri käsittelijöitä: 2
+  0x101c4: 29 vektoria (oletuskäsittelijä)
+# @loppu s3
+# @alku s4
+== päivityspaketin sovellus: latausosoite
+kanta 0x10100: 27 merkkijono-osoitinta
+kanta 0x10300: 1 merkkijono-osoitinta
+kanta 0x0ff00: 1 merkkijono-osoitinta
+kanta 0x0f300: 1 merkkijono-osoitinta
+# @loppu s4
+# @alku s5
+== oheislaitteet ja RAM: sovellus
+funktioita 46
+0x40004000  5 funktiossa  UART0.DATA
+0x40028000  2 funktiossa  FPGAIO.LED
+0x54455341  1 funktiossa  ASCII 'ASET': taikaluku?
+RAM-osoitteita 13: 0x20000000..0x20000540
+muut flash-osoitteet: 0x3f000
+# @loppu s5
+# @alku s6
+== oheislaitteet ja RAM: käynnistyslatain
+funktioita 11
+0x40004000  2 funktiossa  UART0.DATA
+0x4c540064  1 funktiossa  ?
+0x5041544c  1 funktiossa  ASCII 'LTAP': taikaluku?
+0xe000e000  1 funktiossa  System Control Space, kanta
+RAM-osoitteita 3: 0x20000000..0x20000404
+muut flash-osoitteet: 0x10000, 0x10100
+# @loppu s6

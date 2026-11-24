@@ -1,0 +1,31 @@
+# @alku s1
+== istunnon tekstiosat
+LT-100 boot 1.2
+boot: sovellus 2.4.1 ok
+> aja 2400
+ajettu 2400 ms
+> tila
+nimi LT-100, sarja LT100-04217, aika 2400 ms, tietueita 3
+> kehys 0503686569921d
+~kehys 0
+> siirra
+> sammuta
+sammutetaan
+# @loppu s1
+# @alku s2
+== kehykset heksana
+0000009a: 7e05 0368 6569 921d 7e6b 6568 7973 2030  ~..hei..~kehys 0
+000000aa: 0a3e 2073 6969 7272 610a 7e10 0720 0300  .> siirra.~.. ..
+000000ba: 00e6 0701 b7a5 7e7e 1007 4006 0000 fa07  ......~~..@.....
+000000ca: 0171 bc7e 7e10 0760 0900 00e6 0700 fc6a  .q.~~..`.......j
+# @loppu s2
+# @alku s3
+== toistettavuus
+kaksi ajoa: tavulleen samat
+# @loppu s3
+# @alku s4
+== muutettu sovellus: yksi tavu flashissa
+LT-100 boot 1.2
+boot: sovellus hylatty (4)
+paluuarvo 14
+# @loppu s4

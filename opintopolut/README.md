@@ -125,7 +125,7 @@ flowchart LR
     tietoturvan_perusteet["✓ Tietoturvan perusteet"]
     takaisinmallinnus["✓ Takaisinmallinnus"]
     haavoittuvuudet["✓ Haavoittuvuuksien analyysi ja torjunta"]
-    laiteohjelmiston_takaisinmallinnus["Laiteohjelmiston takaisinmallinnus"]
+    laiteohjelmiston_takaisinmallinnus["✓ Laiteohjelmiston takaisinmallinnus"]
     kryptografia["✓ Kryptografia"]
     turvallinen_kehitys["✓ Tietoturva kehitystyössä"]
     web_tietoturva["✓ Web-sovellusten tietoturva"]
@@ -441,7 +441,7 @@ flowchart LR
 | Sulautettujen järjestelmien tietoturva | 3 | Kryptografia, Mikrokontrollerit ja bare-metal-ohjelmointi | [valmis](../sulautettujen-tietoturva/) |
 | Takaisinmallinnus | 5 | Käyttöjärjestelmät, Objektitiedostot, linkitys ja ABI, Tietoturvan perusteet | [valmis](../takaisinmallinnus/) |
 | Haavoittuvuuksien analyysi ja torjunta | 5 | Takaisinmallinnus | [valmis](../haavoittuvuudet/) |
-| Laiteohjelmiston takaisinmallinnus | 5 | Mikrokontrollerit ja bare-metal-ohjelmointi, Takaisinmallinnus | suunniteltu |
+| Laiteohjelmiston takaisinmallinnus | 5 | Mikrokontrollerit ja bare-metal-ohjelmointi, Takaisinmallinnus | [valmis](../laiteohjelmiston-takaisinmallinnus/) |
 
 ### Ohjelmointikielet
 

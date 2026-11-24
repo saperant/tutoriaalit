@@ -1,0 +1,35 @@
+# @alku s1
+== koot tavuina
+sovellus.bin 4608
+sovellus.hex 13037
+sovellus.srec 13328
+# @loppu s1
+# @alku s2
+== tunnistus
+sovellus.elf: ELF32, ARM, tulokohta 0x10181
+sovellus.bin: raaka Cortex-M-kuva: pino 0x20001540, Reset 0x00010181
+sovellus.hex: Intel HEX (tekstiä, tietueet :LLAAAATT...CC)
+sovellus.srec: Motorola S-record (tekstiä, tietueet S0..S9)
+lt100-2.4.1.lt1: tuntematon muoto, taikaluku 'LT1P'
+flash.bin: raaka Cortex-M-kuva: pino 0x20001408, Reset 0x000000a1
+# @loppu s2
+# @alku s3
+== Intel HEX: alku ja loppu
+:020000021000EC
+:100100004015002081010100C5010100C501010069
+:10011000C5010100C5010100C5010100C5010100C3
+:040000031000018167
+:00000001FF
+aloitusosoite 0x10000181
+tyyppi 00 (data): 290
+tyyppi 01 (loppu): 1
+tyyppi 02 (segmentti): 1
+tyyppi 03 (aloitus CS:IP): 1
+data 4608 tavua, osoitteet 0x10100..0x11300
+# @loppu s3
+# @alku s4
+== S-record: alku ja loppu
+S0100000736F76656C6C75732E7372656397
+S2140101004015002081010100C5010100C501010063
+S80401018178
+# @loppu s4

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Pieni CMSIS-SVD-muotoinen kuvaus mps2-an385-kortin oheislaitteista.
+     Oikeat SVD-tiedostot tulevat piirivalmistajalta, ja niissä on myös
+     bittikentät, nollausarvot ja käyttöoikeudet. -->
+<device>
+  <name>MPS2_AN385</name>
+  <peripherals>
+    <peripheral>
+      <name>TIMER0</name>
+      <baseAddress>0x40000000</baseAddress>
+      <registers>
+        <register><name>CTRL</name><addressOffset>0x0</addressOffset>
+        </register>
+        <register><name>VALUE</name><addressOffset>0x4</addressOffset>
+        </register>
+      </registers>
+    </peripheral>
+    <peripheral>
+      <name>UART0</name>
+      <baseAddress>0x40004000</baseAddress>
+      <registers>
+        <register><name>DATA</name><addressOffset>0x0</addressOffset>
+        </register>
+        <register><name>STATE</name><addressOffset>0x4</addressOffset>
+        </register>
+        <register><name>CTRL</name><addressOffset>0x8</addressOffset>
+        </register>
+        <register><name>BAUDDIV</name><addressOffset>0x10</addressOffset>
+        </register>
+      </registers>
+    </peripheral>
+    <peripheral>
+      <name>FPGAIO</name>
+      <baseAddress>0x40028000</baseAddress>
+      <registers>
+        <register><name>LED</name><addressOffset>0x0</addressOffset>
+        </register>
+        <register><name>BUTTON</name><addressOffset>0x8</addressOffset>
+        </register>
+      </registers>
+    </peripheral>
+    <peripheral>
+      <name>SCB</name>
+      <baseAddress>0xE000ED00</baseAddress>
+      <registers>
+        <register><name>CPUID</name><addressOffset>0x0</addressOffset>
+        </register>
+        <register><name>VTOR</name><addressOffset>0x8</addressOffset>
+        </register>
+        <register><name>AIRCR</name><addressOffset>0xC</addressOffset>
+        </register>
+      </registers>
+    </peripheral>
+  </peripherals>
+</device>

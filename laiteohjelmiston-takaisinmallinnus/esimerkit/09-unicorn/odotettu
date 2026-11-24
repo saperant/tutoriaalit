@@ -1,0 +1,12 @@
+# @alku s1
+crc32: laite cbf43926, zlib cbf43926, 11863 kaskya
+crc32 uudelleen: cbf43926, 83 kaskya
+# @loppu s1
+# @alku s2
+lohko 0: laite 4c5468756f6c746f, viite 4c5468756f6c746f
+lohko 1: laite 3230313900000000, viite 3230313900000000
+purettu kentta: LThuolto2019
+# @loppu s2
+# @alku s3
+k_versio palautti 0, UART: b'LT-100 sovellus 2.4.1\n'
+# @loppu s3

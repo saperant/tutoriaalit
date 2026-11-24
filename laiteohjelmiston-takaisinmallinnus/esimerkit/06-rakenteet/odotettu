@@ -1,0 +1,46 @@
+# @alku s1
+== tietuetaulukot vektoritaulun jälkeen
+0x11210: 9 tietuetta, 3 sanaa, malli SSF
+    "ohje", "nayta komennot", fn 0x10294
+    "versio", "nayta versio", fn 0x1027c
+    "tila", "nayta tila", fn 0x102d8
+    "aja", "aja <ms>: mittaa ja kirjaa", fn 0x1038c
+    "siirra", "siirra loki kehyksina", fn 0x102cc
+    "kehys", "kehys <heksa>: kasittele keh", fn 0x103b4
+    "huolto", 0, fn 0x10364
+    "lue", 0, fn 0x1030c
+    "sammuta", "sammuta laite", fn 0x102bc
+0x112c0: 3 tietuetta, 3 sanaa, malli SNF
+    "mittaus", 100, fn 0x10970
+    "kirjaus", 800, fn 0x10918
+    "vahti", 500, fn 0x108f0
+# @loppu s1
+# @alku s2
+== hyppytaulut
+funktio 0x10810, tbb osoitteessa 0x10862:
+  tapaus 0: 0x1086c
+  tapaus 1: 0x1087c
+  tapaus 2: 0x108ae
+  tapaus 3: 0x108be
+  tapaus 4: 0x108c4
+# @loppu s2
+# @alku s3
+== tbb ja sitä edeltävä vertailu
+00010852  42a8       cmp     r0, r5
+00010854  d13b       bne     #0x108ce
+00010856  4631       mov     r1, r6
+00010858  f811 3b02  ldrb    r3, [r1], #2
+0001085c  3b01       subs    r3, #1
+0001085e  2b04       cmp     r3, #4
+00010860  d838       bhi     #0x108d4
+00010862  e8df f003  tbb     [pc, r3]
+00010866: 030b 242c 2f00                           ..$,/.
+# @loppu s3
+# @alku s4
+== nimeämisten tarkistus
+  0x10294 k_ohje: oikein (k_ohje)
+  0x10364 k_huolto: oikein (k_huolto)
+  0x1030c k_lue: oikein (k_lue)
+  0x10970 mittaa: oikein (mittaa)
+  0x10810 kasittele_kehys: oikein (kasittele_kehys)
+# @loppu s4

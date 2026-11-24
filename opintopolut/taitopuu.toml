@@ -1415,6 +1415,7 @@ laajuus = 5
 testaus = "itse käännetyt laiteohjelmistot, QEMU- ja Unicorn-emulointi"
 roadmap = ["cyber-security"]
 amk = "Sulautettujen järjestelmien tietoturva"
+tutoriaali = "laiteohjelmiston-takaisinmallinnus"
 
 # ---------------------------------------------------------------------
 # Kielet syvemmin
