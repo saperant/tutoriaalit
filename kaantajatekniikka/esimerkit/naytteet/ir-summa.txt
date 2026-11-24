@@ -1,0 +1,23 @@
+fn summa(n)
+L0:
+    s = 0
+    i = 1
+    jmp L1
+L1:                      ; edeltäjät: L0 L4
+    %3 = le i, n
+    br %3, L2, L5
+L2:                      ; edeltäjät: L1
+    %4 = 3
+    %5 = rem i, %4
+    %6 = 0
+    %7 = eq %5, %6
+    br %7, L3, L4
+L3:                      ; edeltäjät: L2
+    s = add s, i
+    jmp L4
+L4:                      ; edeltäjät: L2 L3
+    %9 = 1
+    i = add i, %9
+    jmp L1
+L5:                      ; edeltäjät: L1
+    ret s

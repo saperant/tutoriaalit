@@ -1,0 +1,7 @@
+fn summa
+  L0  idom -  DF {}
+  L1  idom L0  DF {L1}
+  L2  idom L1  DF {L1}
+  L3  idom L2  DF {L4}
+  L4  idom L2  DF {L1}
+  L5  idom L1  DF {}

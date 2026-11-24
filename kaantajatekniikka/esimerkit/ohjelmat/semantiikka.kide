@@ -1,0 +1,18 @@
+// Kide määrittelee jokaisen kokonaislukuoperaation tuloksen: ylivuoto
+// kiertää modulo 2^64, ja nollalla jakaminen toimii kuten RISC-V:ssä.
+fn main() -> int {
+    var suurin = 9223372036854775807;
+    var pienin = -suurin - 1;
+    print(suurin + 1);          // kiertää pienimpään
+    print(pienin - 1);          // kiertää suurimpaan
+    print(pienin * -1);
+    print(pienin / -1);         // C:ssä määrittelemätöntä
+    print(pienin % -1);
+    print(7 / 0);               // RISC-V: -1
+    print(7 % 0);               // RISC-V: jaettava
+    print(-7 / 2);              // katkaisu kohti nollaa
+    print(-7 % 2);              // jäännöksellä jaettavan etumerkki
+    var nolla = 0;
+    print(100 / nolla);         // sama ajonaikana kuin laskostettuna
+    return 0;
+}

@@ -1,0 +1,38 @@
+    .text
+    .globl  k_kertoma
+    .type   k_kertoma, @function
+k_kertoma:
+    addi    sp, sp, -16
+    sd      ra, 8(sp)
+    sd      s0, 0(sp)
+    addi    s0, sp, 16
+    addi    sp, sp, -16
+    sd      s1, -24(s0)
+    sd      s2, -32(s0)
+    mv      s1, a0
+.Lkertoma_0:
+    li      s2, 1
+    slt     s2, s2, s1
+    xori    s2, s2, 1
+    beqz    s2, .Lkertoma_2
+.Lkertoma_1:
+    li      s2, 1
+    mv      a0, s2
+    j       .Lkertoma_loppu
+.Lkertoma_2:
+    li      s2, 1
+    sub     s2, s1, s2
+    mv      a0, s2
+    call    k_kertoma
+    mv      s2, a0
+    mul     s1, s1, s2
+    mv      a0, s1
+.Lkertoma_loppu:
+    ld      s1, -24(s0)
+    ld      s2, -32(s0)
+    addi    sp, s0, -16
+    ld      ra, 8(sp)
+    ld      s0, 0(sp)
+    addi    sp, sp, 16
+    ret
+    .size   k_kertoma, .-k_kertoma

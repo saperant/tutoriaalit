@@ -1,0 +1,34 @@
+// Kaksitoista yhtä aikaa elävää arvoa: s1-s11 eivät riitä, joten
+// rekisterien varaaja joutuu viemään osan pinoon.
+fn main() -> int {
+    var a = 1;
+    var b = 2;
+    var c = 3;
+    var d = 4;
+    var e = 5;
+    var f = 6;
+    var g = 7;
+    var h = 8;
+    var i = 9;
+    var j = 10;
+    var k = 11;
+    var l = 12;
+    var kierros = 0;
+    while kierros < 3 {
+        a = a + l;
+        b = b + a;
+        c = c + b;
+        d = d + c;
+        e = e + d;
+        f = f + e;
+        g = g + f;
+        h = h + g;
+        i = i + h;
+        j = j + i;
+        k = k + j;
+        l = l + k;
+        kierros = kierros + 1;
+    }
+    print(a + b + c + d + e + f + g + h + i + j + k + l);
+    return 0;
+}

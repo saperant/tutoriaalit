@@ -1,0 +1,21 @@
+// Nimiin liittyvät virheet: tuntemattomat nimet, kahdesti esitelty
+// muuttuja ja funktio sekä puuttuva return-lause.
+fn kasvata(n: int) -> int {
+    var n = n + 1;
+    if n > 10 {
+        return n;
+    }
+}
+
+fn kasvata(n: int) -> int {
+    return n + 1;
+}
+
+fn main() -> int {
+    {
+        var sisempi = 1;
+    }
+    print(sisempi);
+    laske(3);
+    return 0;
+}

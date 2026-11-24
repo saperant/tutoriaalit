@@ -1,0 +1,16 @@
+// Kahdeksan parametria: kaikki mahtuvat rekistereihin a0-a7.
+fn painotettu(a: int, b: int, c: int, d: int,
+              e: int, f: int, g: int, h: int) -> int {
+    return a + 2 * b + 3 * c + 4 * d + 5 * e + 6 * f + 7 * g + 8 * h;
+}
+
+fn vaihda(a: int, b: int) -> int {
+    return painotettu(b, a, b, a, b, a, b, a);
+}
+
+fn main() -> int {
+    print(painotettu(1, 1, 1, 1, 1, 1, 1, 1));
+    print(painotettu(8, 7, 6, 5, 4, 3, 2, 1));
+    print(vaihda(1, 0));
+    return 0;
+}

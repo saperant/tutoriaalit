@@ -1,0 +1,10 @@
+tyypit.kide:8:15: virhe: '+' odottaa tyyppiä int, saatiin bool
+tyypit.kide:9:8: virhe: if-ehto odottaa tyyppiä bool, saatiin int
+tyypit.kide:10:15: virhe: print odottaa tyyppiä int, saatiin bool
+tyypit.kide:12:13: virhe: funktio 'jaollinen' odottaa 2 argumenttia, saatiin 1
+tyypit.kide:12:28: virhe: tuntematon muuttuja 'tuntematon'
+tyypit.kide:12:26: virhe: '+' odottaa tyyppiä int, saatiin bool
+tyypit.kide:13:17: virhe: '<' odottaa tyyppiä int, saatiin bool
+tyypit.kide:14:13: virhe: muuttuja 'y' odottaa tyyppiä int, saatiin bool
+tyypit.kide:16:12: virhe: return odottaa tyyppiä int, saatiin bool
+9 virhettä

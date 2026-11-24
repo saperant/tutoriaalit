@@ -1,0 +1,39 @@
+fn molemmat(a, b)
+L0:
+    %1 = 0
+    %2 = gt a, %1
+    br %2, L1, L3
+L1:                      ; edeltäjät: L0
+    %3 = 0
+    %4 = gt b, %3
+    br %4, L2, L3
+L2:                      ; edeltäjät: L1
+    %5 = 1
+    ret %5
+L3:                      ; edeltäjät: L0 L1
+    %6 = 0
+    ret %6
+
+fn main()
+L0:
+    %2 = 2
+    %3 = 1
+    %4 = gt %2, %3
+    %1 = %4
+    br %4, L2, L1
+L1:                      ; edeltäjät: L0
+    %5 = 1
+    %6 = 0
+    %7 = div %5, %6
+    %8 = 0
+    %9 = gt %7, %8
+    %1 = %9
+    jmp L2
+L2:                      ; edeltäjät: L0 L1
+    c = %1
+    %10 = 1
+    %11 = 2
+    %12 = call molemmat(%10, %11)
+    print %12
+    %13 = 0
+    ret %13

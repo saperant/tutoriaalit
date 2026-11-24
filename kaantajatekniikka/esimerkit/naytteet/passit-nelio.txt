@@ -1,0 +1,29 @@
+fn nelio(a, b)
+L0:
+    %1 = add a, b
+    %2 = add a, b
+    %3 = mul %1, %2
+    ret %3
+L1:
+    %4 = 0
+    ret %4
+; passin 'saavuttamattomat lohkot' jälkeen
+fn nelio(a, b)
+L0:
+    %1 = add a, b
+    %2 = add a, b
+    %3 = mul %1, %2
+    ret %3
+; passin 'arvonumerointi' jälkeen
+fn nelio(a, b)
+L0:
+    %1 = add a, b
+    %2 = %1
+    %3 = mul %1, %1
+    ret %3
+; passin 'kuollut koodi' jälkeen
+fn nelio(a, b)
+L0:
+    %1 = add a, b
+    %3 = mul %1, %1
+    ret %3

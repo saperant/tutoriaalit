@@ -1,0 +1,6 @@
+nimet.kide:10:1: virhe: funktio 'kasvata' on jo määritelty
+nimet.kide:4:5: virhe: 'n' on jo esitelty tällä alueella
+nimet.kide:3:1: virhe: funktio 'kasvata' voi päättyä ilman return-lausetta
+nimet.kide:18:11: virhe: tuntematon muuttuja 'sisempi'
+nimet.kide:19:5: virhe: tuntematon funktio 'laske'
+5 virhettä

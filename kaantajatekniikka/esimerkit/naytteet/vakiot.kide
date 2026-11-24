@@ -1,0 +1,15 @@
+fn nelio(a: int, b: int) -> int {
+    return (a + b) * (a + b);       // yhteinen alilauseke
+}
+
+fn main() -> int {
+    var leveys = 6;
+    var korkeus = 7;
+    var ala = leveys * korkeus;
+    if ala > 40 {
+        print(ala * 1 + 0);
+    } else {
+        print(nelio(leveys, korkeus));
+    }
+    return 0;
+}

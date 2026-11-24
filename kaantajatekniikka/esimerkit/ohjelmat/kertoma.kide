@@ -1,0 +1,16 @@
+// Kertoma rekursiolla ja silmukalla.
+fn kertoma(n: int) -> int {
+    if n <= 1 {
+        return 1;
+    }
+    return n * kertoma(n - 1);
+}
+
+fn main() -> int {
+    var i = 1;
+    while i <= 10 {
+        print(kertoma(i));
+        i = i + 1;
+    }
+    return 0;
+}

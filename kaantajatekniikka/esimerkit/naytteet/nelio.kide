@@ -1,0 +1,8 @@
+fn nelioiden_summa(a: int, b: int) -> int {
+    return a * a + b * b;
+}
+
+fn main() -> int {
+    print(nelioiden_summa(3, 4));
+    return 0;
+}

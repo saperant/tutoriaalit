@@ -1,0 +1,34 @@
+fn kertoma(n)
+L0:
+    %1 = 1
+    %2 = le n, %1
+    br %2, L1, L2
+L1:                      ; edeltäjät: L0
+    %3 = 1
+    ret %3
+L2:                      ; edeltäjät: L0
+    %4 = 1
+    %5 = sub n, %4
+    %6 = call kertoma(%5)
+    %7 = mul n, %6
+    ret %7
+
+fn main()
+L0:
+    %1 = 1
+    i = %1
+    jmp L1
+L1:                      ; edeltäjät: L0 L2
+    %2 = 10
+    %3 = le i, %2
+    br %3, L2, L3
+L2:                      ; edeltäjät: L1
+    %4 = call kertoma(i)
+    print %4
+    %5 = 1
+    %6 = add i, %5
+    i = %6
+    jmp L1
+L3:                      ; edeltäjät: L1
+    %7 = 0
+    ret %7

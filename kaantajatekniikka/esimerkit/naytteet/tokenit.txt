@@ -1,0 +1,25 @@
+1:1 'fn'
+1:4 tunniste main
+1:8 '('
+1:9 ')'
+1:11 '->'
+1:14 'int'
+1:18 '{'
+2:5 'var'
+2:9 tunniste ala
+2:13 '='
+2:15 kokonaisluku 2
+2:17 '*'
+2:19 '('
+2:20 kokonaisluku 3
+2:22 '+'
+2:24 kokonaisluku 4
+2:25 ')'
+2:26 ';'
+3:5 'return'
+3:12 tunniste ala
+3:16 '-'
+3:18 kokonaisluku 1
+3:19 ';'
+4:1 '}'
+5:1 tiedoston loppu

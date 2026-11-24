@@ -451,6 +451,7 @@ laajuus = 5
 testaus = "C++, käännetyt ohjelmat ajetaan QEMU-emulaattorissa"
 roadmap = ["computer-science"]
 amk = "Kääntäjätekniikka"
+tutoriaali = "kaantajatekniikka"
 
 # ---------------------------------------------------------------------
 # Tietokonejärjestelmät

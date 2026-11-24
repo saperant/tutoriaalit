@@ -1,0 +1,17 @@
+// Tyyppivirheet. Virheellinen alilauseke saa tuntemattoman tyypin,
+// joten samasta virheestä ei raportoida moneen kertaan.
+fn jaollinen(n: int, d: int) -> bool {
+    return n % d == 0;
+}
+
+fn main() -> int {
+    var x = 1 + true;
+    if x {
+        print(jaollinen(4, 2));
+    }
+    var y = jaollinen(1) + tuntematon;
+    while 1 < 2 < 3 {
+        y = false;
+    }
+    return jaollinen(x, 3);
+}

@@ -1,0 +1,26 @@
+fn summa(n.0)
+L0:
+    s.0 = 0
+    i.0 = 1
+    jmp L1
+L1:                      ; edeltäjät: L0 L4
+    i.1 = phi [i.0, L0], [i.2, L4]
+    s.1 = phi [s.0, L0], [s.3, L4]
+    %3 = le i.1, n.0
+    br %3, L2, L5
+L2:                      ; edeltäjät: L1
+    %4 = 3
+    %5 = rem i.1, %4
+    %6 = 0
+    %7 = eq %5, %6
+    br %7, L3, L4
+L3:                      ; edeltäjät: L2
+    s.2 = add s.1, i.1
+    jmp L4
+L4:                      ; edeltäjät: L2 L3
+    s.3 = phi [s.1, L2], [s.2, L3]
+    %9 = 1
+    i.2 = add i.1, %9
+    jmp L1
+L5:                      ; edeltäjät: L1
+    ret s.1

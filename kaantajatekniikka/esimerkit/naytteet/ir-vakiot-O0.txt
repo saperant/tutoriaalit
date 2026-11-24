@@ -1,0 +1,25 @@
+fn main()
+L0:
+    %1 = 6
+    leveys = %1
+    %2 = 7
+    korkeus = %2
+    %3 = mul leveys, korkeus
+    ala = %3
+    %4 = 40
+    %5 = gt ala, %4
+    br %5, L1, L2
+L1:                      ; edeltäjät: L0
+    %6 = 1
+    %7 = mul ala, %6
+    %8 = 0
+    %9 = add %7, %8
+    print %9
+    jmp L3
+L2:                      ; edeltäjät: L0
+    %10 = call nelio(leveys, korkeus)
+    print %10
+    jmp L3
+L3:                      ; edeltäjät: L1 L2
+    %11 = 0
+    ret %11

@@ -1,0 +1,22 @@
+// && ja || laskevat oikean puolen vain tarvittaessa. Funktio tulostaa
+// argumenttinsa, joten tulosteesta näkee, mitkä kutsut tehtiin.
+fn nayta(n: int) -> bool {
+    print(n);
+    return n > 0;
+}
+
+fn main() -> int {
+    var a = nayta(0) && nayta(1);       // vain 0
+    var b = nayta(2) || nayta(3);       // vain 2
+    if a || !b {
+        print(-1);
+    }
+    if nayta(4) && (nayta(-5) || nayta(6)) {
+        print(100);
+    }
+    var c = !(nayta(7) && nayta(0));    // 7 ja 0
+    if c == true {
+        print(200);
+    }
+    return 0;
+}

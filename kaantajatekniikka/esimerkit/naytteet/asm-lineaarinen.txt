@@ -1,0 +1,27 @@
+    .text
+    .globl  k_nelioiden_summa
+    .type   k_nelioiden_summa, @function
+k_nelioiden_summa:
+    addi    sp, sp, -16
+    sd      ra, 8(sp)
+    sd      s0, 0(sp)
+    addi    s0, sp, 16
+    addi    sp, sp, -16
+    sd      s1, -24(s0)
+    sd      s2, -32(s0)
+    mv      s1, a0
+    mv      s2, a1
+.Lnelioiden_summa_0:
+    mul     s1, s1, s1
+    mul     s2, s2, s2
+    add     s1, s1, s2
+    mv      a0, s1
+.Lnelioiden_summa_loppu:
+    ld      s1, -24(s0)
+    ld      s2, -32(s0)
+    addi    sp, s0, -16
+    ld      ra, 8(sp)
+    ld      s0, 0(sp)
+    addi    sp, sp, 16
+    ret
+    .size   k_nelioiden_summa, .-k_nelioiden_summa

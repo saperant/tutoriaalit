@@ -1,0 +1,29 @@
+(* Kide-kielen kielioppi (EBNF). Isot kirjaimet ovat tokeneita:
+   TUNNISTE = [A-Za-z_][A-Za-z0-9_]*, LUKU = [0-9]+. *)
+
+ohjelma   = { funktio } ;
+funktio   = "fn" TUNNISTE "(" [ parametri { "," parametri } ] ")"
+            "->" tyyppi lohko ;
+parametri = TUNNISTE ":" tyyppi ;
+tyyppi    = "int" | "bool" ;
+lohko     = "{" { lause } "}" ;
+
+lause     = "var" TUNNISTE "=" lauseke ";"
+          | TUNNISTE "=" lauseke ";"
+          | "if" lauseke lohko [ "else" ( lohko | if-lause ) ]
+          | "while" lauseke lohko
+          | "return" lauseke ";"
+          | "print" "(" lauseke ")" ";"
+          | lohko
+          | lauseke ";" ;
+
+lauseke   = tai ;
+tai       = ja { "||" ja } ;
+ja        = yhtasuuruus { "&&" yhtasuuruus } ;
+yhtasuuruus = vertailu { ( "==" | "!=" ) vertailu } ;
+vertailu  = summa { ( "<" | "<=" | ">" | ">=" ) summa } ;
+summa     = tulo { ( "+" | "-" ) tulo } ;
+tulo      = unaari { ( "*" | "/" | "%" ) unaari } ;
+unaari    = ( "-" | "!" ) unaari | perus ;
+perus     = LUKU | "true" | "false" | "(" lauseke ")"
+          | TUNNISTE [ "(" [ lauseke { "," lauseke } ] ")" ] ;

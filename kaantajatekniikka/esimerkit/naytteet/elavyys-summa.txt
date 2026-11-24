@@ -1,0 +1,7 @@
+fn summa (kierroksia 3)
+  L0  sisään {n}  ulos {n s i}
+  L1  sisään {n s i}  ulos {n s i}
+  L2  sisään {n s i}  ulos {n s i}
+  L3  sisään {n s i}  ulos {n s i}
+  L4  sisään {n s i}  ulos {n s i}
+  L5  sisään {s}  ulos {}

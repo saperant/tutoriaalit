@@ -1,0 +1,28 @@
+// Suurin yhteinen tekijä Eukleideen algoritmilla ja pienin yhteinen
+// jaettava sen avulla.
+fn syt(a: int, b: int) -> int {
+    while b != 0 {
+        var r = a % b;
+        a = b;
+        b = r;
+    }
+    return a;
+}
+
+fn pyj(a: int, b: int) -> int {
+    return a / syt(a, b) * b;    // jaetaan ensin: välitulos pysyy pienenä
+}
+
+fn main() -> int {
+    print(syt(1071, 462));
+    print(syt(17, 5));
+    print(pyj(4, 6));
+    var tulos = 1;
+    var k = 1;
+    while k <= 20 {             // pienin luku, jonka 1..20 jakavat
+        tulos = pyj(tulos, k);
+        k = k + 1;
+    }
+    print(tulos);
+    return 0;
+}

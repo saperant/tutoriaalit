@@ -1,0 +1,12 @@
+fn molemmat(a: int, b: int) -> int {
+    if a > 0 && b > 0 {
+        return 1;
+    }
+    return 0;
+}
+
+fn main() -> int {
+    var c = 2 > 1 || 1 / 0 > 0;
+    print(molemmat(1, 2));
+    return 0;
+}

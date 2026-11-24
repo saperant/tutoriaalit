@@ -1,0 +1,7 @@
+// Selausvirheet: tuntemattomat merkit ja liian suuri luku.
+fn main() -> int {
+    var a = 9223372036854775808;
+    var b = 12kpl;
+    var c = a & b;
+    return a # b;
+}

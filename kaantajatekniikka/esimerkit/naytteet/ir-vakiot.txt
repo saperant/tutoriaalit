@@ -1,0 +1,6 @@
+fn main()
+L0:
+    ala = 42
+    print ala
+    %11 = 0
+    ret %11

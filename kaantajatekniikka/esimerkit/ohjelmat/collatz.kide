@@ -1,0 +1,30 @@
+// Pisin Collatzin jono aloitusluvuilla 1..9999.
+fn pituus(n: int) -> int {
+    var askelia = 1;
+    while n != 1 {
+        if n % 2 == 0 {
+            n = n / 2;
+        } else {
+            n = 3 * n + 1;
+        }
+        askelia = askelia + 1;
+    }
+    return askelia;
+}
+
+fn main() -> int {
+    var paras = 1;
+    var pisin = 1;
+    var n = 1;
+    while n < 10000 {
+        var p = pituus(n);
+        if p > pisin {
+            pisin = p;
+            paras = n;
+        }
+        n = n + 1;
+    }
+    print(paras);
+    print(pisin);
+    return 0;
+}

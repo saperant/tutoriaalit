@@ -107,6 +107,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Käyttöjärjestelmät | [`kayttojarjestelmat/`](kayttojarjestelmat/) | [kayttojarjestelmat.pdf](https://saperant.github.io/tutoriaalit/materiaalit/kayttojarjestelmat.pdf) |
 | Säteenseuranta ja fysikaalinen valaistus | [`sateenseuranta/`](sateenseuranta/) | [sateenseuranta.pdf](https://saperant.github.io/tutoriaalit/materiaalit/sateenseuranta.pdf) |
 | Suorituskyvyn analyysi ja optimointi | [`suorituskyky/`](suorituskyky/) | [suorituskyky.pdf](https://saperant.github.io/tutoriaalit/materiaalit/suorituskyky.pdf) |
+| Kääntäjätekniikka | [`kaantajatekniikka/`](kaantajatekniikka/) | [kaantajatekniikka.pdf](https://saperant.github.io/tutoriaalit/materiaalit/kaantajatekniikka.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

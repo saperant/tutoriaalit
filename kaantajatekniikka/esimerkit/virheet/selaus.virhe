@@ -1,0 +1,5 @@
+selaus.kide:3:13: virhe: kokonaisluku ei mahdu 64 bittiin
+selaus.kide:4:13: virhe: virheellinen luku
+selaus.kide:5:15: virhe: odotettiin '&&'
+selaus.kide:6:14: virhe: tuntematon merkki '#'
+4 virhettä

@@ -1,0 +1,4 @@
+fn main() -> int {
+    var ala = 2 * (3 + 4);   // kommentti ohitetaan
+    return ala - 1;
+}

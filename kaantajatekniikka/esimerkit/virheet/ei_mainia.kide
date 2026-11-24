@@ -1,0 +1,4 @@
+// Ohjelmasta puuttuu main() -> int.
+fn main(argc: int) -> bool {
+    return argc > 0;
+}

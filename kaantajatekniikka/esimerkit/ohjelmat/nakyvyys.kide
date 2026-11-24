@@ -1,0 +1,23 @@
+// Sisempi alue voi esitellä samannimisen muuttujan, joka peittää
+// ulomman. Esittelyn arvo lasketaan ennen kuin uusi nimi on näkyvissä.
+fn main() -> int {
+    var x = 1;
+    {
+        var x = x + 10;          // oikealla puolella ulompi x
+        print(x);
+        {
+            var x = x * 2;
+            print(x);
+        }
+        x = x + 1;
+        print(x);
+    }
+    print(x);                    // ulompaan ei koskettu
+    var i = 0;
+    while i < 3 {
+        var x = i * 100;         // uusi muuttuja jokaisella kierroksella
+        print(x + i);
+        i = i + 1;
+    }
+    return 0;
+}

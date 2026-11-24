@@ -1,0 +1,31 @@
+// Alkuluvut kokeilujaolla. Ehto d * d <= n && n % d != 0 käyttää
+// oikosulkua: jäännös lasketaan vain, kun d on vielä pieni.
+fn alkuluku(n: int) -> bool {
+    if n < 2 {
+        return false;
+    }
+    var d = 2;
+    while d * d <= n && n % d != 0 {
+        d = d + 1;
+    }
+    return d * d > n;
+}
+
+fn main() -> int {
+    var n = 0;
+    var maara = 0;
+    var summa = 0;
+    while n < 1000 {
+        if alkuluku(n) {
+            maara = maara + 1;
+            summa = summa + n;
+            if n > 970 {
+                print(n);
+            }
+        }
+        n = n + 1;
+    }
+    print(maara);
+    print(summa);
+    return 0;
+}

@@ -1,0 +1,4 @@
+jasennys.kide:4:19: virhe: odotettiin ')', saatiin ';'
+jasennys.kide:5:17: virhe: odotettiin lauseketta, saatiin ';'
+jasennys.kide:7:5: virhe: odotettiin ';', saatiin 'return'
+3 virhettä

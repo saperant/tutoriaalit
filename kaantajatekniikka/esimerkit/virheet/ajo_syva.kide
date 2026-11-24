@@ -1,0 +1,9 @@
+// Päättymätön rekursio. Tulkki rajoittaa kutsupinon syvyyttä;
+// käännetty ohjelma kaatuisi, kun pino loppuu.
+fn syvemmalle(n: int) -> int {
+    return syvemmalle(n + 1) + 1;
+}
+
+fn main() -> int {
+    return syvemmalle(0);
+}
