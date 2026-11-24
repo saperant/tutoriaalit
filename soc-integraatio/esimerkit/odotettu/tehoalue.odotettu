@@ -1,0 +1,17 @@
+jakso  2  PAALLA       eristys=0 kello=1 virta=1
+          alue: 0x02  eristetty lähtö: 0x02
+jakso 10  ERISTA       eristys=1 kello=1 virta=1
+          alue: 0x0a  eristetty lähtö: 0x00
+jakso 11  KELLO_POIS   eristys=1 kello=0 virta=1
+          alue: 0x0b  eristetty lähtö: 0x00
+jakso 12  POIS         eristys=1 kello=0 virta=0
+          alue: 0xa5  eristetty lähtö: 0x00
+jakso 16  VIRTA_PAALLE eristys=1 kello=0 virta=1
+          alue: 0x00  eristetty lähtö: 0x00
+jakso 20  NOLLAUS      eristys=1 kello=1 virta=1
+          alue: 0x00  eristetty lähtö: 0x00
+jakso 21  VAPAUTA      eristys=1 kello=1 virta=1
+          alue: 0x00  eristetty lähtö: 0x00
+jakso 22  PAALLA       eristys=0 kello=1 virta=1
+          alue: 0x01  eristetty lähtö: 0x01
+lopuksi   alue: 0x05  lähtö: 0x05

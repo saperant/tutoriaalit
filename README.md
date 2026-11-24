@@ -76,6 +76,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Tietoturva kehitystyössä | [`turvallinen-kehitys/`](turvallinen-kehitys/) | [turvallinen-kehitys.pdf](https://saperant.github.io/tutoriaalit/materiaalit/turvallinen-kehitys.pdf) |
 | Web-sovellusten tietoturva | [`web-tietoturva/`](web-tietoturva/) | [web-tietoturva.pdf](https://saperant.github.io/tutoriaalit/materiaalit/web-tietoturva.pdf) |
 | Digitaalitekniikka | [`digitaalitekniikka/`](digitaalitekniikka/) | [digitaalitekniikka.pdf](https://saperant.github.io/tutoriaalit/materiaalit/digitaalitekniikka.pdf) |
+| SoC-integraatio | [`soc-integraatio/`](soc-integraatio/) | [soc-integraatio.pdf](https://saperant.github.io/tutoriaalit/materiaalit/soc-integraatio.pdf) |
 | GPU-ohjelmointi: OpenGL ja Vulkan | [`gpu-ohjelmointi/`](gpu-ohjelmointi/) | [gpu-ohjelmointi.pdf](https://saperant.github.io/tutoriaalit/materiaalit/gpu-ohjelmointi.pdf) |
 | Peliohjelmointi | [`peliohjelmointi/`](peliohjelmointi/) | [peliohjelmointi.pdf](https://saperant.github.io/tutoriaalit/materiaalit/peliohjelmointi.pdf) |
 | RTL-suunnittelu (SystemVerilog) | [`rtl-suunnittelu/`](rtl-suunnittelu/) | [rtl-suunnittelu.pdf](https://saperant.github.io/tutoriaalit/materiaalit/rtl-suunnittelu.pdf) |

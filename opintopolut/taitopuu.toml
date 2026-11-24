@@ -1724,6 +1724,7 @@ laajuus = 5
 testaus = "Verilator ja RISC-V-ohjelmisto simuloidussa SoC:ssa"
 roadmap = []
 amk = "SoC-suunnittelu"
+tutoriaali = "soc-integraatio"
 
 [[taito]]
 id = "peliohjelmointi"

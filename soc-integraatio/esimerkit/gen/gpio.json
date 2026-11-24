@@ -1,0 +1,14 @@
+{
+  "nimi": "gpio",
+  "kuvaus": "Yleiskäyttöiset 8-bittiset tulot ja lähdöt",
+  "rekisterit": [
+    {"nimi": "ULOS", "siirto": 0, "leveys": 8, "tyyppi": "rw",
+     "kuvaus": "Lähtöjen tila"},
+    {"nimi": "SISAAN", "siirto": 4, "leveys": 8, "tyyppi": "ro",
+     "kuvaus": "Tulojen tila (tahdistettu)"},
+    {"nimi": "SALLI", "siirto": 8, "leveys": 8, "tyyppi": "rw",
+     "kuvaus": "Keskeytykset sallittu tulon nousevalla reunalla"},
+    {"nimi": "REUNAT", "siirto": 12, "leveys": 8, "tyyppi": "w1c",
+     "kuvaus": "Havaitut nousevat reunat; ykkösen kirjoitus nollaa"}
+  ]
+}

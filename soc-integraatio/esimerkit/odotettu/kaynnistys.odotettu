@@ -1,0 +1,5 @@
+Pikku-SoC käynnistyi
+tunniste: 0x534f4331 (SOC1)
+misa:     0x40000100
+APU:      0x00c0ffee
+CLINT-luku kesti 21 jaksoa, mtime = 10498

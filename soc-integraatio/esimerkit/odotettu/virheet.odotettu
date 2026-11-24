@@ -1,0 +1,15 @@
+luku osoitteesta, jossa ei ole orjaa (kytkin: DECERR)
+  -> mcause 5 (lukemisen väylävirhe), mtval 0x20000000
+kirjoitus tyhjään APB-ikkunaan (silta: DECERR)
+  -> mcause 7 (kirjoituksen väylävirhe), mtval 0x1000f000
+tavukirjoitus UARTin rekisteriin (UART: SLVERR)
+  -> mcause 7 (kirjoituksen väylävirhe), mtval 0x10000000
+kirjoitus vain luettavaan TUNNISTE-rekisteriin (SLVERR)
+  -> mcause 7 (kirjoituksen väylävirhe), mtval 0x10001000
+kohdistamaton sanaluku
+  -> mcause 4 (kohdistamaton luku), mtval 0x00000102
+laiton käsky
+  -> mcause 2 (laiton käsky), mtval 0x00000000
+ympäristökutsu
+  -> mcause 11 (ecall), mtval 0x00000000
+kaikki poikkeukset käsitelty

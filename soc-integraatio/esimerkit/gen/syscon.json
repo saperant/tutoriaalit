@@ -1,0 +1,13 @@
+{
+  "nimi": "syscon",
+  "kuvaus": "Järjestelmäohjain: tunniste, apurekisteri ja lopetus",
+  "rekisterit": [
+    {"nimi": "TUNNISTE", "siirto": 0, "leveys": 32, "tyyppi": "vakio",
+     "nollaus": 1397703473,
+     "kuvaus": "SoC:n tunniste ASCII-merkkeinä: \"SOC1\""},
+    {"nimi": "APU", "siirto": 4, "leveys": 32, "tyyppi": "rw",
+     "kuvaus": "Vapaasti käytettävä apurekisteri"},
+    {"nimi": "LOPETA", "siirto": 8, "leveys": 8, "tyyppi": "wo",
+     "kuvaus": "Simulaatio päättyy; arvo on paluukoodi"}
+  ]
+}

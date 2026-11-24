@@ -78,7 +78,7 @@ flowchart LR
     hls["Korkean tason synteesi"]
     dsp_laitteisto["DSP-algoritmien laitteistototeutus"]
     asic_toteutus["ASIC-toteutus"]
-    soc_integraatio["SoC-integraatio"]
+    soc_integraatio["✓ SoC-integraatio"]
   end
   subgraph signaalit["Signaalinkäsittely ja radiot"]
     signaalit_ja_jarjestelmat["Signaalit ja järjestelmät"]
@@ -351,7 +351,7 @@ flowchart LR
 | Laitteiston verifiointi | 5 | Python työkaluohjelmointiin, RTL-suunnittelu SystemVerilogilla | suunniteltu |
 | Lukujen esitys ja kiinteän pilkun aritmetiikka | 3 | Digitaalitekniikka, Miten tietokone laskee | suunniteltu |
 | Korkean tason mallinnus (SystemC/TLM) | 5 | Lukujen esitys ja kiinteän pilkun aritmetiikka, Moderni C++, Tietokonearkkitehtuuri | suunniteltu |
-| SoC-integraatio | 5 | RTL-suunnittelu SystemVerilogilla, Tietokonearkkitehtuuri | suunniteltu |
+| SoC-integraatio | 5 | RTL-suunnittelu SystemVerilogilla, Tietokonearkkitehtuuri | [valmis](../soc-integraatio/) |
 | Arkkitehtuurin mallinnus ja suunnittelutilan tutkiminen | 5 | Korkean tason mallinnus (SystemC/TLM), Suorituskyvyn analyysi ja optimointi, Todennäköisyys ja tilastot | suunniteltu |
 | DSP-algoritmien laitteistototeutus | 5 | Digitaalinen signaalinkäsittely, FPGA-toteutus, Laitteiston verifiointi, Lukujen esitys ja kiinteän pilkun aritmetiikka | suunniteltu |
 | Korkean tason synteesi | 5 | FPGA-toteutus, Korkean tason mallinnus (SystemC/TLM) | suunniteltu |
