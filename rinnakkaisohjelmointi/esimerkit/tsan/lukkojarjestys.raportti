@@ -1,0 +1,7 @@
+WARNING: ThreadSanitizer: lock-order-inversion (potential deadlock) (pid=...)
+  Cycle in lock order graph: M0 (0x...) => M1 (0x...) => M0
+  Mutex M1 acquired here while holding mutex M0 in thread T1:
+    #4 siirto() tsan/lukkojarjestys.cc:15
+  Mutex M0 acquired here while holding mutex M1 in thread T2:
+    #4 raportti() tsan/lukkojarjestys.cc:21
+SUMMARY: ThreadSanitizer: lock-order-inversion (potential deadlock)

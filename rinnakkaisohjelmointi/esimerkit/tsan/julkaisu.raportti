@@ -1,0 +1,7 @@
+WARNING: ThreadSanitizer: data race (pid=...)
+  Read of size 4 at 0x... by thread T2:
+    #0 operator() tsan/julkaisu.cc:22
+  Previous write of size 4 at 0x... by thread T1:
+    #0 operator() tsan/julkaisu.cc:15
+  Location is global 'data' of size 4 at 0x...
+SUMMARY: ThreadSanitizer: data race tsan/julkaisu.cc:22 in operator()

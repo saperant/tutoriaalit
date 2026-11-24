@@ -61,7 +61,7 @@ flowchart LR
     tietokonearkkitehtuuri["✓ Tietokonearkkitehtuuri"]
     binaarit_ja_linkitys["✓ Objektitiedostot, linkitys ja ABI"]
     kayttojarjestelmat["✓ Käyttöjärjestelmät"]
-    rinnakkaisohjelmointi["Rinnakkaisohjelmointi"]
+    rinnakkaisohjelmointi["✓ Rinnakkaisohjelmointi"]
     suorituskyky["✓ Suorituskyvyn analyysi ja optimointi"]
     tietokonearitmetiikka["✓ Miten tietokone laskee"]
     virtualisointi["✓ Virtualisointi"]
@@ -336,7 +336,7 @@ flowchart LR
 | Tietokonearkkitehtuuri | 5 | Assembly | [valmis](../tietokonearkkitehtuuri/) |
 | Käyttöjärjestelmät | 5 | Tietokonearkkitehtuuri | [valmis](../kayttojarjestelmat/) |
 | Suorituskyvyn analyysi ja optimointi | 3 | Algoritmit, Tietokonearkkitehtuuri | [valmis](../suorituskyky/) |
-| Rinnakkaisohjelmointi | 5 | Käyttöjärjestelmät, Moderni C++ | suunniteltu |
+| Rinnakkaisohjelmointi | 5 | Käyttöjärjestelmät, Moderni C++ | [valmis](../rinnakkaisohjelmointi/) |
 | Virtualisointi | 3 | Käyttöjärjestelmät | [valmis](../virtualisointi/) |
 
 ### Laitteistosuunnittelu

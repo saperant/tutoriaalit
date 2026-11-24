@@ -1,0 +1,5 @@
+SB relaxed: sallitut (0,0) (0,1) (1,0) (1,1); havainnot sallittuja: kylla
+SB release/acquire: sallitut (0,0) (0,1) (1,0) (1,1); havainnot sallittuja: kylla
+SB seq_cst: sallitut (0,1) (1,0) (1,1); havainnot sallittuja: kylla
+MP relaxed: sallitut (0,0) (0,1) (1,0) (1,1); havainnot sallittuja: kylla
+MP release/acquire: sallitut (0,0) (0,1) (1,1); havainnot sallittuja: kylla

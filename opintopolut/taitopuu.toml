@@ -577,6 +577,7 @@ laajuus = 5
 testaus = "C++, ThreadSanitizer"
 roadmap = ["cpp", "computer-science"]
 amk = "Rinnakkaisohjelmointi"
+tutoriaali = "rinnakkaisohjelmointi"
 
 [[taito]]
 id = "suorituskyky"

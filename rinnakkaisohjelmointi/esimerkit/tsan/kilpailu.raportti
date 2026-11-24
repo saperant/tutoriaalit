@@ -1,0 +1,10 @@
+WARNING: ThreadSanitizer: data race (pid=...)
+  ... of size 4 at 0x... by thread T...:
+    #0 laske() tsan/kilpailu.cc:13
+  Previous ... of size 4 at 0x... by thread T...:
+    #0 laske() tsan/kilpailu.cc:13
+  Location is global 'osumia' of size 4 at 0x...
+  Thread T... created by main thread at:
+    #4 main tsan/kilpailu.cc:20
+    #4 main tsan/kilpailu.cc:21
+SUMMARY: ThreadSanitizer: data race tsan/kilpailu.cc:13 in laske()
