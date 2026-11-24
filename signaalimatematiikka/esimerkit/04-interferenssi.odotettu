@@ -1,0 +1,9 @@
+ vaihe-ero  amplitudi  2|cos(d/2)|   teho (dB)
+     0        2.000        2.000         0.00
+    45        1.848        1.848        -0.69
+    90        1.414        1.414        -3.01
+   120        1.000        1.000        -6.02
+   180        0.000        0.000         -inf
+summa = 2 cos(pi df t) cos(2 pi fk t): True
+|x| <= verho: True
+huojuntataajuus |f2 - f1| = 4 Hz, kantoaalto 442 Hz

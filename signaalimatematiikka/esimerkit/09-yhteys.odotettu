@@ -1,0 +1,7 @@
+c_0 : DFT[ 0]/N = 0.5000 + 0.0000i, tarkka 0.5000 + 0.0000i
+c_1 : DFT[ 1]/N = 1.0000 - 1.0000i, tarkka 1.0000 - 1.0000i
+c_3 : DFT[ 3]/N = 0.0000 + 0.2500i, tarkka 0.0000 + 0.2500i
+c_-1: DFT[15]/N = 1.0000 + 1.0000i, tarkka 1.0000 + 1.0000i
+c_-3: DFT[13]/N = 0.0000 - 0.2500i, tarkka 0.0000 - 0.2500i
+taajuusväli 1/(N dt) = 0.0391 Hz, suurin taajuus 10.0 Hz
+FFT * dt = e^(-pi f^2): True

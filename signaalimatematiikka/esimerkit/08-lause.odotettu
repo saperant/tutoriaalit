@@ -1,0 +1,5 @@
+syklinen määritelmästä: [-2.5  4.   1.5  2.   2.5  3. ]
+ifft(fft(x) fft(h))   : [-2.5  4.   1.5  2.   2.5  3. ]
+np.convolve       : [ 1.   1.   1.5  2.  -2.5  2. ]
+FFT, pituus 4     : [-1.5  3.   1.5  2. ] <- kiertyy
+FFT, pituus 6     : [ 1.   1.   1.5  2.  -2.5  2. ]

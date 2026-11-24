@@ -46,7 +46,7 @@ flowchart LR
   subgraph matematiikka["Matematiikka"]
     diskreetti_matematiikka["✓ Diskreetti matematiikka"]
     lineaarialgebra["✓ Lineaarialgebra"]
-    signaalimatematiikka["Kompleksiluvut ja Fourier-analyysi"]
+    signaalimatematiikka["✓ Kompleksiluvut ja Fourier-analyysi"]
     todennakoisyys["✓ Todennäköisyys ja tilastot"]
   end
   subgraph algoritmit["Algoritmit ja tietorakenteet"]
@@ -314,7 +314,7 @@ flowchart LR
 | Diskreetti matematiikka | 5 | – | [valmis](../diskreetti-matematiikka/) |
 | Lineaarialgebra | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../lineaarialgebra/) |
 | Todennäköisyys ja tilastot | 3 | Diskreetti matematiikka | [valmis](../todennakoisyys/) |
-| Kompleksiluvut ja Fourier-analyysi | 5 | Lineaarialgebra | suunniteltu |
+| Kompleksiluvut ja Fourier-analyysi | 5 | Lineaarialgebra | [valmis](../signaalimatematiikka/) |
 
 ### Algoritmit ja tietorakenteet
 

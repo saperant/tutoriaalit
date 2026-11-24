@@ -1,0 +1,10 @@
+F (N = 4):
+  1    1    1    1
+  1   -i   -1    i
+  1   -1    1   -1
+  1    i   -1   -i
+F^H F = N I: True
+F on symmetrinen: True
+U = F / sqrt(N) on unitaarinen: True
+oma silmukka = np.fft.fft: True
+matriisi     = np.fft.fft: True

@@ -1,0 +1,5 @@
+lineaarisuus                 ok
+aikasiirto: x(t - t0)        ok
+modulaatio: x e^(i2pi f0 t)  ok
+skaalaus: x(a t)             ok
+kosinimodulaatio             ok

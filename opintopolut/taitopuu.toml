@@ -348,6 +348,7 @@ laajuus = 5
 testaus = "Python ja NumPy, pytest"
 roadmap = []
 amk = "Insinöörimatematiikka: kompleksiluvut ja muunnokset"
+tutoriaali = "signaalimatematiikka"
 
 [[taito]]
 id = "todennakoisyys"

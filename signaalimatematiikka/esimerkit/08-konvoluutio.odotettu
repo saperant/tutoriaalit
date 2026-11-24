@@ -1,0 +1,4 @@
+oma        : [ 0.5   1.25  2.25  1.25  0.25 -0.25 -0.25]
+np.convolve: [ 0.5   1.25  2.25  1.25  0.25 -0.25 -0.25]
+vaihdannainen: True
+x * viivästetty impulssi: [ 0.  0.  1.  2.  3.  0. -1.]

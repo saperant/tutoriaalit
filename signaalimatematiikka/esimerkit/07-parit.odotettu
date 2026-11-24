@@ -1,0 +1,8 @@
+rect -> sinc, max virhe < 1e-6: True
+  X(0.0) = +1.0000  sinc = +1.0000
+  X(0.5) = +0.6366  sinc = +0.6366
+  X(1.0) = +0.0000  sinc = +0.0000
+  X(1.5) = -0.2122  sinc = -0.2122
+  X(2.5) = +0.1273  sinc = +0.1273
+e^(-pi t^2) -> e^(-pi f^2): True
+muunnos on reaalinen, koska x on parillinen: True

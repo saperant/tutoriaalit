@@ -1,0 +1,8 @@
+r =   0.50 + 0.00i: silmukka 2.0000 + 0.0000i, kaava 2.0000 + 0.0000i
+r =  -0.90 + 0.00i: silmukka 0.4623 + 0.0000i, kaava 0.4623 + 0.0000i
+r =   0.00 + 0.60i: silmukka 0.7353 + 0.4412i, kaava 0.7353 + 0.4412i
+r =   0.92 + 0.39i: silmukka 3.0131 + 2.3308i, kaava 3.0131 + 2.3308i
+0.5:n äärettömän sarjan summa 1/(1 - r) = 2.0, 60 termiä: 2.000000000000000
+Dirichlet'n ydin = summa: True
+imaginaariosa < 1e-12: True
+arvo pisteessä 0 (raja-arvo) = 2N + 1 = 13, pisteessä 1e-6: 13.000000

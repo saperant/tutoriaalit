@@ -99,6 +99,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Tietokonearkkitehtuuri | [`tietokonearkkitehtuuri/`](tietokonearkkitehtuuri/) | [tietokonearkkitehtuuri.pdf](https://saperant.github.io/tutoriaalit/materiaalit/tietokonearkkitehtuuri.pdf) |
 | Laitteiston verifiointi | [`verifiointi/`](verifiointi/) | [verifiointi.pdf](https://saperant.github.io/tutoriaalit/materiaalit/verifiointi.pdf) |
 | Algoritmit | [`algoritmit/`](algoritmit/) | [algoritmit.pdf](https://saperant.github.io/tutoriaalit/materiaalit/algoritmit.pdf) |
+| Kompleksiluvut ja Fourier-analyysi | [`signaalimatematiikka/`](signaalimatematiikka/) | [signaalimatematiikka.pdf](https://saperant.github.io/tutoriaalit/materiaalit/signaalimatematiikka.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

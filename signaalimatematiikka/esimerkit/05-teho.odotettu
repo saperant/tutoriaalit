@@ -1,0 +1,16 @@
+keskiarvo      12.000 V
+teho <u^2>    52956.5 V^2
+kaava         52956.5 V^2  (DC^2 + A^2/2)
+tehollisarvo  230.123 V
+A/sqrt(2)     229.810 V  (pelkkä vaihto-osa)
+signaali on reaalinen: True
+teho aikatasossa   4.375000
+teho kertoimista   4.375000
+  k = -3: |c_k|^2 = 0.0625 (  1.4 %)
+  k = -1: |c_k|^2 = 2.0000 ( 45.7 %)
+  k = +0: |c_k|^2 = 0.2500 (  5.7 %)
+  k = +1: |c_k|^2 = 2.0000 ( 45.7 %)
+  k = +3: |c_k|^2 = 0.0625 (  1.4 %)
+SNR = 53.25 dB
+amplitudi puolittuu: -6.02 dB, teho puolittuu: -3.01 dB
+kymmenkertainen amplitudi: 20.0 dB

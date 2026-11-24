@@ -1,0 +1,6 @@
+max |e^(it) - (cos t + i sin t)| < 1e-14: True
+e^(i pi) + 1 = 0.0 + 1.2246e-16i
+cos ja sin eksponenteista: True
+cos(a+b) = 0.362358, cos a cos b - sin a sin b = 0.362358, Re = 0.362358
+de Moivre: 0.0707 + 0.9975i = 0.0707 + 0.9975i
+cos^2 = (1 + cos 2x)/2: True

@@ -1,0 +1,6 @@
+alaraja 1/(4 pi) = 0.0796
+pulssi            sigma_t   sigma_f   tulo
+Gauss, s = 0.2     0.1414    0.5627  0.0796
+Gauss, s = 2       1.4142    0.0563  0.0796
+e^(-|t|)           0.7071    0.1591  0.1125
+Hann-pulssi        0.1414    0.5773  0.0817

@@ -1,0 +1,11 @@
+termejä   huippu   paikka t   pi/(2n)   ylitys hypystä
+      5   1.1823    0.31416   0.31416       9.12 %
+     20   1.1792    0.07854   0.07854       8.96 %
+    100   1.1790    0.01571   0.01571       8.95 %
+    500   1.1790    0.00314   0.00314       8.95 %
+Si(pi) = 1.851937, huippu (2/pi) Si(pi) = 1.178980
+ylitys = 8.949 % hypyn korkeudesta
+termejä   max |virhe|   keskineliövirhe
+      5         0.998           0.04040
+     20         0.990           0.01013
+    100         0.951           0.00202

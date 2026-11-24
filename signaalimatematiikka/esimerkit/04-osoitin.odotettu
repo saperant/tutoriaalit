@@ -1,0 +1,7 @@
+osoitin X = 1.000 + 1.732i = 2.000 kulmassa 60.00 astetta
+A cos(2 pi f t + phi) = Re(X e^(i 2 pi f t)): True
+jakso T = 1/f = 4.0 ms, kulmataajuus = 1570.8 rad/s
+vaihe pi/3 vastaa 0.6667 ms:n edistystä ajassa
+summaosoitin: 0.359 - 1.021i = 1.083 kulmassa -70.63 astetta
+aikatason summa = osoitinsumma: True
+huippuarvo näytteistä 1.082, |Xs| = 1.083
