@@ -87,10 +87,10 @@ server default {
     }
 }
 KONF
-ns radius freeradius -f -d "$R" > /dev/null 2>&1 &
+ns radius freeradius -f -d "$R" > "$R/radius.log" 2>&1 &
 # @loppu palvelin
-kuuntelee() { ns radius ss -lun | grep -q ':1812 '; }
-odota 20 kuuntelee
+valmis() { grep -q 'Ready to process requests' "$R/radius.log"; }
+if ! odota 30 valmis; then cat "$R/radius.log" >&2; exit 1; fi
 
 # @alku kysely
 kysy() {   # kysy KÄYTTÄJÄ SALASANA
@@ -104,3 +104,8 @@ kysy liisa Kesa-2026
 kysy vieras Tervetuloa
 kysy liisa arvaus
 # @loppu kysely
+# Vianetsintää varten: jos palvelin ei vastaa, sen loki virhetulosteeseen.
+if ! ns nas radtest liisa Kesa-2026 10.70.0.10 0 Jaettu-Salaisuus-Tamakin \
+        2>&1 | grep -q '^Received'; then
+    cat "$R/radius.log" >&2
+fi

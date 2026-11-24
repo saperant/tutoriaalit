@@ -44,6 +44,7 @@ git bisect start HEAD "HEAD~9" > /dev/null   # huono, hyvä
 git bisect run ./testi.sh > /dev/null 2>&1
 echo "ensimmäinen huono: $(git log -1 --format=%s refs/bisect/bad)"
 git bisect log | grep '^# \(good\|bad\|first\)' \
-    | sed 's/\[\(.......\)[0-9a-f]*\]/\1/'
+    | sed -e 's/\[\(.......\)[0-9a-f]*\]/\1/' \
+          -e "s/first 'bad' commit/first bad commit/"
 git bisect reset > /dev/null 2>&1   # takaisin lähtöhaaraan
 # @loppu bisect
