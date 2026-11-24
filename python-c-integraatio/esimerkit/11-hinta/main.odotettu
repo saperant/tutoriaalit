@@ -1,0 +1,4 @@
+C++-kutsu alkiota kohden hitaampi kuin Pythonin x*x: True
+listan muunnos yli 3 kertaa hitaampi kuin taulukko: True
+erä yli 20 kertaa nopeampi kuin alkio kerrallaan: True
+tulokset samat: True

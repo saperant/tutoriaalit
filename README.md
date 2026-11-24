@@ -93,6 +93,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | FPGA-toteutus | [`fpga-toteutus/`](fpga-toteutus/) | [fpga-toteutus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/fpga-toteutus.pdf) |
 | Tietorakenteet | [`tietorakenteet/`](tietorakenteet/) | [tietorakenteet.pdf](https://saperant.github.io/tutoriaalit/materiaalit/tietorakenteet.pdf) |
 | Käännösjärjestelmät, testaus ja CI | [`rakennus-ja-testaus/`](rakennus-ja-testaus/) | [rakennus-ja-testaus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/rakennus-ja-testaus.pdf) |
+| Python ja C/C++ yhteen | [`python-c-integraatio/`](python-c-integraatio/) | [python-c-integraatio.pdf](https://saperant.github.io/tutoriaalit/materiaalit/python-c-integraatio.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

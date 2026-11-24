@@ -134,7 +134,7 @@ flowchart LR
     funktionaalinen_ohjelmointi["✓ Funktionaalinen ohjelmointi (Racket)"]
     cpp_suorituskyky["C++:n suorituskyky"]
     c_asm_integraatio["C ja assembly yhteen"]
-    python_c_integraatio["Python ja C/C++ yhteen"]
+    python_c_integraatio["✓ Python ja C/C++ yhteen"]
   end
   subgraph sovellukset["Sovelluskehitys"]
     sql["✓ SQL ja relaatiotietokannat"]
@@ -427,7 +427,7 @@ flowchart LR
 | Rust | 5 | C-kieli | [valmis](../rust/) |
 | TypeScript | 3 | JavaScript | [valmis](../typescript/) |
 | C ja assembly yhteen | 2 | Assembly | suunniteltu |
-| Python ja C/C++ yhteen | 3 | Moderni C++, Python työkaluohjelmointiin | suunniteltu |
+| Python ja C/C++ yhteen | 3 | Moderni C++, Python työkaluohjelmointiin | [valmis](../python-c-integraatio/) |
 | C++:n suorituskyky | 3 | Moderni C++, Suorituskyvyn analyysi ja optimointi | suunniteltu |
 
 ### Sovelluskehitys

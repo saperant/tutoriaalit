@@ -1,0 +1,18 @@
+# @alku projekti
+[build-system]
+requires = ["setuptools>=77", "pybind11>=3.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nopeatarkiste"
+version = "1.0.0"
+description = "CRC-32 C++:lla mille tahansa puskurille"
+requires-python = ">=3.12"
+license = "CC-BY-SA-4.0"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+nopeatarkiste = ["py.typed", "*.pyi"]
+# @loppu projekti

@@ -1,0 +1,3 @@
+from collections.abc import Buffer
+
+def crc32(puskuri: Buffer) -> int: ...

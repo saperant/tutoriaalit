@@ -1,0 +1,6 @@
+Tilasto(n=4) keskiarvo 20.150, hajonta 0.265
+pituus: 4
+funktio: 2.0
+TyhjaOtos: otos on tyhjä | ValueError: True
+ValueError: arvon on oltava äärellinen
+TypeError: lisaa(): incompatible function arguments

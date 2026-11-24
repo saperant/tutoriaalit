@@ -1,0 +1,12 @@
+crc32: 0dea66d6 (zlib: 0dea66d6)
+tilasto: keskiarvo 20.150, hajonta 0.265
+tyhjä: EINVAL - Invalid argument
+paloittain:
+  16/41
+  32/41
+  41/41
+  tulos 0dea66d6
+  16/41
+  32/41
+  keskeytetty: ECANCELED
+heksana: 007fff

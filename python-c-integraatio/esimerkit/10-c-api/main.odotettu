@@ -1,0 +1,6 @@
+summa: 7.0
+generaattorista: 5.0
+TypeError: [1.0, 'kaksi']
+TypeError: 42
+viitemäärä ennallaan: True
+sama olio: True

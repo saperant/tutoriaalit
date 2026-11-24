@@ -1,0 +1,17 @@
+kynnystetty paikallaan:
+ [[  0 255   0]
+ [255   0 255]]
+vain parilliset sarakkeet:
+ [[  0  20   0  60]
+ [  0 100 255 140]
+ [255 180 255 220]]
+float64 hylätty: TypeError
+sumennettu float32 
+ [[2.25 1.5  2.25]
+ [1.5  1.   1.5 ]
+ [2.25 1.5  2.25]]
+C++ näkee: 21 | omistaa: False
+näkymä pitää kehyksen elossa: 21
+nanobind summa: 2.5
+viipale kopioiden: 1.5
+tiukka versio hylkää viipaleen: TypeError

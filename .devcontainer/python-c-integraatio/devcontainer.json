@@ -5,7 +5,7 @@
     "context": "..",
     "args": {
       "LISAPAKETIT": "python3-dev cmake",
-      "PIP_PAKETIT": "pybind11 nanobind numpy ruff mypy pytest"
+      "PIP_PAKETIT": "pybind11==3.1.0 nanobind==3.1.0 numpy setuptools>=77 wheel ruff mypy pytest"
     }
   },
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/python-c-integraatio/esimerkit",
