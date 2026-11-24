@@ -1,0 +1,10 @@
+pieni-endian: 78 56 34 12
+iso-endian:   12 34 56 78
+verkko (!I):  12 34 56 78
+@BI: 8 tavua
+<BI: 5 tavua
+>BI: 5 tavua
+8 tavua: 02 a1 02 00 65 53 f1 00
+tyyppi 2, liput 10100001, pituus 512, aika 1700000000
+{'VALMIS': 1, 'VIRHE': 0, 'TILA': 5, 'JONO': 10}
+0xa15

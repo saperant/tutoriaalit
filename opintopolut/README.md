@@ -40,7 +40,7 @@ flowchart LR
     moderni_cpp["✓ Moderni C++"]
     python["✓ Python"]
     bash["✓ Bash-skriptaus"]
-    python_tyokalut["Python työkaluohjelmointiin"]
+    python_tyokalut["✓ Python työkaluohjelmointiin"]
     rakennus_ja_testaus["Käännösjärjestelmät, testaus ja CI"]
   end
   subgraph matematiikka["Matematiikka"]
@@ -305,7 +305,7 @@ flowchart LR
 | Versionhallinta (Git) | 2 | Komentorivi ja Linux | [valmis](../versionhallinta/) |
 | Käännösjärjestelmät, testaus ja CI | 3 | Bash-skriptaus, C-kieli, Versionhallinta (Git) | suunniteltu |
 | Moderni C++ | 5 | C-kieli | [valmis](../moderni-cpp/) |
-| Python työkaluohjelmointiin | 5 | Komentorivi ja Linux, Python | suunniteltu |
+| Python työkaluohjelmointiin | 5 | Komentorivi ja Linux, Python | [valmis](../python-tyokalut/) |
 
 ### Matematiikka
 

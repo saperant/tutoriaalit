@@ -1,0 +1,9 @@
+# Simulaattori v2.3, käännetty 2026-11-01
+@ 0 ns INFO tb: simulaatio alkaa, siemen 1234
+@ 40 ns INFO tb: nollaus vapautettu
+@ 1250 ns WARNING uart_rx: kehysvirhe, tavu ohitettu
+@ 2210 ns INFO scoreboard: 128 tapahtumaa verrattu
+@ 3020 ns WARNING fifo: täyttöaste yli 90 %
+@ 4100 ns WARNING uart_rx: kehysvirhe, tavu ohitettu
+@ 5000 ns INFO tb: simulaatio päättyi
+

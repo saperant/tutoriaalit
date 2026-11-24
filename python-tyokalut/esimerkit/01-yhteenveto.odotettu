@@ -1,0 +1,7 @@
+INFO        4
+WARNING     3
+ERROR       0
+FATAL       0
+varoitukset ja virheet komponenteittain:
+  uart_rx       2
+  fifo          1

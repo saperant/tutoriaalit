@@ -1,0 +1,31 @@
+Report : timing
+Design : alu_top
+Corner : ss_0p72v_125c
+
+Startpoint: u_alu/acc_reg[3] (rising edge-triggered flip-flop clocked by clk)
+Endpoint: u_alu/res_reg[7] (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  u_alu/acc_reg[3]/CK (DFF_X1)             0.00       0.00 r
+  u_alu/add_0/S (FA_X1)                    2.41       2.41 f
+  u_alu/res_reg[7]/D (DFF_X1)              2.42       4.83 f
+  data arrival time                                   4.83
+  data required time                                  4.52
+  -----------------------------------------------------------
+  slack (VIOLATED)                                   -0.31
+
+Startpoint: u_uart/div_reg[0] (rising edge-triggered flip-flop clocked by clk)
+Endpoint: u_uart/div_reg[9] (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+  data arrival time                                   3.10
+  data required time                                  4.52
+  slack (MET)                                         1.42
+
+Startpoint: in_valid (input port clocked by clk)
+Endpoint: u_fifo/wr_ptr_reg[2] (rising edge-triggered flip-flop clocked by clk)
+Path Group: **in2reg**
+  data arrival time                                   4.60
+  data required time                                  4.52
+  slack (VIOLATED)                                   -0.08

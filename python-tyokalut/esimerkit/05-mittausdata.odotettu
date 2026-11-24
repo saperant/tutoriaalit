@@ -1,0 +1,6 @@
+52 tavua, 2 kanavaa, 8 näytettä, 48000 Hz
+kanava 0: [0, 1200, 2400, 1200, 0, -1200, -2400, -1200]
+kanava 1: [10, 12, 15, 12, 10, 8, 5, 8]
+tavu muuttunut: tarkistussumma ei täsmää
+katkennut: pituus 30, odotettiin 52
+väärä tiedosto: väärä taikasana b'PK\x03\x04'

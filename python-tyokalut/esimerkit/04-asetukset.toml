@@ -1,0 +1,14 @@
+# Regressioajon asetukset.
+[ajo]
+simulaattori = "verilator"
+rinnakkain = 4
+aikaraja_s = 120
+
+[[testi]]
+nimi = "uart_perus"
+siemenet = [1, 2, 3]
+
+[[testi]]
+nimi = "uart_virheet"
+siemenet = [7]
+argumentit = ["+VIRHEET=10"]

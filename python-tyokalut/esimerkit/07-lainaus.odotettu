@@ -1,0 +1,4 @@
+shell=True: ['raportti', 'HYÖKKÄYS']
+lista:      ['raportti; echo HYÖKKÄYS']
+quote:      ['RAPORTTI; ECHO HYÖKKÄYS']
+lokiin:     sim --testi 'raportti; echo HYÖKKÄYS'

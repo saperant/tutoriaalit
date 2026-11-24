@@ -1,0 +1,10 @@
+check=True: paluuarvo 3, stderr: lisenssipalvelin ei vastaa
+uart_perus      1  läpi
+uart_perus      2  läpi
+uart_virheet    1  epäonnistui
+    UVM_ERROR @ 2us: [VERTAILU] odotettu 0x3f, saatu 0x3e
+uart_virheet    2  läpi
+fifo_jumi       1  aikaraja
+kaatuu          1  työkaluvirhe
+    lisenssipalvelin ei vastaa
+3/6 läpi

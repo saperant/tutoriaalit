@@ -1,0 +1,30 @@
+# @alku projekti
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lokikoonti"
+version = "1.2.0"
+description = "Simulaatiolokien koonti ja suodatus"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []                 # vain standardikirjasto
+
+[project.optional-dependencies]
+kehitys = ["pytest", "ruff", "mypy"]
+
+[project.scripts]
+lokikoonti = "lokikoonti.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+# @loppu projekti
+
+[tool.ruff]
+target-version = "py312"
+line-length = 78
+
+[tool.mypy]
+strict = true
+mypy_path = "src"

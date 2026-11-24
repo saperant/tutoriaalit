@@ -1,0 +1,6 @@
+TOML: verilator, 4 rinnakkain, aikaraja 120 s
+  {"nimi": "uart_perus", "siemenet": [1, 2, 3], "argumentit": []}
+  {"nimi": "uart_virheet", "siemenet": [7], "argumentit": ["+VIRHEET=10"]}
+INI: icarus, 2 rinnakkain, aikaraja 300 s
+  {"nimi": "uart_perus", "siemenet": [1, 2], "argumentit": []}
+hylätty: tuntematon simulaattori modelsim

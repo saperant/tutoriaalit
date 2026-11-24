@@ -1,0 +1,8 @@
+UVM_INFO @ 0: reporter [RNTST] Running test uart_perus...
+UVM_INFO tb/top.sv(55) @ 0ns: uvm_test_top [ALKU] siemen 1234
+UVM_WARNING tb/uart_mon.sv(88) @ 1250ns: uvm_test_top.env.mon [KEHYS] stop-bitti puuttuu
+UVM_ERROR tb/scb.sv(142) @ 2us: uvm_test_top.env.scb [VERTAILU] odotettu 0x3f, saatu 0x3e
+UVM_WARNING tb/uart_mon.sv(88) @ 4100ns: uvm_test_top.env.mon [KEHYS] stop-bitti puuttuu
+UVM_ERROR tb/scb.sv(142) @ 5200ns: uvm_test_top.env.scb [VERTAILU] odotettu 0x40, saatu 0x00
+UVM_INFO tb/top.sv(71) @ 9000ns: uvm_test_top [LOPPU] testi päättyi
+--- UVM Report Summary ---

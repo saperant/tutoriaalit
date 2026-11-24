@@ -1,0 +1,4 @@
+Regressioajo 2026-11-24 08:30 UTC
+läpi 1/3 (33.3 %), kesto yhteensä 66.8 s
+  EPÄONNISTUI fifo/1 (aikaraja)
+  EPÄONNISTUI spi/1 (epäonnistui)

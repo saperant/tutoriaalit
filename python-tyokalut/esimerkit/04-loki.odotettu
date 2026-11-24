@@ -1,0 +1,5 @@
+ERROR   VERTAILU      2  ensin 2000 ns: odotettu 0x3f, saatu 0x3e
+INFO    ALKU          1  ensin 0 ns: siemen 1234
+INFO    LOPPU         1  ensin 9000 ns: testi päättyi
+WARNING KEHYS         2  ensin 1250 ns: stop-bitti puuttuu
+tunnistamattomia rivejä: 2

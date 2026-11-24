@@ -1,0 +1,27 @@
+/* Generoitu rekisterikartasta. Älä muokkaa käsin. */
+#ifndef UART_REKISTERIT_H
+#define UART_REKISTERIT_H
+
+#define UART_CTRL_OFFSET 0x00u
+/* EN [0:0] RW: lohko päälle */
+#define UART_CTRL_EN_POS 0u
+#define UART_CTRL_EN_MASK 0x00000001u
+/* PARITY [2:1] RW: pariteetti (0 ei; 1 parillinen; 2 pariton) */
+#define UART_CTRL_PARITY_POS 1u
+#define UART_CTRL_PARITY_MASK 0x00000006u
+/* STOP2 [3:3] RW: kaksi stop-bittiä */
+#define UART_CTRL_STOP2_POS 3u
+#define UART_CTRL_STOP2_MASK 0x00000008u
+#define UART_STATUS_OFFSET 0x04u
+/* TX_FULL [0:0] RO: lähetysjono täynnä */
+#define UART_STATUS_TX_FULL_POS 0u
+#define UART_STATUS_TX_FULL_MASK 0x00000001u
+/* RX_ERR [1:1] W1C: vastaanottovirhe */
+#define UART_STATUS_RX_ERR_POS 1u
+#define UART_STATUS_RX_ERR_MASK 0x00000002u
+#define UART_DIV_OFFSET 0x08u
+/* DIVISOR [15:0] RW: baudijakaja */
+#define UART_DIV_DIVISOR_POS 0u
+#define UART_DIV_DIVISOR_MASK 0x0000FFFFu
+
+#endif /* UART_REKISTERIT_H */

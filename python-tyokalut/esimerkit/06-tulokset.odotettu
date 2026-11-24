@@ -1,0 +1,7 @@
+fifo_taysi/siemen_1     ei lokia
+uart_perus/siemen_1     läpi
+uart_perus/siemen_2     läpi
+uart_virheet/siemen_7   epäonnistui
+aaltomuodot: ['uart_perus/siemen_2/aaltomuoto.vcd']
+yhteensä 72 tavua
+pääte: .log | nimi ilman päätettä: kesken

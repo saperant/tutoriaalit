@@ -1,0 +1,4 @@
+polkuja 3, rikkovia 2, WNS -0.31 ns, TNS -0.39 ns
+ -0.31  u_alu/acc_reg[3] -> u_alu/res_reg[7] (clk)
+ -0.08  in_valid -> u_fifo/wr_ptr_reg[2] (**in2reg**)
+ +1.42  u_uart/div_reg[0] -> u_uart/div_reg[9] (clk)

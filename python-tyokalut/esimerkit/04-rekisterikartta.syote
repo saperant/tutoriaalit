@@ -1,0 +1,7 @@
+rekisteri,osoite,kentta,bitit,paasy,kuvaus
+CTRL,0x00,EN,0,RW,lohko päälle
+CTRL,0x00,PARITY,2:1,RW,pariteetti (0 ei; 1 parillinen; 2 pariton)
+CTRL,0x00,STOP2,3,RW,kaksi stop-bittiä
+STATUS,0x04,TX_FULL,0,RO,lähetysjono täynnä
+STATUS,0x04,RX_ERR,1,W1C,vastaanottovirhe
+DIV,0x08,DIVISOR,15:0,RW,baudijakaja

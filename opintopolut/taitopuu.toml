@@ -265,6 +265,7 @@ laajuus = 5
 testaus = "Python, pytest"
 roadmap = ["python"]
 amk = "Ohjelmointi ja skriptaus"
+tutoriaali = "python-tyokalut"
 
 [[taito]]
 id = "rakennus-ja-testaus"
