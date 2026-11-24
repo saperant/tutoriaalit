@@ -1,0 +1,14 @@
+x86-käsky              tavua  µop:t
+add eax, [esi+ecx*4]       3  lataus + alu
+inc ecx                    1  alu
+cmp ecx, edx               2  alu
+jl silmukka                2  (sulautui)
+add [ebx+8], eax           3  lataus + alu + tal-os + tal-data
+mov [edi], eax             2  tal-os + tal-data
+push eax                   1  tal-os + tal-data
+call tulosta               5  tal-os + tal-data + hyppy
+ret                        1  lataus + hyppy
+
+kierros    käskyjä tavuja µop:ja
+x86              4      8      4
+RISC-V           4     16      4

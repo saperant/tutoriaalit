@@ -513,6 +513,7 @@ laajuus = 5
 testaus = "C++-simulaattori RISC-V-osajoukolle, testiohjelmat"
 roadmap = ["computer-science"]
 amk = "Tietokonearkkitehtuuri"
+tutoriaali = "tietokonearkkitehtuuri"
 
 [[taito]]
 id = "binaarit-ja-linkitys"

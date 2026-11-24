@@ -1,0 +1,7 @@
+UART: OK  (321 käskyä)
+mcause 0x0000000b  mepc 0x014  ecall M-tilasta       ecall
+mcause 0x00000002  mepc 0x018  laiton käsky          .word 0x00000000
+mcause 0x00000004  mepc 0x020  kohdistamaton lataus  lw t2, 0(t1)
+mcause 0x80000007  mepc 0x04c  ajastinkeskeytys      blt s1, t1, 0x48
+mcause 0x80000007  mepc 0x048  ajastinkeskeytys      addi t1, zero, 3
+mcause 0x80000007  mepc 0x04c  ajastinkeskeytys      blt s1, t1, 0x48

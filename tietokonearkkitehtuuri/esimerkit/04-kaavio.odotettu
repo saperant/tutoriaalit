@@ -1,0 +1,15 @@
+eteenpäinkytkentä pois: 21 jaksoa, 8 pysähdystä
+slli t2, t0, 2      IF ID EX ME WB
+add t2, s0, t2         IF ID ** ** EX ME WB
+lw t1, 0(t2)              IF ** ** ID ** ** EX ME WB
+add a0, a0, t1               IF ** ** ** ** ID ** ** EX ME WB
+addi t0, t0, 1                  IF ** ** ** ** ** ** ID EX ME WB
+blt t0, s1, 0x38                   IF ** ** ** ** ** ** ID ** ** EX ME WB
+eteenpäinkytkentä päällä: 14 jaksoa, 1 pysähdystä
+slli t2, t0, 2      IF ID EX ME WB
+add t2, s0, t2         IF ID EX ME WB
+lw t1, 0(t2)              IF ID EX ME WB
+add a0, a0, t1               IF ID ** EX ME WB
+addi t0, t0, 1                  IF ** ID EX ME WB
+blt t0, s1, 0x38                   IF ** ID EX ME WB
+slli t2, t0, 2                                 IF ID EX ME WB

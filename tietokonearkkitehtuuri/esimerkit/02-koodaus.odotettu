@@ -1,0 +1,9 @@
+konekoodi  muoto op  rd rs1 rs2  f3        imm
+00c58533   R     33  10  11  12   0          -
+fff28293   I     13   5   5   -   0         -1
+00812503   I     03  10   2   -   2          8
+fe112e23   S     23   -   2   1   2         -4
+00050663   B     63   -  10   0   0         12
+123457b7   U     37  15   -   -   -  305418240
+fe9ff0ef   J     6f   1   -   -   -        -24
+siirtymiä kokeiltu 1052672, virheitä 0

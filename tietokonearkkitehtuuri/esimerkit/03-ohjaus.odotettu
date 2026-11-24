@@ -1,0 +1,18 @@
+luokka    rk  a  b ml mk wb ha hy imm  alu
+R          1  r  r  0  0  a  0  0   - f3f7
+OP-IMM     1  r  i  0  0  a  0  0   I f3f7
+lataus     1  r  i  1  0  m  0  0   I  add
+talletus   0  r  i  0  1  a  0  0   S  add
+haara      0  r  r  0  0  a  1  0   B  cmp
+lui        1  0  i  0  0  a  0  0   U  add
+auipc      1  p  i  0  0  a  0  0   U  add
+jal        1  p  i  0  0  p  0  1   J  add
+jalr       1  r  i  0  0  p  0  1   I  add
+
+ohjelma   käskyt  yksi (ns)  moni (ns) liuku (ns)
+summa       2810       2248       2208        838
+  CPI                  1.00       3.93       1.36
+kupla       9461       7569       7550       3129
+  CPI                  1.00       3.99       1.50
+fib        35122      28098      28417      11591
+  CPI                  1.00       4.05       1.50

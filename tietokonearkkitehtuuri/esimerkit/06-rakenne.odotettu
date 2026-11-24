@@ -1,0 +1,17 @@
+siirtymä 4 bittiä, indeksi 4 bittiä, tagi 24 bittiä
+0x100: tagi 0x1 indeksi  0 siirtymä  0 huti
+0x104: tagi 0x1 indeksi  0 siirtymä  4 osuma
+0x10c: tagi 0x1 indeksi  0 siirtymä 12 osuma
+0x110: tagi 0x1 indeksi  1 siirtymä  0 huti
+0x200: tagi 0x2 indeksi  0 siirtymä  0 huti
+0x104: tagi 0x1 indeksi  0 siirtymä  4 huti
+0x204: tagi 0x2 indeksi  0 siirtymä  4 huti
+0x100: tagi 0x1 indeksi  0 siirtymä  0 huti
+
+3900 viitettä; osumasuhde (%), suora kuvaus
+    koko    4 B    8 B   16 B   32 B   64 B  128 B
+   256 B   33.1   56.0   67.5   50.0   46.6   37.2
+   512 B   60.1   76.1   84.1   77.2   71.3   60.7
+  1024 B   82.0   90.1   94.2   95.1   94.5   92.6
+  2048 B   88.9   94.5   97.2   98.6   99.3   99.6
+  4096 B   88.9   94.5   97.2   98.6   99.3   99.6

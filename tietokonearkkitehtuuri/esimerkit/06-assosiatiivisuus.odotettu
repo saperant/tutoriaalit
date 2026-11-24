@@ -1,0 +1,26 @@
+matriisi, 16 B lohkot; osumasuhde (%)
+tiet   korvaus          256 B     512 B    1024 B
+1      -                 67.5      84.1      94.2
+2      LRU               67.7      88.3      95.3
+2      FIFO              65.8      87.6      94.5
+2      satunnainen       66.3      86.5      94.4
+4      LRU               73.1      86.6      95.8
+4      FIFO              73.5      86.4      94.3
+4      satunnainen       68.9      85.6      95.1
+täysi  LRU               84.9      85.1      95.9
+täysi  FIFO              83.1      84.2      93.9
+täysi  satunnainen       67.6      84.7      94.0
+
+3C, matriisi: pakolliset / kapasiteetti / ristiriita
+  256 B 1-tie:  108    479    681
+  256 B 2-tie:  108    479    672
+  256 B 4-tie:  108    479    464
+  512 B 1-tie:  108    475     37
+  512 B 2-tie:  108    475      0
+  512 B 4-tie:  108    475      0
+ 1024 B 1-tie:  108     53     66
+ 1024 B 2-tie:  108     53     24
+ 1024 B 4-tie:  108     53      2
+ 2048 B 1-tie:  108      0      0
+ 2048 B 2-tie:  108      0      0
+ 2048 B 4-tie:  108      0      0

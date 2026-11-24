@@ -3,17 +3,13 @@
   "build": {
     "dockerfile": "../Dockerfile",
     "context": "..",
-    "args": {
-      "LISAPAKETIT": "verilator gcc-riscv64-unknown-elf",
-      "PIP_PAKETIT": "ruff mypy"
-    }
+    "args": {}
   },
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/tietokonearkkitehtuuri/esimerkit",
   "customizations": {
     "vscode": {
       "extensions": [
-        "mshr-h.veriloghdl",
-        "ms-python.python"
+        "ms-vscode.cpptools"
       ]
     }
   }

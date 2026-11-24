@@ -1,0 +1,23 @@
+käskyn nouto 0x00400010:
+  taso 1: VPN[1] =   1, PTE @0x10004 = 0x00004401
+  taso 0: VPN[0] =   0, PTE @0x11000 = 0x2000000b
+  -> fyysinen 0x080000010
+talletus dataan 0x00401234:
+  taso 1: VPN[1] =   1, PTE @0x10004 = 0x00004401
+  taso 0: VPN[0] =   1, PTE @0x11004 = 0x20001407
+  -> fyysinen 0x080005234
+lataus megasivulta 0xc0123456:
+  taso 1: VPN[1] = 768, PTE @0x10c00 = 0x10000007
+  -> fyysinen 0x040123456
+talletus koodiin 0x00400010:
+  taso 1: VPN[1] =   1, PTE @0x10004 = 0x00004401
+  taso 0: VPN[0] =   0, PTE @0x11000 = 0x2000004b
+  -> sivuvirhe, mcause = 15
+kuvaamaton sivu 0x00402000:
+  taso 1: VPN[1] =   1, PTE @0x10004 = 0x00004401
+  taso 0: VPN[0] =   2, PTE @0x11008 = 0x00000000
+  -> sivuvirhe, mcause = 13
+data-PTE nyt 0x200014c7 (A ja D asetettu)
+0x0000001234567abc: VPN  72 418 359 siirtymä 0xabc
+0xffffffc000001000: VPN 256   0   1 siirtymä 0x000
+0x0000008000000000: VPN   0   0   0 siirtymä 0x000  ei kanoninen

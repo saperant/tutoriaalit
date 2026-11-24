@@ -1,0 +1,9 @@
+ohjelma   viitteet  kirj      WB+WA     WT+WA   WT+noWA
+summa         400   200       2400      2400      1600
+kupla        3280  1022        208      4296      4296
+matriisi     3900   432      23600     21872     15776
+
+ohjelma    h1 (%)  h2 (%)     AMAT
+summa        25.0    25.0     9.75
+kupla         0.4    53.8     1.25
+matriisi     32.5     4.3     5.64

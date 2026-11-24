@@ -1,0 +1,12 @@
+op      väylä    ytimet 0 1 2
+Y0 R    BusRd           E I I
+Y1 R    BusRd           S S I
+Y1 W    BusUpgr         I M I
+Y2 R    BusRd           I S S
+Y0 W    BusRdX          M I I
+Y0 R    osuma           M I I
+Y2 W    BusRdX          I I M
+MSI : 200 väylätapahtumaa
+MESI: 100 väylätapahtumaa
+väli  4 B: väylä 3999, mitätöinnit 1999, takaisinkirjoitukset 1999
+väli 64 B: väylä    2, mitätöinnit    0, takaisinkirjoitukset    0

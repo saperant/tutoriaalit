@@ -1,0 +1,21 @@
+tarkkuus (%)          summa    kupla matriisi      fib    lista
+aina ei                 0.5     22.8      8.3     50.0      1.6
+taaksepäin kyllä       99.5     70.7     91.7     50.0     98.4
+1-bittinen (64)        99.0     74.7     83.3     61.8     96.9
+2-bittinen (64)        98.5     82.1     91.1     50.0     95.3
+2-bittinen (1)         99.0     76.1     90.9     50.0     96.9
+gshare (256)           95.0     83.8     89.7     91.0     85.2
+
+CPI                   summa    kupla matriisi      fib    lista
+aina ei                1.36     1.50     1.20     1.50     1.24
+taaksepäin kyllä       1.07     1.27     1.08     1.50     1.05
+1-bittinen (64)        1.08     1.25     1.09     1.48     1.06
+2-bittinen (64)        1.08     1.21     1.08     1.50     1.06
+2-bittinen (1)         1.08     1.24     1.08     1.50     1.06
+gshare (256)           1.09     1.20     1.08     1.43     1.08
+
+summa     2 haarakäskyä,   400 suoritusta, 99.5 % toteutuu
+kupla     4 haarakäskyä,  2351 suoritusta, 77.2 % toteutuu
+matriisi  6 haarakäskyä,  2052 suoritusta, 91.7 % toteutuu
+fib       1 haarakäskyä,  3193 suoritusta, 50.0 % toteutuu
+lista     2 haarakäskyä,   128 suoritusta, 98.4 % toteutuu
