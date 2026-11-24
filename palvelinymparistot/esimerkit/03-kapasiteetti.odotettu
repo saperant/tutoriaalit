@@ -1,0 +1,7 @@
+8 × 12 Tt = 96 Tt raakaa
+taso               käytössä  osuus  kestää  kirj.×
+RAID 0                96 Tt   100%       0       1
+RAID 1 (n-peili)      12 Tt    12%       7       8
+RAID 10               48 Tt    50%       1       2
+RAID 5                84 Tt    88%       1       4
+RAID 6                72 Tt    75%       2       6

@@ -1,0 +1,28 @@
+# @alku tehtavat
+- name: Hakemistot
+  ansible.builtin.file:
+    path: "{{ juuri }}/etc/ssh"
+    state: directory
+    mode: "0755"
+
+- name: SSH-palvelimen asetukset
+  ansible.builtin.template:
+    src: sshd_config.j2
+    dest: "{{ juuri }}/etc/ssh/sshd_config"
+    mode: "0600"
+  notify: Lataa sshd uudelleen
+
+- name: Salasanojen enimmäisikä
+  ansible.builtin.lineinfile:
+    path: "{{ juuri }}/etc/login.defs"
+    regexp: '^PASS_MAX_DAYS'
+    line: "PASS_MAX_DAYS {{ salasanan_ika_paivina }}"
+    create: true
+    mode: "0644"
+
+- name: Kirjautumisviesti
+  ansible.builtin.copy:
+    content: "{{ motd }}\n"
+    dest: "{{ juuri }}/etc/motd"
+    mode: "0644"
+# @loppu tehtavat

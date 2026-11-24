@@ -1656,6 +1656,7 @@ laajuus = 5
 testaus = "Ansible ja Linux-palvelut konteissa, OpenLDAP, mdadm silmukkalaitteilla"
 roadmap = ["devops", "linux"]
 amk = "Palvelinympäristöt"
+tutoriaali = "palvelinymparistot"
 
 [[taito]]
 id = "palveluarkkitehtuurit"

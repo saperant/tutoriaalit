@@ -1,0 +1,5 @@
+CRITICAL: 3 havaintoa
+  CRITICAL PSU2: Critical
+  CRITICAL virransyötön redundanssi N+1 menetetty
+  WARNING  Inlet Temp 31 °C
+paluuarvo valvonnalle: 2

@@ -1,0 +1,6 @@
+# @alku kasittelija
+# Oikeasti: ansible.builtin.service: name=ssh state=reloaded
+- name: Lataa sshd uudelleen
+  ansible.builtin.debug:
+    msg: "sshd ladattaisiin uudelleen"
+# @loppu kasittelija

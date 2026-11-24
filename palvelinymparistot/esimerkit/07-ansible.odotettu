@@ -1,0 +1,14 @@
+1. ajo:
+  ok=5 changed=4
+  käsittelijä ajettiin
+2. ajo:
+  ok=4 changed=0
+käsin muutettu; tarkistusajo:
+  ok=5 changed=1
+  käsittelijä ajettiin
+-PermitRootLogin yes
++PermitRootLogin no
+korjaava ajo:
+  ok=5 changed=1
+  käsittelijä ajettiin
+PermitRootLogin no

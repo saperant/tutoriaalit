@@ -1,0 +1,6 @@
+esx1: 8 vm, vapaana 72 vCPU, 416 Gt
+esx2: 9 vm, vapaana 48 vCPU, 384 Gt
+esx3: 5 vm, vapaana 32 vCPU, 64 Gt
+esx1 kaatuu: kestää
+esx2 kaatuu: kestää
+esx3 kaatuu: EI KESTÄ, ilman paikkaa: analytiikka

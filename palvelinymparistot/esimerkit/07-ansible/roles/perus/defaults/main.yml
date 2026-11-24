@@ -1,0 +1,5 @@
+# @alku oletukset
+ssh_ryhmat: [yllapito]
+salasanan_ika_paivina: 90
+motd: "Valvottu järjestelmä. Käyttö kirjataan."
+# @loppu oletukset

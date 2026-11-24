@@ -1,0 +1,25 @@
+== käyttäjät
+dn: uid=aino,ou=ihmiset,dc=esimerkki,dc=fi
+uid: aino
+mail: aino.virtanen@esimerkki.fi
+uidNumber: 10001
+
+dn: uid=olli,ou=ihmiset,dc=esimerkki,dc=fi
+uid: olli
+mail: olli.makela@esimerkki.fi
+uidNumber: 10002
+
+== ylläpitoryhmän jäsenet
+dn: cn=yllapito,ou=ryhmat,dc=esimerkki,dc=fi
+memberUid: aino
+
+== kirjautuminen
+dn:uid=aino,ou=ihmiset,dc=esimerkki,dc=fi
+ldap_bind: Invalid credentials (49)
+== Aino lukee Ollin tiedot
+dn: uid=olli,ou=ihmiset,dc=esimerkki,dc=fi
+mail: olli.makela@esimerkki.fi
+
+== anonyymi haku
+No such object (32)
+(haku evätty, paluuarvo 32)

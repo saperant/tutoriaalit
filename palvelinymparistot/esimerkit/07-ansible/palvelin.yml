@@ -1,0 +1,10 @@
+# @alku playbook
+- name: Web-palvelinten perusasetukset
+  hosts: web
+  gather_facts: false
+  vars:
+    # Testissä tiedostot kirjoitetaan tilapäishakemistoon; oikeasti "".
+    juuri: "{{ lookup('env', 'JUURI') }}"
+  roles:
+    - perus
+# @loppu playbook

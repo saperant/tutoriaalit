@@ -1,0 +1,4 @@
+CPU0_DIMM_A1   CE=0     UE=0  ok
+CPU0_DIMM_B1   CE=2     UE=0  ok
+CPU1_DIMM_A1   CE=1873  UE=0  vaihda huollossa (korjattuja 1873)
+CPU1_DIMM_B1   CE=0     UE=1  VAIHDA HETI (korjaamaton virhe)

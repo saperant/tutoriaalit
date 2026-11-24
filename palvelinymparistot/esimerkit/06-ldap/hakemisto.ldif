@@ -1,0 +1,51 @@
+# @alku runko
+dn: dc=esimerkki,dc=fi
+objectClass: dcObject
+objectClass: organization
+o: Esimerkki Oy
+dc: esimerkki
+
+dn: ou=ihmiset,dc=esimerkki,dc=fi
+objectClass: organizationalUnit
+ou: ihmiset
+
+dn: ou=ryhmat,dc=esimerkki,dc=fi
+objectClass: organizationalUnit
+ou: ryhmat
+# @loppu runko
+
+# @alku kayttaja
+dn: uid=aino,ou=ihmiset,dc=esimerkki,dc=fi
+objectClass: inetOrgPerson
+objectClass: posixAccount
+uid: aino
+cn: Aino Virtanen
+sn: Virtanen
+mail: aino.virtanen@esimerkki.fi
+uidNumber: 10001
+gidNumber: 10001
+homeDirectory: /home/aino
+loginShell: /bin/bash
+userPassword: SALASANA-AINO
+# @loppu kayttaja
+
+dn: uid=olli,ou=ihmiset,dc=esimerkki,dc=fi
+objectClass: inetOrgPerson
+objectClass: posixAccount
+uid: olli
+cn: Olli Mäkelä
+sn: Mäkelä
+mail: olli.makela@esimerkki.fi
+uidNumber: 10002
+gidNumber: 10002
+homeDirectory: /home/olli
+loginShell: /bin/bash
+userPassword: SALASANA-OLLI
+
+# @alku ryhma
+dn: cn=yllapito,ou=ryhmat,dc=esimerkki,dc=fi
+objectClass: posixGroup
+cn: yllapito
+gidNumber: 20000
+memberUid: aino
+# @loppu ryhma

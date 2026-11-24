@@ -1,0 +1,5 @@
+normaali: aino@ESIMERKKI.FI sisään palveluun cifs/tiedostot.esimerkki.fi
+sama todennin uudelleen: HYLÄTTY, todennin toistettu (replay)
+asiakkaan kello 7 min jäljessä: HYLÄTTY, kellot eroavat liikaa (clock skew)
+11 tunnin päästä: HYLÄTTY, lippu on vanhentunut
+väärennetty lippu: HYLÄTTY, lippu on väärennetty

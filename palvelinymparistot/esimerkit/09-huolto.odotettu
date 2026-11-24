@@ -1,0 +1,8 @@
+alussa:
+  solmu-a: odota, PDB estää: haku
+  solmu-b: odota, PDB estää: haku
+  solmu-c: voi tyhjentää
+kun haulla on kolmas kopio solmulla solmu-c:
+  solmu-a: voi tyhjentää
+  solmu-b: voi tyhjentää
+  solmu-c: voi tyhjentää

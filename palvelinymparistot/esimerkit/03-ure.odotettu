@@ -1,0 +1,5 @@
+RAID 5, 4 × 12 Tt, kuluttaja 10^-14: lukuvirhe rakennuksen aikana 94%
+RAID 5, 4 × 12 Tt, yritys 10^-15: lukuvirhe rakennuksen aikana 25%
+RAID 5, 8 × 12 Tt, kuluttaja 10^-14: lukuvirhe rakennuksen aikana 100%
+RAID 5, 8 × 12 Tt, yritys 10^-15: lukuvirhe rakennuksen aikana 49%
+rakennusaika 12 Tt, 200 Mt/s, puolet kaistasta kuormalla: 33 h

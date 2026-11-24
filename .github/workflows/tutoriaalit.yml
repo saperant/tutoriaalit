@@ -31,7 +31,8 @@ jobs:
           printf '#!/bin/sh\nexit 101\n' | sudo tee /usr/sbin/policy-rc.d > /dev/null
           sudo chmod +x /usr/sbin/policy-rc.d
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends \
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
+            --no-install-recommends \
             make python3 pandoc g++-14 clang-20 libclang-rt-20-dev \
             texlive-xetex texlive-latex-recommended texlive-latex-extra \
             texlive-fonts-recommended texlive-lang-european lmodern \
@@ -40,12 +41,13 @@ jobs:
             tcpdump dnsmasq-base bind9-dnsutils nftables bird2 \
             wireguard-tools wireguard-go busybox socat snmp snmpd \
             softflowd nfdump freeradius freeradius-utils qemu-system-x86 \
-            qemu-utils \
+            qemu-utils slapd ldap-utils restic rsync e2fsprogs \
             rustc-1.80 cargo-1.80 rust-1.80-clippy golang-1.23-go \
             openjdk-21-jdk-headless
           pip install --break-system-packages ruff mypy pytest \
             numpy cryptography==50.0.1 types-PyYAML hadolint-bin==2.15.1 \
-            kubernetes-validate==1.37.0 yamllint==1.38.0 check-jsonschema==0.39.0
+            kubernetes-validate==1.37.0 yamllint==1.38.0 check-jsonschema==0.39.0 \
+            ansible-core==2.21.6
 
       - uses: actions/setup-node@v4
         with:

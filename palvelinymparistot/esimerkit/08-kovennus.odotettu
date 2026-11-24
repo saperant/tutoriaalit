@@ -1,0 +1,16 @@
+== vanha
+FAIL SSH-1  root ei kirjaudu SSH:lla
+FAIL SSH-2  salasanakirjautuminen pois
+FAIL SSH-3  enintään 4 yritystä
+FAIL FS-1   /etc/shadow enintään 640
+FAIL FS-2   /etc:ssä ei kaikkien kirjoitettavia
+FAIL UPD-1  automaattiset tietoturvapäivitykset
+tulos: hylätty (paluuarvo 1)
+== uusi
+PASS SSH-1  root ei kirjaudu SSH:lla
+PASS SSH-2  salasanakirjautuminen pois
+PASS SSH-3  enintään 4 yritystä
+PASS FS-1   /etc/shadow enintään 640
+PASS FS-2   /etc:ssä ei kaikkien kirjoitettavia
+PASS UPD-1  automaattiset tietoturvapäivitykset
+tulos: hyväksytty

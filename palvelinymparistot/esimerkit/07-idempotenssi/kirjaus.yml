@@ -1,0 +1,23 @@
+- name: Idempotenssi käytännössä
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    tiedosto: "{{ lookup('env', 'KOHDE') }}"
+  tasks:
+    # @alku huono
+    - name: HUONO – lisää rivin joka ajolla
+      ansible.builtin.shell: >-
+        echo "nfs-palvelin 10.0.0.5" >> {{ tiedosto }}.huono
+      changed_when: true
+    # @loppu huono
+
+    # @alku hyva
+    - name: HYVÄ – kuvaa halutun lopputilan
+      ansible.builtin.lineinfile:
+        path: "{{ tiedosto }}.hyva"
+        regexp: '^nfs-palvelin '
+        line: "nfs-palvelin 10.0.0.5"
+        create: true
+        mode: "0644"
+    # @loppu hyva

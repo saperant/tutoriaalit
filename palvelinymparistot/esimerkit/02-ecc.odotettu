@@ -1,0 +1,5 @@
+käännetyt bitit ()      -> ok          data 10110010 (oikein)
+käännetyt bitit (6,)    -> korjattu    data 10110010 (oikein)
+käännetyt bitit (11,)   -> korjattu    data 10110010 (oikein)
+käännetyt bitit (0,)    -> korjattu    data 10110010 (oikein)
+käännetyt bitit (3, 9)  -> korjaamaton data 10100011 (VÄÄRIN)

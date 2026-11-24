@@ -101,7 +101,7 @@ flowchart LR
     kontit_ja_pilvi["✓ Säiliöt ja pilvi-infrastruktuuri"]
     verkkoinfrastruktuuri["✓ Verkkoinfrastruktuuri"]
     tietoliikennetekniikka["✓ Tietoliikennetekniikka"]
-    palvelinymparistot["Palvelinympäristöt"]
+    palvelinymparistot["✓ Palvelinympäristöt"]
     palveluarkkitehtuurit["✓ Palveluarkkitehtuurit"]
   end
   subgraph grafiikka["Tietokonegrafiikka"]
@@ -382,7 +382,7 @@ flowchart LR
 | Tietoverkot | 5 | Komentorivi ja Linux | [valmis](../tietoverkot/) |
 | Säiliöt ja pilvi-infrastruktuuri | 5 | Tietoverkot | [valmis](../kontit-ja-pilvi/) |
 | Verkkoinfrastruktuuri | 5 | Tietoverkot | [valmis](../verkkoinfrastruktuuri/) |
-| Palvelinympäristöt | 5 | Säiliöt ja pilvi-infrastruktuuri, Verkkoinfrastruktuuri | suunniteltu |
+| Palvelinympäristöt | 5 | Säiliöt ja pilvi-infrastruktuuri, Verkkoinfrastruktuuri | [valmis](../palvelinymparistot/) |
 | Palveluarkkitehtuurit | 5 | Säiliöt ja pilvi-infrastruktuuri, Taustapalvelut | [valmis](../palveluarkkitehtuurit/) |
 | Tietoliikennetekniikka | 5 | Python työkaluohjelmointiin, Tietoverkot, Todennäköisyys ja tilastot | [valmis](../tietoliikennetekniikka/) |
 | Verkko-ohjelmointi | 5 | Käyttöjärjestelmät, Tietoverkot | suunniteltu |

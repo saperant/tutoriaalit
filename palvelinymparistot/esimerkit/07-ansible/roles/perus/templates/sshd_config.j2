@@ -1,0 +1,8 @@
+# Ansiblen hallinnoima: käsin tehdyt muutokset kumoutuvat.
+Port 22
+PermitRootLogin no
+PasswordAuthentication no
+KbdInteractiveAuthentication no
+AllowGroups {{ ssh_ryhmat | join(' ') }}
+MaxAuthTries 3
+X11Forwarding no

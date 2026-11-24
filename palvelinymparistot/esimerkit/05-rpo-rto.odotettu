@@ -1,0 +1,6 @@
+verkkokauppa | yökopio pilveen       | EI: väli 24 h > RPO 0.25 h
+verkkokauppa | 15 min välein + lokit | ok
+intranet     | yökopio pilveen       | ok
+intranet     | 15 min välein + lokit | ok
+arkisto      | yökopio pilveen       | EI: palautus 94 h > RTO 72 h
+arkisto      | 15 min välein + lokit | ok
