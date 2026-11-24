@@ -1,0 +1,8 @@
+raja: enintaan 1024 saietta tyoryhmassa
+ryhman koko   sade  ryhmia       tiiviste  sama kuin CPU
+    8 x 8        1   125 x 94    46f9578a  kylla
+   16 x 16       1    63 x 47    46f9578a  kylla
+   32 x 8        1    32 x 94    46f9578a  kylla
+  256 x 1        1     4 x 750   46f9578a  kylla
+   16 x 16       3    63 x 47    a2041c57  kylla
+validointi-ilmoituksia: 0

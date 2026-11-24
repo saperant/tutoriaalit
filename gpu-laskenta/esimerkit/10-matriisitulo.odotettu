@@ -1,0 +1,5 @@
+C (300 x 260) = A (300 x 280) B (280 x 260)
+tapa     latauksia/alkio    laskut/tavu   ero < 1e-5
+suora             560.0           0.25        kylla
+laatta             35.0           4.00        kylla
+validointi-ilmoituksia: 0

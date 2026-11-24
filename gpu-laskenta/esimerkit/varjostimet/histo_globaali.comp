@@ -1,0 +1,21 @@
+#version 460
+// Tavuhistogrammi suoraan globaaliin muistiin: jokainen tavu on yksi
+// atominen lisäys yhteen 256 laskurista.
+
+// @alku globaali
+layout(local_size_x = 256) in;
+layout(set = 0, binding = 0) readonly buffer Syote { uint sanat[]; };
+layout(set = 0, binding = 1) buffer Histogrammi { uint lokerot[256]; };
+layout(push_constant) uniform Vakiot { uint n; };  // sanoja
+
+void main() {
+    const uint i = gl_GlobalInvocationID.x;
+    if (i >= n) {
+        return;
+    }
+    const uint sana = sanat[i];
+    for (uint k = 0; k < 4; ++k) {  // neljä tavua sanassa
+        atomicAdd(lokerot[(sana >> (8 * k)) & 0xFF], 1);
+    }
+}
+// @loppu globaali

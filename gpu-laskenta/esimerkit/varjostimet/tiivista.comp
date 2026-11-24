@@ -1,0 +1,18 @@
+#version 460
+// Virran tiivistys (stream compaction): ehdon täyttävät alkiot omille
+// paikoilleen. Paikat on laskettu lippujen poissulkevana summana.
+
+// @alku tiivista
+layout(local_size_x = 256) in;
+layout(set = 0, binding = 0) readonly buffer Syote { uint x[]; };
+layout(set = 0, binding = 1) readonly buffer Paikat { uint paikat[]; };
+layout(set = 0, binding = 2) writeonly buffer Kohde { uint kohde[]; };
+layout(push_constant) uniform Vakiot { uint n; uint jakaja; };
+
+void main() {
+    const uint i = gl_GlobalInvocationID.x;
+    if (i < n && x[i] % jakaja == 0) {
+        kohde[paikat[i]] = x[i];
+    }
+}
+// @loppu tiivista

@@ -1,0 +1,11 @@
+512 alkion lohko    lisayksia  kierroksia  oikein
+Hillis-Steele            4097           9  kylla
+Blelloch                 1022          18  kylla
+
+Hillis-Steele GPU:lla, 64 lohkoa: oikein kylla
+
+monitasoinen skannaus, 1000000 alkiota:
+tasoja 3, skannauksen ajoja 5
+paikat oikein: kylla
+tiivistys: 334933 alkiota jaollisia 3:lla, oikein: kylla
+validointi-ilmoituksia: 0

@@ -1,0 +1,17 @@
+#version 460
+// Monitasoisen skannauksen viimeinen vaihe: lohkon jokaiseen alkioon
+// lisätään edeltävien lohkojen summa (skannattu summat-taulukko).
+
+// @alku lisaa
+layout(local_size_x = 256) in;
+layout(set = 0, binding = 0) buffer Data { uint data[]; };
+layout(set = 0, binding = 1) readonly buffer Summat { uint summat[]; };
+layout(push_constant) uniform Vakiot { uint n; };
+
+void main() {
+    const uint lisays = summat[gl_WorkGroupID.x];
+    const uint a = gl_WorkGroupID.x * 512 + gl_LocalInvocationID.x;
+    if (a < n) data[a] += lisays;
+    if (a + 256 < n) data[a + 256] += lisays;
+}
+// @loppu lisaa

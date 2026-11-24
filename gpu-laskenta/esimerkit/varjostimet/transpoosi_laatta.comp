@@ -1,0 +1,35 @@
+#version 460
+// Transpoosi 32 x 32 -laatoittain jaetun muistin kautta: sekä luku
+// että kirjoitus globaaliin muistiin ovat rivejä. Työryhmä on 32 x 8,
+// joten jokainen säie siirtää neljä riviä.
+
+layout(local_size_x = 32, local_size_y = 8) in;
+layout(set = 0, binding = 0) readonly buffer Lahde { uint lahde[]; };
+layout(set = 0, binding = 1) writeonly buffer Kohde { uint kohde[]; };
+layout(push_constant) uniform Vakiot { uint leveys; uint korkeus; };
+layout(constant_id = 0) const uint TAYTE = 0;  // 1 = laatta 32 x 33
+
+// @alku laatta
+shared uint laatta[32][32 + TAYTE];
+
+void main() {
+    const uint lx = gl_LocalInvocationID.x;
+    const uint ly = gl_LocalInvocationID.y;
+    const uint x0 = gl_WorkGroupID.x * 32;
+    const uint y0 = gl_WorkGroupID.y * 32;
+    for (uint r = 0; r < 32; r += 8) {
+        const uint x = x0 + lx, y = y0 + ly + r;
+        if (x < leveys && y < korkeus) {
+            laatta[ly + r][lx] = lahde[y * leveys + x];
+        }
+    }
+    barrier();
+    // Kohteessa laatan paikka vaihtuu: rivi y0 + lx, sarake x0 + ly + r.
+    for (uint r = 0; r < 32; r += 8) {
+        const uint kx = y0 + lx, ky = x0 + ly + r;
+        if (kx < korkeus && ky < leveys) {
+            kohde[ky * korkeus + kx] = laatta[lx][ly + r];
+        }
+    }
+}
+// @loppu laatta

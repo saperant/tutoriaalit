@@ -1,0 +1,29 @@
+#version 460
+// Hillisin ja Steelen kattava prefiksisumma 256 alkion lohkoille.
+// Jokaisella kierroksella jokainen säie lisää d paikan päässä olevan
+// arvon; kaksi puskuria estää lukemasta jo päivitettyä arvoa.
+
+// @alku hs
+layout(local_size_x = 256) in;
+layout(set = 0, binding = 0) buffer Data { uint data[]; };
+
+shared uint t[2][256];
+
+void main() {
+    const uint oma = gl_LocalInvocationID.x;
+    const uint i = gl_GlobalInvocationID.x;
+    uint p = 0;
+    t[p][oma] = data[i];
+    barrier();
+    for (uint d = 1; d < 256; d *= 2) {
+        uint v = t[p][oma];
+        if (oma >= d) {
+            v += t[p][oma - d];
+        }
+        t[1 - p][oma] = v;
+        p = 1 - p;
+        barrier();
+    }
+    data[i] = t[p][oma];
+}
+// @loppu hs

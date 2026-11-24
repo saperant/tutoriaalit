@@ -1,0 +1,42 @@
+#version 460
+// Bitonisen verkon askeleet, joiden etäisyys j on alle 512, jaetussa
+// muistissa: työryhmä lataa 512 alkion lohkon kerran ja tekee kaikki
+// lohkon sisäiset askeleet barrier()-kutsujen välein.
+
+layout(local_size_x = 256) in;
+layout(set = 0, binding = 0) buffer Data { uint a[]; };
+// k_alku...k_loppu: vaiheet (2, 4, ...), j_alku: ensimmäinen etäisyys.
+layout(push_constant) uniform Vakiot {
+    uint k_alku;
+    uint k_loppu;
+    uint j_alku;
+};
+
+shared uint t[512];
+
+void main() {
+    const uint oma = gl_LocalInvocationID.x;
+    const uint pohja = gl_WorkGroupID.x * 512;
+    t[oma] = a[pohja + oma];
+    t[oma + 256] = a[pohja + oma + 256];
+    // @alku lohko
+    for (uint k = k_alku; k <= k_loppu; k *= 2) {
+        for (uint j = min(k / 2, j_alku); j > 0; j /= 2) {
+            barrier();
+            // Säikeen pari: alempi indeksi, jonka bitti j on nolla.
+            const uint ala = 2 * oma - (oma & (j - 1));
+            const uint yla = ala + j;
+            const bool nouseva = ((pohja + ala) & k) == 0;
+            const uint x = t[ala];
+            const uint y = t[yla];
+            if ((x > y) == nouseva) {
+                t[ala] = y;
+                t[yla] = x;
+            }
+        }
+    }
+    // @loppu lohko
+    barrier();
+    a[pohja + oma] = t[oma];
+    a[pohja + oma + 256] = t[oma + 256];
+}

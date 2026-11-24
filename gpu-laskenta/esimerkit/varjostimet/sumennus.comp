@@ -1,0 +1,41 @@
+#version 460
+// Laatikkosumennus harmaasävykuvalle: jokainen säie laskee yhden
+// pikselin keskiarvon (2r+1) x (2r+1) -naapurustosta. Työryhmän koko
+// ja säde ovat erikoistusvakioita, jotka isäntä asettaa putkea
+// luotaessa.
+
+// @alku erikoistus
+layout(local_size_x_id = 0, local_size_y_id = 1) in;
+layout(constant_id = 2) const int SADE = 1;
+// @loppu erikoistus
+
+layout(set = 0, binding = 0) readonly buffer Lahde { uint lahde[]; };
+layout(set = 0, binding = 1) writeonly buffer Kohde { uint kohde[]; };
+
+layout(push_constant) uniform Vakiot {
+    uint leveys;
+    uint korkeus;
+};
+
+// @alku main
+void main() {
+    const ivec2 p = ivec2(gl_GlobalInvocationID.xy);
+    const ivec2 koko = ivec2(leveys, korkeus);
+    if (any(greaterThanEqual(p, koko))) {
+        return;  // reunan ylimääräiset säikeet molemmissa suunnissa
+    }
+    uint summa = 0;
+    uint maara = 0;
+    for (int dy = -SADE; dy <= SADE; ++dy) {
+        for (int dx = -SADE; dx <= SADE; ++dx) {
+            const ivec2 q = p + ivec2(dx, dy);
+            if (all(greaterThanEqual(q, ivec2(0))) &&
+                all(lessThan(q, koko))) {
+                summa += lahde[q.y * koko.x + q.x];
+                ++maara;
+            }
+        }
+    }
+    kohde[p.y * koko.x + p.x] = (summa + maara / 2) / maara;
+}
+// @loppu main

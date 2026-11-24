@@ -1,0 +1,22 @@
+#version 460
+// y[i] = a * x[i] + y[i] kaikille i < n.
+
+// @alku saxpy
+layout(local_size_x = 256) in;
+
+layout(set = 0, binding = 0) readonly buffer Syote { float x[]; };
+layout(set = 0, binding = 1) buffer Tulos { float y[]; };
+
+layout(push_constant) uniform Vakiot {
+    uint n;
+    float a;
+};
+
+void main() {
+    const uint i = gl_GlobalInvocationID.x;
+    if (i >= n) {
+        return;  // viimeisen ryhmän ylimääräiset säikeet
+    }
+    y[i] = a * x[i] + y[i];
+}
+// @loppu saxpy

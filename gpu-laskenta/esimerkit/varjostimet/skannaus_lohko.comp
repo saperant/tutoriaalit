@@ -1,0 +1,57 @@
+#version 460
+// Blellochin poissulkeva prefiksisumma 512 alkion lohkoille: 256
+// säiettä, ylös- ja alasvaihe jaetussa muistissa. Lohkon kokonaissumma
+// kirjoitetaan taulukkoon summat seuraavaa tasoa varten.
+
+layout(local_size_x = 256) in;
+layout(set = 0, binding = 0) buffer Data { uint data[]; };
+layout(set = 0, binding = 1) writeonly buffer Summat { uint summat[]; };
+layout(push_constant) uniform Vakiot { uint n; };
+
+shared uint t[512];
+
+void main() {
+    const uint oma = gl_LocalInvocationID.x;
+    const uint a = gl_WorkGroupID.x * 512 + oma;
+    const uint b = a + 256;
+    t[oma] = a < n ? data[a] : 0;
+    t[oma + 256] = b < n ? data[b] : 0;
+
+    // @alku ylos
+    // Ylösvaihe: summapuu paikalleen. Tasolla d on d aktiivista
+    // säiettä, ja kukin lisää vasemman lapsen oikeaan.
+    uint vali = 1;
+    for (uint d = 256; d > 0; d /= 2) {
+        barrier();
+        if (oma < d) {
+            const uint vasen = vali * (2 * oma + 1) - 1;
+            const uint oikea = vali * (2 * oma + 2) - 1;
+            t[oikea] += t[vasen];
+        }
+        vali *= 2;
+    }
+    // @loppu ylos
+    barrier();
+    if (oma == 0) {
+        summat[gl_WorkGroupID.x] = t[511];  // lohkon kokonaissumma
+        t[511] = 0;
+    }
+    // @alku alas
+    // Alasvaihe: juuren nolla valuu alas; vasen lapsi saa vanhemman
+    // arvon ja oikea vanhemman ja vasemman summan.
+    for (uint d = 1; d < 512; d *= 2) {
+        vali /= 2;
+        barrier();
+        if (oma < d) {
+            const uint vasen = vali * (2 * oma + 1) - 1;
+            const uint oikea = vali * (2 * oma + 2) - 1;
+            const uint v = t[vasen];
+            t[vasen] = t[oikea];
+            t[oikea] += v;
+        }
+    }
+    // @loppu alas
+    barrier();
+    if (a < n) data[a] = t[oma];
+    if (b < n) data[b] = t[oma + 256];
+}

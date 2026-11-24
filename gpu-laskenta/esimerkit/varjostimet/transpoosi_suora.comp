@@ -1,0 +1,18 @@
+#version 460
+// Matriisin transpoosi suoraan: luku riveittäin, kirjoitus sarakkeittain.
+// Naapurisäikeiden kirjoitukset osuvat H alkion päähän toisistaan.
+
+// @alku suora
+layout(local_size_x = 32, local_size_y = 8) in;
+layout(set = 0, binding = 0) readonly buffer Lahde { uint lahde[]; };
+layout(set = 0, binding = 1) writeonly buffer Kohde { uint kohde[]; };
+layout(push_constant) uniform Vakiot { uint leveys; uint korkeus; };
+
+void main() {
+    const uint x = gl_GlobalInvocationID.x;
+    const uint y = gl_GlobalInvocationID.y;
+    if (x < leveys && y < korkeus) {
+        kohde[x * korkeus + y] = lahde[y * leveys + x];
+    }
+}
+// @loppu suora

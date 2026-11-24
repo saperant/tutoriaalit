@@ -1,0 +1,37 @@
+#version 460
+// C = A B laatoittain: työryhmä lataa A:sta ja B:stä 16 x 16 -laatan
+// jaettuun muistiin, ja jokainen ladattu luku käytetään 16 kertaa.
+
+layout(local_size_x = 16, local_size_y = 16) in;
+layout(set = 0, binding = 0) readonly buffer A { float a[]; };
+layout(set = 0, binding = 1) readonly buffer B { float b[]; };
+layout(set = 0, binding = 2) writeonly buffer C { float c[]; };
+layout(push_constant) uniform Vakiot { uint M; uint N; uint K; };
+
+// @alku laatta
+shared float laatta_a[16][16];
+shared float laatta_b[16][16];
+
+void main() {
+    const uint tx = gl_LocalInvocationID.x;
+    const uint ty = gl_LocalInvocationID.y;
+    const uint sarake = gl_GlobalInvocationID.x;
+    const uint rivi = gl_GlobalInvocationID.y;
+    float summa = 0.0;
+    for (uint k0 = 0; k0 < K; k0 += 16) {
+        // Reunan yli jäävät paikat täytetään nollilla, jotta kaikki
+        // säikeet kulkevat saman silmukan ja saavuttavat esteet.
+        const uint ka = k0 + tx, kb = k0 + ty;
+        laatta_a[ty][tx] = rivi < M && ka < K ? a[rivi * K + ka] : 0.0;
+        laatta_b[ty][tx] = kb < K && sarake < N ? b[kb * N + sarake] : 0.0;
+        barrier();
+        for (uint k = 0; k < 16; ++k) {
+            summa += laatta_a[ty][k] * laatta_b[k][tx];
+        }
+        barrier();  // laattoja ei saa korvata, ennen kuin kaikki lukivat
+    }
+    if (rivi < M && sarake < N) {
+        c[rivi * N + sarake] = summa;
+    }
+}
+// @loppu laatta

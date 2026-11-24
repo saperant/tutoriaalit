@@ -1,0 +1,4 @@
+1000000 satunnaista 32-bittista avainta, 8 kierrosta, 40 ajoa
+sama kuin std::sort: kylla
+vakaus, 65536 avainta, 4 kierrosta: sama kuin std::stable_sort: kylla
+validointi-ilmoituksia: 0

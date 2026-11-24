@@ -1,0 +1,36 @@
+#version 460
+// Summa aliryhmäoperaatioilla: subgroupAdd summaa aliryhmän ilman
+// jaettua muistia, ja jaettuun muistiin jää vain aliryhmien summat.
+#extension GL_KHR_shader_subgroup_basic : require
+#extension GL_KHR_shader_subgroup_arithmetic : require
+
+// @alku aliryhma
+layout(local_size_x = 256) in;
+layout(set = 0, binding = 0) readonly buffer Syote { uint x[]; };
+layout(set = 0, binding = 1) writeonly buffer Osat { uint osat[]; };
+layout(push_constant) uniform Vakiot { uint n; };
+
+shared uint aliryhmien_summat[64];  // riittää aliryhmille >= 4
+
+void main() {
+    const uint i = gl_WorkGroupID.x * 512 + gl_LocalInvocationID.x;
+    uint v = (i < n ? x[i] : 0) + (i + 256 < n ? x[i + 256] : 0);
+    v = subgroupAdd(v);
+    if (subgroupElect()) {
+        aliryhmien_summat[gl_SubgroupID] = v;
+    }
+    barrier();
+    if (gl_SubgroupID == 0) {
+        // Ensimmäinen aliryhmä summaa aliryhmien summat.
+        uint w = 0;
+        for (uint k = gl_SubgroupInvocationID; k < gl_NumSubgroups;
+             k += gl_SubgroupSize) {
+            w += aliryhmien_summat[k];
+        }
+        w = subgroupAdd(w);
+        if (subgroupElect()) {
+            osat[gl_WorkGroupID.x] = w;
+        }
+    }
+}
+// @loppu aliryhma

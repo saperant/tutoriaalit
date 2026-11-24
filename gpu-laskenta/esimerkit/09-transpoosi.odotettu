@@ -1,0 +1,6 @@
+matriisi 1000 x 760, aalto 32 saietta, segmentti 128 t
+tapa           luku/aalto  kirj./aalto     pankit  oikein
+suora                1.73        31.25          -   kylla
+laatta               1.71         1.70   32-kert.   kylla
+laatta+tayte         1.71         1.70    1-kert.   kylla
+validointi-ilmoituksia: 0

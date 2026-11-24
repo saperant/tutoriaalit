@@ -1,0 +1,7 @@
+jarjestys                este       ilmoitukset
+kirjoitus p -> luku p    ei         SYNC-HAZARD-READ-AFTER-WRITE
+kirjoitus p -> luku p    suoritus   SYNC-HAZARD-READ-AFTER-WRITE
+kirjoitus p -> luku p    muisti     ei yhtaan
+luku p -> kirjoitus p    ei         SYNC-HAZARD-WRITE-AFTER-READ
+luku p -> kirjoitus p    suoritus   ei yhtaan
+validointi-ilmoituksia: 0

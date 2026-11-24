@@ -1,0 +1,24 @@
+#version 460
+// C = A B suoraan: säie laskee yhden C:n alkion ja lukee koko A:n rivin
+// ja B:n sarakkeen globaalista muistista.
+
+// @alku suora
+layout(local_size_x = 16, local_size_y = 16) in;
+layout(set = 0, binding = 0) readonly buffer A { float a[]; };   // M x K
+layout(set = 0, binding = 1) readonly buffer B { float b[]; };   // K x N
+layout(set = 0, binding = 2) writeonly buffer C { float c[]; };  // M x N
+layout(push_constant) uniform Vakiot { uint M; uint N; uint K; };
+
+void main() {
+    const uint sarake = gl_GlobalInvocationID.x;
+    const uint rivi = gl_GlobalInvocationID.y;
+    if (rivi >= M || sarake >= N) {
+        return;
+    }
+    float summa = 0.0;
+    for (uint k = 0; k < K; ++k) {
+        summa += a[rivi * K + k] * b[k * N + sarake];
+    }
+    c[rivi * N + sarake] = summa;
+}
+// @loppu suora

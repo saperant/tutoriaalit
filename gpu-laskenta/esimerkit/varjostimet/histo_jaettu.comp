@@ -1,0 +1,38 @@
+#version 460
+// Yksityistetty histogrammi: työryhmä kerää oman histogramminsa
+// jaettuun muistiin ja lisää sen lopuksi globaaliin, yksi atominen
+// lisäys lokeroa kohden.
+
+// @alku jaettu
+layout(local_size_x = 256) in;
+layout(set = 0, binding = 0) readonly buffer Syote { uint sanat[]; };
+layout(set = 0, binding = 1) buffer Histogrammi { uint lokerot[256]; };
+layout(set = 0, binding = 2) buffer Laskuri { uint globaaleja; };
+layout(push_constant) uniform Vakiot { uint n; uint sanoja_saikeelle; };
+
+shared uint paikalliset[256];
+
+void main() {
+    const uint oma = gl_LocalInvocationID.x;
+    paikalliset[oma] = 0;
+    barrier();
+    // Säie käsittelee useita sanoja harppauksin, jolloin naapurisäikeet
+    // lukevat peräkkäisiä sanoja (yhtenäinen muistihaku).
+    const uint alku = gl_WorkGroupID.x * 256 * sanoja_saikeelle + oma;
+    for (uint s = 0; s < sanoja_saikeelle; ++s) {
+        const uint i = alku + s * 256;
+        if (i < n) {
+            const uint sana = sanat[i];
+            for (uint k = 0; k < 4; ++k) {
+                atomicAdd(paikalliset[(sana >> (8 * k)) & 0xFF], 1);
+            }
+        }
+    }
+    barrier();
+    const uint oma_maara = paikalliset[oma];
+    if (oma_maara != 0) {
+        atomicAdd(lokerot[oma], oma_maara);
+        atomicAdd(globaaleja, 1);  // vain tilastoa varten
+    }
+}
+// @loppu jaettu

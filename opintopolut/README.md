@@ -108,7 +108,7 @@ flowchart LR
     renderoinnin_perusteet["✓ Renderöinnin perusteet"]
     sateenseuranta["✓ Säteenseuranta ja fysikaalinen valaistus"]
     gpu_ohjelmointi["✓ GPU-ohjelmointi: OpenGL ja Vulkan"]
-    gpu_laskenta["GPU-laskenta"]
+    gpu_laskenta["✓ GPU-laskenta"]
     peliohjelmointi["✓ Peliohjelmointi"]
     moninpelit["✓ Reaaliaikaiset moninpelit"]
   end
@@ -398,7 +398,7 @@ flowchart LR
 | Säteenseuranta ja fysikaalinen valaistus | 5 | Algoritmit, Renderöinnin perusteet, Todennäköisyys ja tilastot | [valmis](../sateenseuranta/) |
 | GPU-ohjelmointi: OpenGL ja Vulkan | 5 | Renderöinnin perusteet, Rinnakkaisohjelmointi | [valmis](../gpu-ohjelmointi/) |
 | Reaaliaikaiset moninpelit | 3 | Peliohjelmointi, Verkko-ohjelmointi | [valmis](../moninpelit/) |
-| GPU-laskenta | 3 | GPU-ohjelmointi: OpenGL ja Vulkan, Suorituskyvyn analyysi ja optimointi | suunniteltu |
+| GPU-laskenta | 3 | GPU-ohjelmointi: OpenGL ja Vulkan, Suorituskyvyn analyysi ja optimointi | [valmis](../gpu-laskenta/) |
 
 ### Tietoturva ja takaisinmallinnus
 

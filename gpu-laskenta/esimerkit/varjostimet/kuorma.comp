@@ -1,0 +1,22 @@
+#version 460
+// Säädettävä laskentaintensiteetti: jokainen säie lukee yhden luvun,
+// laskee sille toistot kertaa x = a x + b ja kirjoittaa tuloksen.
+// Laskuja on 2 * toistot jokaista 8 siirrettyä tavua kohden.
+
+// @alku kuorma
+layout(local_size_x = 256) in;
+layout(set = 0, binding = 0) buffer Data { float data[]; };
+layout(push_constant) uniform Vakiot { uint n; uint toistot; };
+
+void main() {
+    const uint i = gl_GlobalInvocationID.x;
+    if (i >= n) {
+        return;
+    }
+    float x = data[i];
+    for (uint t = 0; t < toistot; ++t) {
+        x = 0.999 * x + 0.001;
+    }
+    data[i] = x;
+}
+// @loppu kuorma

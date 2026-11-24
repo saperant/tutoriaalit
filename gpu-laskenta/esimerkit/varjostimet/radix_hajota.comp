@@ -1,0 +1,47 @@
+#version 460
+// Kantalukulajittelun kierroksen 3. vaihe: jokainen avain omalle
+// paikalleen. Paikka = (numero, ryhmä)-parin alku + samaa numeroa
+// olevien aiempien avainten määrä työryhmässä. Järjestys säilyy, joten
+// lajittelu on vakaa.
+#extension GL_KHR_shader_subgroup_basic : require
+#extension GL_KHR_shader_subgroup_ballot : require
+
+layout(local_size_x = 256) in;
+layout(set = 0, binding = 0) readonly buffer Lahde { uint lahde[]; };
+layout(set = 0, binding = 1) readonly buffer Alut { uint alut[]; };
+layout(set = 0, binding = 2) writeonly buffer Kohde { uint kohde[]; };
+layout(push_constant) uniform Vakiot { uint n; uint siirto; uint ryhmia; };
+
+shared uint maarat[16][64];  // [numero][aliryhmä], aliryhmät >= 4
+
+void main() {
+    const uint i = gl_GlobalInvocationID.x;
+    const bool mukana = i < n;
+    const uint avain = mukana ? lahde[i] : 0;
+    const uint numero = (avain >> siirto) & 15;
+    // @alku sija
+    // Aliryhmän sisäinen järjestys äänestyksellä (ballot): bittimaski
+    // kaistoista, joilla on sama numero, ja omaa kaistaa edeltävien
+    // bittien määrä.
+    uint sija_aliryhmassa = 0;
+    for (uint d = 0; d < 16; ++d) {
+        const bool sama = mukana && numero == d;
+        const uvec4 maski = subgroupBallot(sama);
+        if (sama) {
+            sija_aliryhmassa = subgroupBallotExclusiveBitCount(maski);
+        }
+        if (subgroupElect()) {
+            maarat[d][gl_SubgroupID] = subgroupBallotBitCount(maski);
+        }
+    }
+    barrier();
+    if (mukana) {
+        // Lisäksi samaa numeroa olevat avaimet aiemmissa aliryhmissä.
+        uint edella = sija_aliryhmassa;
+        for (uint s = 0; s < gl_SubgroupID; ++s) {
+            edella += maarat[numero][s];
+        }
+        kohde[alut[numero * ryhmia + gl_WorkGroupID.x] + edella] = avain;
+    }
+    // @loppu sija
+}

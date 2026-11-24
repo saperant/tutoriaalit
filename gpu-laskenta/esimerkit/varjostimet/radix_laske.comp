@@ -1,0 +1,30 @@
+#version 460
+// Kantalukulajittelun kierroksen 1. vaihe: työryhmän 256 avaimen
+// numeroiden (4 bittiä) määrät. Tulos on numero kerrallaan:
+// laskut[numero * ryhmia + ryhma], jolloin sen poissulkeva summa antaa
+// jokaiselle (numero, ryhmä)-parille aloituspaikan kohteessa.
+
+// @alku laske
+layout(local_size_x = 256) in;
+layout(set = 0, binding = 0) readonly buffer Avaimet { uint avaimet[]; };
+layout(set = 0, binding = 1) writeonly buffer Laskut { uint laskut[]; };
+layout(push_constant) uniform Vakiot { uint n; uint siirto; uint ryhmia; };
+
+shared uint maarat[16];
+
+void main() {
+    const uint oma = gl_LocalInvocationID.x;
+    if (oma < 16) {
+        maarat[oma] = 0;
+    }
+    barrier();
+    const uint i = gl_GlobalInvocationID.x;
+    if (i < n) {
+        atomicAdd(maarat[(avaimet[i] >> siirto) & 15], 1);
+    }
+    barrier();
+    if (oma < 16) {
+        laskut[oma * ryhmia + gl_WorkGroupID.x] = maarat[oma];
+    }
+}
+// @loppu laske

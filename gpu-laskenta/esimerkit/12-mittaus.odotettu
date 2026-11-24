@@ -1,0 +1,4 @@
+laskentajono tukee aikaleimoja: kylla (64 bittia), jakso 1 ns
+aikaleimat kasvavat: kylla
+kuorman tulos sama kuin CPU:lla (ero < 1e-5): kylla
+validointi-ilmoituksia: 0

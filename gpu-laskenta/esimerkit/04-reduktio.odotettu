@@ -1,0 +1,10 @@
+alkioita 4206649, summa 536582741
+tapa        ajoja     atomisia   oikein
+atomi           1      4206649    kylla
+jaettu          3            0    kylla
+aliryhma        3            0    kylla
+
+float-summa, 4194304 alkiota:
+perakkain: suhteellinen virhe alle 1e-3: kylla, alle 1e-5: ei
+puuna GPU:lla: suhteellinen virhe alle 1e-6: kylla
+validointi-ilmoituksia: 0

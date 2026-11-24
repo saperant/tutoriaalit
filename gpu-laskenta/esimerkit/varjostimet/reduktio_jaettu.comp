@@ -1,0 +1,33 @@
+#version 460
+// Summa puuna jaetussa muistissa: työryhmä summaa 512 alkiota ja
+// kirjoittaa osasumman. Isäntä ajaa uudestaan osasummille, kunnes
+// jäljellä on yksi luku.
+
+// @alku jaettu
+layout(local_size_x = 256) in;
+layout(set = 0, binding = 0) readonly buffer Syote { uint x[]; };
+layout(set = 0, binding = 1) writeonly buffer Osat { uint osat[]; };
+layout(push_constant) uniform Vakiot { uint n; };
+
+shared uint valisummat[256];
+
+void main() {
+    const uint oma = gl_LocalInvocationID.x;
+    // Jokainen säie lataa kaksi alkiota: ensimmäinen yhteenlasku
+    // tehdään jo latauksessa, eikä puolet säikeistä jää heti tyhjiksi.
+    const uint i = gl_WorkGroupID.x * 512 + oma;
+    const uint a = i < n ? x[i] : 0;
+    const uint b = i + 256 < n ? x[i + 256] : 0;
+    valisummat[oma] = a + b;
+    barrier();
+    for (uint askel = 128; askel > 0; askel /= 2) {
+        if (oma < askel) {
+            valisummat[oma] += valisummat[oma + askel];
+        }
+        barrier();  // kaikki tämän tason summat valmiina
+    }
+    if (oma == 0) {
+        osat[gl_WorkGroupID.x] = valisummat[0];
+    }
+}
+// @loppu jaettu

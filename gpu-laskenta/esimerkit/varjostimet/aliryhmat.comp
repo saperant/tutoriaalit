@@ -1,0 +1,62 @@
+#version 460
+// Aliryhmät (subgroup, warp, aalto): koko, säikeiden järjestys,
+// aliryhmän summa sekä haarautumisen hajaantuminen eri ehdoilla.
+#extension GL_KHR_shader_subgroup_basic : require
+#extension GL_KHR_shader_subgroup_vote : require
+#extension GL_KHR_shader_subgroup_arithmetic : require
+
+layout(local_size_x = 256) in;
+
+// @alku tulos
+layout(set = 0, binding = 0) buffer Tulos {
+    uint koko;              // gl_SubgroupSize
+    uint aliryhmia;         // gl_NumSubgroups työryhmässä
+    uint jarjestysvirheet;  // säie ei ole odotetulla paikallaan
+    uint summavirheet;      // subgroupAdd antoi väärän summan
+    uint hajaantuneet[4];   // aliryhmät, joissa ehto jakautui
+};
+// @loppu tulos
+
+// @alku ehdot
+bool ehto(uint kuvio, uint i) {
+    switch (kuvio) {
+    case 0: return (i / 64) % 2 == 0;  // 64 säikeen lohkot
+    case 1: return i % 16 < 8;         // 8 säikeen lohkot
+    case 2: return i % 2 == 0;         // parilliset ja parittomat
+    default: return i % 256 != 7;      // yksi säie työryhmästä
+    }
+}
+// @loppu ehdot
+
+void main() {
+    const uint i = gl_GlobalInvocationID.x;
+    const uint paikka = gl_LocalInvocationIndex;
+    if (i == 0) {
+        koko = gl_SubgroupSize;
+        aliryhmia = gl_NumSubgroups;
+    }
+    // @alku jarjestys
+    // Ovatko aliryhmät työryhmän peräkkäisiä säikeitä? Määrittely ei
+    // lupaa sitä, mutta käytännössä toteutukset tekevät niin.
+    const uint alku = gl_SubgroupID * gl_SubgroupSize;
+    if (alku + gl_SubgroupInvocationID != paikka) {
+        atomicAdd(jarjestysvirheet, 1);
+    }
+    // Summa koko aliryhmän yli yhdellä käskyllä ilman jaettua muistia.
+    const uint summa = subgroupAdd(paikka);
+    const uint k = gl_SubgroupSize;
+    if (subgroupElect() && summa != k * alku + k * (k - 1) / 2) {
+        atomicAdd(summavirheet, 1);
+    }
+    // @loppu jarjestys
+    // @alku hajaantuminen
+    for (uint kuvio = 0; kuvio < 4; ++kuvio) {
+        const bool c = ehto(kuvio, i);
+        // Hajaantunut: osa kaistoista menee kumpaankin haaraan.
+        const bool jakautui = subgroupAny(c) && !subgroupAll(c);
+        if (subgroupElect() && jakautui) {
+            atomicAdd(hajaantuneet[kuvio], 1);
+        }
+    }
+    // @loppu hajaantuminen
+}

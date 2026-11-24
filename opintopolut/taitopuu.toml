@@ -1168,6 +1168,7 @@ laajuus = 3
 testaus = "Vulkan-laskentavarjostimet (lavapipe), vertailu CPU-toteutukseen"
 roadmap = ["game-developer"]
 amk = "Rinnakkaislaskenta"
+tutoriaali = "gpu-laskenta"
 
 # ---------------------------------------------------------------------
 # Tietoturva ja takaisinmallinnus
