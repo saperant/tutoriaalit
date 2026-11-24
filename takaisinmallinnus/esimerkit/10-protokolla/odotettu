@@ -1,0 +1,29 @@
+== kaappauksen alku
+# @alku t1
+000000 00 05 00 a5 03 40 00 43 01 0e 00 a5 83 40 09 54
+000010 4b 2d 37 20 76 31 2e 34 f8 00 05 00 a5 01 41 00
+000020 42 01 08 00 a5 81 41 03 06 09 01 d5 00 08 00 a5
+000030
+# @loppu t1
+== päättely
+# @alku t2
+12 kehystä
+tavu 0: aina 0xa5 (tahdistus?)
+tavu 3: kehyksen pituus - 5 (hyötykuorman pituus)
+tavu 1: tyyppi, vastaus = pyyntö | 0x80
+tavu 2: järjestysnumero, kasvaa pyynnöittäin, vastaus kaiuttaa
+viimeinen tavu: tarkiste = summa tavuista 1..n-2 (mod 256)
+puretut kehykset:
+  -> tyyppi 0x03 nro 0x40 data []
+  <- tyyppi 0x83 nro 0x40 data [TK-7 v1.4]
+  -> tyyppi 0x01 nro 0x41 data []
+  <- tyyppi 0x81 nro 0x41 data [06 09 01]
+  -> tyyppi 0x02 nro 0x42 data [01 e8 03]
+  <- tyyppi 0x82 nro 0x42 data [00 c8 00]
+  -> tyyppi 0x01 nro 0x43 data []
+  <- tyyppi 0x81 nro 0x43 data [15 09 01]
+  -> tyyppi 0x02 nro 0x44 data [07 10 00]
+  <- tyyppi 0x82 nro 0x44 data [02]
+  -> tyyppi 0x01 nro 0x45 data []
+  <- tyyppi 0x81 nro 0x45 data [24 09 01]
+# @loppu t2

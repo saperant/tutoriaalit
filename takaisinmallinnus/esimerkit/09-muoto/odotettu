@@ -1,0 +1,54 @@
+# @alku t0
+koko: 282 tavua
+# @loppu t0
+== heksavedos, alku
+# @alku t1
+000000  4b 4d 54 44 02 00 01 00 04 00 00 00 00 b9 55 69  KMTD..........Ui
+000010  66 08 9c 01 01 08 6f 6c 6f 68 75 6f 6e 65 2c ba  f.....olohuone,.
+000020  55 69 57 08 a2 01 01 08 6f 6c 6f 68 75 6f 6e 65  UiW.....olohuone
+000030  58 bb 55 69 20 fe 69 03 02 07 70 61 72 76 65 6b  X.Ui .i...parvek
+000040  65 84 bc 55 69 8f 02 bd 02 03 07 6b 65 6c 6c 61  e..Ui......kella
+000050  72 69 c0 00 00 00 84 99 6d 1a 22 1f 18 e8 a3 00  ri......m.".....
+# @loppu t1
+== entropia 32 tavun lohkoissa
+# @alku t2
+000000  4.16  #################
+000020  4.45  ##################
+000040  4.44  ##################
+000060  4.94  ####################
+000080  4.94  ####################
+0000a0  4.88  ####################
+0000c0  4.81  ###################
+0000e0  4.81  ###################
+000100  4.62  ##################
+# @loppu t2
+== merkkijonot
+# @alku t3
+000000  KMTD
+000016  olohuone,
+000028  olohuoneX
+00003a  parveke
+00004b  kellari
+00009a  s#Jk
+0000a3   `zynGL
+# @loppu t3
+== kokonaislukuehdokkaat
+# @alku t4
+000052  u32 192: pituuskenttä? 192 tavua ja 4 tavua loppuun
+00000c  u32 aikaleima? 2026-01-01 00:00 UTC
+00001e  u32 aikaleima? 2026-01-01 00:05 UTC  +18 tavua, +300 s
+000030  u32 aikaleima? 2026-01-01 00:10 UTC  +18 tavua, +300 s
+000041  u32 aikaleima? 2026-01-01 00:15 UTC  +17 tavua, +300 s
+000116  CRC-32 koko edeltävästä datasta
+# @loppu t4
+== jäsennin
+# @alku t5
+versio 2, liput 0x0001, 4 mittausta
+  1767225600  anturi 1 olohuone   21.50 C   41.2 %
+  1767225900  anturi 1 olohuone   21.35 C   41.8 %
+  1767226200  anturi 2 parveke    -4.80 C   87.3 %
+  1767226500  anturi 3 kellari     6.55 C   70.1 %
+kalibrointilohko 192 tavua
+uudelleen kirjoitettu tiedosto identtinen: kyllä
+yksi bitti muutettu: CRC-32 ei täsmää
+# @loppu t5

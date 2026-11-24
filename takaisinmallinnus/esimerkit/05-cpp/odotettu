@@ -1,0 +1,76 @@
+# @alku t0
+virhe: tuntematon muoto: kolmio
+ala 7.14, ympyröitä 1, merkkejä 43
+# @loppu t0
+== koristellut nimet ja niiden purku
+# @alku t1
+_Z3luoRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
+    luo(std::__cxx11::basic_string<char, std::char_traits<char>,
+    std::allocator<char> > const&)
+_ZN11SuorakulmioD0Ev
+    Suorakulmio::~Suorakulmio()
+_ZN11SuorakulmioD1Ev
+    Suorakulmio::~Suorakulmio()
+_ZN11SuorakulmioD2Ev
+    Suorakulmio::~Suorakulmio()
+_ZNK6Ympyra9pinta_alaEv
+    Ympyra::pinta_ala() const
+_ZTS6Ympyra
+    typeinfo name for Ympyra
+# @loppu t1
+== virtuaalitaulut ja RTTI
+# @alku t2
+vtable for Ympyra: 6 paikkaa
+  [0] 0 (siirtymä olion alkuun)
+  [1] typeinfo for Ympyra
+  [2] Ympyra::~Ympyra() [täydellinen purkaja]  <- olion vptr
+  [3] Ympyra::~Ympyra() [poistava purkaja]
+  [4] Ympyra::pinta_ala() const
+  [5] Ympyra::nimi() const
+typeinfo for Ympyra: 3 paikkaa
+  [0] vtable for __cxxabiv1::__si_class_type_info + 16
+  [1] typeinfo name for Ympyra = "6Ympyra"
+  [2] typeinfo for Muoto
+vtable for Suorakulmio: 6 paikkaa
+  [0] 0 (siirtymä olion alkuun)
+  [1] typeinfo for Suorakulmio
+  [2] Suorakulmio::~Suorakulmio() [täydellinen purkaja]  <- olion vptr
+  [3] Suorakulmio::~Suorakulmio() [poistava purkaja]
+  [4] Suorakulmio::pinta_ala() const
+  [5] Muoto::nimi() const
+typeinfo for Suorakulmio: 3 paikkaa
+  [0] vtable for __cxxabiv1::__si_class_type_info + 16
+  [1] typeinfo name for Suorakulmio = "11Suorakulmio"
+  [2] typeinfo for Muoto
+vtable for Muoto: ei ohjelmassa
+typeinfo for Muoto: 2 paikkaa
+  [0] vtable for __cxxabiv1::__class_type_info + 16
+  [1] typeinfo name for Muoto = "5Muoto"
+# @loppu t2
+== virtuaalikutsu
+# @alku t3
+    mov rdi,QWORD PTR [rbx]
+    mov rax,QWORD PTR [rdi]
+    call QWORD PTR [rax+0x10]
+# @loppu t3
+== poikkeukset ja tyyppitarkistus
+# @alku t4
+.eh_frame
+.eh_frame_hdr
+.gcc_except_table
+luo kutsuu __cxa_throw
+main kutsuu __cxa_begin_catch
+ympyroita kutsuu __dynamic_cast
+# @loppu t4
+== std::string ja std::vector muistissa (gdb)
+# @alku t5
+> sizeof(std::string) = 32
+> lyhyt: data-osoitin = olio+16: 1
+> lyhyt: pituus (siirtymä 8) = 3
+> pitka: data-osoitin = olio+16: 0
+> pitka: pituus 40, kapasiteetti (siirtymä 16) 40
+> sizeof(std::vector) = 24
+> vector: alkioita 2, kapasiteetti 2
+> alkio 0: vtable for Ympyra + 16 in section .data.rel.ro
+> alkio 1: vtable for Suorakulmio + 16 in section .data.rel.ro
+# @loppu t5

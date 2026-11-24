@@ -1,0 +1,108 @@
+# @alku t0
+summa 18
+painotettu 36
+keskipiste 1.5 2.5
+suurin numero 6
+# @loppu t0
+== summa (-O0)
+# @alku t1
+<summa>:
+    endbr64
+    push rbp
+    mov rbp,rsp
+    mov QWORD PTR [rbp-0x18],rdi
+    mov QWORD PTR [rbp-0x20],rsi
+    mov QWORD PTR [rbp-0x10],0x0
+    mov QWORD PTR [rbp-0x8],0x0
+    jmp <summa+0x42>
+    mov rax,QWORD PTR [rbp-0x8]
+    lea rdx,[rax*4+0x0]
+    mov rax,QWORD PTR [rbp-0x18]
+    add rax,rdx
+    mov eax,DWORD PTR [rax]
+    cdqe
+    add QWORD PTR [rbp-0x10],rax
+    add QWORD PTR [rbp-0x8],0x1
+    mov rax,QWORD PTR [rbp-0x8]
+    cmp rax,QWORD PTR [rbp-0x20]
+    jb <summa+0x22>
+    mov rax,QWORD PTR [rbp-0x10]
+    pop rbp
+    ret
+# @loppu t1
+== summa (-O1)
+# @alku t2
+<summa>:
+    endbr64
+    test rsi,rsi
+    je <summa+0x33>
+    mov rax,rdi
+    lea rsi,[rdi+rsi*4]
+    mov edx,0x0
+    movsxd rcx,DWORD PTR [rax]
+    add rdx,rcx
+    add rax,0x4
+    cmp rax,rsi
+    jne <summa+0x20>
+    mov rax,rdx
+    ret
+    mov edx,0x0
+    jmp <summa+0x2f>
+# @loppu t2
+== painotettu: argumentit 7 ja 8 pinossa
+# @alku t3
+<painotettu>:
+    endbr64
+    push rbp
+    mov rbp,rsp
+    mov rax,rsi
+    mov rsi,rcx
+    mov rcx,QWORD PTR [rbp+0x10]
+    lea rax,[rdi+rax*2]
+    lea rdx,[rdx+rdx*2]
+    add rax,rdx
+    lea rax,[rax+rsi*4]
+    lea rdx,[r8+r8*4]
+    add rax,rdx
+    lea rdx,[r9+r9*2]
+    lea rax,[rax+rdx*2]
+    lea rdx,[rcx*8+0x0]
+    sub rdx,rcx
+    add rax,rdx
+    mov rdx,QWORD PTR [rbp+0x18]
+    lea rax,[rax+rdx*8]
+    pop rbp
+    ret
+# @loppu t3
+== keskipiste: liukuluvut xmm-rekistereissä
+# @alku t4
+<keskipiste>:
+    endbr64
+    addsd xmm1,xmm3
+    movsd xmm3,QWORD PTR [rip+X] # <_IO_stdin_used+0x58>
+    mulsd xmm1,xmm3
+    addsd xmm0,xmm2
+    mulsd xmm0,xmm3
+    movq rax,xmm1
+    movq rdx,xmm0
+    xchg rdx,rax
+    movq xmm0,rax
+    movq xmm1,rdx
+    ret
+# @loppu t4
+== suurin_numero: pinokehys ja kanarialintu
+# @alku t5
+    sub rsp,0x38
+    mov rax,QWORD PTR fs:0x28
+    sub rdx,QWORD PTR fs:0x28
+    call <__stack_chk_fail@plt>
+# @loppu t5
+== AT&T-syntaksi
+# @alku t6
+<summa>:
+    endbr64
+    test %rsi,%rsi
+    je <summa+0x33>
+    mov %rdi,%rax
+    lea (%rdi,%rsi,4),%rsi
+# @loppu t6

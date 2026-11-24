@@ -1214,6 +1214,7 @@ laajuus = 5
 testaus = "itse käännetyt kohdeohjelmat, skriptatut analyysit (Ghidra headless, gdb)"
 roadmap = ["cyber-security"]
 amk = "Kyberturvallisuuden syventävä opintojakso"
+tutoriaali = "takaisinmallinnus"
 
 [[taito]]
 id = "haavoittuvuudet"

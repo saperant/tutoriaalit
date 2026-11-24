@@ -1,0 +1,45 @@
+# @alku t0
+takaisinmallinnus: eefc67ec
+# @loppu t0
+== mitä riisuminen poisti
+# @alku t1
+ohjelma: 11 funktiosymbolia, 3 osiota (.symtab, .strtab, .eh_frame)
+ohjelma-s: 0 funktiosymbolia, 1 osiota (.symtab, .strtab, .eh_frame)
+tuonti: __libc_start_main
+tuonti: __memcpy_chk
+tuonti: __printf_chk
+tuonti: __stack_chk_fail
+tuonti: free
+tuonti: malloc
+tuonti: strlen
+# @loppu t1
+== _start (riisumattomasta ohjelmasta)
+# @alku t2
+<_start>:
+    endbr64
+    xor ebp,ebp
+    mov r9,rdx
+    pop rsi
+    mov rdx,rsp
+    and rsp,0xfffffffffffffff0
+    push rax
+    push rsp
+    xor r8d,r8d
+    xor ecx,ecx
+    lea rdi,[rip+X] # <main>
+    call QWORD PTR [rip+X] # <__libc_start_main@GLIBC_2.34>
+    hlt
+# @loppu t2
+== rajat, main ja allekirjoitukset
+# @alku t3
+FDE-tietueita: 8
+nro  osio       koko  päätelmä                   symbolitaulussa
+1    .plt        112  PLT-koodia                 -
+2    .plt.got     16  PLT-koodia                 -
+3    .plt.sec     96  PLT-koodia                 -
+4    .text       173  main (lea rdi _startissa)  main
+5    .text        38  tulokohta (_start)         _start
+6    .text       100  kirjasto: crc32_paivita    crc32_paivita
+7    .text        68  kirjasto: kopioi           kopioi
+8    .text       112  kirjasto: heksaksi         heksaksi
+# @loppu t3

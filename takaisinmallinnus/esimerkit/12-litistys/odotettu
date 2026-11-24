@@ -1,0 +1,42 @@
+== tavallinen ja litistetty antavat saman tuloksen
+# @alku t1
+79927398713       1 1
+79927398710       0 0
+4539578763621486  1 1
+1234567812345678  0 0
+0                 1 1
+# @loppu t1
+== purun koko
+# @alku t2
+luhn: 56 käskyä
+luhn_litistetty: 126 käskyä
+# @loppu t2
+== välittäjän alku
+# @alku t3
+    mov DWORD PTR [rbp-0x4],0x6b2f9c01
+    cmp DWORD PTR [rbp-0x4],0xe5013b7c
+    je <luhn_litistetty+0x144>
+    cmp DWORD PTR [rbp-0x4],0xe5013b7c
+    ja <luhn_litistetty+0x33>
+    cmp DWORD PTR [rbp-0x4],0xb85e20f9
+    je <luhn_litistetty+0x16b>
+    cmp DWORD PTR [rbp-0x4],0xb85e20f9
+    ja <luhn_litistetty+0x33>
+# @loppu t3
+== palautettu tilakone
+# @alku t4
+tilamuuttuja DWORD PTR [rbp-0x4], välittäjässä 8 tilaa
+T0 0x6b2f9c01  7 käskyä -> T1
+T1 0x1d44e7a3  7 käskyä -> T2 | T3
+T2 0x93c0558e 19 käskyä -> T4 | T5
+T3 0x0c71b2d4 21 käskyä -> paluu
+T4 0x47a8d316  7 käskyä -> T6 | T7
+T5 0xe5013b7c  3 käskyä -> T3
+T6 0xb85e20f9 13 käskyä -> T7
+T7 0x2a9364c5  9 käskyä -> T1
+# @loppu t4
+== läpinäkymätön predikaatti
+# @alku t5
+tarkistettu 165542 arvoa, vastaesimerkkejä 0
+ehto on aina tosi: tila 0xe5013b7c on kuollutta koodia
+# @loppu t5

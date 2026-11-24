@@ -4,7 +4,7 @@
     "dockerfile": "../Dockerfile",
     "context": "..",
     "args": {
-      "LISAPAKETIT": "radare2 gdb strace ltrace binutils",
+      "LISAPAKETIT": "radare2 gdb strace ltrace binutils shellcheck",
       "PIP_PAKETIT": "ruff mypy"
     }
   },

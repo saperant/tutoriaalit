@@ -1,0 +1,65 @@
+== 1. käyttäytyminen
+# @alku t1
+f255 lampo 21.5
+e7f9 kosteus 41
+# @loppu t1
+== 2. tuonnit
+# @alku t2
+__libc_start_main __printf_chk __stack_chk_fail fgets strcspn
+# @loppu t2
+== 3. main ja sen kutsuma funktio
+# @alku t3
+|      :|        call sym.imp.strcspn
+|      :|        call tarkiste
+|      :|        call sym.imp.__printf_chk
+|      :         call sym.imp.fgets
+|       `->      call sym.imp.__stack_chk_fail
+# @loppu t3
+== 4. tarkistefunktio
+# @alku t4
+  ; CALL XREF from main @ OSOITE
+/ 144: tarkiste (uint32_t arg1, int64_t arg2, int64_t arg6);
+|  ; arg uint32_t arg1 @ rdi
+|  ; arg int64_t arg2 @ rsi
+|  ; arg int64_t arg6 @ r9
+|                test rsi, rsi  ; arg2
+|       ,=<      je OSOITE
+|       |        add rsi, rdi  ; arg2
+|       |        xor eax, eax
+|       |        mov edx, 1
+|       |        mov r8d, 0x828cbfbf
+|       |  ; CODE XREF from tarkiste @ OSOITE
+|      .-->      movzx ecx, byte [rdi]  ; arg1
+|      :|        add rdi, 1  ; arg1
+|      :|        add edx, ecx
+|      :|        mov rcx, rdx
+|      :|        imul rdx, r8
+|      :|        shr rdx, 0x27
+|      :|        imul r9d, edx, 0xfb
+|      :|        sub ecx, r9d  ; arg6
+|      :|        add eax, ecx
+|      :|        mov edx, ecx
+|      :|        mov eax, eax
+|      :|        mov rcx, rax
+|      :|        imul rax, r8
+|      :|        shr rax, 0x27
+|      :|        imul r9d, eax, 0xfb
+|      :|        mov eax, ecx
+|      :|        sub eax, r9d  ; arg6
+|      :|        cmp rsi, rdi  ; arg2
+|      `==<      jne OSOITE
+|       |        shl eax, 8
+|       |        or eax, edx
+|       |        xor ax, 0x5a5a
+|       |        ret
+..
+|       |  ; CODE XREF from tarkiste @ OSOITE
+|       `->      mov eax, 0x5a5b  ; '[Z'
+\                ret
+# @loppu t4
+== 5. uudelleentoteutus ja eroavuustesti
+# @alku t5
+f255 lampo 21.5
+e7f9 kosteus 41
+2003 riviä, eroja 0
+# @loppu t5

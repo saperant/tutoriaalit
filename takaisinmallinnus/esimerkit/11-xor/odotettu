@@ -1,0 +1,37 @@
+# @alku t0
+yhdistetään: paivitys.example.invalid
+pyyntö: POST /api/v2/laitteet/rekisteroi
+otsake: X-Laite-Avain: 3f9a-77c1
+# @loppu t0
+== strings ei löydä osoitteita
+# @alku t1
+0
+# @loppu t1
+== purkufunktio
+# @alku t2
+<pura>:
+    mov rax,rdx
+    xor ecx,ecx
+    mov r8d,0x5c
+    movzx r9d,BYTE PTR [rdi+rcx*1]
+    xor r9d,r8d
+    add r8d,0x1d
+    mov BYTE PTR [rax+rcx*1],r9b
+    add rcx,0x1
+    cmp rsi,rcx
+    jne <pura+0x20>
+    ret
+# @loppu t2
+== staattinen purku
+# @alku t3
+avain purkufunktiosta: alku 0x5c, askel 0x1d
+.rodata+0x040: X-Laite-Avain: 3f9a-77c1
+.rodata+0x060: /api/v2/laitteet/rekisteroi
+.rodata+0x080: paivitys.example.invalid
+# @loppu t3
+== dynaaminen purku: __printf_chk-kutsun argumentti
+# @alku t4
+> paivitys.example.invalid
+> /api/v2/laitteet/rekisteroi
+> X-Laite-Avain: 3f9a-77c1
+# @loppu t4

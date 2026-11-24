@@ -1,0 +1,136 @@
+# @alku t0
+4 180 -1
+15.00 40 7
+# @loppu t0
+== luokka
+# @alku t1
+<luokka>:
+    endbr64
+    mov eax,0x5
+    cmp edi,0x59
+    jg <luokka+0x24>
+    mov eax,0x4
+    cmp edi,0x4a
+    jg <luokka+0x24>
+    cmp edi,0x31
+    setg al
+    movzx eax,al
+    lea eax,[rax+rax*2]
+    ret
+# @loppu t1
+== hinnoittele
+# @alku t2
+<hinnoittele>:
+    endbr64
+    mov eax,esi
+    cmp edi,0x5
+    ja <hinnoittele+0x70>
+    mov edi,edi
+    lea rcx,[rip+X] # <_IO_stdin_used+0x4>
+    movsxd rdx,DWORD PTR [rcx+rdi*4]
+    add rdx,rcx
+    notrack jmp rdx
+    movsxd rdx,esi
+    imul rdx,rdx,0x66666667
+    sar rdx,0x23
+    mov ecx,esi
+    sar ecx,0x1f
+    sub ecx,edx
+    add eax,ecx
+    ret
+    movsxd rdx,esi
+    imul rdx,rdx,0x66666667
+    sar rdx,0x22
+    mov ecx,esi
+    sar ecx,0x1f
+    sub ecx,edx
+    add eax,ecx
+    ret
+    movsxd rdx,esi
+    imul rdx,rdx,0x66666667
+    sar rdx,0x21
+    mov ecx,esi
+    sar ecx,0x1f
+    sub ecx,edx
+    add eax,ecx
+    ret
+    mov edx,esi
+    shr edx,0x1f
+    add eax,edx
+    sar eax,1
+    ret
+    mov eax,0xffffffff
+    ret
+    mov eax,0x0
+    ret
+# @loppu t2
+== varaston_arvo
+# @alku t3
+<varaston_arvo>:
+    endbr64
+    test esi,esi
+    jle <varaston_arvo+0x3f>
+    mov rax,rdi
+    movsxd rsi,esi
+    shl rsi,0x4
+    add rdi,rsi
+    pxor xmm1,xmm1
+    pxor xmm0,xmm0
+    cvtsi2sd xmm0,DWORD PTR [rax+0x4]
+    mulsd xmm0,QWORD PTR [rax+0x8]
+    addsd xmm1,xmm0
+    add rax,0x10
+    cmp rax,rdi
+    jne <varaston_arvo+0x1f>
+    movapd xmm0,xmm1
+    ret
+    pxor xmm1,xmm1
+    jmp <varaston_arvo+0x3a>
+# @loppu t3
+== lavan_paino
+# @alku t4
+<lavan_paino>:
+    endbr64
+    movsxd rsi,esi
+    lea rax,[rsi+rsi*4]
+    lea rdx,[rdi+rax*4]
+    mov eax,DWORD PTR [rdx+0x4]
+    add eax,DWORD PTR [rdx]
+    add eax,DWORD PTR [rdx+0x8]
+    add eax,DWORD PTR [rdx+0xc]
+    add eax,DWORD PTR [rdx+0x10]
+    ret
+# @loppu t4
+== pituus
+# @alku t5
+<pituus>:
+    endbr64
+    cmp BYTE PTR [rdi],0x0
+    je <pituus+0x28>
+    mov eax,0x0
+    add eax,0x1
+    mov edx,eax
+    cmp BYTE PTR [rdi+rdx*1],0x0
+    jne <pituus+0x1c>
+    ret
+    mov eax,0x0
+    ret
+# @loppu t5
+== automaattinen tunnistus
+# @alku t6
+luokka: 12 käskyä
+  vertailut vakioihin: 89, 74, 49
+hinnoittele: 42 käskyä
+  hyppytaulu: 6 alkiota (arvot 0..5), 6 eri kohdetta
+  vertailut vakioihin: 5
+varaston_arvo: 19 käskyä
+  silmukka: jne taaksepäin, runko 7 käskyä
+  muistiviittaukset: +4 DWORD, +8 QWORD
+  osoittimen askel (add, shl): 16 tavua
+lavan_paino: 10 käskyä
+  muistiviittaukset: +0 DWORD, +4 DWORD, +8 DWORD, +12 DWORD, +16 DWORD
+pituus: 11 käskyä
+  silmukka: jne taaksepäin, runko 4 käskyä
+  vertailut vakioihin: 0, 0
+  muistiviittaukset: +0 BYTE
+# @loppu t6

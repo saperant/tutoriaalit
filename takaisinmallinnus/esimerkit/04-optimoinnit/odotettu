@@ -1,0 +1,137 @@
+# @alku t0
+25 12 108
+14 -9 12 -5
+valmis
+# @loppu t0
+== käskyt ja kutsut
+# @alku t1
+funktio     -O0  -O2  kutsut -O0 / -O2
+etaisyys2    18    5  nelio nelio / -
+syt          19   16  syt / -
+ilmoita      10    2  puts@plt / jmp:puts@plt
+skaalaa      28   13  - / -
+summa8       20   12  - / -
+jaa7         14    9  - / -
+jaa10        14    7  - / -
+# @loppu t1
+== etaisyys2 -O2
+# @alku t2
+<etaisyys2>:
+    endbr64
+    imul edi,edi
+    imul esi,esi
+    lea eax,[rdi+rsi*1]
+    ret
+# @loppu t2
+== syt -O2
+# @alku t3
+<syt>:
+    endbr64
+    mov eax,edi
+    test esi,esi
+    jne <syt+0x12>
+    jmp <syt+0x20>
+    mov esi,edx
+    xor edx,edx
+    div esi
+    mov eax,esi
+    test edx,edx
+    jne <syt+0x10>
+    mov eax,esi
+    ret
+    mov esi,edi
+    mov eax,esi
+    ret
+# @loppu t3
+== ilmoita -O2
+# @alku t4
+<ilmoita>:
+    endbr64
+    jmp <puts@plt>
+# @loppu t4
+== summa8 -O2
+# @alku t5
+<summa8>:
+    endbr64
+    movdqu xmm1,XMMWORD PTR [rdi+0x10]
+    movdqu xmm0,XMMWORD PTR [rdi]
+    paddd xmm0,xmm1
+    movdqa xmm1,xmm0
+    psrldq xmm1,0x8
+    paddd xmm0,xmm1
+    movdqa xmm1,xmm0
+    psrldq xmm1,0x4
+    paddd xmm0,xmm1
+    movd eax,xmm0
+    ret
+# @loppu t5
+== skaalaa -O3: vektoroitu silmukka
+# @alku t6
+    movdqu xmm0,XMMWORD PTR [rsi+rax*1]
+    movdqa xmm1,xmm0
+    psrlq xmm0,0x20
+    pmuludq xmm1,xmm2
+    pmuludq xmm0,xmm3
+    pshufd xmm1,xmm1,0x8
+    pshufd xmm0,xmm0,0x8
+    punpckldq xmm1,xmm0
+    movups XMMWORD PTR [rdi+rax*1],xmm1
+    add rax,0x10
+    cmp rax,rdx
+    jne <skaalaa+0x70>
+käskyjä: -O2 13, -O3 50
+# @loppu t6
+== jaa7 -O2
+# @alku t7
+<jaa7>:
+    endbr64
+    mov eax,edi
+    imul rax,rax,0x24924925
+    shr rax,0x20
+    sub edi,eax
+    shr edi,1
+    add eax,edi
+    shr eax,0x2
+    ret
+# @loppu t7
+== jaa10 -O2
+# @alku t8
+<jaa10>:
+    endbr64
+    movsxd rax,edi
+    sar edi,0x1f
+    imul rax,rax,0x66666667
+    sar rax,0x22
+    sub eax,edi
+    ret
+# @loppu t8
+== jaa8 -O2
+# @alku t9
+<jaa8>:
+    endbr64
+    mov eax,edi
+    shr eax,0x3
+    ret
+# @loppu t9
+== jaannos10 -O2
+# @alku t10
+<jaannos10>:
+    endbr64
+    movsxd rax,edi
+    mov edx,edi
+    imul rax,rax,0x66666667
+    sar edx,0x1f
+    sar rax,0x22
+    sub eax,edx
+    lea edx,[rax+rax*4]
+    mov eax,edi
+    add edx,edx
+    sub eax,edx
+    ret
+# @loppu t10
+== jakajat taikaluvuista
+# @alku t11
+jaa7: M=0x124924925 s=35 lisäysmuoto: x/7 ok
+jaa10: M=0x66666667 s=34 etumerkillinen: x/10 ok
+jaannos10: M=0x66666667 s=34 etumerkillinen: x/10 ok
+# @loppu t11

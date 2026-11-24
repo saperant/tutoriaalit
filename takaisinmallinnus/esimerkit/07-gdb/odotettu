@@ -1,0 +1,43 @@
+# @alku t0
+pieni tilaus: 2190
+iso tilaus: 14025
+alennuskoodi hylätty
+myynti yhteensä: 16215
+# @loppu t0
+== argumentit.gdb
+# @alku t1
+> laske_hinta(n=2, asiakasluokka=1)
+>   rivi 0: tuote 101, määrä 2, hinta 450
+>   rivi 1: tuote 205, määrä 1, hinta 1290
+> laske_hinta(n=2, asiakasluokka=2)
+>   rivi 0: tuote 101, määrä 20, hinta 450
+>   rivi 1: tuote 310, määrä 3, hinta 2500
+> ehto täyttyi: alennus(2, 16500)
+alennuskoodi hylätty
+# @loppu t1
+== muuta.gdb
+# @alku t2
+> tarkista_koodi("KEVAT-26")
+> tarkista_koodi palautti 0, asetetaan rax = 1
+alennuskoodi hyväksytty
+# @loppu t2
+== jaljita.gdb
+# @alku t3
+> laske_hinta(osoitin, 2, 1)
+>   alennus(1, 2190)
+>   alennus -> 0
+> laske_hinta -> 2190
+> laske_hinta(osoitin, 2, 2)
+>   alennus(2, 16500)
+>   alennus -> 2475
+> laske_hinta -> 14025
+> tarkista_koodi(osoitin)
+> tarkista_koodi -> 0
+alennuskoodi hylätty
+# @loppu t3
+== vahti.gdb
+# @alku t4
+> laske_hinta: myynti_yhteensa = 2190
+> laske_hinta: myynti_yhteensa = 16215
+alennuskoodi hylätty
+# @loppu t4

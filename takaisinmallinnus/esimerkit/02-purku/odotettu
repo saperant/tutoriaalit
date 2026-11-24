@@ -1,0 +1,73 @@
+# @alku t0
+1 0
+# @loppu t0
+== objdump: lineaarinen purku
+# @alku t1
+<tarkista>:
+    xor eax,eax
+    cmp edi,0x2a
+    jne <tarkista+0xf>
+    jmp <tarkista+0xa>
+    call <_fini+0x1b3>
+    add bl,al
+# @loppu t1
+== radare2: rekursiivinen purku
+# @alku t2
+  ; CALL XREFS from main @ OSOITE, OSOITE
+/ 15: sym.tarkista (uint32_t arg1);
+|  ; arg uint32_t arg1 @ rdi
+|                xor eax, eax
+|                cmp edi, 0x2a  ; arg1
+|       ,=<      jne OSOITE
+|      ,==<      jmp OSOITE
+..
+|      ||  ; CODE XREF from sym.tarkista @ OSOITE
+|      `-->      mov eax, 1
+|       |  ; CODE XREF from sym.tarkista @ OSOITE
+\       `->      ret
+otto: 8
+otto: -1
+TILAA: R-200 (saldo 3)
+TILAA: M-310 (saldo 0)
+# @loppu t2
+== funktiot (afl): lohkoja, koko, nimi
+# @alku t3
+7 107 sym.etsi
+6 95 sym.ota
+6 153 sym.raportoi
+1 104 main
+# @loppu t3
+== merkkijonot (iz)
+# @alku t4
+21 22 .rodata ascii TILAA: %s (saldo %d)\n
+5 6 .rodata ascii R-100
+9 10 .rodata ascii otto: %d\n
+5 6 .data ascii R-100
+5 6 .data ascii R-200
+5 6 .data ascii M-310
+# @loppu t4
+== ristiviittaukset (axt)
+# @alku t5
+sym.raportoi OSOITE [DATA] lea rax, str.TILAA:__s__saldo__d__n
+sym.ota OSOITE [CALL] call sym.etsi
+sym.etsi OSOITE [DATA] lea rax, obj.varasto
+sym.etsi OSOITE [DATA] lea rax, obj.varasto
+sym.raportoi OSOITE [DATA] lea rdx, obj.varasto
+# @loppu t5
+== pseudokoodi (pdc), alku
+# @alku t6
+int sym.etsi (int esi, int edx) {
+    loc_OSOITE:
+        // CALL XREF from sym.ota @ OSOITE
+        endbr6
+        push  (rbp)
+        rbp = rsp
+        rsp -= 0x20
+        qword [s2] = rdi // arg1
+        dword [s1] = 0
+        goto loc_OSOITE
+         // do {
+    loc_OSOITE:
+        // CODE XREF from sym.etsi @ OSOITE
+        var = dword [s1] - 2
+# @loppu t6

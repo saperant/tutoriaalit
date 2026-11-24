@@ -1,0 +1,36 @@
+# @alku t0
+väärä salasana
+# @loppu t0
+== strings: salasanaa ei näy
+# @alku t1
+0
+# @loppu t1
+== strace: tiedostot ja tulosteet
+# @alku t2
+openat(AT_FDCWD, "asetukset.conf", O_RDONLY) = 3
+read(3, "kirjautumiset.log\n", 4096) = 18
+close(3) = 0
+openat(AT_FDCWD, "kirjautumiset.log", O_WRONLY|O_CREAT|O_APPEND, 0666) = 3
+write(3, "kirjautuminen ep\303\244onnistui\n", 27) = 27
+close(3) = 0
+write(1, "v\303\244\303\244r\303\244 salasana\n", 18) = 18
++++ exited with 1 +++
+# @loppu t2
+== ltrace: kirjastokutsut
+# @alku t3
+kirjautuja->fopen("asetukset.conf", "r")
+kirjautuja->strcmp("arvaus", "Lumi-2026")
+kirjautuja->fopen("kirjautumiset.log", "a")
++++ exited (status 1) +++
+# @loppu t3
+== LD_PRELOAD-koukku
+# @alku t4
+[koukku] strcmp("arvaus", "Lumi-2026")
+väärä salasana
+tervetuloa
+kirjautuminen epäonnistui
+kirjautuminen epäonnistui
+kirjautuminen epäonnistui
+kirjautuminen epäonnistui
+kirjautuminen onnistui
+# @loppu t4

@@ -119,6 +119,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | C++:n suorituskyky | [`cpp-suorituskyky/`](cpp-suorituskyky/) | [cpp-suorituskyky.pdf](https://saperant.github.io/tutoriaalit/materiaalit/cpp-suorituskyky.pdf) |
 | Rinnakkaisohjelmointi | [`rinnakkaisohjelmointi/`](rinnakkaisohjelmointi/) | [rinnakkaisohjelmointi.pdf](https://saperant.github.io/tutoriaalit/materiaalit/rinnakkaisohjelmointi.pdf) |
 | Digitaalinen signaalinkäsittely | [`dsp/`](dsp/) | [dsp.pdf](https://saperant.github.io/tutoriaalit/materiaalit/dsp.pdf) |
+| Takaisinmallinnus | [`takaisinmallinnus/`](takaisinmallinnus/) | [takaisinmallinnus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/takaisinmallinnus.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

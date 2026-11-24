@@ -1,0 +1,32 @@
+== ilman debuggeria
+# @alku t1
+suojattu toiminto suoritettu
+# @loppu t1
+== strace ja gdb havaitaan
+# @alku t2
+tarkistus 1: TracerPid ei ole 0
+debuggeri havaittu, lopetetaan
+paluuarvo 3
+tarkistus 1: TracerPid ei ole 0
+debuggeri havaittu, lopetetaan
+# @loppu t2
+== ohita-pid.gdb: ensimmäinen tarkistus ohitettu
+# @alku t3
+> jaljittajan_pid palautti jäljittäjän pid:n (> 0: True), asetetaan 0
+tarkistus 2: ptrace epäonnistui
+debuggeri havaittu, lopetetaan
+# @loppu t3
+== ohita-kaikki.gdb: päätösfunktio ohitettu
+# @alku t4
+> debuggeri_havaittu ohitetaan: rax = 0, paluu kutsujaan
+suojattu toiminto suoritettu
+# @loppu t4
+== pysyvä paikkaus tiedostoon
+# @alku t5
+main: call debuggeri_havaittu (e8 + rel32) -> 31 c0 0f 1f 00
+    xor eax,eax
+    test eax,eax
+    jne <main+0x20>
+4 tavua muuttui
+suojattu toiminto suoritettu
+# @loppu t5
