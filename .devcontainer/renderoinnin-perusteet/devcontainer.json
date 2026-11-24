@@ -1,0 +1,16 @@
+{
+  "name": "Renderöinnin perusteet: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {}
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/renderoinnin-perusteet/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools"
+      ]
+    }
+  }
+}
