@@ -1,0 +1,21 @@
+== commit
+tree 53b72974c7d60bc706084da2a98460398ce30d43
+author Aino Kehittäjä <aino@example.fi> 1767261720 +0200
+committer Aino Kehittäjä <aino@example.fi> 1767261720 +0200
+
+Ensimmäinen versio
+== puu 53b7297
+100644 blob 7b85bccb8786cd389b4c5103a28f5d5bdef91579	README.md
+040000 tree 6ef3d997890d3b6e542fb3384eec2837b09cdb73	src
+== alipuu src
+100644 blob 0108731009b0c46e34b45ac1eed03e7fc61bace1	main.py
+== blob
+Laskuri
+7b85bccb8786cd389b4c5103a28f5d5bdef91579
+7b85bccb8786cd389b4c5103a28f5d5bdef91579
+7b85bccb8786cd389b4c5103a28f5d5bdef91579
+== viitteet
+ref: refs/heads/main
+cce554f
+commit
+5 objects

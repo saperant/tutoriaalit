@@ -1,0 +1,14 @@
+commit
+tag
+object 8f918a797ef1489291e183eef64fc830b9a6e016
+type commit
+tag v1.0.0
+tagger Aino Kehittäjä <aino@example.fi> 1767261900 +0200
+
+Ensimmäinen julkaisu
+v1.0.0-1-g544c816
+v1.0.0-1-g544c816-dirty
+v1.0.0
+v1.2.0
+v1.9.1
+v1.10.0

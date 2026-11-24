@@ -161,6 +161,7 @@ laajuus = 2
 testaus = "skriptatut Git-esimerkit väliaikaisissa repositorioissa"
 roadmap = ["git-github"]
 amk = "Ohjelmistotuotannon työkalut"
+tutoriaali = "versionhallinta"
 
 [[taito]]
 id = "c-kieli"

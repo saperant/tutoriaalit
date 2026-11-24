@@ -1,0 +1,10 @@
+?? .env.esimerkki
+?? .gitignore
+?? logs/.keep
+?? src/main.py
+.gitignore:2:build/	build/main.o
+.gitignore:3:*.log	logs/a.log
+.gitignore:5:.env	.env
+ M asetukset.local
+D  asetukset.local
+asetukset.local

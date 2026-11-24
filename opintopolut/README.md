@@ -35,7 +35,7 @@ flowchart LR
   subgraph perusta["Perusta"]
     ohjelmoinnin_perusteet["✓ Ohjelmoinnin perusteet (Python)"]
     komentorivi["✓ Komentorivi ja Linux"]
-    versionhallinta["Versionhallinta (Git)"]
+    versionhallinta["✓ Versionhallinta (Git)"]
     c_kieli["✓ C-kieli"]
     moderni_cpp["✓ Moderni C++"]
     python["✓ Python"]
@@ -302,7 +302,7 @@ flowchart LR
 | Bash-skriptaus | 3 | Komentorivi ja Linux, Ohjelmoinnin perusteet (Python) | [valmis](../bash/) |
 | C-kieli | 5 | Komentorivi ja Linux, Ohjelmoinnin perusteet (Python) | [valmis](../c-kieli/) |
 | Python | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../python/) |
-| Versionhallinta (Git) | 2 | Komentorivi ja Linux | suunniteltu |
+| Versionhallinta (Git) | 2 | Komentorivi ja Linux | [valmis](../versionhallinta/) |
 | Käännösjärjestelmät, testaus ja CI | 3 | Bash-skriptaus, C-kieli, Versionhallinta (Git) | suunniteltu |
 | Moderni C++ | 5 | C-kieli | [valmis](../moderni-cpp/) |
 | Python työkaluohjelmointiin | 5 | Komentorivi ja Linux, Python | suunniteltu |

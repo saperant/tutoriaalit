@@ -1,0 +1,29 @@
+ M README.md
+MM laskuri.py
+== git diff --staged (valmisteltu)
+ laskuri.py | 2 ++
+ 1 file changed, 2 insertions(+)
+== git diff (valmistelematon)
+diff --git a/README.md b/README.md
+index 7b85bcc..0bdc2ac 100644
+--- a/README.md
++++ b/README.md
+@@ -1 +1,2 @@
+ Laskuri
++Laskee rivit ja sanat.
+diff --git a/laskuri.py b/laskuri.py
+index fb34a1a..e467526 100644
+--- a/laskuri.py
++++ b/laskuri.py
+@@ -2,3 +2,4 @@ def rivit(teksti):
+     return teksti.count("\n")
+ def sanat(teksti):
+     return len(teksti.split())
++# TODO: merkit
+ M README.md
+ M laskuri.py
+369e846 Sanalaskuri ja tarkempi README
+
+ README.md  | 1 +
+ laskuri.py | 2 ++
+ 2 files changed, 3 insertions(+)

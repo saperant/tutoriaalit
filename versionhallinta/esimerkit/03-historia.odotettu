@@ -1,0 +1,30 @@
+64538c9 Korjaa sanojen erotin
+8e0bd33 README
+3f320f8 Sanalaskuri
+61bd304 Rivilaskuri
+== muotoiltu
+64538c9 2026-01-01 Aino Kehittäjä: Korjaa sanojen erotin
+8e0bd33 2026-01-01 Aino Kehittäjä: README
+== vain laskuri.py
+64538c9 Korjaa sanojen erotin
+3f320f8 Sanalaskuri
+61bd304 Rivilaskuri
+== milloin 'split' lisättiin tai poistettiin (-S)
+64538c9 Korjaa sanojen erotin
+3f320f8 Sanalaskuri
+== viimeisin muutos
+64538c9 Korjaa sanojen erotin
+
+Pelkkä split() jakaa myös rivinvaihdoista; erotin näkyviin.
+
+
+diff --git a/laskuri.py b/laskuri.py
+index 1059940..34c118e 100644
+--- a/laskuri.py
++++ b/laskuri.py
+@@ -1,4 +1,4 @@
+ def rivit(t):
+     return t.count("\n")
+ def sanat(t):
+-    return len(t.split())
++    return len(t.split(None))

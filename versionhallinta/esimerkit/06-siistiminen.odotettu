@@ -1,0 +1,13 @@
+b60dd3c fixup! Sanalaskuri
+1f93e83 Merkkilaskuri
+7c13621 WIP väliaikainen tuloste
+4d82131 Sanalaskuri
+3900f6e README
+3e3b8a7 Merkkilaskuri
+b3fe85f Sanalaskuri
+3900f6e README
++def sanat(t):
++    return len(t.split())
+README.md
+merkit.py
+sanat.py

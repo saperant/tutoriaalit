@@ -1,0 +1,12 @@
+kuva.png: text: unset
+kuva.png: eol: lf
+kuva.png: diff: unset
+aja.bat: text: set
+aja.bat: eol: crlf
+aja.bat: diff: unspecified
+main.py: text: auto
+main.py: eol: lf
+main.py: diff: unspecified
+i/lf w/crlf main.py
+.gitattributes
+main.py

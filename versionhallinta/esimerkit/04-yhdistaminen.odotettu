@@ -1,0 +1,17 @@
+yhteinen kanta: cc88b93
+*   3068629 Merge branch 'sanat'
+|\  
+| * ed17563 Sanalaskuri
+* | 0abe37d Pääohjelma
+|/  
+* cc88b93 Rivilaskuri
+== tulos
+def rivit(t):
+    return t.count("\n")
+
+def sanat(t):
+    return len(t.split())
+
+
+def main():
+    print(rivit(input()))

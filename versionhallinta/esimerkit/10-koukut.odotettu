@@ -1,0 +1,6 @@
+laskuri.py:1: trailing whitespace.
++def rivit(t):  
+=> hylätty (pre-commit)
+commit-viesti: huono otsikko: lisää rivilaskuri.
+=> hylätty (commit-msg)
+d7fe995 Lisää rivilaskuri

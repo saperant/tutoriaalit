@@ -1,0 +1,8 @@
+[submodule "ulkoiset/kirjasto"]
+	path = ulkoiset/kirjasto
+	url = ../kirjasto
+160000 commit a671b59 ulkoiset/kirjasto
+ M ulkoiset/kirjasto
+d9f0e77 Kirjasto 2
+ca6d1c6 Kirjasto alimoduliksi
+sanat.py

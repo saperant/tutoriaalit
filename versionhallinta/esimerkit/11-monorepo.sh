@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# Monorepo: osittainen työhakemisto ja rinnakkaiset työpuut.
+set -euo pipefail
+# @alku vakiot
+# Esimerkkien vakioympäristö: ei käyttäjän omia asetuksia, kiinteä
+# tekijä ja kello, joten commit-tunnisteet ovat joka ajolla samat.
+export LC_ALL=C.UTF-8 GIT_CONFIG_GLOBAL=/dev/null GIT_CONFIG_NOSYSTEM=1
+export GIT_AUTHOR_NAME="Aino Kehittäjä" GIT_AUTHOR_EMAIL=aino@example.fi
+export GIT_COMMITTER_NAME=$GIT_AUTHOR_NAME
+export GIT_COMMITTER_EMAIL=$GIT_AUTHOR_EMAIL
+kello=1767261600              # 1.1.2026 klo 12.00 Suomen aikaa
+aika() {                      # kello etenee minuutin
+    kello=$((kello + 60))
+    export GIT_AUTHOR_DATE="$kello +0200" GIT_COMMITTER_DATE="$kello +0200"
+}
+tallenna() { aika; git commit -q "$@"; }   # commit, kello etenee
+aika
+# @loppu vakiot
+
+git init -q -b main monorepo
+cd monorepo
+mkdir -p palvelut/haku palvelut/maksu kirjastot/yhteinen dokumentit
+for d in palvelut/haku palvelut/maksu kirjastot/yhteinen dokumentit; do
+    printf '%s\n' "$d" > "$d/README.md"
+done
+git add . && tallenna -m "Monorepon rakenne"
+cd ..
+
+# @alku sparse
+git clone -q --no-checkout monorepo haku-tiimi
+cd haku-tiimi
+git sparse-checkout set palvelut/haku kirjastot/yhteinen
+git checkout -q main
+find . -name README.md | sort
+# @loppu sparse
+# @alku worktree
+git worktree add -q -b kiireellinen ../korjaus main
+git worktree list | awk '{ print $NF }'
+git -C ../korjaus branch --show-current
+# @loppu worktree

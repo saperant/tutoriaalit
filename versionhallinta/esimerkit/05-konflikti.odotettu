@@ -1,0 +1,14 @@
+yhdistäminen pysähtyi konfliktiin
+UU asetukset.ini
+<<<<<<< HEAD
+portti = 8000
+=======
+portti = 80
+>>>>>>> tuotanto
+aikakatkaisu = 30
+*   993769c Merge branch 'tuotanto'
+|\  
+| * a2c039d Tuotannon portti
+* | c7c7f87 Kehityksen portti
+|/  
+* 2764098 Asetukset

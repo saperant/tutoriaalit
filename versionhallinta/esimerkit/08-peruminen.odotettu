@@ -1,0 +1,13 @@
+43afcf2 Revert "Pienempi raja"
+6f088be Uusi asetus
+9e7c204 Pienempi raja
+2f764c1 Versio 1
+versio = 1
+raja = 100
+== reset-tilat
+M  ulkoasu.ini
+ M ulkoasu.ini
+(tyhjä)
+== korjaus julkaisuhaaraan
+6b666d3 Korjaa tietoturva-asetus
+(cherry picked from commit 45690fb61692f0063343e3118a62aff389852594)

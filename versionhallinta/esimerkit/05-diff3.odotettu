@@ -1,0 +1,13 @@
+<<<<<<< HEAD
+portti = 8000
+aikakatkaisu = 10
+||||||| 2764098
+portti = 8080
+aikakatkaisu = 30
+=======
+portti = 80
+aikakatkaisu = 60
+>>>>>>> tuotanto
+portti = 80
+aikakatkaisu = 60
+62d527e Kehityksen asetukset
