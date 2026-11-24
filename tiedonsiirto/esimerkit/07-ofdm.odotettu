@@ -1,0 +1,8 @@
+|H| alikantoaalloilla: -13.0 ... 4.2 dB
+CP  0: symbolivirheitä   458 / 25600, EVM  29.9 %, tehokkuus 100 %
+CP  4: symbolivirheitä     0 / 25600, EVM   9.8 %, tehokkuus 94 %
+CP  8: symbolivirheitä     0 / 25600, EVM   4.6 %, tehokkuus 89 %
+CP 16: symbolivirheitä     0 / 25600, EVM   4.6 %, tehokkuus 80 %
+OFDM: teho > keskiteho +  4.0 dB   8.052 % näytteistä
+OFDM: teho > keskiteho +  8.0 dB   0.160 % näytteistä
+OFDM: teho > keskiteho + 10.0 dB   0.004 % näytteistä

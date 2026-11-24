@@ -1,0 +1,5 @@
+kantataajuus/kHz:  [-1.2, -0.5, 0.5, 1.2]
+kaistanpäästö/kHz: [-11.2, -10.5, -9.5, -8.8, 8.8, 9.5, 10.5, 11.2]
+I ja Q takaisin, suurin virhe 0.0091
+verhokäyrä |kanta| = |hilbert(kaista)|, suurin ero 0.0000
+teho: kanta 0.6250, kaista 0.3125

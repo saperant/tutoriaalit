@@ -862,6 +862,7 @@ laajuus = 5
 testaus = "Python-simulaatiot, kiinteä satunnaissiemen"
 roadmap = []
 amk = "Tietoliikennetekniikka"
+tutoriaali = "tiedonsiirto"
 
 [[taito]]
 id = "sdr"

@@ -1,0 +1,8 @@
+Eb/N0   koodaamaton   kova       pehmeä
+   2 dB    3.75e-02   7.07e-02   1.43e-02
+   3 dB    2.29e-02   3.40e-02   4.19e-03
+   4 dB    1.25e-02   1.09e-02   6.27e-04
+   5 dB    5.95e-03   3.33e-03   9.96e-06
+ilman lomitusta  : virheellisiä lohkoja  92.5 %
+lomitus 4 riviä  : virheellisiä lohkoja   0.5 %
+lomitus 12 riviä : virheellisiä lohkoja   0.0 %

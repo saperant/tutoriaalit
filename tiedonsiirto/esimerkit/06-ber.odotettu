@@ -1,0 +1,11 @@
+modulaatio  Eb/N0    simuloitu    teoria  suhde
+BPSK          4 dB    1.26e-02  1.25e-02   1.01
+BPSK          8 dB    2.06e-04  1.91e-04   1.08
+QPSK          4 dB    1.20e-02  1.25e-02   0.96
+QPSK          8 dB    1.91e-04  1.91e-04   1.00
+8-PSK         4 dB    4.59e-02  4.58e-02   1.00
+8-PSK         8 dB    6.47e-03  6.18e-03   1.05
+16-QAM        4 dB    5.77e-02  5.86e-02   0.98
+16-QAM        8 dB    9.40e-03  9.25e-03   1.02
+64-QAM        4 dB    1.18e-01  1.16e-01   1.02
+64-QAM        8 dB    5.29e-02  5.23e-02   1.01

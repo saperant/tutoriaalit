@@ -1,0 +1,7 @@
+mu = 0.5: särö: verhokäyrä  0.0 %, koherentti  0.0 %, viestin teho  7 %
+mu = 1.0: särö: verhokäyrä  0.0 %, koherentti  0.0 %, viestin teho 22 %
+mu = 1.5: särö: verhokäyrä 21.3 %, koherentti  0.0 %, viestin teho 39 %
+DSB-SC, vaihevirhe  0 astetta: vahvistus 1.000
+DSB-SC, vaihevirhe 30 astetta: vahvistus 0.866
+DSB-SC, vaihevirhe 60 astetta: vahvistus 0.500
+DSB-SC, vaihevirhe 90 astetta: vahvistus 0.000

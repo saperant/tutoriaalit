@@ -1,0 +1,9 @@
+sinc (beta = 0)       ISI 0.0000
+RC, beta = 0.35       ISI 0.0000
+RRC yksin             ISI 0.3396
+RRC * RRC (sovitettu) ISI 0.0080
+beta   99 %:n kaista   (1 + beta) / 2T
+0.00       0.493 / T       0.500 / T
+0.25       0.511 / T       0.625 / T
+0.50       0.557 / T       0.750 / T
+1.00       0.678 / T       1.000 / T

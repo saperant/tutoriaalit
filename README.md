@@ -121,6 +121,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Digitaalinen signaalinkäsittely | [`dsp/`](dsp/) | [dsp.pdf](https://saperant.github.io/tutoriaalit/materiaalit/dsp.pdf) |
 | Takaisinmallinnus | [`takaisinmallinnus/`](takaisinmallinnus/) | [takaisinmallinnus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/takaisinmallinnus.pdf) |
 | Sulautettu Linux | [`embedded-linux/`](embedded-linux/) | [embedded-linux.pdf](https://saperant.github.io/tutoriaalit/materiaalit/embedded-linux.pdf) |
+| Digitaalinen tiedonsiirto | [`tiedonsiirto/`](tiedonsiirto/) | [tiedonsiirto.pdf](https://saperant.github.io/tutoriaalit/materiaalit/tiedonsiirto.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

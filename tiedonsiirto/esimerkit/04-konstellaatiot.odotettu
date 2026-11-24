@@ -1,0 +1,11 @@
+nimi    bittejä  dmin   huippu/keski  Gray
+BPSK        1   2.000     0.00 dB     kyllä
+QPSK        2   1.414     0.00 dB     kyllä
+8-PSK       3   0.765     0.00 dB     kyllä
+16-QAM      4   0.632     2.55 dB     kyllä
+64-QAM      6   0.309     3.68 dB     kyllä
+16-QAM, nimiöt (I-bitit | Q-bitit):
+   00|10  01|10  11|10  10|10
+   00|11  01|11  11|11  10|11
+   00|01  01|01  11|01  10|01
+   00|00  01|00  11|00  10|00

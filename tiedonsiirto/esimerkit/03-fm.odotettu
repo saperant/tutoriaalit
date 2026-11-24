@@ -1,0 +1,14 @@
+modulaatioindeksi beta = 5.0
+viiva 0 x fm: |J_k| = 0.1776, mitattu 0.1775
+viiva 1 x fm: |J_k| = 0.3276, mitattu 0.3276
+viiva 2 x fm: |J_k| = 0.0466, mitattu 0.0465
+viiva 3 x fm: |J_k| = 0.3648, mitattu 0.3648
+viiva 4 x fm: |J_k| = 0.3912, mitattu 0.3912
+viiva 5 x fm: |J_k| = 0.2611, mitattu 0.2612
+viiva 6 x fm: |J_k| = 0.1310, mitattu 0.1311
+viiva 7 x fm: |J_k| = 0.0534, mitattu 0.0534
+viiva 8 x fm: |J_k| = 0.0184, mitattu 0.0184
+kaista   10 kHz: tehosta 95.9 %
+kaista   12 kHz: tehosta 99.4 %
+kaista   14 kHz: tehosta 99.9 %
+demoduloitu, virheen keskihajonta 0.0090

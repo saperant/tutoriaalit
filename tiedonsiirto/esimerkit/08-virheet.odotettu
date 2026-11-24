@@ -1,0 +1,9 @@
+vaihevirhe    QPSK BER   16-QAM BER
+    0 astetta   1.78e-04    9.29e-03
+    5 astetta   3.10e-04    1.50e-02
+   10 astetta   9.60e-04    3.55e-02
+   20 astetta   8.27e-03    1.26e-01
+   30 astetta   4.86e-02    2.13e-01
+taajuusvirhe 200 Hz:    100 symbolin jälkeen kiertynyt    7.2 astetta
+taajuusvirhe 200 Hz:   1000 symbolin jälkeen kiertynyt   72.0 astetta
+taajuusvirhe 200 Hz:  10000 symbolin jälkeen kiertynyt  720.0 astetta

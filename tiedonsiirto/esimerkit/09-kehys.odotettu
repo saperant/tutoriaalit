@@ -1,0 +1,5 @@
+Barker-13: huippu 13, suurin sivukeila 1
+satunnainen 13: huippu 13, suurin sivukeila 6
+kehykset alkavat: [137, 489, 841, 1193, 1545]
+löydetyt:         [137, 489, 841, 1193, 1545]
+mitta kehyksen kohdalla >= 0.70, muualla <= 0.38

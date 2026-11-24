@@ -1,0 +1,9 @@
+dfT    koherentti   epäkoherentti
+0.25        0.637           0.900
+0.50        0.000           0.637
+0.75        0.212           0.300
+1.00        0.000           0.000
+hyppivä vaihe: teho |f| > 1/T  -10.0 dB
+hyppivä vaihe: teho |f| > 2/T  -13.0 dB
+jatkuva (MSK): teho |f| > 1/T  -25.9 dB
+jatkuva (MSK): teho |f| > 2/T  -34.9 dB

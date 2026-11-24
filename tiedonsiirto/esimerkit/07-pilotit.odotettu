@@ -1,0 +1,4 @@
+tunnettu kanava            EVM   7.9 %
+lineaarinen interpolointi  EVM  35.1 %
+aikatason rajaus           EVM   9.8 %
+rajaus + keskiarvo 200     EVM   7.9 %

@@ -1,0 +1,6 @@
+QPSK:n neljännet potenssit: ['(-1+0j)']
+todellinen   arvio      virhe     (sykliä/symboli)
+   +0.0013   +0.00130   +0.00000
+   -0.0200   -0.02000   +0.00000
+   +0.1000   +0.10000   +0.00000
+   +0.1300   -0.12000   -0.25000

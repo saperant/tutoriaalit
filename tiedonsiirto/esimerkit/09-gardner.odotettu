@@ -1,0 +1,5 @@
+1. aste: lukittui 18 symbolissa, virhe lopussa +0.013 +- 0.004 T, EVM 6.0 %
+2. aste: lukittui 18 symbolissa, virhe lopussa +0.002 +- 0.005 T, EVM 5.8 %
+ilman tahdistusta, symbolit    0- 500: EVM   9.6 %
+ilman tahdistusta, symbolit 1000-1500: EVM  19.2 %
+ilman tahdistusta, symbolit 2000-2500: EVM  47.8 %
