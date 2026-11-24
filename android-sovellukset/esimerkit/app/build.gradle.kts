@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+
 // @alku liitannaiset
 plugins {
     alias(libs.plugins.android.application)
@@ -44,6 +46,13 @@ android {
     testOptions {
         // Robolectric tarvitsee resurssit ja manifestin JVM-testeissä.
         unitTests.isIncludeAndroidResources = true
+        // CI:n lokiin kaatuneen testin nimi ja virhe kokonaisuudessaan.
+        unitTests.all {
+            it.testLogging {
+                events("failed")
+                exceptionFormat = TestExceptionFormat.FULL
+            }
+        }
     }
 }
 // @loppu android
