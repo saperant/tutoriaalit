@@ -1,0 +1,9 @@
+/* Jaetun kirjaston julkinen rajapinta: vain nämä symbolit näkyvät. */
+TILASTO_1 {
+    global:
+        keskiarvo;
+        keskihajonta;
+        mediaani;
+    local:
+        *;
+};

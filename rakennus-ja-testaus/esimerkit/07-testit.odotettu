@@ -1,0 +1,18 @@
+== testit
+OK    keskiarvo_ja_hajonta
+OK    mediaani_pariton_ja_parillinen
+OK    raportissa_on_aika_ja_luvut
+OK    muistin_loppuminen_palauttaa_virheen
+4/4 testiä läpi
+== tuotanto-ohjelma rakentuu oikeaa kelloa vasten
+raportti <nyt> UTC: n=3 ka=21.77 md=21.80
+== virhe keskiarvossa: mitä testit kertovat
+  testit.c:13: keskiarvo(x, 8) = 4.44444, odotettiin 5
+  testit.c:14: keskihajonta(x, 8) = 2.21905, odotettiin 2.13809
+HYLÄT keskiarvo_ja_hajonta
+OK    mediaani_pariton_ja_parillinen
+  testit.c:36: ei päde: strcmp(puskuri, odotettu) == 0
+HYLÄT raportissa_on_aika_ja_luvut
+OK    muistin_loppuminen_palauttaa_virheen
+2/4 testiä läpi
+paluuarvo 1

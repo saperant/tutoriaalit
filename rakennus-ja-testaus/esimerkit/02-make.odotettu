@@ -1,0 +1,17 @@
+== ensimmäinen rakennus
+gcc-14 -std=c17 -Wall -Wextra -O2 -c lahde/main.c -o main.o
+gcc-14 -std=c17 -Wall -Wextra -O2 -c lahde/tilasto.c -o tilasto.o
+gcc-14  main.o tilasto.o -lm -o tilasto
+== heti uudelleen
+make: 'tilasto' is up to date.
+== tilasto.c muuttui
+gcc-14 -std=c17 -Wall -Wextra -O2 -c lahde/tilasto.c -o tilasto.o
+gcc-14  main.o tilasto.o -lm -o tilasto
+== tilasto.h muuttui
+make: 'tilasto' is up to date.
+== testaa
+./tilasto < lahde/mittaukset.txt
+n            5
+keskiarvo    22.160
+keskihajonta 0.619
+mediaani     22.000

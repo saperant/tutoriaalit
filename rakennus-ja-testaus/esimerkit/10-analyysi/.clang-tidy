@@ -1,0 +1,9 @@
+# clang-tidy-asetukset projektin juuressa: tarkistukset ja niiden
+# rajaukset ovat versionhallinnassa kuten koodi.
+Checks: >
+  -*,
+  bugprone-*,
+  cert-*,
+  clang-analyzer-*,
+  -clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling
+WarningsAsErrors: '*'

@@ -1,0 +1,10 @@
+== ensimmäiset testit
+testit läpi
+File                                       Lines    Exec  Cover   Missing
+lahde/tilasto.c                               22      20    90%   17,37
+TOTAL                                         22      20    90%
+== puuttuvat tapaukset lisätty
+testit läpi
+File                                       Lines    Exec  Cover   Missing
+lahde/tilasto.c                               22      22   100%
+TOTAL                                         22      22   100%

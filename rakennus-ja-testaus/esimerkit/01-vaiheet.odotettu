@@ -1,0 +1,37 @@
+== 1. esikäsittely (cpp): makrot auki, kommentit pois
+int pinta_ala(int sivu)
+{
+    return sivu > 100 ? -1 : ((sivu) * (sivu));
+}
+== 2. käännös assemblyksi (-S): funktion käskyt
+pinta_ala:
+.LFB0:
+        endbr64
+        movl    %edi, %eax
+        cmpl    $100, %edi
+        jg      .L3
+        imull   %edi, %eax
+        ret
+.L3:
+        movl    $-1, %eax
+        ret
+.LFE0:
+== 3. kokoaminen objektitiedostoiksi (-c)
+-- tilasto.o: T = määritelty, t = paikallinen, U = puuttuu
+0000000000000000 T keskiarvo
+0000000000000093 T keskihajonta
+00000000000001eb T mediaani
+                 U qsort
+                 U sqrt
+000000000000019b t vertaa
+-- main.o (vain tilaston funktiot)
+                 U keskiarvo
+                 U keskihajonta
+                 U mediaani
+== 4. linkitys: ilman matematiikkakirjastoa
+undefined reference to `sqrt'
+== 4. linkitys: -lm mukaan
+n            5
+keskiarvo    22.160
+keskihajonta 0.619
+mediaani     22.000

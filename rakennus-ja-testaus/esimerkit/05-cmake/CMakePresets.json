@@ -1,0 +1,32 @@
+{
+  "version": 6,
+  "configurePresets": [
+    {
+      "name": "kehitys",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_C_FLAGS": "-fsanitize=address,undefined"
+      }
+    },
+    {
+      "name": "julkaisu",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+    }
+  ],
+  "buildPresets": [
+    { "name": "kehitys", "configurePreset": "kehitys" },
+    { "name": "julkaisu", "configurePreset": "julkaisu" }
+  ],
+  "testPresets": [
+    {
+      "name": "kehitys",
+      "configurePreset": "kehitys",
+      "output": { "outputOnFailure": true }
+    },
+    { "name": "julkaisu", "configurePreset": "julkaisu" }
+  ]
+}

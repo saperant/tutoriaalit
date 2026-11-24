@@ -1,0 +1,13 @@
+== kehitys: konfigurointi, rakennus ja testit
+1/2 Test #1: yksikkotestit  ...    Passed
+2/2 Test #2: komentorivi  ...    Passed
+100% tests passed, 0 tests failed out of 2
+== mitä lippuja kukin lähde sai (compile_commands.json)
+tilasto.c          -Ilahde: True  -Werror: True
+main.c             -Ilahde: True  -Werror: False
+testaa_tilasto.c   -Ilahde: True  -Werror: False
+== julkaisu
+mediaani     22.000
+100% tests passed, 0 tests failed out of 2
+build/julkaisu/libtilasto.a
+build/julkaisu/tilasto

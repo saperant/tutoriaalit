@@ -1,0 +1,19 @@
+== ylivuoto.c, -fsanitize=address
+ERROR: AddressSanitizer: heap-buffer-overflow
+WRITE of size 8
+    #0 kopioi ylivuoto.c:9
+    #1 main ylivuoto.c:16
+is located 0 bytes after 40-byte region
+allocated by thread T0 here:
+    #1 kopioi ylivuoto.c:7
+    #2 main ylivuoto.c:16
+== summa.c ilman sanitoijaa: väärä tulos, ei virhettä
+kesto -2094967296 ms
+== summa.c, -fsanitize=undefined
+summa.c:8:15:
+  runtime error: signed integer overflow: 2000000000 + 200000000
+  cannot be represented in type 'int'
+== kilpa.c, -fsanitize=thread
+WARNING: ThreadSanitizer: data race
+  Location is global 'laskuri' of size 8
+SUMMARY: ThreadSanitizer: data race kilpa.c:11 in kasvata

@@ -1,0 +1,10 @@
+# Sama työ kahdella tyypillisellä virheellä: runs-on puuttuu ja
+# vaiheen avain on kirjoitettu väärin.
+name: rikki
+on: push
+jobs:
+  rakenna:
+    steps:
+      - uses: actions/checkout@v4
+      - nme: Käännös
+        run: make

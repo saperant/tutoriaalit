@@ -1,0 +1,95 @@
+# Projektin CI: käännös ja testit kahdella kääntäjällä, analyysi ja
+# kattavuus. Ajetaan jokaisesta pushista mainiin ja jokaisesta PR:stä.
+name: ci
+
+# @alku laukaisu
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+# @loppu laukaisu
+
+jobs:
+  # @alku matriisi
+  rakenna:
+    name: ${{ matrix.cc }} / ${{ matrix.preset }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        cc: [gcc-14, clang-20]
+        preset: [kehitys, julkaisu]
+        exclude:
+          - cc: clang-20
+            preset: julkaisu
+    env:
+      CC: ${{ matrix.cc }}
+      CCACHE_DIR: ${{ github.workspace }}/.ccache
+    steps:
+      - uses: actions/checkout@v4
+      - name: Työkalut
+        run: sudo apt-get install -y ninja-build ccache ${{ matrix.cc }}
+      # @alku valimuisti
+      - name: Käännösvälimuisti
+        uses: actions/cache@v4
+        with:
+          path: .ccache
+          key: ccache-${{ matrix.cc }}-${{ matrix.preset }}-${{ github.sha }}
+          restore-keys: ccache-${{ matrix.cc }}-${{ matrix.preset }}-
+      # @loppu valimuisti
+      - name: Konfigurointi
+        run: >
+          cmake --preset ${{ matrix.preset }}
+          -DCMAKE_C_COMPILER_LAUNCHER=ccache
+      - name: Käännös
+        run: cmake --build --preset ${{ matrix.preset }}
+      - name: Testit
+        run: ctest --preset ${{ matrix.preset }} --output-on-failure
+  # @loppu matriisi
+
+  # @alku analyysi
+  analyysi:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Työkalut
+        run: sudo apt-get install -y $(cat .github/apt.txt)
+      - name: clang-tidy
+        run: |
+          cmake --preset kehitys
+          run-clang-tidy-20 -p build/kehitys -quiet lahde/
+      - name: cppcheck
+        run: >
+          cppcheck --enable=warning,style --error-exitcode=1
+          --inline-suppr --quiet lahde/
+  # @loppu analyysi
+
+  # @alku kattavuus
+  kattavuus:
+    runs-on: ubuntu-24.04
+    needs: rakenna
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get install -y ninja-build gcovr
+      - name: Mittaus
+        run: |
+          cmake -B build/kattavuus -G Ninja -DCMAKE_C_FLAGS=--coverage
+          cmake --build build/kattavuus
+          ctest --test-dir build/kattavuus
+          gcovr -r . --filter lahde/ --fail-under-line 90 \
+            --html-details kattavuus/index.html
+      - name: Raportti talteen
+        uses: actions/upload-artifact@v4
+        with:
+          name: kattavuus
+          path: kattavuus/
+          retention-days: 14
+  # @loppu kattavuus

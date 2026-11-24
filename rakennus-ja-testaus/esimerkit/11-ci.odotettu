@@ -1,0 +1,10 @@
+ok -- validation done
+rikki.yml hylättiin:
+$.jobs.rakenna
+    'runs-on' is a required property
+$.jobs.rakenna.steps[1]
+    Additional properties are not allowed ('nme' was unexpected)
+matriisin työt: gcc-14/kehitys, gcc-14/julkaisu, clang-20/kehitys
+työ rakenna: tarvitsee -
+työ analyysi: tarvitsee -
+työ kattavuus: tarvitsee rakenna

@@ -1,0 +1,24 @@
+== kaatuminen
+paluuarvo 139
+Program received signal SIGSEGV, Segmentation fault.
+0x... in arvo (nimi=0x... "syvyys") at kaatuu.c:23
+23          return hae(nimi)->arvo;
+#0  arvo (nimi=0x... "syvyys") at kaatuu.c:23
+#1  main () at kaatuu.c:29
+$1 = 0x... "syvyys"
+$2 = (struct asetus *) 0x0
+== vahtipiste
+laskuri 55
+Breakpoint 1 at file vahti.c, line 20.
+Breakpoint 1, main () at vahti.c:20
+20          nimea(&t, "mittari-7");
+Watchpoint 2: t.laskuri
+Watchpoint 2: t.laskuri
+Old value = 3
+New value = 55
+nimea (t=0x..., uusi=0x... "mittari-7") at vahti.c:11
+11          for (int i = 0; uusi[i] != '\0'; i++)
+#0  nimea (t=0x..., uusi=0x... "mittari-7") at vahti.c:11
+#1  main () at vahti.c:20
+$1 = 8
+$2 = "mittari-"

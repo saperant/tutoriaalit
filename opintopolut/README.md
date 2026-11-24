@@ -41,7 +41,7 @@ flowchart LR
     python["✓ Python"]
     bash["✓ Bash-skriptaus"]
     python_tyokalut["✓ Python työkaluohjelmointiin"]
-    rakennus_ja_testaus["Käännösjärjestelmät, testaus ja CI"]
+    rakennus_ja_testaus["✓ Käännösjärjestelmät, testaus ja CI"]
   end
   subgraph matematiikka["Matematiikka"]
     diskreetti_matematiikka["✓ Diskreetti matematiikka"]
@@ -303,7 +303,7 @@ flowchart LR
 | C-kieli | 5 | Komentorivi ja Linux, Ohjelmoinnin perusteet (Python) | [valmis](../c-kieli/) |
 | Python | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../python/) |
 | Versionhallinta (Git) | 2 | Komentorivi ja Linux | [valmis](../versionhallinta/) |
-| Käännösjärjestelmät, testaus ja CI | 3 | Bash-skriptaus, C-kieli, Versionhallinta (Git) | suunniteltu |
+| Käännösjärjestelmät, testaus ja CI | 3 | Bash-skriptaus, C-kieli, Versionhallinta (Git) | [valmis](../rakennus-ja-testaus/) |
 | Moderni C++ | 5 | C-kieli | [valmis](../moderni-cpp/) |
 | Python työkaluohjelmointiin | 5 | Komentorivi ja Linux, Python | [valmis](../python-tyokalut/) |
 

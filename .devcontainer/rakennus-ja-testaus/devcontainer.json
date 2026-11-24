@@ -4,7 +4,8 @@
     "dockerfile": "../Dockerfile",
     "context": "..",
     "args": {
-      "LISAPAKETIT": "cmake ninja-build gcovr clang-tidy-20 cppcheck shellcheck git"
+      "LISAPAKETIT": "cmake ninja-build pkgconf gcovr clang-tidy-20 cppcheck shellcheck python3-yaml",
+      "PIP_PAKETIT": "check-jsonschema==0.39.0"
     }
   },
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/rakennus-ja-testaus/esimerkit",
@@ -15,5 +16,6 @@
         "ms-vscode.cpptools"
       ]
     }
-  }
+  },
+  "postCreateCommand": "make -s -j4"
 }

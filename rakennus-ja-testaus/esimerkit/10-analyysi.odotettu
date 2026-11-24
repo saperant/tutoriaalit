@@ -1,0 +1,18 @@
+== asetus.c
+-- kääntäjä: -Wall -Wextra -O2
+asetus.c:13: -Wsign-compare
+asetus.c:34: -Warray-bounds=
+-- clang-tidy (.clang-tidy)
+asetus.c:12: bugprone-narrowing-conversions
+asetus.c:17: cert-err34-c
+asetus.c:25: clang-analyzer-unix.Malloc
+asetus.c:26: clang-analyzer-security.insecureAPI.strcpy
+asetus.c:34: clang-analyzer-core.uninitialized.UndefReturn
+-- cppcheck
+asetus.c:34: arrayIndexOutOfBounds
+asetus.c:25: memleak
+asetus.c:33: constVariable
+== korjattu.c
+-- kääntäjä: -Wall -Wextra -O2
+-- clang-tidy (.clang-tidy)
+-- cppcheck

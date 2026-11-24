@@ -285,6 +285,7 @@ laajuus = 3
 testaus = "esimerkkiprojektit rakennetaan ja testataan CI:ssä"
 roadmap = ["c", "cpp", "devops"]
 amk = "Ohjelmistotuotanto"
+tutoriaali = "rakennus-ja-testaus"
 
 # ---------------------------------------------------------------------
 # Matematiikka

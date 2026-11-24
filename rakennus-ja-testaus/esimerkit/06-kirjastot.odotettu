@@ -1,0 +1,23 @@
+== staattinen kirjasto: arkisto objektitiedostoista
+tilasto.o
+(NEEDED) [libm.so.6]
+(NEEDED) [libc.so.6]
+== jaettu kirjasto: -fPIC, soname ja versioskripti
+A TILASTO_1
+T keskiarvo@@TILASTO_1
+T keskihajonta@@TILASTO_1
+T mediaani@@TILASTO_1
+(NEEDED) [libm.so.6]
+(NEEDED) [libc.so.6]
+(SONAME) [libtilasto.so.1]
+== ohjelma, joka käyttää jaettua kirjastoa
+libtilasto.so.1: cannot open shared object file
+-- RUNPATH $ORIGIN: kirjasto ohjelman vierestä
+(NEEDED) [libtilasto.so.1]
+(NEEDED) [libc.so.6]
+(RUNPATH) [$ORIGIN]
+mediaani     22.000
+== asennus ja pkg-config
+1.2.0
+-ITYO/asennus/include -LTYO/asennus/lib -ltilasto -lm
+mediaani     22.000

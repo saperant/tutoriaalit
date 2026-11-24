@@ -1,0 +1,18 @@
+== ensimmäinen rakennus
+  CC      build/main.o -O2
+  CC      build/tilasto.o -O2
+  LD      build/tilasto
+== kääntäjän kirjoittama build/tilasto.d
+build/tilasto.o: lahde/tilasto.c lahde/tilasto.h
+lahde/tilasto.h:
+== tilasto.h muuttui: molemmat sitä lukevat käännetään
+  CC      build/main.o -O2
+  CC      build/tilasto.o -O2
+  LD      build/tilasto
+== make -n V=1: komennot kokonaan, mitään ei tehdä
+gcc-14 -MMD -MP -std=c17 -Wall -Wextra -Werror -O2 -c
+== optimointi pois käyttäjän lipuilla
+  CC      build/tilasto.o -O0
+== rinnakkainen rakennus puhtaalta pöydältä
+objekteja: 2, ohjelma: on
+mediaani     22.000
