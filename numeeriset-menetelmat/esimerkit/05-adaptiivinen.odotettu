@@ -1,0 +1,3 @@
+adaptiivinen Simpson: suhteellinen virhe 5e-13, arvoja 5017
+tasavälinen Simpson:  suhteellinen virhe 7e-08, arvoja 5017
+quad (Gauss-Kronrod): suhteellinen virhe < 1e-13, arvoja 651

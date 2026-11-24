@@ -1,0 +1,7 @@
+stabiilisuusraja eksplisiittiselle: h < 2/|lambda| = 0.0020
+h = 0.0010: eksplisiittinen virhe  2.7e-07, implisiittinen 2.7e-07
+h = 0.0019: eksplisiittinen virhe  5.1e-07, implisiittinen 5.2e-07
+h = 0.0021: eksplisiittinen virhe  5.3e+13, implisiittinen 5.7e-07
+h = 0.0025: eksplisiittinen virhe  3.4e+64, implisiittinen 6.8e-07
+h = 0.0100: eksplisiittinen virhe  1.3e+90, implisiittinen 2.7e-06
+h = 0.1000: eksplisiittinen virhe  4.5e+15, implisiittinen 2.8e-05

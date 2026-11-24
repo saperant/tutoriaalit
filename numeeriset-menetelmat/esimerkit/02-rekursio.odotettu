@@ -1,0 +1,6 @@
+n= 5  eteenpäin  1.455e-01   taaksepäin 0.145533   quad 0.145533
+n=10  eteenpäin  8.388e-02   taaksepäin 0.083877   quad 0.083877
+n=15  eteenpäin  5.903e-02   taaksepäin 0.059018   quad 0.059018
+n=17  eteenpäin  5.719e-02   taaksepäin 0.052771   quad 0.052771
+n=20  eteenpäin -3.019e+01   taaksepäin 0.045545   quad 0.045545
+I_0:n pyöristys <= 7e-17, kertaa 20! = 2e+02

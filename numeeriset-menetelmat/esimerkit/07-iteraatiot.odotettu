@@ -1,0 +1,3 @@
+Jacobi:           3564 kierrosta (ennuste spektrisäteestä ~3912)
+Gauss-Seidel:     1783 kierrosta (ennuste ~1956)
+liittogradientti:   15 kierrosta (enintään N = 30)

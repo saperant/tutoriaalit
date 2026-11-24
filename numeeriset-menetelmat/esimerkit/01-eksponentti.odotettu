@@ -1,0 +1,5 @@
+suora sarja     6.147562e-09  suhteellinen virhe 2e+00
+1 / sarja(20)   2.061154e-09  suhteellinen virhe 4e-16
+math.exp        2.061154e-09  suhteellinen virhe 0e+00
+suurin termi 4.31e+07, tulos 2.06e-09, suhde 2e+16
+pyöristysvirhe suurimmassa termissä ~ 5e-09

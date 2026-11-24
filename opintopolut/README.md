@@ -52,7 +52,7 @@ flowchart LR
     matematiikan_perusteet["✓ Matematiikan perusteet ohjelmallisesti"]
     analyysi["✓ Differentiaali- ja integraalilaskenta"]
     differentiaaliyhtalot["Differentiaaliyhtälöt ja Laplace-muunnos"]
-    numeeriset_menetelmat["Numeeriset menetelmät"]
+    numeeriset_menetelmat["✓ Numeeriset menetelmät"]
   end
   subgraph algoritmit["Algoritmit ja tietorakenteet"]
     tietorakenteet["✓ Tietorakenteet"]
@@ -346,7 +346,7 @@ flowchart LR
 | Differentiaali- ja integraalilaskenta | 5 | Matematiikan perusteet ohjelmallisesti | [valmis](../analyysi/) |
 | Kompleksiluvut ja Fourier-analyysi | 5 | Lineaarialgebra | [valmis](../signaalimatematiikka/) |
 | Differentiaaliyhtälöt ja Laplace-muunnos | 5 | Differentiaali- ja integraalilaskenta, Lineaarialgebra | suunniteltu |
-| Numeeriset menetelmät | 5 | Differentiaali- ja integraalilaskenta, Lineaarialgebra | suunniteltu |
+| Numeeriset menetelmät | 5 | Differentiaali- ja integraalilaskenta, Lineaarialgebra | [valmis](../numeeriset-menetelmat/) |
 
 ### Algoritmit ja tietorakenteet
 

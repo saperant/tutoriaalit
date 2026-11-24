@@ -1,0 +1,8 @@
+k= 5  virhe 3.77e-02  suhde 0.693
+k=10  virhe 5.15e-03  suhde 0.671
+k=20  virhe 9.93e-05  suhde 0.674
+k=30  virhe 1.91e-06  suhde 0.674
+sin(x*) = 0.674
+x = 2/x            5 kierrosta: 2.0000000000  virhe 5.9e-01
+x = x - (x^2-2)/4  5 kierrosta: 1.4127442400  virhe 1.5e-03
+x = (x + 2/x)/2    5 kierrosta: 1.4142135624  virhe 2.2e-16

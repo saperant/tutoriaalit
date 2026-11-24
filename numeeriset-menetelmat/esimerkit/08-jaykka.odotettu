@@ -1,0 +1,5 @@
+RK45  y(200) = 1.7186, onnistui: True
+Radau y(200) = 1.7186, onnistui: True
+BDF   y(200) = 1.7186, onnistui: True
+RK45 tarvitsi yli 10 kertaa enemmän funktion arvoja kuin Radau: True
+RK45:n askelia yli 5000: True

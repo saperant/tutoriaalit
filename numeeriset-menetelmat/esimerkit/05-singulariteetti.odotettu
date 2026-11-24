@@ -1,0 +1,7 @@
+keskipiste n=   10: virhe 1.9e-01
+keskipiste n=  100: virhe 6.0e-02
+keskipiste n= 1000: virhe 1.9e-02
+keskipiste n=10000: virhe 6.0e-03
+sijoituksen jälkeen n=10: virhe 0.0e+00
+quad: 2.000000000000, virhearvio < 1e-12: True
+quad, weight='alg': 2.000000000000

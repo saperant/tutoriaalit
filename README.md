@@ -136,6 +136,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Elektroniikan perusteet ja SPICE | [`elektroniikan-perusteet/`](elektroniikan-perusteet/) | [elektroniikan-perusteet.pdf](https://saperant.github.io/tutoriaalit/materiaalit/elektroniikan-perusteet.pdf) |
 | Integraatiotestaus ja Testcontainers | [`integraatiotestaus/`](integraatiotestaus/) | [integraatiotestaus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/integraatiotestaus.pdf) |
 | NoSQL-tietokannat | [`nosql/`](nosql/) | [nosql.pdf](https://saperant.github.io/tutoriaalit/materiaalit/nosql.pdf) |
+| Numeeriset menetelmät | [`numeeriset-menetelmat/`](numeeriset-menetelmat/) | [numeeriset-menetelmat.pdf](https://saperant.github.io/tutoriaalit/materiaalit/numeeriset-menetelmat.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

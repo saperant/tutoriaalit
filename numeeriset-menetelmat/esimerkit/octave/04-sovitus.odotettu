@@ -1,0 +1,4 @@
+polyval(p, 2.5) = 17.469
+interp1 linear  = 16.750
+interp1 spline  = 17.469
+suora: y = 1.0429 + 2.0029 x

@@ -1,0 +1,3 @@
+askelia 2273, virhe hetkellä 10: 3e-08
+pisin askel 0.129, lyhin 2.5e-04 hetkellä t = 5.00
+solve_ivp RK45: virhe < 1e-7: True, askelia alle 500: True

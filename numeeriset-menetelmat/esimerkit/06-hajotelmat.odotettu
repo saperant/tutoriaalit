@@ -1,0 +1,13 @@
+L =
+[[ 1.   0.   0. ]
+ [ 0.5  1.   0. ]
+ [-0.5  1.   1. ]]
+U =
+[[ 4. -6.  0.]
+ [ 0.  4.  1.]
+ [ 0.  0.  1.]]
+x = [1. 1. 2.]
+x = [ 0.75  0.5  -1.  ]
+Cholesky: suhteellinen jäännös < 1e-14: True
+Cholesky hylkäsi indefiniitin matriisin
+singulaariarvot 3.162 ja 3e-11, ehtoluku 1e+11

@@ -1,0 +1,4 @@
+sqrt(x), x=2       ehtoluku  5.0e-01   havaittu vahvistus  5.0e-01
+exp(x), x=30       ehtoluku  3.0e+01   havaittu vahvistus  3.0e+01
+log(x), x=1.0001   ehtoluku  1.0e+04   havaittu vahvistus  1.0e+04
+tan(x), x=1.5707   ehtoluku  1.6e+04   havaittu vahvistus  1.6e+04

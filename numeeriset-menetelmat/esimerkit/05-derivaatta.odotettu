@@ -1,0 +1,6 @@
+menetelmä        paras h  virhe    teoria h
+eteenpäin        1e-08   7e-09  1e-08
+keskeinen        1e-05   6e-11  6e-06
+Richardson       1e-03   4e-13  7e-04
+kompleksiaskel h = 1e-08: suhteellinen virhe <= eps: kyllä
+kompleksiaskel h = 1e-100: suhteellinen virhe <= eps: kyllä

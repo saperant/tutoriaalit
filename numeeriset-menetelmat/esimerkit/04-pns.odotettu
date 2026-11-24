@@ -1,0 +1,5 @@
+cond(A) = 2e+07, cond(A^T A) = 4e+14
+normaaliyht. virhe < 1e-6: ei    virhe <= 10 x raja: kyllä
+QR           virhe < 1e-6: kyllä virhe <= 10 x raja: kyllä
+lstsq        virhe < 1e-6: kyllä virhe <= 10 x raja: kyllä
+raja QR:lle cond(A) eps = 5e-09, normaaliyhtälöille cond(A)^2 eps = 9e-02

@@ -447,6 +447,7 @@ laajuus = 5
 testaus = "NumPy, SciPy ja GNU Octave, virheet verrataan teoreettisiin rajoihin"
 roadmap = []
 amk = "Numeeriset menetelmät"
+tutoriaali = "numeeriset-menetelmat"
 
 # ---------------------------------------------------------------------
 # Algoritmit ja tietorakenteet

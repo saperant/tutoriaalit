@@ -1,0 +1,12 @@
+  n   puolisuunnikas      Simpson
+  2   3.6e-02          5.8e-04
+  4   8.9e-03 (x 4.0)  3.7e-05 (x15.7)
+  8   2.2e-03 (x 4.0)  2.3e-06 (x15.9)
+ 16   5.6e-04 (x 4.0)  1.5e-07 (x16.0)
+ 32   1.4e-04 (x 4.0)  9.1e-09 (x16.0)
+Gauss n=1: virhe 7.0e-02
+Gauss n=2: virhe 3.9e-04
+Gauss n=3: virhe 8.2e-07
+Gauss n=4: virhe 9.3e-10
+Gauss n=5: virhe 6.5e-13
+Gauss n=6: virhe < 1e-14

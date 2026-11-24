@@ -1,0 +1,4 @@
+tavallinen suhteellinen virhe   489 eps
+Kahan      suhteellinen virhe     0 eps
+np.sum     suhteellinen virhe     0 eps
+tavallisen summan raja (n-1) eps = 99999 eps

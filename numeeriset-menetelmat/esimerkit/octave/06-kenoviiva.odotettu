@@ -1,0 +1,4 @@
+x = [1 1 2]
+norm(P*A - L*U) < 1e-14: 1
+chol: R = [2 1; 0 1.41421]
+hilb(10): cond 2e+13, virhe < 1e-6: 0

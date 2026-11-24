@@ -1,0 +1,3 @@
+trapz, 33 pistettä:  virhe 1.4e-04
+integral:            virhe alle 1e-14: 1
+quadgk 1/sqrt(x):    2.0000000000
