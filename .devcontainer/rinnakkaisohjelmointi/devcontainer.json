@@ -1,0 +1,16 @@
+{
+  "name": "Rinnakkaisohjelmointi: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {}
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/rinnakkaisohjelmointi/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools"
+      ]
+    }
+  }
+}

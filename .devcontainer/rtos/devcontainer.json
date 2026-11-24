@@ -1,0 +1,19 @@
+{
+  "name": "Reaaliaikakäyttöjärjestelmät: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "gcc-arm-none-eabi libnewlib-arm-none-eabi qemu-system-arm gdb-multiarch"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/rtos/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "marus25.cortex-debug"
+      ]
+    }
+  }
+}
