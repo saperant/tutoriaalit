@@ -1,0 +1,16 @@
+{
+  "name": "Säteenseuranta ja fysikaalinen valaistus: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {}
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/sateenseuranta/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools"
+      ]
+    }
+  }
+}
