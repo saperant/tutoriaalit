@@ -1,0 +1,24 @@
+{
+  "name": "Integraatiotestaus ja Testcontainers: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "docker.io postgresql-client",
+      "PIP_PAKETIT": "testcontainers==4.15.0 psycopg==3.3.9 psycopg-binary==3.3.9 sqlalchemy==2.1.9 redis==8.2.0 ruff mypy pytest"
+    }
+  },
+  "runArgs": [
+    "--network=host",
+    "-v=/var/run/docker.sock:/var/run/docker.sock",
+    "-e=TESTCONTAINERS_HUB_IMAGE_NAME_PREFIX=mirror.gcr.io/"
+  ],
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/integraatiotestaus/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python"
+      ]
+    }
+  }
+}

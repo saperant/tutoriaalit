@@ -1666,9 +1666,12 @@ aiheet = [
   "transaktiot ja eristystasot",
   "indeksit ja kyselysuunnitelmat",
   "SQL sovelluksesta: parametrit ja injektioiden torjunta",
+  "tietokantajärjestelmät: SQLite, PostgreSQL, MariaDB, Oracle ja SQL Server",
+  "aikasarjatieto relaatiotietokannassa ja aikasarjatietokannat",
+  "sovelluksen tietokantarajapinnat: ajurit, DAO, kyselynrakentajat ja ORM",
 ]
 laajuus = 5
-testaus = "SQLite, kyselyjen tulosten vertailu"
+testaus = "SQLite, PostgreSQL ja MariaDB, kyselyjen tulosten vertailu"
 roadmap = ["sql", "postgresql-dba"]
 amk = "Tietokannat"
 tutoriaali = "sql"
@@ -2078,6 +2081,44 @@ roadmap = ["cyber-security", "system-design"]
 amk = "Pilvipalveluiden tietoturva"
 tutoriaali = "palvelutietoturva"
 
+[[taito]]
+id = "integraatiotestaus"
+nimi = "Integraatiotestaus ja Testcontainers"
+alue = "sovellukset"
+kuvaus = "Sovelluksen testaaminen oikeita tietokantoja, viestijonoja ja palveluita vasten kertakäyttöisissä konteissa."
+edellyttaa = ["sql", "kontit-ja-pilvi", "python-tyokalut"]
+aiheet = [
+  "testipyramidi ja integraatiotestien paikka",
+  "Testcontainers: tietokannat, viestijonot ja palvelut testeissä",
+  "testidata, migraatiot ja eristys testien välillä",
+  "testikaksoiset vai oikea riippuvuus",
+  "verkkovikojen simulointi ja sopimustestaus",
+  "integraatiotestit CI:ssä",
+]
+laajuus = 5
+testaus = "pytest ja Testcontainers Dockerilla, Java-vertailu JUnitilla"
+roadmap = ["backend"]
+amk = "Ohjelmistotestaus"
+
+[[taito]]
+id = "nosql"
+nimi = "NoSQL-tietokannat"
+alue = "sovellukset"
+kuvaus = "Avain-arvo-, dokumentti-, leveäsarake-, graafi- ja aikasarjatietokannat: tietomallit, kyselyt ja valinnan perusteet."
+edellyttaa = ["sql", "kontit-ja-pilvi"]
+aiheet = [
+  "milloin relaatiomalli ei riitä",
+  "avain-arvo ja tietorakennepalvelimet (Redis)",
+  "dokumenttitietokannat (MongoDB, PostgreSQL JSONB)",
+  "leveäsaraketietokannat ja LSM-puut (Cassandra)",
+  "graafitietokannat (Neo4j, Cypher)",
+  "konsistenssi, replikointi ja osiointi käytännössä",
+]
+laajuus = 5
+testaus = "oikeat tietokannat konteissa, Python-asiakkaat ja pytest"
+roadmap = ["backend"]
+amk = "Tietokannat (jatkokurssi)"
+
 # ---------------------------------------------------------------------
 # Roolit
 # ---------------------------------------------------------------------
@@ -2115,7 +2156,7 @@ id = "hajautettujen-kehittaja"
 nimi = "Hajautettujen järjestelmien kehittäjä"
 kuvaus = "Rakentaa verkossa toimivia, vikasietoisia ja skaalautuvia palveluja ja infrastruktuuria."
 tavoitteet = ["jarjestelmasuunnittelu", "kontit-ja-pilvi"]
-valinnaiset = ["suorituskyky", "tietoturvan-perusteet", "go", "palveluarkkitehtuurit", "virtualisointi"]
+valinnaiset = ["suorituskyky", "tietoturvan-perusteet", "go", "palveluarkkitehtuurit", "virtualisointi", "nosql"]
 
 [[rooli]]
 id = "takaisinmallintaja"
@@ -2143,7 +2184,7 @@ id = "taustajarjestelmakehittaja"
 nimi = "Taustajärjestelmäkehittäjä"
 kuvaus = "Toteuttaa palvelinsovelluksia, rajapintoja ja tietokantaratkaisuja."
 tavoitteet = ["taustapalvelut", "kontit-ja-pilvi"]
-valinnaiset = ["kotlin", "go", "jarjestelmasuunnittelu", "palveluarkkitehtuurit", "web-tietoturva"]
+valinnaiset = ["kotlin", "go", "jarjestelmasuunnittelu", "palveluarkkitehtuurit", "web-tietoturva", "integraatiotestaus", "nosql"]
 
 [[rooli]]
 id = "mobiilikehittaja"

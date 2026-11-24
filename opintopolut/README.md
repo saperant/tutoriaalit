@@ -5,7 +5,7 @@
 
 Tutoriaalit muodostavat taitopuun: jokainen tutoriaali on yksi taito, ja taidot rakentuvat toistensa päälle. Roolit ovat ammattiprofiileja, joiden polku kulkee puun läpi.
 
-Taitoja on 95, yhteensä noin 422 op. Valmis PDF: [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf). Taitopuun lähdetiedosto: [taitopuu.toml](taitopuu.toml).
+Taitoja on 97, yhteensä noin 432 op. Valmis PDF: [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf). Taitopuun lähdetiedosto: [taitopuu.toml](taitopuu.toml).
 
 ## Roolit
 
@@ -151,6 +151,8 @@ flowchart LR
     web_sovellukset["✓ Web-sovellukset"]
     taustapalvelut["✓ Taustapalvelut"]
     android_sovellukset["✓ Android-sovellukset"]
+    integraatiotestaus["Integraatiotestaus ja Testcontainers"]
+    nosql["NoSQL-tietokannat"]
   end
   komentorivi --> versionhallinta
   ohjelmoinnin_perusteet --> c_kieli
@@ -310,6 +312,11 @@ flowchart LR
   kryptografia --> sulautettujen_tietoturva
   palveluarkkitehtuurit --> palvelutietoturva
   kryptografia --> palvelutietoturva
+  sql --> integraatiotestaus
+  kontit_ja_pilvi --> integraatiotestaus
+  python_tyokalut --> integraatiotestaus
+  sql --> nosql
+  kontit_ja_pilvi --> nosql
 ```
 
 ## Taidot alueittain
@@ -467,4 +474,6 @@ flowchart LR
 | SQL ja relaatiotietokannat | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../sql/) |
 | Taustapalvelut | 5 | Java, SQL ja relaatiotietokannat, Tietoverkot | [valmis](../taustapalvelut/) |
 | Android-sovellukset | 5 | Kotlin | [valmis](../android-sovellukset/) |
+| Integraatiotestaus ja Testcontainers | 5 | Python työkaluohjelmointiin, SQL ja relaatiotietokannat, Säiliöt ja pilvi-infrastruktuuri | suunniteltu |
+| NoSQL-tietokannat | 5 | SQL ja relaatiotietokannat, Säiliöt ja pilvi-infrastruktuuri | suunniteltu |
 | Web-sovellukset | 5 | HTML ja CSS, Tietoverkot, TypeScript | [valmis](../web-sovellukset/) |
