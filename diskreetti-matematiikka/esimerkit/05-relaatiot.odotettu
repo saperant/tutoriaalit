@@ -1,0 +1,13 @@
+sama pituus: refleksiivinen, symmetrinen, transitiivinen
+anagrammi: refleksiivinen, symmetrinen, transitiivinen
+alkuosa (a on b:n alku): refleksiivinen, antisymmetrinen, transitiivinen
+eri sana: symmetrinen
+  [aikks] ['sakki']
+  [aiks] ['aski', 'saki']
+  [aikss] ['kissa', 'kassi']
+  [aiksst] ['kissat']
+  Helsinki  -> Tampere, Oulu
+  Tampere   -> Oulu
+  Oulu      -> -
+  Turku     -> Helsinki, Tampere, Oulu
+  Joensuu   -> Joensuu

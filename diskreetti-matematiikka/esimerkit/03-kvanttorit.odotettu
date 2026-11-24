@@ -1,0 +1,7 @@
+kaikilla tilauksilla rivejä: False
+jokin yli 100 €: True
+vastaesimerkit: [2]
+all([]) = True  any([]) = False
+tyhjällä listalla 'kaikki maksettu': True
+jokaisella asiakkaalla on tilaus: False
+ilman tilausta: ['Pekka']

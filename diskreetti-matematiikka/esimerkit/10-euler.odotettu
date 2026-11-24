@@ -1,0 +1,4 @@
+Königsberg: None
+kirjekuori: ['1', '3', '5', '4', '2', '3', '4', '1', '2']
+kirjekuoren Hamiltonin kehä: ['1', '2', '3', '5', '4'] (2 kokeilua)
+20 solmun graafissa järjestyksiä olisi 121 645 100 408 832 000

@@ -1,0 +1,5 @@
+F(10) = 55, kutsuja 177 (2F(11) - 1 = 177)
+F(20) = 6765, kutsuja 21891 (2F(21) - 1 = 21891)
+F(25) = 75025, kutsuja 242785 (2F(26) - 1 = 242785)
+Binet'n kaava liukuluvuilla pettää ensin, kun n = 71
+F(300) muistilla == silmukalla: True

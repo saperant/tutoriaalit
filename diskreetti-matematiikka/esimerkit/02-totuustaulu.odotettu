@@ -1,0 +1,12 @@
+p q | tulos
+0 0 | 1
+0 1 | 1
+1 0 | 0
+1 1 | 1
+De Morgan 1    pätee
+De Morgan 2    pätee
+osittelu       pätee
+kontrapositio  pätee
+käänteinen     EI
+p ∨ ¬p tautologia: True
+modus ponens tautologia: True

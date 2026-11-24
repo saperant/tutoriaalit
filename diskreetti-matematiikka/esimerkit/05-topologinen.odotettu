@@ -1,0 +1,2 @@
+järjestys: apu -> grafiikka -> tietokanta -> kayttoliittyma -> sovellus
+virhe: riippuvuuskehä: ['apu', 'grafiikka', 'kayttoliittyma', 'sovellus', 'tietokanta']

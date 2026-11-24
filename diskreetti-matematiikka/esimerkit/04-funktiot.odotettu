@@ -1,0 +1,7 @@
+x ↦ 3x mod 8: bijektio
+x ↦ 2x mod 8: ei kumpikaan
+x ↦ x // 2  : surjektio
+x ↦ x + 1   : injektio
+20 avainta, 16 lokeroa, suurin lokero 2 avainta
+pura ∘ salaa = id: True
+3·y mod 8 kumoaa: True

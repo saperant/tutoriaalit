@@ -307,6 +307,7 @@ laajuus = 5
 testaus = "Python-esimerkit, pytest"
 roadmap = ["computer-science"]
 amk = "Diskreetti matematiikka"
+tutoriaali = "diskreetti-matematiikka"
 
 [[taito]]
 id = "lineaarialgebra"

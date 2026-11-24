@@ -85,6 +85,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | RTL-suunnittelu VHDL:llä | [`vhdl/`](vhdl/) | [vhdl.pdf](https://saperant.github.io/tutoriaalit/materiaalit/vhdl.pdf) |
 | Versionhallinta (Git) | [`versionhallinta/`](versionhallinta/) | [versionhallinta.pdf](https://saperant.github.io/tutoriaalit/materiaalit/versionhallinta.pdf) |
 | Lukujen esitys ja kiinteän pilkun aritmetiikka | [`kiintea-pilkku/`](kiintea-pilkku/) | [kiintea-pilkku.pdf](https://saperant.github.io/tutoriaalit/materiaalit/kiintea-pilkku.pdf) |
+| Diskreetti matematiikka | [`diskreetti-matematiikka/`](diskreetti-matematiikka/) | [diskreetti-matematiikka.pdf](https://saperant.github.io/tutoriaalit/materiaalit/diskreetti-matematiikka.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

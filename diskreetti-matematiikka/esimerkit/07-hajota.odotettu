@@ -1,0 +1,11 @@
+n =     16: vertailuja      35, n·log2(n) =      64, suhde 0.55
+n =    256: vertailuja    1594, n·log2(n) =    2048, suhde 0.78
+n =   4096: vertailuja   41369, n·log2(n) =   49152, suhde 0.84
+n =  65536: vertailuja  956515, n·log2(n) = 1048576, suhde 0.91
+  binäärihaku                T(n) = 1T(n/2) + 1: Θ(log n)
+  lomituslajittelu           T(n) = 2T(n/2) + n: Θ(n log n)
+  puun läpikäynti            T(n) = 2T(n/2) + 1: Θ(n)
+  Karatsuban kertolasku      T(n) = 3T(n/2) + n: Θ(n^1.58)
+  naiivi matriisitulo        T(n) = 8T(n/2) + n^2: Θ(n^3)
+  Strassen                   T(n) = 7T(n/2) + n^2: Θ(n^2.81)
+  pikavalinta (keskimäärin)  T(n) = 1T(n/2) + n: Θ(n)

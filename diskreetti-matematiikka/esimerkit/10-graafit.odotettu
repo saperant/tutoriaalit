@@ -1,0 +1,11 @@
+  Helsinki  0000011  naapurit: Tampere, Turku
+  Joensuu   0010000  naapurit: Nurmes
+  Nurmes    0100000  naapurit: Joensuu
+  Oulu      0000010  naapurit: Tampere
+  Pori      0000010  naapurit: Tampere
+  Tampere   1001101  naapurit: Helsinki, Oulu, Turku, Pori
+  Turku     1000010  naapurit: Helsinki, Tampere
+asteiden summa: 12 = 2 · 6
+paritonasteiset: ['Joensuu', 'Nurmes', 'Oulu', 'Pori']
+komponentti: ['Helsinki', 'Oulu', 'Pori', 'Tampere', 'Turku']
+komponentti: ['Joensuu', 'Nurmes']

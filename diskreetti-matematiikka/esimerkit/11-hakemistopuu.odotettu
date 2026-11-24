@@ -1,0 +1,11 @@
+projekti
+  src
+    main.py
+    apu
+      io.py
+      laskenta.py
+  tests
+    test_main.py
+  README.md
+korkeus: 3  lehtiä: 5  koko: 5300 tavua
+solmuja: 9  kaaria: 8

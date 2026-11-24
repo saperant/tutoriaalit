@@ -1,0 +1,4 @@
+x ≡ 2 (mod 5), x ≡ 3 (mod 7), x ≡ 4 (mod 11): x = 367
+tarkistus: 2 3 4
+erilaisia kolmikoita: 385 = 5·7·11
+purku suoraan 1234, CRT:llä 1234

@@ -1,0 +1,18 @@
+molemmat  A ∩ B: ['Olli', 'Sanna']
+jompikumpi A ∪ B: ['Aino', 'Olli', 'Pekka', 'Sanna', 'Timo']
+vain Python A - B: ['Aino', 'Pekka']
+täsmälleen yksi A △ B: ['Aino', 'Pekka', 'Timo']
+ei kumpaakaan: ['Ulla']
+De Morgan: True
+osajoukko {Olli} ⊆ A: True
+8 oikeusyhdistelmää = 2^3
+  {}
+  {kirjoitus}
+  {luku}
+  {suoritus}
+  {kirjoitus, luku}
+  {kirjoitus, suoritus}
+  {luku, suoritus}
+  {kirjoitus, luku, suoritus}
+|koot × värit| = 3·2 = 6
+ensimmäiset: [('S', 'musta'), ('S', 'valkoinen'), ('M', 'musta')]

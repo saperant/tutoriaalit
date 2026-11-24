@@ -1,0 +1,7 @@
+ensimmäinen >= 0: indeksi 0
+ensimmäinen >= 5: indeksi 1
+ensimmäinen >= 6: indeksi 3
+ensimmäinen >= 21: indeksi 5
+ensimmäinen >= 40: indeksi 8
+3^13 = 1594323 = 1594323
+tarkistus: True

@@ -1,0 +1,6 @@
+tentit: 3 aikaväliä: {'fysiikka': 0, 'kemia': 1, 'matikka': 1, 'ohjelmointi': 0, 'tilastot': 2}
+kruunu, ensin a:t: 2 väriä
+kruunu, vuorotellen: 4 väriä
+kromaattinen luku: 3
+tenttigraafi kaksijakoinen: False
+neliö (parillinen kehä) kaksijakoinen: True

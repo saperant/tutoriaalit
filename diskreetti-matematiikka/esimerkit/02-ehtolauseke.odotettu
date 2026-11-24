@@ -1,0 +1,7 @@
+eroavat syötteet: []
+DNF: 5 termiä
+   (¬kanta ∧ suuri ∧ ¬ulkomaa)
+   (kanta ∧ ¬suuri ∧ ¬ulkomaa)
+   (kanta ∧ ¬suuri ∧ ulkomaa)
+   (kanta ∧ suuri ∧ ¬ulkomaa)
+   (kanta ∧ suuri ∧ ulkomaa)

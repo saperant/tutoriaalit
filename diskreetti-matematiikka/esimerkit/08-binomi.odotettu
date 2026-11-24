@@ -1,0 +1,12 @@
+n=0:                     1
+n=1:                   1  1
+n=2:                  1  2  1
+n=3:                1  3  3  1
+n=4:               1  4  6  4  1
+n=5:             1  5 10 10  5  1
+n=6:            1  6 15 20 15  6  1
+C(n,k) = C(n,n-k): True
+Σ_k C(n,k) = 2^n: True
+Pascal C(n,k) = C(n-1,k-1) + C(n-1,k): True
+binomilause: True
+6×4-ruudukko: 210 reittiä, C(10,4) = 210, luetellen 210
