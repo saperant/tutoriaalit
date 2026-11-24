@@ -13,7 +13,7 @@ permissions:
 # ei voi julkaista sivustoa uudemman päälle.
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   testaa-ja-rakenna:
