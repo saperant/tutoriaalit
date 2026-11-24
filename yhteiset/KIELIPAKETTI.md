@@ -126,6 +126,41 @@ sisennettyinä: tarkistimet etsivät vain sisentämättömiä lohkoja. Taulukon
 solussa olevan koodin pystyviiva näkyy PDF:ssä muodossa `\|`, joten
 sellaista koodia ei kirjoiteta taulukkoon.
 
+## Kaaviot ja kuvat
+
+Kuva kertoo usein enemmän kuin kappale tekstiä: ajoituskaavio
+kättelystä, tilakone, riippuvuusverkko tai mittaustuloksen kuvaaja.
+Kaaviot kirjoitetaan tekstinä koodilohkoihin, ja suodatin `kaaviot.lua`
+piirtää ne PDF:ään (ks. `yhteiset/kaaviot.py`):
+
+- **Ajoituskaavio** `{.ajoituskaavio}` kirjoitetaan WaveDromin
+  JSON-muodon osajoukolla (kellot `p`/`P`, tasot `0`/`1`, data `=` ja
+  `data`-luettelo, `x`, `z`, ryhmät ja katkot).
+- **Graphviz-kaavio** `{.dot}` sopii tilakoneisiin, verkkoihin,
+  lohkokaavioihin ja riippuvuuksiin.
+- `otsikko="…"` tekee kaaviosta numeroidun kuvan kuvatekstein, ja
+  `leveys="60%"` rajaa leveyttä. Muuten kaavio ladotaan
+  luonnolliseen kokoonsa, joten kaikkien kaavioiden teksti on
+  samankokoista.
+
+Kuten koodi, myös kaavion pitää vastata testattua todellisuutta. Kun
+kaavio kuvaa simuloitua piiriä, se tuotetaan simulaation VCD-tiedostosta:
+
+```
+python3 ../../yhteiset/kaaviot.py vcd sim.vcd --kello clk \
+    --signaalit valid,ready,data --alku 2 --jaksot 10 > kattely.json
+```
+
+Tiedosto `kattely.json` on versionhallinnassa ja kirjassa näytetään
+`{.ajoituskaavio tiedosto="esimerkit/kattely.json"}`. Esimerkkien testi
+tuottaa JSONin uudelleen ja vertaa sitä tallennettuun, joten muutos
+piirissä paljastuu kaaviossa. Arvo näytetään jaksolla sellaisena kuin se
+on kellon nousevan reunan jälkeen.
+
+Mittaus- ja laskentatulosten kuvaajat tehdään Matplotlibilla
+skriptillä `kuvat/piirra.py` (`make kuvat`), ja syntyneet PNG-tiedostot
+ovat versionhallinnassa.
+
 ## Pikaopas
 
 Paketin juuressa on `pikaopas.md`, josta rakennetaan muutaman sivun

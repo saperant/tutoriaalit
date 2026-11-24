@@ -13,6 +13,7 @@ compiled/
 .mypy_cache/
 target/
 obj_dir/
+.kaaviot/
 
 # PDF:t ovat käännöstuotteita: CI rakentaa ja julkaisee ne.
 *.pdf

@@ -49,4 +49,4 @@ $(NIMI)-pikaopas.pdf: pikaopas.md $(ESIMERKIT) $(wildcard $(YHTEISET)/*)
 	    pikaopas.md -o $@
 
 siivoa:
-	rm -f $(NIMI).pdf $(NIMI)-pikaopas.pdf
+	rm -rf $(NIMI).pdf $(NIMI)-pikaopas.pdf .kaaviot

@@ -4,6 +4,7 @@ from: markdown
 pdf-engine: xelatex
 filters:
   - ${.}/sisallyta.lua
+  - ${.}/kaaviot.lua
   - ${.}/ulkoasu.lua
 include-in-header:
   - ${.}/tyyli.tex
