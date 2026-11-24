@@ -1,0 +1,19 @@
+{
+  "name": "Sulautettujen järjestelmien tietoturva: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "gcc-arm-none-eabi libnewlib-arm-none-eabi qemu-system-arm",
+      "PIP_PAKETIT": "cryptography==50.0.1 ruff mypy"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/sulautettujen-tietoturva/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools"
+      ]
+    }
+  }
+}

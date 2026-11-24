@@ -72,6 +72,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Tietoliikennetekniikka | [`tietoliikennetekniikka/`](tietoliikennetekniikka/) | [tietoliikennetekniikka.pdf](https://saperant.github.io/tutoriaalit/materiaalit/tietoliikennetekniikka.pdf) |
 | Palveluarkkitehtuurit | [`palveluarkkitehtuurit/`](palveluarkkitehtuurit/) | [palveluarkkitehtuurit.pdf](https://saperant.github.io/tutoriaalit/materiaalit/palveluarkkitehtuurit.pdf) |
 | Palveluarkkitehtuurin tietoturva | [`palvelutietoturva/`](palvelutietoturva/) | [palvelutietoturva.pdf](https://saperant.github.io/tutoriaalit/materiaalit/palvelutietoturva.pdf) |
+| Sulautettujen järjestelmien tietoturva | [`sulautettujen-tietoturva/`](sulautettujen-tietoturva/) | [sulautettujen-tietoturva.pdf](https://saperant.github.io/tutoriaalit/materiaalit/sulautettujen-tietoturva.pdf) |
 | Tietoturva kehitystyössä | [`turvallinen-kehitys/`](turvallinen-kehitys/) | [turvallinen-kehitys.pdf](https://saperant.github.io/tutoriaalit/materiaalit/turvallinen-kehitys.pdf) |
 | Web-sovellusten tietoturva | [`web-tietoturva/`](web-tietoturva/) | [web-tietoturva.pdf](https://saperant.github.io/tutoriaalit/materiaalit/web-tietoturva.pdf) |
 | Digitaalitekniikka | [`digitaalitekniikka/`](digitaalitekniikka/) | [digitaalitekniikka.pdf](https://saperant.github.io/tutoriaalit/materiaalit/digitaalitekniikka.pdf) |

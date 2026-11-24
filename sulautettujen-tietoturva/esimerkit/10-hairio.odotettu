@@ -1,0 +1,9 @@
+Ilman vikaa: tavallinen 0, kovennettu 0
+Tavallinen:
+  yksi ohitettu käsky:  1/4 käynnistää
+  yksi käännetty bitti: 32/32 käynnistää
+  kaksi ohitettua:      2/6 käynnistää
+Kovennettu:
+  yksi ohitettu käsky:  0/8 käynnistää
+  yksi käännetty bitti: 0/32 käynnistää
+  kaksi ohitettua:      1/28 käynnistää

@@ -1,0 +1,14 @@
+/* Sovellus linkitetään paikkansa osoitteeseen otsakkeen perään.
+ * Makefile korvaa @ALKU@:n paikan osoitteella. */
+MEMORY {
+    FLASH (rx) : ORIGIN = @ALKU@, LENGTH = 0x7FF00
+    RAM (rwx)  : ORIGIN = 0x20020000, LENGTH = 128K
+}
+SECTIONS {
+    .text : { KEEP(*(.vektorit)) *(.text*) *(.rodata*) } > FLASH
+    /* Kuva on raakabinääri: sovelluksella ei saa olla .dataa. */
+    .data : { *(.data*) } > RAM
+    .bss  : { *(.bss*) *(COMMON) } > RAM
+    ASSERT(SIZEOF(.data) == 0, "sovelluksella on .data-osio")
+    _pino = ORIGIN(RAM) + LENGTH(RAM);
+}

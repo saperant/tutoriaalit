@@ -44,6 +44,7 @@ jobs:
             qemu-utils slapd ldap-utils restic rsync e2fsprogs libsdl2-dev \
             libegl-dev libopengl-dev libgl1-mesa-dri libegl-mesa0 \
             mesa-vulkan-drivers libvulkan-dev vulkan-validationlayers glslc \
+            gcc-arm-none-eabi libnewlib-arm-none-eabi qemu-system-arm \
             rustc-1.80 cargo-1.80 rust-1.80-clippy golang-1.23-go \
             openjdk-21-jdk-headless
           pip install --break-system-packages ruff mypy pytest \

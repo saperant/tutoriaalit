@@ -120,7 +120,7 @@ flowchart LR
     kryptografia["✓ Kryptografia"]
     turvallinen_kehitys["✓ Tietoturva kehitystyössä"]
     web_tietoturva["✓ Web-sovellusten tietoturva"]
-    sulautettujen_tietoturva["Sulautettujen järjestelmien tietoturva"]
+    sulautettujen_tietoturva["✓ Sulautettujen järjestelmien tietoturva"]
     palvelutietoturva["✓ Palveluarkkitehtuurin tietoturva"]
   end
   subgraph kielet["Ohjelmointikielet"]
@@ -409,7 +409,7 @@ flowchart LR
 | Tietoturva kehitystyössä | 3 | Tietoturvan perusteet, Versionhallinta (Git) | [valmis](../turvallinen-kehitys/) |
 | Palveluarkkitehtuurin tietoturva | 3 | Kryptografia, Palveluarkkitehtuurit | [valmis](../palvelutietoturva/) |
 | Web-sovellusten tietoturva | 5 | Tietoturvan perusteet, Web-sovellukset | [valmis](../web-tietoturva/) |
-| Sulautettujen järjestelmien tietoturva | 3 | Kryptografia, Mikrokontrollerit ja bare-metal-ohjelmointi | suunniteltu |
+| Sulautettujen järjestelmien tietoturva | 3 | Kryptografia, Mikrokontrollerit ja bare-metal-ohjelmointi | [valmis](../sulautettujen-tietoturva/) |
 | Takaisinmallinnus | 5 | Käyttöjärjestelmät, Objektitiedostot, linkitys ja ABI, Tietoturvan perusteet | suunniteltu |
 | Haavoittuvuuksien analyysi ja hyödyntäminen | 5 | Takaisinmallinnus | suunniteltu |
 | Laiteohjelmiston takaisinmallinnus | 5 | Mikrokontrollerit ja bare-metal-ohjelmointi, Takaisinmallinnus | suunniteltu |

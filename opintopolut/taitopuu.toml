@@ -1850,6 +1850,7 @@ laajuus = 3
 testaus = "C ja QEMU, allekirjoitusten tarkistus"
 roadmap = ["cyber-security"]
 amk = "Sulautettujen järjestelmien tietoturva"
+tutoriaali = "sulautettujen-tietoturva"
 
 [[taito]]
 id = "palvelutietoturva"
