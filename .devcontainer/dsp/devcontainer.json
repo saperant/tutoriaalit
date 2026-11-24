@@ -1,0 +1,19 @@
+{
+  "name": "Digitaalinen signaalinkäsittely: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "PIP_PAKETIT": "numpy scipy==1.18.1 scipy-stubs==1.18.1.1 ruff mypy pytest"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/dsp/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-vscode.cpptools"
+      ]
+    }
+  }
+}
