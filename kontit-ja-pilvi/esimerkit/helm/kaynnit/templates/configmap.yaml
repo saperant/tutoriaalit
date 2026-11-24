@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    {{- include "kaynnit.tunnisteet" . | nindent 4 }}
+data:
+  LASKURI_URL: {{ .Values.laskuriUrl | quote }}
+  VERSIO: {{ .Chart.AppVersion | quote }}

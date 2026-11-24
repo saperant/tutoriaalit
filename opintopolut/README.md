@@ -98,7 +98,7 @@ flowchart LR
     verkko_ohjelmointi["Verkko-ohjelmointi"]
     hajautetut_jarjestelmat["Hajautetut järjestelmät"]
     jarjestelmasuunnittelu["Skaalautuvien järjestelmien suunnittelu"]
-    kontit_ja_pilvi["Säiliöt ja pilvi-infrastruktuuri"]
+    kontit_ja_pilvi["✓ Säiliöt ja pilvi-infrastruktuuri"]
     verkkoinfrastruktuuri["✓ Verkkoinfrastruktuuri"]
     tietoliikennetekniikka["✓ Tietoliikennetekniikka"]
     palvelinymparistot["Palvelinympäristöt"]
@@ -380,7 +380,7 @@ flowchart LR
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
 | Tietoverkot | 5 | Komentorivi ja Linux | [valmis](../tietoverkot/) |
-| Säiliöt ja pilvi-infrastruktuuri | 5 | Tietoverkot | suunniteltu |
+| Säiliöt ja pilvi-infrastruktuuri | 5 | Tietoverkot | [valmis](../kontit-ja-pilvi/) |
 | Verkkoinfrastruktuuri | 5 | Tietoverkot | [valmis](../verkkoinfrastruktuuri/) |
 | Palvelinympäristöt | 5 | Säiliöt ja pilvi-infrastruktuuri, Verkkoinfrastruktuuri | suunniteltu |
 | Palveluarkkitehtuurit | 5 | Säiliöt ja pilvi-infrastruktuuri, Taustapalvelut | [valmis](../palveluarkkitehtuurit/) |

@@ -1,0 +1,78 @@
+# Laskurilla on tila, joten se on StatefulSet: podilla on pysyvä nimi
+# ja oma levy (PersistentVolumeClaim), joka säilyy uudelleenluonnissa.
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: laskuri
+  namespace: kaynnit
+spec:
+  serviceName: laskuri
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: laskuri
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: laskuri
+        app.kubernetes.io/part-of: kaynnit
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: laskuri
+          image: ghcr.io/esimerkki/kaynnit:1.0.0
+          args: ["laskuri.py"]
+          env:
+            - name: DATA_HAKEMISTO
+              value: /data
+          ports:
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /terveys
+              port: http
+          livenessProbe:
+            httpGet:
+              path: /terveys
+              port: http
+          resources:
+            requests:
+              cpu: 20m
+              memory: 32Mi
+            limits:
+              memory: 64Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: data
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: laskuri
+  namespace: kaynnit
+spec:
+  selector:
+    app.kubernetes.io/name: laskuri
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http

@@ -1,0 +1,143 @@
+---
+# Source: kaynnit/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kaynnit
+  labels:
+    app.kubernetes.io/name: kaynnit
+    app.kubernetes.io/instance: kaynnit
+    app.kubernetes.io/version: "1.0.0"
+    helm.sh/chart: kaynnit-0.3.0
+data:
+  LASKURI_URL: "http://laskuri:8080"
+  VERSIO: "1.0.0"
+---
+# Source: kaynnit/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: kaynnit
+  labels:
+    app.kubernetes.io/name: kaynnit
+    app.kubernetes.io/instance: kaynnit
+    app.kubernetes.io/version: "1.0.0"
+    helm.sh/chart: kaynnit-0.3.0
+spec:
+  selector:
+    app.kubernetes.io/name: kaynnit
+    app.kubernetes.io/instance: kaynnit
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+---
+# Source: kaynnit/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kaynnit
+  labels:
+    app.kubernetes.io/name: kaynnit
+    app.kubernetes.io/instance: kaynnit
+    app.kubernetes.io/version: "1.0.0"
+    helm.sh/chart: kaynnit-0.3.0
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kaynnit
+      app.kubernetes.io/instance: kaynnit
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: kaynnit
+        app.kubernetes.io/instance: kaynnit
+        app.kubernetes.io/version: "1.0.0"
+        helm.sh/chart: kaynnit-0.3.0
+      annotations:
+        # Asetusten muutos vaihtaa tiivisteen ja käynnistää podit.
+        checksum/asetukset: 24d0a37209c58ceb93aa9f2be7e17befb78ba09eef31f7a7971bf13e8d641f5d
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: api
+          image: "ghcr.io/esimerkki/kaynnit:1.0.0"
+          args: ["api.py"]
+          ports:
+            - name: http
+              containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: kaynnit
+          readinessProbe:
+            httpGet:
+              path: /valmius
+              port: http
+          livenessProbe:
+            httpGet:
+              path: /terveys
+              port: http
+          resources:
+            limits:
+              memory: 128Mi
+            requests:
+              cpu: 50m
+              memory: 64Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+---
+# Source: kaynnit/templates/hpa.yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: kaynnit
+  labels:
+    app.kubernetes.io/name: kaynnit
+    app.kubernetes.io/instance: kaynnit
+    app.kubernetes.io/version: "1.0.0"
+    helm.sh/chart: kaynnit-0.3.0
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: kaynnit
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+---
+# Source: kaynnit/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kaynnit
+  labels:
+    app.kubernetes.io/name: kaynnit
+    app.kubernetes.io/instance: kaynnit
+    app.kubernetes.io/version: "1.0.0"
+    helm.sh/chart: kaynnit-0.3.0
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: kaynnit.example.fi
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kaynnit
+                port:
+                  name: http

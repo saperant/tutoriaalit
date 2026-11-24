@@ -1,0 +1,21 @@
+# Asetukset erillään kuvasta: sama kuva kaikkiin ympäristöihin.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kaynnit-asetukset
+  namespace: kaynnit
+data:
+  LASKURI_URL: http://laskuri:8080
+  VERSIO: "1.0.0"
+---
+# Salaisuus vain esimerkkinä: oikeaa arvoa ei koskaan tallenneta
+# versionhallintaan. Tuotannossa Secret luodaan salaisuusvarastosta
+# (esim. External Secrets, Sealed Secrets).
+apiVersion: v1
+kind: Secret
+metadata:
+  name: kaynnit-salaisuudet
+  namespace: kaynnit
+type: Opaque
+stringData:
+  API_AVAIN: korvaa-tama-arvo

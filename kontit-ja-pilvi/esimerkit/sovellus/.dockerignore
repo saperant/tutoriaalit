@@ -1,0 +1,8 @@
+# Rakennuskontekstiin vain tarpeellinen: pienempi konteksti, nopeampi
+# rakennus ja ei vahingossa salaisuuksia tai välimuisteja kuvaan.
+**/__pycache__
+**/*.pyc
+.mypy_cache
+.ruff_cache
+.env
+*.odotettu

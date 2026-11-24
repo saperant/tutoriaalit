@@ -1,0 +1,22 @@
+# Kelvollinen manifesti, joka rikkoo käytäntöjä: politiikka.py löytää
+# puutteet ennen kuin ne päätyvät klusteriin.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  namespace: kaynnit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+        - name: api
+          image: ghcr.io/esimerkki/kaynnit:latest
+          ports:
+            - containerPort: 8080

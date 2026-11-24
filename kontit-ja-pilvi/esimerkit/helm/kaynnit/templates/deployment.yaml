@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    {{- include "kaynnit.tunnisteet" . | nindent 4 }}
+spec:
+  {{- if not .Values.skaalaus.enabled }}
+  replicas: {{ .Values.replicas }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "kaynnit.valitsin" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "kaynnit.tunnisteet" . | nindent 8 }}
+      annotations:
+        # Asetusten muutos vaihtaa tiivisteen ja käynnistää podit.
+        checksum/asetukset: {{ include "kaynnit.asetustiiviste" . }}
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: api
+          image: {{ include "kaynnit.kuva" . | quote }}
+          args: ["api.py"]
+          ports:
+            - name: http
+              containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}
+          readinessProbe:
+            httpGet:
+              path: /valmius
+              port: http
+          livenessProbe:
+            httpGet:
+              path: /terveys
+              port: http
+          resources:
+            {{- toYaml .Values.resurssit | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]

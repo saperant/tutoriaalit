@@ -1,0 +1,20 @@
+{
+  "name": "Kontit ja pilvi: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "shellcheck",
+      "PIP_PAKETIT": "ruff mypy types-PyYAML hadolint-bin==2.15.1 kubernetes-validate==1.37.0 yamllint==1.38.0 check-jsonschema==0.39.0"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/kontit-ja-pilvi/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "ms-kubernetes-tools.vscode-kubernetes-tools"
+      ]
+    }
+  }
+}

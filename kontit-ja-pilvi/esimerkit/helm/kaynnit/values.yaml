@@ -1,0 +1,26 @@
+# Oletusarvot. Ympäristökohtaiset erot omissa tiedostoissaan
+# (esim. values-tuotanto.yaml), joten pohjat pysyvät samoina.
+replicas: 2
+
+kuva:
+  repository: ghcr.io/esimerkki/kaynnit
+  # Tyhjä tagi tarkoittaa kaavion appVersionia.
+  tag: ""
+
+laskuriUrl: http://laskuri:8080
+
+resurssit:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    memory: 128Mi
+
+ingress:
+  enabled: false
+  host: ""
+
+skaalaus:
+  enabled: false
+  min: 2
+  max: 6

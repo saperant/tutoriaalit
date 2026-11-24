@@ -1,0 +1,10 @@
+k8s-huono/deployment.yaml: Deployment/api, säiliö api:
+  - kuva 'ghcr.io/esimerkki/kaynnit:latest' ilman kiinteää versiota
+  - muistiraja puuttuu
+  - resurssipyynnöt puuttuvat
+  - readinessProbe puuttuu
+  - livenessProbe puuttuu
+  - runAsNonRoot ei ole päällä
+  - allowPrivilegeEscalation sallittu
+  - juuritiedostojärjestelmä kirjoitettavissa
+8 rikkomusta

@@ -1,0 +1,27 @@
+== suunnitelma tyhjälle tilalle
++ kaynnit-kuvat: luodaan
+    tyyppi = rekisteri
+    yksityinen = True
++ kaynnit-tuotanto: luodaan
+    solmuja = 3
+    tyyppi = klusteri
+    versio = 1.35
++ kaynnit-varmuuskopiot: luodaan
+    sailytys_paivia = 30
+    tyyppi = tallennustila
+== toteutus
++ kaynnit-kuvat: luodaan
+    tyyppi = rekisteri
+    yksityinen = True
++ kaynnit-tuotanto: luodaan
+    solmuja = 3
+    tyyppi = klusteri
+    versio = 1.35
++ kaynnit-varmuuskopiot: luodaan
+    sailytys_paivia = 30
+    tyyppi = tallennustila
+toteutettu: 3 muutosta
+== toinen ajo
+ei muutoksia: infrastruktuuri vastaa kuvausta
+== joku kasvatti klusteria käsin konsolista
+~ kaynnit-tuotanto.solmuja: 5 -> 3

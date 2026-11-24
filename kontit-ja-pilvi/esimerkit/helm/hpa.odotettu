@@ -1,0 +1,25 @@
+---
+# Source: kaynnit/templates/hpa.yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: kaynnit
+  labels:
+    app.kubernetes.io/name: kaynnit
+    app.kubernetes.io/instance: kaynnit
+    app.kubernetes.io/version: "1.0.0"
+    helm.sh/chart: kaynnit-0.3.0
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: kaynnit
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70

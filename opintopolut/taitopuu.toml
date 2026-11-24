@@ -1055,6 +1055,7 @@ laajuus = 5
 testaus = "säiliöt rakennetaan ja ajetaan CI:ssä"
 roadmap = ["docker", "kubernetes", "devops"]
 amk = "Pilvipalvelut / DevOps"
+tutoriaali = "kontit-ja-pilvi"
 
 # ---------------------------------------------------------------------
 # Tietokonegrafiikka

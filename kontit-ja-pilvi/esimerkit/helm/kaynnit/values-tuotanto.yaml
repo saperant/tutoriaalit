@@ -1,0 +1,12 @@
+# Tuotannon erot oletuksiin: enemmän podeja, julkinen osoite ja
+# automaattinen skaalaus.
+replicas: 3
+
+ingress:
+  enabled: true
+  host: kaynnit.example.fi
+
+skaalaus:
+  enabled: true
+  min: 3
+  max: 10

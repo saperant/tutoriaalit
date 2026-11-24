@@ -1,0 +1,42 @@
+# Käyntilaskuri Composella: api ja laskuri samasta kuvasta.
+#   docker compose up -d --wait     käynnistää, kun molemmat terveitä
+#   docker compose down -v          pysäyttää ja poistaa volyymin
+
+# @alku kuva
+# Laajennuskenttä (x-) ja YAML-ankkuri: kuvan määrittely kerran.
+x-kuva: &kuva
+  build:
+    context: sovellus
+    target: ajo
+    args:
+      VERSIO: "1.0.0"
+  image: kaynnit:1.0.0
+  read_only: true
+  restart: unless-stopped
+# @loppu kuva
+
+name: kaynnit
+
+# @alku palvelut
+services:
+  api:
+    <<: *kuva
+    environment:
+      LASKURI_URL: http://laskuri:8080
+    ports:
+      - "127.0.0.1:${API_PORTTI:-8080}:8080"
+    depends_on:
+      laskuri:
+        condition: service_healthy
+
+  laskuri:
+    <<: *kuva
+    command: ["laskuri.py"]
+    environment:
+      DATA_HAKEMISTO: /data
+    volumes:
+      - laskuridata:/data
+
+volumes:
+  laskuridata:
+# @loppu palvelut

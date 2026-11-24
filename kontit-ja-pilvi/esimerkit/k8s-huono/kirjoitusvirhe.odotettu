@@ -1,0 +1,2 @@
+VIRHE k8s-huono/kirjoitusvirhe.yaml: deployment/api
+  spec: Additional properties are not allowed ('replica' was unexpected)

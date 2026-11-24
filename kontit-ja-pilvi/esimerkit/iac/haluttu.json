@@ -1,0 +1,7 @@
+{
+  "kaynnit-kuvat": {"tyyppi": "rekisteri", "yksityinen": true},
+  "kaynnit-tuotanto": {"tyyppi": "klusteri", "solmuja": 3,
+                       "versio": "1.35"},
+  "kaynnit-varmuuskopiot": {"tyyppi": "tallennustila",
+                            "sailytys_paivia": 30}
+}

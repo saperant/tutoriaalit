@@ -1,0 +1,8 @@
+# Oma nimiavaruus sovellukselle. Pod Security -tunnisteet pakottavat
+# rajoitetun (restricted) profiilin: ei root-käyttäjää, ei lisäoikeuksia.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kaynnit
+  labels:
+    pod-security.kubernetes.io/enforce: restricted

@@ -1,0 +1,22 @@
+== testit-vaihe
+testit läpi
+== kuvat
+kaynnit:1.0.0: käyttäjä 10001, terveys [CMD python terveys.py]
+staattinen:1.0.0: käyttäjä 65532:65532, terveys [CMD /palvelu -terveys]
+staattinen alle 20 Mt: kyllä
+Python-kuva yli 5 kertaa suurempi: kyllä
+== muistiraja cgroupissa (--memory 64m)
+67108864
+== compose
+{"palvelu": "kaynnit", "versio": "1.0.0", "kaynnit": 1}
+{"palvelu": "kaynnit", "versio": "1.0.0", "kaynnit": 2}
+laskuri käynnistetään uudelleen: arvo säilyy volyymissa
+{"palvelu": "kaynnit", "versio": "1.0.0", "kaynnit": 3}
+api pysäytetään (SIGTERM): viimeinen lokirivi
+{"taso": "INFO", "viesti": "sammutettu", "palvelu": "api"}
+== helm
+lint läpi
+renderöinti vastaa tiedostoa helm/tuotanto.odotettu
+HPA vastaa tiedostoa helm/hpa.odotettu
+renderöity kaavio on kelvollinen Kubernetes 1.35:lle
+OK: ei rikkomuksia

@@ -1,0 +1,45 @@
+# @alku ingress
+# Ulkoinen liikenne Ingressin kautta; TLS-varmenne Secretissä.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kaynnit
+  namespace: kaynnit
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts: ["kaynnit.example.fi"]
+      secretName: kaynnit-tls
+  rules:
+    - host: kaynnit.example.fi
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: api
+                port:
+                  name: http
+# @loppu ingress
+---
+# @alku verkkopolitiikka
+# Laskuriin saa ottaa yhteyttä vain api: muu liikenne estetään.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: laskuri-vain-apista
+  namespace: kaynnit
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: laskuri
+  policyTypes: ["Ingress"]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: api
+      ports:
+        - port: 8080
+# @loppu verkkopolitiikka
