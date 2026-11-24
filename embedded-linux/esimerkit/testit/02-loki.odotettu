@@ -1,0 +1,9 @@
+Linux version 6.8.12-tutoriaali (tutoriaali@kaantaja)
+Machine model: linux,dummy-virt
+Kernel command line: console=ttyAMA0 panic=-1
+Memory: ...
+9000000.pl011: ttyAMA0
+Unpacking initramfs...
+Run /init as init process
+reboot: Power down
+paluuarvo 0

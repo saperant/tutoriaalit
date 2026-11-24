@@ -1,0 +1,3 @@
+# Kbuild: ytimen käännösjärjestelmä lukee tämän ulkoisen moduulin
+# hakemistosta (make M=...).
+obj-m := hei.o

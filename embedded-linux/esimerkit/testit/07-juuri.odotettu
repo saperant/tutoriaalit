@@ -1,0 +1,10 @@
+juuri: vain luku
+kirjoitus /tila.txt: Read-only file system
+/etc/laite.conf: nimi=tehdasasetus
+overlay: /etc = /etc (alempi) + /run/etc/yla (ylempi)
+kirjoitus /etc/laite.conf: ok
+yhdistetty: nimi=kentalla-muutettu
+alempi    : nimi=tehdasasetus
+ylempi    : nimi=kentalla-muutettu
+reboot: Power down
+paluuarvo 0

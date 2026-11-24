@@ -1,0 +1,8 @@
+yocto: LIC_FILES_CHKSUM vastaa minit.c:n riveja 1-4
+buildroot ja yocto: minit.c loytyy
+buildroot ja yocto: palvelu.c loytyy
+buildroot ja yocto: palvelut.conf loytyy
+BR2_EXTERNAL_TUT_PATH: external/external.mk:1
+BR2_EXTERNAL_TUT_PATH: external/Config.in:1
+BR2_EXTERNAL_TUT_PATH: tutoriaali_defconfig:1
+paluuarvo 0

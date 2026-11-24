@@ -1,0 +1,4 @@
+config BR2_PACKAGE_MINIT
+    bool "minit"
+    help
+      Tutoriaalin pieni init-järjestelmä palveluineen.

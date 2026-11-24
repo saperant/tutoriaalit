@@ -1,0 +1,12 @@
+init: PID 1, vanhempi 0
+init: kiinnitetty /proc (proc)
+init: kiinnitetty /sys  (sysfs)
+init: kiinnitetty /dev  (devtmpfs)
+init: kiinnitetty /run  (tmpfs)
+init: ydin 6.8.12-tutoriaali, arkkitehtuuri aarch64
+init: komentorivi: console=ttyAMA0 loglevel=1 panic=-1
+init: prosessorit: 0
+init: /dev/ttyAMA0 on, /dev/vda ei
+init: sammutetaan
+reboot: Power down
+paluuarvo 0

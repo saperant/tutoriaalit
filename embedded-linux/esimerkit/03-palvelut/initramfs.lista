@@ -1,0 +1,11 @@
+# minit ja sen palvelut. ${MINIT} ja ${PALVELU} ovat käännetyt ohjelmat.
+dir  /dev                    0755 0 0
+nod  /dev/console            0600 0 0 c 5 1
+dir  /proc                   0555 0 0
+dir  /sys                    0555 0 0
+dir  /run                    0755 0 0
+dir  /etc                    0755 0 0
+dir  /sbin                   0755 0 0
+file /etc/palvelut.conf ${PALVELUT_CONF} 0644 0 0
+file /sbin/palvelu      ${PALVELU}       0755 0 0
+file /init              ${MINIT}         0755 0 0

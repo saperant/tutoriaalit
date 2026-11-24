@@ -1,0 +1,8 @@
+# Moduulin lataaja initinä. ${LATAAJA} ja ${MODUULI} ovat käännöksiä.
+dir  /dev                0755 0 0
+nod  /dev/console        0600 0 0 c 5 1
+dir  /proc               0555 0 0
+dir  /lib                0755 0 0
+dir  /lib/modules        0755 0 0
+file /lib/modules/hei.ko ${MODUULI} 0644 0 0
+file /init               ${LATAAJA} 0755 0 0

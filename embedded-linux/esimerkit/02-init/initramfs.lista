@@ -1,0 +1,8 @@
+# gen_init_cpio-luettelo: initramfsin sisältö ilman pääkäyttäjän oikeuksia.
+# Muuttuja ${INIT} on käännetyn init-ohjelman polku.
+dir  /dev                 0755 0 0
+nod  /dev/console         0600 0 0 c 5 1
+dir  /proc                0555 0 0
+dir  /sys                 0555 0 0
+dir  /run                 0755 0 0
+file /init     ${INIT}    0755 0 0

@@ -1,0 +1,27 @@
+== isanta
+suoritin:      x86_64
+long:          8 tavua
+osoitin:       8 tavua
+tavujarjestys: little-endian
+char:          etumerkillinen
+== qemu-aarch64, staattinen
+suoritin:      aarch64
+long:          8 tavua
+osoitin:       8 tavua
+tavujarjestys: little-endian
+char:          etumerkiton
+== qemu-aarch64, dynaaminen ilman sysrootia
+qemu-aarch64: Could not open '/lib/ld-linux-aarch64.so.1':
+    No such file or directory
+paluuarvo 255
+== qemu-aarch64 -L /usr/aarch64-linux-gnu, dynaaminen
+suoritin:      aarch64
+long:          8 tavua
+osoitin:       8 tavua
+tavujarjestys: little-endian
+char:          etumerkiton
+== readelf
+Class: ELF64
+Machine: AArch64
+interpreter: /lib/ld-linux-aarch64.so.1
+staattisen tulkkeja: 0

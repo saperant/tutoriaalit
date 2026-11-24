@@ -1,0 +1,4 @@
+# Virheellinen initramfs: /init puuttuu. Ydin yrittää silloin kiinnittää
+# juuren komentorivin root=-laitteelta, jota ei ole, ja pysähtyy paniikkiin.
+dir  /dev          0755 0 0
+nod  /dev/console  0600 0 0 c 5 1

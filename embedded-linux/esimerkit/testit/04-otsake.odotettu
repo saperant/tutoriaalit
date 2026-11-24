@@ -1,0 +1,8 @@
+taikaluku:     b'ARMd'
+alku:          hyppykasky
+text_offset:   0x0
+tavujarjestys: little-endian
+sivukoko:      4 KiB
+image_size:    kattaa tiedoston
+PE-otsake:     ei
+paluuarvo 0

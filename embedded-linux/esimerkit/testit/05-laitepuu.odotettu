@@ -1,0 +1,12 @@
+/                model              linux,dummy-virt
+/                #address-cells     2
+/                interrupt-parent   8002
+/intc@8000000    phandle            8002
+/intc@8000000    #interrupt-cells   3
+/pl011@9000000   compatible         arm,pl011 arm,primecell
+/pl011@9000000   reg                0 9000000 0 1000
+/pl011@9000000   interrupts         0 1 4
+/memory@40000000 reg                0 40000000 0 10000000
+/chosen          stdout-path        /pl011@9000000
+juuren alisolmuja: 48
+paluuarvo 0

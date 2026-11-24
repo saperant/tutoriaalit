@@ -1,0 +1,19 @@
+[1] odota /Hit any key to stop autoboot/: ok
+[2] laheta: 
+[3] odota /=> $/: ok
+[4] laheta: printenv kernel_addr_r ramdisk_addr_r
+[5] odota /ramdisk_addr_r=0x[0-9a-f]+/: ok
+[6] odota /=> $/: ok
+[7] laheta: virtio scan
+[8] odota /=> $/: ok
+[9] laheta: load virtio 0:1 ${kernel_addr_r} /Image
+[10] odota /[0-9]+ bytes read/: ok
+[11] laheta: load virtio 0:1 ${ramdisk_addr_r} /initramfs.cpio.gz
+[12] odota /[0-9]+ bytes read/: ok
+[13] laheta: setenv bootargs console=ttyAMA0 loglevel=1 kaynnistys=kasin
+[14] laheta: booti $kernel_addr_r $ramdisk_addr_r:$filesize $fdtcontroladdr
+[15] odota /Starting kernel/: ok
+[16] odota /komentorivi: console=ttyAMA0 loglevel=1 kaynnistys=kasin/: ok
+[17] odota /reboot: Power down/: ok
+[18] loppu 0: ok
+paluuarvo 0

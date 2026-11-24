@@ -1,0 +1,22 @@
+minit: kaynnistetaan loki
+minit: loki valmis
+minit: kaynnistetaan lampo
+lampo: anturi ei vastaa (yritys 1)
+minit: lampo paattyi (3), uudelleen 1/3
+lampo: anturi ei vastaa (yritys 2)
+minit: lampo paattyi (3), uudelleen 2/3
+minit: lampo valmis
+minit: kaynnistetaan mittari
+minit: mittari valmis
+minit: palvelu  tila         uudelleen
+minit: loki     kaynnissa    0
+minit: lampo    kaynnissa    2
+minit: mittari  kaynnissa    0
+minit: sammutetaan
+minit: mittari ei paattynyt, SIGKILL
+lampo: SIGTERM, tila tallennettu
+minit: lampo pysaytetty
+loki: SIGTERM, tila tallennettu
+minit: loki pysaytetty
+reboot: Power down
+paluuarvo 0

@@ -1,0 +1,5 @@
+# Laitepuun tutkija initinä. ${TUTKIJA} on käännetty ohjelma.
+dir  /dev          0755 0 0
+nod  /dev/console  0600 0 0 c 5 1
+dir  /sys          0555 0 0
+file /init ${TUTKIJA} 0755 0 0

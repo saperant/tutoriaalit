@@ -1,0 +1,8 @@
+# minitin käynnistystesti: palvelut valmistuvat ja järjestelmä sammuu.
+odota 60 minit: loki valmis
+odota 10 minit: lampo valmis
+odota 10 minit: mittari valmis
+odota 10 lampo +kaynnissa +2
+odota 10 minit: loki pysaytetty
+odota 10 reboot: Power down
+loppu 0

@@ -1,0 +1,20 @@
+# U-Boot käsin: keskeytetään automaattinen käynnistys ja annetaan
+# samat komennot, jotka extlinux ja boot.scr tekevät automaattisesti.
+odota 60 Hit any key to stop autoboot
+laheta
+odota 10 => $
+laheta printenv kernel_addr_r ramdisk_addr_r
+odota 10 ramdisk_addr_r=0x[0-9a-f]+
+odota 10 => $
+laheta virtio scan
+odota 10 => $
+laheta load virtio 0:1 ${kernel_addr_r} /Image
+odota 10 [0-9]+ bytes read
+laheta load virtio 0:1 ${ramdisk_addr_r} /initramfs.cpio.gz
+odota 10 [0-9]+ bytes read
+laheta setenv bootargs console=ttyAMA0 loglevel=1 kaynnistys=kasin
+laheta booti $kernel_addr_r $ramdisk_addr_r:$filesize $fdtcontroladdr
+odota 30 Starting kernel
+odota 30 komentorivi: console=ttyAMA0 loglevel=1 kaynnistys=kasin
+odota 30 reboot: Power down
+loppu 0

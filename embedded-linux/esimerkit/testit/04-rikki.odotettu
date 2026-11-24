@@ -1,0 +1,4 @@
+Kconfig ei ottanut kaikkia asetuksia:
+pyydetty: CONFIG_TMPFS=y
+  saatu:  puuttuu
+paluuarvo 1

@@ -1,0 +1,12 @@
+model:                "linux,dummy-virt"
+bootargs:             "console=ttyAMA0 loglevel=1 panic=-1"
+anturi compatible:    "tutoriaalit,lampoanturi"
+anturi reg:           <0x0 0x9100000 0x0 0x1000>
+anturi interrupts:    <0x0 0x20 0x4>
+raja-arvo:            <0x2d>
+label:                "kotelo"
+modalias:             of:NanturiT(null)Ctutoriaalit,lampoanturi
+amba/9000000.pl011: ajuri uart-pl011
+platform/9100000.anturi: ei ajuria
+reboot: Power down
+paluuarvo 0

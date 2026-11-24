@@ -964,6 +964,7 @@ laajuus = 5
 testaus = "Buildroot ja QEMU, käynnistystestit"
 roadmap = ["linux"]
 amk = "Sulautettu Linux"
+tutoriaali = "embedded-linux"
 
 [[taito]]
 id = "linux-ajurit"

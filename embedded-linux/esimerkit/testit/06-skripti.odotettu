@@ -1,0 +1,5 @@
+tapa: script /boot.scr
+Starting kernel ...
+init: komentorivi: console=ttyAMA0 loglevel=1 panic=-1 kaynnistys=skripti
+reboot: Power down
+paluuarvo 0
