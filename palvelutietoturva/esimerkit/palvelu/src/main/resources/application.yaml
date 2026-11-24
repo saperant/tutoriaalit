@@ -1,0 +1,24 @@
+# @alku ssl
+server:
+  ssl:
+    bundle: palvelu
+    client-auth: need          # ilman asiakasvarmennetta ei yhteyttä
+spring:
+  ssl:
+    bundle:
+      pem:
+        palvelu:
+          reload-on-update: true # uusi varmenne käyttöön lennossa
+          keystore:
+            certificate: ${PALVELU_VARMENNE}
+            private-key: ${PALVELU_AVAIN}
+          truststore:
+            certificate: ${LUOTETUT_JUURET}
+# @loppu ssl
+# @alku luvat
+palvelu:
+  luvat:                       # SPIFFE-tunniste -> oikeudet
+    "[spiffe://kauppa.example/tilaus]": laskut:luku
+    "[spiffe://kauppa.example/raportointi]": laskut:luku
+    "[spiffe://kauppa.example/hallinta]": laskut:luku,laskut:mitatointi
+# @loppu luvat

@@ -1868,6 +1868,7 @@ laajuus = 3
 testaus = "Spring Boot ja mTLS testivarmenteilla"
 roadmap = ["cyber-security", "system-design"]
 amk = "Pilvipalveluiden tietoturva"
+tutoriaali = "palvelutietoturva"
 
 # ---------------------------------------------------------------------
 # Roolit

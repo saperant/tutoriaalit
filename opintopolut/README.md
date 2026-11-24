@@ -121,7 +121,7 @@ flowchart LR
     turvallinen_kehitys["✓ Tietoturva kehitystyössä"]
     web_tietoturva["✓ Web-sovellusten tietoturva"]
     sulautettujen_tietoturva["Sulautettujen järjestelmien tietoturva"]
-    palvelutietoturva["Palveluarkkitehtuurin tietoturva"]
+    palvelutietoturva["✓ Palveluarkkitehtuurin tietoturva"]
   end
   subgraph kielet["Ohjelmointikielet"]
     rust["✓ Rust"]
@@ -407,7 +407,7 @@ flowchart LR
 | Tietoturvan perusteet | 3 | Ohjelmoinnin perusteet (Python), Tietoverkot | [valmis](../tietoturvan-perusteet/) |
 | Kryptografia | 5 | Diskreetti matematiikka, Python, Tietoturvan perusteet | [valmis](../kryptografia/) |
 | Tietoturva kehitystyössä | 3 | Tietoturvan perusteet, Versionhallinta (Git) | [valmis](../turvallinen-kehitys/) |
-| Palveluarkkitehtuurin tietoturva | 3 | Kryptografia, Palveluarkkitehtuurit | suunniteltu |
+| Palveluarkkitehtuurin tietoturva | 3 | Kryptografia, Palveluarkkitehtuurit | [valmis](../palvelutietoturva/) |
 | Web-sovellusten tietoturva | 5 | Tietoturvan perusteet, Web-sovellukset | [valmis](../web-tietoturva/) |
 | Sulautettujen järjestelmien tietoturva | 3 | Kryptografia, Mikrokontrollerit ja bare-metal-ohjelmointi | suunniteltu |
 | Takaisinmallinnus | 5 | Käyttöjärjestelmät, Objektitiedostot, linkitys ja ABI, Tietoturvan perusteet | suunniteltu |

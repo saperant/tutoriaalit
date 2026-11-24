@@ -1,0 +1,8 @@
+{
+  "lausekkeet": [
+    { "tunnus": "EiPoistojaTuotannossa", "vaikutus": "ESTA",
+      "toiminnot": ["*:Poista"],
+      "resurssit": ["krn:kauppa:*"],
+      "ehdot": { "ymparisto": "tuotanto" } }
+  ]
+}

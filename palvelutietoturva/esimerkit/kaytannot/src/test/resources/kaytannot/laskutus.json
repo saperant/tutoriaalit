@@ -1,0 +1,14 @@
+{
+  "lausekkeet": [
+    { "tunnus": "LueTilaukset", "vaikutus": "SALLI",
+      "toiminnot": ["tilaukset:Lue"],
+      "resurssit": ["krn:kauppa:tilaukset/*"] },
+    { "tunnus": "KirjoitaLaskut", "vaikutus": "SALLI",
+      "toiminnot": ["laskut:Kirjoita"],
+      "resurssit": ["krn:kauppa:laskut/*"],
+      "ehdot": { "lahde": "spiffe://kauppa.example/laskutus" } },
+    { "tunnus": "LueAsiakkaat", "vaikutus": "SALLI",
+      "toiminnot": ["asiakkaat:Lue"],
+      "resurssit": ["krn:kauppa:asiakkaat/*"] }
+  ]
+}

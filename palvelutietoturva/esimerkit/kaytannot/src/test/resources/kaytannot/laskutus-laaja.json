@@ -1,0 +1,6 @@
+{
+  "lausekkeet": [
+    { "tunnus": "Kaikki", "vaikutus": "SALLI",
+      "toiminnot": ["*"], "resurssit": ["*"] }
+  ]
+}

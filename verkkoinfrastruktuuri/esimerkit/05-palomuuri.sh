@@ -25,7 +25,7 @@ ns pm sysctl -qw net.ipv4.ip_forward=1
 # Palvelut: verkkopalvelin DMZ:ssä ja "ulkoinen" palvelin internetissä.
 # Molemmat vastaavat yhdellä rivillä, josta näkee asiakkaan osoitteen.
 kuuntele() {   # kuuntele SOLMU PORTTI NIMI
-    ns "$1" socat "TCP-LISTEN:$2,fork,reuseaddr" \
+    ns "$1" socat "TCP4-LISTEN:$2,fork,reuseaddr" \
         SYSTEM:"echo $3 näkee asiakkaan \$SOCAT_PEERADDR" 2> /dev/null &
 }
 kuuntele palvelin 80 www

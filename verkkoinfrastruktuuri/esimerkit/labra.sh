@@ -27,6 +27,13 @@ solmu() {
     juuri ip netns add "$LABRA-$1"
     LABRA_SOLMUT+=("$LABRA-$1")
     juuri ip -n "$LABRA-$1" link set lo up
+    # Laboratoriot ovat IPv4-verkkoja: IPv6:n automaattinen liikenne
+    # (NDP, MLD) pois, jos ytimessä on IPv6.
+    if [[ -d /proc/sys/net/ipv6 ]]; then
+        juuri ip netns exec "$LABRA-$1" sysctl -qw \
+            net.ipv6.conf.all.disable_ipv6=1 \
+            net.ipv6.conf.default.disable_ipv6=1
+    fi
 }
 
 # ns NIMI KOMENTO...: ajaa komennon solmun nimiavaruudessa.

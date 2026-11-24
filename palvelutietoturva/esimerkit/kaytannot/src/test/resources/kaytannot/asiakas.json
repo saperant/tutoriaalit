@@ -1,0 +1,8 @@
+{
+  "lausekkeet": [
+    { "tunnus": "OmatTiedostot", "vaikutus": "SALLI",
+      "toiminnot": ["tiedostot:Lue", "tiedostot:Kirjoita"],
+      "resurssit": ["krn:kauppa:tiedostot/${asiakas}/*"],
+      "ehdot": { "laite.hallittu": "kylla", "mfa": "kylla" } }
+  ]
+}

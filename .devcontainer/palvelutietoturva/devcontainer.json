@@ -1,0 +1,19 @@
+{
+  "name": "Palveluarkkitehtuurin tietoturva: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "openjdk-21-jdk-headless openssl"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/palvelutietoturva/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vmware.vscode-boot-dev-pack",
+        "redhat.java"
+      ]
+    }
+  }
+}
