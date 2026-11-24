@@ -79,6 +79,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | SoC-integraatio | [`soc-integraatio/`](soc-integraatio/) | [soc-integraatio.pdf](https://saperant.github.io/tutoriaalit/materiaalit/soc-integraatio.pdf) |
 | GPU-ohjelmointi: OpenGL ja Vulkan | [`gpu-ohjelmointi/`](gpu-ohjelmointi/) | [gpu-ohjelmointi.pdf](https://saperant.github.io/tutoriaalit/materiaalit/gpu-ohjelmointi.pdf) |
 | Peliohjelmointi | [`peliohjelmointi/`](peliohjelmointi/) | [peliohjelmointi.pdf](https://saperant.github.io/tutoriaalit/materiaalit/peliohjelmointi.pdf) |
+| Reaaliaikaiset moninpelit | [`moninpelit/`](moninpelit/) | [moninpelit.pdf](https://saperant.github.io/tutoriaalit/materiaalit/moninpelit.pdf) |
 | RTL-suunnittelu (SystemVerilog) | [`rtl-suunnittelu/`](rtl-suunnittelu/) | [rtl-suunnittelu.pdf](https://saperant.github.io/tutoriaalit/materiaalit/rtl-suunnittelu.pdf) |
 | RTL-suunnittelu VHDL:llä | [`vhdl/`](vhdl/) | [vhdl.pdf](https://saperant.github.io/tutoriaalit/materiaalit/vhdl.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |

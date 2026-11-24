@@ -1767,6 +1767,7 @@ laajuus = 3
 testaus = "C++-simulaatiot keinotekoisella viiveellä ja pakettihäviöllä"
 roadmap = ["server-side-game-developer"]
 amk = "Verkkopeliohjelmointi"
+tutoriaali = "moninpelit"
 
 [[taito]]
 id = "kryptografia"

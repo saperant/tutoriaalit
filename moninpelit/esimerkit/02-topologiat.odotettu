@@ -1,0 +1,5 @@
+malli            viestit/s    lähetys B/s   pahin ms
+vertaisverkko          720          21600         70
+asiakas–palvelin       480            960         56
+isäntä 0               360          86400         88
+isännän viive omaan peliin: 0 ms, pelaajan 3: 140 ms

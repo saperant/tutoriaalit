@@ -1,0 +1,4 @@
+uudempi(2, 65534) = true
+kvantisoi(1.5, 0, 10, 8) = 38
+puskuri 20 Hz, värinä 40 ms: 140 ms
+täsmäytetty x = 105

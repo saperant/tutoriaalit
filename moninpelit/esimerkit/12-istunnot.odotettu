@@ -1,0 +1,6 @@
+  1000 ms: jonossa -> ladataan
+  9000 ms: ladataan -> pelissä
+200000 ms: pelissä -> katkennut
+215000 ms: katkennut -> pelissä
+400000 ms: pelissä -> katkennut
+460000 ms: katkennut -> päättynyt

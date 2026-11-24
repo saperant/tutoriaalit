@@ -110,7 +110,7 @@ flowchart LR
     gpu_ohjelmointi["✓ GPU-ohjelmointi: OpenGL ja Vulkan"]
     gpu_laskenta["GPU-laskenta"]
     peliohjelmointi["✓ Peliohjelmointi"]
-    moninpelit["Reaaliaikaiset moninpelit"]
+    moninpelit["✓ Reaaliaikaiset moninpelit"]
   end
   subgraph tietoturva["Tietoturva ja takaisinmallinnus"]
     tietoturvan_perusteet["✓ Tietoturvan perusteet"]
@@ -397,7 +397,7 @@ flowchart LR
 | Renderöinnin perusteet | 5 | Lineaarialgebra, Moderni C++ | suunniteltu |
 | Säteenseuranta ja fysikaalinen valaistus | 5 | Algoritmit, Renderöinnin perusteet, Todennäköisyys ja tilastot | suunniteltu |
 | GPU-ohjelmointi: OpenGL ja Vulkan | 5 | Renderöinnin perusteet, Rinnakkaisohjelmointi | [valmis](../gpu-ohjelmointi/) |
-| Reaaliaikaiset moninpelit | 3 | Peliohjelmointi, Verkko-ohjelmointi | suunniteltu |
+| Reaaliaikaiset moninpelit | 3 | Peliohjelmointi, Verkko-ohjelmointi | [valmis](../moninpelit/) |
 | GPU-laskenta | 3 | GPU-ohjelmointi: OpenGL ja Vulkan, Suorituskyvyn analyysi ja optimointi | suunniteltu |
 
 ### Tietoturva ja takaisinmallinnus

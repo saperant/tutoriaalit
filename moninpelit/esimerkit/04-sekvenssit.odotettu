@@ -1,0 +1,6 @@
+  101 uudempi kuin   100? oikein: true  naiivi: true
+  100 uudempi kuin   101? oikein: false naiivi: false
+    2 uudempi kuin 65534? oikein: true  naiivi: false
+65534 uudempi kuin     2? oikein: false naiivi: true
+40000 uudempi kuin   100? oikein: false naiivi: true
+kierros 60 Hz:llä: 1092 s
