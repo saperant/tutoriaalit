@@ -16,7 +16,7 @@ Taitoja on 87, yhteensä noin 382 op. Valmis PDF: [opintopolut.pdf](https://sape
 | Signaalinkäsittelyn ja ohjelmistoradion kehittäjä | Ohjelmistoradio | 13 | 61 |
 | Grafiikkaohjelmoija | GPU-laskenta, Säteenseuranta ja fysikaalinen valaistus | 19 | 87 |
 | Hajautettujen järjestelmien kehittäjä | Skaalautuvien järjestelmien suunnittelu, Säiliöt ja pilvi-infrastruktuuri | 18 | 88 |
-| Takaisinmallintaja ja tietoturva-analyytikko | Haavoittuvuuksien analyysi ja hyödyntäminen, Laiteohjelmiston takaisinmallinnus | 15 | 69 |
+| Takaisinmallintaja ja tietoturva-analyytikko | Haavoittuvuuksien analyysi ja torjunta, Laiteohjelmiston takaisinmallinnus | 15 | 69 |
 | Algoritmiikan ja ohjelmistokehityksen perusta | Edistyneet algoritmit ja tietorakenteet, Käännösjärjestelmät, testaus ja CI | 10 | 41 |
 | Web-kehittäjä | Web-sovellukset | 7 | 29 |
 | Taustajärjestelmäkehittäjä | Säiliöt ja pilvi-infrastruktuuri, Taustapalvelut | 7 | 33 |
@@ -115,7 +115,7 @@ flowchart LR
   subgraph tietoturva["Tietoturva ja takaisinmallinnus"]
     tietoturvan_perusteet["✓ Tietoturvan perusteet"]
     takaisinmallinnus["✓ Takaisinmallinnus"]
-    haavoittuvuudet["Haavoittuvuuksien analyysi ja hyödyntäminen"]
+    haavoittuvuudet["Haavoittuvuuksien analyysi ja torjunta"]
     laiteohjelmiston_takaisinmallinnus["Laiteohjelmiston takaisinmallinnus"]
     kryptografia["✓ Kryptografia"]
     turvallinen_kehitys["✓ Tietoturva kehitystyössä"]
@@ -411,7 +411,7 @@ flowchart LR
 | Web-sovellusten tietoturva | 5 | Tietoturvan perusteet, Web-sovellukset | [valmis](../web-tietoturva/) |
 | Sulautettujen järjestelmien tietoturva | 3 | Kryptografia, Mikrokontrollerit ja bare-metal-ohjelmointi | [valmis](../sulautettujen-tietoturva/) |
 | Takaisinmallinnus | 5 | Käyttöjärjestelmät, Objektitiedostot, linkitys ja ABI, Tietoturvan perusteet | [valmis](../takaisinmallinnus/) |
-| Haavoittuvuuksien analyysi ja hyödyntäminen | 5 | Takaisinmallinnus | suunniteltu |
+| Haavoittuvuuksien analyysi ja torjunta | 5 | Takaisinmallinnus | suunniteltu |
 | Laiteohjelmiston takaisinmallinnus | 5 | Mikrokontrollerit ja bare-metal-ohjelmointi, Takaisinmallinnus | suunniteltu |
 
 ### Ohjelmointikielet

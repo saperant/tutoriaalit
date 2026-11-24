@@ -1225,9 +1225,9 @@ tutoriaali = "takaisinmallinnus"
 
 [[taito]]
 id = "haavoittuvuudet"
-nimi = "Haavoittuvuuksien analyysi ja hyödyntäminen"
+nimi = "Haavoittuvuuksien analyysi ja torjunta"
 alue = "tietoturva"
-kuvaus = "Muistiturvallisuusvirheiden löytäminen, hyödyntämisen periaatteet ja suojausmekanismit harjoitusympäristössä."
+kuvaus = "Muistiturvallisuusvirheiden löytäminen, vaikutusten arviointi, korjaaminen ja suojausmekanismit omissa ohjelmissa."
 edellyttaa = ["takaisinmallinnus"]
 aiheet = [
   "turvallinen ohjelmointi C:llä",
@@ -1236,6 +1236,7 @@ aiheet = [
   "suojaukset: ASLR, NX, pinokanarit, CFI",
   "paluuorientoitunut ohjelmointi periaatteena",
   "fuzzaus (libFuzzer, AFL++)",
+  "tapaustutkimuksia korjatuista haavoittuvuuksista",
   "vastuullinen haavoittuvuuksien ilmoittaminen",
 ]
 laajuus = 5
