@@ -1,0 +1,10 @@
+   0 s kirjoitus 0x0000 = 0xc0de0000 +30 ns TLM_OK_RESPONSE
+ 30 ns kirjoitus 0x0004 = 0xc0de0001 +30 ns TLM_OK_RESPONSE
+ 60 ns kirjoitus 0x0008 = 0xc0de0002 +30 ns TLM_OK_RESPONSE
+ 90 ns luku      0x0000 = 0xc0de0000 +20 ns TLM_OK_RESPONSE
+110 ns luku      0x0004 = 0xc0de0001 +20 ns TLM_OK_RESPONSE
+130 ns luku      0x0008 = 0xc0de0002 +20 ns TLM_OK_RESPONSE
+150 ns luku      0x1000 = 0x00000000 +  0 s TLM_ADDRESS_ERROR_RESPONSE
+       aloittaja käsitteli osoitevirheen
+150 ns kirjoitus 0x0000 = 0x0000ffff +  0 s TLM_BYTE_ENABLE_ERROR_RESPONSE
+valmis 150 ns, transaktioita 8

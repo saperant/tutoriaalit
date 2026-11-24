@@ -1,0 +1,9 @@
+--- oikea
+  verrattu 2025 näytettä, eroja 0, jonoon jäi 0
+  tulos: RTL vastaa mallia
+--- katkaisu
+  ero näytteessä 2 (50 ns): RTL 5569, malli 5570
+  ero näytteessä 3 (60 ns): RTL 13106, malli 13107
+  ero näytteessä 4 (70 ns): RTL 13106, malli 13107
+  verrattu 2025 näytettä, eroja 1033, jonoon jäi 0
+  tulos: RTL ja malli eroavat

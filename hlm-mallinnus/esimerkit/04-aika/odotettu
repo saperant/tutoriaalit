@@ -1,0 +1,10 @@
+tarkkuus 10 ps
+jakso 2500 ps = 250 tarkkuusyksikköä
+14 ps -> 10 ps, 4 ps -> 0 s
+10 x 0,1 ns: sc_time 1 ns (tasan), double 9.9999999999999986e-10 s
+kerroin: 10 ns, suhde: 400 jaksoa
+nouseva 5 ns, laskeva 15 ns
+nouseva 30 ns, laskeva 40 ns
+nouseva 55 ns, laskeva 65 ns
+nouseva 80 ns, laskeva 90 ns
+set time resolution failed: simulation running

@@ -1,0 +1,14 @@
+10 ns: ilmoitetaan
+10 ns: heti, delta-syklejä ilmoituksesta 0
+10 ns: delta, delta-syklejä ilmoituksesta 1
+15 ns: ajastettu, delta-syklejä ilmoituksesta 2
+20 ns: työ valmis
+55 ns: työ valmis
+105 ns: aikaraja ylittyi
+115 ns: työ valmis
+200 ns: lähetetään
+211 ns: ilmoitus hukkui
+250 ns: vilkku 0
+260 ns: vilkku 1
+285 ns: vilkku 2
+290 ns: vilkku 3

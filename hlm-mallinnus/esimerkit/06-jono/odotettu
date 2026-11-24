@@ -1,0 +1,13 @@
+10 ns: kirjoitettu 1
+10 ns:   luettu 1, jonossa 0
+20 ns: kirjoitettu 2
+30 ns: kirjoitettu 3
+35 ns:   luettu 2, jonossa 1
+40 ns: kirjoitettu 4
+60 ns:   luettu 3, jonossa 1
+60 ns: kirjoitettu 5
+85 ns:   luettu 4, jonossa 1
+85 ns: kirjoitettu 6
+110 ns:   luettu 5, jonossa 1
+135 ns:   luettu 6, jonossa 0
+valmis 160 ns

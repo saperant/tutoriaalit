@@ -72,7 +72,7 @@ flowchart LR
     vhdl["✓ RTL-suunnittelu VHDL:llä"]
     verifiointi["✓ Laitteiston verifiointi"]
     fpga_toteutus["✓ FPGA-toteutus"]
-    hlm_mallinnus["Korkean tason mallinnus (SystemC/TLM)"]
+    hlm_mallinnus["✓ Korkean tason mallinnus (SystemC/TLM)"]
     arkkitehtuurin_tutkiminen["Arkkitehtuurin mallinnus ja suunnittelutilan tutkiminen"]
     eda_skriptaus["✓ EDA-työkaluketjujen automatisointi"]
     hls["Korkean tason synteesi"]
@@ -350,7 +350,7 @@ flowchart LR
 | FPGA-toteutus | 5 | RTL-suunnittelu SystemVerilogilla | [valmis](../fpga-toteutus/) |
 | Laitteiston verifiointi | 5 | Python työkaluohjelmointiin, RTL-suunnittelu SystemVerilogilla | [valmis](../verifiointi/) |
 | Lukujen esitys ja kiinteän pilkun aritmetiikka | 3 | Digitaalitekniikka, Miten tietokone laskee | [valmis](../kiintea-pilkku/) |
-| Korkean tason mallinnus (SystemC/TLM) | 5 | Lukujen esitys ja kiinteän pilkun aritmetiikka, Moderni C++, Tietokonearkkitehtuuri | suunniteltu |
+| Korkean tason mallinnus (SystemC/TLM) | 5 | Lukujen esitys ja kiinteän pilkun aritmetiikka, Moderni C++, Tietokonearkkitehtuuri | [valmis](../hlm-mallinnus/) |
 | SoC-integraatio | 5 | RTL-suunnittelu SystemVerilogilla, Tietokonearkkitehtuuri | [valmis](../soc-integraatio/) |
 | Arkkitehtuurin mallinnus ja suunnittelutilan tutkiminen | 5 | Korkean tason mallinnus (SystemC/TLM), Suorituskyvyn analyysi ja optimointi, Todennäköisyys ja tilastot | suunniteltu |
 | DSP-algoritmien laitteistototeutus | 5 | Digitaalinen signaalinkäsittely, FPGA-toteutus, Laitteiston verifiointi, Lukujen esitys ja kiinteän pilkun aritmetiikka | suunniteltu |

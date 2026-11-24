@@ -1,0 +1,12 @@
+0 s +1: x=0 y1=1 y2=1 y3=1
+0 s +2: x=0 y1=1 y2=0 y3=0
+0 s +3: x=0 y1=1 y2=0 y3=1
+heti kirjoituksen jälkeen x=0
+10 ns +1: x=1 y1=1 y2=0 y3=1
+deltan jälkeen x=1
+10 ns +2: x=1 y1=0 y2=0 y3=1
+10 ns +3: x=1 y1=0 y2=1 y3=1
+10 ns +4: x=1 y1=0 y2=1 y3=0
+jakso 1: signaalit 2 1, muuttujat 1 1
+jakso 2: signaalit 1 2, muuttujat 1 1
+jakso 3: signaalit 2 1, muuttujat 1 1

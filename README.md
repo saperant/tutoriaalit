@@ -102,6 +102,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Kompleksiluvut ja Fourier-analyysi | [`signaalimatematiikka/`](signaalimatematiikka/) | [signaalimatematiikka.pdf](https://saperant.github.io/tutoriaalit/materiaalit/signaalimatematiikka.pdf) |
 | Renderöinnin perusteet | [`renderoinnin-perusteet/`](renderoinnin-perusteet/) | [renderoinnin-perusteet.pdf](https://saperant.github.io/tutoriaalit/materiaalit/renderoinnin-perusteet.pdf) |
 | EDA-työkaluketjujen automatisointi | [`eda-skriptaus/`](eda-skriptaus/) | [eda-skriptaus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/eda-skriptaus.pdf) |
+| Korkean tason mallinnus (SystemC/TLM) | [`hlm-mallinnus/`](hlm-mallinnus/) | [hlm-mallinnus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/hlm-mallinnus.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

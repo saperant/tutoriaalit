@@ -1,0 +1,11 @@
+--- tapaus 1
+complete binding failed
+  port not bound: port 'kuuntelija.tulo' (sc_in)
+--- tapaus 2
+wait() is only allowed in SC_THREADs and SC_CTHREADs
+  in SC_METHODs use next_trigger() instead
+--- tapaus 3
+sc_signal<T> cannot have more than one driver
+  signal `ajurit.vayla' (sc_signal) first driver `ajurit.eka'
+  (sc_thread_process) second driver `ajurit.toka'
+  (sc_thread_process)

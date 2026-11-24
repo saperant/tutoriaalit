@@ -1,0 +1,21 @@
+20 ns: arvo=1
+30 ns: arvo=2
+40 ns: arvo=3
+50 ns: arvo=4
+60 ns: arvo=5
+70 ns: arvo=6
+80 ns: arvo=7
+90 ns: arvo=8
+120 ns: arvo=9
+130 ns: arvo=10
+140 ns: arvo=11
+150 ns: arvo=12
+160 ns: arvo=13
+170 ns: arvo=14
+180 ns: arvo=15
+190 ns: arvo=0 ylivuoto
+200 ns: arvo=1
+210 ns: arvo=2
+
+Info: /OSCI/SystemC: Simulation stopped by user.
+pysähtyi: 215 ns

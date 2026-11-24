@@ -1,0 +1,12 @@
+kvantti 0 s: odotuksia 73, loppu 4240 ns
+  nähtiin 20/20 viestiä, 0 s - 70 ns lähetyksen jälkeen
+  naiivi ajastin jäljessä enintään 1 jaksoa
+kvantti 100 ns: odotuksia 62, loppu 4240 ns
+  nähtiin 20/20 viestiä, 0 s - 150 ns lähetyksen jälkeen
+  naiivi ajastin jäljessä enintään 9 jaksoa
+kvantti 1 us: odotuksia 9, loppu 5040 ns
+  nähtiin 5/20 viestiä, 70 ns - 820 ns lähetyksen jälkeen, 1 ennen sitä
+  naiivi ajastin jäljessä enintään 97 jaksoa
+kvantti 10 us: odotuksia 0, loppu 4200 ns
+  nähtiin 1/20 viestiä, 1 ennen sitä
+  naiivi ajastin jäljessä enintään 6 jaksoa

@@ -1,0 +1,5 @@
+30 us: dmi: DMI mitätöity
+51200 ns: dmi valmis
+51200 ns: ilman_dmi valmis
+ilman_dmi: summa 1046772, b_transport 2048, DMI-lukuja 0, DMI-pyyntöjä 0
+dmi: summa 1046772, b_transport 2, DMI-lukuja 2046, DMI-pyyntöjä 2

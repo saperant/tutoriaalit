@@ -717,6 +717,7 @@ laajuus = 5
 testaus = "SystemC-kirjasto, C++-testit"
 roadmap = []
 amk = "Sulautettujen järjestelmien suunnittelu"
+tutoriaali = "hlm-mallinnus"
 
 [[taito]]
 id = "arkkitehtuurin-tutkiminen"

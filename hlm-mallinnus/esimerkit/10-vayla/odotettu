@@ -1,0 +1,6 @@
+[uart 830 ns] Hei väylältä!
+850 ns: ajastin 85 jaksoa
+890 ns: 0x20000000: TLM_ADDRESS_ERROR_RESPONSE
+895 ns: 0x10001000: TLM_COMMAND_ERROR_RESPONSE
+895 ns: debug-luku 4 tavua: 0x12345678
+valmis 895 ns, RAM-transaktioita 1

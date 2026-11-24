@@ -1,0 +1,17 @@
+   0 s  BEGIN_REQ  kohde      #0
+ 10 ns  END_REQ    aloittaja  #0
+ 10 ns  BEGIN_REQ  kohde      #1
+ 20 ns  END_REQ    aloittaja  #1
+ 20 ns  BEGIN_REQ  kohde      #2
+ 30 ns  END_REQ    aloittaja  #2
+ 30 ns  BEGIN_REQ  kohde      #3
+ 40 ns  END_REQ    aloittaja  #3
+ 50 ns  BEGIN_RESP aloittaja  #0
+ 50 ns  END_RESP   kohde      #0
+ 60 ns  BEGIN_RESP aloittaja  #1
+ 60 ns  END_RESP   kohde      #1
+ 70 ns  BEGIN_RESP aloittaja  #2
+ 70 ns  END_RESP   kohde      #2
+ 80 ns  BEGIN_RESP aloittaja  #3
+ 80 ns  END_RESP   kohde      #3
+AT valmis 80 ns, LT valmis 200 ns

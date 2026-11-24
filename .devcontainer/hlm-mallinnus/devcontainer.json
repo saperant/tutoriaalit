@@ -4,7 +4,7 @@
     "dockerfile": "../Dockerfile",
     "context": "..",
     "args": {
-      "LISAPAKETIT": "libsystemc-dev"
+      "LISAPAKETIT": "libsystemc-dev pkgconf verilator shellcheck"
     }
   },
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/hlm-mallinnus/esimerkit",
