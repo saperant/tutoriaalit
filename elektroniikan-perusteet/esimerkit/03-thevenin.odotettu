@@ -1,0 +1,4 @@
+Theveninin vastine solmusta b:
+  U_th         simuloitu     3.10 V   laskettu     3.10 V   ok
+  R_th         simuloitu    476 ohm   laskettu    476 ohm   ok
+  Nortonin vastine: I_N = 6.502 mA rinnan R_th:n kanssa

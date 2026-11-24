@@ -1,0 +1,15 @@
+* I2C-väylän nousuaika: avokollektorilähtö päästää linjan, ja
+* vetovastus Rp lataa väylän kapasitanssia Cb käyttöjännitteeseen.
+* Linja vapautuu hetkellä 0, jolloin väylä on 0 V (IC=0); 3,3 V:n väylä.
+.param Rp=4.7k Cb=200p
+Vdd vdd 0 DC 3.3
+Rp vdd sda {Rp}
+Cb sda 0 {Cb} IC=0
+.control
+tran 1n 3u uic
+meas tran t30 WHEN v(sda)=0.99 RISE=1
+meas tran t70 WHEN v(sda)=2.31 RISE=1
+let tr = t70 - t30
+print tr
+.endc
+.end

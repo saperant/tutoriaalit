@@ -1,0 +1,14 @@
+* NPN-transistori kytkimenä: 3,3 V:n mikrokontrollerin lähtö ohjaa
+* 12 V:n kuormaa (120 ohm, noin 100 mA). Kantavastus 470 ohm.
+.include transistorit.lib
+.param Rb=470
+Vohjaus ohj 0 DC 3.3
+Vsyotto vcc 0 DC 12
+Rb ohj b {Rb}
+Rkuorma vcc c 120
+Q1 c b 0 QNPN
+.control
+op
+print @rb[i] @rkuorma[i] v(c) v(b)
+.endc
+.end

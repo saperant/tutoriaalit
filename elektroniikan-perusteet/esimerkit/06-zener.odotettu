@@ -1,0 +1,6 @@
+syöttö   lähtö    zener-virta
+  9.0 V  5.160 V   12.3 mA
+ 10.0 V  5.182 V   16.7 mA
+ 11.0 V  5.199 V   21.2 mA
+ 12.0 V  5.215 V   25.6 mA
+lähtö muuttuu 55 mV, kun syöttö muuttuu 3 V

@@ -1,0 +1,14 @@
+* RC-alipäästösuodin: R = 1 kohm, C = 100 nF, rajataajuus noin 1,59 kHz.
+* AC-analyysi: lähteen amplitudi 1 V, joten v(ulos) on suoraan vahvistus.
+V1 sisaan 0 DC 0 AC 1
+R1 sisaan ulos 1k
+C1 ulos 0 100n
+.control
+set units=degrees
+ac dec 50 10 1Meg
+meas ac f3db WHEN vdb(ulos)=-3.0103 FALL=1
+meas ac vahv10k FIND vdb(ulos) AT=15.9155k
+meas ac vaihe FIND vp(ulos) AT=1.59155k
+wrdata alipaasto.dat vdb(ulos) vp(ulos)
+.endc
+.end

@@ -1,0 +1,7 @@
+Kolmen RC-asteen ketju:
+  C = 10 nF    simuloitu   7.30 kHz   laskettu   7.30 kHz   ok
+               kuormitusta huomioimatta    8114 Hz
+  C = 22 nF    simuloitu   3.32 kHz   laskettu   3.32 kHz   ok
+               kuormitusta huomioimatta    3688 Hz
+  C = 47 nF    simuloitu   1.55 kHz   laskettu   1.55 kHz   ok
+               kuormitusta huomioimatta    1726 Hz

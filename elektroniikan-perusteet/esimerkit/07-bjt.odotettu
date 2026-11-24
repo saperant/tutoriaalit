@@ -1,0 +1,4 @@
+I_c = 98 mA, I_b = 4.9 mA, R_b = 519 ohm -> E12: 470 ohm
+  I_c          simuloitu    98.2 mA   laskettu    98.3 mA   ok
+  I_b          simuloitu    5.19 mA   laskettu    5.43 mA   ok
+U_CE = 0.218 V, häviö transistorissa 21 mW

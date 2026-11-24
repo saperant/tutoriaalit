@@ -1,0 +1,16 @@
+* Theveninin vastine kokeellisesti: sama silta kuin 03-solmut.cir,
+* mutta solmusta b otetaan kuormavirta virtalähteellä Ikuorma, jota
+* pyyhkäistään 0...2 mA. Jännite laskee suoraan Theveninin mallin mukaan.
+V1 v1 0 DC 10
+V2 v2 0 DC 5
+R1 v1 a 1k
+R2 a 0 2k
+R3 a b 1k
+R4 b v2 2k
+R5 b 0 1k
+Ikuorma b 0 DC 0
+.control
+dc Ikuorma 0 2m 0.1m
+wrdata thevenin.dat v(b)
+.endc
+.end

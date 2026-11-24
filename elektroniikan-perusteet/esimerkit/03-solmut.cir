@@ -1,0 +1,19 @@
+* Kahden lähteen silta: solmujännitteet SPICEllä.
+*        R1        R3        R4
+*  V1 --/\/\-- a --/\/\-- b --/\/\-- V2
+*              |          |
+*              R2         R5
+*              |          |
+*             maa        maa
+V1 v1 0 DC 10
+V2 v2 0 DC 5
+R1 v1 a 1k
+R2 a 0 2k
+R3 a b 1k
+R4 b v2 2k
+R5 b 0 1k
+.control
+op
+print v(a) v(b)
+.endc
+.end

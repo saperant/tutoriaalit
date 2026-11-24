@@ -1,0 +1,14 @@
+* Zener-säädin: 9...12 V:n syöttö, sarjavastus 220 ohm,
+* 5,1 V:n zener ja 1 kohm:n kuorma.
+.include diodit.lib
+V1 sisaan 0 DC 12
+Rs sisaan ulos 220
+Dz 0 ulos DZ51
+Rkuorma ulos 0 1k
+.control
+dc V1 9 12 1
+let isarja = (v(sisaan) - v(ulos)) / 220
+let izener = isarja - v(ulos) / 1k
+wrdata zener.dat v(ulos) izener
+.endc
+.end

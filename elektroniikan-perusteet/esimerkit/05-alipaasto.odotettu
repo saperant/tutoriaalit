@@ -1,0 +1,4 @@
+RC-alipäästö, f_c = 1591.5 Hz:
+  f(-3 dB)     simuloitu   1.59 kHz   laskettu   1.59 kHz   ok
+  10 f_c       simuloitu   -20.0 dB   laskettu   -20.0 dB   ok
+  vaihe f_c    simuloitu -45.0 aste   laskettu -45.0 aste   ok

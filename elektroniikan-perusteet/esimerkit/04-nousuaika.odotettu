@@ -1,0 +1,4 @@
+I2C-väylä, Rp = 4,7 kohm, Cb = 200 pF:
+  t_r          simuloitu     796 ns   laskettu     796 ns   ok
+  100 kbit/s: Rp enintään 5.90 kohm
+  400 kbit/s: Rp enintään 1.77 kohm

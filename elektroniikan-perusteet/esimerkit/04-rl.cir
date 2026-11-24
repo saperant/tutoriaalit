@@ -1,0 +1,10 @@
+* RL-piiri: 12 V:n askel kelaan L = 10 mH sarjavastuksen 100 ohm kautta.
+V1 sisaan 0 PULSE(0 12 0 1n 1n 10m 20m)
+R1 sisaan l 100
+L1 l 0 10m IC=0
+.control
+tran 1u 0.6m uic
+meas tran t63 WHEN i(L1)=75.8545m RISE=1
+meas tran ilop FIND i(L1) AT=0.5m
+.endc
+.end

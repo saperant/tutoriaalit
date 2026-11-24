@@ -1,0 +1,11 @@
+* Yleismittari kuormittaa mitattavaa piiriä: jakaja 1 Mohm / 1 Mohm
+* ja mittarin sisäresistanssi 10 Mohm rinnan alemman vastuksen kanssa.
+V1 syotto 0 DC 10
+R1 syotto ulos 1Meg
+R2 ulos 0 1Meg
+Rmittari ulos 0 10Meg
+.control
+op
+print v(ulos)
+.endc
+.end

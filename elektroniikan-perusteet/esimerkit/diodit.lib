@@ -1,0 +1,10 @@
+* Esimerkkien diodimallit. Parametrit ovat tyypillisiä arvoja, eivät
+* minkään valmistajan takuuarvoja.
+* Pienitehoinen kytkentädiodi (1N4148:n kaltainen):
+.model DPIEN D(IS=2.52n N=1.752 RS=0.568 BV=100 IBV=100u CJO=4p TT=20n)
+* Tasasuuntausdiodi (1N4001:n kaltainen):
+.model DTEHO D(IS=14.1n N=1.984 RS=33.9m BV=50 IBV=5u CJO=25.9p TT=5.7u)
+* Punainen LED: suuri kaistaero näkyy pienenä IS:nä.
+.model LEDPUN D(IS=1e-20 N=1.8 RS=5 BV=5)
+* Zener-diodi, läpilyönti noin 5,1 V:ssä:
+.model DZ51 D(IS=1n N=1.5 RS=2 BV=5.1 IBV=5m)

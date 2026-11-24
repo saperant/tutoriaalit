@@ -133,6 +133,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Konenäkö (OpenCV) | [`konenako/`](konenako/) | [konenako.pdf](https://saperant.github.io/tutoriaalit/materiaalit/konenako.pdf) |
 | Matematiikan perusteet ohjelmallisesti | [`matematiikan-perusteet/`](matematiikan-perusteet/) | [matematiikan-perusteet.pdf](https://saperant.github.io/tutoriaalit/materiaalit/matematiikan-perusteet.pdf) |
 | Differentiaali- ja integraalilaskenta | [`analyysi/`](analyysi/) | [analyysi.pdf](https://saperant.github.io/tutoriaalit/materiaalit/analyysi.pdf) |
+| Elektroniikan perusteet ja SPICE | [`elektroniikan-perusteet/`](elektroniikan-perusteet/) | [elektroniikan-perusteet.pdf](https://saperant.github.io/tutoriaalit/materiaalit/elektroniikan-perusteet.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

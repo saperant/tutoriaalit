@@ -82,7 +82,7 @@ flowchart LR
     eda_skriptaus["✓ EDA-työkaluketjujen automatisointi"]
     hls["✓ Korkean tason synteesi"]
     dsp_laitteisto["✓ DSP-algoritmien laitteistototeutus"]
-    elektroniikan_perusteet["Elektroniikan perusteet ja SPICE"]
+    elektroniikan_perusteet["✓ Elektroniikan perusteet ja SPICE"]
     analogiaelektroniikka["Analogiaelektroniikka"]
     kuvausstandardit["✓ Laitteiston kuvausstandardit (SystemRDL, IP-XACT)"]
     asic_toteutus["✓ ASIC-toteutus"]
@@ -375,7 +375,7 @@ flowchart LR
 
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
-| Elektroniikan perusteet ja SPICE | 5 | Matematiikan perusteet ohjelmallisesti | suunniteltu |
+| Elektroniikan perusteet ja SPICE | 5 | Matematiikan perusteet ohjelmallisesti | [valmis](../elektroniikan-perusteet/) |
 | RTL-suunnittelu SystemVerilogilla | 5 | Digitaalitekniikka | [valmis](../rtl-suunnittelu/) |
 | RTL-suunnittelu VHDL:llä | 5 | Digitaalitekniikka | [valmis](../vhdl/) |
 | ASIC-toteutus | 5 | RTL-suunnittelu SystemVerilogilla | [valmis](../asic-toteutus/) |

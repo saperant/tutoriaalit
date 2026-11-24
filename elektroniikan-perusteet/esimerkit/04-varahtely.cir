@@ -1,0 +1,12 @@
+* Painikkeen värähtely: kosketin pomppii noin 2 ms ennen kuin se
+* pysyy kiinni. Raaka signaali (PWL-lähde) ja RC-suodatettu signaali.
+Vraaka raaka 0 PWL(0 3.3 1m 3.3 1.01m 0 1.2m 0 1.21m 3.3 1.5m 3.3
++ 1.51m 0 1.6m 0 1.61m 3.3 1.9m 3.3 1.91m 0 2.0m 0 2.01m 2.5
++ 2.2m 2.5 2.21m 0 10m 0)
+R1 raaka suod 10k
+C1 suod 0 22n IC=3.3
+.control
+tran 5u 8m uic
+wrdata varahtely.dat v(raaka) v(suod)
+.endc
+.end

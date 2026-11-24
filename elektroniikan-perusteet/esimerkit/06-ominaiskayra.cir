@@ -1,0 +1,12 @@
+* Diodin ominaiskäyrä: jännitettä pyyhkäistään 0...0,9 V.
+.include diodit.lib
+V1 a 0 DC 0
+D1 a 0 DPIEN
+.control
+dc V1 0 0.9 0.005
+let id = -i(V1)
+wrdata ominaiskayra.dat id
+meas dc u1ma WHEN id=1m CROSS=1
+meas dc u10ma WHEN id=10m CROSS=1
+.endc
+.end

@@ -5,7 +5,7 @@
     "context": "..",
     "args": {
       "LISAPAKETIT": "ngspice",
-      "PIP_PAKETIT": "numpy scipy==1.18.1 scipy-stubs==1.18.1.1 matplotlib ruff mypy pytest"
+      "PIP_PAKETIT": "numpy sympy==1.14.0 scipy==1.18.1 scipy-stubs==1.18.1.1 matplotlib schemdraw==0.23 ruff mypy pytest"
     }
   },
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/elektroniikan-perusteet/esimerkit",

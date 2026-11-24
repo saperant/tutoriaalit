@@ -1,0 +1,4 @@
+|Z| = 50.0 ohm, vaihe-ero 36.9 astetta
+S = 1058 VA, P = 846 W, Q = 635 var, tehokerroin 0.80
+  P            simuloitu      846 W   laskettu      846 W   ok
+  I_eff        simuloitu     4.60 A   laskettu     4.60 A   ok

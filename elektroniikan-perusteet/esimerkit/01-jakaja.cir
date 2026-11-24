@@ -1,0 +1,10 @@
+* Jännitteenjakaja: 12 V syöttö, 10 kohm ja 4,7 kohm.
+* Solmut: syotto, ulos ja maa (0).
+V1 syotto 0 DC 12
+R1 syotto ulos 10k
+R2 ulos 0 4.7k
+.control
+op
+print v(ulos) i(v1)
+.endc
+.end

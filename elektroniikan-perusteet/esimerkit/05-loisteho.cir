@@ -1,0 +1,13 @@
+* Vaihtosähköteho: 230 V 50 Hz, kuormana vastus ja kela sarjassa
+* (kuten moottorin käämi). Keskimääräinen teho mitataan
+* transienttianalyysistä hetkellisen tehon keskiarvona.
+V1 verkko 0 SIN(0 325.27 50)
+R1 verkko a 40
+L1 a 0 95.5m
+.control
+tran 20u 200m
+let p = v(verkko) * (-i(V1))
+meas tran P AVG p FROM=100m TO=200m
+meas tran Ieff RMS i(V1) FROM=100m TO=200m
+.endc
+.end

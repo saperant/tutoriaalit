@@ -1,0 +1,3 @@
+U_F = 1.98 V, laskettu R = 132 ohm -> E12: 150 ohm
+  I_LED        simuloitu    8.88 mA   laskettu    8.80 mA   ok
+  U_F          simuloitu     1.97 V   laskettu     1.98 V   ok

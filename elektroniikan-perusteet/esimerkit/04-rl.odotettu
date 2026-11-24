@@ -1,0 +1,3 @@
+RL-piiri, tau = 100 us:
+  t(63 %)      simuloitu     100 us   laskettu     100 us   ok
+  i(0.5 ms)    simuloitu     119 mA   laskettu     119 mA   ok

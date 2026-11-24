@@ -1,0 +1,8 @@
+ngspice toimii
+  v(b)         simuloitu     5.00 V   laskettu     5.00 V   ok
+  4700 -> 4.70 kX
+  0.0147 -> 14.7 mX
+  1.5e-09 -> 1.50 nX
+  220 -> 220 X
+  2.2e+06 -> 2.20 MX
+  0.000999 -> 999 uX

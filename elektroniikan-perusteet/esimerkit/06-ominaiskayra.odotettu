@@ -1,0 +1,4 @@
+Sovitetut diodiparametrit (malli: IS = 2.52 nA, N = 1.752):
+  I_S          simuloitu    2.52 nA   laskettu    2.52 nA   ok
+  n            simuloitu      1.75    laskettu      1.75    ok
+U(1 mA) = 0.585 V, U(10 mA) = 0.694 V

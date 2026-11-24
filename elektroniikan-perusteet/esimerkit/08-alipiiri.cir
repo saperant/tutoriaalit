@@ -1,0 +1,21 @@
+* Aliohjelma (.subckt) ja parametrit: kolme RC-alipäästöastetta
+* peräkkäin. Silmukka vaihtaa kondensaattorin arvoa ja mittaa
+* rajataajuuden joka kierroksella.
+.subckt rcaste sisaan ulos params: R=1k C=10n
+R1 sisaan ulos {R}
+C1 ulos 0 {C}
+.ends
+.param Caste=10n
+V1 a 0 DC 0 AC 1
+X1 a b rcaste R=1k C={Caste}
+X2 b c rcaste R=10k C={Caste/10}
+X3 c d rcaste R=100k C={Caste/100}
+.control
+foreach arvo 10n 22n 47n
+  alterparam Caste = $arvo
+  reset
+  ac dec 100 10 10Meg
+  meas ac f3db WHEN vdb(d)=-3.0103 FALL=1
+end
+.endc
+.end

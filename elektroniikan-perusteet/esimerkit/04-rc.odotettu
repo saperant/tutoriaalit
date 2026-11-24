@@ -1,0 +1,5 @@
+RC-lataus, tau = 1 ms:
+  t(63 %)      simuloitu    1.00 ms   laskettu    1.00 ms   ok
+  u(1 ms)      simuloitu     3.16 V   laskettu     3.16 V   ok
+  u(5 ms)      simuloitu     4.97 V   laskettu     4.97 V   ok
+  energia täysin ladattuna 1.250 uJ

@@ -1,0 +1,13 @@
+* Logiikkatason MOSFET kytkimenä: 12 V, 6 ohmin kuorma (2 A).
+* Hilajännitettä pyyhkäistään 0...5 V.
+.include transistorit.lib
+Vhila g 0 DC 3.3
+Vsyotto vcc 0 DC 12
+Rkuorma vcc d 6
+M1 d g 0 0 NLOG
+.control
+dc Vhila 0 5 0.1
+let id = (12 - v(d)) / 6
+wrdata mosfet.dat v(d) id
+.endc
+.end

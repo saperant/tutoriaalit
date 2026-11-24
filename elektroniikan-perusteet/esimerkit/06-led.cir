@@ -1,0 +1,11 @@
+* LED ja etuvastus 3,3 V:n mikrokontrollerin lähdöstä.
+.include diodit.lib
+.param Rs=150
+V1 lahto 0 DC 3.3
+R1 lahto a {Rs}
+D1 a 0 LEDPUN
+.control
+op
+print @r1[i] v(a)
+.endc
+.end

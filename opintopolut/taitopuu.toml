@@ -897,6 +897,7 @@ laajuus = 5
 testaus = "ngspice eräajona, tulokset verrataan käsin laskettuihin Pythonilla"
 roadmap = []
 amk = "Elektroniikan perusteet"
+tutoriaali = "elektroniikan-perusteet"
 
 [[taito]]
 id = "analogiaelektroniikka"

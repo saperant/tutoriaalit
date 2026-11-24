@@ -1,0 +1,10 @@
+* Etuvastus 5 V:n syötöstä 2 V:n kuormaan (kuorma mallinnettu
+* jännitelähteenä). Kuinka paljon tehoa vastus kuluttaa?
+V1 syotto 0 DC 5
+R1 syotto kuorma 47
+V2 kuorma 0 DC 2
+.control
+op
+print @r1[i] @r1[p]
+.endc
+.end

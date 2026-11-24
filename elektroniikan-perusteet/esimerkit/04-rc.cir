@@ -1,0 +1,12 @@
+* RC-piirin lataus: 5 V:n askel, R = 10 kohm, C = 100 nF (tau = 1 ms).
+V1 sisaan 0 PULSE(0 5 0 1n 1n 20m 40m)
+R1 sisaan c 10k
+C1 c 0 100n IC=0
+.control
+tran 5u 6m uic
+meas tran t63 WHEN v(c)=3.16060 RISE=1
+meas tran u1ms FIND v(c) AT=1m
+meas tran u5ms FIND v(c) AT=5m
+wrdata rc.dat v(c)
+.endc
+.end

@@ -1,0 +1,22 @@
+* Diodisilta ja suodatuskondensaattori: 12 V (rms) 50 Hz:n
+* muuntajan toisio, 1000 uF ja 100 ohmin kuorma. Tasajännitteen
+* miinusnapa on piirin maa (0).
+.include diodit.lib
+Vtoisio a1 b SIN(0 16.97 50)
+Rkaami a1 a 0.5           ; toisiokäämin resistanssi
+Rmaa b 0 10Meg            ; kelluva toisio tarvitsee DC-polun maahan
+D1 a plus DTEHO
+D2 b plus DTEHO
+D3 0 a DTEHO
+D4 0 b DTEHO
+Csuod plus 0 1000u
+Rkuorma plus 0 100
+.control
+tran 20u 300m
+meas tran umax MAX v(plus) FROM=200m TO=300m
+meas tran umin MIN v(plus) FROM=200m TO=300m
+let aalto = umax - umin
+print aalto
+wrdata tasasuuntaaja.dat v(plus)
+.endc
+.end

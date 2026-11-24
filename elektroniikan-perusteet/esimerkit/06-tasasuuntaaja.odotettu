@@ -1,0 +1,4 @@
+Diodisilta, C = 1000 uF, kuorma 100 ohm:
+  U_max        simuloitu     14.9 V   laskettu     15.3 V   ok
+  karkea rippeliarvio 1.53 V
+  rippeli      simuloitu     1.12 V   laskettu     1.27 V   ok

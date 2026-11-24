@@ -1,0 +1,12 @@
+U_GS = 2.0 V:
+  U_DS         simuloitu     6.87 V   laskettu     6.87 V   ok
+  I_D = 0.85 A, häviö 5.87 W
+U_GS = 2.5 V:
+  U_DS         simuloitu     252 mV   laskettu     252 mV   ok
+  I_D = 1.96 A, häviö 0.49 W
+U_GS = 3.3 V:
+  U_DS         simuloitu     121 mV   laskettu     121 mV   ok
+  I_D = 1.98 A, häviö 0.24 W
+U_GS = 5.0 V:
+  U_DS         simuloitu    59.0 mV   laskettu    59.0 mV   ok
+  I_D = 1.99 A, häviö 0.12 W

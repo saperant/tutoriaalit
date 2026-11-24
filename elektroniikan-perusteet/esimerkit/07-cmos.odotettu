@@ -1,0 +1,6 @@
+W_p = 2.5um:
+  U_M          simuloitu     900 mV   laskettu     900 mV   ok
+  t_pHL 22.0 ps, t_pLH 22.0 ps
+W_p = 1um:
+  U_M          simuloitu     800 mV   laskettu     799 mV   ok
+  t_pHL 22.0 ps, t_pLH 47.5 ps

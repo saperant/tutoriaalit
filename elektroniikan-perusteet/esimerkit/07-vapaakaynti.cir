@@ -1,0 +1,17 @@
+* Induktiivinen kuorma (releen käämi 100 mH, 100 ohm) kytketään pois
+* hetkellä 5 ms. Käämin oma kapasitanssi 100 pF. Vapaakäyntidiodi D1.
+.include transistorit.lib
+.include diodit.lib
+Vsyotto vcc 0 DC 12
+Vhila g 0 PULSE(5 0 5m 100n 100n 20m 40m)
+Lkaami vcc x 100m
+Rkaami x d 100
+Ckaami vcc d 100p
+M1 d g 0 0 NLOG
+D1 d vcc DPIEN
+.control
+tran 10n 8m
+meas tran huippu MAX v(d) FROM=4.9m TO=8m
+meas tran ilaskee WHEN i(Lkaami)=44.1m FALL=1 FROM=5m
+.endc
+.end

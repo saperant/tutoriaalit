@@ -1,0 +1,4 @@
+Etuvastus 47 ohm:
+  I            simuloitu    63.8 mA   laskettu    63.8 mA   ok
+  P            simuloitu     191 mW   laskettu     191 mW   ok
+valitaan 500 mW:n vastus
