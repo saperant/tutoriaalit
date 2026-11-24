@@ -1,0 +1,3 @@
+nollat lisatty  1 kHz  -12.0 dB, peilit  -12.0 dB (11 kHz),  -12.0 dB (13 kHz)
+suodatettu      1 kHz    0.0 dB, peilit -102.7 dB (11 kHz), -102.7 dB (13 kHz)
+upfirdn == lfilter(nollat): True

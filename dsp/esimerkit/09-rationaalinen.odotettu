@@ -1,0 +1,4 @@
+L = 160, M = 147, valitaajuus 7.056 MHz
+oletus: 1 kHz   0.0 dB, 19 kHz -20.1 dB, peili 22,9 kHz -56.4 dB
+oma   : 1 kHz   0.0 dB, 19 kHz -20.0 dB, peili 22,9 kHz alle -100 dB
+oma suodin: 19672 kerrointa, 123 kertolaskua ulostulonaytetta kohti

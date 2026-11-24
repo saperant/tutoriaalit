@@ -1,0 +1,5 @@
+DAC alkaa naytteesta 48, alivuotoja 0, saturaatioita 0
+ulostulo bitilleen sama kuin kerralla: kylla
+latenssi 48 + 7 (ryhmaviive) naytetta = 1.146 ms
+vahvistus 4: saturaatioita 6377 / 9600
+budjetti: 15 MAC/nayte, 0.72 MMAC/s, aikaraja 0.667 ms/lohko

@@ -1,0 +1,7 @@
+lohko 770, FFT 1024: ero lfilteriin alle 1e-12: True
+   N_fft   L   kertolaskuja/nayte (suora: 255)
+     512   258     75.4
+    1024   770     55.9
+    2048  1794     52.5
+    4096  3842     53.3
+   16384 16130     58.9

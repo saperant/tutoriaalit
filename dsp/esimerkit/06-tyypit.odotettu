@@ -1,0 +1,5 @@
+tyyppi  aste  aaltoilu  vaimennus  viive 500 Hz  viive max
+butter    19   0.100 dB   62.6 dB      14.8         26.9
+cheby1     9   0.100 dB   60.3 dB      10.1         32.5
+cheby2     9   0.100 dB   60.0 dB       4.8         10.9
+ellip      6   0.100 dB   60.0 dB       5.3         18.4

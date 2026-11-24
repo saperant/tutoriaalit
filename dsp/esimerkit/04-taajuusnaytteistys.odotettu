@@ -1,0 +1,5 @@
+   500 Hz:  0.00 dB
+  2000 Hz:  6.02 dB
+  6000 Hz:  0.00 dB
+virhe pisteissa alle 1e-12: True
+virhe pisteiden valissa 0.156

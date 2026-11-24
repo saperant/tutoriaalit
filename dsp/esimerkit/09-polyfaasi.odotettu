@@ -1,0 +1,5 @@
+desimoija: 250 ulostuloa, sama kuin suora: kylla
+interpoloija: ero suoraan alle 1e-15: kylla
+kertolaskuja syotenaytetta kohti:
+  desimoija 12 (suora 48)
+  interpoloija 48 (suora 192)

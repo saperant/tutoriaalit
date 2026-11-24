@@ -1,0 +1,5 @@
+naytteita   LMS mu=0,02   NLMS mu=0,5   (virhe painoissa, dB)
+     100         -9.7         -33.0
+     500        -48.9         -37.9
+    1000        -43.8         -37.2
+    5000        -47.5         -41.4

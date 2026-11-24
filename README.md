@@ -118,6 +118,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | GPU-laskenta | [`gpu-laskenta/`](gpu-laskenta/) | [gpu-laskenta.pdf](https://saperant.github.io/tutoriaalit/materiaalit/gpu-laskenta.pdf) |
 | C++:n suorituskyky | [`cpp-suorituskyky/`](cpp-suorituskyky/) | [cpp-suorituskyky.pdf](https://saperant.github.io/tutoriaalit/materiaalit/cpp-suorituskyky.pdf) |
 | Rinnakkaisohjelmointi | [`rinnakkaisohjelmointi/`](rinnakkaisohjelmointi/) | [rinnakkaisohjelmointi.pdf](https://saperant.github.io/tutoriaalit/materiaalit/rinnakkaisohjelmointi.pdf) |
+| Digitaalinen signaalinkäsittely | [`dsp/`](dsp/) | [dsp.pdf](https://saperant.github.io/tutoriaalit/materiaalit/dsp.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

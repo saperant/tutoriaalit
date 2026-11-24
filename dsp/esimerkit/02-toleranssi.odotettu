@@ -1,0 +1,8 @@
+eteen vs. taakse: suhteellinen ero 3e-15
+np.dot samaa luokkaa: True
+ULP luvussa 1.0   2.220e-16
+ULP luvussa 1000  1.137e-13
+float32:n ULP 1.0 1.192e-07
+ylaraja 1.4e-08, todellinen ero 3e-13
+pelkka rtol nollan kohdalla: False
+atol signaalin tasoon: True

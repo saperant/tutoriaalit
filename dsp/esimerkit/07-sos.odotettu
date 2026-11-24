@@ -1,0 +1,7 @@
+suurin |napa|
+  lohkoista, float64   0.9962
+  lohkoista, float32   0.9962
+  polynomista, float32 1.11
+impulssivaste, polynomi float64 virhe 6.7e-02
+impulssivaste, polynomi float32 virhe hajosi (inf)
+impulssivaste, lohkot float32   virhe 2.4e-04

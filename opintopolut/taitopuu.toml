@@ -842,6 +842,7 @@ laajuus = 5
 testaus = "Python-referenssit ja C-toteutukset, numeeriset toleranssit"
 roadmap = []
 amk = "Digitaalinen signaalinkäsittely"
+tutoriaali = "dsp"
 
 [[taito]]
 id = "tiedonsiirto"

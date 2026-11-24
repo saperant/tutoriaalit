@@ -1,0 +1,3 @@
+21 bittia: sama kuin (laatikko*3)-konvoluutio: True
+20 bittia: sama kuin (laatikko*3)-konvoluutio: False
+tasavahvistus R^N = 512, integraattori ylivuoti: True

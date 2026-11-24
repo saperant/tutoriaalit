@@ -1,0 +1,9 @@
+  50 Hz: b0 = 1.07e-05, |napa| 0.99538
+  Q2.14: b pyoristyi nollaksi
+  Q2.30: DC   0.00 dB, -3 dB    50.1 Hz
+ 500 Hz: b0 = 1.02e-03, |napa| 0.95477
+  Q2.14: DC   0.13 dB, -3 dB   499.8 Hz
+  Q2.30: DC   0.00 dB, -3 dB   500.1 Hz
+5000 Hz: b0 = 7.22e-02, |napa| 0.63099
+  Q2.14: DC   0.00 dB, -3 dB  4999.3 Hz
+  Q2.30: DC   0.00 dB, -3 dB  5000.1 Hz

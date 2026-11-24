@@ -1,0 +1,11 @@
+FIR vs. lfilter                    <= 1e-12   OK
+FIR symmetrinen vs. lfilter        <= 1e-12   OK
+FIR lohkoittain vs. kerralla       bitilleen  OK
+SOS DF2T vs. sosfilt               <= 1e-10   OK
+SOS DF1 vs. sosfilt                <= 1e-10   OK
+RBJ-alipaasto vs. butter(2)        <= 1e-12   OK
+FFT vs. numpy.fft                  <= 1e-12   OK
+desimoija vs. upfirdn              <= 1e-12   OK
+interpoloija vs. upfirdn           <= 1e-12   OK
+NLMS vs. Python-malli              <= 1e-09   OK
+Q15-kasittelija vs. malli          bitilleen  OK

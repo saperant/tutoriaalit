@@ -1,0 +1,5 @@
+ 300 Hz: vahvistus   -0.01 dB
+3000 Hz: vahvistus  -85.50 dB
+lohkoittain == kerralla: kylla
+symmetrinen muoto, ero alle 1e-15: kylla
+kertolaskuja naytteelle: suora 31, symmetrinen 16
