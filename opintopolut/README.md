@@ -95,7 +95,7 @@ flowchart LR
   end
   subgraph hajautetut["Verkot ja hajautetut järjestelmät"]
     tietoverkot["✓ Tietoverkot"]
-    verkko_ohjelmointi["Verkko-ohjelmointi"]
+    verkko_ohjelmointi["✓ Verkko-ohjelmointi"]
     hajautetut_jarjestelmat["Hajautetut järjestelmät"]
     jarjestelmasuunnittelu["Skaalautuvien järjestelmien suunnittelu"]
     kontit_ja_pilvi["✓ Säiliöt ja pilvi-infrastruktuuri"]
@@ -385,7 +385,7 @@ flowchart LR
 | Palvelinympäristöt | 5 | Säiliöt ja pilvi-infrastruktuuri, Verkkoinfrastruktuuri | [valmis](../palvelinymparistot/) |
 | Palveluarkkitehtuurit | 5 | Säiliöt ja pilvi-infrastruktuuri, Taustapalvelut | [valmis](../palveluarkkitehtuurit/) |
 | Tietoliikennetekniikka | 5 | Python työkaluohjelmointiin, Tietoverkot, Todennäköisyys ja tilastot | [valmis](../tietoliikennetekniikka/) |
-| Verkko-ohjelmointi | 5 | Käyttöjärjestelmät, Tietoverkot | suunniteltu |
+| Verkko-ohjelmointi | 5 | Käyttöjärjestelmät, Tietoverkot | [valmis](../verkko-ohjelmointi/) |
 | Hajautetut järjestelmät | 5 | Algoritmit, Rinnakkaisohjelmointi, Verkko-ohjelmointi | suunniteltu |
 | Skaalautuvien järjestelmien suunnittelu | 5 | Hajautetut järjestelmät, SQL ja relaatiotietokannat | suunniteltu |
 

@@ -1,0 +1,9 @@
+datagrammi 1:    5 tavua, lähettäjä a: kyllä
+datagrammi 2:    0 tavua, lähettäjä a: kyllä
+datagrammi 3: 1200 tavua, lähettäjä a: kyllä
+10 tavun puskuriin: datagrammin todellinen koko 100, loput hävisivät
+65508 tavun datagrammi: EMSGSIZE
+sendto suljettuun porttiin: onnistui
+yhdistämätön soketti, recv: EAGAIN
+yhdistetty soketti, send: onnistui
+yhdistetty soketti, recv: ECONNREFUSED

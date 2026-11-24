@@ -1,0 +1,19 @@
+// Luvun 9 laskinpalvelu gRPC-rajapintana. protoc tuottaa tästä
+// asiakkaan tyngän ja palvelimen rungon eri kielille.
+syntax = "proto3";
+
+package laskin.v1;
+
+service Laskin {
+  rpc Summa(Pari) returns (Luku);
+  rpc Jaa(Pari) returns (Luku);   // b = 0: INVALID_ARGUMENT
+}
+
+message Pari {
+  sint32 a = 1;                    // kentän numero, ei järjestys
+  sint32 b = 2;
+}
+
+message Luku {
+  sint32 arvo = 1;
+}

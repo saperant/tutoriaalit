@@ -1,0 +1,9 @@
+asiakas: vastaus "18 tavua"
+-- kirjoitus suljettuun yhteyteen, MSG_NOSIGNAL:
+1. send: onnistui
+2. send: EPIPE
+-- sama ilman lippua:
+1. send: onnistui
+lapsi: PIPE
+-- palvelin katkaisee yhteyden (SO_LINGER, aika 0):
+recv: ECONNRESET

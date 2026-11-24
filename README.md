@@ -110,6 +110,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Kääntäjätekniikka | [`kaantajatekniikka/`](kaantajatekniikka/) | [kaantajatekniikka.pdf](https://saperant.github.io/tutoriaalit/materiaalit/kaantajatekniikka.pdf) |
 | Signaalit ja järjestelmät | [`signaalit-ja-jarjestelmat/`](signaalit-ja-jarjestelmat/) | [signaalit-ja-jarjestelmat.pdf](https://saperant.github.io/tutoriaalit/materiaalit/signaalit-ja-jarjestelmat.pdf) |
 | Edistyneet algoritmit ja tietorakenteet | [`edistyneet-algoritmit/`](edistyneet-algoritmit/) | [edistyneet-algoritmit.pdf](https://saperant.github.io/tutoriaalit/materiaalit/edistyneet-algoritmit.pdf) |
+| Verkko-ohjelmointi | [`verkko-ohjelmointi/`](verkko-ohjelmointi/) | [verkko-ohjelmointi.pdf](https://saperant.github.io/tutoriaalit/materiaalit/verkko-ohjelmointi.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

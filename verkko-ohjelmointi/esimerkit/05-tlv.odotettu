@@ -1,0 +1,6 @@
+binääri (23 tavua):
+  01 01 00 05 73 61 75 6e 61 02 00 04 00 00 20 3a
+  03 00 04 69 24 81 00
+teksti (45 tavua): anturi=sauna;lampotila=82.50;aika=1764000000
+uusi kenttä mukana: ok, anturi sauna, 82.50 astetta
+versio 2: versio

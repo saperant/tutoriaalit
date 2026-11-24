@@ -1,0 +1,4 @@
+yksi recv sai 23 tavua: eka viesti
+toka viesti
+1. recv pyysi 1048576 tavua, sai vähemmän: kyllä
+lue_tasan luki loput, tarkistussumma täsmää: kyllä

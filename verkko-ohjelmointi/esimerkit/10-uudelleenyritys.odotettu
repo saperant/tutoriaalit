@@ -1,0 +1,8 @@
+t =    0 ms, yritys 1: ECONNREFUSED
+t =   69 ms, yritys 2: ECONNREFUSED
+t =  200 ms, yritys 3: ECONNREFUSED
+t =  265 ms, yritys 4: ECONNREFUSED
+t =  944 ms, yritys 5: ECONNREFUSED
+t = 1340 ms, yritys 6: onnistui
+ilman satunnaisuutta: pahimmassa jaksossa 1000 yritystä
+täysi satunnaisuus: pahimmassa jaksossa 69 yritystä

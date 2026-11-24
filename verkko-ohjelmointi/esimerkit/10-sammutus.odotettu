@@ -1,0 +1,6 @@
+asiakas: ALOITETTU
+asiakas: SIGTERM lähetetty kesken työn
+asiakas: VALMIS
+asiakas: palvelin sulki yhteyden (EOF)
+uusi yhteys: ECONNREFUSED
+palvelimen paluuarvo: 0

@@ -1,0 +1,9 @@
+          0 -> 1 tavua: 00             takaisin: ok
+          1 -> 1 tavua: 02             takaisin: ok
+        127 -> 2 tavua: fe 01          takaisin: ok
+        128 -> 2 tavua: 80 02          takaisin: ok
+        300 -> 2 tavua: d8 04          takaisin: ok
+         -1 -> 1 tavua: 01             takaisin: ok
+        -64 -> 1 tavua: 7f             takaisin: ok
+ 4294967296 -> 5 tavua: 80 80 80 80 20 takaisin: ok
+katkennut varint: 0 tavua purettu

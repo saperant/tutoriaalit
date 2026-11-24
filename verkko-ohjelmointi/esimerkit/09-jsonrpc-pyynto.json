@@ -1,0 +1,4 @@
+[
+  {"jsonrpc": "2.0", "id": 1, "method": "summa", "params": [40, 2]},
+  {"jsonrpc": "2.0", "id": 2, "method": "jaa", "params": [7, 0]}
+]

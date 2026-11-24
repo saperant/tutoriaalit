@@ -1,0 +1,6 @@
+tyhjä estämätön soketti: EAGAIN
+100 tavua saapui:       taso 1, reuna 1
+luettu 10, 90 jäljellä: taso 1, reuna 0
+1 tavu lisää:           taso 1, reuna 1
+tyhjennys luki 91 tavua ja päättyi: EAGAIN
+vastapuoli sulki: EPOLLRDHUP kyllä

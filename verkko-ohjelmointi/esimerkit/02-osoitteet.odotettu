@@ -1,0 +1,6 @@
+127.0.0.1      AF_INET , 16 tavua: [127.0.0.1]:8080
+::1            AF_INET6, 28 tavua: [::1]:8080
+2001:db8::42   AF_INET6, 28 tavua: [2001:db8::42]:8080
+192.0.2.300    virhe: Name or service not known
+esimerkki.fi   virhe: Name or service not known
+yhteys syntyi osoitteeseen 127.0.0.1

@@ -1,0 +1,6 @@
+nuku(300)      = 0
+summa(40, 2)   = 42
+jaa(7, 0)      : virhe: virheellinen argumentti
+metodi 9       : virhe: tuntematon metodi
+nuku(500)      : virhe: määräaika ylittyi
+hidas vastaus saapui viimeisenä: kyllä

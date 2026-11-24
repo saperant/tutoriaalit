@@ -1,0 +1,4 @@
+bind kanssa SO_REUSEADDR: onnistui
+-- palvelin käynnistyy uudelleen samaan porttiin:
+bind ilman SO_REUSEADDR: EADDRINUSE
+bind kanssa SO_REUSEADDR: onnistui

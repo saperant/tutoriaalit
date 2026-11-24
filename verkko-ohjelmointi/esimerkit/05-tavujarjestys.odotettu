@@ -1,0 +1,5 @@
+muistissa:     0d 0c 0b 0a
+htonl:         0a 0b 0c 0d
+kirjoita_u32:  0a 0b 0c 0d
+lue_u32 palauttaa: 0x0a0b0c0d
+sizeof(struct otsake) = 8, kenttiä yhteensä 5 tavua

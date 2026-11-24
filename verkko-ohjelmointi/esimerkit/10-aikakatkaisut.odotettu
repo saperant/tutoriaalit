@@ -1,0 +1,9 @@
+1. yhteys:               yhteys
+2. yhteys, jono täynnä:  ETIMEDOUT
+suljettu portti:         ECONNREFUSED
+vastauksen odotus:       EAGAIN
+SO_KEEPALIVE      = 1
+TCP_KEEPIDLE      = 30
+TCP_KEEPINTVL     = 5
+TCP_KEEPCNT       = 3
+TCP_USER_TIMEOUT  = 20000
