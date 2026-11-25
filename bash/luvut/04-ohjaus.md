@@ -108,6 +108,31 @@ Laskuri-silmukalle on C:n kaltainen muoto:
 valinnaisen sisäkkäisyystason (`break 2`). Aaltosulkulaajennus
 `{1..10}` tuottaa lukujonon, mutta sen rajat eivät voi olla muuttujia.
 
+`nullglob` on yksi `shopt`-komennolla kytkettävistä asetuksista, jotka
+muuttavat globien ja putkien toimintaa. Skripteissä hyödyllisimmät ovat:
+
+| Asetus | Vaikutus |
+|--------|----------|
+| `nullglob` | Kuvio, joka ei täsmää mihinkään, laajenee tyhjäksi |
+| `globstar` | `**` täsmää hakemistoihin rekursiivisesti: `lahde/**/*.c` |
+| `extglob` | Laajennetut kuviot, esim. `!(*.bak)` ja `+([0-9])` |
+| `dotglob` | `*` täsmää myös pisteellä alkaviin nimiin |
+| `lastpipe` | Putken viimeinen osa ajetaan skriptin omassa kuoressa |
+| `inherit_errexit` | Komentokorvaus perii `set -e`:n (luku 7) |
+
+```{.bash tiedosto="esimerkit/04-shopt.sh" osa="shopt"}
+```
+
+```{.tuloste tiedosto="esimerkit/04-shopt.odotettu"}
+```
+
+`**` ilman `globstar`-asetusta toimii kuin `*` eikä varoita, joten asetus
+on helppo unohtaa. `lastpipe` ratkaisee luvun 2 sudenkuopan, jossa putken
+perässä olevan `while read` -silmukan muuttujat katoavat: silmukka ajetaan
+nyt skriptin omassa kuoressa, ja `maara` säilyy. Asetus toimii vain
+skripteissä, ei vuorovaikutteisessa kuoressa. Asetus kytketään
+`shopt -s`:llä ja puretaan `shopt -u`:lla.
+
 ## Funktiot
 
 Funktio määritellään `nimi() { … }` ja kutsutaan kuten komentoa.
@@ -194,6 +219,8 @@ kirjoitetaan erikseen aina, kun oikea puoli on komentokorvaus.
   säännöllisellä lausekkeella ja aritmeettisella ehdolla.
 - Osaat käydä tiedostot läpi globilla ja `find -print0`:lla niin, että
   välilyönnit ja rivinvaihdot nimissä eivät riko silmukkaa.
+- Osaat valita `shopt`-asetukset (`nullglob`, `globstar`, `lastpipe`)
+  skriptin tarpeen mukaan.
 - Osaat palauttaa funktiosta arvon tulosteena, onnistumisen paluuarvona
   ja taulukon nimiviittauksella.
 - Osaat selittää, miksi `local x=$(komento)` peittää virheen ja miten sen

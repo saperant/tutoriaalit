@@ -6,6 +6,10 @@ päälle. Tuloksena on suora historia, mutta commitit ovat uusia olioita.
 Tässä luvussa opetellaan rebase, historian siistiminen ennen jakamista
 ja rebasen tärkein sääntö.
 
+Historia *jaetaan* lähettämällä commitit palvelimelle komennolla
+`git push`, josta muut hakevat ne (seuraava luku). Siihen asti commitit
+ovat vain omassa repositoriossa, ja niitä voi muokata vapaasti.
+
 ## Rebase
 
 Haarassa `sanat` on kaksi committia, ja `main` on edennyt yhdellä:
@@ -22,7 +26,12 @@ ja toistaa ne yksi kerrallaan `main`in kärjen päälle:
 Commitien sisältö ja viestit ovat samat, mutta tunnisteet muuttuivat.
 Vanhempi on eri, joten commit on eri olio (luku *Gitin tietomalli*).
 Vanhat commitit ovat yhä olemassa, ja ne löytyvät viitteistä `ORIG_HEAD`
-ja reflog. Nyt `main` voidaan pikakelata, ja historia on suora:
+ja reflog.
+
+```{.dot tiedosto="kaaviot/06-rebase.dot" otsikko="Rebase toistaa haaran commitit uusina olioina main-haaran kärjen päälle. Vanhat commitit (katkoviiva) jäävät reflogiin."}
+```
+
+Nyt `main` voidaan pikakelata, ja historia on suora:
 
 ```{.bash tiedosto="esimerkit/06-rebase.sh" osa="pikakelaus"}
 ```
@@ -53,9 +62,37 @@ committinaan ja merkitään korjaukseksi:
 ```
 
 `git rebase -i --autosquash` siirtää `fixup!`-commitit automaattisesti
-korjattavan commitin perään ja merkitsee ne yhdistettäviksi. Normaalisti
-tehtävälista avautuu editoriin. Skriptissä se muokataan
-`GIT_SEQUENCE_EDITOR`-muuttujalla, tässä pudottamaan WIP-commit:
+korjattavan commitin perään ja merkitsee ne yhdistettäviksi. Editoriin
+avautuu tehtävälista, jossa vanhin commit on ylimpänä:
+
+```text
+pick 4d82131 Sanalaskuri
+fixup b60dd3c fixup! Sanalaskuri
+pick 7c13621 WIP väliaikainen tuloste
+pick 1f93e83 Merkkilaskuri
+
+# Rebase 3900f6e..b60dd3c onto 3900f6e (4 commands)
+#
+# Commands:
+# p, pick <commit> = use commit
+# r, reword <commit> = use commit, but edit the commit message
+# ...
+```
+
+`--autosquash` on jo siirtänyt korjauksen toiselle riville ja vaihtanut
+sen komennoksi `fixup`. WIP-commit pudotetaan vaihtamalla sen rivin
+komento:
+
+```text
+pick 4d82131 Sanalaskuri
+fixup b60dd3c fixup! Sanalaskuri
+drop 7c13621 WIP väliaikainen tuloste
+pick 1f93e83 Merkkilaskuri
+```
+
+Kun tiedosto tallennetaan ja editori suljetaan, Git suorittaa rivit
+ylhäältä alas. Skriptissä sama muokkaus tehdään
+`GIT_SEQUENCE_EDITOR`-muuttujalla:
 
 ```{.bash tiedosto="esimerkit/06-siistiminen.sh" osa="interaktiivinen"}
 ```

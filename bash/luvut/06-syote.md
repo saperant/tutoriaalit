@@ -55,6 +55,10 @@ Huomioita:
 
 ## Uudelleenohjaukset
 
+Virrat ja uudelleenohjauksen perusteet kuuluvat taitoon *Komentorivi ja
+Linux*. Taulukko kertaa ne ja lisää muodot, joita tarvitaan lähinnä
+skripteissä (neljä viimeistä riviä):
+
 | Merkintä | Merkitys |
 |----------|----------|
 | `> t`, `>> t` | vakiotuloste tiedostoon, korvaten tai lisäten |
@@ -132,7 +136,9 @@ Bash-silmukka on hidas, koska jokainen kierros tulkitaan erikseen ja
 ulkoiset komennot käynnistävät prosessin. `awk` käsittelee kaikki rivit
 yhdessä prosessissa ja tuntee kentät, assosiatiiviset taulukot ja
 liukuluvut. Raja kulkee näin: Bash ohjaa työtä (tiedostot, komennot,
-virheet), ja `awk` käsittelee rivit.
+virheet), ja `awk` käsittelee rivit. Itse awk-kieli opetetaan taidossa
+*Komentorivi ja Linux*; tässä näytetään vain, miten se liitetään
+skriptiin.
 
 Esimerkki laskee vasteaikojen keskiarvon ja virheiden määrän polku
 kerrallaan:

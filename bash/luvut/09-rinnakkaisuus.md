@@ -1,4 +1,4 @@
-# Putket, prosessit ja rinnakkaiset työt {.runko-rinnakkaisuus}
+# Prosessit ja rinnakkaiset työt {.runko-rinnakkaisuus}
 
 Bashin rinnakkaisuus on prosessien rinnakkaisuutta. Säikeitä ja jaettua
 muistia ei ole: jokainen putken osa, taustatyö ja alikuori on oma
@@ -17,6 +17,23 @@ ja lukitus, käsitellään taitopuun taidossa *Rinnakkaisohjelmointi*.
 | `a` \| `b` | kumpikin osa alikuoressa | ei |
 | `komento &` | taustalla oleva alikuori | ei, vain paluuarvo `wait`:lla |
 | `<(komento)` | alikuori, tuloste tiedostona | ei |
+
+```{.dot otsikko="Rakenteet, jotka luovat uuden prosessin: lapsi saa kopion muuttujista, ja takaisin kulkee vain tuloste tai paluuarvo"}
+digraph {
+  nodesep=0.35;
+  kuori [label="skriptin kuori\n(muuttujat, funktiot)"];
+  a [label="a"]; b [label="b"];
+  s [label="( komennot )"];
+  k [label="$(komento)"];
+  t [label="komento &"];
+  kuori -> a; kuori -> b; kuori -> s; kuori -> k; kuori -> t;
+  {rank=same; a; b; s; k; t}
+  a -> b [label="putki"];
+  s -> kuori [style=dashed, label=" paluuarvo", constraint=false];
+  k -> kuori [style=dashed, label=" tuloste", constraint=false];
+  t -> kuori [style=dashed, label=" paluuarvo\n (wait)", constraint=false];
+}
+```
 
 Alikuori perii muuttujien kopiot, funktiot ja avoimet tiedostot, mutta
 muutokset eivät palaa. Tätä voi käyttää hyväksi: `( cd hakemisto &&
@@ -63,7 +80,8 @@ lopuksi.
 
 Kun sama komento ajetaan monelle syötteelle, `xargs -P` hoitaa
 rinnakkaisuuden rajoituksen itse. `find -print0 | xargs -0` käsittelee
-mielivaltaiset tiedostonimet. Esimerkki pakkaa lokit neljällä
+mielivaltaiset tiedostonimet (komennot `find` ja `xargs` esitellään
+taidossa *Komentorivi ja Linux*). Esimerkki pakkaa lokit neljällä
 rinnakkaisella `gzip`-prosessilla:
 
 ```{.bash tiedosto="esimerkit/09-xargs.sh" osa="xargs"}

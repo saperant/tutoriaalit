@@ -32,7 +32,7 @@ komennot ovat valmiiksi idempotentteja: `mkdir -p`, `ln -sfn`,
 `install -d`, `cp` samalla sisällöllä ja `systemctl enable`. Rivin
 lisäys tiedostoon (`>>`) ja `useradd` eivät ole, joten ne tarvitsevat
 tarkistuksen. `grep -qxF` vertaa koko riviä kiinteänä merkkijonona,
-joten rivin erikoismerkit eivät tulkitu säännöllisenä lausekkeena.
+joten rivin erikoismerkkejä ei tulkita säännöllisenä lausekkeena.
 
 ## Kuivaharjoitus
 
@@ -65,6 +65,26 @@ ja palvelu käyttää symbolista linkkiä `nykyinen`, joka käännetään
 osoittamaan uuteen versioon:
 
 ```{.bash tiedosto="esimerkit/10-julkaisu.sh" osa="vaihto"}
+```
+
+```{.dot otsikko="Linkin vaihto: uusi linkki luodaan väliaikaisella nimellä ja nimetään vanhan päälle"}
+digraph {
+  rankdir=LR; nodesep=0.25;
+  subgraph cluster_e {
+    label="ln -sfn v1.10.0 nykyinen.uusi"; color="#D9E0E3";
+    e1 [label="nykyinen", shape=plaintext];
+    e2 [label="nykyinen.uusi", shape=plaintext];
+    ev1 [label="v1.9.0/"]; ev2 [label="v1.10.0/"];
+    e1 -> ev1; e2 -> ev2;
+  }
+  subgraph cluster_j {
+    label="mv -T nykyinen.uusi nykyinen"; color="#D9E0E3";
+    j1 [label="nykyinen", shape=plaintext];
+    jv1 [label="v1.9.0/"]; jv2 [label="v1.10.0/"];
+    j1 -> jv2;
+  }
+  ev2 -> j1 [style=invis];
+}
 ```
 
 Version hakemisto valmistellaan nimellä `.kesken` ja nimetään valmiiksi

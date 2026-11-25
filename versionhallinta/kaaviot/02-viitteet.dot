@@ -1,0 +1,11 @@
+digraph {
+  nodesep=0.25; ranksep=0.3;
+  node [margin="0.1,0.05"];
+  k0_3078605 [label="3078605\nEnsimmäinen versio"];
+  k0_e8abc3c [label="e8abc3c\nSuomenkielinen nimi"];
+  k0_af3213c [label="af3213c\nTarkempi kuvaus"];
+  k0_3078605 -> k0_e8abc3c [dir=back];
+  k0_e8abc3c -> k0_af3213c [dir=back];
+  k0_vaf3213c [label="HEAD → main", shape=box, style="filled", fillcolor="#FBEFD5", margin="0.08,0.03"];
+  {rank=same; k0_af3213c -> k0_vaf3213c [dir=back];}
+}

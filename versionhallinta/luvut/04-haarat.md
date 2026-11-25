@@ -27,6 +27,9 @@ yhdistämiscommittia:
 ```{.tuloste tiedosto="esimerkit/04-haarat.odotettu"}
 ```
 
+```{.dot tiedosto="kaaviot/04-pikakelaus.dot" otsikko="Pikakelaus: uutta committia ei synny, vaan viite main siirtyy samaan committiin kuin sanat"}
+```
+
 `git branch -d` poistaa vain yhdistetyn haaran. `-D` poistaa
 yhdistämättömänkin, jolloin sen commitit jäävät vain reflogiin.
 
@@ -66,6 +69,29 @@ tiedostossa, koska ne koskivat eri kohtia. `--graph` piirtää historian
 haarautumisen. Yhdistämiscommitin ensimmäinen vanhempi on haara, johon
 yhdistettiin (`HEAD^1`), ja toinen on yhdistetty haara (`HEAD^2`).
 
+```{.dot tiedosto="kaaviot/04-yhdistaminen.dot" otsikko="Kolmen osapuolen yhdistäminen: haarat ovat erkaantuneet yhteisestä kannasta, ja yhdistämiscommitilla on kaksi vanhempaa"}
+```
+
+## Haarojen vertailu: revisiovälit
+
+Ennen yhdistämistä halutaan usein tietää, mitä haarassa on. Revisioväli
+`A..B` tarkoittaa committeja, jotka ovat saavutettavissa B:stä mutta
+eivät A:sta. Kolmen pisteen väli `A...B` tarkoittaa committeja, jotka
+ovat vain jommassakummassa. Esimerkissä haarassa `sanat` on kaksi omaa
+committia ja `main` on edennyt yhdellä:
+
+```{.bash tiedosto="esimerkit/04-valit.sh" osa="valit"}
+```
+
+```{.tuloste tiedosto="esimerkit/04-valit.odotettu"}
+```
+
+Komennossa `git diff` pisteet tarkoittavat eri asiaa kuin lokissa:
+`git diff main...sanat` näyttää haaran muutokset yhteisestä kannasta
+lähtien, eli saman, minkä pull request näyttää. `git diff main sanat`
+(tai `main..sanat`) vertaa haarojen kärkiä, jolloin mukana ovat
+käänteisinä myös `main`in omat muutokset.
+
 ## Yhdistää vai ei yhdistämiscommittia
 
 Pikakelaus jättää historian suoraksi, mutta haaran olemassaolo katoaa.
@@ -92,6 +118,10 @@ päähaaran omat askeleet ilman haarojen sisäisiä committeja (luku
 - **Kuvaavat haaranimet.** `korjaus/kirjautuminen-aikakatkaisu` tai
   `ominaisuus/haku-suodattimet` kertoo enemmän kuin `testi2`. Kauttaviiva
   ryhmittelee haarat työkaluissa.
+- **Kiireellinen korjaus kesken työn.** Keskeneräisen työn voi viedä
+  talteen (`git stash`, luku *Muutokset ja commitit*) tai avata toisen
+  haaran omaan hakemistoonsa (`git worktree`, luku *Työnkulut ja
+  repositorion rakenne*).
 - **`git branch --merged main`** listaa haarat, jotka voi poistaa, ja
   `--no-merged` haarat, joissa on vielä yhdistämätöntä työtä.
 
@@ -103,5 +133,7 @@ päähaaran omat askeleet ilman haarojen sisäisiä committeja (luku
   `--ff-only` on turvallinen oletus.
 - Osaat selittää kolmen osapuolen yhdistämisen ja yhteisen kannan
   merkityksen.
+- Osaat näyttää revisiovälillä, mitkä commitit ja muutokset haarassa
+  on päähaaraan verrattuna (`main..haara`, `git diff main...haara`).
 - Osaat valita perustellusti yhdistämisen, `--no-ff`:n ja `--squash`in
   välillä.

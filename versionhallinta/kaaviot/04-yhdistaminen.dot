@@ -1,0 +1,31 @@
+digraph {
+  nodesep=0.25; ranksep=0.3;
+  node [margin="0.1,0.05"];
+  subgraph cluster_0 {
+    label="ennen"; color="#D9E0E3";
+    k0_cc88b93 [label="cc88b93\nRivilaskuri\n(yhteinen kanta)", penwidth=2.2];
+    k0_ed17563 [label="ed17563\nSanalaskuri"];
+    k0_0abe37d [label="0abe37d\nPääohjelma"];
+    k0_cc88b93 -> k0_ed17563 [dir=back];
+    k0_cc88b93 -> k0_0abe37d [dir=back];
+    k0_v0abe37d [label="HEAD → main", shape=box, style="filled", fillcolor="#FBEFD5", margin="0.08,0.03"];
+    {rank=same; k0_0abe37d -> k0_v0abe37d [dir=back];}
+    k0_ved17563 [label="sanat", shape=box, style="filled", fillcolor="#FBEFD5", margin="0.08,0.03"];
+    {rank=same; k0_ed17563 -> k0_ved17563 [dir=back];}
+  }
+  subgraph cluster_1 {
+    label="git merge sanat"; color="#D9E0E3";
+    k1_cc88b93 [label="cc88b93\nRivilaskuri"];
+    k1_0abe37d [label="0abe37d\nPääohjelma"];
+    k1_ed17563 [label="ed17563\nSanalaskuri"];
+    k1_3068629 [label="3068629\nMerge branch 'sanat'"];
+    k1_cc88b93 -> k1_0abe37d [dir=back];
+    k1_cc88b93 -> k1_ed17563 [dir=back];
+    k1_0abe37d -> k1_3068629 [dir=back];
+    k1_ed17563 -> k1_3068629 [dir=back];
+    k1_v3068629 [label="HEAD → main", shape=box, style="filled", fillcolor="#FBEFD5", margin="0.08,0.03"];
+    {rank=same; k1_3068629 -> k1_v3068629 [dir=back];}
+    k1_ved17563 [label="sanat", shape=box, style="filled", fillcolor="#FBEFD5", margin="0.08,0.03"];
+    {rank=same; k1_ed17563 -> k1_ved17563 [dir=back];}
+  }
+}

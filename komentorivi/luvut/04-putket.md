@@ -36,6 +36,24 @@ väliä: `> tiedosto 2>&1` vie molemmat tiedostoon, mutta `2>&1 >
 tiedosto` vie virheet sinne, minne tuloste oli menossa ennen
 ohjausta, tässä putkeen:
 
+```{.dot otsikko="Ohjausten järjestys: 2>&1 kopioi virran 1 senhetkisen kohteen"}
+digraph {
+  rankdir=LR; nodesep=0.2; ranksep=0.5;
+  subgraph cluster_a {
+    label="komento > tiedosto 2>&1"; color="#D9E0E3";
+    a1 [label="1 tuloste"]; a2 [label="2 virheet"];
+    at [label="tiedosto", shape=note]; ap [label="pääte tai putki"];
+    a1 -> at; a2 -> at; a2 -> ap [style=invis];
+  }
+  subgraph cluster_b {
+    label="komento 2>&1 > tiedosto"; color="#D9E0E3";
+    b1 [label="1 tuloste"]; b2 [label="2 virheet"];
+    bt [label="tiedosto", shape=note]; bp [label="pääte tai putki"];
+    b1 -> bt; b2 -> bp;
+  }
+}
+```
+
 ```{.bash tiedosto="esimerkit/04-ohjaukset.sh" osa="jarjestys"}
 ```
 
@@ -53,7 +71,20 @@ Putki `a | b` yhdistää komennon `a` tulosteen komennon `b` syötteeseen.
 Komennot käynnistyvät samanaikaisesti ja käsittelevät dataa virtana:
 `b` saa ensimmäiset rivit ennen kuin `a` on valmis, eikä välitulosta
 tarvitse mahtua muistiin. Jos `b` lopettaa aikaisin (esim. `head`),
-`a` saa signaalin `SIGPIPE` ja lopettaa myös.
+`a` saa signaalin `SIGPIPE` ja lopettaa myös. Putkeen kulkee vain
+vakiotuloste; virhetulosteet menevät edelleen päätteelle:
+
+```{.dot otsikko="Putki a | b yhdistää vain vakiotulosteen seuraavan komennon syötteeseen"}
+digraph {
+  rankdir=LR; nodesep=0.3;
+  a [label="a"]; b [label="b"];
+  paate [label="pääte"];
+  a -> b [label="tuloste (1) → syöte (0)"];
+  a -> paate [label="virheet (2)", style=dashed];
+  b -> paate [label="tuloste (1)"];
+  b -> paate [label="virheet (2)", style=dashed];
+}
+```
 
 `tee` haaroittaa virran: se kirjoittaa syötteensä tiedostoon ja
 tulosteeseen, joten välituloksen voi tallentaa putken keskeltä:
@@ -99,7 +130,23 @@ ensimmäisen tiedoston rivi 2 poistetaan, ja `3a3`, että rivin 3
 jälkeen lisätään. Ihmiselle luettavampi muoto on `diff -u`, jota myös
 versionhallinta käyttää.
 
-## Komentojen ketjutus
+## Paluuarvot ja komentojen ketjutus
+
+Jokainen komento palauttaa päättyessään *paluuarvon*, luvun 0–255.
+Arvo 0 tarkoittaa onnistumista ja muu arvo epäonnistumista. Kuori
+tallettaa edellisen komennon paluuarvon muuttujaan `$?`, ja sen varaan
+rakentuvat ketjutukset `&&` ja `||`:
+
+```{.bash tiedosto="esimerkit/04-paluuarvo.sh" osa="paluuarvo"}
+```
+
+```{.tuloste tiedosto="esimerkit/04-paluuarvo.odotettu"}
+```
+
+`grep` palauttaa 1, kun osumia ei ole, ja 2 virheessä. `ls` palauttaa
+2 vakavassa virheessä. Arvot on dokumentoitu kunkin komennon
+ohjesivulla, ja niiden varaan voi rakentaa ehtoja. Komentoja voi
+yhdistää samalle riville usealla tavalla:
 
 - `a; b`: `b` ajetaan aina `a`:n jälkeen.
 - `a && b`: `b` vain, jos `a` onnistui.

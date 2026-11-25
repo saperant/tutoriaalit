@@ -36,7 +36,8 @@ koukkuina käsitellään taidossa *Tietoturva kehitystyössä*.
 ## .gitignore
 
 `.gitignore` kertoo, mitä seuraamattomia tiedostoja Git ei näytä eikä
-lisää. Rivit ovat glob-kuvioita: `/` lopussa rajaa hakemistoihin, `/`
+lisää (perusteet luvussa *Muutokset ja commitit*). Rivit ovat
+glob-kuvioita: `/` lopussa rajaa hakemistoihin, `/`
 alussa repositorion juureen, `**` mihin tahansa syvyyteen, ja `!`
 palauttaa aiemmin ohitetun:
 

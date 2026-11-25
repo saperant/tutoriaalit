@@ -53,7 +53,7 @@ kahdesta toisistaan riippumattomasta korjauksesta. Asetus kannattaa
 ottaa käyttöön globaalisti.
 
 Koko tiedoston voi valita toiselta puolelta komennolla
-`git checkout --ours` tai `--theirs`. Se sopii esimerkiksi
+`git restore --ours` tai `--theirs`. Se sopii esimerkiksi
 lukitustiedostoille, jotka generoidaan uudelleen. Jos yhdistämisestä
 halutaan luopua, `git merge --abort` palauttaa tilan ennalleen:
 

@@ -36,7 +36,8 @@ subtitle: Pikaopas · Git 2.43+
 | Erot | `git diff` (työ↔valm.), `git diff --staged` (valm.↔HEAD) |
 | Peru valmistelu | `git restore --staged t` |
 | Hylkää muutos | `git restore t` (peruuttamaton) |
-| Talteen | `git stash`, `git stash pop` |
+| Talteen | `git stash -u`, `git stash pop`, `git stash list` |
+| Älä versioi | `.gitignore`: `build/`, `*.log`, `.env`; `git clean -n` |
 | Commit | `git commit -m "Otsikko" -m "Miksi"` |
 | Korjaa viimeisin | `git commit --amend` (vain jakamaton) |
 
@@ -51,6 +52,7 @@ subtitle: Pikaopas · Git 2.43+
 | Commit | `git show --stat X` |
 | Rivit | `git blame t`, `git log -L 10,20:t`, `git log -L :f:t` |
 | Mitä on tulossa | `git fetch; git log main..origin/main` |
+| Haaran omat | `git log main..haara`, `git diff main...haara` |
 
 # Haarat ja yhdistäminen
 

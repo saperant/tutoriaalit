@@ -18,6 +18,18 @@ ei ole työhakemistoa. Palvelimen repositorio on täsmälleen tällainen.
 kertoo, missä palvelimen `main` oli viimeksi, kun siitä kuultiin. Sitä ei
 voi siirtää itse. Se päivittyy vain `fetch`in ja `push`in yhteydessä.
 
+Oikea palvelin vaatii tunnistautumisen, ja tapa näkyy repositorion
+osoitteesta. SSH-osoite (`git@palvelin:tiimi/laskuri.git`) käyttää
+SSH-avainparia: julkinen avain lisätään palvelun käyttäjäasetuksiin, ja
+yksityinen pysyy omalla koneella (taito *Komentorivi ja Linux*, luku
+ssh:sta). HTTPS-osoite (`https://palvelin/tiimi/laskuri.git`) kysyy
+käyttäjätunnuksen ja salasanan tilalla käytettävän henkilökohtaisen
+*käyttöoikeustunnisteen* (access token), jonka palvelu luo ja jonka
+oikeudet ja voimassaolon voi rajata. Tunnisteen tallentaa
+tunnistetietojen säilö (`git config --global credential.helper …`),
+jottei sitä kysytä joka kerta. Komento `git remote -v` näyttää, kumpaa
+osoitetta repositorio käyttää.
+
 ## Fetch ja pull
 
 Olli kloonaa ja pushaa oman muutoksensa. Esimerkeissä toinen henkilö
@@ -29,6 +41,9 @@ on funktio, joka asettaa tekijätiedot:
 ```{.bash tiedosto="esimerkit/07-eta.sh" osa="olli-tyo"}
 ```
 
+```{.dot tiedosto="kaaviot/07-kolme-repoa.dot" otsikko="Kolme repositoriota Ollin pushin jälkeen: Ainon origin/main kertoo yhä tilanteen, jossa palvelin oli, kun Aino viimeksi oli siihen yhteydessä"}
+```
+
 Ainon repositorio ei tiedä tästä mitään ennen kuin se hakee muutokset.
 `git fetch` päivittää etäseurantahaarat mutta ei koske omiin haaroihin.
 Sen jälkeen omaan haaraan voi yhdistää, jolloin `git pull` on
@@ -38,6 +53,9 @@ Sen jälkeen omaan haaraan voi yhdistää, jolloin `git pull` on
 ```
 
 ```{.tuloste tiedosto="esimerkit/07-eta.odotettu"}
+```
+
+```{.dot tiedosto="kaaviot/07-haku.dot" otsikko="Ainon repositorio: fetch tuo commitin ja siirtää etäseurantahaaraa, ja vasta yhdistäminen siirtää omaa haaraa"}
 ```
 
 `git status -sb` näyttää suhteen etähaaraan: `[behind 1]` tarkoittaa,
@@ -53,6 +71,9 @@ historian siistiminen*). Sen jälkeen push onnistuu ja historia pysyy
 suorana:
 
 ```{.bash tiedosto="esimerkit/07-ristiriita.sh" osa="hylatty"}
+```
+
+```{.dot tiedosto="kaaviot/07-hylatty.dot" otsikko="Hylätty push: palvelimen main ei ole Ainon commitin esivanhempi, joten viitteen siirto ei olisi pikakelaus"}
 ```
 
 ```{.bash tiedosto="esimerkit/07-ristiriita.sh" osa="pull-rebase"}
@@ -121,6 +142,7 @@ upstream …`), josta haetaan päivitykset.
 
 - Osaat selittää etäseurantahaaran ja oman haaran eron sekä `fetch`in ja
   `pull`in eron.
+- Osaat kertoa, miten SSH- ja HTTPS-osoitteen tunnistautuminen eroavat.
 - Osaat toimia, kun push hylätään, koska etäpää on edennyt.
 - Osaat selittää, miksi `--force-with-lease` on turvallisempi kuin
   `--force`.

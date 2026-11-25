@@ -1,4 +1,4 @@
-# Tiedostojen etsintä ja massatoiminnot
+# Etsintä, massatoiminnot ja arkistot
 
 Jokerimerkit riittävät yhteen hakemistoon. Kun tiedostoja etsitään
 koko puusta nimen, koon, iän tai oikeuksien perusteella ja niille
@@ -131,8 +131,8 @@ asennuspaketti vastaa julkaistua tai varmuuskopio on ehjä.
 ```{.tuloste tiedosto="esimerkit/08-arkisto.odotettu"}
 ```
 
-Hakemistojen synkronointiin ja etäkopiointiin on `rsync` (luku
-*Etäkäyttö: ssh*). Se siirtää vain muuttuneet osat ja osaa poistaa
+Hakemistojen synkronointiin ja etäkopiointiin on `rsync` (luku *Verkko
+ja etäkäyttö: ssh*). Se siirtää vain muuttuneet osat ja osaa poistaa
 kohteesta tiedostot, jotka on poistettu lähteestä (`--delete`).
 
 ## Käytännössä

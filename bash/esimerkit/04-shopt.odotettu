@@ -1,0 +1,5 @@
+kaikki: lahde/paa.c
+kaikki: lahde/testit/t_jono.c
+kaikki: lahde/ydin/jono.c
+ei testit: lahde/ydin/jono.c
+otsikkotiedostoja: 1

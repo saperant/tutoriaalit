@@ -12,8 +12,9 @@
    Jaetun virheen peruu `revert`.
 6. **`--force-with-lease`, ei `--force`.** `pull.ff only` tai
    `pull.rebase true` oletukseksi.
-7. **Mikään commitoitu ei katoa heti.** Reflog muistaa 90 päivää, ja
-   varmuusviite (`git branch varmuus`) maksaa yhden tiedoston.
+7. **Mikään commitoitu ei katoa heti.** Reflog muistaa hylätynkin
+   commitin 30 päivää, ja varmuusviite (`git branch varmuus`) maksaa
+   yhden tiedoston.
 8. **Julkaisu on annotoitu tagi**, josta CI rakentaa artefaktit.
 9. **`.gitignore` ja `.gitattributes` alusta asti.** Käännöstuotteet,
    riippuvuudet ja salaisuudet eivät kuulu historiaan.
@@ -26,8 +27,10 @@
 - *Tietoturva kehitystyössä* käsittelee salaisuusvuodot ja niiden
   siivouksen historiasta, commitien ja julkaisujen allekirjoitukset sekä
   haarasuojaukset.
-- *Kontit ja pilvi* esittelee GitOpsin, jossa versionhallinta on myös
-  infrastruktuurin totuuden lähde.
+- *Jatkuva integraatio ja toimitus* syventää runkopohjaista kehitystä
+  ja toimitusputkea.
+- *Kontit ja pilvi-infrastruktuuri* esittelee GitOpsin, jossa
+  versionhallinta on myös infrastruktuurin totuuden lähde.
 
 ## Lähteet ja lisämateriaali
 

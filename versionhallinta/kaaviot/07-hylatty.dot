@@ -1,0 +1,30 @@
+digraph {
+  nodesep=0.25; ranksep=0.3;
+  node [margin="0.1,0.05"];
+  subgraph cluster_0 {
+    label="Aino"; color="#D9E0E3";
+    k0_3900f6e [label="3900f6e\nREADME"];
+    k0_71a9f71 [label="71a9f71\nRivilaskuri"];
+    k0_3900f6e -> k0_71a9f71 [dir=back];
+    k0_v71a9f71 [label="main", shape=box, style="filled", fillcolor="#FBEFD5", margin="0.08,0.03"];
+    {rank=same; k0_71a9f71 -> k0_v71a9f71 [dir=back];}
+    k0_v3900f6e [label="origin/main", shape=box, style="filled", fillcolor="#FBEFD5", margin="0.08,0.03"];
+    {rank=same; k0_3900f6e -> k0_v3900f6e [dir=back];}
+  }
+  subgraph cluster_1 {
+    label="palvelin"; color="#D9E0E3";
+    k1_3900f6e [label="3900f6e\nREADME"];
+    k1_91d60f2 [label="91d60f2\nLisenssi"];
+    k1_3900f6e -> k1_91d60f2 [dir=back];
+    k1_v91d60f2 [label="main", shape=box, style="filled", fillcolor="#FBEFD5", margin="0.08,0.03"];
+    {rank=same; k1_91d60f2 -> k1_v91d60f2 [dir=back];}
+  }
+  subgraph cluster_2 {
+    label="Olli"; color="#D9E0E3";
+    k2_3900f6e [label="3900f6e\nREADME"];
+    k2_91d60f2 [label="91d60f2\nLisenssi"];
+    k2_3900f6e -> k2_91d60f2 [dir=back];
+    k2_v91d60f2 [label="main\norigin/main", shape=box, style="filled", fillcolor="#FBEFD5", margin="0.08,0.03"];
+    {rank=same; k2_91d60f2 -> k2_v91d60f2 [dir=back];}
+  }
+}

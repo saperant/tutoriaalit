@@ -1,0 +1,12 @@
+ M laskuri.py
+?? muistio.txt
+stash@{0}: On main: sanalaskuri kesken
+== pop
+ M laskuri.py
+?? muistio.txt
+0
+== clean
+Would remove ajo.tmp
+Would remove muistio.txt
+ M laskuri.py
+?? muistio.txt

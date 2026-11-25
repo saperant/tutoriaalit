@@ -1,0 +1,22 @@
+digraph {
+  nodesep=0.25; ranksep=0.3;
+  node [margin="0.1,0.05"];
+  subgraph cluster_0 {
+    label="ennen"; color="#D9E0E3";
+    k0_3900f6e [label="3900f6e\nREADME"];
+    k0_7ae97c6 [label="7ae97c6\nSanalaskuri"];
+    k0_3900f6e -> k0_7ae97c6 [dir=back];
+    k0_v3900f6e [label="main", shape=box, style="filled", fillcolor="#FBEFD5", margin="0.08,0.03"];
+    {rank=same; k0_3900f6e -> k0_v3900f6e [dir=back];}
+    k0_v7ae97c6 [label="HEAD → sanat", shape=box, style="filled", fillcolor="#FBEFD5", margin="0.08,0.03"];
+    {rank=same; k0_7ae97c6 -> k0_v7ae97c6 [dir=back];}
+  }
+  subgraph cluster_1 {
+    label="git merge --ff-only sanat"; color="#D9E0E3";
+    k1_3900f6e [label="3900f6e\nREADME"];
+    k1_7ae97c6 [label="7ae97c6\nSanalaskuri"];
+    k1_3900f6e -> k1_7ae97c6 [dir=back];
+    k1_v7ae97c6 [label="HEAD → main\nsanat", shape=box, style="filled", fillcolor="#FBEFD5", margin="0.08,0.03"];
+    {rank=same; k1_7ae97c6 -> k1_v7ae97c6 [dir=back];}
+  }
+}

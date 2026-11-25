@@ -15,6 +15,10 @@ Päähaara on aina julkaisukelpoinen, koska CI testaa jokaisen muutoksen.
 ```{.bash tiedosto="esimerkit/11-runko.sh" osa="lyhyet"}
 ```
 
+Käytännöt, joiden varassa malli toimii (pienet erät, ominaisuusliput ja
+jokaisen muutoksen testaava CI-putki), käsitellään taidossa *Jatkuva
+integraatio ja toimitus*.
+
 `--first-parent` seuraa vain päähaaran omia askeleita, joten jokainen
 ominaisuus näkyy yhtenä rivinä, vaikka haaroissa oli useampi commit.
 Julkaisuhaara tehdään tarvittaessa tagista vain korjauksia varten, ja
@@ -58,12 +62,16 @@ repositoriossa. *Polyrepossa* jokainen on omansa.
 Suuressa monorepossa ei tarvitse ladata eikä purkaa kaikkea. Osittainen
 työhakemisto (`sparse-checkout`) purkaa vain valitut hakemistot, ja
 osittainen kloonaus (`--filter=blob:none`) hakee tiedostojen sisällön
-vasta tarvittaessa. *Työpuut* (worktree) antavat saman repositorion
-toisen haaran omaan hakemistoonsa ilman toista kloonia, esimerkiksi
-kiireellistä korjausta varten kesken muun työn:
+vasta tarvittaessa:
 
 ```{.bash tiedosto="esimerkit/11-monorepo.sh" osa="sparse"}
 ```
+
+*Työpuu* (worktree) on repositorion toinen työhakemisto, jossa on eri
+haara. Se ei liity monorepoon vaan sopii mihin tahansa repositorioon:
+kiireellisen korjauksen voi tehdä omassa hakemistossaan ilman toista
+kloonia ja koskematta keskeneräiseen työhön. Suuressa repositoriossa
+hyöty on suurin, koska toinen klooni olisi kallis:
 
 ```{.bash tiedosto="esimerkit/11-monorepo.sh" osa="worktree"}
 ```

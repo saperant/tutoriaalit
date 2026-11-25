@@ -34,6 +34,23 @@ kirjoitusoikeudesta (*w*, 2) ja suoritusoikeudesta (*x*, 1).
 Oktaalimuodossa jokainen numero on joukon oikeuksien summa: `750` on
 `rwxr-x---`.
 
+```{.dot otsikko="Oikeudet `rwxr-x---` ovat oktaalina `750`: jokainen numero on yhden joukon bittien summa"}
+digraph {
+  node [shape=plaintext];
+  t [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="6">
+    <tr><td colspan="3" bgcolor="#EEF2F4">omistaja (u)</td>
+        <td colspan="3" bgcolor="#EEF2F4">ryhmä (g)</td>
+        <td colspan="3" bgcolor="#EEF2F4">muut (o)</td></tr>
+    <tr><td>r</td><td>w</td><td>x</td><td>r</td><td>-</td><td>x</td>
+        <td>-</td><td>-</td><td>-</td></tr>
+    <tr><td>4</td><td>2</td><td>1</td><td>4</td><td>0</td><td>1</td>
+        <td>0</td><td>0</td><td>0</td></tr>
+    <tr><td colspan="3">4 + 2 + 1 = 7</td><td colspan="3">4 + 0 + 1 = 5</td>
+        <td colspan="3">0 + 0 + 0 = 0</td></tr>
+  </table>>];
+}
+```
+
 | Oikeus | Tiedostolle | Hakemistolle |
 |--------|-------------|--------------|
 | `r` | Sisällön luku | Nimien listaus |
@@ -80,7 +97,9 @@ palveluyksikössä (`UMask=0027`, luku *Paketit, palvelut ja lokit*).
 
 Tyypillinen tilanne: verkkosivuston tiedostot on kopioitu arkistosta
 tai Windows-levyltä, ja oikeudet ovat sekaisin. Kaikkien
-kirjoitettavissa olevat tiedostot löytyvät `find -perm`-ehdolla:
+kirjoitettavissa olevat tiedostot löytyvät `find -perm`-ehdolla
+(komento `find` käsitellään luvussa *Etsintä, massatoiminnot ja
+arkistot*):
 
 ```{.bash tiedosto="esimerkit/03-korjaus.sh" osa="etsinta"}
 ```
@@ -123,7 +142,9 @@ setgid-hakemisto ja umask `002` ovat tiimin jaetun hakemiston
 perusresepti: kaikki uudet tiedostot kuuluvat projektiryhmälle ja ovat
 ryhmän kirjoitettavissa. setuid-ohjelmat ovat tietoturvan kannalta
 herkkiä, ja ne löytää komennolla `find / -perm -4000 -type f
-2>/dev/null`.
+2>/dev/null`. Loppuosa `2>/dev/null` piilottaa virheilmoitukset
+hakemistoista, joihin ei ole lukuoikeutta (luku *Putket ja
+uudelleenohjaukset*).
 
 Hienojakoisempiin tarpeisiin, kuten yhden lisäkäyttäjän lukuoikeuteen,
 on ACL-luettelot (`setfacl -m u:olli:r tiedosto`, `getfacl`).

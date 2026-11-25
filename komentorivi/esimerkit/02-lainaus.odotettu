@@ -1,0 +1,7 @@
+Yksinkertaiset: $nimi ja *.txt sellaisenaan
+Kaksinkertaiset: vuosi raportti.txt, 8 tavua, *.txt
+Lainaamaton: muistio.txt vuosi raportti.txt
+<vuosi>
+<raportti.txt>
+<vuosi raportti.txt>
+Kenoviiva poistaa merkityksen: $nimi ja "lainaus"

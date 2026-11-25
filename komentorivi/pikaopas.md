@@ -20,6 +20,9 @@ subtitle: Pikaopas · GNU-työkalut · Ubuntu 24.04 · Bash 5.2
 |---------|---------|
 | Listaus | `ls -lah`, `ls -lt` (uusin ensin), `stat -c '%a %n' t` |
 | Kopio, siirto | `cp -a l k`, `mv v u`, `mkdir -p a/b` |
+| Katselu | `less t` (`/sana`, `n`, `G`, `q`), `tail -f loki`, `file t` |
+| Editori | nano: Ctrl+O, Ctrl+X; vi: `i`, Esc, `:wq`, `:q!` |
+| Lainaus | `'…'` kirjaimellinen; `"$m"` laajentaa, ei jaa sanoiksi |
 | Linkit | `ln -s kohde nimi`, `ln -sfn uusi nimi`, `readlink -f` |
 | Tila | `df -h`, `du -xh --max-depth=1 /var` |
 | Polut | `basename p .c`, `dirname p`, `realpath p` |
@@ -95,7 +98,7 @@ pystyviiva vaihtoehdoille.
 ```
 
 - `$0 $1 $NF NR NF`; `BEGIN`, `END`; alustamaton muuttuja on 0 tai tyhjä.
-- Ubuntun oletus on `mawk`: ei `gensub`, `asort`, `strftime`.
+- Ubuntun oletus on `mawk`: ei `gensub`- eikä `asort`-funktiota.
 
 # Reseptit
 
@@ -150,6 +153,7 @@ pystyviiva vaihtoehdoille.
 | Muutos | `sudo systemctl edit s`, `daemon-reload` |
 | Loki | `journalctl -u s -f`, `-p err`, `-b`, `--since` |
 | Epäonnistuneet | `systemctl list-units --failed` |
+| Ajastus | `crontab -e` (min tunti pv kk vkpv), `systemctl list-timers` |
 
 # ssh
 
@@ -163,3 +167,5 @@ pystyviiva vaihtoehdoille.
 | Siirto | `scp t h:/p`, `rsync -av --dry-run --delete l/ h:/p/` |
 | Tunneli | `ssh -L 5433:localhost:5432 h`, `ssh -J hyppy h` |
 | Istunto | `tmux new -s n`, Ctrl+B d, `tmux attach -t n` |
+| Verkko | `ip addr`, `getent hosts h`, `ping -c 3 h`, `ss -tlnp` |
+| HTTP | `curl -fsS URL`, `curl -I URL`, `curl -fsS -o t URL` |

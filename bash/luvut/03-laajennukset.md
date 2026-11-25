@@ -23,8 +23,8 @@ Käytäntönä on:
   vahingossa korvaa ympäristömuuttujaa: muuttuja nimeltä `PATH` tai
   `USER` muuttaisi koko skriptin toimintaa.
 - **`export`** vain muuttujille, jotka lapsiprosessien on nähtävä.
-  Viejä on tavallinen muuttuja, joka kopioidaan käynnistettävien ohjelmien
-  ympäristöön.
+  Viety muuttuja on tavallinen muuttuja, joka kopioidaan käynnistettävien
+  ohjelmien ympäristöön.
 - **`local`** kaikille funktion muuttujille (luku 4).
 
 ## Laajennusten järjestys
@@ -41,6 +41,32 @@ tuntee, lainauksen säännöt ovat johdonmukaisia:
 5. **polkunimilaajennus** (*glob*): sanat, joissa on `*`, `?` tai `[`,
    korvataan täsmäävillä tiedostonimillä
 6. lainausmerkkien poisto
+
+Kuva seuraa yhtä komentoriviä vaiheiden läpi. Muuttujan `nimi` arvo on
+`kesän raportti`, ja hakemistossa on tiedostot `a.txt`, `b.txt` ja
+`ohje.md`. Kullakin rivillä on korostettu se, mitä vaihe muutti, ja
+pystyviiva erottaa jaon tuottamat sanat. Lopuksi `echo` saa kuusi
+argumenttia.
+
+```{.dot otsikko="Laajennusten järjestys yhdellä komentorivillä: lainattu muuttuja ohittaa vaiheet 4 ja 5"}
+digraph {
+  node [shape=plaintext];
+  t [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="6">
+    <tr><td bgcolor="#EEF2F4" align="left">komentorivi</td>
+        <td align="left"><font face="monospace">echo $nimi "$nimi" *.{txt,md}</font></td></tr>
+    <tr><td bgcolor="#EEF2F4" align="left">1 aaltosulut</td>
+        <td align="left"><font face="monospace">echo $nimi "$nimi" <b>*.txt *.md</b></font></td></tr>
+    <tr><td bgcolor="#EEF2F4" align="left">3 parametrit</td>
+        <td align="left"><font face="monospace">echo <b>kesän raportti</b> "<b>kesän raportti</b>" *.txt *.md</font></td></tr>
+    <tr><td bgcolor="#EEF2F4" align="left">4 sanojen jako</td>
+        <td align="left"><font face="monospace">echo <b>kesän | raportti</b> "kesän raportti" *.txt *.md</font></td></tr>
+    <tr><td bgcolor="#EEF2F4" align="left">5 glob</td>
+        <td align="left"><font face="monospace">echo kesän | raportti "kesän raportti" <b>a.txt | b.txt | ohje.md</b></font></td></tr>
+    <tr><td bgcolor="#EEF2F4" align="left">6 lainausmerkit pois</td>
+        <td align="left"><font face="monospace">echo kesän | raportti | <b>kesän raportti</b> | a.txt | b.txt | ohje.md</font></td></tr>
+  </table>>];
+}
+```
 
 Vaiheet 4 ja 5 kohdistuvat vain lainaamattomiin laajennuksiin.
 Kaksinkertaiset lainausmerkit `"$x"` sallivat vaiheen 3 mutta estävät
@@ -188,6 +214,29 @@ odottaa ja tulostaa desimaalipilkun. Siksi esimerkki asettaa
 `LC_ALL=C`. Skripti, jonka tulostetta toinen ohjelma lukee, asettaa
 lokaalin aina itse.
 
+## Aika ja päivämäärät
+
+Lokirivi tarvitsee aikaleiman ja ajastettu työ keston. Bashissa ei ole
+päivämäärätyyppiä: aika käsitellään sekunteina vuoden 1970 alusta
+(*epoch*), jolloin erotus on tavallista kokonaislukuaritmetiikkaa.
+Muunnokset tekee `date`:
+
+```{.bash tiedosto="esimerkit/03-aika.sh" osa="aika"}
+```
+
+```{.tuloste tiedosto="esimerkit/03-aika.odotettu"}
+```
+
+`printf`:n määre `%(muoto)T` muotoilee sekuntiarvon käynnistämättä
+prosessia, mikä kannattaa lokifunktiossa, jota kutsutaan usein. Arvo
+`-1` tarkoittaa nykyhetkeä: `printf '%(%F %T)T\n' -1`. Muuttuja
+`EPOCHSECONDS` (Bash 5.0) on nykyhetki sekunteina ja `SECONDS` skriptin
+käynnistyksestä kulunut aika. Valitsin `date -d` on GNU-laajennus;
+muotoilumerkit (`%F`, `%T`, `%s`) ovat samat kuin C:n
+`strftime`-funktiossa. Esimerkki asettaa aikavyöhykkeeksi `TZ=UTC`,
+jotta tulos ei riipu koneen asetuksista. Varsinainen kalenterilaskenta
+(viikonpäivät, aikavyöhykkeet, kuukausien pituudet) kuuluu Pythonille.
+
 ## Käytännössä
 
 - **Lainaa jokainen laajennus.** `"$x"`, `"$(komento)"` ja `"${taulu[@]}"`.
@@ -222,3 +271,5 @@ lokaalin aina itse.
   kokonaislukuaritmetiikalla.
 - Osaat kertoa, miksi `printf '%s\n'` on turvallisempi kuin `echo`
   mielivaltaiselle datalle.
+- Osaat tulostaa aikaleiman ja laskea kahden ajanhetken välisen keston
+  sekunteina.

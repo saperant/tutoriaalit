@@ -58,6 +58,14 @@ luo uuden blobin vain muuttuneelle tiedostolle:
 ```{.tuloste tiedosto="esimerkit/02-tilannekuvat.odotettu"}
 ```
 
+```{.dot tiedosto="kaaviot/02-oliot.dot" otsikko="Esimerkin kolme committia puineen ja blobeineen. Muuttumaton sisältö on yksi yhteinen blob."}
+```
+
+Kuva on piirretty esimerkin repositoriosta. Commit osoittaa puuhunsa ja
+vanhempaansa, ja puu antaa blobeille nimet. Ensimmäisen ja toisen
+commitin puut osoittavat samaan blobiin `7b85bcc` eri nimillä: nimi on
+puussa, ei blobissa.
+
 `LICENSE` on sama blob kaikissa kolmessa commitissa. Git ei tallenna
 nimenmuutoksia erikseen. Se *päättelee* ne vertaamalla tilannekuvia:
 jos poistettu ja lisätty tiedosto ovat riittävän samankaltaisia,
@@ -91,11 +99,21 @@ solmuissa. Jos `HEAD` osoittaa suoraan committiin eikä haaraan, ollaan
 eivät ole minkään haaran varassa, mutta ne löytyvät reflogista
 (luku *Historian tutkiminen ja korjaaminen*).
 
+```{.dot tiedosto="kaaviot/02-viitteet.dot" otsikko="Edellisen esimerkin commit-verkko: nuoli osoittaa vanhempaan, ja lappu kertoo, mihin committiin haara ja HEAD osoittavat"}
+```
+
+Tutoriaalin commit-verkkojen kuvat on tuotettu esimerkkien
+repositorioista, joten niiden tunnisteet ovat samat kuin tulosteissa.
+Vanhin commit on ylimpänä.
+
 Revisiot voi nimetä monella tavalla: `HEAD~2` (kaksi sukupolvea taakse
 ensimmäisiä vanhempia pitkin), `HEAD^2` (yhdistämiscommitin toinen
 vanhempi), `main@{yesterday}`, `:/viestin teksti` (uusin commit, jonka
-viestissä on teksti) ja `HEAD:polku` (tiedosto commitissa). `git help
-revisions` luettelee kaikki.
+viestissä on teksti) ja `HEAD:polku` (tiedosto commitissa). Kaksi
+revisiota rajaa *välin*: `A..B` tarkoittaa committeja, jotka ovat
+saavutettavissa B:stä mutta eivät A:sta. Välejä käytetään haarojen
+vertailuun luvussa *Haarat ja yhdistäminen*. `git help revisions`
+luettelee kaikki muodot.
 
 ## Kolme aluetta
 
@@ -109,7 +127,24 @@ Työskentelyssä tiedostolla on kolme olinpaikkaa:
 
 `git add` kopioi tiedoston työhakemistosta valmistelualueelle (ja tekee
 siitä blobin), ja `git commit` tekee valmistelualueesta puun ja commitin.
-Valmistelualue on seuraava luku.
+
+```{.dot otsikko="Kolme aluetta ja komennot, jotka siirtävät tai vertaavat sisältöä niiden välillä"}
+digraph {
+  rankdir=LR; nodesep=0.6; ranksep=1.6;
+  t [label="työhakemisto\n(tiedostot)"];
+  v [label="valmistelualue\n(.git/index)"];
+  r [label="repositorio\n(commitit)"];
+  t:ne -> v:nw [label="git add"];
+  v:ne -> r:nw [label="git commit"];
+  t:e -> v:w [label="git diff", dir=none, style=dotted];
+  v:e -> r:w [label="git diff --staged", dir=none, style=dotted];
+  v:sw -> t:se [label="git restore", style=dashed];
+  r:sw -> v:se [label="git restore --staged", style=dashed];
+}
+```
+
+Yhtenäinen nuoli vie muutoksen kohti historiaa, katkoviiva peruu ja
+pisteviiva vertaa. Komennot käydään läpi seuraavassa luvussa.
 
 ## Käytännössä
 
@@ -139,3 +174,5 @@ Valmistelualue on seuraava luku.
 - Osaat kertoa, mitä haara ja `HEAD` ovat levyllä ja mitä tapahtuu, kun
   teet commitin.
 - Osaat nimetä revision tavoilla `HEAD~2`, `HEAD^2` ja `HEAD:polku`.
+- Osaat nimetä kolme aluetta ja kertoa, mikä komento siirtää sisältöä
+  niiden välillä.

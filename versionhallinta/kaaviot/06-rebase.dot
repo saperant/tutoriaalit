@@ -1,0 +1,36 @@
+digraph {
+  nodesep=0.25; ranksep=0.3;
+  node [margin="0.1,0.05"];
+  subgraph cluster_0 {
+    label="ennen"; color="#D9E0E3";
+    k0_3900f6e [label="3900f6e\nREADME"];
+    k0_7ae97c6 [label="7ae97c6\nSanalaskuri"];
+    k0_d7ba854 [label="d7ba854\nMerkkilaskuri"];
+    k0_6d91bf2 [label="6d91bf2\nLisenssi"];
+    k0_3900f6e -> k0_7ae97c6 [dir=back];
+    k0_7ae97c6 -> k0_d7ba854 [dir=back];
+    k0_3900f6e -> k0_6d91bf2 [dir=back];
+    k0_v6d91bf2 [label="HEAD → main", shape=box, style="filled", fillcolor="#FBEFD5", margin="0.08,0.03"];
+    {rank=same; k0_6d91bf2 -> k0_v6d91bf2 [dir=back];}
+    k0_vd7ba854 [label="sanat", shape=box, style="filled", fillcolor="#FBEFD5", margin="0.08,0.03"];
+    {rank=same; k0_d7ba854 -> k0_vd7ba854 [dir=back];}
+  }
+  subgraph cluster_1 {
+    label="git rebase main"; color="#D9E0E3";
+    k1_3900f6e [label="3900f6e\nREADME"];
+    k1_7ae97c6 [label="7ae97c6\nSanalaskuri", style="rounded,dashed", color="#9AA7AB", fontcolor="#7A888C", fillcolor="#FFFFFF"];
+    k1_d7ba854 [label="d7ba854\nMerkkilaskuri", style="rounded,dashed", color="#9AA7AB", fontcolor="#7A888C", fillcolor="#FFFFFF"];
+    k1_6d91bf2 [label="6d91bf2\nLisenssi"];
+    k1_c3195e0 [label="c3195e0\nSanalaskuri"];
+    k1_d39d3bd [label="d39d3bd\nMerkkilaskuri"];
+    k1_3900f6e -> k1_7ae97c6 [dir=back, color="#9AA7AB"];
+    k1_7ae97c6 -> k1_d7ba854 [dir=back, color="#9AA7AB"];
+    k1_3900f6e -> k1_6d91bf2 [dir=back];
+    k1_6d91bf2 -> k1_c3195e0 [dir=back];
+    k1_c3195e0 -> k1_d39d3bd [dir=back];
+    k1_v6d91bf2 [label="main", shape=box, style="filled", fillcolor="#FBEFD5", margin="0.08,0.03"];
+    {rank=same; k1_6d91bf2 -> k1_v6d91bf2 [dir=back];}
+    k1_vd39d3bd [label="HEAD → sanat", shape=box, style="filled", fillcolor="#FBEFD5", margin="0.08,0.03"];
+    {rank=same; k1_d39d3bd -> k1_vd39d3bd [dir=back];}
+  }
+}

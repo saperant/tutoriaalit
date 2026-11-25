@@ -66,8 +66,13 @@ tunnisteen:
 ```{.tuloste tiedosto="esimerkit/08-reflog.odotettu"}
 ```
 
-Reflogin merkinnät säilyvät oletuksena 90 päivää, ja vasta sen jälkeen
-saavuttamattomat oliot siivotaan (`git gc`). Reflog on paikallinen: se ei
+Reflogin merkinnät vanhenevat. Merkintä, jonka commit on yhä
+saavutettavissa haaran kärjestä, säilyy oletuksena 90 päivää
+(`gc.reflogExpire`). Merkintä, jonka commit ei enää ole saavutettavissa,
+säilyy 30 päivää (`gc.reflogExpireUnreachable`). Tämän luvun tapaukset,
+kuten `reset --hard` ja epäonnistunut rebase, kuuluvat jälkimmäisiin,
+joten pelastusaikaa on noin kuukausi. Sen jälkeen `git gc` voi siivota
+oliot. Reflog on paikallinen: se ei
 siirry kloonissa eikä pushissa. Valmistelemattomia muutoksia se ei pelasta,
 koska ne eivät ole koskaan olleet olioita.
 

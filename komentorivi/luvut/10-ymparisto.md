@@ -105,6 +105,23 @@ onko se vuorovaikutteinen:
 | Vuorovaikutteinen muu kuori (pääteikkuna) | `/etc/bash.bashrc`, `~/.bashrc` |
 | Skripti | Ei mitään (paitsi `$BASH_ENV`) |
 
+```{.dot otsikko="Mitkä asetustiedostot Bash lukee käynnistyessään" leveys="75%"}
+digraph {
+  q1 [label="Kirjautumiskuori?\n(konsoli, ssh)", shape=diamond];
+  q2 [label="Vuorovaikutteinen?", shape=diamond];
+  p1 [label="/etc/profile"];
+  p2 [label="ensimmäinen löytyvä:\n~/.bash_profile, ~/.bash_login, ~/.profile"];
+  b [label="/etc/bash.bashrc\n~/.bashrc"];
+  e [label="ei mitään\n(paitsi $BASH_ENV)"];
+  q1 -> p1 [label=" kyllä"];
+  p1 -> p2;
+  p2 -> b [style=dashed, label=" Debian ja Ubuntu:\n ~/.profile lukee"];
+  q1 -> q2 [label=" ei"];
+  q2 -> b [label=" kyllä (pääteikkuna)"];
+  q2 -> e [label=" ei (skripti)"];
+}
+```
+
 Käytäntö Debianissa ja Ubuntussa: `~/.profile` asettaa ympäristön (kuten
 `PATH`) ja lukee lopuksi tiedoston `~/.bashrc`. Tiedosto `~/.bashrc`
 sisältää vuorovaikutteisen käytön asetukset:
@@ -117,9 +134,9 @@ Muutos tulee voimaan uudessa kuoressa tai komennolla
 Skriptit eivät näe niitä, eikä skripti saa nojata käyttäjän
 asetuksiin.
 
-Hyödyllisiä vuorovaikutteisia toimintoja ovat historian haku Ctrl+R,
-edellisen komennon viimeinen argumentti `Alt+.` (tai `!$`), rivin
-alkuun Ctrl+A ja loppuun Ctrl+E sekä täydennys sarkaimella.
+Rivin muokkauksen näppäimet (sarkain, Ctrl+R, Ctrl+A ja Ctrl+E) esiteltiin
+luvussa *Johdanto*. Niiden lisäksi `Alt+.` (tai `!$`) lisää riville
+edellisen komennon viimeisen argumentin.
 
 ## Käytännössä
 

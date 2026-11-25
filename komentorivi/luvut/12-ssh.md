@@ -1,11 +1,50 @@
-# Etäkäyttö: ssh
+# Verkko ja etäkäyttö: ssh
 
-SSH (*Secure Shell*) on salattu yhteys etäkoneen komentoriville. Sillä
-ylläpidetään palvelimia, siirretään tiedostoja, käytetään Gitiä ja
-tunneloidaan muita yhteyksiä. OpenSSH on käytännössä ainoa toteutus
-Linuxissa. Testiympäristössä ei ole etäkonetta, joten luvun testatut
-esimerkit käsittelevät avaimia ja asetuksia. Yhteyskomennot näytetään
-ilman tulostetta.
+Tässä luvussa käsitellään ensin komennot, joilla selvitetään, toimiiko
+verkkoyhteys, ja sitten SSH (*Secure Shell*), salattu yhteys etäkoneen
+komentoriville. SSH:lla ylläpidetään palvelimia, siirretään tiedostoja,
+käytetään Gitiä ja tunneloidaan muita yhteyksiä. OpenSSH on käytännössä
+ainoa toteutus Linuxissa. Testiympäristössä ei ole etäkonetta, joten
+luvun testatut esimerkit käsittelevät omaa konetta, avaimia ja
+asetuksia. Yhteyskomennot etäkoneelle näytetään ilman tulostetta.
+
+## Verkon perustyökalut
+
+Kun yhteys palveluun ei toimi, vika on jollakin neljästä tasosta: nimi
+ei selviä osoitteeksi, osoitteeseen ei ole reittiä, portti ei vastaa
+tai palvelu vastaa virheellä. Jokaiselle tasolle on oma komentonsa:
+
+| Komento | Mihin se vastaa |
+|---------|-----------------|
+| `ip addr`, `ip route` | Mitkä osoitteet koneella on ja minne liikenne reititetään |
+| `getent hosts palvelin` | Miksi osoitteeksi nimi selviää tällä koneella |
+| `dig +short palvelin` | Mitä nimipalvelu vastaa |
+| `ping -c 3 palvelin` | Vastaako kone; palomuuri voi estää pingin, vaikka palvelu toimii |
+| `nc -zv palvelin 443` | Aukeaako TCP-yhteys porttiin |
+| `ss -tlnp` | Mitkä portit kuuntelevat tällä koneella ja mikä prosessi |
+| `curl -I https://palvelin/` | Vastaako HTTP-palvelu ja millä tilakoodilla |
+| `curl -fsS -o tiedosto URL` | Lataa tiedosto; `wget URL` tekee saman |
+
+Komennot käydään läpi tässä järjestyksessä: nimi, yhteys, portti,
+palvelu. Ensimmäinen epäonnistuva kertoo, missä vika on. `curl` on
+näistä monipuolisin, koska sillä voi tehdä minkä tahansa HTTP-pyynnön.
+Alla sitä kokeillaan omalla koneella ajettavaan palvelimeen:
+
+```{.bash tiedosto="esimerkit/12-verkko.sh" osa="verkko"}
+```
+
+```{.tuloste tiedosto="esimerkit/12-verkko.odotettu"}
+```
+
+Oletuksena `curl` palauttaa arvon 0 aina, kun palvelin vastasi, myös
+virhesivulla. Valitsin `-f` muuttaa HTTP-virheen (tilakoodi 400 tai
+suurempi) paluuarvoksi 22, joten se kuuluu jokaiseen skriptiin. `-sS`
+piilottaa edistymispalkin mutta näyttää virheet, `-I` hakee vain
+otsakkeet ja `-L` seuraa uudelleenohjauksia. Osoite `127.0.0.1`
+(`localhost`) on aina oma kone.
+
+Verkkojen toiminta, osoitteet, nimipalvelu ja protokollat kuuluvat
+taitoon *Tietoverkot*.
 
 ## Yhteys ja palvelimen tunnistus
 
@@ -17,10 +56,28 @@ ssh palvelin 'sudo journalctl -u nginx -n 20' | grep -i error
 ```
 
 Ensimmäisellä yhteydellä ssh näyttää palvelimen avaimen sormenjäljen
-ja kysyy, luotetaanko siihen. Vastauksen jälkeen avain tallentuu
-tiedostoon `~/.ssh/known_hosts`. Jos avain myöhemmin muuttuu, ssh
-kieltäytyy yhteydestä varoituksella *REMOTE HOST IDENTIFICATION HAS
-CHANGED*. Syy on joko asennettu palvelin, jolla on uusi avain, tai
+ja kysyy, luotetaanko siihen:
+
+```text
+The authenticity of host 'palvelin (192.0.2.10)' can't be established.
+ED25519 key fingerprint is SHA256:kq1Zr0v…
+Are you sure you want to continue connecting (yes/no/[fingerprint])?
+```
+
+Sormenjälkeä verrataan palvelimen ylläpidolta saatuun. Vastauksen `yes`
+jälkeen avain tallentuu tiedostoon `~/.ssh/known_hosts`. Jos avain
+myöhemmin muuttuu, ssh kieltäytyy yhteydestä:
+
+```text
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+…
+Host key verification failed.
+```
+
+Syy on joko uudelleen asennettu palvelin, jolla on uusi avain, tai
 välimieshyökkäys. Sormenjälki tarkistetaan palvelimen ylläpidolta, ja
 vasta sitten vanha avain poistetaan: `ssh-keygen -R palvelin`.
 
@@ -121,6 +178,57 @@ Paikallinen tunneli (`-L`) on tavallisin: etäkoneen tietokanta, joka
 kuuntelee vain osoitetta `localhost`, saadaan omalle koneelle ilman,
 että sitä avataan verkkoon.
 
+```{.dot otsikko="Paikallinen tunneli: ssh -L 5433:localhost:5432 tietokanta"}
+digraph {
+  rankdir=LR;
+  subgraph cluster_o {
+    label="oma kone"; color="#D9E0E3";
+    a [label="psql -p 5433\n-h localhost"]; s [label="ssh\nkuuntelee: 5433"];
+  }
+  subgraph cluster_e {
+    label="tietokanta"; color="#D9E0E3";
+    d [label="sshd"]; p [label="PostgreSQL\nlocalhost:5432"];
+  }
+  a -> s; s -> d [label="salattu\nSSH-yhteys", penwidth=2]; d -> p;
+}
+```
+
+Käänteinen tunneli (`-R`) toimii toiseen suuntaan: portti avataan
+etäkoneella, ja yhteydet siihen ohjataan omalle koneelle. Sillä
+näytetään esimerkiksi omalla koneella kehitettävä palvelu etäkoneen
+kautta.
+
+```{.dot otsikko="Käänteinen tunneli: ssh -R 9000:localhost:3000 palvelin"}
+digraph {
+  rankdir=LR;
+  subgraph cluster_o {
+    label="oma kone"; color="#D9E0E3";
+    p [label="kehityspalvelin\nlocalhost:3000"]; s [label="ssh"];
+  }
+  subgraph cluster_e {
+    label="palvelin"; color="#D9E0E3";
+    d [label="sshd\nkuuntelee: 9000"]; a [label="asiakas\nlocalhost:9000"];
+  }
+  p -> s [dir=back]; s -> d [label="salattu\nSSH-yhteys", penwidth=2, dir=back];
+  d -> a [dir=back];
+}
+```
+
+Hyppykone (`-J`, asetuksissa `ProxyJump`) välittää yhteyden koneeseen,
+johon ei pääse suoraan. Salaus ulottuu omalta koneelta kohteeseen asti,
+joten hyppykone ei näe liikenteen sisältöä eikä tarvitse avaimiasi.
+
+```{.dot otsikko="Hyppykone: ssh -J bastioni rakennus-01"}
+digraph {
+  rankdir=LR;
+  o [label="oma kone\nssh"];
+  b [label="bastioni\n(julkinen osoite)"];
+  r [label="rakennus-01\n(sisäverkko)"];
+  o -> b [label="SSH"]; b -> r [label="välitetty\nTCP-yhteys"];
+  o -> r [style=dashed, label="päästä päähän salattu SSH-istunto", constraint=false];
+}
+```
+
 ## Pitkät istunnot: tmux
 
 Katkeava yhteys lopettaa etäkuoren ja sen käynnistämät ohjelmat.
@@ -169,6 +277,9 @@ asetus voi muuten lukita sinut ulos koneesta.
 
 ## Itsearviointi
 
+- Osaat selvittää komennoilla, onko vika nimessä, yhteydessä, portissa
+  vai palvelussa, ja tehdä HTTP-pyynnön `curl`-komennolla niin, että
+  virhe näkyy paluuarvossa.
 - Osaat luoda avainparin, viedä julkisen avaimen palvelimelle ja
   rajata avaimen käyttöä `authorized_keys`-tiedostossa.
 - Osaat kirjoittaa `~/.ssh/config`-tiedoston, jossa on lyhyet nimet ja

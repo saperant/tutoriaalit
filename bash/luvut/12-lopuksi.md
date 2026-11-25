@@ -84,6 +84,28 @@ Raja ei ole ehdoton. Hyvä käytäntö on pitää Bash ohuena ohjauskerroksena,
 joka kutsuu Python-ohjelmaa tai `awk`:ia raskaaseen työhön. Taitopuun
 taito *Python työkaluohjelmointiin* jatkaa tästä.
 
+## Kun käytössä on vain sh
+
+Pienissä konteissa (Alpine, BusyBox) ja joissakin käynnistysskripteissä
+Bashia ei ole, ja skripti kirjoitetaan POSIX-`sh`:lle. Tämän tutoriaalin
+periaatteet pätevät, mutta osa rakenteista on korvattava:
+
+| Bash | POSIX `sh` |
+|------|------------|
+| `[[ $a == v* ]]` | `case $a in v*) … ;; esac` |
+| `[[ -n $a && -f $t ]]` | `[ -n "$a" ] && [ -f "$t" ]`; lainaus on pakollinen |
+| Taulukko `a=(x y)`, `"${a[@]}"` | Positioparametrit: `set -- x y`, `"$@"` |
+| `local x` | Ei standardissa, mutta toimii dashissa ja BusyBoxissa |
+| `${x//a/b}`, `${x^^}` | `sed`, `tr`; `${x#alku}` ja `${x%loppu}` toimivat |
+| `<<< "$x"`, `< <(komento)` | Here-dokumentti, putki tai väliaikaistiedosto |
+| `set -o pipefail` | Vasta POSIX 2024:ssä; puuttuu esimerkiksi dashin versiosta 0.5.12 |
+| `source t`, `function f` | `. t`, `f() { …; }` |
+
+Skripti aloitetaan rivillä `#!/bin/sh`, ja `shellcheck --shell=sh`
+ilmoittaa Bash-rakenteista. Testaa skripti sillä kuorella, jolla se
+ajetaan: Debianin ja Ubuntun `/bin/sh` on `dash`, Alpinen BusyBoxin
+`ash`.
+
 ## Lähteet ja jatkolukeminen
 
 - **GNU Bash Reference Manual** (<https://www.gnu.org/software/bash/manual/>)

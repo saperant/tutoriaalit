@@ -1,0 +1,26 @@
+digraph {
+  nodesep=0.3; ranksep=0.45;
+  c3078605 [label="commit 3078605\nEnsimmäinen versio"];
+  t0d882fb [label="tree 0d882fb", shape=folder, style="filled", fillcolor="#EEF2F4"];
+  ba22a2da [label="blob a22a2da", shape=note, style="filled", fillcolor="#FFFFFF"];
+  b7b85bcc [label="blob 7b85bcc", shape=note, style="filled", fillcolor="#FFFFFF"];
+  ce8abc3c [label="commit e8abc3c\nSuomenkielinen nimi"];
+  t3ef0e10 [label="tree 3ef0e10", shape=folder, style="filled", fillcolor="#EEF2F4"];
+  caf3213c [label="commit af3213c\nTarkempi kuvaus"];
+  te044db7 [label="tree e044db7", shape=folder, style="filled", fillcolor="#EEF2F4"];
+  bf44b3f7 [label="blob f44b3f7", shape=note, style="filled", fillcolor="#FFFFFF"];
+  {rank=same; c3078605; ce8abc3c; caf3213c;}
+  {rank=same; t0d882fb; t3ef0e10; te044db7;}
+  {rank=same; ba22a2da; b7b85bcc; bf44b3f7;}
+  c3078605 -> t0d882fb;
+  t0d882fb -> ba22a2da [label="LICENSE"];
+  t0d882fb -> b7b85bcc [label="README.md"];
+  c3078605 -> ce8abc3c [dir=back, label="vanhempi"];
+  ce8abc3c -> t3ef0e10;
+  t3ef0e10 -> ba22a2da [label="LICENSE"];
+  t3ef0e10 -> b7b85bcc [label="LUEMINUT.md"];
+  ce8abc3c -> caf3213c [dir=back, label="vanhempi"];
+  caf3213c -> te044db7;
+  te044db7 -> ba22a2da [label="LICENSE"];
+  te044db7 -> bf44b3f7 [label="LUEMINUT.md"];
+}

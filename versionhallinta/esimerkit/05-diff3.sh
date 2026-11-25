@@ -35,7 +35,7 @@ git merge -q tuotanto > /dev/null || true
 cat asetukset.ini
 # @loppu zdiff3
 # @alku valinta
-git checkout -q --theirs asetukset.ini  # koko tiedosto toisesta haarasta
+git restore --theirs asetukset.ini      # koko tiedosto toisesta haarasta
 cat asetukset.ini
 git merge --abort                     # tai luovu koko yhdistämisestä
 git status --short

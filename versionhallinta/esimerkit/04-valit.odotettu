@@ -1,0 +1,13 @@
+== main..sanat: sanat-haaran omat commitit
+d71854c Ohje
+d01dce1 Sanalaskuri
+== sanat..main: mitä main-haarassa on uutta
+96b4452 Lisenssi
+== main...sanat: molempien omat, < main ja > sanat
+< 96b4452 Lisenssi
+> d71854c Ohje
+> d01dce1 Sanalaskuri
+== diff main...sanat: haaran muutokset yhteisestä kannasta
+ OHJE.md  | 1 +
+ sanat.py | 2 ++
+ 2 files changed, 3 insertions(+)

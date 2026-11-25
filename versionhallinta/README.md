@@ -12,9 +12,12 @@ ja pikaopas
 
 1. Johdanto – hajautettu versionhallinta, asetukset, ensimmäinen
    repositorio
-2. Gitin tietomalli – blobit, puut, commitit, viitteet ja `HEAD`
-3. Muutokset ja commitit – valmistelualue, diffit, historia, hyvä commit
-4. Haarat ja yhdistäminen – pikakelaus, kolmen osapuolen yhdistäminen
+2. Gitin tietomalli – blobit, puut, commitit, viitteet ja `HEAD`,
+   kolme aluetta
+3. Muutokset ja commitit – valmistelualue, `.gitignore`, diffit,
+   historia, hyvä commit, `stash`
+4. Haarat ja yhdistäminen – pikakelaus, kolmen osapuolen yhdistäminen,
+   revisiovälit
 5. Konfliktit – merkinnät, ratkaisu, `zdiff3`, `--ours`/`--theirs`
 6. Rebase ja historian siistiminen – `fixup`, `--autosquash`,
    kultainen sääntö
@@ -46,6 +49,11 @@ make testaa   # rakenteen tarkistus, ShellCheck ja esimerkkien ajo
 make pdf      # versionhallinta.pdf ja versionhallinta-pikaopas.pdf
 ```
 
+Commit-verkkojen kuvat (`kaaviot/*.dot`) tuotetaan esimerkkien luomista
+repositorioista komennolla `python3 kaaviot/tee.py`, ja `make testaa`
+tarkistaa, että ne vastaavat esimerkkejä.
+
 Kehityskontti: `.devcontainer/versionhallinta` (Git ja ShellCheck).
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks. [Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 Lisenssi: CC BY-SA 4.0.

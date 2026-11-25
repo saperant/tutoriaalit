@@ -117,8 +117,9 @@ funktio toimii ehdoissa kuten `grep -q`.
 - **Lajittele tulos** `for (k in a)`-silmukan jälkeen; järjestys ei ole
   määritelty.
 - **Kirjoita siirrettävää awkia**: Ubuntussa oletus on `mawk`, jossa ei
-  ole GNU-laajennuksia kuten `gensub`, `asort` ja `strftime`. Jos tarvitset
-  niitä, kutsu `gawk`-komentoa nimellä.
+  ole GNU-laajennuksia kuten `gensub` ja `asort`. Aikafunktiot
+  (`strftime`, `systime`) ovat mawkin nykyversioissa, mutta puuttuvat
+  vanhoista. Jos tarvitset laajennuksia, kutsu `gawk`-komentoa nimellä.
 - **Liukuluvut**: awk laskee kaksoistarkkuudella. Rahasummat
   kannattaa laskea sentteinä tai pyöristää vasta tulostuksessa
   (`%.2f`).

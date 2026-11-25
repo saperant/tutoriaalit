@@ -101,11 +101,88 @@ joten sovelluksen ei tarvitse hallita lokitiedostoja. Lopetus lähettää
 `TERM`-signaalin ja aikarajan jälkeen `KILL`-signaalin (luku
 *Prosessit ja signaalit*).
 
-Ajastetut tehtävät tehdään perinteisesti `cron`-palvelulla
-(`crontab -e`, rivi `30 3 * * * /usr/local/bin/varmuuskopioi`) tai
-systemd-ajastimella (`.timer`-yksikkö). Ajastimen etuja ovat loki
-journalissa, riippuvuudet ja `Persistent=true`, joka ajaa väliin
-jääneen ajon, kun kone käynnistyy.
+Kun yksikkö on otettu käyttöön (`sudo systemctl enable --now varasto`),
+`systemctl status varasto` näyttää tilan ja viimeiset lokirivit:
+
+```text
+● varasto.service - Varastopalvelun HTTP-rajapinta
+     Loaded: loaded (/etc/systemd/system/varasto.service; enabled)
+     Active: active (running) since Mon 2025-03-10 08:02:11 EET; 2h ago
+   Main PID: 912 (python)
+     Memory: 48.3M (max: 512.0M)
+
+Mar 10 08:02:11 palvelin systemd[1]: Started varasto.service.
+Mar 10 08:02:12 palvelin python[912]: Kuunnellaan porttia 8080
+```
+
+Rivi `Loaded` kertoo, mistä yksikkö luettiin ja käynnistyykö se koneen
+käynnistyessä (`enabled`). Rivi `Active` kertoo tilan. Kaatunut palvelu
+näyttää tältä:
+
+```text
+× varasto.service - Varastopalvelun HTTP-rajapinta
+     Loaded: loaded (/etc/systemd/system/varasto.service; enabled)
+     Active: failed (Result: exit-code) since Mon 2025-03-10 10:31:40 EET
+    Process: 5120 ExecStart=/opt/varasto/venv/bin/python … (code=exited,
+             status=1/FAILURE)
+
+Mar 10 10:31:40 palvelin python[5120]: FileNotFoundError: asetukset.toml
+Mar 10 10:31:40 palvelin systemd[1]: varasto.service: Failed with result
+                                     'exit-code'.
+```
+
+Syy on lähes aina viimeisillä lokiriveillä: tässä sovellus ei löytänyt
+asetustiedostoaan ja päättyi paluuarvoon 1. `Restart=on-failure` yrittää
+käynnistystä uudelleen, mutta toistuvien epäonnistumisten jälkeen
+systemd luovuttaa ja tila jää arvoon `failed`.
+
+## Ajastetut tehtävät
+
+Toistuvat tehtävät, kuten varmuuskopiot ja siivoukset, ajastetaan
+perinteisesti `cron`-palvelulla. Komento `crontab -e` avaa käyttäjän
+ajastustaulun editoriin. Jokaisella rivillä on viisi aikakenttää
+(minuutti, tunti, kuukaudenpäivä, kuukausi, viikonpäivä) ja komento:
+
+```text
+# min tunti pv kk vkpv  komento
+30    3     *  *  *     /usr/local/bin/varmuuskopioi
+*/15  *     *  *  1-5   /usr/local/bin/tarkista-levytila
+```
+
+Ensimmäinen rivi ajetaan joka yö kello 3.30 ja toinen arkisin vartin
+välein. cron ajaa komennot suppealla ympäristöllä (lyhyt `PATH`, ei
+kuoren asetustiedostoja), joten komennot kirjoitetaan täysillä poluilla
+ja tuloste ohjataan lokiin.
+
+systemd-ajastin tekee saman kahdella yksiköllä: `.service` kertoo,
+mitä ajetaan, ja samanniminen `.timer`, milloin:
+
+```ini
+# /etc/systemd/system/varmuuskopio.service
+[Unit]
+Description=Yöllinen varmuuskopio
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/varmuuskopioi
+
+# /etc/systemd/system/varmuuskopio.timer
+[Unit]
+Description=Ajaa varmuuskopion joka yö
+
+[Timer]
+OnCalendar=*-*-* 03:30:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+```
+
+Ajastin otetaan käyttöön komennolla `sudo systemctl enable --now
+varmuuskopio.timer`, ja `systemctl list-timers` näyttää seuraavan ja
+edellisen ajon. Ajastimen etuja cronin riviin verrattuna ovat loki
+journalissa, riippuvuudet muihin yksiköihin ja `Persistent=true`, joka
+ajaa väliin jääneen ajon, kun kone käynnistyy.
 
 ## Lokit
 
@@ -119,6 +196,19 @@ journalctl -b -p err              # tämän käynnistyksen virheet
 journalctl -k                     # ytimen viestit (vrt. dmesg)
 journalctl -u ssh -o cat          # pelkät viestit ilman aikaleimoja
 journalctl -u nginx -o json       # rakenteinen muoto jq:lle
+```
+
+Jokaisella rivillä on aikaleima, koneen nimi, prosessi ja sen PID sekä
+viesti:
+
+```text
+$ journalctl -u ssh -n 3
+Mar 10 08:14:02 palvelin sshd[4100]: Accepted publickey for aino from
+    192.0.2.44 port 51234 ssh2: ED25519 SHA256:kq1Zr0v…
+Mar 10 08:14:02 palvelin sshd[4100]: pam_unix(sshd:session): session
+    opened for user aino(uid=1000) by (uid=0)
+Mar 10 09:02:51 palvelin sshd[4391]: Invalid user admin from
+    203.0.113.9 port 40022
 ```
 
 Perinteiset tekstilokit ovat hakemistossa `/var/log` (esim. `syslog`,
@@ -167,6 +257,9 @@ ottaa käyttöön `fail2ban`.
   selvittää `dpkg`:lla, mistä paketista tiedosto on peräisin.
 - Osaat käynnistää, pysäyttää ja ottaa käyttöön palvelun sekä
   kirjoittaa oman palvelun yksikkötiedoston.
+- Osaat lukea `systemctl status` -tulosteesta, onko palvelu käynnissä
+  ja miksi se kaatui.
+- Osaat ajastaa toistuvan tehtävän cronilla tai systemd-ajastimella.
 - Osaat lukea palvelun lokia `journalctl`-komennolla ajan ja tason
   mukaan rajattuna.
 - Osaat analysoida kirjautumislokin ja tunnistaa salasanojen
