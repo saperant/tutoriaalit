@@ -170,6 +170,10 @@ näin:
 - **Ilman repositoriota:** taitopuukartalta saa kunkin tutoriaalin
   esimerkit zip-pakettina, jossa on mukana oma kehityskontti.
 
+Tarkemmat ohjeet, myös esimerkkien ajamiseen ilman konttia, ovat
+tutoriaalissa [Kehitysympäristöt ja Dev Containers](kehitysymparistot/)
+(luku 2).
+
 Kontissa `make -C <paketti> testaa` tarkistaa ja ajaa paketin kaikki
 esimerkit samoin kuin CI. C- ja C++-esimerkit voi kääntää myös
 esimerkkihakemiston Makefilellä: `make` kääntää kaikki, `make aja-01-hei` kääntää ja ajaa
