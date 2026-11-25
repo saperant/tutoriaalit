@@ -2,3 +2,4 @@ kopio: 0, viite: 5
 1 2 3
 siirretty lambdaan
 viesti on nyt tyhjä: true
+this: 2, *this: 1

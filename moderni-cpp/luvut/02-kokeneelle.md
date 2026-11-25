@@ -105,6 +105,23 @@ osoittimet ja iteraattorit vanhoihin alkioihin mitätöityvät:
 ```{.tuloste tiedosto="esimerkit/02-mitatoityminen.virhe"}
 ```
 
+```{.dot otsikko="Uudelleenvaraus siirtää alkiot uuteen taulukkoon ja vapauttaa vanhan. Aiemmin otettu viittaus osoittaa edelleen vanhaan muistiin."}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.6;
+  node [shape=box, fontsize=10];
+  v [label="jono\n(koko 4, kapasiteetti 6)"];
+  r [label="const int& ensimmainen"];
+  vanha [shape=plain, label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td port="a" bgcolor="#dddddd">10</td><td bgcolor="#dddddd">20</td><td bgcolor="#dddddd">30</td></tr>
+    <tr><td colspan="3" border="0">vapautettu</td></tr></table>>];
+  uusi [shape=plain, label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td port="a">10</td><td>20</td><td>30</td><td>40</td><td> </td><td> </td></tr>
+    <tr><td colspan="6" border="0">uusi taulukko</td></tr></table>>];
+  v -> uusi:a;
+  r -> vanha:a [style=dashed, label="roikkuu"];
+}
+```
+
 **Olion viipaloituminen.** Kun johdetun luokan olio kopioidaan
 kantaluokan tyyppiseen muuttujaan, kopioituu vain kantaluokan osa, ja
 dynaaminen sidonta katoaa:
@@ -116,6 +133,23 @@ dynaaminen sidonta katoaa:
 ```
 
 ```{.tuloste tiedosto="esimerkit/02-viipaloituminen.odotettu"}
+```
+
+```{.dot otsikko="Arvoparametri on `Tili`-kokoinen olio, johon mahtuu vain kantaluokan osa. Viittaus osoittaa alkuperäiseen olioon, jonka tyyppi on edelleen `Saastotili`."}
+digraph {
+  rankdir=LR; nodesep=0.4; ranksep=0.9;
+  node [shape=box, fontsize=10];
+  s [shape=plain, label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0">Saastotili s</td></tr>
+    <tr><td port="k">Tili-osa</td></tr>
+    <tr><td bgcolor="#e8eef7">Saastotili-osa</td></tr></table>>];
+  t [shape=plain, label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0">arvona(Tili t)</td></tr>
+    <tr><td port="k">Tili-osa (kopio)</td></tr></table>>];
+  r [label="viittauksena(const Tili& t)"];
+  s:k -> t:k [label="kopioidaan"];
+  r -> s:k [label="osoittaa", style=dashed];
+}
 ```
 
 Monimuotoisia olioita käsitellään viittausten tai osoittimien kautta.
@@ -140,6 +174,9 @@ Kokenut kehittäjä voi edetä näin:
    [Siirtosemantiikka](#siirtosemantiikka) huolellisesti. Ne poikkeavat
    eniten muista kielistä.
 3. Lue muista luvuista ensin loppuosio *Itsearviointi*. Jos hallitset
-   kaikki väitteet, siirry seuraavaan lukuun. Lukujen *Käytännössä*-osiot
+   kaikki väitteet, siirry seuraavaan lukuun. Luvut
+   [C:stä C++:aan](#cstä-caan) ja [Luokan perusteet](#luokan-perusteet)
+   on tarkoitettu C-taustaiselle lukijalle; muista olio-ohjelmointikielistä
+   tulevalle niiden itsearviointi yleensä riittää. Lukujen *Käytännössä*-osiot
    kannattaa lukea joka tapauksessa, koska niissä ovat kielen idiomit ja
    hinnat.

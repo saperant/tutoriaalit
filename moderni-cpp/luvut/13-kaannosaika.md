@@ -12,7 +12,7 @@ se suoritetaan ajoaikana kuten tavallinen funktio. C++11:ssä
 `constexpr`-funktion runko sai sisältää vain yhden `return`-lauseen;
 C++14:stä alkaen silmukat ja paikalliset muuttujat ovat sallittuja.
 
-```{.cpp tiedosto="esimerkit/11-constexpr.cpp" osa="funktio"}
+```{.cpp tiedosto="esimerkit/13-constexpr.cpp" osa="funktio"}
 ```
 
 `static_assert` tarkistaa ehdon käännösaikana. Jos laskenta
@@ -24,7 +24,7 @@ pitkien lukujen lukemista.
 Käännösaikaisella laskennalla voi myös rakentaa hakutaulukoita. Alla
 lambda kutsutaan heti, ja sen tulos alustaa vakion:
 
-```{.cpp tiedosto="esimerkit/11-constexpr.cpp" osa="taulukko"}
+```{.cpp tiedosto="esimerkit/13-constexpr.cpp" osa="taulukko"}
 ```
 
 C++20 salli dynaamisen muistinvarauksen käännösaikana, kunhan muisti
@@ -32,7 +32,7 @@ vapautetaan ennen laskennan päättymistä. Siksi `constexpr`-funktiossa voi
 käyttää `std::vector`- ja `std::string`-olioita. Seuraava funktio
 laskee alkulukujen summan Eratostheneen seulalla:
 
-```{.cpp tiedosto="esimerkit/11-constexpr.cpp" osa="vektori"}
+```{.cpp tiedosto="esimerkit/13-constexpr.cpp" osa="vektori"}
 ```
 
 ## `consteval` ja `constinit`
@@ -44,20 +44,20 @@ saa muuttaa. Tämä estää niin sanotun staattisen alustusjärjestyksen
 ongelman, jossa globaali muuttuja käyttää toista, vielä alustamatonta
 globaalia muuttujaa.
 
-```{.cpp tiedosto="esimerkit/11-constexpr.cpp" osa="consteval"}
+```{.cpp tiedosto="esimerkit/13-constexpr.cpp" osa="consteval"}
 ```
 
-```{.cpp tiedosto="esimerkit/11-constexpr.cpp" osa="kaytto"}
+```{.cpp tiedosto="esimerkit/13-constexpr.cpp" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/11-constexpr.odotettu"}
+```{.tuloste tiedosto="esimerkit/13-constexpr.odotettu"}
 ```
 
 Sama `kertoma`-funktio toimii sekä käännös- että ajoaikana.
 `consteval`-funktiota taas ei voi kutsua arvolla, joka selviää vasta
 ajoaikana:
 
-```{.cpp tiedosto="esimerkit/11-consteval.ei-kaanny.cpp"}
+```{.cpp tiedosto="esimerkit/13-consteval.ei-kaanny.cpp"}
 ```
 
 Käännösaikainen laskenta pidentää käännösaikaa, mutta se on usein

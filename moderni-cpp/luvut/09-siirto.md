@@ -30,7 +30,30 @@ siirtomuodostimen ja siirtosijoituksen. Tätä kutsutaan *viiden
 säännöksi* (*rule of five*). Seuraava luokka hallitsee dynaamista
 taulukkoa ja tulostaa, mitä tapahtuu:
 
-```{.cpp tiedosto="esimerkit/07-puskuri.cpp" osa="luokka"}
+```{.cpp tiedosto="esimerkit/09-puskuri.cpp" osa="luokka"}
+```
+
+```{.dot otsikko="Kopio varaa uuden taulukon ja kopioi alkiot. Siirto vaihtaa vain taulukon omistajaa: lähteen osoittimeksi jää `nullptr`."}
+digraph {
+  rankdir=TB; nodesep=0.3; ranksep=0.4;
+  node [shape=box, fontsize=10];
+  subgraph cluster_kopio {
+    label="Puskuri b = a;  (kopio)"; fontsize=10; style=rounded;
+    ka [label="a\nkoko_ = 10\ndata_"];
+    kb [label="b\nkoko_ = 10\ndata_"];
+    kt1 [label="taulukko (10 alkiota)", style=filled, fillcolor="#e8eef7"];
+    kt2 [label="uusi taulukko (kopio)", style=filled, fillcolor="#e8eef7"];
+    ka -> kt1; kb -> kt2;
+  }
+  subgraph cluster_siirto {
+    label="Puskuri c = std::move(a);  (siirto)"; fontsize=10; style=rounded;
+    sa [label="a\nkoko_ = 0\ndata_ = nullptr"];
+    sc [label="c\nkoko_ = 10\ndata_"];
+    st [label="sama taulukko", style=filled, fillcolor="#e8eef7"];
+    sc -> st;
+    sa -> st [style=invis];
+  }
+}
 ```
 
 Siirtomuodostin ei varaa muistia, vaan ottaa lähteen osoittimen ja
@@ -43,13 +66,13 @@ tehdään jo parametria alustettaessa, minkä jälkeen operaattori vain
 vaihtaa sisällön. Tämä *copy-and-swap*-tekniikka hoitaa sekä kopio- että
 siirtosijoituksen ja on turvallinen myös itseen sijoittaessa.
 
-```{.cpp tiedosto="esimerkit/07-puskuri.cpp" osa="tehdas"}
+```{.cpp tiedosto="esimerkit/09-puskuri.cpp" osa="tehdas"}
 ```
 
-```{.cpp tiedosto="esimerkit/07-puskuri.cpp" osa="kaytto"}
+```{.cpp tiedosto="esimerkit/09-puskuri.cpp" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/07-puskuri.odotettu"}
+```{.tuloste tiedosto="esimerkit/09-puskuri.odotettu"}
 ```
 
 Kohdissa 4 ja 5 ei kutsuta kopio- eikä siirtomuodostinta. C++17 takaa
@@ -77,7 +100,7 @@ Edellinen `Puskuri` olisi käytännössä vain `std::vector<int>`. Itse
 toteutettu resurssinhallinta kannattaa rajata pieniin, yhden asian
 luokkiin, joita muut luokat käyttävät jäseninään.
 
-```{.cpp tiedosto="esimerkit/07-nollasaanto.cpp" osa="nolla"}
+```{.cpp tiedosto="esimerkit/09-nollasaanto.cpp" osa="nolla"}
 ```
 
 Metodi `lisaa` ottaa merkkijonon arvona ja siirtää sen vektoriin. Jos
@@ -85,10 +108,10 @@ kutsuja antaa nimetyn muuttujan, se kopioidaan parametriin kerran. Jos
 kutsuja antaa väliaikaisen arvon, kopiota ei tehdä lainkaan. Yksi
 funktio palvelee siis molempia tapauksia lähes optimaalisesti.
 
-```{.cpp tiedosto="esimerkit/07-nollasaanto.cpp" osa="kaytto"}
+```{.cpp tiedosto="esimerkit/09-nollasaanto.cpp" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/07-nollasaanto.odotettu"}
+```{.tuloste tiedosto="esimerkit/09-nollasaanto.odotettu"}
 ```
 
 Vektorin siirtäminen siirtää vain sisäisen osoittimen: alkiot pysyvät
@@ -103,16 +126,16 @@ joutuu kasvattamaan muistiaan, se siirtää alkiot uuteen muistiin vain,
 jos siirto ei voi epäonnistua. Muuten se kopioi alkiot, jotta
 poikkeuksen sattuessa alkuperäinen vektori säilyy ehjänä.
 
-```{.cpp tiedosto="esimerkit/07-noexcept.cpp" osa="tyypit"}
+```{.cpp tiedosto="esimerkit/09-noexcept.cpp" osa="tyypit"}
 ```
 
-```{.cpp tiedosto="esimerkit/07-noexcept.cpp" osa="kasvatus"}
+```{.cpp tiedosto="esimerkit/09-noexcept.cpp" osa="kasvatus"}
 ```
 
-```{.cpp tiedosto="esimerkit/07-noexcept.cpp" osa="kaytto"}
+```{.cpp tiedosto="esimerkit/09-noexcept.cpp" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/07-noexcept.odotettu"}
+```{.tuloste tiedosto="esimerkit/09-noexcept.odotettu"}
 ```
 
 Kääntäjän tuottama siirtomuodostin on automaattisesti `noexcept`, jos

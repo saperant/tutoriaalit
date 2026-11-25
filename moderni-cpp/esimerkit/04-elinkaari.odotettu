@@ -1,0 +1,13 @@
+lohko alkaa
+  avattu a.log
+  avattu b.log
+lohko päättyy
+  suljettu b.log, rivejä 0
+  suljettu a.log, rivejä 2
+lohkon jälkeen
+kirjaa(5):
+  avattu arvot.log
+  suljettu arvot.log, rivejä 1
+kirjaa(-1):
+  avattu arvot.log
+  suljettu arvot.log, rivejä 0

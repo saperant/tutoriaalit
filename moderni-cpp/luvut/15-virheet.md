@@ -16,7 +16,7 @@ Omat poikkeusluokat kannattaa periä standardikirjaston luokista, kuten
 perii kantaluokan muodostimet, joten niitä ei tarvitse kirjoittaa
 uudelleen.
 
-```{.cpp tiedosto="esimerkit/13-poikkeukset.cpp" osa="tyyppi"}
+```{.cpp tiedosto="esimerkit/15-poikkeukset.cpp" osa="tyyppi"}
 ```
 
 Poikkeus siepataan aina `const`-viittauksena. Arvona sieppaaminen
@@ -24,17 +24,17 @@ kopioisi poikkeuksen ja voisi leikata siitä johdetun luokan osan pois.
 `catch`-lohkot käydään läpi järjestyksessä, joten tarkimmat tyypit on
 lueteltava ensin:
 
-```{.cpp tiedosto="esimerkit/13-poikkeukset.cpp" osa="kaytto"}
+```{.cpp tiedosto="esimerkit/15-poikkeukset.cpp" osa="kaytto"}
 ```
 
 Standardikirjasto käyttää poikkeuksia esimerkiksi rajatarkistuksissa.
 Säiliön metodi `at` tarkistaa indeksin ja heittää `std::out_of_range`,
 kun taas `operator[]` ei tarkista mitään:
 
-```{.cpp tiedosto="esimerkit/13-poikkeukset.cpp" osa="vahva"}
+```{.cpp tiedosto="esimerkit/15-poikkeukset.cpp" osa="vahva"}
 ```
 
-```{.tuloste tiedosto="esimerkit/13-poikkeukset.odotettu"}
+```{.tuloste tiedosto="esimerkit/15-poikkeukset.odotettu"}
 ```
 
 ### `noexcept`
@@ -57,10 +57,10 @@ heti. Tällöin virhe kannattaa palauttaa arvona.
 mutta kertoo myös, miksi tulosta ei saatu. Virhe palautetaan
 käärimällä se `std::unexpected`-olioon.
 
-```{.cpp tiedosto="esimerkit/13-expected.cpp" osa="tyypit"}
+```{.cpp tiedosto="esimerkit/15-expected.cpp" osa="tyypit"}
 ```
 
-```{.cpp tiedosto="esimerkit/13-expected.cpp" osa="jasenna"}
+```{.cpp tiedosto="esimerkit/15-expected.cpp" osa="jasenna"}
 ```
 
 Kuten `optional`, myös `expected` muuntuu totuusarvoksi ja sen arvoon
@@ -68,17 +68,17 @@ päästään operaattorilla `*`. Virhe luetaan metodilla `error`. Vaiheet
 ketjutetaan `and_then`-metodilla, joka kutsuu seuraavaa vaihetta vain,
 jos edellinen onnistui:
 
-```{.cpp tiedosto="esimerkit/13-expected.cpp" osa="kaytto"}
+```{.cpp tiedosto="esimerkit/15-expected.cpp" osa="kaytto"}
 ```
 
 `transform` muuntaa onnistuneen arvon ja `value_or` antaa oletusarvon
 virhetilanteessa. Lisäksi on `or_else`, joka käsittelee virheen, ja
 `transform_error`, joka muuntaa virhetyypin toiseksi.
 
-```{.cpp tiedosto="esimerkit/13-expected.cpp" osa="ketju"}
+```{.cpp tiedosto="esimerkit/15-expected.cpp" osa="ketju"}
 ```
 
-```{.tuloste tiedosto="esimerkit/13-expected.odotettu"}
+```{.tuloste tiedosto="esimerkit/15-expected.odotettu"}
 ```
 
 ## Kumpi valita?

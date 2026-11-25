@@ -3,6 +3,16 @@
 #include <string>
 #include <utility>
 
+// @alku this
+struct Mittari {
+    int arvo = 0;
+
+    // [this] sieppaa osoittimen olioon, [*this] kopion oliosta.
+    auto viittaava() { return [this] { return arvo; }; }
+    auto kopioiva() { return [*this] { return arvo; }; }
+};
+// @loppu this
+
 int main()
 {
     // @alku arvo-viittaus
@@ -27,4 +37,12 @@ int main()
     tulosta();
     std::println("viesti on nyt tyhjä: {}", viesti == nullptr);
     // @loppu siirto
+
+    // @alku this-kaytto
+    Mittari mittari{1};
+    auto nykyinen = mittari.viittaava();
+    auto tallennettu = mittari.kopioiva();
+    mittari.arvo = 2;
+    std::println("this: {}, *this: {}", nykyinen(), tallennettu());
+    // @loppu this-kaytto
 }

@@ -10,18 +10,11 @@ testaus ja CI*.
 
 CMake on C++-projektien yleisin käännösjärjestelmä. Se ei itse käännä,
 vaan tuottaa käännösohjeet esimerkiksi Ninjalle tai Makelle. Projektin
-kuvaus kirjoitetaan tiedostoon `CMakeLists.txt`:
+kuvaus kirjoitetaan tiedostoon `CMakeLists.txt`. Luvun
+[Ohjelman rakenne ja modulit](#ohjelman-rakenne-ja-modulit)
+mittauslokille se on tällainen:
 
-```text
-cmake_minimum_required(VERSION 3.28)
-project(mittaus LANGUAGES CXX)
-
-add_library(mittausloki mittausloki.cpp)
-target_compile_features(mittausloki PUBLIC cxx_std_23)
-target_include_directories(mittausloki PUBLIC .)
-
-add_executable(mittaus main.cpp)
-target_link_libraries(mittaus PRIVATE mittausloki)
+```{.cmake tiedosto="esimerkit/14-mittausloki/CMakeLists.txt"}
 ```
 
 Nykyaikaisessa CMakessa asetukset kiinnitetään *kohteisiin* (`target_*`)
@@ -31,19 +24,30 @@ käyttäjille, `PRIVATE` eivät. Käännös tehdään erilliseen hakemistoon:
 ```text
 cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug
 cmake --build build
+ctest --test-dir build
 ```
+
+Viimeinen komento ajaa `add_test`-komennolla rekisteröidyt testit.
+CMaken rakenteita, esiasetuksia ja riippuvuuksien hakua käsittelee
+tarkemmin taito *Käännösjärjestelmät, testaus ja CI*.
 
 ## Debuggaus ja sanitoijat
 
 Debuggeri gdb (tai lldb) pysäyttää ohjelman keskeytyskohtiin ja näyttää
 muuttujat ja kutsupinon. Ohjelma käännetään valitsimella `-g`, jotta
 debug-tieto on mukana. Tavallisimmat komennot ovat `break tiedosto:rivi`,
-`run`, `next`, `step`, `print lauseke` ja `backtrace`.
+`run`, `next`, `step`, `print lauseke` ja `backtrace`. Kokonainen
+debuggausistunto käydään läpi taidossa *Käännösjärjestelmät, testaus ja
+CI*.
 
 Sanitoijat löytävät virheet, joita debuggerilla ei edes etsitä:
 AddressSanitizer muistivirheet, UndefinedBehaviorSanitizer
 määrittelemättömän käyttäytymisen ja ThreadSanitizer kilpatilanteet. Ne
-ovat käytössä tämän tutoriaalin kaikissa testeissä. Valitsin
+ovat käytössä tämän tutoriaalin kaikissa testeissä, ja
+AddressSanitizerin raportteja on luvussa
+[C++ kokeneelle](#c-kokeneelle). Raportin ensimmäinen rivi nimeää
+virheen lajin, ja sen alla ovat kutsupinot: missä virheellinen käyttö
+tapahtui ja missä muisti varattiin ja vapautettiin. Valitsin
 `-D_GLIBCXX_ASSERTIONS` kytkee lisäksi päälle libstdc++:n omat
 tarkistukset, kuten indeksien rajatarkistuksen `std::vector`in
 `operator[]`-kutsussa.
@@ -53,6 +57,19 @@ tarkistukset, kuten indeksien rajatarkistuksen `std::vector`in
 clang-tidy tarkistaa koodin käännöksen tasolla satojen sääntöjen avulla:
 esimerkiksi tarpeettomat kopiot, puuttuvat `override`-merkinnät,
 käyttö siirron jälkeen ja C++ Core Guidelines -ohjeiden rikkomukset.
+Luvun [Siirtosemantiikka](#siirtosemantiikka) puskuriesimerkki lukee
+tarkoituksella olion kokoa siirron jälkeen, ja clang-tidy huomaa sen:
+
+```text
+$ clang-tidy -checks='-*,bugprone-use-after-move' 09-puskuri.cpp \
+      -- -std=c++23
+09-puskuri.cpp:68:52: warning: 'a' used after it was moved
+    [bugprone-use-after-move]
+   68 |     std::println("  a.koko() = {}, c.koko() = {}", a.koko(), ...
+09-puskuri.cpp:67:17: note: move occurred here
+   67 |     Puskuri c = std::move(a);
+```
+
 clang-format muotoilee koodin projektin tyyliasetusten mukaan, jolloin
 tyylistä ei tarvitse kiistellä katselmoinneissa. Molemmat lukevat
 asetuksensa projektin juuren tiedostoista (`.clang-tidy`,
@@ -77,14 +94,14 @@ tuloksen. C++-projekteissa käytetään yleisimmin kehyksiä GoogleTest ja
 Catch2. Niiden periaatteen näkee pienestä itse tehdystä kehyksestä.
 Testattavana on funktio, joka jäsentää keston muodossa `1h30m`:
 
-```{.cpp tiedosto="esimerkit/15-testit.cpp" osa="testattava"}
+```{.cpp tiedosto="esimerkit/17-testit.cpp" osa="testattava"}
 ```
 
 Kehys rekisteröi testit automaattisesti makron avulla. Jokainen
 `TESTI`-makro määrittelee funktion ja staattisen olion, jonka muodostin
 lisää funktion luetteloon ennen `main`-funktion alkua.
 
-```{.cpp tiedosto="esimerkit/15-testit.cpp" osa="kehys"}
+```{.cpp tiedosto="esimerkit/17-testit.cpp" osa="kehys"}
 ```
 
 Luettelo on funktion sisäinen staattinen muuttuja, joka alustetaan
@@ -95,13 +112,13 @@ tarkistuksen rivin ilman makroja.
 
 Testit kuvaavat käyttäytymistä, myös virhetapauksia:
 
-```{.cpp tiedosto="esimerkit/15-testit.cpp" osa="testit"}
+```{.cpp tiedosto="esimerkit/17-testit.cpp" osa="testit"}
 ```
 
-```{.cpp tiedosto="esimerkit/15-testit.cpp" osa="ajo"}
+```{.cpp tiedosto="esimerkit/17-testit.cpp" osa="ajo"}
 ```
 
-```{.tuloste tiedosto="esimerkit/15-testit.odotettu"}
+```{.tuloste tiedosto="esimerkit/17-testit.odotettu"}
 ```
 
 Paluuarvo on nolla vain, jos kaikki testit menevät läpi, joten

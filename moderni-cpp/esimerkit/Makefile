@@ -3,7 +3,7 @@
 #   make                       kääntää kaikki esimerkit hakemistoon bin/
 #   make 01-hei                kääntää yhden esimerkin
 #   make aja-01-hei            kääntää ja ajaa esimerkin
-#   make virhe-03-kaventaminen näyttää .ei-kaanny-esimerkin käännösvirheen
+#   make virhe-05-kaventaminen näyttää .ei-kaanny-esimerkin käännösvirheen
 #   make siivoa                poistaa käännetyt ohjelmat
 #
 # Ohjelmat käännetään AddressSanitizerin ja UndefinedBehaviorSanitizerin

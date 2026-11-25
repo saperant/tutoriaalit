@@ -26,6 +26,25 @@ Kirjaston kaikki nimet sijoitetaan sen omaan nimiavaruuteen, kuten alla
 `tutoriaali::mittaus`. *Nimetön nimiavaruus* rajaa nimen näkyvyyden
 yhteen käännösyksikköön. Se korvaa C:n `static`-sanan apufunktioille.
 
+### Rajapinnan dokumentointi
+
+Otsikkotiedosto on myös paikka, jossa rajapinta dokumentoidaan.
+Tyypit kertovat jo paljon, joten kommentti kertoo sen, mitä tyypit
+eivät kerro: esiehdot, mitä poikkeuksia funktio heittää ja missä
+tilassa olio on sen jälkeen, kuinka kauan palautettu viittaus on
+voimassa, onko luokka säieturvallinen ja mitä siirretylle oliolle saa
+tehdä. Kommentti, joka toistaa funktion nimen sanoina, on turha.
+
+C++-projekteissa rajapintakommentit kirjoitetaan yleensä
+*Doxygen*-muodossa. Kommentti alkaa merkeillä `///`, ja komennot
+`@brief`, `@param`, `@return`, `@pre` ja `@throws` jäsentävät sen.
+Doxygen kokoaa kommenteista selattavan viitedokumentaation, ja sen
+asetukset `WARN_IF_UNDOCUMENTED`, `WARN_NO_PARAMDOC` ja `WARN_AS_ERROR`
+muuttavat puuttuvat kuvaukset virheiksi, jolloin jatkuva integraatio
+huomaa dokumentoimattoman funktion. Seuraavan osion
+`mittausloki.hpp` on kommentoitu näin. Dokumentaation rakennetta ja
+julkaisemista käsittelee taitopuun taito *Tekninen dokumentaatio*.
+
 ## Pimpl-malli
 
 Otsikkotiedosto paljastaa käyttäjälle luokan yksityisetkin kentät, koska
@@ -38,24 +57,36 @@ luokka viittaa `std::unique_ptr`:lla.
 Esimerkkinä on mittausloki, joka koostuu kolmesta tiedostosta. Rajapinta
 on otsikkotiedostossa:
 
-```{.cpp tiedosto="esimerkit/12-mittausloki/mittausloki.hpp"}
+```{.cpp tiedosto="esimerkit/14-mittausloki/mittausloki.hpp"}
 ```
 
-Otsikko liittää vain `<memory>`- ja `<string>`-otsikot. Toteutuksen
+Otsikko liittää vain muutaman standardikirjaston perusotsikon. Toteutuksen
 `std::vector` ja algoritmit eivät näy käyttäjälle. Hajotin ja
 siirto-operaatiot on vain esitelty, koska `unique_ptr` tarvitsee
 `Toteutus`-tyypin täydellisen määrittelyn tuhotessaan sen. Ne määritellään
 lähdetiedostossa:
 
-```{.cpp tiedosto="esimerkit/12-mittausloki/mittausloki.cpp"}
+```{.cpp tiedosto="esimerkit/14-mittausloki/mittausloki.cpp"}
 ```
 
 Käyttäjä näkee vain julkisen rajapinnan:
 
-```{.cpp tiedosto="esimerkit/12-mittausloki/main.cpp"}
+```{.cpp tiedosto="esimerkit/14-mittausloki/main.cpp"}
 ```
 
-```{.tuloste tiedosto="esimerkit/12-mittausloki.odotettu"}
+```{.tuloste tiedosto="esimerkit/14-mittausloki.odotettu"}
+```
+
+```{.dot otsikko="Pimpl-mallin näkyvyys. Käyttäjän koodi riippuu vain otsikkotiedostosta, jossa `Toteutus` on pelkkä esittely. Kentät tuntee vain `mittausloki.cpp`, joten niiden muuttaminen ei käännä käyttäjän koodia uudelleen."}
+digraph {
+  rankdir=LR; nodesep=0.35; ranksep=0.7;
+  node [shape=box, fontsize=10];
+  main [label="main.cpp\nkäyttää Mittauslokia"];
+  hpp [label="mittausloki.hpp\nclass Mittausloki\n  unique_ptr<Toteutus> t_\nstruct Toteutus;  (esittely)"];
+  cpp [label="mittausloki.cpp\nstruct Toteutus {\n  std::string nimi;\n  std::vector<double> arvot;\n}", style=filled, fillcolor="#e8eef7"];
+  main -> hpp [label="#include"];
+  cpp -> hpp [label="#include"];
+}
 ```
 
 Ohjelma käännetään antamalla kääntäjälle molemmat lähdetiedostot:
@@ -77,11 +108,13 @@ Makrot eivät vuoda moduulin ulkopuolelle, eikä liittämisjärjestyksellä ole
 merkitystä. C++23 lisäsi standardikirjaston moduulin `std`, jolloin koko
 kirjaston voi ottaa käyttöön esittelyllä `import std;`.
 
-Kääntäjien ja käännösjärjestelmien tuki on kuitenkin vielä epätasaista.
-GCC 14 tukee moduuleja valitsimella `-fmodules-ts` mutta ei vielä
-`import std`-esittelyä, ja moduulit vaativat käännösjärjestelmältä
-riippuvuuksien selvittämistä ennen käännöstä. CMake tukee tätä
-versiosta 3.28 alkaen. Tämän tutoriaalin esimerkit käyttävät siksi
+Kääntäjien ja käännösjärjestelmien tuki on kuitenkin epätasaista ja
+muuttuu versio versiolta. Tämän tutoriaalin testeissä käytetty GCC 14
+tukee moduuleja valitsimella `-fmodules-ts` mutta ei
+`import std`-esittelyä. Moduulit vaativat lisäksi käännösjärjestelmältä
+riippuvuuksien selvittämistä ennen käännöstä; CMake tukee tätä
+versiosta 3.28 alkaen. Tilanne kannattaa tarkistaa käytettävän
+kääntäjän dokumentaatiosta. Tämän tutoriaalin esimerkit käyttävät
 otsikkotiedostoja, jotka ovat edelleen yleisin tapa.
 
 ## Riippuvuudet
@@ -89,7 +122,8 @@ otsikkotiedostoja, jotka ovat edelleen yleisin tapa.
 C++:lla ei ole yhtä virallista paketinhallintaa. Ulkoiset kirjastot
 otetaan tavallisesti käyttöön käännösjärjestelmän kautta. CMakessa
 asennettu kirjasto löydetään komennolla `find_package` ja liitetään
-kohteeseen komennolla `target_link_libraries`. Kirjastojen asentamiseen
+kohteeseen komennolla `target_link_libraries` (luku
+[Työkalut ja testaus](#työkalut-ja-testaus)). Kirjastojen asentamiseen
 ja versioiden hallintaan käytetään paketinhallintaa: vcpkg ja Conan ovat
 yleisimmät, ja Linux-jakeluiden paketit ovat vaihtoehto järjestelmän
 laajuisille kirjastoille. Pienen, vain otsikkotiedostoista koostuvan
@@ -103,6 +137,10 @@ kirjaston voi myös lisätä projektiin sellaisenaan tai CMaken
   käännöstä ja kytkee ne toteutukseen. Esittely ilman määrittelyä
   (*forward declaration*) riittää, kun tyyppiä käytetään vain osoittimen
   tai viittauksen kautta.
+- **Rajapintakommentti kertoo sopimuksen, ei toteutusta.** Esiehdot,
+  poikkeukset, elinajat ja säieturvallisuus kirjataan otsikkotiedostoon
+  esittelyn viereen, missä ne pysyvät ajan tasalla. Toteutuksen
+  yksityiskohdat kuuluvat lähdetiedoston kommentteihin.
 - **Otsikkotiedosto kääntyy yksinään.** Jokainen otsikko liittää itse
   kaiken, mitä se tarvitsee. Yleinen tapa varmistaa tämä on liittää
   lähdetiedoston oma otsikko ensimmäisenä, kuten `mittausloki.cpp`
@@ -126,6 +164,8 @@ kirjaston voi myös lisätä projektiin sellaisenaan tai CMaken
 - Osaat jakaa ohjelman otsikko- ja lähdetiedostoihin ja selittää yhden
   määrittelyn säännön.
 - Osaat käyttää nimiavaruuksia ja nimetöntä nimiavaruutta.
+- Osaat kirjoittaa funktiolle rajapintakommentin, joka kertoo esiehdot,
+  poikkeukset ja palautetun viittauksen elinajan.
 - Osaat toteuttaa pimpl-mallin ja kertoa, miksi hajotin määritellään
   lähdetiedostossa.
 - Osaat kertoa, miten ulkoinen kirjasto otetaan käyttöön CMakella ja

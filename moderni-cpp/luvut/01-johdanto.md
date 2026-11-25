@@ -62,15 +62,20 @@ yleiset kääntäjät jo tukevat.
 
 ## Kenelle tutoriaali on tarkoitettu
 
-Tutoriaali olettaa, että lukija osaa ohjelmoida jollakin kielellä ja
-tuntee C-tyylisen syntaksin perusteet: muuttujat, funktiot, silmukat ja
-osoittimet. Vanhemman C++:n tuntemus on hyödyksi muttei välttämätöntä.
-Tavoitteena ei ole kattaa koko kieltä, vaan esitellä ne piirteet, joiden
-varaan nykyaikainen C++-koodi rakentuu.
+Tutoriaali olettaa, että lukija osaa ohjelmoida C:llä tai tuntee
+muuten C-tyylisen syntaksin: muuttujat, funktiot, silmukat, rakenteet
+ja osoittimet. Aiempaa C++:n tuntemusta ei tarvita. Luvut
+[C:stä C++:aan](#cstä-caan) ja [Luokan perusteet](#luokan-perusteet)
+esittelevät viittaukset, standardikirjaston merkkijonon ja vektorin
+sekä luokat, ja myöhemmät luvut nojaavat niihin. Tavoitteena ei ole
+kattaa koko kieltä, vaan esitellä ne piirteet, joiden varaan
+nykyaikainen C++-koodi rakentuu.
 
 Tutoriaali palvelee kolmella tavalla:
 
-- **Kieltä opetteleva** lukee luvut järjestyksessä.
+- **Kieltä opetteleva** lukee luvut järjestyksessä. Luvun
+  [C++ kokeneelle](#c-kokeneelle) voi ensimmäisellä kerralla silmäillä
+  ja lukea tarkemmin, kun perusteet ovat tuttuja.
 - **Toista kieltä osaava kokenut kehittäjä** aloittaa luvusta
   [C++ kokeneelle](#c-kokeneelle) ja erillisestä pikaoppaasta ja lukee
   muista luvuista ensin loppuosion *Itsearviointi*.
