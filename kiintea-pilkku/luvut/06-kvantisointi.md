@@ -27,17 +27,46 @@ Jokainen bitti lisää noin 6 dB. Sääntö tarkistetaan mittaamalla:
 ```{.python tiedosto="esimerkit/06-sqnr.py" osa="mittaus"}
 ```
 
-```{.tuloste tiedosto="esimerkit/06-sqnr.odotettu"}
+```{.tuloste tiedosto="esimerkit/06-sqnr.odotettu" rivit="1-8"}
 ```
+
+![Mitattu SQNR bittimäärän funktiona. Pisteet asettuvat suoralle
+kymmenestä bitistä ylöspäin; pienillä bittimäärillä mittaus jää sen
+alle.](kuvat/sqnr.png){width=66%}
 
 Kymmenestä bitistä ylöspäin mitattu ja laskettu ovat sadasosien päässä
 toisistaan. Hyvin pienillä bittimäärillä malli pettää: virhe ei ole enää
 tasajakautunut eikä riippumaton signaalista, vaan se on signaalin
-jaksollinen funktio. Neljällä bitillä kvantisoitu sini ei kuulosta
-kohinaiselta vaan säröytyneeltä, koska virhe keskittyy harmonisille
-taajuuksille. Siksi pienillä bittimäärillä käytetään *ditheriä*: ennen
-kvantisointia lisätään pieni satunnainen signaali, joka tekee virheestä
-riippumattoman ja muuttaa särön kohinaksi.
+deterministinen funktio. Neljällä bitillä kvantisoitu sini ei kuulosta
+kohinaiselta vaan säröytyneeltä, koska virhe keskittyy yksittäisille
+taajuuksille, signaalin harmonisille ja niiden laskostumille.
+
+## Dither
+
+Pienillä bittimäärillä käytetään *ditheriä*: ennen kvantisointia
+lisätään pieni satunnainen signaali, joka tekee virheestä signaalista
+riippumattoman ja muuttaa särön kohinaksi. Tavallisin valinta on
+kolmiojakautunut dither, kahden tasajakautuneen satunnaisluvun summa,
+jonka huippuarvo on yksi LSB:
+
+```{.python tiedosto="esimerkit/06-sqnr.py" osa="dither"}
+```
+
+```{.tuloste tiedosto="esimerkit/06-sqnr.odotettu" rivit="10-11"}
+```
+
+![Kvantisoidun sinin spektri. Neljällä bitillä virhe on rivi
+säröpiikkejä, joista suurin on 30 dB signaalin alapuolella. Dither
+levittää saman virheen tasaiseksi kohinaksi: kokonaiskohina kasvaa,
+mutta yksikään taajuus ei erotu. Kuudellatoista bitillä virhe on kohinaa
+ilman ditheriäkin.](kuvat/spektri.png){width=100%}
+
+Dither siis *heikentää* SQNR:ää noin 5 dB, koska se lisää kohinaa,
+mutta suurin yksittäinen häiriökomponentti putoaa 16 dB. Kauppa
+kannattaa, kun yksittäinen taajuuspiikki haittaa enemmän kuin tasainen
+kohina: audiossa särö kuuluu, radiovastaanottimessa piikki näyttää
+signaalilta. Laitteistossa ditherin lähde on halpa lineaarinen
+takaisinkytketty siirtorekisteri.
 
 ## Tarkkuus on absoluuttinen
 
@@ -46,6 +75,9 @@ sama kaikille arvoille, joten hiljainen signaali saa saman kohinan
 mutta vähemmän tehoa:
 
 ```{.python tiedosto="esimerkit/06-sqnr.py" osa="hiljainen"}
+```
+
+```{.tuloste tiedosto="esimerkit/06-sqnr.odotettu" rivit="9-9"}
 ```
 
 40 dB hiljaisempi signaali menettää 40 dB SQNR:stä, eli 16 bitistä jää
@@ -69,6 +101,11 @@ kertoimen tarkasta kumoutumisesta:
 
 ```{.tuloste tiedosto="esimerkit/06-kertoimet.odotettu"}
 ```
+
+![Saman suodattimen taajuusvaste eri kerroinleveyksillä. Päästökaista ei
+muutu, mutta estokaistan pohja nousee jokaisen pudotetun bitin myötä.
+Kaksitoistabittinen vaste kulkee vielä tarkan vasteen tasolla; kymmenen
+bitin vaste on jo 10 dB sen yläpuolella.](kuvat/kertoimet.png){width=100%}
 
 Ikkunoidun suodattimen −52 dB:n vaimennus säilyy 12 kerroinbitillä.
 Sen alapuolella vaimennus heikkenee noin 6 dB bittiä kohti, koska
@@ -95,7 +132,8 @@ korkea-asteiset IIR-suodattimet toteutetaan toisen asteen lohkojen
   valitaan tarkistamalla kvantisoitujen kertoimien taajuusvaste, ei
   pelkällä kaavalla.
 - **Käytä ditheriä matalilla bittimäärillä.** Kun SQNR on alle noin
-  40 dB, virhe on säröä eikä kohinaa.
+  40 dB, virhe on säröä eikä kohinaa. Dither maksaa muutaman desibelin
+  kohinaa ja poistaa piikit.
 
 ## Itsearviointi
 
@@ -103,6 +141,8 @@ korkea-asteiset IIR-suodattimet toteutetaan toisen asteen lohkojen
   kaavan $6{,}02\,b + 1{,}76$ dB.
 - Osaat mitata SQNR:n ja selittää, miksi malli pettää pienillä
   bittimäärillä.
+- Osaat selittää, mitä dither tekee kvantisointivirheen spektrille ja
+  mitä se maksaa.
 - Osaat selittää, miksi kiinteän pilkun tarkkuus on absoluuttinen ja
   mitä se tarkoittaa skaalauksen kannalta.
 - Osaat arvioida, montako bittiä FIR-suodattimen kertoimet tarvitsevat

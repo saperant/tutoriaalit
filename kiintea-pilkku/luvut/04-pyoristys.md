@@ -5,6 +5,9 @@ näyttää pieneltä yksityiskohdalta, mutta sillä on kaksi mitattavaa
 seurausta: virheen *harha* (keskiarvo) ja virheen *hajonta*.
 Harha kertyy suodattimissa ja takaisinkytkennöissä, hajonta näkyy
 kohinana. Laitteistossa pyöristystavat eroavat myös hinnaltaan.
+Pyöristystapojen määritelmät ja liukulukujen pyöristystilat ovat
+tuttuja taidosta *Miten tietokone laskee*; tässä luvussa mitataan, mitä
+kukin tapa tekee kiinteän pilkun datapolussa ja mitä se maksaa.
 
 ## Pyöristystavat
 
@@ -37,6 +40,13 @@ siirtää vain ei-negatiivisia lukuja:
 ```{.tuloste tiedosto="esimerkit/04-pyoristys.odotettu"}
 ```
 
+![Neljän pyöristystavan siirtofunktio: vaaka-akselilla arvo ennen
+pyöristystä, pystyakselilla tulos. Lattia on kokonaan suoran alapuolella
+(harha), kohti nollaa pyöristävässä on leveä porras nollan kohdalla
+(vaimennus), ja kaksi oikeanpuoleista eroavat vain tasapeleissä.
+Kuva on piirretty esimerkin `04-harha.py`
+funktioilla.](kuvat/pyoristys.png){width=100%}
+
 Erot näkyvät tasapeleissä ja negatiivisissa luvuissa. Puolikas
 ylöspäin pyöristää −2,5:n luvuksi −2 mutta 2,5:n luvuksi 3, eli
 tasapelit menevät aina samaan suuntaan. Parilliseen pyöristäminen
@@ -54,7 +64,7 @@ käyvät läpi kaikki arvot yhtä usein:
 ```{.python tiedosto="esimerkit/04-harha.py" osa="mittaus"}
 ```
 
-```{.tuloste tiedosto="esimerkit/04-harha.odotettu"}
+```{.tuloste tiedosto="esimerkit/04-harha.odotettu" rivit="1-5"}
 ```
 
 Tulokset vastaavat teoriaa. Katkaisun harha on
@@ -76,15 +86,31 @@ yksinapainen IIR-suodatin:
 ```{.python tiedosto="esimerkit/04-harha.py" osa="kertyminen"}
 ```
 
-Tuloste on edellä mittauksen jälkeen. Katkaisulla keskiarvo jää
-alhaalta lähestyttäessä 15 yksikköä tavoitteen alle mutta saavuttaa sen
-ylhäältä: virhe riippuu suunnasta, eli suodatin on harhainen. Kun ero on
-pienempi kuin 16, askel $(x - y)/16$ pyöristyy nollaksi, ja suodatin
-pysähtyy *kuolleelle alueelle* (*deadband*). Pyöristys lähimpään
-puolittaa kuolleen alueen ja tekee siitä symmetrisen, mutta ei poista
-sitä. Pysyvä ratkaisu on lisätä tilamuuttujaan murtobittejä: kun $y$
-pidetään neljä bittiä tarkempana kuin $x$, kuollut alue kutistuu alle
-yhden LSB:n.
+```{.tuloste tiedosto="esimerkit/04-harha.odotettu" rivit="6-8"}
+```
+
+Katkaisulla keskiarvo jää alhaalta lähestyttäessä 15 yksikköä
+tavoitteen alle mutta saavuttaa sen ylhäältä: virhe riippuu suunnasta,
+eli suodatin on harhainen. Kun ero on pienempi kuin 16, askel
+$(x - y)/16$ pyöristyy nollaksi, ja suodatin pysähtyy *kuolleelle
+alueelle* (*deadband*). Pyöristys lähimpään puolittaa kuolleen alueen ja
+tekee siitä symmetrisen, mutta ei poista sitä. Pysyvä ratkaisu on lisätä
+tilamuuttujaan murtobittejä: kun $y$ pidetään neljä bittiä tarkempana
+kuin $x$, kuollut alue kutistuu alle yhden LSB:n, vaikka pyöristys on
+pelkkä katkaisu.
+
+![Liukuvan keskiarvon asettuminen kohti arvoa 1000 ylhäältä ja
+alhaalta. Vasemmalla käyrät näyttävät samoilta; suurennos paljastaa
+kuolleen alueen. Katkaisu pysähtyy arvoon 985, pyöristys arvoihin 992
+ja 1008, ja neljä lisämurtobittiä tilassa vie tuloksen yhden LSB:n
+päähän tavoitteesta.](kuvat/keskiarvo.png){width=100%}
+
+Kuollut alue on esimerkki *rajasyklistä* (*limit cycle*):
+takaisinkytketty suodatin ei asetu siihen arvoon, johon tarkka laskenta
+veisi, vaan jää pyöristyksen takia vakioon tai pieneen jaksolliseen
+heiluntaan. Pyöristyksestä johtuva rajasykli on pieni, muutaman LSB:n
+suuruinen (*granular limit cycle*). Luvun 5 ylivuotovärähtely on eri
+ilmiö: se syntyy ylivuodosta ja on koko arvoalueen suuruinen.
 
 ## Käytännössä
 
@@ -114,3 +140,5 @@ yhden LSB:n.
   suodattimessa ja miten kuollut alue poistetaan.
 - Osaat kirjoittaa negatiivisille luvuille siirrettävän
   aritmeettisen siirron C:llä.
+- Osaat erottaa pyöristyksestä johtuvan rajasyklin
+  ylivuotovärähtelystä.

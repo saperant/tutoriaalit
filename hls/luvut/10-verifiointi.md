@@ -28,7 +28,7 @@ C-testipenkki on tavallinen C++-ohjelma, jolla on kolme tehtävää:
    `std::inner_product` pistetulolle, suora konvoluutio FIR-suotimelle ja
    kolme sisäkkäistä silmukkaa matriisitulolle. Jos viitemalli on sama
    koodi kuin ydin, vertailu ei todenna mitään. Bittitarkka malli
-   (taito *Korkean tason mallinnus*) on hyvä viitemalli.
+   (taito *Korkean tason mallinnus (SystemC/TLM)*) on hyvä viitemalli.
 2. **Testivektorit.** Testipenkki kirjaa jokaisen tapauksen syötteet ja
    ytimen tulokset. Samoilla vektoreilla ajetaan myöhemmin RTL.
 3. **Pahimmat tapaukset.** Satunnaiset syötteet kiinteällä siemenellä,
@@ -65,7 +65,8 @@ Pistetulo suurilla syötteillä:
 
 Sanitoija löysi ylivuodon summassa. Korjaus on suunnittelupäätös:
 leveämpi summa (`long long` tai `ap_int<48>`), syötteiden rajaaminen
-tai kyllästävä laskenta (taito *Kiinteän pilkun aritmetiikka*).
+tai saturoiva laskenta (taito *Lukujen esitys ja kiinteän pilkun
+aritmetiikka*).
 AddressSanitizer löytää samalla tavalla taulukon rajojen ylitykset,
 jotka laitteistossa lukisivat hiljaa väärää muistia.
 

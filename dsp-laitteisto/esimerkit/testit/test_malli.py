@@ -64,7 +64,7 @@ def test_desimointi_valitsee_joka_neljannen() -> None:
 
 
 # @alku kuollut
-def test_biquad_kuollut_kaista() -> None:
+def test_biquad_kuollut_alue() -> None:
     """Askelvaste asettuu lähelle sisääntulon tasoa (DC-vahvistus 1).
     Takaisinkytkentä pyöristää joka näytteellä, joten tasapainoon jää
     virhe, jonka raja on 0.5 / (1 + a1 + a2) LSB."""

@@ -47,6 +47,11 @@ vaatii 3 miljardia jaksoa, eri jännitteillä:
 ```{.tuloste tiedosto="esimerkit/08-dvfs.odotettu"}
 ```
 
+![Vasemmalla koko tehtävän energia ja energia–viivetulo jännitteen
+funktiona. Oikealla määräaikatehtävän energia: ilman alustan tehoa
+matalin jännite voittaa, mutta 20 W:n alusta siirtää minimin noin
+0,9 V:iin.](kuvat/dvfs.png){width=100%}
+
 Jännitteen laskeminen 1,0 V:sta 0,7 V:iin pidentää ajoa 57 %, mutta
 puolittaa energian. Tästä syystä tehorajoitteinen siru ajaa monta ydintä
 matalalla jännitteellä mieluummin kuin vähän ytimiä korkealla.
@@ -114,8 +119,12 @@ pienenee kokemusperäisen neliöjuurisäännön mukaan (Hartstein ym. 2006):
 ```{.tuloste tiedosto="esimerkit/08-valimuisti.odotettu"}
 ```
 
+![Sama malli tiheämmällä ruudukolla: viiveen ja energian minimit ovat
+eri kohdissa, yli kymmenkertaisen kokoeron päässä
+toisistaan.](kuvat/valimuisti.png){width=100%}
+
 Keskimääräinen muistiviive (AMAT) on pienin 128 KiB:llä, mutta energia
-viittausta kohden on pienin 2 MiB:llä. Yksi välimuisti ei voi olla
+viittausta kohden on taulukon riveistä pienin 2 MiB:llä. Yksi välimuisti ei voi olla
 optimaalinen molemmille, ja tämä on *muistihierarkian* perustelu: pieni
 ja nopea L1 lähellä ydintä, suuri ja energiatehokas viimeisen tason
 välimuisti sen takana. Neliöjuurisääntö on karkea keskiarvo monista
@@ -128,8 +137,46 @@ ytimille, verkoille ja muistiohjaimille koko suorittimen tehoksi ja
 pinta-alaksi. Molempien tulokset ovat suuntaa antavia, ja ne
 kalibroidaan mittauksiin, kun mittauksia on.
 
+## Pinta-alasta hinnaksi
+
+Luvun alussa todettiin, että pinta-ala määrää valmistuskustannuksen.
+Yhteys ei ole lineaarinen. Suuria piirejä mahtuu kiekolle vähemmän, ja
+lisäksi suurempi osa niistä on viallisia, koska valmistusvirhe osuu
+suureen piiriin todennäköisemmin. Saantomallit ja kiekon geometria ovat
+taidon *ASIC-toteutus* aihetta; arkkitehtuurivaiheessa riittää niistä
+johdettu hinta pinta-alan funktiona:
+
+```{.python tiedosto="esimerkit/08-hinta.py" osa="malli"}
+```
+
+```{.python tiedosto="esimerkit/08-hinta.py" osa="taulukko"}
+```
+
+```{.tuloste tiedosto="esimerkit/08-hinta.odotettu" asti="800"}
+```
+
+Neliömillimetrin hinta yli kaksinkertaistuu, kun piiri kasvaa 50:stä
+800 neliömillimetriin: pinta-alan kaksinkertaistaminen maksaa enemmän
+kuin kaksi kertaa. Siksi luvun 9 suunnittelutilassa pinta-ala on
+rajoite eikä vapaa muuttuja, ja siksi suuri järjestelmä kannattaa
+joskus jakaa pienempiin paloihin, jotka valmistetaan ja testataan
+erikseen (*chiplet*):
+
+```{.python tiedosto="esimerkit/08-hinta.py" osa="jako"}
+```
+
+```{.tuloste tiedosto="esimerkit/08-hinta.odotettu" alkaen="yksi 800"}
+```
+
+Neljä palaa maksavat tällä mallilla puolet yhden suuren piirin hinnasta.
+Malli jättää pois kokoonpanon ja palojen väliset liitännät, jotka
+maksavat pinta-alaa, tehoa ja viivettä, joten jako ei ole ilmainen;
+laskelma kertoo, kuinka paljon niihin on varaa käyttää.
+
 ## Käytännössä
 
+- **Pinta-alan hinta kasvaa alaa nopeammin.** Laske hinta saannon
+  kanssa, ennen kuin lisäät välimuistia tai ytimiä "koska tilaa on".
 - **Teho on usein rajoite, ei tavoite.** Maksimoi suorituskyky
   tehobudjetin sisällä. Budjetti tulee jäähdytyksestä tai
   virtalähteestä, ja se on kovempi raja kuin pinta-ala.
@@ -152,3 +199,5 @@ kalibroidaan mittauksiin, kun mittauksia on.
   energioista operaatiota kohden.
 - Osaat perustella muistihierarkian välimuistin koon, viiveen,
   energian ja pinta-alan skaalaussäännöillä.
+- Osaat arvioida piirin hinnan pinta-alasta saannon kanssa ja selittää,
+  miksi hinta kasvaa pinta-alaa nopeammin.

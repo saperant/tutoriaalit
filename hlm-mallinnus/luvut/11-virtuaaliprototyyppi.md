@@ -155,7 +155,7 @@ rakennetaan:
   muistiin debug-liikenteellä, kuten tämän luvun lataaja tekee.
 - **Jäljitys.** Mallin voi laajentaa kirjaamaan jokaisen käskyn tai
   väylätransaktion. Jäljitystä käytetään sekä virheiden etsintään että
-  ohjelman kuorman karakterisointiin (taito *Arkkitehtuurin tutkiminen*).
+  ohjelman kuorman karakterisointiin (taito *Arkkitehtuurin mallinnus ja suunnittelutilan tutkiminen*).
 - **Virheiden injektointi.** Malli voi palauttaa väylävirheen,
   kadottaa keskeytyksen tai kääntää muistibitin hallitusti, ja ajurin
   virheenkäsittelyn voi testata toistettavasti.

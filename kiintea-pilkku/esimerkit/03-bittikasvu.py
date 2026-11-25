@@ -34,3 +34,16 @@ for k in (2, 16, 64, 256, 1000):
     print(f"K={k:5}: tarvitaan {tarvittavat_bitit(-suurin, suurin)} "
           f"bittiä, sääntö 32 + {vartija} = {32 + vartija}")
 # @loppu kertyma
+
+# @alku sekamuodot
+# Etumerkitön a-bittinen ja etumerkillinen b-bittinen samassa laskussa:
+# etumerkitön tarvitsee yhden bitin lisää ennen kuin se on etumerkillinen.
+for a, b in ((4, 4), (8, 4), (4, 8)):
+    u, s = range(2**a), range(-(2 ** (b - 1)), 2 ** (b - 1))
+    summat = [x + y for x in u for y in s]
+    tulot = [x * y for x in u for y in s]
+    print(f"UQ{a} ja Q{b}: summa "
+          f"{tarvittavat_bitit(min(summat), max(summat))}"
+          f" = max({a}+1, {b})+1, tulo "
+          f"{tarvittavat_bitit(min(tulot), max(tulot))} = {a}+{b}")
+# @loppu sekamuodot

@@ -174,7 +174,7 @@ vain suoralla simuloinnilla:
 Naiivin matriisitulon hudit 4 KiB:n välimuistissa kahdeksankertaistuvat,
 kun assosiatiivisuus putoaa täydestä kahdeksaan tiehen. Syy on
 askelpituus: B:n sarakkeen peräkkäiset alkiot ovat 256 tavun eli neljän
-rivin päässä toisistaan, ja 64 rivin 8-tiekätköissä on 8 joukkoa, joten
+rivin päässä toisistaan, ja 64 rivin 8-tievälimuistissa on 8 joukkoa, joten
 sarake osuu vain kahteen joukkoon. Virran kolme taulukkoa alkavat 16 KiB:n
 välein ja osuvat samoihin joukkoihin; kahdella tiellä ne heittävät
 toisensa ulos joka viittauksella. Hutikäyrä kertoo siis kapasiteetin

@@ -127,9 +127,12 @@ laskentarajoitteisia, päinvastoin.
 ## Kaista ja Littlen laki
 
 Muistikanavan kaista on teoreettinen yläraja. Siihen päästään vain, jos
-pyyntöjä on tarpeeksi monta yhtä aikaa kesken. *Littlen laki* (luku 4)
-yhdistää kolme suuretta: keskimäärin kesken olevien pyyntöjen määrä $L$
-on läpäisy $\lambda$ kertaa viive $W$. Muistille $\lambda$ on
+pyyntöjä on tarpeeksi monta yhtä aikaa kesken. *Littlen laki* yhdistää
+kolme suuretta: keskimäärin kesken olevien pyyntöjen määrä $L$ on
+läpäisy $\lambda$ kertaa viive $W$. Laki on pelkkää kirjanpitoa (jos
+pyyntöjä valmistuu $\lambda$ sekunnissa ja jokainen viipyy $W$
+sekuntia, niitä on kerrallaan kesken $\lambda W$), ja se perustellaan
+luvussa 4. Muistille $\lambda$ on
 kaista riveinä sekunnissa:
 
 $$\text{kaista} = \frac{L \cdot \text{rivikoko}}{W}.$$

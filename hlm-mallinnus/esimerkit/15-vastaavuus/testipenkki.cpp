@@ -42,7 +42,7 @@ SC_MODULE(Herate) {
         rst.write(true);
         wait(2);
         rst.write(false);
-        // Suunnatut tapaukset: impulssi ja pahin tapaus (kyllästys).
+        // Suunnatut tapaukset: impulssi ja pahin tapaus (saturaatio).
         syota(32767);
         for (int i = 0; i < 8; ++i) syota(0);
         for (int i = 0; i < 16; ++i) {

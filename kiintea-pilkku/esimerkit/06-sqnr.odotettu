@@ -7,3 +7,5 @@ bitit  mitattu (dB)  6,02b + 1,76
    14         86.04         86.04
    16         98.09         98.08
 16 bittiä, signaali -40 dB: 58.12 dB
+4 bittiä, ilman ditheriä: SQNR 20.35 dB, suurin piikki  -30.4 dBc
+4 bittiä, dither        : SQNR 15.06 dB, suurin piikki  -46.3 dBc

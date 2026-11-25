@@ -72,7 +72,7 @@ $$B = B_{\mathrm{in}} + N \log_2(RM).$$
 ```{.python tiedosto="esimerkit/analyysit/cic.py" osa="hogenauer"}
 ```
 
-```{.tuloste tiedosto="esimerkit/odotetut/cic.odotettu"}
+```{.tuloste tiedosto="esimerkit/odotetut/cic.odotettu" asti="f = 0.750"}
 ```
 
 Sääntö koskee vain ulostuloa. Integraattoreiden arvot kasvavat ilman
@@ -85,10 +85,20 @@ koska tulos tiedetään mahtuvan $B$ bittiin. Tämä on CIC-suotimen
 toinen keskeinen idea: modulo-aritmetiikka tekee oikean tuloksen
 väärien välitulosten kautta.
 
-Analyysin viimeiset rivit näyttävät sen. 21-bittinen kiertävä
-laskenta antaa saman tuloksen kuin rajattomat kokonaisluvut. Bittiä
-kapeampi toteutus menee rikki täydellä askeleella, koska oikea
-ulostulo ei enää mahdu. RTL-testi raportoi, kuinka monesti
+![Täysi askel CIC-suotimeen. Toinen ja kolmas integraattori kiertävät
+21-bittisen alueensa yli kerta toisensa jälkeen (pisteviivat ovat
+alueen rajat), ja välitulokset ovat sahalaitaa. Kampojen jälkeen
+ulostulo on silti oikea askelvaste. Laskenta on sama kuin mallin
+`cic`.](kuvat/cic-integraattorit.png){width=100%}
+
+Analyysi näyttää saman luvuin:
+
+```{.tuloste tiedosto="esimerkit/odotetut/cic.odotettu" alkaen="21-bittinen"}
+```
+
+Kiertävä 21-bittinen laskenta antaa saman tuloksen kuin rajattomat
+kokonaisluvut. Bittiä kapeampi toteutus menee rikki täydellä
+askeleella, koska oikea ulostulo ei enää mahdu. RTL-testi raportoi, kuinka monesti
 integraattorit todella vuotavat yli, ja tulos on silti bittitarkka:
 
 ```{.tuloste tiedosto="esimerkit/odotetut/cocotb-cic.odotettu"}
@@ -106,14 +116,39 @@ $R$:n arvoilla.
 
 ## Taajuusvaste ja kompensointi
 
-CIC-suotimen taajuusvaste on sinc-funktion $N$:s potenssi.
+CIC-suotimen taajuusvaste on sinc-funktion $N$:s potenssi. Sen
+nollakohdat ovat ulostulon näytetaajuuden monikerroilla eli juuri
+niiden kaistojen keskellä, jotka desimoinnissa laskostuvat
+hyötykaistan päälle. Siksi CIC kelpaa desimaattoriksi, vaikka sen
+estokaista on muuten vaatimaton.
+
 Päästökaista ei ole tasainen: analyysin mukaan vahvistus on jo
 neljänneksellä ulostulon näytetaajuudesta −2,7 dB. Tätä *taipumaa*
 (*droop*) kompensoidaan desimoinnin jälkeen lyhyellä FIR-suotimella,
 jonka vaste nousee kaistan reunaa kohti (*CFIR*, compensation FIR).
-Kompensointisuodin toimii jo matalalla näytetaajuudella, joten se on
-halpa. Usein sen perässä on vielä puolikaistasuodin, joka desimoi
-kahdella ja hoitaa varsinaisen kaistanrajauksen.
+Yksinkertaisin kompensaattori on kolmen kertoimen symmetrinen suodin
+$[a,\ 1 - 2a,\ a]$, jossa $a$ on negatiivinen. Sen vaste on
+$1 - 2a(1 - \cos 2\pi f)$, ja $a$ valitaan niin, että taipuma
+kumoutuu kaistan reunalla:
+
+```{.python tiedosto="esimerkit/analyysit/cic.py" osa="kompensointi"}
+```
+
+```{.tuloste tiedosto="esimerkit/odotetut/cic.odotettu" alkaen="kompensaattori" asti="f = 0.250: CIC"}
+```
+
+![Vasemmalla CIC:n vaste ($N = 3$, $R = 8$) sisääntulon taajuuksilla.
+Harmaa alue on hyötykaista ja punertavat alueet ne kaistat, jotka
+laskostuvat sen päälle; vasteen nollat osuvat niiden keskelle.
+Oikealla päästökaistan taipuma ilman kompensaattoria ja kolmen
+kertoimen kompensaattorin kanssa.](kuvat/cic-vaste.png){width=100%}
+
+Kolme kerrointa, joista kaksi on samoja, riittää pitämään kaistan
+0,25 dB:n sisällä. Kompensointisuodin toimii jo matalalla
+näytetaajuudella, joten se on halpa; käytännössä se on pidempi FIR,
+joka hoitaa samalla kaistanrajausta. Usein sen perässä on vielä
+puolikaistasuodin, joka desimoi kahdella. Puolikaistasuotimen joka
+toinen kerroin on nolla, joten se tarvitsee vain puolet kertojista.
 
 Ketju on tyypillisesti:
 
@@ -199,7 +234,7 @@ modulossa.
 - Osaat laskea CIC:n sisäisen leveyden ja perustella, miksi
   integraattorien ylivuoto ei haittaa.
 - Osaat kertoa, miksi CIC tarvitsee kompensointisuotimen ja missä
-  kohtaa ketjua se on.
+  kohtaa ketjua se on, ja mitoittaa kolmen kertoimen kompensaattorin.
 - Osaat johtaa polyfaasihajotelman ja toteuttaa desimaattorin, jossa
   on $N/R$ kertojaa.
 - Osaat perustella, miksi referenssimalli ei saa käyttää samaa

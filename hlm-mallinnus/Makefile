@@ -3,3 +3,11 @@ NIMI    := hlm-mallinnus
 KIELI   := projekti
 RAKENNE := taito
 include ../yhteiset/paketti.mk
+
+# Kuvat tuotetaan skriptillä kuvat/piirra.py esimerkin 11-kvantti
+# jäljestä; kuvat commitoidaan.
+.PHONY: kuvat
+kuvat:
+	esimerkit/testaa.sh 11-kvantti
+	PYTHONDONTWRITEBYTECODE=1 python3 kuvat/piirra.py kuvat \
+	    esimerkit/build/11-kvantti/ohjelma

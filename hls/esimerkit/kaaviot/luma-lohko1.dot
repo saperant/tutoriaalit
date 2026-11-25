@@ -1,0 +1,32 @@
+digraph {
+  rankdir=LR; nodesep=0.12; ranksep=0.5;
+  node [fontsize=9, height=0.3, margin="0.06,0.03"];
+  j0 [label="jakso 0", shape=plaintext, style=""];
+  { rank=same; j0; t0; t1; t2; t3; t4; t5; }
+  t0 [label="t0 = r * 77\n[mul0]"];
+  t1 [label="t1 = g * 150\n[mul1]"];
+  t2 [label="t2 = t0 + t1"];
+  t3 [label="t3 = b * 29\n[mul2]"];
+  t4 [label="t4 = t2 + t3"];
+  t5 [label="t5 = t4 >> 8"];
+  j1 [label="jakso 1", shape=plaintext, style=""];
+  { rank=same; j1; t6; t8; t9; t11; t12; }
+  t6 [label="t6 = t5 > 255"];
+  t8 [label="t8 = t6 ? 255 : t5"];
+  t9 [label="t9 = t8 < 0"];
+  t11 [label="t11 = t9 ? 0 : t8"];
+  t12 [label="return t11"];
+  j0 -> j1 [style=invis];
+  t0 -> t2;
+  t1 -> t2;
+  t2 -> t4;
+  t3 -> t4;
+  t4 -> t5;
+  t5 -> t6;
+  t6 -> t8;
+  t5 -> t8;
+  t8 -> t9;
+  t9 -> t11;
+  t8 -> t11;
+  t11 -> t12;
+}

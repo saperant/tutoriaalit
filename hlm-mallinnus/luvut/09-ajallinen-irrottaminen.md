@@ -58,7 +58,19 @@ Skripti ajaa mallin neljällä kvantilla:
 ```{.tuloste tiedosto="esimerkit/11-kvantti/odotettu"}
 ```
 
-Tulos kertoo ajallisen irrottamisen hinnan ja hyödyn:
+![Aloittajien oma aika simulaatioajan funktiona. Lävistäjällä
+aloittaja on synkronissa; pystysuora nousu on kulkua simulaatioajan
+edellä ja vaakasuora siirtymä synkronointi. Nollakvantilla jokainen
+siirto tehdään lävistäjällä. Mikrosekunnin kvantilla kumpikin aloittaja
+tekee koko kvantin siirrot samalla simulaatiohetkellä, tuottaja ensin:
+kuluttajan ensimmäinen kysely (oma aika 50 ns) näkee jo viestin, jonka
+tuottaja lähetti omassa ajassaan vasta 830 ns:n
+kohdalla.](kuvat/kvantti.png){width=100%}
+
+Kuva on piirretty esimerkin omasta jäljestä: funktion `jalki` kutsut
+tuottajassa ja kuluttajassa tulostavat jokaisen siirron ajat, kun
+ohjelmalle annetaan toinen argumentti (`make kuvat`). Tulos kertoo
+ajallisen irrottamisen hinnan ja hyödyn:
 
 - **Nolla kvantti** synkronoi ennen jokaista siirtoa. Kuluttaja näkee
   jokaisen viestin 0–70 ns sen jälkeen, kun se lähetettiin: viive johtuu

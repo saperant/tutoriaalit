@@ -47,49 +47,22 @@ työkalu huomaa sen jo käännösaikana. Muuttuvan indeksin ylitys jää
 C-simulaation sanitoijien varaan (luku 10). Laitteistossa ylitys ei
 kaadu, vaan lukee tai kirjoittaa jonkin muun osoitteen.
 
-## Sanasto ja jäsennys
+## Jäsennys lyhyesti
 
-minihls:n etupää on kahdessa tiedostossa. `jasennin.py` pilkkoo lähteen
-*merkeiksi* (*tokens*) säännöllisellä lausekkeella. Esikäsittelijän
-rivit käsitellään samalla: `#define` on yksinkertainen vakiomakro, ja
-`#pragma HLS` -rivi välitetään jäsentimelle omana merkkinään, jotta
-pragma voidaan liittää silmukkaan, jonka rungossa se on.
+minihls:n etupää on tavallinen jäsennin, eikä siinä ole mitään
+laitteistolle ominaista. `jasennin.py` pilkkoo lähteen merkeiksi ja
+jäsentää ne rekursiivisesti etenevällä jäsentimellä puuksi, jonka
+solmut ovat tiedostossa `puu.py`; menetelmät ovat taidon
+*Kääntäjätekniikka* aihetta. Laitteiston kannalta jäsentimestä on hyvä
+tietää kolme asiaa:
 
-```{.python tiedosto="esimerkit/minihls/jasennin.py" osa="sanasto"}
-```
-
-Jäsennin on *rekursiivisesti etenevä* (*recursive descent*): jokaista
-kieliopin sääntöä vastaa metodi. Lausekkeet jäsennetään operaattorien
-sitovuuden mukaan. `binaari` jäsentää ensin vasemman operandin ja
-kokoaa sitten tiukemmin sitovat operaattorit rekursiivisesti oikeaksi
-operandiksi, jolloin `a + b * c` jäsentyy oikein ilman, että jokaiselle
-sitovuustasolle tarvitaan oma sääntö:
-
-```{.python tiedosto="esimerkit/minihls/jasennin.py" osa="lauseke"}
-```
-
-Yhdistetyt sijoitukset puretaan jo jäsennyksessä. `s += e` on puussa
-sama kuin `s = s + e`, joten myöhemmät vaiheet käsittelevät vain yhden
-sijoituksen muodon:
-
-```{.python tiedosto="esimerkit/minihls/jasennin.py" osa="sijoitus"}
-```
-
-Silmukasta jäsennin laskee kierrosmäärän heti. Alkuarvon, rajan ja
-askeleen on oltava vakioita; muuten jäsennin ilmoittaa virheestä.
-
-## Jäsennyspuu
-
-Jäsennyspuu on tiedostossa `puu.py`. Lausekkeet ja lauseet ovat
-muuttumattomia tietoluokkia, ja Pythonin hahmonsovitus (`match`) käy
-niitä läpi samaan tapaan kuin algebrallisia tietotyyppejä taidossa
-*Funktionaalinen ohjelmointi*:
-
-```{.python tiedosto="esimerkit/minihls/puu.py" osa="lausekkeet"}
-```
-
-```{.python tiedosto="esimerkit/minihls/puu.py" osa="lauseet"}
-```
+- `#pragma HLS` -rivi välitetään jäsentimelle omana merkkinään, jotta
+  pragma voidaan liittää siihen silmukkaan, jonka rungossa se on.
+- Yhdistetyt sijoitukset puretaan heti: `s += e` on puussa sama kuin
+  `s = s + e`, joten myöhemmät vaiheet käsittelevät yhden sijoituksen
+  muodon.
+- Silmukan kierrosmäärä lasketaan jo jäsennyksessä. Alkuarvon, rajan ja
+  askeleen on oltava vakioita; muuten jäsennin ilmoittaa virheestä.
 
 ## Tietovuograafi
 
@@ -117,6 +90,12 @@ Kirkkauden laskeva ydin näyttää, mitä graafiin päätyy:
 Valitsin `--dfg` tulostaa graafin:
 
 ```{.tuloste tiedosto="esimerkit/02-etupaa/odotettu"}
+```
+
+Sama graafi kuvana, valitsimen `--dot` tuottamana ja jo ajoitettuna
+kellojaksoille (ajoitus on luvun 3 aihe):
+
+```{.dot tiedosto="esimerkit/kaaviot/luma-lohko1.dot" otsikko="Kirkkausytimen tietovuograafi. Kolme kertolaskua eivät riipu toisistaan; summat ja valinnat muodostavat ketjun niiden perään."}
 ```
 
 Muuttujaa `y` ei näy: sen kolme arvoa ovat solmut `t5`, `t8` ja `t11`.

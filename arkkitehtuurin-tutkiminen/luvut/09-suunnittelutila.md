@@ -183,6 +183,44 @@ Päätöksentekijälle tämä on tärkein tulos: valinta on hyvä, *jos*
 muistin kaista on vähintään oletettu 25 GB/s. Kaistan arvio on
 siksi tarkistettava ennen kuin suunnitelma lyödään lukkoon.
 
+## Faktorikoe: yhdysvaikutukset näkyviin
+
+Edellä oletuksia muutettiin yksi kerrallaan. Kaistan tapaus näytti
+menetelmän rajan: kaista vaikuttaa vain, kun ytimiä on paljon ja huteja
+tulee tiuhaan. Tällainen *yhdysvaikutus* (*interaction*) ei näy, kun
+muut tekijät pidetään paikallaan. Kokeiden suunnittelun perusväline sen
+löytämiseen on *2^k^-faktorikoe*: jokaiselle $k$ tekijälle valitaan
+kaksi tasoa, ja kaikki $2^k$ yhdistelmää arvioidaan. Kolmella tekijällä
+se on kahdeksan arviointia:
+
+```{.python tiedosto="esimerkit/09-faktorikoe.py" osa="tekijat"}
+```
+
+Tekijän *päävaikutus* on vasteen keskiarvo sen ylätasolla miinus
+keskiarvo alatasolla. Kahden tekijän yhdysvaikutus lasketaan samoin,
+mutta merkkinä on tekijöiden merkkien tulo: se on positiivinen, kun
+tekijät vahvistavat toisiaan.
+
+```{.python tiedosto="esimerkit/09-faktorikoe.py" osa="vaikutukset"}
+```
+
+```{.tuloste tiedosto="esimerkit/09-faktorikoe.odotettu"}
+```
+
+Hutimäärä ja ytimen koko selittävät valtaosan vaihtelusta, ja niiden
+yhdysvaikutus on kolmanneksi suurin: suuri ydin kärsii hudeista
+vähemmän, koska sen muu CPI on pienempi. Kaistan rivit ovat
+paljastavia. Sen päävaikutus ja kaikki kolme yhdysvaikutusta ovat
+itseisarvoltaan samat, mikä on merkki siitä, että kaista vaikuttaa
+vain yhdessä kahdeksasta kulmasta: pienillä ytimillä (joita on paljon)
+ja suurella hutimäärällä. Yksi tekijä kerrallaan tehty analyysi
+oletuspisteessä ei näe tätä lainkaan, koska sen jousto on nolla.
+
+Kaksi tasoa riittää vaikutusten järjestämiseen, ei käyrän muotoon.
+Kun tekijöitä on kymmeniä, kaikkia yhdistelmiä ei arvioida, vaan
+osittaisella faktorikokeella seulotaan ensin tärkeimmät tekijät, ja
+vain ne otetaan täyteen ruudukkoon.
+
 ## Käytännössä
 
 - **Tarkista reunat.** Optimi tilan keinotekoisella reunalla tarkoittaa,
@@ -194,6 +232,9 @@ siksi tarkistettava ennen kuin suunnitelma lyödään lukkoon.
 - **Rintama ennen valintaa.** Pareto-rintama erottaa tekniset faktat
   (mitä on mahdollista) liiketoiminnan päätöksistä (mikä teho on
   hyväksyttävä).
+- **Muuta tekijöitä yhdessä.** Yksi tekijä kerrallaan ei löydä
+  yhdysvaikutuksia. Faktorikoe kahdella tasolla on halpa tapa nähdä,
+  mitkä tekijät ja tekijäparit ratkaisevat.
 - **Kysy, muuttuuko päätös.** Herkkyysanalyysin tarkoitus ei ole
   tuottaa lukuja vaan löytää ne oletukset, joista päätös riippuu.
   Niiden tarkentamiseen kannattaa käyttää aikaa.
@@ -209,3 +250,5 @@ siksi tarkistettava ennen kuin suunnitelma lyödään lukkoon.
 - Osaat laskea Pareto-rintaman ja tulkita sen muodon.
 - Osaat laskea joustot ja tutkia, muuttaako oletuksen virhe optimaalista
   suunnitelmaa.
+- Osaat suunnitella 2^k^-faktorikokeen ja laskea pää- ja
+  yhdysvaikutukset sen tuloksista.

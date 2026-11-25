@@ -6,7 +6,7 @@ kunkin operaation ja mikä rekisteri säilyttää kunkin välituloksen.
 *Ohjauksen tuottaminen* tekee tilakoneen, joka kertoo datapolulle,
 millä jaksolla ollaan. Tulos on *FSMD* (*finite state machine with
 datapath*): sama tilakoneen ja datapolun jako, jonka taito
-*RTL-suunnittelu* opetti kirjoittamaan käsin.
+*RTL-suunnittelu SystemVerilogilla* opetti kirjoittamaan käsin.
 
 ## Yksiköiden jakaminen
 

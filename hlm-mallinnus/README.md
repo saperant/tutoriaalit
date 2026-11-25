@@ -52,6 +52,9 @@ esimerkin itse. `esimerkit/testaa.sh` vertaa tulosteen tiedostoon
 `odotettu`. Yhteiset TLM-mallit ovat hakemistossa `esimerkit/mallit/`.
 Kehityskontti on hakemistossa `.devcontainer/hlm-mallinnus`.
 
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
+
 ## Lisenssi
 
 Creative Commons Nimeä–JaaSamoin 4.0 (CC BY-SA 4.0), myös esimerkit.

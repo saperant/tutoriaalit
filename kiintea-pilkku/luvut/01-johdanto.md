@@ -31,12 +31,24 @@ Tämä tutoriaali opettaa nuo päätökset:
 - **Suunnittelu:** kiinteä pilkku vai liukuluku, lohkoliukuluku,
   sanaleveyksien valinta virhebudjetilla ja yleiset sudenkuopat.
 
+## Esitiedot ja rajaus
+
 Tutoriaali rakentuu taitojen *Digitaalitekniikka* ja *Miten tietokone
-laskee* päälle. Kahden komplementti, liukulukujen rakenne ja
-int8-kvantisointi oletetaan tutuiksi; tässä ne nähdään
-laitteistosuunnittelijan silmin. Jatkotaidot *Korkean tason mallinnus
-(SystemC/TLM)* ja *DSP-algoritmien laitteistototeutus* käyttävät tämän
-tutoriaalin bittitarkkoja malleja RTL:n referenssinä.
+laskee* päälle. Kahden komplementti, liukulukujen rakenne,
+pyöristystapojen määritelmät ja int8-kvantisointi oletetaan tutuiksi;
+tässä ne nähdään laitteistosuunnittelijan silmin: mitä kukin valinta
+maksaa bitteinä, kohinana ja logiikkana. Esimerkit ovat C:tä ja
+Pythonia, ja lukujen 6 ja 9 mittaukset käyttävät NumPyä. Yksi esimerkki
+on SystemVerilogia, mutta sen lukemiseen riittää tämän tutoriaalin
+teksti.
+
+Rajauksen ulkopuolelle jäävät suodattimien suunnittelu (taito
+*Digitaalinen signaalinkäsittely*), laitteistorakenteet, kuten
+suodattimien, CORDICin ja NCO:n RTL-toteutukset (taito *DSP-algoritmien
+laitteistototeutus*), liukulukuyksikön suunnittelu ja logaritmiset
+lukujärjestelmät. Jatkotaidot *Korkean tason mallinnus (SystemC/TLM)* ja
+*DSP-algoritmien laitteistototeutus* käyttävät tämän tutoriaalin
+bittitarkkoja malleja RTL:n referenssinä.
 
 ## Ensimmäinen kiinteän pilkun luku
 
@@ -78,4 +90,10 @@ ylivuotoja, ja NumPy laskee kohinan ja taajuusvasteet.
 
 Kaikki tulosteet ovat deterministisiä: testisignaalit tuotetaan
 siniaalloista tai omalla kongruenssigeneraattorilla, ei
-satunnaislukukirjastolla.
+satunnaislukukirjastolla. Esimerkit ajetaan paketin juuresta komennolla
+`make testaa`, joka kääntää ja ajaa jokaisen esimerkin ja vertaa
+tulostetta tallennettuun; yksittäisen Python-esimerkin voi ajaa
+suoraan (`python3 esimerkit/06-sqnr.py`). Kuvaajat piirtää
+`kuvat/piirra.py` samoilla funktioilla, joita esimerkit käyttävät
+(`make kuvat`), joten jokaisen kuvan voi tuottaa itse ja muuttaa sen
+parametreja.

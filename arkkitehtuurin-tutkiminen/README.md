@@ -26,9 +26,9 @@ pikaopas
 7. Laitteisto–ohjelmisto-jako – kiihdyttimen hyötymalli ja
    virtuaaliprototyyppi
 8. Pinta-ala ja teho – dynaaminen teho ja vuoto, DVFS, energia
-   operaatiota kohden, välimuistin koko
+   operaatiota kohden, välimuistin koko, pinta-alasta hinnaksi
 9. Suunnittelutilan tutkiminen – ruudukko, otanta, latinalainen
-   hyperkuutio, Pareto-rintama, herkkyys
+   hyperkuutio, Pareto-rintama, herkkyys, faktorikoe
 10. Validointi, toistettavuus ja raportointi – luottamusvälit,
     kalibrointi, koetiedostot
 11. Lopuksi – työnkulku, nyrkkisäännöt, lähteet
@@ -51,6 +51,9 @@ SystemC-esimerkit ovat hakemistoja `esimerkit/NN-nimi/`, jotka
 `esimerkit/testaa.sh` kääntää ja ajaa. Jokaisen esimerkin tulostetta
 verrataan tallennettuun. Kehityskontti on hakemistossa
 `.devcontainer/arkkitehtuurin-tutkiminen`.
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 ## Lisenssi
 

@@ -5,7 +5,7 @@
     "context": "..",
     "args": {
       "LISAPAKETIT": "verilator iverilog yosys nextpnr-ice40 shellcheck",
-      "PIP_PAKETIT": "cocotb==2.1.0 numpy scipy==1.18.1 scipy-stubs==1.18.1.1 ruff mypy pytest"
+      "PIP_PAKETIT": "cocotb==2.1.0 numpy matplotlib scipy==1.18.1 scipy-stubs==1.18.1.1 ruff mypy pytest"
     }
   },
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/dsp-laitteisto/esimerkit",

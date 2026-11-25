@@ -55,7 +55,43 @@ laskee saman tiivisteen, ja ensimmäinen poikkeava näyte etsitään vasta,
 kun tiivisteet eroavat. Tässä käytetty FNV-1a on yksinkertainen ja
 riittää testaukseen; se ei ole kryptografinen tiiviste.
 
+## Sama kavennus laitteistokuvauskielellä
+
+Malli on olemassa laitteistoa varten, joten on syytä nähdä kerran, miltä
+sama kavennus näyttää SystemVerilogilla. Kertymä on 36-bittinen
+etumerkillinen vektori: 32-bittinen tulo ja neljä vartijabittiä, jotka
+15 tapin summa säännön mukaan tarvitsee. (Kertoimien $\ell_1$-normi on
+1,16, joten yksikin riittäisi.) Jokainen mallin operaatio vastaa
+johdotusta tai pientä logiikkaa:
+
+```{.systemverilog tiedosto="esimerkit/07-fir-rtl.sv" osa="kavenna"}
+```
+
+Aritmeettinen siirto `>>>` ja bittileikkaus `kertyma[14:0]` ovat pelkkää
+johdotusta. Logiikkaa syntyy vain vertailusta puolikkaaseen, yhden
+lisäyksestä ja saturaation multiplekseristä. Avainsana `signed` on
+välttämätön: ilman sitä `>>>` täyttäisi nollilla ja vertailut olisivat
+etumerkittömiä, eikä kääntäjä varoita. Testipenkki ajaa saman
+generaattorin tuottamat 200 näytettä ja laskee saman tiivisteen:
+
+```{.systemverilog tiedosto="esimerkit/07-fir-rtl.sv" osa="ajo"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-fir-rtl.odotettu"}
+```
+
+Tiiviste `4c6887fe` on sama kuin C- ja Python-mallissa, eli kolme
+toteutusta kolmella kielellä tuottavat bitilleen saman tuloksen.
+Rekisterit, liukuhihnat ja kättelyt tämän laskennan ympärillä ovat
+taidon *DSP-algoritmien laitteistototeutus* aihe.
+
 ## CORDIC
+
+FIR-suodattimessa virhe syntyy yhdessä kohdassa, lopun pyöristyksessä.
+Toinen esimerkki näyttää mallin toisen käyttötavan: iteratiivisessa
+algoritmissa bittejä katkeaa joka kierroksella, ja mallilla mitoitetaan
+kierrosten määrä ja välitulosten vartijabitit ennen kuin laitteistoa on
+olemassa.
 
 CORDIC (*coordinate rotation digital computer*) laskee trigonometrisia
 funktioita pelkillä yhteenlaskuilla, siirroilla ja pienellä
@@ -78,7 +114,9 @@ sanaleveyden ennen kuin riviäkään RTL:ää on kirjoitettu: 16-bittiseen
 ulostuloon tarvitaan noin 16 iteraatiota ja muutama vartijabitti
 välituloksiin, koska jokaisen iteraation siirto katkaisee bittejä.
 Vahvistus $K \approx 1{,}6468$ kompensoidaan alkuarvolla $1/K$, joten
-kertolaskua ei tarvita lainkaan.
+kertolaskua ei tarvita lainkaan. CORDICin laitteistorakenteet
+(iteratiivinen ja liukuhihnoitettu) ja kiertotila ovat taidossa
+*DSP-algoritmien laitteistototeutus*.
 
 ## Bittitarkan mallin rakenne
 
@@ -119,3 +157,5 @@ mielessä, vaan sen tarvitsee vain vastata mallia.
 - Osaat toteuttaa CORDICin siirroilla ja yhteenlaskuilla ja valita
   iteraatioiden määrän tarkkuusvaatimuksesta.
 - Osaat kertoa, miten bittitarkkaa mallia käytetään RTL:n testauksessa.
+- Osaat lukea kavennuksen SystemVerilog-toteutuksen ja kertoa, mikä osa
+  siitä on johdotusta ja mikä logiikkaa.

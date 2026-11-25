@@ -9,7 +9,7 @@ subtitle: Pikaopas · SystemC 2.3, TLM-2.0 ja virtuaaliprototyypit
 |-------|----------------------|
 | kääntäjä, standardi | `g++ -std=c++17` (sama kuin kirjastolla) |
 | kirjasto | `pkg-config --cflags --libs systemc` |
-| kiintopistetyypit | `-DSC_INCLUDE_FX` |
+| kiinteän pilkun tyypit | `-DSC_INCLUDE_FX` |
 | ei käynnistysilmoitusta | `SC_COPYRIGHT_MESSAGE=DISABLE` |
 | RTL SystemC-moduuliksi | `verilator --sc --exe --build` |
 | aaltomuodot | `sc_create_vcd_trace_file`, `sc_trace` |
@@ -93,13 +93,13 @@ Tapahtumalla ei ole muistia: tila ensin, sitten odotus.
 | `sc_bigint<W>`, `sc_biguint<W>` | mielivaltainen leveys |
 | `sc_bv<W>`, `sc_lv<W>` | bitit; neliarvoinen logiikka |
 | `x.range(h, l)`, `x[i]`, `(a, b)` | kenttä, bitti, liitos |
-| `sc_fixed<W, I, Q, O>` | etumerkillinen kiintopiste, Q1.15 = `<16, 1>` |
+| `sc_fixed<W, I, Q, O>` | etumerkillinen kiinteän pilkun luku, Q1.15 = `<16, 1>` |
 | `SC_TRN`, `SC_RND`, `SC_RND_CONV` | katkaisu, pyöristys, parilliseen |
-| `SC_WRAP`, `SC_SAT` | kierto, kyllästys |
+| `SC_WRAP`, `SC_SAT` | kierto, saturaatio |
 | `sc_fixed_fast` | enintään 53 bittiä, nopea |
 
 Tarkka tulo: W1 + W2 bittiä, I1 + I2 kokonaisbittiä. Summaan N tulosta:
-log₂ N suojabittiä.
+log₂ N vartijabittiä.
 
 # TLM-2.0
 

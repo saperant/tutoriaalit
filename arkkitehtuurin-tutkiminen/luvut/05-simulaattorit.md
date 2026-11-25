@@ -24,7 +24,7 @@ mallin on itse laskettava, milloin seuraava tapahtuma on.
 SystemC tukee kumpaakin. `SC_METHOD`, joka on herkkä kellon nousevalle
 reunalle, on syklipohjainen komponentti. `SC_THREAD`, joka odottaa
 `wait(t)`, ja TLM-2.0:n annotoidut viiveet ovat tapahtumapohjaisia.
-Paketti *Korkean tason mallinnus* esittelee molemmat; tässä niitä
+Taito *Korkean tason mallinnus (SystemC/TLM)* esittelee molemmat; tässä niitä
 verrataan saman järjestelmän malleina.
 
 ## Järjestelmä
@@ -36,6 +36,22 @@ kerrallaan (10 ns), ja DRAM-käyttö kestää vielä 40 ns. Ilman kilpailua
 pyynnön viive on 54 ns. Parametrit ovat samat kuin luvun 4
 MVA-esimerkissä.
 
+```{.dot otsikko="Mallinnettava järjestelmä. Ytimet eivät kilpaile väylästä tai DRAMista, vain muistiohjaimesta, joka palvelee yhden pyynnön kerrallaan."}
+digraph {
+  rankdir=LR; nodesep=0.2; ranksep=0.5;
+  node [shape=box, height=0.3];
+  y1 [label="ydin 1"]; y2 [label="ydin 2"]; yk [label="ydin K"];
+  pisteet [label="…", shape=plaintext];
+  vayla [label="väylä\n4 ns"];
+  jono [label="jono", shape=cds];
+  ohjain [label="muistiohjain\n10 ns, yksi kerrallaan"];
+  dram [label="DRAM\n40 ns"];
+  {y1 y2 pisteet yk} -> vayla [arrowsize=0.6];
+  vayla -> jono -> ohjain -> dram;
+  dram -> y1 [label="vastaus", style=dashed, constraint=false];
+}
+```
+
 Laskenta-ajat tulevat kiinteän siemenen satunnaislukugeneraattorista,
 joten kaikki mallit saavat täsmälleen saman kuorman:
 
@@ -44,7 +60,8 @@ joten kaikki mallit saavat täsmälleen saman kuorman:
 
 ## Kolme mallia
 
-**LT-malli** on paketin *Korkean tason mallinnus* tapaan löyhästi
+**LT-malli** on taidon *Korkean tason mallinnus (SystemC/TLM)* tapaan
+löyhästi
 ajoitettu: ydin lähettää `b_transport`-kutsun väylän kautta muistille,
 joka lisää kiinteän viiveen. Väylä ja muisti ovat samat mallit kuin
 siinä paketissa (`esimerkit/mallit/`). Kilpailua ei ole: jokainen pyyntö
@@ -96,6 +113,12 @@ syklimalliin verrattuna ja lisää MVA:n ennusteen luvusta 4:
 ```{.tuloste tiedosto="esimerkit/05-vertailu.odotettu"}
 ```
 
+![Pyynnön viive ytimien määrän funktiona (molemmat akselit
+logaritmisia). LT-malli on vaakasuora viiva, koska se ei mallinna
+jonotusta lainkaan. Varausmalli kulkee syklimallin päällä, ja MVA
+poikkeaa polven kohdalla. Simulaattorien pisteet ovat esimerkin
+`05-muisti` tulosteesta.](kuvat/simulaattorit.png){width=92%}
+
 **LT-malli** on oikeassa vain, kun kuorma on kevyt. Kahdeksalla
 ytimellä se aliarvioi viiveen 6 %, 16:lla 25 % ja 32:lla 75 %. Kaista
 on vielä pahemmin väärin: 32 ytimellä LT-malli ennustaa 13 GB/s, kun
@@ -133,8 +156,9 @@ ja verkkomallit tapahtumapohjaisia.
 ## Kvantti rikkoo varausmallin
 
 Varausmalli on oikein vain, jos pyynnöt saapuvat ohjaimelle
-aikajärjestyksessä. Ajallisesti irrotettu ydin (paketin *Korkean tason
-mallinnus* luku 9) kulkee simulaatioaikaa edellä ja lähettää pyyntöjä
+aikajärjestyksessä. Ajallisesti irrotettu ydin (taito *Korkean tason
+mallinnus (SystemC/TLM)*) kulkee simulaatioaikaa edellä ja lähettää
+pyyntöjä
 tulevaisuudesta. Tulosteen viimeinen rivi ajaa varausmallin 16 ytimellä
 1 µs:n kvantilla: viive on 632 ns syklimallin 72 ns:n sijaan. Ydin, joka
 on mikrosekunnin edellä, varaa ohjaimen tulevaisuudesta, ja ytimet,

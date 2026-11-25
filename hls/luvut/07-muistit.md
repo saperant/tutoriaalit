@@ -63,6 +63,11 @@ Syklinen jako neljällä vie ne eri pankkeihin. Matriisi B luetaan
 sarakkeittain: alkiot `b[j]`, `b[4+j]`, `b[8+j]` ja `b[12+j]` ovat
 neljän alkion välein, ja lohkojako neljään vie ne eri pankkeihin:
 
+![Kuudentoista alkion taulukko matriisina, väri kertoo pankin. Kehystetyt
+alkiot luetaan yhdellä kierroksella: A:sta rivi, B:stä sarake. A:n
+lukemat osuvat eri pankkeihin vain syklisellä jaolla ja B:n vain
+lohkojaolla.](kuvat/jako.png){width=100%}
+
 ```{.cpp tiedosto="esimerkit/07-matriisi/matmul_jaettu.cpp" osa="jako"}
 ```
 

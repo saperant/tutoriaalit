@@ -47,44 +47,54 @@ tutkia virhetilanteita, joita oikeassa laitteessa on vaikea tuottaa.
 
 ## Mitä tutoriaali kattaa
 
-| Luku | Aihe | Esimerkit |
-|------|------|-----------|
-| 2 | Ensimmäinen malli | moduuli, portit, signaalit, kello |
-| 3 | Prosessit ja tapahtumat | `SC_METHOD`, `SC_THREAD`, ilmoitukset |
-| 4 | Simulaatioydin | delta-syklit, aika, tavalliset virheet |
-| 5 | Kanavat ja rajapinnat | oma FIFO-kanava |
-| 6 | Bittitarkat tyypit | `sc_int`, `sc_lv`, `sc_fixed`, FIR |
-| 7 | TLM-2.0:n perusteet | generic payload, `b_transport` |
-| 8 | Väylä ja oheislaitteet | osoitekartta, rekisterit |
-| 9 | Ajallinen irrottaminen ja DMI | kvantti, suora muistiväylä |
-| 10 | AT-mallinnus | neljä vaihetta, liukuhihna |
-| 11 | Virtuaaliprototyyppi | RISC-V-ISS ajaa ohjelmaa |
-| 12 | Mallin ja RTL:n vastaavuus | Verilator ja SystemC yhdessä |
-| 13 | Lopuksi | nyrkkisäännöt, vianetsintä, lähteet |
+| Luku | Aihe | Sisältö | Esimerkkihakemistot |
+|-----|---------------------------|--------------------------------|-----------------------------|
+| 2 | Ensimmäinen malli | moduuli, portit, signaalit, kello | `01-laskuri` |
+| 3 | Prosessit ja tapahtumat | `SC_METHOD`, `SC_THREAD`, ilmoitukset | `02-tapahtumat` |
+| 4 | Simulaatioydin | delta-syklit, aika, tavalliset virheet | `03-delta`, `04-aika`, `05-virheet` |
+| 5 | Kanavat ja rajapinnat | oma FIFO-kanava | `06-jono` |
+| 6 | Bittitarkat tyypit | `sc_int`, `sc_lv`, `sc_fixed`, FIR | `07-tyypit`, `08-fir` |
+| 7 | TLM-2.0:n perusteet | generic payload, `b_transport` | `09-tlm-muisti` |
+| 8 | Väylä ja oheislaitteet | osoitekartta, rekisterit | `10-vayla` |
+| 9 | Ajallinen irrottaminen ja DMI | kvantti, suora muistiväylä | `11-kvantti`, `12-dmi` |
+| 10 | AT-mallinnus | neljä vaihetta, liukuhihna | `13-at` |
+| 11 | Virtuaaliprototyyppi | RISC-V-ISS ajaa ohjelmaa | `14-prototyyppi` |
+| 12 | Mallin ja RTL:n vastaavuus | Verilator ja SystemC yhdessä | `15-vastaavuus` |
+| 13 | Lopuksi | nyrkkisäännöt, vianetsintä, lähteet | |
+
+Esimerkkihakemistot on numeroitu juoksevasti, ei luvun mukaan; taulukon
+viimeinen sarake kertoo, mitkä hakemistot kuuluvat mihinkin lukuun.
 
 Luvut 2–6 käsittelevät SystemC:tä signaalitasolla: miten malli
-rakennetaan ja miten simulaattori sen ajaa. Luvut 7–10 nostavat
+rakennetaan ja miten simulaattori sen ajaa. Luvun 6 tietotyyppejä
+tarvitaan seuraavan kerran vasta luvussa 12, joten sen voi lukea myös
+juuri ennen sitä. Luvut 7–10 nostavat
 abstraktiotasoa transaktioihin, luku 11 kokoaa osat
 virtuaaliprototyypiksi ja luku 12 palaa RTL:ään: miten varmistetaan,
 että toteutus tekee saman kuin malli.
 
-## Esitiedot ja jatkotaidot
+## Esitiedot ja rajaus
 
 Esimerkit ovat C++17:ää, ja tutoriaali olettaa taidon *Moderni C++*:
 luokat, mallit (*templates*), lambdat ja RAII. SystemC käyttää
 makroja ja moniperintää tavalla, joka selitetään kohdallaan. Taito
 *Tietokonearkkitehtuuri* antaa käsitteet muistiväylästä, muistikartasta,
-oheislaitteiden rekistereistä ja keskeytyksistä, ja taito *Kiinteän
-pilkun aritmetiikka* luvun 6 bittitarkoille laskuille. RTL-suunnittelun
-(*RTL-suunnittelu*, *VHDL*) tuntemus auttaa luvuissa 4 ja 12:
+oheislaitteiden rekistereistä ja keskeytyksistä, ja taito *Lukujen
+esitys ja kiinteän pilkun aritmetiikka* luvun 6 bittitarkoille
+laskuille; sen termit (Q-muodot, vartijabitit, saturaatio) ovat tässä
+samat. RTL-suunnittelun (*RTL-suunnittelu SystemVerilogilla*,
+*RTL-suunnittelu VHDL:llä*) tuntemus auttaa luvuissa 4 ja 12:
 SystemC:n delta-syklit ovat samat kuin VHDL:n ja Verilogin.
 
-Jatkotaitoja ovat *Arkkitehtuurin tutkiminen* (malleilla tehtävät
-suorituskykyanalyysit ja laitteisto–ohjelmisto-jako) ja *Korkean tason
-synteesi* (HLS), jossa C++-malli muunnetaan työkalulla RTL:ksi.
-Rinnakkaisia taitoja ovat *SoC-integraatio* (väylät ja
-osoitekartat oikeassa piirissä) ja *Verifiointi* (referenssimallit
-testipenkeissä).
+Tutoriaali ei käsittele SystemC:n syntetisoitavaa osajoukkoa (taito
+*Korkean tason synteesi*), analogia- ja sekasignaalilaajennusta
+SystemC AMS eikä UVM-SystemC:tä. Virtuaaliprototyypin prosessori on
+pieni opetusmalli ilman keskeytyksiä ja etuoikeustasoja; oheislaitteita
+kysellään. Malleilla tehtävät suorituskykyanalyysit ja
+laitteisto–ohjelmisto-jako ovat taidossa *Arkkitehtuurin mallinnus ja
+suunnittelutilan tutkiminen*, väylät ja osoitekartat oikeassa piirissä
+taidossa *SoC-integraatio* ja referenssimallit testipenkeissä taidossa
+*Laitteiston verifiointi*.
 
 ## Työkalut ja esimerkit
 

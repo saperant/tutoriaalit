@@ -28,6 +28,11 @@ mitä suunnittelija tarvitsee.
 ```{.tuloste tiedosto="esimerkit/02-formaatit.odotettu"}
 ```
 
+![Sama 16-bittinen koodi kolmessa muodossa: bitit eivät muutu, vain
+binääripilkun paikka ja sen mukana bittien painot. Alla nelibittisen
+Q1.3-muodon kaikki arvot: askel on tasainen, ja alue päättyy yhtä
+askelta ennen lukua +1.](kuvat/muodot.png){width=92%}
+
 Arvoalue ja tarkkuus ovat toistensa vastakohdat: jokainen kokonaisosaan
 lisätty bitti kaksinkertaistaa alueen ja puolittaa tarkkuuden.
 Etumerkillisen muodon alue on epäsymmetrinen, koska nollaa vastaa

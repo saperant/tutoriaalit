@@ -140,6 +140,13 @@ näytteistykseen:
 ```{.tuloste tiedosto="esimerkit/06-simpoint.odotettu"}
 ```
 
+![Sadan intervallin CPI väritettynä sen mukaan, mihin ryhmään k-means
+intervallin sijoitti ($k = 3$). Ohjelman kolme vaihetta erottuvat sekä
+väristä että CPI:n tasosta, vaikka ryhmittely näki vain
+peruslohkovektorit. Kolmiot ovat ryhmien edustajat, jotka simuloidaan
+tarkasti; vinoviivoitettu alue on ajon alun viisi
+intervallia.](kuvat/simpoint.png){width=100%}
+
 Ajon alku on huono näyte: siinä sattui olemaan virtaavaa vaihetta, jonka
 hudit limittyvät, ja arvio on 37 % liian pieni. Tasavälinen näytteistys ei ole paljon
 parempi, koska vaiheet ovat eri pituisia ja viisi näytettä osuu niihin

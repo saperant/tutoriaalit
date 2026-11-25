@@ -11,8 +11,8 @@
 
 // @alku tyypit
 // Näytteet ja kertoimet ovat Q1.15-lukuja. Tulo on tarkka (32 bittiä,
-// Q2.30), ja summaimessa on kolme suojabittiä kahdeksan tulon summalle.
-// Ulostulo pyöristetään ja kyllästetään takaisin Q1.15:een.
+// Q2.30), ja summaimessa on kolme vartijabittiä kahdeksan tulon summalle.
+// Ulostulo pyöristetään ja saturoidaan takaisin Q1.15:een.
 namespace fir {
 constexpr std::size_t TAPIT = 8;
 using Nayte = sc_dt::sc_fixed<16, 1, sc_dt::SC_RND, sc_dt::SC_SAT>;
@@ -48,7 +48,7 @@ public:
             const Tulo tulo = kertoimet_[k] * viive_[k];
             summa += tulo;
         }
-        return Nayte(summa);  // pyöristys ja kyllästys
+        return Nayte(summa);  // pyöristys ja saturaatio
     }
 
     const std::array<Kerroin, TAPIT>& kertoimet() const {

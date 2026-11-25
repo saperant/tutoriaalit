@@ -1,0 +1,40 @@
+// lahde: 09-fir/fir.v
+// vcd: --kello clk --signaalit x_TVALID,x_TREADY,x_TDATA,y_TVALID,y_TREADY,y_nro --alku 3 --jaksot 22 --kanta d --naytteistys ennen
+// 09-fir:n RTL vastapaineen kanssa: lähettäjä pitää taukoja (x_TVALID)
+// ja vastaanottaja ei aina ole valmis (y_TREADY). Syöte on juokseva
+// numero 1, 2, 3, ..., joka kasvaa jokaisella siirrolla, ja y_nro
+// laskee siirtyneet tulokset. Arvot
+// näytetään juuri ennen kellon nousevaa reunaa, eli siirto tapahtuu
+// jaksolla, jolla VALID ja READY ovat molemmat ykkösiä.
+module kaavio;
+  logic clk = 1'b0, rst = 1'b1, ap_start = 1'b0;
+  wire ap_done, ap_idle, ap_ready;
+  logic signed [31:0] x_TDATA = 32'sd1;
+  logic x_TVALID = 1'b0, y_TREADY = 1'b0;
+  wire x_TREADY, y_TVALID;
+  wire signed [31:0] y_TDATA;
+  fir dut (.*);
+  always #5 clk = ~clk;
+  // Kiinteä taukokuvio, jotta kaavio on sama joka ajolla.
+  logic [4:0] n = '0;
+  logic [5:0] y_nro = '0;
+  always @(posedge clk) begin
+    n <= n + 5'd1;
+    x_TVALID <= !rst && (n % 5 != 3);
+    y_TREADY <= !rst && (n % 7 != 5) && (n % 7 != 6);
+    if (x_TVALID && x_TREADY) x_TDATA <= x_TDATA + 32'sd1;
+    if (y_TVALID && y_TREADY) y_nro <= y_nro + 6'd1;
+  end
+  initial begin
+    $dumpfile("kaavio.vcd");
+    $dumpvars(1, kaavio);
+    repeat (2) @(posedge clk);
+    rst <= 1'b0;
+    @(posedge clk);
+    ap_start <= 1'b1;
+    @(posedge clk);
+    ap_start <= 1'b0;
+    repeat (30) @(posedge clk);
+    $finish;
+  end
+endmodule

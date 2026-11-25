@@ -17,7 +17,7 @@ static int merkkeja(const std::string& s) {
 // @alku vertailu
 // Virhe ilmoitetaan ulostulon vähiten merkitsevinä bitteinä
 // (LSB = 2^-15). Viitteen tulos rajataan Q1.15:n alueelle, koska
-// kyllästys on toteutuksen määritelty ominaisuus eikä virhe.
+// saturaatio on toteutuksen määritelty ominaisuus eikä virhe.
 struct Tulos {
     double suurin = 0.0, signaali = 0.0, kohina = 0.0;
 };
@@ -70,9 +70,9 @@ int sc_main(int, char*[]) {
     // Tulot katkaistaan tai pyöristetään 18 bittiin ennen summausta.
     vertaa<fir::Suodin<sc_fixed<18, 2, SC_TRN>>>("tulot 18 b, katkaisu");
     vertaa<fir::Suodin<sc_fixed<18, 2, SC_RND>>>("tulot 18 b, pyöristys");
-    // Summaimesta puuttuvat suojabitit: välisumma kiertää.
+    // Summaimesta puuttuvat vartijabitit: välisumma kiertää.
     vertaa<fir::Suodin<fir::TarkkaTulo, sc_fixed<32, 1, SC_TRN, SC_WRAP>>>(
-        "summa ilman suojabittejä");
+        "summa ilman vartijabittejä");
     // @loppu main
     return 0;
 }

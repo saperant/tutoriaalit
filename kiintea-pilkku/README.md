@@ -13,11 +13,14 @@ pikaopas: [kiintea-pilkku-pikaopas.pdf](https://saperant.github.io/tutoriaalit/m
 
 1. Johdanto – miksi kiinteä pilkku, ensimmäinen Q1.15-luku
 2. Q-formaatit – arvoalue, tarkkuus, muunnokset ja muodon vaihto
-3. Yhteen- ja kertolasku – bittikasvu, $-1 \times -1$, vartijabitit
+3. Yhteen- ja kertolasku – bittikasvu, $-1 \times -1$, vartijabitit,
+   jako vakiolla
 4. Pyöristys ja katkaisu – tavat, harha mitattuna, kuollut alue
-5. Saturaatio ja kierto – virhe ylivuodossa, Jacksonin sääntö
-6. Kvantisointivirhe ja SQNR – 6 dB bittiä kohti, kertoimet
-7. Bittitarkat mallit – sama FIR C:llä ja Pythonilla, CORDIC
+5. Saturaatio ja kierto – virhe ylivuodossa, Jacksonin sääntö,
+   ylivuotovärähtely
+6. Kvantisointivirhe ja SQNR – 6 dB bittiä kohti, dither, kertoimet
+7. Bittitarkat mallit – sama FIR C:llä, Pythonilla ja
+   SystemVerilogilla, CORDIC
 8. Kiinteä pilkku vai liukuluku laitteistossa – pinta-ala,
    dynamiikka, lohkoliukuluku
 9. Sanaleveyden valinta ja virhebudjetti
@@ -31,7 +34,8 @@ C-esimerkit GCC 14:llä ja Clang 20:llä (C23, varoitukset virheinä,
 AddressSanitizer ja UndefinedBehaviorSanitizer) ja tarkistaa
 Python-esimerkit ruffilla ja mypyllä (`--strict`). NumPy tarvitaan
 kohina- ja taajuusvastelaskuihin. FIR-suodattimen C-toteutus
-(`07-fir.c`) ja Python-malli (`07-fir-malli.py`) tuottavat bitilleen
+(`07-fir.c`), Python-malli (`07-fir-malli.py`) ja
+SystemVerilog-toteutus (`07-fir-rtl.sv`, Verilator) tuottavat bitilleen
 saman tuloksen.
 
 ## Rakentaminen
@@ -39,6 +43,10 @@ saman tuloksen.
 ```text
 make testaa    # rakenne ja esimerkit
 make pdf       # tutoriaali ja pikaopas
+make kuvat     # kuvaajat esimerkkien funktioilla (Matplotlib)
 ```
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 Lisenssi: CC BY-SA 4.0.

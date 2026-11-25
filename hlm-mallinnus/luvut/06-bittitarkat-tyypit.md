@@ -5,8 +5,11 @@ rekisteri voi olla 4, 12 tai 35 bittiä. Algoritmin liukulukumalli kertoo,
 toimiiko algoritmi, mutta ei sitä, toimiiko se 16-bittisellä
 datapolulla. *Bittitarkka* (*bit-accurate*) malli laskee täsmälleen
 samat bitit kuin tuleva laitteisto, ja siksi sitä voi käyttää RTL:n
-referenssinä (luku 12). SystemC:n tietotyypit ovat nimiavaruudessa
-`sc_dt`.
+referenssinä (luku 12). Tämä luku päättää signaalitason osuuden:
+tyypit kuuluvat SystemC:n ytimeen kuten kanavatkin, mutta niitä
+käytetään seuraavan kerran vasta, kun malli luvussa 12 asetetaan RTL:n
+rinnalle. Luvun 5 lopussa esitelty socket jatkuu luvussa 7. SystemC:n
+tietotyypit ovat nimiavaruudessa `sc_dt`.
 
 | Tyyppi | Leveys | Arvot | Käyttö |
 |------------------------------|--------------|----------------------|------------------------------|
@@ -14,11 +17,11 @@ referenssinä (luku 12). SystemC:n tietotyypit ovat nimiavaruudessa
 | `sc_bigint<W>`, `sc_biguint<W>` | mielivaltainen | kokonaisluku | leveät summaimet, kryptografia |
 | `sc_bv<W>` | mielivaltainen | 0, 1 | bittikentät, maskit |
 | `sc_lv<W>` | mielivaltainen | 0, 1, X, Z | kolmitilaväylät, alustamaton tila |
-| `sc_fixed<W, I, Q, O>` | mielivaltainen | kiintopiste | DSP-datapolut |
-| `sc_ufixed<W, I, Q, O>` | mielivaltainen | etumerkitön kiintopiste | kertoimet, vahvistukset |
+| `sc_fixed<W, I, Q, O>` | mielivaltainen | kiinteän pilkun luku | DSP-datapolut |
+| `sc_ufixed<W, I, Q, O>` | mielivaltainen | etumerkitön kiinteän pilkun luku | kertoimet, vahvistukset |
 
 `sc_int` ja `sc_uint` on toteutettu 64-bittisellä kokonaisluvulla, joten
-ne ovat nopeita. `sc_bigint` ja kiintopistetyypit ovat moninkertaisesti
+ne ovat nopeita. `sc_bigint` ja kiinteän pilkun tyypit ovat moninkertaisesti
 hitaampia, koska ne laskevat mielivaltaisella tarkkuudella. Mallissa
 käytetään nopeinta tyyppiä, joka on vielä bittitarkka.
 
@@ -60,9 +63,9 @@ Pelkkä bittioperaatio ei ole ratkaisu: `01ZZ | ZZ10` antaa `X11X`, koska
 ```{.tuloste tiedosto="esimerkit/07-tyypit/odotettu"}
 ```
 
-## Kiintopiste
+## Kiinteä pilkku
 
-Taito *Kiinteän pilkun aritmetiikka* käsittelee Q-muodot, kvantisoinnin
+Taito *Lukujen esitys ja kiinteän pilkun aritmetiikka* käsittelee Q-muodot, kvantisoinnin
 ja ylivuodon; tässä ne kirjoitetaan SystemC:n tyypeillä. `sc_fixed<W, I,
 Q, O>` on W-bittinen etumerkillinen luku, jossa I bittiä on
 kokonaisosaa (etumerkki mukaan lukien). Q1.15 on siis
@@ -75,9 +78,9 @@ kun arvo ei mahdu:
 | kvantisointi | `SC_RND` | pyöristys, puolikas kohti plus ääretöntä |
 | kvantisointi | `SC_RND_CONV` | pyöristys, puolikas parilliseen |
 | ylivuoto | `SC_WRAP` (oletus) | kierto kuten kokonaisluvuissa |
-| ylivuoto | `SC_SAT` | kyllästys suurimpaan tai pienimpään |
+| ylivuoto | `SC_SAT` | saturaatio suurimpaan tai pienimpään |
 
-Kiintopistetyypit tulevat mukaan vain, jos makro `SC_INCLUDE_FX` on
+Kiinteän pilkun tyypit tulevat mukaan vain, jos makro `SC_INCLUDE_FX` on
 määritelty ennen ensimmäistä `<systemc>`-otsaketta. Siksi se asetetaan
 yleensä käännösvalitsimella `-DSC_INCLUDE_FX`; muuten virheilmoitus
 kertoo vain, ettei `sc_fixed` ole tyyppi.
@@ -85,12 +88,12 @@ kertoo vain, ettei `sc_fixed` ole tyyppi.
 ```{.cpp tiedosto="esimerkit/07-tyypit/main.cpp" osa="kiintopiste"}
 ```
 
-Q1.7:n pienin askel on 2^−7^ = 0,0078125. Tulosteen kiintopisteosa
+Q1.7:n pienin askel on 2^−7^ = 0,0078125. Tulosteen kiinteän pilkun osa
 näyttää eron: 0,3 osuu askelten 38 ja 39 väliin lähemmäs alempaa, joten
 molemmat tilat antavat saman tuloksen, mutta −0,3 katkaistaan kohti
 miinus ääretöntä eli itseisarvoltaan suuremmaksi. Samoin 0,99 katkeaa
 alaspäin mutta pyöristyy suurimpaan arvoon.
-1,5 ei mahdu välille [−1, 1): kierto antaa −0,5 ja kyllästys suurimman
+1,5 ei mahdu välille [−1, 1): kierto antaa −0,5 ja saturaatio suurimman
 arvon 0,9921875. −2,0 kiertää nollaan. Kertolaskun tarkka tulos vaatii
 W1 + W2 bittiä ja I1 + I2 kokonaisbittiä, tässä `sc_fixed<16, 2>`.
 
@@ -109,9 +112,9 @@ kirjoitetaan niin, että välitulosten tyypit ovat parametreja:
 Tarkka tulo kahdesta Q1.15-luvusta on Q2.30 eli 32 bittiä. Kahdeksan
 tulon summa voi kasvaa enintään kertoimien itseisarvojen summan
 verran, tässä 1,28-kertaiseksi, joten kokonaisosaan tarvitaan lisää
-*suojabittejä* (*guard bits*): kolme bittiä riittää kahdeksalle
+*vartijabittejä* (*guard bits*): kolme bittiä riittää kahdeksalle
 tulolle (log₂ 8 = 3) kertoimista riippumatta. Ulostulo pyöristetään ja
-kyllästetään takaisin Q1.15:een.
+saturoidaan takaisin Q1.15:een.
 
 Viitteeksi tehdään sama suodin liukuluvuilla (`fir::Viite`) mutta samoilla
 kvantisoiduilla kertoimilla, jolloin ero johtuu vain välitulosten
@@ -135,7 +138,7 @@ Tarkoilla välituloksilla virhe on enintään puoli LSB:tä, mikä on
 ulostulon pyöristyksen teoreettinen alaraja. Tulojen katkaisu 18 bittiin
 säästää kertojien ja summaimen leveyttä mutta kasvattaa suurimman virheen
 lähes seitsenkertaiseksi ja heikentää signaali–kohinasuhdetta 16 dB;
-pyöristys samaan leveyteen puolittaa haitan. Summain ilman suojabittejä
+pyöristys samaan leveyteen puolittaa haitan. Summain ilman vartijabittejä
 toimii täydellisesti sinisignaalilla mutta kiertää pahimmassa
 tapauksessa: virhe on kymmeniätuhansia LSB:itä, eli ulostulo vaihtaa
 merkkiään. Juuri tällainen virhe jää huomaamatta, jos testataan vain
@@ -148,10 +151,10 @@ tavallisella signaalilla.
   leveydet. Sama koodi tyyppiparametreilla tekee molemmat ja estää
   mallien erkanemisen.
 - **Pahin tapaus mitoittaa.** Bittileveydet perustellaan analyysillä
-  (suojabitit, kertoimien itseisarvojen summa) ja todennetaan pahimman
+  (vartijabitit, kertoimien itseisarvojen summa) ja todennetaan pahimman
   tapauksen herätteellä. Satunnainen tai tyypillinen signaali löytää
   kvantisointikohinan mutta harvoin ylivuodon.
-- **Pyöristystila on määrittely.** Katkaisu, pyöristys ja kyllästys
+- **Pyöristystila on määrittely.** Katkaisu, pyöristys ja saturaatio
   ovat toteutuksen ominaisuuksia, jotka kirjataan määrittelyyn
   bittileveyksien kanssa. RTL:n on tehtävä täsmälleen sama, tai malli
   ei ole referenssi.
@@ -170,5 +173,5 @@ tavallisella signaalilla.
   tiedät, missä vaiheessa lausekkeen tulos katkaistaan.
 - Osaat määritellä Q-muodon `sc_fixed`-tyyppinä ja valita kvantisointi-
   ja ylivuototilan.
-- Osaat mitoittaa summaimen suojabitit ja todentaa mitoituksen
+- Osaat mitoittaa summaimen vartijabitit ja todentaa mitoituksen
   bittitarkalla mallilla ja pahimman tapauksen herätteellä.

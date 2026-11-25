@@ -48,7 +48,7 @@ käyttö alkoi vasta, kun lähdekieleksi tuli C ja C++.
 | Työkalu | Taustaa | Lisenssi |
 |----------------------|----------------------------------|--------------|
 | Catapult (Siemens) | Mentor Graphics 2004, C++ ja SystemC, ASIC-vuot | kaupallinen |
-| Vitis HLS (AMD) | AutoESL:n AutoPilot 2006, Vivado HLS 2013, Xilinxin FPGA:t | kaupallinen, maksuton käyttö |
+| Vitis HLS (AMD) | AutoESL:n AutoPilot 2006, Vivado HLS 2012, Xilinxin FPGA:t | kaupallinen, maksuton käyttö |
 | Intel HLS Compiler | Intelin FPGA:t, oneAPI | kaupallinen, maksuton käyttö |
 | Stratus (Cadence) | SystemC, ASIC | kaupallinen |
 | Bambu (PandA) | Politecnico di Milano, C ja C++ LLVM:n tai GCC:n kautta | GPL-3.0 |
@@ -90,8 +90,9 @@ Pythonia hakemistossa `esimerkit/minihls/`. Jokainen vaihe on luettavissa
 ja kokeiltavissa, ja tutoriaali näyttää vaiheiden koodia sitä mukaa,
 kun aiheet tulevat vastaan.
 
-minihls jäljittelee Vitis HLS:ää kahdessa asiassa, jotta opittu siirtyy
-suoraan oikeisiin työkaluihin: pragmojen syntaksi on sama (esimerkiksi
+minihls jäljittelee Vitis HLS:ää kahdessa asiassa, jotta käsitteet ja
+merkinnät ovat tuttuja oikeassa työkalussa: pragmojen syntaksi on sama
+(esimerkiksi
 `#pragma HLS pipeline II=1`), ja tuotetun RTL:n porttien nimet ja
 protokollat ovat samat (`ap_start`, `ap_done`, `a_address0`,
 `x_TVALID`). Muuten minihls on tarkoituksella pieni:
@@ -189,7 +190,21 @@ Kehityskontti on hakemistossa `.devcontainer/hls`.
 | 10 | Verifiointi | C-simulaatio, yhteissimulaatio, sanitoijat |
 | 11 | Lopuksi | nyrkkisäännöt, työkalujen vastaavuudet, lähteet |
 
-Tutoriaali olettaa taidot *Korkean tason mallinnus* (C++-mallit ja
-bittitarkat tyypit) ja *FPGA-toteutus* (synteesi, resurssit ja
-ajoitus). *RTL-suunnittelu* opetti tilakoneen ja datapolun sekä
-valid/ready-kättelyn, jotka HLS-työkalu tuottaa tässä automaattisesti.
+## Esitiedot ja rajaus
+
+Tutoriaali olettaa taidot *Korkean tason mallinnus (SystemC/TLM)*
+(C++-mallit ja bittitarkat tyypit) ja *FPGA-toteutus* (synteesi,
+resurssit ja ajoitus). *RTL-suunnittelu SystemVerilogilla* opetti
+tilakoneen ja datapolun sekä valid/ready-kättelyn, jotka HLS-työkalu
+tuottaa tässä automaattisesti.
+
+Rajaus seuraa työkalusta. Yhtään esimerkkiä ei ajeta kaupallisella
+HLS-työkalulla, joten oikean työkalun raportteja, varoituksia ja
+laatua ei tässä nähdä; ajoituksen, sidonnan, liukuhihnoituksen ja
+rajapintojen periaatteet ovat samat, yksityiskohdat luetaan työkalun
+ohjeesta. Kaksi oikeassa työssä keskeistä asiaa jää maininnan
+varaan: mielivaltaiset bittileveydet (`ap_int`, `ap_fixed`), jotka
+määräävät kertojien koon ja ketjutuksen pituuden (leveyksien valinta
+on taidossa *Lukujen esitys ja kiinteän pilkun aritmetiikka*), ja
+tietovuo-optimointi (`dataflow`), jossa useita ytimiä ketjutetaan
+virroilla.

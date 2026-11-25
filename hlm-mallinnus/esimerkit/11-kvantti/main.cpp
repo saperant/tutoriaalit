@@ -25,6 +25,19 @@ const sc_time VALI(200, SC_NS);  // tuottajan laskenta viestien välillä
 // Tavallinen C++-taulukko on mallin ulkopuolinen havaintokanava.
 static sc_time lahetetty[VIESTEJA + 1];
 
+// Kuvaa varten (kuvat/piirra.py): toinen komentoriviargumentti kytkee
+// päälle jäljen, jossa on tapahtuman simulaatioaika ja aloittajan oma
+// aika nanosekunteina. Testattu tuloste ei muutu.
+static bool jalki_paalla = false;
+
+static void jalki(const char* kuka, const char* mita, const sc_time& oma) {
+    if (jalki_paalla) {
+        std::cout << "J " << kuka << ' ' << mita << ' '
+                  << sc_time_stamp().to_seconds() * 1e9 << ' '
+                  << oma.to_seconds() * 1e9 << '\n';
+    }
+}
+
 // @alku tuottaja
 // Tuottaja kirjoittaa viestin numeron muistiin 200 ns:n välein omassa
 // paikallisessa ajassaan. Se synkronoi simulaatioajan kanssa vasta, kun
@@ -45,6 +58,7 @@ SC_MODULE(Tuottaja) {
                 ++odotuksia;
             }
             lahetetty[i] = qk.get_current_time();
+            jalki("tuottaja", "kirjoitus", lahetetty[i]);
             sc_time viive = qk.get_local_time();
             siirra(socket, tlm::TLM_WRITE_COMMAND, LIPPU, i, viive);
             qk.set(viive);
@@ -85,6 +99,7 @@ SC_MODULE(Kuluttaja) {
             siirra(socket, tlm::TLM_READ_COMMAND, NAIIVI, naiivi, viive);
             qk.set(viive);
             ajastinvirhe = std::max(ajastinvirhe, oikea - naiivi);
+            jalki("kuluttaja", arvo != nahty ? "uusi" : "luku", nyt);
             if (arvo != nahty) {
                 nahty = arvo;
                 ++nahtyja;
@@ -107,6 +122,7 @@ int sc_main(int argc, char* argv[]) {
     // Kvantti nanosekunteina komentoriviltä.
     const sc_time kvantti(argc > 1 ? std::atof(argv[1]) : 0.0, SC_NS);
     tlm_utils::tlm_quantumkeeper::set_global_quantum(kvantti);
+    jalki_paalla = argc > 2;
 
     Tuottaja tuottaja("tuottaja");
     Kuluttaja kuluttaja("kuluttaja");

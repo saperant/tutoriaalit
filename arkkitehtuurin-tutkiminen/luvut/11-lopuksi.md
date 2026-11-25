@@ -39,7 +39,7 @@ Arkkitehtuurin tutkiminen etenee samoin vaihein kysymyksestä riippumatta:
 - Kalibroitu parametri, joka on fysikaalisesti mahdoton, kantaa mallin
   muut virheet.
 
-## Mihin seuraavaksi
+## Jatkotaidot
 
 Taitopuussa tämä taito johtaa kohti toteutusta. *Korkean tason
 synteesi* tekee C++-mallista laitteistoa, jolloin luvun 7 kiihdytin
@@ -132,7 +132,7 @@ Suunnittelutila ja raportointi (luvut 9 ja 10):
   correct way to summarize benchmark results. *Communications of the
   ACM* 29(3), 1986.
 
-Muut taitopuun paketit: *Korkean tason mallinnus* (SystemC ja TLM),
+Muut taitopuun paketit: *Korkean tason mallinnus (SystemC/TLM)*,
 *Suorituskyvyn analyysi ja optimointi* (Amdahl ja roofline ohjelmiston
 näkökulmasta), *Todennäköisyys ja tilastot* (jakaumat ja luottamusvälit)
 ja *Tietokonearkkitehtuuri* (mallinnettavat rakenteet).

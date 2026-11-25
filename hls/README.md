@@ -49,6 +49,9 @@ Jokainen esimerkki on hakemisto `esimerkit/NN-nimi/`: tiedoston
 synteesin, Verilatorin lintin ja C/RTL-yhteissimulaation. Kehityskontti on
 hakemistossa `.devcontainer/hls`.
 
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
+
 ## Lisenssi
 
 Creative Commons Nimeä–JaaSamoin 4.0 (CC BY-SA 4.0), myös esimerkit ja

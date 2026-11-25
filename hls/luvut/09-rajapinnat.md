@@ -135,6 +135,13 @@ testipenkin lähettäjä pitää `TVALID`:n alhaalla ja vastaanottaja
 ```{.tuloste tiedosto="esimerkit/09-fir/odotettu"}
 ```
 
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/fir-virta.json" otsikko="Suotimen virrat vastapaineella RTL-simulaatiosta. Lähettäjä pitää taukoja (x_TVALID) ja vastaanottaja ei aina ole valmis (y_TREADY). Kun jompikumpi puuttuu, koko piiri pysähtyy: x_TREADY laskee, x_TDATA ei vaihdu eikä y_nro kasva. Yhtään näytettä ei katoa eikä toistu."}
+```
+
+Kaavion syöte on juokseva numero ja `y_nro` testipenkin laskuri
+siirtyneistä tuloksista; kumpikin etenee vain jaksoilla, joilla oman
+virran `TVALID` ja `TREADY` ovat molemmat ykkösiä.
+
 Ilman vastapainetta 32 näytettä vievät 34 jaksoa, kun mukaan lasketaan
 kolmivaiheisen liukuhihnan täyttyminen; viivelinjan nollaus ja
 käynnistys tuovat kokonaislatenssiksi 36 jaksoa. Vastapaineen kanssa latenssi vaihtelee

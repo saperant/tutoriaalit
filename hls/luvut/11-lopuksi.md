@@ -67,6 +67,20 @@ operaatioille.
 | `testipenkki.py` | yhteissimulaation testipenkki | 10 |
 | `raportti.py`, `__main__.py` | raportti, vuo | 1 |
 
+## Jatkotaidot
+
+Taitopuussa tämä taito on polun päässä, mutta luontevia seuraavia
+taitoja on useita:
+
+- *DSP-algoritmien laitteistototeutus*: samat suotimet ja rakenteet
+  käsin kirjoitettuna RTL:nä; vertailukohta sille, mitä HLS tuottaa.
+- *SoC-integraatio*: HLS:n tuottaman ytimen liittäminen väylään ja
+  rekisterirajapintaan.
+- *ASIC-toteutus*: sama RTL piirinä, jossa pinta-ala ja ajoitus
+  mitataan toteutuksesta eikä työkalun arviosta.
+- *Laitteiston verifiointi*: yhteissimulaation jälkeen tulevat
+  kattavuus ja formaalit menetelmät.
+
 ## Lähteet
 
 Työkalujen dokumentaatio:

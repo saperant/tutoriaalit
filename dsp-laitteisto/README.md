@@ -49,7 +49,11 @@ make -C esimerkit                     # kaikki esimerkit
 make -C esimerkit cocotb-fir-suora    # yksi kohde
 make -C esimerkit siivoa              # poistaa rakennus/-hakemiston
 PAIVITA=1 make -C esimerkit ...       # kirjoittaa odotetut uudelleen
+make kuvat                            # kuvaajat malleista (Matplotlib)
 ```
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 Työkalut: Icarus Verilog 12, Verilator 5.020, Yosys 0.33 ja
 nextpnr-ice40 (Ubuntu 24.04) sekä cocotb 2.1, NumPy, SciPy 1.18,

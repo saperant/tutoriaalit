@@ -182,6 +182,11 @@ pragmalla `pipeline style=stp|flp|frp`.
 
 ## Käytännössä
 
+- **Liukuhihnoitus avaa sisäsilmukat.** Kun `pipeline` annetaan
+  ulommalle silmukalle, työkalu avaa sen sisäsilmukat kokonaan, koska
+  liukuhihnan vaiheessa ei voi olla silmukkaa. Laitteisto kasvaa
+  sisäsilmukan kierrosmäärän verran (luvun 7 matriisitulo).
+
 - **Liukuhihnoita sisin silmukka ensin** ja tavoittele II = 1. Lue
   raportista saavutettu II ja syy, jos se on suurempi.
 - **ResMII vai RecMII?** Jos syy on resurssi, lisää yksiköitä tai

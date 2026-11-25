@@ -24,7 +24,24 @@ yhdeltä, väylämalli toiselta ja oma oheislaite kolmannelta.
 | *generic payload* | standardoitu transaktio-olio |
 | *base protocol* | säännöt, joita generic payload ja vaiheet noudattavat |
 
-Rajapinnat ovat:
+```{.dot otsikko="Aloittaja, välittäjä ja kohde socketeineen. Yhtenäinen nuoli on eteenpäin kulkeva polku, jota pitkin b_transport-kutsu etenee ja palaa; katkoviiva on taaksepäin kulkeva polku, jota kohde käyttää AT-tyylin vaiheisiin ja DMI:n mitätöintiin."}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.7;
+  node [shape=box, height=0.4];
+  a [label="aloittaja\n(prosessori)"];
+  v [label="välittäjä\n(väylä)"];
+  k [label="kohde\n(muisti)"];
+  a -> v [label="b_transport(payload, viive)"];
+  v -> k [label="osoite muunnettu,\nviive + väylän viive"];
+  k -> v [style=dashed, constraint=false];
+  v -> a [style=dashed, constraint=false];
+}
+```
+
+Kutsu on tavallinen C++-funktiokutsu, joka kulkee ketjun läpi ja palaa
+samaa reittiä. Jokainen lohko lisää viiveargumenttiin oman osuutensa, ja
+vasta aloittaja päättää, milloin kertynyt viive odotetaan. Rajapinnat
+ovat:
 
 | Rajapinta | Suunta | Tarkoitus |
 |------------------------------------|------------|------------------------------------|

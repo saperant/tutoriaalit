@@ -65,7 +65,7 @@ $C$ = kellojaksoja näytettä kohden.
   lohkoille.
 - Silmukkaa ei voi liukuhihnoittaa: lyhennä, ennakoi tai lomita
   ($C$-slow).
-- Saturoi takaisinkytkentä aina. Kuollut kaista
+- Saturoi takaisinkytkentä aina. Kuollut alue
   $\le 0{,}5 / (1 + a_1 + a_2)$ LSB.
 
 # CORDIC

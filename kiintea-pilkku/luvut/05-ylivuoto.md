@@ -21,6 +21,11 @@ kuin muoto sallii. Kierron virhe on lähes koko arvoalueen suuruinen:
 ```{.tuloste tiedosto="esimerkit/05-saturaatio.odotettu"}
 ```
 
+![Esimerkin signaali: sini, jonka amplitudi vahvistuksen jälkeen on
+1,2. Saturoiva summain leikkaa huiput alueen rajaan. Kiertävä summain
+heittää ne alueen toiseen päähän, ja virhe on lähes kaksi eli koko
+arvoalueen suuruinen.](kuvat/ylivuoto.png){width=100%}
+
 Audiossa kierto kuuluu kovana napsahduksena, kuvassa väärän värisenä
 pikselinä ja säätöjärjestelmässä täyteen vastakkaiseen suuntaan
 kääntyvänä toimilaitteena. Saturaatio kuulostaa leikkaantumiselta, mikä
@@ -51,10 +56,36 @@ lähtee datapolulta.
 Sääntö pätee summille ja FIR-suodattimille, joiden lopputulos on
 rajattu. Se ei päde, jos välitulos kerrotaan tai sitä vertaillaan, ja
 se ei päde IIR-suodattimen takaisinkytkennässä, jossa kiertänyt arvo
-palaa seuraavan kierroksen syötteeksi. Siellä kierto voi tuottaa
-*ylivuotovärähtelyn*, jossa suodatin heiluu täyttä amplitudia ilman
-syötettä. IIR-tilamuuttujat saturoidaan tai mitoitetaan niin leveiksi,
-ettei ylivuotoa voi syntyä.
+palaa seuraavan kierroksen syötteeksi.
+
+## Ylivuotovärähtely
+
+Takaisinkytkennässä kierto voi tuottaa *ylivuotovärähtelyn* (*overflow
+oscillation*): suodatin jää heilumaan suurella amplitudilla, vaikka
+syöte on nolla. Esimerkkinä on toisen asteen suodatin
+$y_n = 1{,}1\,y_{n-1} - 0{,}9\,y_{n-2}$. Sen navat ovat yksikköympyrän
+sisällä säteellä 0,95, joten tarkalla aritmetiikalla vaste vaimenee
+aina. Tilan arvoista 0,8 ja −0,8 seuraava summa on kuitenkin
+$0{,}88 + 0{,}72 = 1{,}6$, joka ei mahdu Q1.15:een:
+
+```{.python tiedosto="esimerkit/05-varahtely.py" osa="suodatin"}
+```
+
+```{.python tiedosto="esimerkit/05-varahtely.py" osa="koe"}
+```
+
+```{.tuloste tiedosto="esimerkit/05-varahtely.odotettu"}
+```
+
+![Sama suodatin ilman syötettä. Saturoiva tila leikkaa ensimmäisen
+arvon ja vaimenee sen jälkeen. Kiertävä tila ei vaimene koskaan: jokainen kierto syöttää
+silmukkaan lähes täyden skaalan virheen, joka pitää värähtelyn yllä
+amplitudilla 0,67.](kuvat/varahtely.png){width=100%}
+
+Kiertävä suodatin on käyttökelvoton, kunnes se nollataan. Saturoiva
+toteutus vaimenee, ja sen tilaan jää lopuksi kolmen LSB:n heilunta,
+joka on luvun 4 pyöristyksestä johtuva rajasykli. IIR-tilamuuttujat
+saturoidaan tai mitoitetaan niin leveiksi, ettei ylivuotoa voi syntyä.
 
 ## Saturaation hinta laitteistossa
 
@@ -90,3 +121,5 @@ siirretään usein omaan liukuhihnavaiheeseensa.
   lopputulos mahtuu alueelle, ja milloin se ei ole.
 - Osaat valita, mihin kohtiin datapolkua saturaatio sijoitetaan.
 - Osaat kertoa, miten ylivuoto tunnistetaan laitteistossa.
+- Osaat selittää, miten ylivuotovärähtely syntyy stabiilissa
+  IIR-suodattimessa ja miksi saturaatio estää sen.

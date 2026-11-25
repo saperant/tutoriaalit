@@ -56,13 +56,22 @@ Tutoriaali olettaa seuraavat taidot:
 - *Laitteiston verifiointi*: testipenkin rakenne, cocotb,
   satunnaistus ja siemenet.
 - *FPGA-toteutus*: Yosys, nextpnr, ajoitusraportit ja
-  resurssien jakaminen. Sen luvussa 9 jaettiin yksi kertoja
-  neljän kertoimen suotimessa; tässä aihe viedään pidemmälle.
+  resurssien jakaminen. Siellä jaettiin yksi kertoja neljän kertoimen
+  suotimessa; tässä aihe viedään pidemmälle.
 
-Läheisiä taitoja ovat *RTL-suunnittelu* (valid/ready-kättely ja
-liukuhihnat), *Korkean tason synteesi* (sama työ tehtynä C++:sta
-työkalun avulla) ja *Korkean tason mallinnus* (SystemC:n
-`sc_fixed`-tyypit vastaavat tämän tutoriaalin Python-malleja).
+Läheisiä taitoja ovat *RTL-suunnittelu SystemVerilogilla*
+(valid/ready-kättely ja liukuhihnat), *Korkean tason synteesi* (sama
+työ tehtynä C++:sta työkalun avulla) ja *Korkean tason mallinnus
+(SystemC/TLM)* (SystemC:n `sc_fixed`-tyypit vastaavat tämän tutoriaalin
+Python-malleja).
+
+Tutoriaali rajautuu yksittäisiin lohkoihin, joista vastaanottimen
+datapolku kootaan. Lohkoja ei kytketä tässä kokonaiseksi ketjuksi
+(digitaalinen alassekoitin on taidon *Ohjelmistoradio* aihe
+ohjelmistona), eikä FFT:tä käsitellä: sen rakenteet (iteratiivinen ja
+liukuhihnoitettu perhonen, vaiheittainen skaalaus) ansaitsisivat oman
+lukunsa, ja samat periaatteet (bittikasvu, liukuhihna vastaan jaettu
+kertoja, lohko-RAM) opitaan tämän tutoriaalin lohkoista.
 
 ## Esimerkit
 
@@ -105,6 +114,11 @@ testi todella vie suotimen ylivuotoon: 30 ulostulossa saturoiva ja
 kiertävä toteutus antaisivat eri tuloksen. Taajuusvasteen rivit
 näyttävät mallin ja RTL:n vahvistuksen neljällä taajuudella.
 
+Sama tulostemuoto toistuu jokaisen lohkon kohdalla luvuissa 3–8, ja
+sen lukemiseen riittää tämä kuvaus: "bittitarkasti" tarkoittaa, että
+jokainen RTL:n ulostulo oli sama kokonaisluku kuin mallin. Testipenkin
+rakenne (ajuri, vastaanottaja ja vertailu) avataan luvussa 9.
+
 ## Työkalut
 
 Esimerkit käyttävät Ubuntu 24.04:n paketteja: Icarus Verilog 12,
@@ -117,6 +131,11 @@ Verilatoria vasta versiosta 5.036 alkaen. Verilatoria käytetään
 lintiin ja nopeaan C++-testipenkkiin, joka ajaa 100 000 näytettä
 sekunnin murto-osassa. FPGA-esimerkit syntetisoidaan Lattice iCE40
 UP5K -piirille, jossa on kahdeksan 16 × 16 -bitin kertojalohkoa.
+
+Kuvaajat (spektrit, taajuusvasteet ja askelvasteet) piirtää
+`kuvat/piirra.py` samoilla malleilla ja analyyseillä, joihin testit
+vertaavat RTL:n ulostulon. Komento `make kuvat` tuottaa ne uudelleen,
+joten parametreja voi muuttaa ja katsoa, mitä kuvalle tapahtuu.
 
 ## Lukuohje
 

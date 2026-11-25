@@ -115,7 +115,8 @@ tämä paketti opettaa:
 
 ## Esitiedot ja rajaus
 
-Paketti olettaa kolme taitoa. *Korkean tason mallinnus* opettaa
+Paketti olettaa kolme taitoa. *Korkean tason mallinnus (SystemC/TLM)*
+opettaa
 SystemC:n ja TLM-2.0:n, joilla luvun 5 ja 7 mallit on kirjoitettu.
 *Suorituskyvyn analyysi ja optimointi* esittelee Amdahlin lain ja
 roofline-mallin ohjelmiston näkökulmasta; tässä niitä käytetään

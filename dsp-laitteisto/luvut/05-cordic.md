@@ -28,7 +28,7 @@ z_{i+1} = z_i - d_i \arctan 2^{-i}.$$
 Pois jätetty tekijä $\cos\theta_i$ kertautuu kaikista kierroksista
 vahvistukseksi
 
-$$K = \prod_i \sqrt{1 + 2^{-2i}} \approx 1.6468.$$
+$$K = \prod_i \sqrt{1 + 2^{-2i}} \approx 1{,}6468.$$
 
 Koska $d_i = \pm 1$, $|\cos(d_i\theta_i)|$ ei riipu suunnasta, ja $K$ on
 vakio. Se kompensoidaan kerran: aloitetaan pisteestä $(1/K, 0)$,
@@ -84,6 +84,12 @@ rajoittaa:
 
 ```{.tuloste tiedosto="esimerkit/odotetut/cordic_tarkkuus.odotettu"}
 ```
+
+![Vasemmalla yksikkövektorin kierto 50 astetta: jokainen kierros
+kääntää vektoria puolet edellistä pienemmän kulman kohti tavoitetta ja
+venyttää sitä, kunnes pituus on $K$ (katkoviiva). Oikealla analyysin
+mittaus kuvana: bitti kierrosta kohden, kunnes siirtojen katkaisuvirheet
+alkavat rajoittaa.](kuvat/cordic-kierto.png){width=100%}
 
 Kymmeneen kierrokseen asti tarkkuus kasvaa täsmälleen bitin
 kierrosta kohden. Sen jälkeen kasvu hidastuu, koska jokainen siirto

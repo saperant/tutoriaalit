@@ -97,6 +97,11 @@ vuotoa, ja jokaiselle taajuudelle annetaan ensin aikaa asettua:
 ```{.python tiedosto="esimerkit/penkit/test_suodin.py" osa="taajuusvaste"}
 ```
 
+![FIR-suotimen vahvistus mitattuna ulostulosta 31 taajuudella ja
+kertoimista laskettu vaste. Pisteet on laskettu bittitarkan mallin
+ulostulosta, jonka testi toteaa samaksi kuin RTL:n ulostulon; testi
+itse mittaa neljä taajuutta.](kuvat/mitattu-vaste.png){width=84%}
+
 Mitattua vahvistusta verrataan kertoimista laskettuun vasteeseen
 toleranssilla 0,004 eli noin 0,03 dB päästökaistalla. Ero syntyy
 ulostulon kvantisoinnista. Vasta lopuksi tarkistetaan sama jono

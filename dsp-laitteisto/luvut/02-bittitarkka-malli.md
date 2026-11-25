@@ -37,6 +37,11 @@ on; testipenkki huolehtii siitä, *milloin* näytteet liikkuvat.
 
 ## Rajaukset
 
+Saturaatio, kierto ja pyöristystavat ovat tuttuja taidosta *Lukujen
+esitys ja kiinteän pilkun aritmetiikka*. Tässä ja seuraavassa osiossa
+ne kirjoitetaan funktioiksi, joita sekä malli että RTL käyttävät, ja
+kerrataan vain se, mikä vaikuttaa toteutukseen.
+
 Etumerkillisen $b$-bittisen luvun alue on
 $[-2^{b-1}, 2^{b-1} - 1]$. Ylivuodossa on kaksi vaihtoehtoa: arvo
 jää alueen reunalle (saturaatio) tai ylimmät bitit vain pudotetaan
@@ -62,7 +67,7 @@ $2^{s-1}$:
 ```{.python tiedosto="esimerkit/malli/kiintea.py" osa="pyoristys"}
 ```
 
-Puolikkaat pyöristyvät ylöspäin, myös negatiiviset: $-2.5$ pyöristyy
+Puolikkaat pyöristyvät ylöspäin, myös negatiiviset: $-2{,}5$ pyöristyy
 lukuun $-2$. Tämä on laitteistossa halvin pyöristys lähimpään, koska
 siihen riittää yksi summain. Symmetrinen pyöristys (puolikkaat
 poispäin nollasta) ja konvergentti pyöristys (puolikkaat parilliseen)
@@ -107,7 +112,7 @@ Yleinen sääntö antaa 31 bittiä, mutta näiden kertoimien tarkka
 pahin tapaus mahtuu 28 bittiin. Tarkka raja lasketaan kertoimien
 itseisarvojen summasta: suurin mahdollinen ulostulo saadaan, kun
 jokainen näyte on täysi arvo oman kertoimensa etumerkillä, jolloin
-vahvistus on $\sum_k |h_k| = 1.1122$. Kaksi johtopäätöstä:
+vahvistus on $\sum_k |h_k| = 1{,}1122$. Kaksi johtopäätöstä:
 
 - Summaimen kolme lisäbittiä ovat varmuusvaraa, jota nämä kertoimet
   eivät tarvitse. Synteesi ei osaa poistaa niitä, koska se ei tiedä,
@@ -178,7 +183,9 @@ kertoimen alipäästön eri leveyksiin ja mittaa estokaistan suurimman
 vahvistuksen. Jokainen bitti parantaa vaimennusta noin 5–6 dB,
 kunnes vaimennus saavuttaa liukulukusuunnittelun oman rajan
 (−63 dB). Sen jälkeen lisäbitit eivät auta. Esimerkkien 16-bittiset
-kertoimet ovat tälle suotimelle reilusti riittävät.
+kertoimet ovat tälle suotimelle reilusti riittävät. Sama ilmiö
+taajuusvasteen kuvana on taidossa *Lukujen esitys ja kiinteän pilkun
+aritmetiikka*.
 
 ## Käytännössä
 

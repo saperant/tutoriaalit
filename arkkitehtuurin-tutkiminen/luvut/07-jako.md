@@ -66,6 +66,22 @@ Prototyyppi on SystemC-malli: prosessori, väylä, muisti ja kiihdytin,
 jolla on rekisterit ja DMA. Väylä ja muisti ovat samat kuin luvussa 5.
 Kiihdytin on TLM-kohde rekistereilleen ja TLM-aloittaja DMA:lleen:
 
+```{.dot otsikko="Virtuaaliprototyyppi. Prosessori ohjaa kiihdytintä rekistereillä (yhtenäinen viiva); kiihdytin hakee ja tallentaa näytteet itse DMA:lla (katkoviiva) ja ilmoittaa valmistumisesta keskeytyksellä."}
+digraph {
+  rankdir=LR; nodesep=0.35; ranksep=0.6;
+  node [shape=box, height=0.35];
+  cpu [label="prosessori"];
+  vayla [label="väylä"];
+  muisti [label="muisti"];
+  kiihdytin [label="kiihdytin\nrekisterit | FIR | DMA"];
+  cpu -> vayla [label="luku, kirjoitus"];
+  vayla -> muisti;
+  vayla -> kiihdytin [label="rekisterit"];
+  kiihdytin -> vayla [label="DMA", style=dashed];
+  kiihdytin -> cpu [label="keskeytys", style=dotted, constraint=false];
+}
+```
+
 ```{.cpp tiedosto="esimerkit/07-prototyyppi/kiihdytin.hpp" osa="rekisterit"}
 ```
 
@@ -103,7 +119,7 @@ Analyyttistä mallia verrataan prototyypin tuloksiin:
 ```{.python tiedosto="esimerkit/07-jako.py" osa="vertailu"}
 ```
 
-```{.tuloste tiedosto="esimerkit/07-jako.odotettu"}
+```{.tuloste tiedosto="esimerkit/07-jako.odotettu" asti="4096"}
 ```
 
 Malli ja prototyyppi ovat täsmälleen samaa mieltä, koska tässä
@@ -119,6 +135,14 @@ prototyypissä ei ole:
 
 ```{.python tiedosto="esimerkit/07-jako.py" osa="vaihtoehdot"}
 ```
+
+```{.tuloste tiedosto="esimerkit/07-jako.odotettu" alkaen="vaihtoehto"}
+```
+
+![Kutsun kesto koon funktiona (logaritmiset akselit). Kiihdyttimen
+kiinteä kustannus näkyy vaakasuorana alkuna: keskeytyksellä 2 µs,
+kyselyllä 0,3 µs. Tasapiste on käyrien leikkauspiste, ja sen oikealla
+puolella kiihdytin voittaa.](kuvat/tasapiste.png){width=92%}
 
 Taulukko vastaa kysymyksiin, jotka ratkaisevat suunnittelun:
 

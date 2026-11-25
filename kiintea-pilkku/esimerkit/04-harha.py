@@ -1,9 +1,12 @@
 """Pyöristystapojen harha ja virheen hajonta mitattuna."""
 
+from collections.abc import Callable
+
 import numpy as np
 import numpy.typing as npt
 
 Kokonaiset = npt.NDArray[np.int64]
+Tapa = Callable[["Kokonaiset"], "Kokonaiset"]
 K = 4                                    # pudotettavat bitit
 YKSI = 2**K                              # yksi tulos-LSB alkuperäisinä
 
@@ -47,13 +50,22 @@ for nimi, tapa in [("lattia", lattia), ("kohti nollaa", kohti_nollaa),
 # @alku kertyminen
 # Liukuva keskiarvo y += (x - y) / 16 kohti arvoa 1000 alhaalta ja
 # ylhäältä: pieni ero pyöristyy nollaksi, ja y jää kuolleelle alueelle.
-for nimi, tapa in [("lattia", lattia), ("parilliseen", parilliseen)]:
-    loput = []
-    for alku in (0, 2000):
-        y = kok([alku])
-        for _ in range(500):
-            y = y + tapa(kok([1000]) - y)
-        loput.append(int(y[0]))
-    print(f"{nimi:12} alhaalta {loput[0]}, ylhäältä {loput[1]}"
+def keskiarvo(tapa: Tapa, alku: int, murtobitit: int,
+              askelia: int = 500) -> list[int]:
+    """Tila y on murtobitit (0 tai K) bittiä tarkempi kuin syöte."""
+    tavoite = kok([1000 << murtobitit])
+    y, sarja = kok([alku << murtobitit]), []
+    for _ in range(askelia):
+        y = y + tapa(tavoite - y)
+        # Tulos pyöristetään takaisin syötteen tarkkuuteen.
+        sarja.append(int(ylos(y)[0]) if murtobitit == K else int(y[0]))
+    return sarja
+
+
+for nimi, tapa, murtobitit in [("lattia", lattia, 0),
+                               ("parilliseen", parilliseen, 0),
+                               ("lattia, tila +4 b.", lattia, 4)]:
+    loput = [keskiarvo(tapa, alku, murtobitit)[-1] for alku in (0, 2000)]
+    print(f"{nimi:18} alhaalta {loput[0]}, ylhäältä {loput[1]}"
           " (tavoite 1000)")
 # @loppu kertyminen

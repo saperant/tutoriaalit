@@ -13,6 +13,12 @@ vaste, N = 3, R = 8 (f ulostulon näytetaajuuden osina):
   f = 0.500:  -11.6 dB
   f = 0.750:  -31.0 dB
 
+kompensaattori [a, 1 - 2a, a], a = -0.1819:
+  f = 0.050: CIC -0.11 dB, kompensoitu  0.05 dB
+  f = 0.125: CIC -0.66 dB, kompensoitu  0.22 dB
+  f = 0.200: CIC -1.71 dB, kompensoitu  0.24 dB
+  f = 0.250: CIC -2.69 dB, kompensoitu  0.00 dB
+
 21-bittinen kiertävä laskenta vs. rajattomat kokonaisluvut: 0 eroa 500
     näytteessä
 20 bittiä, täysi askel: 49 eroa 50 näytteessä, viimeinen -32, oikea 65504

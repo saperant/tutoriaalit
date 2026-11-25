@@ -13,7 +13,7 @@
 4. **Nimeä kaikki.** Moduulit, portit, kanavat ja socketit saavat
    nimen, jotta virheilmoitukset ja lokit kertovat paikan.
 5. **Bittitarkka malli on määrittely.** Leveydet, pyöristys ja
-   kyllästys kirjataan ja tarkistetaan pahimman tapauksen herätteellä.
+   saturaatio kirjataan ja tarkistetaan pahimman tapauksen herätteellä.
 6. **Kohde annotoi, aloittaja odottaa.** `b_transport` lisää viiveen
    eikä kutsu `wait()`-funktiota. Ajasta riippuva kohde käyttää aikaa
    `sc_time_stamp() + viive`.
@@ -66,15 +66,15 @@ Tyypillisessä piiriprojektissa mallit syntyvät tässä järjestyksessä:
 
 ## Jatkotaidot
 
-- **Arkkitehtuurin tutkiminen**: malleilla tehtävä suorituskyvyn ja
+- *Arkkitehtuurin mallinnus ja suunnittelutilan tutkiminen*: malleilla tehtävä suorituskyvyn ja
   tehonkulutuksen analyysi, kuormien karakterisointi, parametrien
   läpikäynti ja laitteisto–ohjelmisto-jako.
-- **Korkean tason synteesi (HLS)**: C++-mallin muuntaminen RTL:ksi,
+- *Korkean tason synteesi*: C++-mallin muuntaminen RTL:ksi,
   silmukoiden liukuhihnoitus ja muistirajapinnat; bittitarkat tyypit ja
   `SC_CTHREAD`-tyyli ovat HLS-työkalujen syötettä.
-- **SoC-integraatio**: oikeat väylät (AXI, AHB, APB), osoitekartat ja
+- *SoC-integraatio*: oikeat väylät (AXI, AHB, APB), osoitekartat ja
   niiden generointi yhdestä lähteestä.
-- **Verifiointi**: referenssimallit UVM- ja cocotb-testipenkeissä,
+- *Laitteiston verifiointi*: referenssimallit UVM- ja cocotb-testipenkeissä,
   kattavuus ja satunnaistettu heräte.
 
 ## Lähteet

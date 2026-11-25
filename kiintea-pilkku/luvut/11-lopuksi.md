@@ -27,23 +27,41 @@
 | Q-formaatti ja muodon vaihto siirroilla | signaalien skaalaus | 2 |
 | vartijabitit | kertymät, suodattimet | 3 |
 | pyöristys lähimpään parilliseen | harhaton pyöristys | 4 |
+| jako vakiolla käänteisluvun koodilla | skaalaus ilman jakajaa | 3 |
 | Jacksonin sääntö | välitulosten kierto summissa | 5 |
+| dither | särö kohinaksi matalilla bittimäärillä | 6 |
 | kohinamalli $q^2/12$ | SQNR:n ennustaminen | 6 |
 | bittitarkka malli ja tiiviste | RTL:n referenssi | 7 |
 | CORDIC | trigonometria ilman kertojia | 7 |
 | lohkoliukuluku | dynamiikka lähes ilmaiseksi | 8 |
 | virhebudjetti | sanaleveyksien valinta | 9 |
 
+## Valmiit kiinteän pilkun tyypit
+
+Tässä tutoriaalissa muoto ja kavennukset kirjoitettiin käsin, jotta
+jokainen bitti näkyy. Työkaluissa on valmiita tyyppejä, jotka pitävät
+kirjaa pilkun paikasta ja tekevät kavennuksen sijoituksessa:
+
+| Ympäristö | Tyyppi | Pyöristys ja ylivuoto |
+|-----------|--------|-----------------------|
+| SystemC | `sc_fixed<W, I, Q, O>` | tilat tyypin parametreina, oletus katkaisu ja kierto |
+| VHDL-2008 | `sfixed`, `ufixed` (`fixed_pkg`) | funktion `resize` parametreina, oletus pyöristys ja saturaatio |
+| HLS-työkalut | `ap_fixed`, `ac_fixed` | kuten `sc_fixed` |
+
+Oletukset eroavat, joten ne luetaan dokumentaatiosta eikä päätellä
+toisesta ympäristöstä. Tyypit eivät poista suunnittelutyötä: leveydet,
+tilat ja kavennusten paikat valitaan samoin perustein kuin tässä.
+
 ## Jatkotaidot
 
-- **Korkean tason mallinnus (SystemC/TLM):** bittitarkat tietotyypit
+- *Korkean tason mallinnus (SystemC/TLM)*: bittitarkat tietotyypit
   (`sc_fixed`) ja mallin liittäminen virtuaaliprototyyppiin.
-- **DSP-algoritmien laitteistototeutus:** FIR-, IIR-, CIC- ja
+- *DSP-algoritmien laitteistototeutus*: FIR-, IIR-, CIC- ja
   CORDIC-rakenteet RTL:nä tämän tutoriaalin bittitarkkoja malleja
   referenssinä käyttäen.
-- **Korkean tason synteesi:** HLS-työkalujen kiinteän pilkun tyypit
+- *Korkean tason synteesi*: HLS-työkalujen kiinteän pilkun tyypit
   (`ap_fixed`, `ac_fixed`) ja niiden pyöristys- ja saturaatiotilat.
-- **Digitaalinen signaalinkäsittely:** suodattimien suunnittelu, jota
+- *Digitaalinen signaalinkäsittely*: suodattimien suunnittelu, jota
   tässä käytettiin esimerkkinä.
 
 ## Lähteet

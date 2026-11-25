@@ -36,6 +36,23 @@ taulukkoon. Sinin symmetria säästää kolme neljännestä taulukosta:
 | 2 | $i$ | − |
 | 3 | $2^A - 1 - i$ | − |
 
+```{.dot otsikko="NCO:n datapolku. Vaiheakkumulaattori on täysleveä; taulukkoon menee vain vaiheen yläosa, ja pudotetut 14 bittiä ovat vaihevirhe. Katkoviivat ovat neljänneksen kaksi bittiä, jotka ohjaavat peilausta ja etumerkkiä."}
+digraph {
+  rankdir=LR; nodesep=0.25; ranksep=0.3;
+  node [shape=box, height=0.35];
+  akku [label="vaihe\n24 b."];
+  katk [label="katkaisu\n10 b."];
+  peili [label="peilaus"];
+  rom [label="taulukko\n256 × 11 b."];
+  merkki [label="etumerkki"];
+  y [label="sini\nQ1.11", shape=plaintext];
+  akku -> akku [label="+ M"];
+  akku -> katk -> peili -> rom -> merkki -> y;
+  katk -> peili [style=dashed];
+  katk -> merkki [style=dashed, constraint=false];
+}
+```
+
 Taulukon arvot lasketaan puolen askeleen siirrolla, $\sin(\frac{\pi}{2}
 \cdot \frac{i + 1/2}{2^A})$. Silloin neljännes on täsmälleen
 symmetrinen keskipisteensä suhteen, ja peilaus on pelkkä osoitteen
@@ -84,6 +101,10 @@ vaihebittien määrä muuttuu:
 ```{.tuloste tiedosto="esimerkit/odotetut/nco_piikit.odotettu"}
 ```
 
+![Ensimmäisen taulukon mittaus kuvana: SFDR vaihebittien funktiona
+seuraa kuuden desibelin
+suoraa.](kuvat/nco-sfdr.png){width=62%}
+
 SFDR (*spurious-free dynamic range*) kasvaa noin 6 dB bittiä kohden,
 kuten sääntö ennustaa. Toinen taulukko pitää vaihebitit 12:ssa ja
 muuttaa amplitudin bittejä. Amplitudin kvantisointi rajoittaa
@@ -97,6 +118,13 @@ mittaa molemmat tapaukset NCO:n omasta ulostulosta:
 
 ```{.tuloste tiedosto="esimerkit/odotetut/cocotb-nco.odotettu"}
 ```
+
+![NCO:n ulostulon spektri mallista, jonka ulostulo on testissä
+todettu samaksi kuin RTL:n. Vasemmalla taajuussanan alimmat bitit ovat
+nollia: jäljellä ovat vain amplitudin pyöristyksen harmoniset 81 dB
+kantoaallon alapuolella. Oikealla vaiheen katkaisu tuottaa
+kannuspiikkien rivin, josta suurin on 59 dB
+alempana.](kuvat/nco-spektri.png){width=100%}
 
 Taajuudella $f_s/64$ ainoat piikit tulevat amplitudin
 kvantisoinnista, ja SFDR on 81 dB. Taajuudella 0,04 $f_s$

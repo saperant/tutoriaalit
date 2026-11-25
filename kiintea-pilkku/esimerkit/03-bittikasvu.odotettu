@@ -10,3 +10,6 @@ K=   16: tarvitaan 36 bittiä, sääntö 32 + 4 = 36
 K=   64: tarvitaan 38 bittiä, sääntö 32 + 6 = 38
 K=  256: tarvitaan 40 bittiä, sääntö 32 + 8 = 40
 K= 1000: tarvitaan 41 bittiä, sääntö 32 + 10 = 42
+UQ4 ja Q4: summa 6 = max(4+1, 4)+1, tulo 8 = 4+4
+UQ8 ja Q4: summa 10 = max(8+1, 4)+1, tulo 12 = 8+4
+UQ4 ja Q8: summa 9 = max(4+1, 8)+1, tulo 12 = 4+8

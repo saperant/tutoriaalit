@@ -4,7 +4,8 @@
     "dockerfile": "../Dockerfile",
     "context": "..",
     "args": {
-      "PIP_PAKETIT": "numpy ruff mypy"
+      "LISAPAKETIT": "verilator",
+      "PIP_PAKETIT": "numpy matplotlib ruff mypy"
     }
   },
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/kiintea-pilkku/esimerkit",

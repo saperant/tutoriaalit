@@ -38,3 +38,35 @@ hiljainen = 0.01 * sini
 print(f"16 bittiä, signaali -40 dB: "
       f"{sqnr_db(hiljainen, kvantisoi(hiljainen, 16)):.2f} dB")
 # @loppu hiljainen
+
+
+# @alku dither
+def kohina(maara: int) -> Liuku:
+    """Tasajakautunut [0, 1): oma kongruenssigeneraattori, jotta tulos
+    on sama joka ajolla ja joka koneella."""
+    tila, arvot = 12345, []
+    for _ in range(maara):
+        tila = (tila * 1103515245 + 12345) % (1 << 32)
+        arvot.append((tila >> 8) / (1 << 24))
+    return np.asarray(arvot, dtype=np.float64)
+
+
+def suurin_piikki_dbc(x: Liuku) -> float:
+    """Suurin spektripiikki signaalin ulkopuolella suhteessa signaaliin."""
+    spektri = np.abs(np.fft.rfft(x * np.hanning(len(x))))
+    huippu = int(np.argmax(spektri))
+    muut = np.concatenate([spektri[:huippu - 3], spektri[huippu + 4:]])
+    return float(20 * np.log10(np.max(muut) / spektri[huippu]))
+
+
+# Neljä bittiä: ilman ditheriä virhe on säröpiikkejä. Kolmiojakautunut
+# dither (kahden tasajakautuneen summa, +-1 LSB) tekee siitä kohinaa:
+# SQNR heikkenee, mutta suurin yksittäinen piikki putoaa.
+lsb = 2.0**-3
+tpdf = (kohina(2 * len(n)).reshape(2, -1).sum(axis=0) - 1.0) * lsb
+puoli = 0.5 * sini                       # tilaa ditherille, ei saturoidu
+for nimi, x in (("ilman ditheriä", puoli), ("dither", puoli + tpdf)):
+    xq = kvantisoi(x, 4)
+    print(f"4 bittiä, {nimi:14}: SQNR {sqnr_db(puoli, xq):5.2f} dB, "
+          f"suurin piikki {suurin_piikki_dbc(xq):6.1f} dBc")
+# @loppu dither

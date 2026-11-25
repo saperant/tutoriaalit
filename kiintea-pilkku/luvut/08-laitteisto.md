@@ -4,7 +4,11 @@ Ohjelmistossa liukuluku on yleensä oikea valinta: suorittimessa on
 valmiina nopea liukulukuyksikkö, ja ohjelmoijan aika on kalliimpaa
 kuin muutama ylimääräinen kellojakso. Laitteistossa jokainen
 aritmetiikkayksikkö rakennetaan erikseen, ja niiden pinta-ala, viive ja
-teho näkyvät suoraan piirin hinnassa ja energiankulutuksessa.
+teho näkyvät suoraan piirin hinnassa ja energiankulutuksessa. Kysymys
+esitetään vasta nyt, koska vastaus tarvitsee edellisten lukujen
+välineet: kiinteän pilkun hinta on bittikasvun ja kavennusten
+kirjanpito, ja sen heikkous on luvussa 6 mitattu absoluuttinen
+tarkkuus.
 
 ## Pinta-ala
 
@@ -53,14 +57,14 @@ nollasta eroavan arvon suhde desibeleinä:
 ```{.python tiedosto="esimerkit/08-dynamiikka.py" osa="alueet"}
 ```
 
-```{.tuloste tiedosto="esimerkit/08-dynamiikka.odotettu"}
+```{.tuloste tiedosto="esimerkit/08-dynamiikka.odotettu" asti="binary32"}
 ```
 
 Liukulukujen alueet on laskettu subnormaaleilla luvuilla, ja ne ovat
 tähtitieteellisiä. Tärkeämpää on, että liukuluvun suhteellinen tarkkuus
 on sama koko alueella. Kiinteän pilkun 16 bittiä antaa 90 dB, mutta
 vain täyden skaalan signaalille; hiljaiset signaalit menettävät
-tarkkuutta suhteessa tasoonsa, kuten edellisessä luvussa mitattiin.
+tarkkuutta suhteessa tasoonsa, kuten luvussa 6 mitattiin.
 
 ## Lohkoliukuluku
 
@@ -75,7 +79,16 @@ eksponenttia vain kerran lohkoa kohti:
 ```{.python tiedosto="esimerkit/08-dynamiikka.py" osa="vertailu"}
 ```
 
-Taulukko on edellisen tulosteen lopussa. Tavallisen Q1.15:n SQNR putoaa
+```{.tuloste tiedosto="esimerkit/08-dynamiikka.odotettu" alkaen="taso"}
+```
+
+![SQNR signaalin tason funktiona. Q1.15 menettää desibelin jokaista
+signaalin desibeliä kohti. Lohkoliukuluku pysyy samalla tasolla kuin
+Q1.15 täydellä skaalalla, ja binary32 on tasainen leveämmän mantissansa
+korkeudella. Käyrät on laskettu esimerkin
+funktioilla.](kuvat/lohkoliukuluku.png){width=80%}
+
+Tavallisen Q1.15:n SQNR putoaa
 signaalin tason mukana, mutta lohkoliukuluku pitää sen yli 90 dB:ssä,
 koska jokainen lohko skaalataan täyteen skaalaan. Hinta on yksi
 eksponentti lohkoa kohti ja lohkon suurimman arvon etsiminen ennen

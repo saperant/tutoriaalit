@@ -19,9 +19,9 @@ module fir #(
     };
 
     logic signed [15:0] viive[N-1];  // x[n-1] ... x[n-7]
-    logic signed [34:0] summa;       // Q5.30: kolme suojabittiä
+    logic signed [34:0] summa;       // Q5.30: kolme vartijabittiä
     logic signed [34:0] pyoristetty;
-    logic signed [19:0] siirretty;   // Q5.15 ennen kyllästystä
+    logic signed [19:0] siirretty;   // Q5.15 ennen saturaatiota
 
     always_comb begin
         summa = 35'(x) * 35'(C[0]);
@@ -43,7 +43,7 @@ module fir #(
             if (sisaan_kelpaa) begin
                 viive[0] <= x;
                 for (int k = 1; k < N - 1; k++) viive[k] <= viive[k-1];
-                // Kyllästys Q1.15:n alueelle (SC_SAT).
+                // Saturaatio Q1.15:n alueelle (SC_SAT).
                 if (siirretty > 20'sd32767) y <= 16'sd32767;
                 else if (siirretty < -20'sd32768) y <= -16'sd32768;
                 else y <= siirretty[15:0];

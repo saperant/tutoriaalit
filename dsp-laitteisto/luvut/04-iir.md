@@ -17,6 +17,28 @@ yhteen leveään kertymään ja kaventaa vasta lopuksi. Sen tila on
 pelkkiä näytteitä (kaksi sisääntuloa ja kaksi ulostuloa), joten tila
 ei voi vuotaa yli, ja ainoa kavennus on ulostulossa.
 
+```{.dot otsikko="Toisen asteen lohko suorassa muodossa I. Viisi tuloa summataan yhteen leveään kertymään, ja ainoa kavennus on ulostulossa. Takaisinkytkentä (punainen) kulkee kavennuksen kautta, joten kavennuksen virhe kiertää silmukassa."}
+digraph {
+  rankdir=LR; nodesep=0.25; ranksep=0.45;
+  node [shape=box, height=0.3];
+  x [label="x[n]", shape=plaintext];
+  x1 [label="x[n−1]"]; x2 [label="x[n−2]"];
+  y1 [label="y[n−1]"]; y2 [label="y[n−2]"];
+  summa [label="Σ\n35 b.", shape=circle];
+  kav [label="kavenna"];
+  y [label="y[n]", shape=plaintext];
+  x -> x1 -> x2;
+  x -> summa [label="b0"];
+  x1 -> summa [label="b1"];
+  x2 -> summa [label="b2"];
+  summa -> kav -> y;
+  kav -> y1 [color="#B04848", constraint=false];
+  y1 -> y2 [color="#B04848"];
+  y1 -> summa [label="−a1", color="#B04848", fontcolor="#B04848"];
+  y2 -> summa [label="−a2", color="#B04848", fontcolor="#B04848"];
+}
+```
+
 Esimerkin suodin on neljännen asteen Butterworth-alipäästö
 (`signal.butter(4, 0.1)`, rajataajuus 5 % näytetaajuudesta) kahtena
 lohkona. Kertoimet ovat muotoa Q2.14, koska $|a_1|$ on lähes 2:
@@ -112,6 +134,11 @@ make -C esimerkit cocotb-sos-kierto
 ```{.tuloste tiedosto="esimerkit/odotetut/cocotb-sos-kierto.odotettu"}
 ```
 
+![Testin askel mallilla laskettuna: vasemmalla oikea, saturoiva
+kavennus, oikealla sama suodin ilman saturaatiota. Yksi kiertänyt arvo
+näytteessä 14 riittää: sen jälkeen ulostulo ei palaa oikeaan arvoon,
+vaikka sisääntulo pysyy vakiona.](kuvat/iir-askel.png){width=100%}
+
 Näytteessä 14 oikea tulos on suurin arvo 32767, mutta kiertävä
 toteutus antaa −31674: ylivuoto käänsi etumerkin. FIR-suotimessa
 virhe jäisi yhteen näytteeseen. IIR-lohkossa väärä arvo menee
@@ -125,7 +152,7 @@ toteutuksella. Tasajakautunut kohina ei saa suodinta ylivuotoon,
 koska suodin vaimentaa sen. Saturaatio testataan vain sisääntulolla,
 joka on suunniteltu viemään ulostulo rajalle (luku 9).
 
-## Kuollut kaista
+## Kuollut alue
 
 Takaisinkytkentä pyöristää joka näytteellä. Kun sisääntulo on vakio,
 ulostulo ei välttämättä asetu oikeaan arvoon, vaan jää kohtaan, jossa
@@ -138,8 +165,12 @@ Ensimmäisen lohkon napojen summa $1 + a_1 + a_2$ on vain 0,076, joten
 puolen LSB:n pyöristysvirhe vahvistuu takaisinkytkennässä noin
 13-kertaiseksi: askel 10000 asettuu arvoon 10005. Mitä lähempänä navat
 ovat pistettä $z = 1$, eli mitä kapeampi suodin, sitä leveämpi
-kuollut kaista. Samasta syystä syntyvät rajasyklit, jotka taito
-*Digitaalinen signaalinkäsittely* näytti.
+*kuollut alue* (*deadband*). Samasta syystä syntyvät rajasyklit, jotka
+taito *Digitaalinen signaalinkäsittely* näytti.
+
+![Ensimmäisen lohkon askelvaste tasolle 10000. Koko mittakaavassa vaste
+näyttää asettuvan oikein; suurennos näyttää, että se jää pysyvästi
+viisi LSB:tä tavoitteen yläpuolelle.](kuvat/iir-kuollut.png){width=100%}
 
 Korjauksia on kaksi. Kertymään voi tallentaa pyöristyksessä
 pudotetut bitit ja lisätä ne seuraavaan näytteeseen (*error
@@ -161,7 +192,7 @@ näkyvät bittitarkassa mallissa ennen kuin RTL:ää on kirjoitettu.
 - Arvioi silmukan viive ennen kuin valitset rakenteen. Jos
   kellotaajuus ei riitä, lyhennä silmukkaa, lomita kanavia tai
   käytä näytejakson ylimääräiset kellojaksot kertojan jakamiseen.
-- Mittaa kuollut kaista mallilla ja lisää tarvittaessa murtobittejä
+- Mittaa kuollut alue mallilla ja lisää tarvittaessa murtobittejä
   takaisinkytkentään.
 
 ## Itsearviointi
@@ -175,4 +206,4 @@ näkyvät bittitarkassa mallissa ennen kuin RTL:ää on kirjoitettu.
   kertoimien Q-muodon.
 - Osaat selittää, miksi kiertävä ylivuoto on IIR-suotimessa paljon
   vaarallisempi kuin FIR-suotimessa, ja testata saturaation.
-- Osaat laskea kuolleen kaistan rajan ja keinot pienentää sitä.
+- Osaat laskea kuolleen alueen rajan ja keinot pienentää sitä.

@@ -1,0 +1,5 @@
+1/10 = 0x199a / 2^16 (13 bittiä): 9830 väärää, ensimmäinen x = 16389
+1/10 = 0x3334 / 2^17 (14 bittiä): 9830 väärää, ensimmäinen x = 16389
+1/10 = 0x6667 / 2^18 (15 bittiä): 2184 väärää, ensimmäinen x = 43699
+1/10 = 0xcccd / 2^19 (16 bittiä): oikein kaikilla x
+1/3 = 10923 / 2^15 = 0.333344, suhteellinen virhe 3.1e-05

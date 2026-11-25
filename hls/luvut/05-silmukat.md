@@ -119,7 +119,7 @@ yhteenlaskua.
 - **Avaa ennen kuin optimoit käsin.** Pragma on helpompi muuttaa kuin
   käsin avattu koodi, ja C-simulaatio pysyy samana.
 - **Liukuhihnoitus avaa sisäsilmukat itse.** Kun ulompi silmukka
-  liukuhihnoitetaan, sen sisäsilmukat avataan kokonaan (luku 7).
+  liukuhihnoitetaan, sen sisäsilmukat avataan kokonaan (luvut 6 ja 7).
 
 ## Itsearviointi
 

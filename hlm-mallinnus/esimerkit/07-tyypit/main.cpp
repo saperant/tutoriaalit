@@ -1,4 +1,4 @@
-// Bittitarkat tietotyypit: kokonaisluvut, bittivektorit ja kiintopiste.
+// Bittitarkat tietotyypit: kokonaisluvut, bittivektorit ja kiinteä pilkku.
 #define SC_INCLUDE_FX  // sc_fixed-tyypit eivät tule mukaan ilman tätä
 #include <iostream>
 #include <systemc>

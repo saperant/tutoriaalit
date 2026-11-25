@@ -27,7 +27,7 @@ hyväksymällä C++:n osajoukolla.
 
 ## RTL-toteutus
 
-Suodin on SystemVerilogia (taito *RTL-suunnittelu*). Se ottaa vastaan
+Suodin on SystemVerilogia (taito *RTL-suunnittelu SystemVerilogilla*). Se ottaa vastaan
 yhden näytteen kellojaksossa ja antaa tuloksen jakson viiveellä:
 
 ```{.systemverilog tiedosto="esimerkit/15-vastaavuus/fir.sv" osa="rtl"}
@@ -36,7 +36,7 @@ yhden näytteen kellojaksossa ja antaa tuloksen jakson viiveellä:
 Kiinteän pilkun aritmetiikka on kirjoitettu kokonaisluvuilla: Q1.15-
 tulot ovat 16-bittisiä, tulot ja summa 35-bittisiä, pyöristys lisää
 puolikkaan LSB:n (2^14^) ennen aritmeettista siirtoa 15 bittiä oikealle,
-ja kyllästys rajaa tuloksen 16 bittiin. Nämä ovat täsmälleen mallin
+ja saturaatio rajaa tuloksen 16 bittiin. Nämä ovat täsmälleen mallin
 `SC_RND`- ja `SC_SAT`-tilat. Kertoimet ovat mallin kertoimia
 katkaistuina, kuten `sc_fixed<16, 1>` ne katkaisee: esimerkiksi
 −0,02 · 2^15^ = −655,36 katkeaa kohti miinus ääretöntä lukuun −656.
@@ -61,7 +61,7 @@ heti, kun näyte syötetään:
 
 Herätteet ovat kolmea lajia. Impulssi tuottaa ulostuloon kertoimet
 yksi kerrallaan, joten väärä kerroin näkyy heti. Pahimman tapauksen
-herätteet kyllästävät ulostulon. Satunnaiset näytteet kiinteällä
+herätteet saturoivat ulostulon. Satunnaiset näytteet kiinteällä
 siemenellä kattavat loput; joka neljäs jakso on tauko, jotta myös
 `sisaan_kelpaa`-signaalin käsittely tulee testatuksi. `std::mt19937`:n
 tulosjono on standardin määräämä, joten sama siemen antaa samat
@@ -87,7 +87,7 @@ Ajoskripti kääntää kaksi versiota, oikean ja virheellisen:
 `--exe --build` kääntää RTL:n, testipenkin ja Verilatorin
 ajonaikaisen kirjaston yhdeksi ohjelmaksi. `-CFLAGS` välittää
 testipenkin käännökselle samat asetukset kuin muissa esimerkeissä,
-myös kiintopistetyypit. `-Wall` tekee Verilatorin varoituksista
+myös kiinteän pilkun tyypit. `-Wall` tekee Verilatorin varoituksista
 virheitä: esimerkiksi parametrin leveysvaroitus pysäyttää käännöksen,
 mikä on oikein, koska leveysvirheet ovat RTL:n yleisimpiä vikoja.
 
@@ -115,7 +115,7 @@ nopeuteen vain sen lohkon osalta.
 ## Käytännössä
 
 - **Sama aritmetiikka, kirjattuna.** Mallin ja RTL:n bittileveydet,
-  pyöristykset ja kyllästykset kirjataan määrittelyyn. Jos RTL:n
+  pyöristykset ja saturaatiot kirjataan määrittelyyn. Jos RTL:n
   suunnittelija joutuu arvaamaan, malli ja toteutus eroavat jo ennen
   ensimmäistä testiä.
 - **Vertaa bitit, ei toleranssia.** Bittitarkan mallin ja RTL:n vertailu
@@ -129,7 +129,7 @@ nopeuteen vain sen lohkon osalta.
 - **Suunnatut ja satunnaiset herätteet.** Impulssi, askel ja pahin
   tapaus löytävät tyypilliset virheet nopeasti ja helposti
   tulkittavasti; satunnaiset herätteet kiinteällä siemenellä löytävät
-  loput toistettavasti. Kattavuuden mittaaminen (taito *Verifiointi*)
+  loput toistettavasti. Kattavuuden mittaaminen (taito *Laitteiston verifiointi*)
   kertoo, milloin herätteitä on tarpeeksi.
 - **Malli elää.** Kun määrittely muuttuu, malli päivitetään ensin ja RTL
   sen jälkeen. Jos RTL:ää korjataan mallin ohi, referenssi menettää
@@ -142,5 +142,5 @@ nopeuteen vain sen lohkon osalta.
 - Osaat kirjoittaa vertailijan, joka vertaa RTL:n tuloksia bittitarkan
   mallin tuloksiin RTL:n viiveestä riippumatta.
 - Osaat valita suunnatut ja satunnaiset herätteet niin, että ne
-  löytävät kerroin-, pyöristys- ja kyllästysvirheet.
+  löytävät kerroin-, pyöristys- ja saturaatiovirheet.
 - Osaat selittää transaktorin roolin TLM-mallin ja RTL:n välillä.
