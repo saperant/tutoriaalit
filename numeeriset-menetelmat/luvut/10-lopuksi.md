@@ -56,6 +56,10 @@ alkioittainen tulo on `*` ja matriisitulo `@`.
 
 - *Differentiaaliyhtälöt ja Laplace-muunnos* soveltaa luvun 8
   ratkaisijoita dynaamisten järjestelmien mallintamiseen.
+- *Fysikaalinen mallinnus ja simulointi* jatkaa osittaisdifferentiaali-
+  yhtälöihin: differenssi- ja elementtimenetelmä rakentuvat tämän
+  tutoriaalin harvojen yhtälöryhmien, ratkaisijoiden ja virheanalyysin
+  päälle. *Virtauslaskenta* jatkaa siitä virtauksiin.
 - *Suorituskyvyn analyysi ja optimointi* ja *GPU-laskenta*
   käsittelevät, miten numeerinen koodi saadaan nopeaksi: välimuistit,
   vektorointi, BLAS ja rinnakkaisuus.

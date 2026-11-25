@@ -29,9 +29,10 @@
 - *Säteenseuranta ja fysikaalinen valaistus*: näkyvyys säteillä
   rasteroinnin sijaan, varjot, heijastukset, epäsuora valo ja
   fysikaalisesti perustellut materiaalit (BRDF).
-- *Peliohjelmointi*: renderöinnin paikka pelisilmukassa, kamerat ja
-  näkymäpuut.
-- *Signaalimatematiikka*: näytteenottoteoreema, suodattimet ja
+- *Peliohjelmointi* ja *3D-peliohjelmointi*: renderöinnin paikka
+  pelisilmukassa; kolmiulotteisen pelin kamerat, näkymägraafi,
+  törmäykset ja animaatio.
+- *Kompleksiluvut ja Fourier-analyysi*: näytteenottoteoreema, suodattimet ja
   aliasointi yleisesti; tekstuurien ja reunanpehmennyksen teoria.
 
 Hyviä harjoituksia tämän toteutuksen jatkoksi ovat varjokartta (syvyys

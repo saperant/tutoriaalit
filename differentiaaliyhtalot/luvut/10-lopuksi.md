@@ -46,6 +46,9 @@ tässä tutoriaalissa, koska se ei kuulu Octaven peruspakettiin.
 
 - *Numeeriset menetelmät* analysoi ratkaisijoiden virheet,
   kertaluvut, vakausalueet ja adaptiivisen askeleen.
+- *Fysikaalinen mallinnus ja simulointi* siirtyy tavallisista
+  differentiaaliyhtälöistä osittaisiin: lämmön, aaltojen ja rakenteiden
+  mallit, joissa suure riippuu ajan lisäksi paikasta.
 - *Analogiaelektroniikka* käyttää siirtofunktioita, navoja ja
   takaisinkytkentää vahvistimiin ja suodattimiin.
 - *Signaalit ja järjestelmät* ja *Digitaalinen signaalinkäsittely*
