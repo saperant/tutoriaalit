@@ -1,0 +1,19 @@
+// lahde: 07-kattely/kattelyvaihe.sv 07-kattely/skid_puskuri.sv 07-kattely/testipenkki.sv
+// vcd: --kello clk --signaalit s_kelv,s_data,s_valmis,vara_kelv,u_kelv,u_data,u_valmis --kanta d --alku 21 --jaksot 15
+// Näytteet otetaan kellon laskevalla reunalla, jolloin jakson signaalit
+// ovat asettuneet. vara_kelv on skid-puskurin varapaikan tila.
+module kaavio;
+  wire       clk       = ~tb.clk;
+  wire       s_kelv    = tb.s_kelv;
+  wire [7:0] s_data    = tb.s_data;
+  wire       s_valmis  = tb.s_valmis;
+  wire       vara_kelv = tb.u_skid.vara_kelv;
+  wire       u_kelv    = tb.u_kelv;
+  wire [7:0] u_data    = tb.u_data;
+  wire       u_valmis  = tb.u_valmis;
+  testipenkki tb ();
+  initial begin
+    $dumpfile("kaavio.vcd");
+    $dumpvars(1, kaavio);
+  end
+endmodule

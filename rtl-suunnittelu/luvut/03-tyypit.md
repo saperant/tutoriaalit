@@ -129,6 +129,47 @@ lausekkeista, joissa leveydet eroavat (`WIDTHEXPAND`, `WIDTHTRUNC`).
 Varoitus poistetaan muunnoksella, joka kertoo lukijalle, että
 katkaisu tai laajennus on tarkoituksellinen.
 
+## Paketit ja funktiot
+
+Kun sama tyyppi tai vakio tarvitaan useassa moduulissa, se
+määritellään *paketissa* (`package`). Paketti on nimiavaruus tyypeille,
+vakioille ja funktioille. Ilman pakettia `typedef` pitäisi kopioida
+jokaiseen moduuliin, ja väylän molemmat päät voisivat erkaantua
+toisistaan huomaamatta.
+
+*Funktio* on nimetty pala kombinaatiologiikkaa: se saa argumentit,
+palauttaa arvon eikä sisällä viiveitä tai muistia. Synteesi avaa
+funktion kutsupaikalle, joten kaksi kutsua tuottaa kaksi kopiota
+logiikasta. Sana `automatic` antaa jokaiselle kutsulle omat paikalliset
+muuttujansa. Ilman sitä muuttujat ovat yhteisiä kaikille kutsuille,
+mikä on Verilogin vanha oletus ja virhelähde.
+
+```{.systemverilog tiedosto="esimerkit/03-paketti.sv" osa="paketti"}
+```
+
+Gray-muunnos tarvitaan uudelleen asynkronisessa FIFOssa (luku 10), ja
+pariteetti lasketaan redusoinnilla liitoksesta. Paketin nimet otetaan
+käyttöön kolmella tavalla. *Nimetty tuonti* moduulin otsikossa tuo vain
+luetellut nimet, ja ne ovat käytettävissä jo porttiluettelossa:
+
+```{.systemverilog tiedosto="esimerkit/03-paketti.sv" osa="lahettaja"}
+```
+
+Ilman tuontia nimeen viitataan muodossa `paketti::nimi`:
+
+```{.systemverilog tiedosto="esimerkit/03-paketti.sv" osa="tarkistin"}
+```
+
+Jokerituonti `import paketti::*;` tuo näkyviin kaikki paketin nimet.
+Esimerkin testipenkki käyttää sitä, laskee Gray-muunnoksen kaikille 16
+arvolle ja kääntää sanomasta yhden bitin:
+
+```{.tuloste tiedosto="esimerkit/03-paketti.odotettu"}
+```
+
+Paketti käännetään ennen moduuleja, jotka käyttävät sitä: työkalulle
+annettavassa tiedostoluettelossa pakettitiedosto on ensimmäisenä.
+
 ## Käytännössä
 
 - **`logic` kaikkialle.** Uudessa koodissa `wire` ja `reg` ovat
@@ -151,6 +192,16 @@ katkaisu tai laajennus on tarkoituksellinen.
   potenssilla, joka on pelkkä siirto.
 - **`'0` nollaukseen.** Kirjoitus `q <= '0;` toimii, vaikka `q`:n
   leveyttä muutettaisiin.
+- **Jaetut tyypit pakettiin, tuonti nimeltä.** Rajapinnan tyypit ja
+  vakiot määritellään yhdessä paketissa. Suunnitelman moduuleissa
+  tuodaan nimetyt nimet tai kirjoitetaan `paketti::nimi`; jokerituonti
+  kahdesta paketista voi tuoda saman nimen kahdesti, ja virheilmoitus
+  tulee vasta käyttöpaikassa.
+- **Funktio aina `automatic`.** Funktiolla nimetään toistuva
+  kombinaatiolauseke (Gray-muunnos, pariteetti, tarkistussumma).
+  Funktion sisällä ei lueta moduulin signaaleja: kaikki tulee
+  argumentteina, jolloin funktion voi siirtää pakettiin ja testata
+  erikseen.
 
 ## Itsearviointi
 
@@ -163,3 +214,6 @@ katkaisu tai laajennus on tarkoituksellinen.
 - Osaat ennustaa lausekkeen leveyden ja etumerkillisyyden sekä korjata
   etumerkillisen ja etumerkittömän vertailun.
 - Osaat arvioida operaattorien laitteistohinnan.
+- Osaat koota jaetut tyypit ja vakiot pakettiin, ottaa ne käyttöön
+  nimetyllä tuonnilla ja kirjoittaa kombinaatiologiikan
+  `function automatic` -funktiona.

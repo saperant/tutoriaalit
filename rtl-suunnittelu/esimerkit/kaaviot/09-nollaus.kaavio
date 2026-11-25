@@ -1,0 +1,20 @@
+// lahde: 09-nollaus.sv
+// vcd: --kello nayte --piilota-kello --signaalit clk,rst_n_ulk,ketju0=ketju[0],rst_n --jaksot 12 --hscale 0.8
+// Nollauksen tahdistin puolen kellojakson tarkkuudella: nayte on
+// näytteistyskello, jonka jakso on puolet kellon jaksosta. Ulkoinen
+// nollaus vapautuu keskellä kellon alatilaa ja kytkeytyy uudelleen
+// keskellä ylätilaa.
+module kaavio;
+  logic clk = 1'b0, nayte = 1'b0, rst_n_ulk = 1'b0;
+  wire  rst_n;
+  wire  ketju0 = u_nt.ketju[0];
+  nollaus_tahdistin u_nt (.clk, .rst_n_ulkoinen(rst_n_ulk), .rst_n);
+  initial repeat (14) #10 clk = ~clk;
+  initial repeat (28) #5 nayte = ~nayte;
+  initial begin
+    $dumpfile("kaavio.vcd");
+    $dumpvars(1, kaavio);
+    #22 rst_n_ulk = 1'b1;                  // vapautus: clk on alhaalla
+    #70 rst_n_ulk = 1'b0;                  // kytkentä: clk on ylhäällä
+  end
+endmodule

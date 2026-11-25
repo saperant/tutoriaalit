@@ -1,0 +1,34 @@
+// lahde: 08-ram.sv
+// vcd: --kello clk --signaalit kirjoita,k_osoite,k_data,l_osoite,l_data --alku 1 --jaksot 9
+// Rekisteröity luku ja read-first: lukudata tulee jakson viiveellä, ja
+// samaan osoitteeseen yhtä aikaa kirjoitettaessa luetaan vanha arvo.
+// Näytteet kellon laskevalla reunalla.
+module kaavio;
+  logic       kello = 1'b0;
+  wire        clk   = ~kello;
+  logic       kirjoita = 1'b0;
+  logic [3:0] k_osoite = '0, l_osoite = '0;
+  logic [7:0] k_data = '0;
+  wire  [7:0] l_data;
+  ram_2p #(.W(8), .D(16)) u_ram (.clk(kello), .kirjoita, .k_osoite,
+                                 .k_data, .l_osoite, .l_data);
+  initial repeat (24) #5 kello = ~kello;
+  task automatic jakso(logic k, logic [3:0] ko, logic [7:0] kd,
+                       logic [3:0] lo);
+    kirjoita = k; k_osoite = ko; k_data = kd; l_osoite = lo;
+    #10;
+  endtask
+  initial begin
+    $dumpfile("kaavio.vcd");
+    $dumpvars(1, kaavio);
+    #6;
+    jakso(1'b1, 4'd1, 8'hA1, 4'd0);
+    jakso(1'b1, 4'd2, 8'hB2, 4'd0);
+    jakso(1'b0, 4'd0, 8'h00, 4'd1);        // luku: A1 seuraavalla jaksolla
+    jakso(1'b0, 4'd0, 8'h00, 4'd2);
+    jakso(1'b1, 4'd2, 8'hC3, 4'd2);        // sama osoite: vanha B2
+    jakso(1'b0, 4'd0, 8'h00, 4'd2);        // nyt uusi C3
+    jakso(1'b0, 4'd0, 8'h00, 4'd1);
+    jakso(1'b0, 4'd0, 8'h00, 4'd1);
+  end
+endmodule

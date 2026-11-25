@@ -22,6 +22,15 @@ Porttien tyyppi on lähes aina `logic`. Leveys kirjoitetaan muodossa
 ei voi ajaa `input`-porttia, ja jokaista `output`-porttia on ajettava
 täsmälleen yhdestä paikasta.
 
+Kaksisuuntainen portti `inout` kuuluu vain suunnitelman ylimmälle
+tasolle, piirin nastoihin. Esimerkiksi I²C-väylän datalinja kuvataan
+*kolmitilapuskurina*: `assign sda = sda_oe ? 1'b0 : 1'bz;` ajaa
+linjan nollaksi tai jättää sen kellumaan, ja linjan tila luetaan
+samasta nastasta. Piirin sisällä ei ole kolmitilaväyliä, joten sisäiset
+moduulit saavat erilliset signaalit (tulo, lähtö ja lähdön sallinta),
+ja puskuri kirjoitetaan yhteen paikkaan ylimmälle tasolle. Nastojen
+kytkentä kohdepiiriin on taidon *FPGA-toteutus* aihe.
+
 Täysisummain on yhden bitin summain, josta suuremmat rakennetaan:
 
 ```{.systemverilog tiedosto="esimerkit/02-summain/taysisummain.sv"}

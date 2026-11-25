@@ -25,6 +25,15 @@ palauttava muoto (write-first) kirjoitetaan eri tavalla, ja synteesi
 tukee molempia. Ratkaisevaa on, että simulaatio ja kohdepiiri
 käyttäytyvät samoin.
 
+Alla olevassa simulaatiossa muistiin kirjoitetaan ensin A1 osoitteeseen
+1 ja B2 osoitteeseen 2. Lukudata tulee aina jakson viiveellä:
+`l_osoite = 1` tuottaa arvon A1 vasta seuraavalla jaksolla. Kun
+osoitteeseen 2 kirjoitetaan C3 samalla jaksolla, jolla sitä luetaan,
+ulos tulee ensin vanha B2 ja vasta seuraavalla jaksolla C3.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/08-ram.json" otsikko="Rekisteröity luku: data jakson viiveellä, sama osoite palauttaa vanhan arvon"}
+```
+
 ROM on muisti, jonka sisältö annetaan alustuksessa. Sisältö voidaan
 laskea funktiolla käännösaikana tai lukea tiedostosta `$readmemh`-
 kutsulla. Molemmat ovat synteesikelpoisia FPGA:ssa, koska alkuarvo
@@ -47,7 +56,19 @@ Jos osoittimet ovat yhtä leveitä kuin muistin osoite, täysi ja tyhjä
 jono näyttävät samalta: osoittimet ovat yhtä suuret. Ratkaisu on yksi
 ylimääräinen bitti. Kun osoittimet ovat kokonaan samat, jono on tyhjä.
 Kun vain ylin bitti eroaa, kirjoitusosoitin on kierroksen edellä ja
-jono on täynnä.
+jono on täynnä. Kahdeksan sanan jonossa osoittimet ovat nelibittisiä,
+ja muistin osoite on kolme alinta bittiä:
+
+| Tilanne | `k_os` | `l_os` | Alimmat bitit | Ylin bitti | Jonossa |
+|---------|--------|--------|---------------|------------|---------|
+| alussa | `0000` | `0000` | samat | sama | 0, tyhjä |
+| kolme kirjoitettu | `0011` | `0000` | eri | – | 3 |
+| kahdeksan kirjoitettu | `1000` | `0000` | samat | eri | 8, täynnä |
+| kaksi luettu | `1000` | `0010` | eri | – | 6 |
+| kaikki luettu | `1000` | `1000` | samat | sama | 0, tyhjä |
+
+Jonon pituus on aina osoittimien erotus `k_os - l_os`, myös
+ylivuodon yli.
 
 ```{.systemverilog tiedosto="esimerkit/08-fifo/fifo.sv"}
 ```
@@ -168,7 +189,10 @@ vaiennetaan `lint_off`-kommentilla, jonka vieressä kerrotaan syy.
 - **Rekisterikartta yhdestä lähteestä.** Tuotannossa rekisterikartta
   kuvataan kerran (SystemRDL, IP-XACT tai taulukko), ja siitä
   generoidaan RTL, ohjelmiston otsikkotiedostot ja dokumentaatio.
-  Käsin ylläpidetyt kopiot eroavat ennen pitkää toisistaan.
+  Käsin ylläpidetyt kopiot eroavat ennen pitkää toisistaan. Tässä
+  luvussa pankki on kirjoitettu käsin, jotta rakenne näkyy;
+  generointia käsittelevät taidot *Laitteiston kuvausstandardit
+  (SystemRDL, IP-XACT)* ja *SoC-integraatio*.
 - **Simulaatiotarkistukset moduuliin.** Rajapinnan ehdot (ei
   kirjoitusta täyteen, ei lukua tyhjästä) tarkistetaan moduulin
   sisällä, jolloin jokainen käyttäjä hyötyy niistä ilman omaa

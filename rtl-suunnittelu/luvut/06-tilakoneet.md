@@ -21,6 +21,29 @@ jolloin synteesi voi valita koodauksen itse.
 | one-hot | N | nopea ja yksinkertainen dekoodaus, yleinen FPGA:ssa |
 | Gray | log2(N) | vain yksi bitti vaihtuu peräkkäisissä tiloissa |
 
+## Kelvollinen/valmis-kättely
+
+Ennen ensimmäistä lohkoa tarvitaan tapa, jolla kaksi lohkoa sopii
+datan siirrosta. Tämän tutoriaalin kaikki virtarajapinnat käyttävät
+*kelvollinen/valmis-kättelyä* (valid/ready), joka on myös AXI-väylien
+perusta. Tuottaja nostaa `kelvollinen`-signaalin, kun sillä on dataa.
+Kuluttaja nostaa `valmis`-signaalin, kun se voi ottaa datan vastaan.
+Säännöt ovat:
+
+1. Sana siirtyy sillä kellon reunalla, jolla sekä `kelvollinen` että
+   `valmis` ovat ykkösiä. Muilla reunoilla ei tapahdu mitään.
+2. Kun tuottaja on nostanut `kelvollinen`-signaalin, se ei saa perua
+   sitä eikä muuttaa dataa ennen kuin siirto on tapahtunut.
+3. `kelvollinen` ei saa riippua `valmis`-signaalista. Tuottaja ei jää
+   odottamaan, että kuluttaja on valmis, ennen kuin tarjoaa dataa.
+   Kuluttaja saa odottaa `kelvollinen`-signaalia.
+
+Kolmas sääntö estää lukkiutuman, jossa kumpikin odottaa toista, ja
+kombinatorisen silmukan (luku 11). Kumpi tahansa osapuoli voi hidastaa
+siirtoa: tuottaja laskemalla `kelvollinen`-signaalin siirtojen välillä,
+kuluttaja pitämällä `valmis`-signaalin alhaalla. Jälkimmäinen on
+*vastapaine* (backpressure), johon palataan luvussa 7.
+
 ## Kaksiprosessityyli: UART-lähetin
 
 UART lähettää tavun sarjamuotoisena: aloitusbitti 0, kahdeksan databittiä
@@ -59,10 +82,9 @@ mikä siinä poikkeaa oletuksesta.
 ```{.systemverilog tiedosto="esimerkit/06-uart-tx/uart_tx.sv" osa="seuraava"}
 ```
 
-Rajapinta käyttää *kelvollinen/valmis-kättelyä* (valid/ready): tavu
-siirtyy, kun molemmat ovat ykkösiä samalla kellon reunalla. Lähetin
-nostaa `valmis`-signaalin vain lepotilassa. Kättely toistuu
-liukuhihnoissa ja väylissä (luvut 7 ja 11).
+Lähetin on kättelyn kuluttaja: se nostaa `valmis`-signaalin vain
+lepotilassa, ja tavu siirtyy sillä reunalla, jolla myös `kelvollinen`
+on ykkönen.
 
 Kellotettu lohko on pelkkä rekisterijoukko. Myös `tx` kulkee kiikun
 kautta. Rekisteröity ulostulo ei näytä kombinaatiologiikan piikkejä,
@@ -102,6 +124,16 @@ aloitusbitti alkaa heti lopetusbitin jälkeen.
 ```{.ajoituskaavio tiedosto="esimerkit/kaaviot/06-uart-tx.json" otsikko="UART-kehys: aloitusbitti, kahdeksan databittiä ja lopetusbitti"}
 ```
 
+Kättely näkyy samasta simulaatiosta kellojakson tarkkuudella. Kaaviossa
+testipenkki tarjoaa merkkiä T (54) ja pitää `kelvollinen`-signaalin
+ja datan paikallaan, kunnes edellisen merkin lopetusbitti on lähetetty.
+Lähetin palaa tilaan `LEPO` ja nostaa `valmis`-signaalin yhdeksi
+jaksoksi. Merkki siirtyy sen jakson lopun reunalla, ja testipenkki
+vaihtaa heti tarjolle seuraavan merkin L (4C).
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/06-kattely.json" otsikko="Kättely: merkki siirtyy reunalla, jolla kelvollinen ja valmis ovat ylhäällä"}
+```
+
 ## Yksiprosessityyli: värähtelyn vaimennin
 
 Mekaaninen kytkin värähtelee painettaessa: kosketus aukeaa ja sulkeutuu
@@ -119,10 +151,34 @@ yksinkertaisesti nykyisestä.
 ```
 
 Välitilat `PAINUU` ja `NOUSEE` odottavat vakautta. Jos signaali palaa
-takaisin ennen kuin laskuri täyttyy, tila palaa lähtötilaan. Testipenkki
-syöttää kaksi värähtelevää painallusta ja yhden liian lyhyen häiriön:
+takaisin ennen kuin laskuri täyttyy, tila palaa lähtötilaan.
+
+```{.dot otsikko="Värähtelyn vaimentimen tilakone"}
+digraph {
+  rankdir=LR; nodesep=0.5; ranksep=0.9;
+  node [shape=ellipse];
+  YLHAALLA -> PAINUU [label="nappi"];
+  PAINUU -> YLHAALLA [label="!nappi"];
+  PAINUU -> ALHAALLA [label="vakaa\n/ painallus"];
+  ALHAALLA -> NOUSEE [label="!nappi"];
+  NOUSEE -> ALHAALLA [label="nappi"];
+  NOUSEE -> YLHAALLA [label="vakaa"];
+}
+```
+
+Testipenkki syöttää kaksi värähtelevää painallusta ja yhden liian
+lyhyen häiriön:
 
 ```{.tuloste tiedosto="esimerkit/06-vaimennin.odotettu"}
+```
+
+Alla on testipenkin ensimmäinen painallus puolen kellojakson
+tarkkuudella. Raaka tulo värähtelee, mutta tahdistin näytteistää sen
+vain kellon reunoilla, ja tahdistettu `nappi` pysyy ylhäällä vasta
+värähtelyn loputtua. Tilakone odottaa tilassa `PAINUU` kahdeksan
+jaksoa (`VAKAA = 8`) ja antaa sitten yhden jakson `painallus`-pulssin.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/06-vaimennin.json" otsikko="Vaimennin: värähtelevä tulo, tahdistettu taso ja yksi painalluspulssi"}
 ```
 
 ## Käytännössä
@@ -147,10 +203,11 @@ syöttää kaksi värähtelevää painallusta ja yhden liian lyhyen häiriön:
   toiseen kellotusalueeseen menevä signaali tulee suoraan kiikusta.
   Mealy-ulostulo, joka riippuu syötteestä kombinatorisesti, pidentää
   ajoituspolkua ja voi muodostaa silmukan (luku 11).
-- **Kelvollinen/valmis-kättely.** Sääntö on yksinkertainen: siirto
-  tapahtuu, kun molemmat ovat ylhäällä reunalla. Lähettäjä ei saa
-  perua `kelvollinen`-signaalia eikä muuttaa dataa ennen siirtoa, eikä
-  `kelvollinen` saa riippua `valmis`-signaalista.
+- **Kättely jokaiseen rajapintaan, jossa jompikumpi voi hidastaa.**
+  Kelvollinen/valmis-kättelyn kolme sääntöä riittävät kytkemään
+  minkä tahansa tuottajan mihin tahansa kuluttajaan ilman tietoa
+  toisen ajoituksesta. Rajapinta, joka olettaa "data tulee kolmen
+  jakson päästä", hajoaa, kun jompaakumpaa lohkoa muutetaan.
 - **Tilakone ja datapolku erikseen.** Laskurit, siirtorekisterit ja
   vertailijat ovat *datapolkua*, ja tilakone ohjaa niitä. Rakenne
   tunnetaan nimellä FSMD (FSM with datapath). Tilakoneen tilojen määrä

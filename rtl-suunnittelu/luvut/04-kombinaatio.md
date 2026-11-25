@@ -50,6 +50,38 @@ tarkistettava simuloinnissa. Jos lupaus ei pidä, simuloinnin ja
 synteesin tulokset eroavat. Verilator tarkistaa lisäksi jo käännöksessä,
 että `case`-lause kattaa kaikki arvot.
 
+Ero näkyy syntyvässä rakenteessa. Kolmen ehdon `if`–`else if` -ketjusta
+tulee kolme peräkkäistä multiplekseriä: viimeisenä kirjoitettu haara on
+syvimmällä, ja sen data kulkee kaikkien läpi. `unique case` tuottaa
+yhden leveän multiplekserin, jossa kaikki haarat ovat yhtä kaukana
+ulostulosta.
+
+```{.dot otsikko="Periaatekuva: if–else-ketjusta syntyy prioriteettiketju"}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.5;
+  node [shape=plaintext];
+  d [label="d (else)"]; c [label="c"]; b [label="b"]; a [label="a"];
+  y [label="y"];
+  node [shape=trapezium, orientation=270, fixedsize=true,
+        width=0.9, height=0.5];
+  m3 [label="ehto3"]; m2 [label="ehto2"]; m1 [label="ehto1"];
+  d -> m3; c -> m3; m3 -> m2; b -> m2; m2 -> m1; a -> m1; m1 -> y;
+}
+```
+
+```{.dot otsikko="Periaatekuva: unique case tuottaa yhden rinnakkaisen multiplekserin"}
+digraph {
+  rankdir=LR; nodesep=0.15; ranksep=0.6;
+  node [shape=plaintext];
+  a [label="a"]; b [label="b"]; c [label="c"]; d [label="d"];
+  s [label="valinta"]; y [label="y"];
+  m [shape=trapezium, orientation=270, fixedsize=true,
+     width=1.6, height=0.6, label="4:1"];
+  a -> m; b -> m; c -> m; d -> m; m -> y;
+  s -> m [style=dashed];
+}
+```
+
 Seuraava ALU käyttää luettelotyyppiä operaatiokoodina. Koska
 `unique case` kattaa kaikki kahdeksan arvoa, `default`-haaraa ei tarvita.
 
@@ -69,6 +101,33 @@ Testipenkki käyttää tehtävää (`task`) toistuvaan koerakenteeseen:
 
 ```{.tuloste tiedosto="esimerkit/04-alu.odotettu"}
 ```
+
+## Jokerit: case inside ja casez
+
+Dekooderissa vain osa biteistä ratkaisee: käskyn laji luetaan
+ylimmistä biteistä, ja loput ovat operandeja. `case (…) inside`
+vertaa lauseketta malleihin, joissa `?` tarkoittaa "ei väliä". Yhdessä
+`unique`-määreen kanssa simulaattori tarkistaa, etteivät mallit mene
+päällekkäin:
+
+```{.systemverilog tiedosto="esimerkit/04-dekooderi.sv" osa="dekooderi"}
+```
+
+Vanhempi muoto on `casez`, jossa `?` (tai `z`) on jokeri. Sillä
+kirjoitetaan usein prioriteettivalinta: mallit saavat mennä
+päällekkäin, ja ensimmäinen osuva haara voittaa.
+
+```{.systemverilog tiedosto="esimerkit/04-dekooderi.sv" osa="keskeytys"}
+```
+
+Testipenkki käy läpi kaikki 256 käskyä ja kaikki 16 pyyntöyhdistelmää:
+
+```{.tuloste tiedosto="esimerkit/04-dekooderi.odotettu"}
+```
+
+Kolmas muoto `casex` pitää jokerina myös arvoa `X`. Silloin
+alustamaton valintasignaali osuu ensimmäiseen haaraan ja virhe jää
+simuloinnissa piiloon, joten `casex`:ää ei käytetä.
 
 ## Silmukat purkautuvat
 
@@ -104,6 +163,30 @@ FPGA:ssa ole sille luontevaa rakennetta. Verilator tunnistaa salvan
 ```{.tuloste tiedosto="esimerkit/04-salpa.odotettu"}
 ```
 
+Alla vasemmalla on rakenne, jota virheellinen moduuli pyytää: salpa
+päästää datan läpi, kun `valinta` on ykkönen, ja pitää arvonsa
+muulloin. Oikealla on oletussijoituksella korjattu versio, joka on
+pelkkä multiplekseri.
+
+```{.dot otsikko="Periaatekuva: puuttuva haara tuottaa salvan, oletussijoitus multiplekserin"}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.5;
+  subgraph cluster_s { label="if (valinta) y = a;"; style=dashed;
+    d1 [shape=plaintext, label="a"]; s1 [shape=plaintext, label="valinta"];
+    y1 [shape=plaintext, label="y"];
+    l [shape=box, label="salpa\nD   Q\nEN"];
+    d1 -> l; s1 -> l [style=dashed]; l -> y1;
+  }
+  subgraph cluster_m { label="y = '0; if (valinta) y = a;"; style=dashed;
+    d2 [shape=plaintext, label="a"]; z2 [shape=plaintext, label="'0"];
+    s2 [shape=plaintext, label="valinta"]; y2 [shape=plaintext, label="y"];
+    m [shape=trapezium, orientation=270, fixedsize=true, width=0.9,
+       height=0.5, label="2:1"];
+    d2 -> m; z2 -> m; s2 -> m [style=dashed]; m -> y2;
+  }
+}
+```
+
 Korjauksia on kaksi: jokaiseen `if`-lauseeseen `else`-haara ja jokaiseen
 `case`-lauseeseen `default`, tai oletussijoitukset lohkon alkuun.
 Jälkimmäinen on luotettavampi, koska se toimii myös, kun lohkoon
@@ -119,6 +202,10 @@ lisätään myöhemmin uusia haaroja.
   poissulkevia, `unique` kertoo sen lukijalle, simulaattorille ja
   synteesille. `priority` on harvinainen; tavallisesti prioriteetti
   kirjoitetaan `if`–`else if` -ketjuna.
+- **Jokerit `inside`-muodolla, ei `casex`.** Uudessa koodissa
+  jokerivertailu kirjoitetaan `case (…) inside` -lauseena ja `unique`-
+  määreellä, kun mallit sulkevat toisensa pois. `casez` on tavallinen
+  vanhassa koodissa; `casex` on virhe odottamassa.
 - **`default` ei korvaa ajattelua.** `default`-haara, joka asettaa
   ulostulot nolliksi, poistaa salvan mutta voi peittää puuttuvan
   haaran. Luettelotyypin kanssa kaikkien arvojen luetteleminen ilman
@@ -143,6 +230,8 @@ lisätään myöhemmin uusia haaroja.
   oletussijoituksilla.
 - Osaat käyttää `unique case` -lausetta ja selittää, mitä se lupaa
   synteesille.
+- Osaat kirjoittaa dekooderin jokerimalleilla (`case inside`) ja
+  selittää, miksi `casex`:ää ei käytetä.
 - Osaat kirjoittaa `for`-silmukan, joka purkautuu rinnakkaiseksi
   logiikaksi, ja ennustaa sen tuottaman rakenteen.
 - Osaat tunnistaa etumerkillisen ylivuodon summaimen etumerkkibiteistä.

@@ -2,9 +2,13 @@
 
 Verilog-2005 on edelleen käytössä: vanhoissa IP-lohkoissa, avoimen
 lähdekoodin projekteissa, opetuksessa ja työkaluissa, jotka eivät tue
-SystemVerilogia kokonaan. Kaikki Verilog-2005-koodi on myös
+SystemVerilogia kokonaan. Lähes kaikki Verilog-2005-koodi on myös
 SystemVerilogia, joten vanhaa koodia voi käyttää uuden rinnalla.
-Toisin päin se ei toimi. Tämä luku kertoo, mitkä erot RTL-
+Poikkeus ovat SystemVerilogin uudet varatut sanat (`logic`, `bit`,
+`do`, `unique`, `priority`, `var` ja muut): vanha koodi, joka käyttää
+niitä signaalien niminä, ei käänny, ellei tiedostoa rajata vanhaan
+kieleen direktiivillä `` `begin_keywords "1364-2005" ``. Toisin päin
+yhteensopivuus ei toimi lainkaan. Tämä luku kertoo, mitkä erot RTL-
 suunnittelija kohtaa ja miten kirjoitetaan koodia, joka kelpaa
 molempiin.
 

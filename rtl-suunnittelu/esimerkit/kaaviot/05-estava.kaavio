@@ -1,0 +1,23 @@
+// lahde: 05-estava.ei-kaanny.sv
+// vcd: --kello clk --signaalit d,oikea,estava --jaksot 7
+// Sama syöte kahdelle viivelinjalle: ei-estävillä sijoituksilla (oikea)
+// viive on kaksi jaksoa, estävillä (estava) yksi. Näytteet kellon
+// laskevalla reunalla.
+module kaavio;
+  logic       kello = 1'b0;
+  wire        clk   = ~kello;
+  logic [7:0] d = 8'h00;
+  wire  [7:0] oikea, estava;
+  viive        u_oikea  (.clk(kello), .d, .vaihe2(oikea));
+  viive_estava u_estava (.clk(kello), .d, .vaihe2(estava));
+  initial repeat (20) #5 kello = ~kello;
+  initial begin
+    $dumpfile("kaavio.vcd");
+    $dumpvars(1, kaavio);
+    #6;
+    for (int i = 1; i <= 6; i++) begin
+      d = 8'(i * 17);                       // 11, 22, 33, ... heksana
+      #10;
+    end
+  end
+endmodule

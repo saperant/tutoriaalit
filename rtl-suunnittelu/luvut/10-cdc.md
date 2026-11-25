@@ -16,6 +16,14 @@ Lopulta se asettuu jompaankumpaan arvoon, mutta asettumisaika on
 satunnainen ja voi olla pidempi kuin kellojakso. Jos metastabiili arvo
 leviää logiikkaan, eri kiikut voivat tulkita sen eri tavoin.
 
+```{.ajoituskaavio otsikko="Periaatekuva: asetusikkunassa muuttuva syöte jättää kiikun hetkeksi välitilaan"}
+{"signal": [
+  {"name": "clk", "wave": "0...1.......0..."},
+  {"name": "d (toinen alue)", "wave": "0...1..........."},
+  {"name": "q", "wave": "0...x....=......", "data": ["0 tai 1"]}
+], "config": {"hscale": 0.7}}
+```
+
 Metastabiiliutta ei voi estää, mutta sen todennäköisyyttä voi
 pienentää. Keskimääräinen aika virheiden välillä (MTBF) kasvaa
 eksponentiaalisesti sen ajan mukana, jonka kiikku saa asettua. Siksi
@@ -33,6 +41,17 @@ Yksibittinen, hitaasti muuttuva tasosignaali (asetus, tilabitti, painonappi)
 ylittää rajan kahden kiikun tahdistimella:
 
 ```{.systemverilog tiedosto="esimerkit/10-tahdistimet.sv" osa="taso"}
+```
+
+```{.dot otsikko="Kahden kiikun tahdistin: vain toisen kiikun lähtöä käytetään"}
+digraph {
+  rankdir=LR; nodesep=0.4; ranksep=0.7;
+  d [shape=plaintext, label="d\n(toinen alue)"];
+  f1 [shape=box, label="kiikku\nD   Q"];
+  f2 [shape=box, label="kiikku\nD   Q"];
+  q [shape=plaintext, label="q\n(oma alue)"];
+  d -> f1; f1 -> f2 [label="meta: saa asettua\nyhden jakson"]; f2 -> q;
+}
 ```
 
 Tahdistimen ulostulo on vastaanottavan alueen signaali, joka voi
@@ -53,6 +72,16 @@ tahdistetaan, ja vastaanottaja tunnistaa vaihdoksen reunantunnistimella
 
 Pulssien välin on oltava riittävän pitkä, jotta edellinen tasonvaihdos
 ehtii tahdistimen läpi ennen seuraavaa.
+
+Alla olevassa simulaatiossa lähettävä kello on 2,5 kertaa
+vastaanottavaa nopeampi. Yhden jakson `pulssi_a` kääntää tason
+`taso_a`, taso kulkee vastaanottajan kahden kiikun läpi (`meta`,
+`taso_b`), ja muutoksesta syntyy vastaanottajan kellon mittainen
+`pulssi_b`. Pelkkä `pulssi_a` olisi mahtunut `clk_b`:n kahden reunan
+väliin ja kadonnut.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/10-pulssi.json" otsikko="Pulssin siirto nopealta kellolta hitaalle tasonvaihdoksena"}
+```
 
 ## Kättely monibittiselle arvolle
 

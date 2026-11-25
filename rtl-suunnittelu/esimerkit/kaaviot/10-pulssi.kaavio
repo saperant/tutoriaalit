@@ -1,0 +1,26 @@
+// lahde: 10-tahdistimet.sv
+// vcd: --kello nayte --piilota-kello --signaalit clk_a,pulssi_a,taso_a,clk_b,meta,taso_b,pulssi_b --jaksot 40 --hscale 0.45
+// Pulssin siirto nopealta kellolta (jakso 4 näytettä) hitaalle (jakso
+// 10 näytettä). nayte on pelkkä näytteistyskello.
+module kaavio;
+  logic nayte = 1'b0, clk_a = 1'b0, clk_b = 1'b0;
+  logic rst_n = 1'b0, pulssi_a = 1'b0;
+  wire  pulssi_b;
+  wire  taso_a = u_p.taso_a;
+  wire  meta   = u_p.u_t.meta;
+  wire  taso_b = u_p.taso_b;
+  pulssi_cdc u_p (.clk_a, .rst_a_n(rst_n), .pulssi_a,
+                  .clk_b, .rst_b_n(rst_n), .pulssi_b);
+  initial repeat (90) #1 nayte = ~nayte;
+  initial begin #1; repeat (22) #4 clk_a = ~clk_a; end
+  initial begin #3; repeat (9) #10 clk_b = ~clk_b; end
+  initial begin
+    $dumpfile("kaavio.vcd");
+    $dumpvars(1, kaavio);
+    #2 rst_n = 1'b1;
+    @(posedge clk_a); @(posedge clk_a);
+    #1 pulssi_a = 1'b1;
+    @(posedge clk_a);
+    #1 pulssi_a = 1'b0;
+  end
+endmodule

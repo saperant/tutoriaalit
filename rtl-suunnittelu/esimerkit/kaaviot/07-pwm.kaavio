@@ -1,0 +1,21 @@
+// lahde: 07-pwm.sv
+// vcd: --kello clk --signaalit suhde,vaihe,voimassa,ulos --kanta d --alku 13 --jaksot 22 --hscale 0.7
+// PWM, jonka jakso on 8 tickiä (W = 3) ja tick on aina 1. Suhde
+// muuttuu kesken jakson; voimassa vaihtuu vasta jakson rajalla.
+// Näytteet kellon laskevalla reunalla.
+module kaavio;
+  logic       kello = 1'b0, rst_n = 1'b0;
+  wire        clk   = ~kello;
+  logic [2:0] suhde = 3'd2;
+  wire        ulos;
+  wire  [2:0] vaihe    = u_pwm.vaihe;
+  wire  [2:0] voimassa = u_pwm.voimassa;
+  pwm #(.W(3)) u_pwm (.clk(kello), .rst_n, .tick(1'b1), .suhde, .ulos);
+  initial repeat (80) #5 kello = ~kello;
+  initial begin
+    $dumpfile("kaavio.vcd");
+    $dumpvars(1, kaavio);
+    #2 rst_n = 1'b1;
+    #190 suhde = 3'd6;                      // kesken jakson
+  end
+endmodule

@@ -11,7 +11,9 @@ rekisteri–logiikka–rekisteri, on RTL:n ydin.
 Kiikut kuvataan `always_ff`-lohkolla. Herkkyyslistassa on kellon reuna
 ja mahdollisen asynkronisen nollauksen reuna. Lohkossa sijoitetaan
 *ei-estävällä* sijoituksella `<=`. Tämä on tavallisin kiikkumalli:
-asynkroninen nollaus ja sallinta (`alku`).
+asynkroninen nollaus ja sallinta. Ote on pikaoppaan esimerkistä, jossa
+sallintasignaalin nimi on `alku`: rekisteri ottaa uuden arvon vain
+jaksolla, jolla `alku` on ykkönen.
 
 ```{.systemverilog tiedosto="esimerkit/pikaopas.sv" osa="rekisteri"}
 ```
@@ -89,7 +91,13 @@ suorittaa eri lohkot. Verilator hylkää estävän sijoituksen
 ```
 
 Korjatussa versiossa `vaihe2` saa `d`:n arvon kahden reunan kuluttua.
-Virheellisessä versiossa se saisi sen jo ensimmäisellä reunalla.
+Virheellisessä versiossa se saisi sen jo ensimmäisellä reunalla. Alla
+molemmat on simuloitu samalla syötteellä (lint-virhe on ohitettu
+kaaviota varten): `oikea` seuraa syötettä kahden jakson ja `estava`
+yhden jakson viiveellä.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/05-estava.json" otsikko="Viivelinja ei-estävillä (oikea) ja estävillä (estava) sijoituksilla"}
+```
 
 ## Simulointisemantiikka lyhyesti
 
@@ -111,12 +119,42 @@ taidossa *Laitteiston verifiointi*.
 ## Ajoitus
 
 Kiikku toimii oikein vain, jos sen syöte on vakaa *asetusajan* (setup)
-ennen reunaa ja *pitoajan* (hold) reunan jälkeen. Kahden kiikun
-välisen kombinaatiologiikan viive ja kiikun oma viive määräävät
-pienimmän kellojakson. Pisin tällainen polku on *kriittinen polku*.
+ennen reunaa ja *pitoajan* (hold) reunan jälkeen. Alla olevassa
+periaatekuvassa data saa muuttua vain ikkunoiden ulkopuolella:
+
+```{.ajoituskaavio otsikko="Periaatekuva: asetus- ja pitoaika kellon nousevan reunan ympärillä"}
+{"signal": [
+  {"name": "clk", "wave": "0...1...0...1..."},
+  {"name": "d", "wave": "x.=.....x.=.....",
+   "data": ["vakaa", "seuraava"]},
+  {"name": "ikkuna", "wave": "z.=.=.z...=.=.z.",
+   "data": ["asetus", "pito", "asetus", "pito"]},
+  {"name": "q", "wave": "=....=.......=..",
+   "data": ["", "vakaa", "seuraava"]}
+], "config": {"hscale": 0.7}}
+```
+
+Kahden kiikun välisen kombinaatiologiikan viive ja kiikun oma viive
+määräävät pienimmän kellojakson: lähtevän kiikun viiveen, logiikan
+viiveen ja vastaanottavan kiikun asetusajan on mahduttava yhteen
+jaksoon. Pisin tällainen polku on *kriittinen polku*.
+
+```{.dot otsikko="Rekisteri–logiikka–rekisteri-polku ja sen viiveet"}
+digraph {
+  rankdir=LR; nodesep=0.4; ranksep=0.9;
+  r1 [shape=box, label="kiikku\nD   Q"];
+  l  [shape=ellipse, label="kombinaatio-\nlogiikka"];
+  r2 [shape=box, label="kiikku\nD   Q"];
+  r1 -> l [label="kiikun viive"];
+  l -> r2 [label="logiikan viive\n+ asetusaika"];
+}
+```
+
 Synteesi- ja sijoittelutyökalun ajoitusanalyysi kertoo, riittääkö
 jakso, ja RTL-suunnittelija vaikuttaa tulokseen päättämällä, kuinka
-paljon logiikkaa rekisterien väliin tulee (luku 7).
+paljon logiikkaa rekisterien väliin tulee (luku 7). Pitoaikaa
+suunnittelija ei yleensä korjaa käsin: työkalu lisää viivettä liian
+nopeille poluille.
 
 ## Käytännössä
 

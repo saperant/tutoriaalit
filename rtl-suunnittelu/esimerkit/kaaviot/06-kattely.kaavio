@@ -1,0 +1,18 @@
+// lahde: 06-uart-tx/uart_tx.sv 06-uart-tx/testipenkki.sv
+// vcd: --kello clk --signaalit kelvollinen,valmis,data,tila,tx --luettelo tila=LEPO:ALKU:DATA:LOPPU --alku 97 --jaksot 10
+// Toisen merkin kättely: kelvollinen odottaa ylhäällä, kunnes lähetin
+// palaa lepotilaan ja nostaa valmis-signaalin. Näytteet kellon
+// laskevalla reunalla.
+module kaavio;
+  wire       clk         = ~tb.clk;
+  wire       kelvollinen = tb.kelvollinen;
+  wire       valmis      = tb.valmis;
+  wire [7:0] data        = tb.data;
+  wire [1:0] tila        = tb.u_tx.tila_q;
+  wire       tx          = tb.tx;
+  testipenkki tb ();
+  initial begin
+    $dumpfile("kaavio.vcd");
+    $dumpvars(1, kaavio);
+  end
+endmodule

@@ -1,0 +1,26 @@
+// lahde: 06-vaimennin.sv
+// vcd: --kello nayte --piilota-kello --signaalit clk,raaka,nappi,tila,painettu,painallus --luettelo tila=YLHAALLA:PAINUU:ALHAALLA:NOUSEE --alku 11 --jaksot 34 --hscale 0.5
+// Testipenkin ensimmäinen painallus puolen kellojakson tarkkuudella:
+// nayte on näytteistyskello, jonka jakso on puolet kellon jaksosta.
+// raaka on värähtelevä tulo, nappi sen tahdistettu kopio.
+module kaavio;
+  logic      nayte = 1'b0;
+  wire       clk       = tb.clk;
+  wire       raaka     = tb.nappi;
+  wire       nappi     = tb.u_v.nappi;
+  wire [1:0] tila      = tb.u_v.tila;
+  wire       painettu  = tb.painettu;
+  wire       painallus = tb.painallus;
+  testipenkki tb ();
+  initial begin
+    #1;
+    while (tb.kaynnissa) begin
+      #2 nayte = 1'b1;
+      #3 nayte = 1'b0;
+    end
+  end
+  initial begin
+    $dumpfile("kaavio.vcd");
+    $dumpvars(1, kaavio);
+  end
+endmodule

@@ -39,6 +39,16 @@ asetuksen jälkeen käyttää vielä vanhaa arvoa, toinen uutta:
 Testipenkin odotus `@(posedge clk iff tick)` herää vain niillä
 reunoilla, joilla ehto on tosi.
 
+Varjorekisterin vaikutus näkyy alla olevassa simulaatiossa, jossa
+jakso on lyhennetty kahdeksaan askeleeseen (`W = 3`) ja `tick` on
+jatkuvasti ykkönen. `suhde` vaihtuu kahdesta kuuteen kesken jakson,
+mutta `voimassa` muuttuu vasta, kun `vaihe` palaa nollaan. Meneillään
+oleva jakso pysyy kahden askeleen pulssina, ja kuuden askeleen pulssi
+alkaa seuraavasta jaksosta.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/07-pwm.json" otsikko="PWM: uusi pulssisuhde tulee voimaan vasta jakson rajalla"}
+```
+
 ## Liukuhihnat
 
 Kun kahden rekisterin välinen logiikka on liian hidas, se jaetaan
@@ -74,10 +84,101 @@ viiveellä kuin data.
 ```{.ajoituskaavio tiedosto="esimerkit/kaaviot/07-liukuhihna.json" otsikko="Kelvollisuusbitit kulkevat kaksivaiheisen liukuhihnan läpi"}
 ```
 
-Tässä liukuhihnassa ei ole vastapainetta: jokainen tulos otetaan vastaan.
-Jos kuluttaja voi pysäyttää virran (`valmis = 0`), jokaiseen vaiheeseen
-tarvitaan kelvollinen/valmis-kättely ja usein *skid-puskuri*, joka
-katkaisee `valmis`-signaalin pitkän kombinatorisen polun.
+Tässä liukuhihnassa ei ole vastapainetta: jokainen tulos otetaan
+vastaan sillä jaksolla, jolla se valmistuu.
+
+## Vastapaine: kättelyvaihe ja skid-puskuri
+
+Kun kuluttaja voi pysäyttää virran (`valmis = 0`), pelkkä
+kelvollisuusbitti ei riitä: vaiheen on pidettävä sanansa, kunnes
+seuraava vaihe ottaa sen. Jokainen vaihe käyttää luvun 6
+kelvollinen/valmis-kättelyä kumpaankin suuntaan. Seuraavissa
+moduuleissa `s_`-alkuiset portit ovat sisääntulon ja `u_`-alkuiset
+ulostulon kättely.
+
+Vaihe saa ottaa uuden sanan, kun se on tyhjä tai kun kuluttaja vie
+nykyisen sanan samalla reunalla:
+
+```{.systemverilog tiedosto="esimerkit/07-kattely/kattelyvaihe.sv" osa="vaihe"}
+```
+
+Rakenne on yksinkertainen, mutta `s_valmis` riippuu kombinatorisesti
+`u_valmis`-signaalista. Kun vaiheita on peräkkäin kymmenen, viimeisen
+kuluttajan `valmis` kulkee yhden jakson aikana kaikkien kymmenen läpi,
+ja polusta tulee kriittinen. *Skid-puskuri* katkaisee polun:
+tuottajalle näkyvä `s_valmis` tulee suoraan kiikusta. Hinta on, että
+tuottaja kuulee pysähdyksestä jakson myöhässä ja ehtii lähettää vielä
+yhden sanan. Puskurissa on tälle sanalle varapaikka:
+
+```{.systemverilog tiedosto="esimerkit/07-kattely/skid_puskuri.sv" osa="skid"}
+```
+
+Testipenkki kytkee skid-puskurin ja kättelyvaiheen peräkkäin. Tuottaja
+pitää taukoja ja kuluttaja pysäyttää virran näennäissatunnaisesti.
+Tuottaja noudattaa kättelyn toista sääntöä, eli se vaihtaa dataa vasta
+siirron jälkeen:
+
+```{.systemverilog tiedosto="esimerkit/07-kattely/testipenkki.sv" osa="tuottaja"}
+```
+
+Tarkistin laskee vain toteutuneet siirrot. Koska sanat ovat juoksevia
+numeroita, kadonnut, kahdentunut tai väärään järjestykseen joutunut
+sana jää heti kiinni:
+
+```{.systemverilog tiedosto="esimerkit/07-kattely/testipenkki.sv" osa="tarkistin"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-kattely.odotettu"}
+```
+
+Kaksi viimeistä riviä ovat testin laadun mittareita: jos virta ei
+olisi pysähtynyt kertaakaan tai varapaikkaa ei olisi käytetty, testi
+ei olisi koetellut juuri sitä, mitä varten moduulit on tehty.
+
+Alla on jakso samasta simulaatiosta. Kuluttaja laskee `u_valmis`-
+signaalin kahdeksi jaksoksi, jolloin `u_data` pysyy arvossa 16.
+Tuottaja näkee pysähdyksen vasta seuraavalla jaksolla (`s_valmis`
+laskee jakson myöhässä), ja sillä välin lähetetty sana 17 jää
+varapaikkaan (`vara_kelv`). Tuottajan seuraava sana 18 odottaa
+paikallaan, kunnes `s_valmis` nousee. Kun virta jatkuu, varapaikka
+tyhjenee ensin, eikä yksikään sana katoa tai vaihda paikkaa.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/07-kattely.json" otsikko="Vastapaine: data pysyy paikallaan ja skid-puskurin varapaikka täyttyy"}
+```
+
+## Kättely rajapintana: interface
+
+Kättelyn kolme signaalia kulkevat aina yhdessä, ja jokainen moduuli
+luettelee ne porteissaan uudelleen. SystemVerilogin `interface` niputtaa
+signaalit yhdeksi nimetyksi kokonaisuudeksi, ja `modport` kertoo
+suunnat kummankin osapuolen näkökulmasta:
+
+```{.systemverilog tiedosto="esimerkit/07-rajapinta.sv" osa="rajapinta"}
+```
+
+Moduulin portiksi kirjoitetaan rajapinta ja sen `modport`, ja
+signaaleihin viitataan pisteellä:
+
+```{.systemverilog tiedosto="esimerkit/07-rajapinta.sv" osa="vaihe"}
+```
+
+Ylemmällä tasolla rajapinnasta luodaan instanssi kuten moduulista, ja
+kaksi vaihetta kytketään yhdellä nimellä kolmen sijasta:
+
+```{.systemverilog tiedosto="esimerkit/07-rajapinta.sv" osa="kytkenta"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-rajapinta.odotettu"}
+```
+
+Rajapinta lyhentää porttiluetteloita ja estää kytkemästä `valmis`-
+signaalia väärin päin. Työkalutuki on kuitenkin epätasaista: osa
+synteesi- ja lint-työkaluista tukee vain osaa ominaisuuksista, ja
+rajapintaportti ylimmän tason nastoissa tai Verilog-2005-moduulin
+rajalla ei onnistu. Siksi moni tyyliopas, esimerkiksi lowRISCin,
+sallii rajapinnat testipenkeissä mutta kirjoittaa suunnitelman portit
+auki tai niputtaa ne pakattuun rakenteeseen (luku 3). Tämän
+tutoriaalin muut esimerkit käyttävät erillisiä portteja.
 
 ## Parametrit ja generate
 
@@ -131,6 +232,15 @@ jakaudu riittävän tarkasti:
 - **Kelvollisuusbitti datan rinnalla.** Liukuhihnan jokainen vaihe
   kuljettaa omaa `valid`-bittiään. Vain ohjausbitit nollataan, sillä
   datarekisterien nollaus kuluttaa reititystä eikä hyödytä mitään.
+- **Vastapaine suunnitellaan alusta asti.** Kättelyn lisääminen
+  valmiiseen liukuhihnaan on työlästä, koska jokaisen vaiheen on
+  osattava pysähtyä. Jos kuluttaja voi joskus olla varattu, rajapintaan
+  tulee `valmis` heti. Kuluttaja, joka on aina valmis, sitoo sen
+  ykköseksi.
+- **Skid-puskuri sinne, missä `valmis`-polku on pitkä.** Jokainen
+  kättelyvaihe ei tarvitse sitä. Tavallinen paikka on moduulin
+  rajapinta, jolloin moduulin sisäinen logiikka ei näy naapurin
+  ajoituspolussa.
 - **Latenssi rajapinnan ominaisuutena.** Kun latenssi on kiinteä, se
   dokumentoidaan otsikkokommenttiin. Kun se voi muuttua, rajapinnassa
   käytetään kättelyä, ja testipenkki vertaa tuloksia jonosta, ei
@@ -150,6 +260,11 @@ jakaudu riittävän tarkasti:
 - Osaat jakaa laskennan liukuhihnaksi, jossa kelvollisuusbitti kulkee
   datan rinnalla.
 - Osaat testata liukuhihnaa tulostaululla, joka ei riipu latenssista.
+- Osaat kirjoittaa liukuhihnan vaiheen, joka pysähtyy vastapaineesta,
+  ja selittää, minkä polun skid-puskuri katkaisee ja miksi se tarvitsee
+  varapaikan.
+- Osaat niputtaa kättelyn `interface`-rakenteeksi ja kertoa, miksi
+  sitä ei aina käytetä suunnitelman porteissa.
 - Osaat valita rakenteen ehdollisella `generate`-lohkolla ja hylätä
   virheelliset parametrit `$error`-kutsulla.
 - Osaat käyttää varjorekisteriä ohjausarvon turvalliseen vaihtamiseen.

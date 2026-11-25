@@ -28,15 +28,17 @@ sanastoa:
 
 | Malli | Ongelma, jonka se ratkaisee | Luku |
 |--------------------------------------|------------------------------------------|------|
+| Paketti ja `function automatic` | jaetut tyypit ja toistuva kombinaatiologiikka | 3 |
 | Oletussijoitukset ensin | salvat ja puutteelliset haarat | 4 |
 | Viivästetyn kopion reunantunnistus | tapahtumaan reagointi ilman uutta kelloa | 5 |
 | Kaksiprosessitilakone (`_d`/`_q`) | selkeä seuraavan tilan logiikka | 6 |
 | FSMD | ohjauksen ja datapolun erottaminen | 6 |
-| Kelvollinen/valmis-kättely | vuonohjaus lohkojen välillä | 6, 11 |
+| Kelvollinen/valmis-kättely | vuonohjaus lohkojen välillä | 6, 7 |
 | Kellon sallinta ja tahtigeneraattori | hidas toiminta yhdellä kellolla | 7 |
 | Varjorekisteri | ohjausarvon vaihto jakson rajalla | 7 |
 | Liukuhihna ja kelvollisuusbitti | kellotaajuus ja läpäisy | 7 |
 | Tulostaulu | latenssista riippumaton tarkistus | 7 |
+| Kättelyvaihe ja skid-puskuri | vastapaine ja `valmis`-polun katkaisu | 7 |
 | Ylimääräisen bitin FIFO-osoitin | täysi ja tyhjä ilman laskuria | 8 |
 | W1C-rekisteri | keskeytysten kuittaus ilman kilpailua | 8 |
 | Nollauksen tahdistin | turvallinen nollauksen vapautus | 9 |
@@ -48,18 +50,22 @@ sanastoa:
 | Ajuri ja monitori | rajapinnan protokolla testistä erillään | 13 |
 | Mutaatio | testin tehon tarkistus | 13 |
 
-## Mihin tästä
+## Jatkotaidot
 
-- **Laitteiston verifiointi.** Testipenkkien rakenne, rajoitettu
+- *Laitteiston verifiointi*: testipenkkien rakenne, rajoitettu
   satunnaistus, toiminnallinen kattavuus, SystemVerilog-väittämät,
-  cocotb syvemmin ja formaali verifiointi. Tämän tutoriaalin
-  testipenkit ovat tarkoituksella yksinkertaisia.
-- **FPGA-toteutus.** Synteesi, sijoittelu, ajoitusrajoitteet ja
-  -analyysi sekä testaus kortilla. Siellä nähdään, mitä tämän
-  tutoriaalin koodista syntyy.
-- **RTL-suunnittelu VHDL:llä.** Samat käsitteet toisella kielellä.
-- **Laitteistosuunnittelun automatisointi.** Työkaluvuon ohjaus Tcl-
-  ja Python-skripteillä.
+  cocotb-ympäristö kerroksittain ja formaali verifiointi. Tämän
+  tutoriaalin testipenkit ovat tarkoituksella yksinkertaisia.
+- *FPGA-toteutus*: synteesi, sijoittelu, ajoitusrajoitteet ja
+  -analyysi. Siellä nähdään, mitä tämän tutoriaalin koodista syntyy,
+  ja suunnitelma ajetaan simuloidulla kortilla, jossa on ledit,
+  painikkeet, sarjaportti ja näyttö.
+- *SoC-integraatio*: väylät, keskeytykset ja rekisterirajapinnat, kun
+  lohkoista kootaan järjestelmä.
+- *RTL-suunnittelu VHDL:llä*: samat käsitteet toisella kielellä.
+- *EDA-työkaluketjujen automatisointi*: työkaluvuon ohjaus Tcl- ja
+  Python-skripteillä.
+- *ASIC-toteutus*: sama RTL piitehtaan vuossa.
 
 ## Lähteet
 
@@ -103,13 +109,14 @@ Tyylioppaat ja artikkelit:
 
 Kirjat:
 
-- Stuart Sutherland, Simon Davidmann ja Peter Flake, *SystemVerilog for
-  Design*, 2. painos. Springer, 2006. Synteesikelpoisen SystemVerilogin
-  perusteos.
+- Stuart Sutherland, *RTL Modeling with SystemVerilog for Simulation
+  and Synthesis*. Sutherland HDL, 2017. Synteesikelpoisen
+  SystemVerilogin perusteos; korvaa saman tekijän vanhemman kirjan
+  *SystemVerilog for Design* (2006).
 - Stuart Sutherland ja Don Mills, *Verilog and SystemVerilog Gotchas*.
   Springer, 2007. Sudenkuopat esimerkkeineen.
-- David Money Harris ja Sarah L. Harris, *Digital Design and Computer
-  Architecture*, 2. painos. Morgan Kaufmann, 2012. Digitaalitekniikka
-  ja HDL rinnakkain.
+- Sarah L. Harris ja David Money Harris, *Digital Design and Computer
+  Architecture, RISC-V Edition*. Morgan Kaufmann, 2021.
+  Digitaalitekniikka ja HDL rinnakkain.
 - Pong P. Chu, *FPGA Prototyping by SystemVerilog Examples*.
   Wiley, 2018. Käytännön FPGA-lohkoja: UART, ajastimet, näytönohjain.

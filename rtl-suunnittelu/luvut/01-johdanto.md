@@ -9,12 +9,29 @@ lähes kaikki digitaalisuunnittelu tehdään, on *rekisterinsiirtotaso*
 piirissä on ja millainen kombinaatiologiikka laskee niiden seuraavan
 arvon. Kellon reuna siirtää arvot rekistereihin, tästä nimi.
 
-Tämä tutoriaali opettaa RTL-suunnittelua SystemVerilogilla. Esitietona
-on taito *Digitaalitekniikka*: Boolen algebra, kombinaatio- ja
-sekvenssilogiikka, kiikut, tilakoneet ja lukujärjestelmät oletetaan
-tutuiksi. Täällä opetellaan kuvaamaan ne niin, että kuvaus on
+Tämä tutoriaali opettaa RTL-suunnittelua SystemVerilogilla: miten
+portit, kiikut ja tilakoneet kuvataan niin, että kuvaus on
 synteesikelpoinen, luettava ja toimii samoin simulaattorissa ja
 piirissä.
+
+## Esitiedot ja rajaus
+
+Esitietona on taito *Digitaalitekniikka*: Boolen algebra, kombinaatio-
+ja sekvenssilogiikka, kiikut, tilakoneet ja lukujärjestelmät oletetaan
+tutuiksi. Ohjelmointikokemus auttaa testipenkkien lukemisessa, mutta
+sitä ei edellytetä. Poikkeus on luku 13, jonka testit on kirjoitettu
+Pythonilla (*Ohjelmoinnin perusteet (Python)* riittää); sen voi ohittaa.
+
+Tutoriaali rajautuu synteesikelpoiseen kuvaukseen ja yksinkertaisiin
+itsetarkistaviin testipenkkeihin. Muu käsitellään omissa taidoissaan:
+
+- verifiointimenetelmät (satunnaistus, kattavuus, väittämät, formaali
+  verifiointi): *Laitteiston verifiointi*
+- synteesi, sijoittelu, ajoitusrajoitteet ja piirin näkyvä toiminta
+  simuloidulla kortilla: *FPGA-toteutus*; ASIC-vuo: *ASIC-toteutus*
+- väylät, keskeytykset ja järjestelmän kokoaminen lohkoista:
+  *SoC-integraatio*
+- samat käsitteet VHDL:llä: *RTL-suunnittelu VHDL:llä*.
 
 ## HDL ei ole ohjelmointikieli
 
@@ -175,12 +192,11 @@ synkronisen piirin. Luvut 6–8 käsittelevät suunnittelun
 rakennuspalikoita: tilakoneet, datapolut ja muistit. Luvut 9–11
 kertovat, miten suunnitelma toimii oikeassa piirissä: kellot, nollaukset,
 kellotusalueiden ylitykset ja synteesikelpoisuus. Luku 12 on
-Verilog-2005-koodin ylläpitäjille.
+Verilog-2005-koodin ylläpitäjille. Luku 13 on ensikosketus cocotbiin:
+samat moduulit testataan Pythonilla kirjoitetuilla testeillä.
 
 Kokenut lukija voi lukea kunkin luvun lopussa olevan itsearvioinnin ja
 ohittaa luvun, jos hallitsee sen kaikki väitteet. Lisäksi on tarjolla
 muutaman sivun pikaopas.
 
-Tutoriaalin jälkeen luontevia jatkotaitoja ovat *Laitteiston
-verifiointi* (väittämät, satunnaistus, kattavuus, cocotb), *FPGA-toteutus*
-(synteesi, sijoittelu ja ajoitusanalyysi) ja *RTL-suunnittelu VHDL:llä*.
+Jatkotaidot on lueteltu viimeisessä luvussa.
