@@ -318,8 +318,8 @@ def poista_pdf_aikaleimat(polku: str) -> None:
 # --- VCD -> ajoituskaavio ------------------------------------------------------
 
 def lue_vcd(polku: str) -> tuple[dict[str, tuple[str, int]], dict[str, list[tuple[int, str]]]]:
-    """Palauttaa signaalien nimet (koko polku ja lyhyt nimi -> tunniste, leveys)
-    ja muutokset tunnisteittain."""
+    """Palauttaa signaalien nimet (koko polku -> tunniste, leveys) ja
+    muutokset tunnisteittain."""
     nimet: dict[str, tuple[str, int]] = {}
     muutokset: dict[str, list[tuple[int, str]]] = {}
     scope: list[str] = []
@@ -346,7 +346,6 @@ def lue_vcd(polku: str) -> tuple[dict[str, tuple[str, int]], dict[str, list[tupl
                 nimi = sanat[i + 4]
                 koko = ".".join(scope + [nimi])
                 nimet.setdefault(koko, (tunniste, leveys))
-                nimet.setdefault(nimi, (tunniste, leveys))
                 muutokset.setdefault(tunniste, [])
                 while sanat[i] != "$end":
                     i += 1
@@ -367,7 +366,7 @@ def lue_vcd(polku: str) -> tuple[dict[str, tuple[str, int]], dict[str, list[tupl
             arvo, tunniste = w[1:], sanat[i + 1]
             muutokset.setdefault(tunniste, []).append((aika, arvo.lower()))
             i += 1
-        elif w[0] in "01xXzZ":
+        elif w[0] in "01xXzZuUwWlLhH-":
             muutokset.setdefault(w[1:], []).append((aika, w[0].lower()))
         i += 1
     return nimet, muutokset
@@ -384,9 +383,15 @@ def arvo_hetkella(lista: list[tuple[int, str]], t: int) -> str:
 
 
 def muotoile(arvo: str, leveys: int, kanta: str) -> str:
-    if any(c in arvo for c in "xz"):
-        return "x" if "x" in arvo else "z"
+    # std_logic: heikot tasot l ja h luetaan nollaksi ja ykköseksi; u, w
+    # ja - ovat tuntemattomia kuten x.
+    arvo = arvo.replace("l", "0").replace("h", "1")
+    muut = set(arvo) - {"0", "1"}
+    if muut:
+        return "z" if muut == {"z"} else "x"
     n = int(arvo, 2)
+    if leveys == 1:
+        return str(n)          # yksibittinen ei ole etumerkillinen luku
     if kanta == "d":
         return str(n)
     if kanta == "b":
@@ -403,7 +408,11 @@ def vcd_kaavioksi(argv: list[str]) -> None:
     p.add_argument("vcd")
     p.add_argument("--kello", required=True, help="kellosignaalin nimi")
     p.add_argument("--signaalit", required=True,
-                   help="pilkuin eroteltu luettelo; nimi=Näyttönimi uudelleennimeää")
+                   help="pilkuin eroteltu luettelo; nimi=Näyttönimi "
+                        "uudelleennimeää. Lyhyt nimi tarkoittaa ylimmän tason "
+                        "signaalia; syvemmällä olevasta annetaan polun "
+                        "loppuosa (esim. u_dut.valid). Moniselitteinen nimi "
+                        "on virhe.")
     p.add_argument("--alku", type=int, default=0,
                    help="ensimmäinen näytettävä kellojakso (nousevat reunat)")
     p.add_argument("--jaksot", type=int, default=12)
@@ -434,11 +443,26 @@ def vcd_kaavioksi(argv: list[str]) -> None:
         if nimi in nimet:
             return nimet[nimi]
         osumat = [k for k in nimet if k.endswith("." + nimi)]
-        if len(osumat) == 1:
-            return nimet[osumat[0]]
-        raise SystemExit(f"kaaviot.py: signaalia {nimi!r} ei löydy VCD:stä"
-                         if not osumat else
-                         f"kaaviot.py: nimi {nimi!r} on moniselitteinen: {osumat}")
+        if not osumat:
+            raise SystemExit(f"kaaviot.py: signaalia {nimi!r} ei löydy VCD:stä")
+        # Lyhyt nimi tarkoittaa ensisijaisesti ylimmän tason (testipenkin)
+        # omaa signaalia, jos siellä on täsmälleen yksi sen niminen.
+        ylin = min(k.count(".") for k in nimet)
+        ylimmat = [k for k in osumat if k.count(".") == ylin]
+        if len(ylimmat) == 1:
+            return nimet[ylimmat[0]]
+        # Muuten sama johdin näkyy usein monella hierarkiatasolla (portti
+        # ja siihen kytketty signaali). Lyhyt nimi kelpaa, jos kaikki
+        # osumat ovat sama johdin tai niiden aaltomuoto on täsmälleen sama.
+        eka = nimet[osumat[0]]
+        for k in osumat[1:]:
+            t, lev = nimet[k]
+            if t != eka[0] and (lev != eka[1]
+                                or muutokset[t] != muutokset[eka[0]]):
+                raise SystemExit(f"kaaviot.py: nimi {nimi!r} on moniselitteinen "
+                                 f"(eri signaaleja): {osumat}; anna polun "
+                                 "loppuosa, esim. dut." + nimi)
+        return eka
 
     kt, _ = hae(a.kello)
     uusi, vanha = ("1", "0") if a.reuna == "nouseva" else ("0", "1")

@@ -180,6 +180,13 @@ tuottaa JSONin uudelleen ja vertaa sitä tallennettuun, joten muutos
 piirissä paljastuu kaaviossa. Arvo näytetään jaksolla sellaisena kuin se
 on kellon nousevan reunan jälkeen.
 
+Lyhyt signaalinimi (`valid`) tarkoittaa ylimmän tason eli testipenkin
+omaa signaalia. Syvemmällä olevaan viitataan polun loppuosalla
+(`u_dut.valid`). Jos nimi sopii usealle eri signaalille, työkalu pysähtyy
+virheeseen eikä arvaa. Yksibittinen signaali piirretään aina tasona,
+myös etumerkillisellä kannalla (`--kanta s`), ja VHDL:n alustamaton
+arvo `U` näkyy tuntemattomana.
+
 Mittaus- ja laskentatulosten kuvaajat tehdään Matplotlibilla
 skriptillä `kuvat/piirra.py` (`make kuvat`), ja syntyneet PNG-tiedostot
 ovat versionhallinnassa.
