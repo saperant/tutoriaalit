@@ -1,0 +1,9 @@
+askelia  impl. Euler  kertaluku  Crank–Nicolson  kertaluku
+      5     3.36e-02         -        1.20e-03         -
+     10     1.74e-02      0.94        2.99e-04      2.00
+     20     8.89e-03      0.97        7.46e-05      2.00
+     40     4.49e-03      0.99        1.86e-05      2.00
+
+porrasalkutila, r = 20: paikallisia ääriarvoja askelittain
+impl. Euler     [1, 1, 1, 1]  huippu 0.626
+Crank–Nicolson  [5, 9, 5, 9]  huippu 0.727

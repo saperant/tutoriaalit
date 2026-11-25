@@ -1,0 +1,7 @@
+palkkiteoria: taipuma 1.9196 mm, jännitys juuressa 60.0 MPa ja keskellä 30.0 MPa
+   verkko  vapausasteita  taipuma mm  osuus %  juuri MPa  keski MPa
+  10 x 1             44      0.4403     22.9       14.1        6.7
+  20 x 2            126      1.0315     53.7       33.3       16.0
+  40 x 4            410      1.5749     82.0       51.0       24.6
+  80 x 8           1458      1.8169     94.6       60.7       28.4
+ 160 x 16          5474      1.8901     98.5       67.7       29.6

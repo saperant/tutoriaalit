@@ -1,0 +1,4 @@
+jäähdytys   h W/(m²K)    Bi  aika s  keski °C  pinta °C  yksi lämpötila °C
+ilma               25  0.01     600     141.5     141.2          141.3
+öljy              500  0.11      60     105.6     101.1          101.7
+vesi             5000  1.11      10      98.9      70.0           68.3

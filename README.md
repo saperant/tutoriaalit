@@ -146,6 +146,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Testivetoinen kehitys ja testisuunnittelu | [`testivetoinen-kehitys/`](testivetoinen-kehitys/) | [testivetoinen-kehitys.pdf](https://saperant.github.io/tutoriaalit/materiaalit/testivetoinen-kehitys.pdf) |
 | Tiimit ja organisaatiomallit | [`tiimit-ja-organisaatiot/`](tiimit-ja-organisaatiot/) | [tiimit-ja-organisaatiot.pdf](https://saperant.github.io/tutoriaalit/materiaalit/tiimit-ja-organisaatiot.pdf) |
 | Jatkuva integraatio ja toimitus | [`jatkuva-toimitus/`](jatkuva-toimitus/) | [jatkuva-toimitus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/jatkuva-toimitus.pdf) |
+| Fysikaalinen mallinnus ja simulointi | [`fysikaalinen-mallinnus/`](fysikaalinen-mallinnus/) | [fysikaalinen-mallinnus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/fysikaalinen-mallinnus.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

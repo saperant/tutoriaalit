@@ -1,0 +1,18 @@
+{
+  "name": "Fysikaalinen mallinnus ja simulointi: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "PIP_PAKETIT": "sympy==1.14.0 numpy scipy==1.18.1 scipy-stubs==1.18.1.1 scikit-fem==12.0.2 matplotlib ruff mypy pytest"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/fysikaalinen-mallinnus/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python"
+      ]
+    }
+  }
+}

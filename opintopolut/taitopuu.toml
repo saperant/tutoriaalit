@@ -498,11 +498,13 @@ aiheet = [
   "elementtimenetelmä: heikko muoto, kokoaminen ja reunaehdot",
   "laskentaverkot ja harvat yhtälöryhmät",
   "verifiointi ja validointi: analyyttiset ratkaisut ja verkon tihennys",
+  "lineaarinen elastisuus ja ominaisvärähtelyt",
 ]
 laajuus = 5
 testaus = "NumPy, SciPy ja scikit-fem, vertailu analyyttisiin ratkaisuihin ja suppenemisnopeuteen"
 roadmap = []
 amk = "Elementtimenetelmä ja simulointi"
+tutoriaali = "fysikaalinen-mallinnus"
 
 [[taito]]
 id = "virtauslaskenta"

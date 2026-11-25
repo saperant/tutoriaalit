@@ -1,0 +1,6 @@
+verkko               solmuja  pienin  suurin  energiavirhe  L2-virhe
+8 x 8                     81    45.0    90.0         0.324    0.0226
+8 x 64 suora             585     7.1    90.0         0.232    0.0108
+8 x 64 siirretty         585     4.8   166.0         1.179    0.1451
+8 x 256 suora           2313     1.8    90.0         0.230    0.0106
+8 x 256 siirretty       2313     1.2   176.4         2.058    0.4299

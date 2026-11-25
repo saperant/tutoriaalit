@@ -1,0 +1,7 @@
+yhden lämpötilan mallin aikavakio: 4860 s
+  aika s  keski °C  yksi lämpötila °C  kuumin °C  taseen virhe
+    4800     38.90              38.83      39.35  alle 1e-9
+    9600     46.04              45.84      46.52  alle 1e-9
+   14400     48.74              48.45      49.23  alle 1e-9
+   19200     49.76              49.42      50.25  alle 1e-9
+   24000     50.14              49.78      50.64  alle 1e-9

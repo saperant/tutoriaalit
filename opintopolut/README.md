@@ -56,7 +56,7 @@ flowchart LR
     analyysi["✓ Differentiaali- ja integraalilaskenta"]
     differentiaaliyhtalot["✓ Differentiaaliyhtälöt ja Laplace-muunnos"]
     numeeriset_menetelmat["✓ Numeeriset menetelmät"]
-    fysikaalinen_mallinnus["Fysikaalinen mallinnus ja simulointi"]
+    fysikaalinen_mallinnus["✓ Fysikaalinen mallinnus ja simulointi"]
     virtauslaskenta["Virtauslaskenta"]
   end
   subgraph algoritmit["Algoritmit ja tietorakenteet"]
@@ -381,7 +381,7 @@ flowchart LR
 | Differentiaaliyhtälöt ja Laplace-muunnos | 5 | Differentiaali- ja integraalilaskenta | [valmis](../differentiaaliyhtalot/) |
 | Kompleksiluvut ja Fourier-analyysi | 5 | Differentiaali- ja integraalilaskenta | [valmis](../signaalimatematiikka/) |
 | Numeeriset menetelmät | 5 | Differentiaali- ja integraalilaskenta | [valmis](../numeeriset-menetelmat/) |
-| Fysikaalinen mallinnus ja simulointi | 5 | Differentiaaliyhtälöt ja Laplace-muunnos, Numeeriset menetelmät | suunniteltu |
+| Fysikaalinen mallinnus ja simulointi | 5 | Differentiaaliyhtälöt ja Laplace-muunnos, Numeeriset menetelmät | [valmis](../fysikaalinen-mallinnus/) |
 | Virtauslaskenta | 5 | Fysikaalinen mallinnus ja simulointi | suunniteltu |
 
 ### Algoritmit ja tietorakenteet

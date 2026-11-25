@@ -1,0 +1,13 @@
+matriisit samat (ero alle 1e-12): True
+ruutuja   P1: tuntem.  virhe   kertal.   P2: tuntem.  virhe   kertal.
+      4           25   7.6e-02      -           81   3.7e-03      -
+      8           81   2.0e-02   1.90          289   4.6e-04   3.00
+     16          289   5.2e-03   1.97         1089   5.7e-05   3.00
+     32         1089   1.3e-03   1.99         4225   7.1e-06   3.00
+
+L-alue, ratkaisu r^(2/3) sin(2 theta/3):
+ruutuja   P1-virhe  kertal.   P2-virhe  kertal.
+      4    1.6e-02       -    3.6e-03       -
+      8    6.5e-03    1.25    1.4e-03    1.39
+     16    2.7e-03    1.28    5.3e-04    1.37
+     32    1.1e-03    1.29    2.1e-04    1.35

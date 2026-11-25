@@ -1,0 +1,11 @@
+ruutuja/sivu   integraali   suurin gradientti
+          16      0.20664              0.8319
+          32      0.21181              1.0917
+          64      0.21335              1.3969
+         128      0.21383              1.7706
+integraali verkoista 16, 32 ja 64:
+  havaittu kertaluku 1.74, ekstrapoloitu 0.21401, GCI 0.39 %
+sama verkoista 32, 64 ja 128:
+  havaittu kertaluku 1.68, ekstrapoloitu 0.21405, GCI 0.13 %
+suurin gradientti verkoista 32, 64 ja 128:
+  muutokset eivät pienene: suure ei suppene, arviota ei ole

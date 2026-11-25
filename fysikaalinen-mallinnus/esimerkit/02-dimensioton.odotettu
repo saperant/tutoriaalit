@@ -1,0 +1,10 @@
+keskikohta puolivälissä, kun Fo = 0.379; 1 % jäljellä, kun Fo = 1.96
+aine      paksuus  puoliväli     1 % jäljellä
+kupari      10 mm       0.1 s         0.4 s
+kupari      20 mm       0.3 s         1.8 s
+teräs       10 mm       0.8 s         4.1 s
+teräs       20 mm       3.2 s        16.4 s
+lasi        10 mm      18.9 s        98.2 s
+lasi        20 mm      75.7 s       392.9 s
+mänty       10 mm      63.1 s       327.4 s
+mänty       20 mm     252.5 s      1309.5 s

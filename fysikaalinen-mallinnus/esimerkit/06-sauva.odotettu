@@ -1,0 +1,7 @@
+elementtejä  pään siirtymä mm  virhe %   suurin jännitys MPa
+          1           0.63492   -3.820                 66.67
+          2           0.65306   -1.072                 80.00
+          4           0.65830   -0.278                 88.89
+          8           0.65968   -0.070                 94.12
+         16           0.66002   -0.018                 96.97
+tarkka: siirtymä 0.66014 mm, jännitys alapäässä 100.00 MPa
