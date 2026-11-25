@@ -1,0 +1,15 @@
+kuuden kuution pino, 10 s:
+kierrokset   lämmin      vajoama       sivuun
+         1       ei       kaatui             
+         4       ei       kaatui             
+        10       ei      0.044 m      0.127 m
+        30       ei      0.023 m      0.088 m
+         1    kyllä       kaatui             
+         4    kyllä      0.015 m      0.347 m
+        10    kyllä      0.005 m      0.018 m
+        30    kyllä      0.001 m      0.003 m
+
+laatikko 10 cm lattian sisällä:
+  beta 0.1: pinnalla 28 askeleessa, suurin nopeus 0.57 m/s, pomppaa 0.0 cm
+  beta 0.2: pinnalla 13 askeleessa, suurin nopeus 1.14 m/s, pomppaa 0.0 cm
+  beta 0.8: pinnalla 2 askeleessa, suurin nopeus 4.56 m/s, pomppaa 99.8 cm

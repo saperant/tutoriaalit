@@ -2156,6 +2156,7 @@ laajuus = 5
 testaus = "C++, deterministiset simulaatiotestit ja säilymislakien tarkistukset"
 roadmap = ["game-developer"]
 amk = "Pelifysiikka"
+tutoriaali = "pelifysiikka"
 
 [[taito]]
 id = "kryptografia"

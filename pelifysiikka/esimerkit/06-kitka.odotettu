@@ -1,0 +1,15 @@
+laatikko rinteessä, kitkakerroin 0.5 (raja 26.6 astetta):
+  15 astetta: kiihtyvyys 0.00 m/s^2 (kaava 0.00)
+  25 astetta: kiihtyvyys 0.00 m/s^2 (kaava 0.00)
+  30 astetta: kiihtyvyys 0.66 m/s^2 (kaava 0.66)
+  45 astetta: kiihtyvyys 3.47 m/s^2 (kaava 3.47)
+
+liukumatka vauhdista 4 m/s (kaava 1.63 m):
+  akselin suuntaan   1.60 m
+  vinottain          1.12 m
+t = 0.0 s: v = 7.00  w r = 0.00
+t = 0.2 s: v = 6.02  w r = 2.45
+t = 0.4 s: v = 5.04  w r = 4.91
+t = 0.6 s: v = 5.00  w r = 5.00
+t = 0.8 s: v = 5.00  w r = 5.00
+t = 1.0 s: v = 5.00  w r = 5.00

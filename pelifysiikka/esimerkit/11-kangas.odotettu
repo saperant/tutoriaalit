@@ -1,0 +1,16 @@
+massa-jousi, 2 s:
+   k (N/m)      dt = 1/60     dt = 1/480
+         2  venyy 2827 %  venyy 2828 %
+         8   venyy 840 %   venyy 829 %
+        32       räjähti   venyy 229 %
+       128       räjähti   venyy 103 %
+       512       räjähti    venyy 34 %
+
+PBD, 2 s, dt = 1/60 s:
+   1 kierrosta: venyy 211 %, energia 27.86 -> 20.57 J
+   4 kierrosta: venyy 60 %, energia 27.86 -> 22.68 J
+  16 kierrosta: venyy 17 %, energia 27.86 -> 23.23 J
+  64 kierrosta: venyy 3 %, energia 27.86 -> 23.33 J
+
+kangas pallon päällä 3 s: alin kohta 0.79 m, venymä 6 %
+lähin hiukkanen 0.41 m pallon keskipisteestä (säde 0.40 m)

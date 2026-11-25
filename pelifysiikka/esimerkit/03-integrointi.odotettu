@@ -1,0 +1,12 @@
+10 s vapaata pyörimistä, dt = 1/60 s:
+tapa                 E / E0  |L - L0|/L0   kääntöjä
+vakio w               1.000        0.009          0
+eksplisiittinen       1.468        0.215          3
+L säilyy              2.153        0.000          1
+L ja keskipiste       1.000        0.000          3
+
+heitto 0,5 s: simuloitu   (1.500, 2.733, 0.000)
+              tarkka      (1.500, 2.774, 0.000)
+
+moottori 1 s: nopeus (-0.11, 0.00, -0.48)  kulmanopeus (0.00, 1.41, 0.00)
+              sijainti (-0.03, 0.00, -0.25)  kääntynyt 41.1 astetta

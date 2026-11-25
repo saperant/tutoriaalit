@@ -1,0 +1,15 @@
+dt = 1/60 s:
+  lankaheiluri 2.007 s (kaava 2.006 s)
+  tankoheiluri 1.639 s (kaava 1.638 s)
+dt = 1/240 s:
+  lankaheiluri 2.007 s (kaava 2.006 s)
+  tankoheiluri 1.639 s (kaava 1.638 s)
+
+viiden lenkin ketju, 10 s:
+ beta kierrokset aliaskelia  suurin rako    lopussa    energia
+  0.0         10          1     394.3 mm   394.3 mm     41.8 J
+  0.2         10          1      69.8 mm     0.8 mm     56.9 J
+  0.2         40          1      72.3 mm     2.6 mm     54.5 J
+  0.2         10          4      11.0 mm     9.3 mm     62.5 J
+
+ovi 2 s: kulmanopeus (0.00, 0.50, 0.00)  saranan rako 0.09 mm

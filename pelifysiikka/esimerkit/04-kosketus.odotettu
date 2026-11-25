@@ -1,0 +1,10 @@
+taso - pallo               n = (0.00, 1.00, 0.00)   pisteitä 1, syvin 0.050
+pallo - pallo              n = (0.98, 0.21, 0.00)   pisteitä 1, syvin 0.184
+taso - laatikko            n = (0.00, 1.00, 0.00)   pisteitä 4, syvin 0.020
+laatikko - laatikko        n = (0.00, 1.00, 0.00)   pisteitä 4, syvin 0.020
+pallo - laatikko           n = (1.00, 0.00, 0.00)   pisteitä 1, syvin 0.200
+laatikko - pallo           n = (-1.00, 0.00, 0.00)  pisteitä 1, syvin 0.200
+taso - laatikko kulmallaan n = (0.00, 1.00, 0.00)   pisteitä 1, syvin 0.013
+lankut ristikkäin          n = (0.00, 1.00, 0.00)   pisteitä 4, syvin 0.010
+särmä - särmä              n = (0.00, 1.00, 0.00)   pisteitä 1, syvin 0.049
+kaukana toisistaan         ei kosketusta

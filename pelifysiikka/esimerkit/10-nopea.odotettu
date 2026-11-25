@@ -1,0 +1,8 @@
+  vauhti  matka/askel   diskreetti      jatkuva
+       6       0.10 m      kimposi      kimposi
+      12       0.20 m         läpi      kimposi
+      40       0.67 m         läpi      kimposi
+     150       2.50 m         läpi      kimposi
+
+osuma-aika askeleen osana: 0.750
+ohi lentävälle: 1.000

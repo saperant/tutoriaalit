@@ -1,0 +1,7 @@
+t = 0.00 s: pallo (-3.70, 1.75, 0.00) vauhti 0.00 m/s, tornin huippu y = 2.10
+t = 0.67 s: pallo (-3.10, 1.43, 0.00) vauhti 1.97 m/s, tornin huippu y = 2.10
+t = 1.33 s: pallo (-1.30, 0.58, 0.00) vauhti 3.95 m/s, tornin huippu y = 2.10
+t = 2.00 s: pallo (1.18, 0.30, 0.00) vauhti 2.60 m/s, tornin huippu y = 2.09
+t = 2.67 s: pallo (2.35, 0.30, 0.00) vauhti 1.23 m/s, tornin huippu y = 0.69
+t = 3.33 s: pallo (3.10, 0.30, 0.01) vauhti 0.70 m/s, tornin huippu y = 0.25
+t = 4.00 s: pallo (3.23, 0.30, 0.01) vauhti 0.01 m/s, tornin huippu y = 0.25

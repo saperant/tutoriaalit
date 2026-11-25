@@ -126,7 +126,7 @@ flowchart LR
     peliohjelmointi["✓ Peliohjelmointi"]
     moninpelit["✓ Reaaliaikaiset moninpelit"]
     peliohjelmointi_3d["✓ 3D-peliohjelmointi"]
-    pelifysiikka["Pelifysiikka"]
+    pelifysiikka["✓ Pelifysiikka"]
   end
   subgraph tietoturva["Tietoturva ja takaisinmallinnus"]
     tietoturvan_perusteet["✓ Tietoturvan perusteet"]
@@ -469,7 +469,7 @@ flowchart LR
 | 3D-peliohjelmointi | 5 | Peliohjelmointi, Renderöinnin perusteet | [valmis](../peliohjelmointi-3d/) |
 | Säteenseuranta ja fysikaalinen valaistus | 5 | Algoritmit, Renderöinnin perusteet, Todennäköisyys ja tilastot | [valmis](../sateenseuranta/) |
 | Konenäkö (OpenCV) | 5 | Signaalit ja järjestelmät | [valmis](../konenako/) |
-| Pelifysiikka | 5 | 3D-peliohjelmointi | suunniteltu |
+| Pelifysiikka | 5 | 3D-peliohjelmointi | [valmis](../pelifysiikka/) |
 | GPU-ohjelmointi: OpenGL ja Vulkan | 5 | Renderöinnin perusteet, Rinnakkaisohjelmointi | [valmis](../gpu-ohjelmointi/) |
 | Reaaliaikaiset moninpelit | 3 | Peliohjelmointi, Verkko-ohjelmointi | [valmis](../moninpelit/) |
 | GPU-laskenta | 3 | GPU-ohjelmointi: OpenGL ja Vulkan, Suorituskyvyn analyysi ja optimointi | [valmis](../gpu-laskenta/) |

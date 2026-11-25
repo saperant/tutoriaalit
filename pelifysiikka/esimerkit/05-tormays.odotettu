@@ -1,0 +1,24 @@
+e = 1.0: impulssi 3.526 N s
+  pallo  v (0.00, 0.00, 0.53)
+  lankku v (0.00, 0.00, -0.88)  w (0.00, 1.99, 0.00)
+  liikemäärä (0.00, 0.00, -3.00) -> (0.00, 0.00, -3.00)
+  liikemäärämomentti (0.00, 2.40, 0.00) -> (0.00, 2.40, 0.00)
+  liike-energia 4.500 -> 4.500 J
+e = 0.5: impulssi 2.644 N s
+  pallo  v (0.00, 0.00, -0.36)
+  lankku v (0.00, 0.00, -0.66)  w (0.00, 1.49, 0.00)
+  liikemäärä (0.00, 0.00, -3.00) -> (0.00, 0.00, -3.00)
+  liikemäärämomentti (0.00, 2.40, 0.00) -> (0.00, 2.40, 0.00)
+  liike-energia 4.500 -> 2.517 J
+e = 0.0: impulssi 1.763 N s
+  pallo  v (0.00, 0.00, -1.24)
+  lankku v (0.00, 0.00, -0.44)  w (0.00, 1.00, 0.00)
+  liikemäärä (0.00, 0.00, -3.00) -> (0.00, 0.00, -3.00)
+  liikemäärämomentti (0.00, 2.40, 0.00) -> (0.00, 2.40, 0.00)
+  liike-energia 4.500 -> 1.856 J
+
+lankun pää osuu pöytään:
+  massakeskipiste v (0.00, -2.12, 0.00)  w (0.00, 0.00, 2.35)
+  osuneen pään nopeus (0.24, 0.00, 0.00)
+  vapaan pään nopeus  (0.24, -4.47, 0.00)
+  momentti osumakohdan suhteen (0.00, 0.00, 10.80) -> (0.00, 0.00, 10.80)
