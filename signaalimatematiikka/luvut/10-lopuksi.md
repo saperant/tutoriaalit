@@ -34,7 +34,7 @@ diskreetille signaalille.
 | DFT-normitus | `fft` ei jaa, `ifft` jakaa $N$:llä; amplitudi $2\lvert X[k]\rvert/N$ |
 | vertailu | `numpy.allclose` tai toleranssi, ei `==` |
 
-## Jatkotaidot taitopuussa
+## Jatkotaidot
 
 - *Signaalit ja järjestelmät* rakentaa tämän perustan päälle
   näytteistyksen ja aliasoinnin, diskreettiaikaiset LTI-järjestelmät,
@@ -43,6 +43,11 @@ diskreetille signaalille.
 - *Tietoliikennetekniikka* käyttää osoittimia, modulaatiota, desibelejä
   ja OFDM:n ortogonaalisia alikantoaaltoja. Tämän tutoriaalin luvut 4,
   7 ja 9 selittävät niiden matematiikan.
+- *Digitaalinen signaalinkäsittely* jatkaa siitä suodattimien
+  suunnitteluun ja toteutukseen.
+- *Differentiaaliyhtälöt ja Laplace-muunnos* käsittelee
+  Fourier-muunnoksen sukulaisen, Laplace-muunnoksen, sekä jatkuva-aikaisen
+  järjestelmän siirtofunktion ja taajuusvasteen.
 - *Lineaarialgebra* on edellytys, mutta sen kannanvaihto,
   ortogonaalisuus ja ominaisarvot näkyvät tässä uudessa valossa:
   Fourier-kanta diagonalisoi konvoluution.

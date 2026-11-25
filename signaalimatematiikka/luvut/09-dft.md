@@ -10,8 +10,10 @@ DFT on Fourier-sarjan kerroinkaava, jossa integraali on korvattu
 summalla $N$ tasavälisen näytteen yli. Samalla se on lineaarialgebran
 peruskäsite: **kannanvaihto ortogonaaliseen kantaan**. Tässä luvussa DFT
 kirjoitetaan matriisina, sen ortogonaalisuus tarkistetaan, se
-toteutetaan itse ja verrataan funktioon `numpy.fft.fft`, ja lopuksi
-nähdään, miksi FFT-algoritmi laskee saman tuloksen paljon nopeammin.
+toteutetaan itse ja verrataan funktioon `numpy.fft.fft`, ja nähdään,
+miksi FFT-algoritmi laskee saman tuloksen paljon nopeammin. Lopuksi
+palataan konvoluutioon: DFT:llä konvoluutiolause saa diskreetin
+muotonsa ja suodattimen taajuusvaste voidaan laskea.
 
 ## DFT-matriisi
 
@@ -196,6 +198,76 @@ alkutekijöihin, välttävät rekursion ja hyödyntävät reaalisen datan
 symmetriaa. Silti pituus, jolla on vain pieniä alkutekijöitä, on
 nopein; alkuluvun pituinen FFT on selvästi hitaampi.
 
+## Syklinen konvoluutio ja nollilla täyttäminen
+
+Luvun *Konvoluutio* konvoluutiolause sanoi, että konvoluutio
+aikatasossa on kertolasku taajuustasossa. Diskreetissä
+Fourier-muunnoksessa jonot ovat jaksollisia: jonon $N$ näytettä
+toistuvat loputtomasti. Silloin konvoluutiolause pätee **sykliselle konvoluutiolle**, jossa indeksit lasketaan modulo
+$N$:
+
+$$y[n] = \sum_{k=0}^{N-1} x[k]\,h[(n - k) \bmod N].$$
+
+Siirretty kopio, joka menee jonon lopusta yli, kiertyy sen alkuun.
+Ohjelma laskee syklisen konvoluution määritelmästä ja DFT:n avulla:
+`ifft(fft(x) * fft(h))`.
+
+```{.python tiedosto="esimerkit/09-syklinen.py" osa="syklinen"}
+```
+
+Tavallinen eli **lineaarinen konvoluutio** saadaan syklisestä, kun
+jonot täytetään nollilla vähintään pituuteen $N_x + N_h - 1$. Silloin
+kiertyvä osa osuu nolliin eikä sekoitu alkuun. Funktioiden
+`numpy.fft.fft(x, n=L)` argumentti `n` tekee täytön automaattisesti.
+
+```{.python tiedosto="esimerkit/09-syklinen.py" osa="nollat"}
+```
+
+```{.tuloste tiedosto="esimerkit/09-syklinen.odotettu"}
+```
+
+Ilman täyttöä kahden viimeisen näytteen arvot kiertyvät alkuun ja
+summautuvat kahteen ensimmäiseen. Tällä on käytännön merkitystä:
+pitkät konvoluutiot lasketaan FFT:llä nopeammin kuin suoraan, ja
+nollilla täyttö on silloin pakollinen. `scipy.signal.fftconvolve`
+tekee tämän valmiiksi.
+
+## Suodatin taajuustasossa
+
+Konvoluutiolauseen mukaan suodattimen vaikutus taajuudella $f$ on
+kertolasku luvulla $H(f)$, jota kutsutaan **taajuusvasteeksi**.
+Liukuvan keskiarvon taajuusvaste on geometrinen summa, ja luvun 5
+tapaan sen itseisarvo on
+
+$$|H(f)| = \Big|\frac{1}{M}\sum_{n=0}^{M-1} e^{-2\pi i f n}\Big|
+= \Big|\frac{\sin(\pi f M)}{M\sin(\pi f)}\Big|,$$
+
+missä $f$ on taajuus jaksoina näytettä kohti. Ohjelma laskee
+taajuusvasteen täyttämällä impulssivasteen nollilla 512 näytteeseen ja
+ottamalla DFT:n, jolloin taajuushila on tiheä.
+
+```{.python tiedosto="esimerkit/09-taajuusvaste.py" osa="taajuusvaste"}
+```
+
+```{.tuloste tiedosto="esimerkit/09-taajuusvaste.odotettu"}
+```
+
+![Liukuvan keskiarvon taajuusvaste kolmella ikkunan pituudella,
+vasemmalla lineaarisella ja oikealla desibeliasteikolla. Nollakohdat
+ovat taajuuksilla $k/M$, ja ensimmäinen sivukeila jää pitkälläkin
+ikkunalla vain noin 13 dB pääkeilan alapuolelle.](kuvat/taajuusvaste.png){width=95%}
+
+Liukuva keskiarvo päästää matalat taajuudet läpi ja vaimentaa korkeita:
+se on **alipäästösuodatin**. Taajuudet $1/M, 2/M, \ldots$ se poistaa
+kokonaan, koska niiden aalto tekee ikkunan aikana kokonaisen määrän
+jaksoja ja keskiarvo on nolla. Väliin jäävät sivukeilat kuitenkin
+päästävät osan korkeista taajuuksista läpi: $|H|$ on taajuudella
+$3/16$ vielä $0.225$. Tämä on Dirichlet'n ytimen aaltoilu, ja paremmat
+suodattimet suunnitellaan juuri niin, että taajuusvasteen muoto on
+halutunlainen. Luvun *Konvoluutio* kohinaesimerkissä signaalin taajuus oli $1/200$, ja
+64 näytteen ikkunalla $|H(1/200)| \approx 0.84$, mikä selittää
+havaitun vaimennuksen.
+
 ## Käytännössä
 
 - **Ajattele DFT:tä kannanvaihtona.** Kertoimet ovat signaalin
@@ -209,6 +281,13 @@ nopein; alkuluvun pituinen FFT on selvästi hitaampi.
   $\Delta t$:llä.
 - **Käytä `rfft`:tä reaaliselle datalle.** Se laskee vain tarpeelliset
   kertoimet ja on noin kaksi kertaa nopeampi.
+- **Käytä `numpy.convolve`:a lyhyille ja FFT:tä pitkille jonoille.**
+  Suora konvoluutio vaatii $N_x N_h$ kertolaskua, FFT-menetelmä noin
+  $L \log_2 L$. Täytä jonot nollilla vähintään pituuteen
+  $N_x + N_h - 1$, tai tulos kiertyy.
+- **Katso suodatinta taajuustasossa.** Taajuusvaste kertoo, mitkä
+  taajuudet säilyvät, ja selittää esimerkiksi liukuvan keskiarvon
+  sivukeilat.
 - **Älä toteuta FFT:tä itse tuotantokoodiin.** Oma toteutus on hyvä
   oppimiseen ja testaamiseen; kirjasto on nopeampi ja tarkempi.
 
@@ -221,3 +300,5 @@ nopein; alkuluvun pituinen FFT on selvästi hitaampi.
   ja Parsevalin kaava seuraavat ortogonaalisuudesta.
 - Osaat muuntaa DFT-indeksit taajuuksiksi ja selittää FFT:n
   parillinen–pariton-jaon ja sen työmäärän $\frac N2 \log_2 N$.
+- Osaat selittää, miksi FFT-konvoluutio vaatii nollilla täyttöä, ja
+  laskea liukuvan keskiarvon taajuusvasteen.

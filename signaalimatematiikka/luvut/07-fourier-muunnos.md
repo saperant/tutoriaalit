@@ -72,6 +72,10 @@ sileä ja vaimenee nopeasti.
 ```{.tuloste tiedosto="esimerkit/07-parit.odotettu"}
 ```
 
+![Ylhäällä kanttipulssi ja sen muunnos sinc. Alhaalla kapea ja leveä
+Gaussin pulssi muunnoksineen: aikatasossa kapea pulssi on
+taajuustasossa leveä ja päinvastoin.](kuvat/parit.png){width=95%}
+
 Gaussin pulssin numeerinen muunnos on tarkka pyöristysvirheen
 tasolla, koska pulssi on sileä ja häviää käytännössä kokonaan hilan
 ulkopuolella. Kanttipulssin virhe on alle $10^{-6}$ mutta paljon
@@ -110,6 +114,8 @@ sijoittamalla määritelmään:
 | liittoluku | $\overline{x(t)}$ | $\overline{X(-f)}$ |
 | derivaatta | $x'(t)$ | $2\pi i f\, X(f)$ |
 | konvoluutio | $(x * y)(t)$ | $X(f)\,Y(f)$ |
+| kertolasku | $x(t)\,y(t)$ | $(X * Y)(f)$ |
+| duaalisuus | $X(t)$ | $x(-f)$ |
 
 Aikasiirto ei muuta amplitudispektriä vaan lisää vaiheeseen lineaarisen
 termin $-2\pi f t_0$: viive näkyy taajuustasossa vaiheena, joka kasvaa
@@ -119,7 +125,13 @@ radiolähetin siirtää äänen tai datan spektrin kantoaallon ympärille.
 Kosinilla kertominen siirtää spektrin kahteen paikkaan, $\pm f_0$,
 puolella painolla. Skaalaus sanoo, että aikatasossa kapeampi signaali
 on taajuustasossa leveämpi. Derivaatta on taas kertolasku, kuten
-osoittimilla luvussa 4.
+osoittimilla luvussa 4. **Duaalisuus** sanoo, että aika ja taajuus
+ovat vaihdettavissa: koska kanttipulssin muunnos on sinc, sinc-pulssin
+muunnos on kanttipulssi. Siksi myös konvoluutio-ominaisuudella on
+peilikuva: kertolasku aikatasossa on konvoluutio taajuustasossa. Kun
+signaalista leikataan äärellinen pätkä (kerrotaan ikkunalla), sen
+spektri konvoloituu ikkunan spektrin kanssa; tästä seuraa taidon
+*Signaalit ja järjestelmät* vuotaminen.
 
 Ohjelma tarkistaa ominaisuudet Gaussin pulssilla, jonka muunnos
 tunnetaan. Jokaisessa rivissä vasen puoli on numeerisesti laskettu
@@ -131,7 +143,8 @@ muunnos ja oikea puoli ominaisuudella johdettu lauseke.
 ```{.tuloste tiedosto="esimerkit/07-ominaisuudet.odotettu"}
 ```
 
-Konvoluutio-ominaisuus on muunnoksen tärkein, ja se on luvun 8 aihe.
+Konvoluutio-ominaisuus on muunnoksen tärkein, ja se on seuraavan
+luvun aihe.
 
 ## Aika–taajuus-epätarkkuus
 

@@ -61,7 +61,7 @@ Dirichlet'n ydin on kapea piikki origossa, ja sen leveys on noin
 $2\pi/(2N+1)$. Piikki kapenee ja kasvaa, kun $N$ kasvaa, mutta sen
 sivuilla aaltoilu ei katoa. Tämä aaltoilu selittää luvun 6 Gibbsin
 ilmiön, ja diskreettinä versiona se on liukuvan keskiarvon
-taajuusvaste luvussa 8.
+taajuusvaste luvussa 9.
 
 ## Ortogonaalisuus
 
@@ -128,7 +128,8 @@ virhe pienenee nopeammin kuin mikään $h$:n potenssi.
 ```{.tuloste tiedosto="esimerkit/05-integraali.odotettu"}
 ```
 
-Funktion $x^2$ virhe nelinkertaistuu tasaisesti, mutta jaksollisen
+Funktion $x^2$ virhe pienenee tasaisesti neljäsosaan aina, kun
+pistemäärä kaksinkertaistuu, mutta jaksollisen
 funktion $e^{\cos x}$ virhe putoaa jo 16 pisteellä pyöristysvirheen
 tasolle. Jaksollisen funktion puolisuunnikassääntö jakson yli on
 tasavälisten näytteiden keskiarvo kerrottuna jakson pituudella. Siksi
@@ -186,11 +187,12 @@ positiiviselle ja negatiiviselle taajuudelle. Esimerkissä taajuudella
 ## Desibelit
 
 Tehot vaihtelevat signaalinkäsittelyssä monella kertaluvulla, joten
-niitä verrataan logaritmisesti. Tehosuhde desibeleinä on
-$10\log_{10}(P/P_0)$, ja koska teho on verrannollinen amplitudin
-neliöön, amplitudisuhde desibeleinä on $20\log_{10}(A/A_0)$. Taidon
-*Tietoliikennetekniikka* signaali-kohinasuhde (SNR) ja linkkibudjetti
-ovat juuri tällaisia lukuja.
+niitä verrataan logaritmisesti. Desibeli määriteltiin luvussa 4
+interferenssin yhteydessä: tehosuhteelle $10\log_{10}(P/P_0)$ ja
+amplitudisuhteelle $20\log_{10}(A/A_0)$. Nyt kun teho ja tehollisarvo
+on määritelty, muunnokset voi laskea. Taidon *Tietoliikennetekniikka*
+signaali-kohinasuhde (SNR) ja linkkibudjetti ovat juuri tällaisia
+lukuja.
 
 ```{.python tiedosto="esimerkit/05-teho.py" osa="desibelit"}
 ```

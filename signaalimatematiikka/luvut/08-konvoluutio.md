@@ -64,6 +64,11 @@ kokonaan signaalin sisällä.
 ```{.tuloste tiedosto="esimerkit/08-keskiarvo.odotettu"}
 ```
 
+![Esimerkin mitattu signaali ja sen liukuvat keskiarvot (katkoviiva on
+kohinaton signaali). Pidempi ikkuna poistaa enemmän kohinaa, mutta
+64 näytteen ikkuna alkaa jo vaimentaa itse
+signaalia.](kuvat/keskiarvo.png){width=95%}
+
 Kohina pienenee teorian mukaisesti, mutta pitkä ikkuna alkaa vaimentaa
 myös signaalia: 64 näytteen ikkuna kattaa kolmasosan signaalin jaksosta,
 ja amplitudista katoaa 16 prosenttia. Suodattimen pituus on aina
@@ -112,86 +117,21 @@ numeerisesti ja vertaa.
 ```{.tuloste tiedosto="esimerkit/08-jatkuva.odotettu"}
 ```
 
-## Syklinen konvoluutio ja nollilla täyttäminen
-
-Diskreetissä Fourier-muunnoksessa (luku 9) jonot ovat jaksollisia:
-jonon $N$ näytettä toistuvat loputtomasti. Silloin konvoluutiolause
-pätee **sykliselle konvoluutiolle**, jossa indeksit lasketaan modulo
-$N$:
-
-$$y[n] = \sum_{k=0}^{N-1} x[k]\,h[(n - k) \bmod N].$$
-
-Siirretty kopio, joka menee jonon lopusta yli, kiertyy sen alkuun.
-Ohjelma laskee syklisen konvoluution määritelmästä ja DFT:n avulla:
-`ifft(fft(x) * fft(h))`.
-
-```{.python tiedosto="esimerkit/08-lause.py" osa="syklinen"}
-```
-
-Tavallinen eli **lineaarinen konvoluutio** saadaan syklisestä, kun
-jonot täytetään nollilla vähintään pituuteen $N_x + N_h - 1$. Silloin
-kiertyvä osa osuu nolliin eikä sekoitu alkuun. Funktioiden
-`numpy.fft.fft(x, n=L)` argumentti `n` tekee täytön automaattisesti.
-
-```{.python tiedosto="esimerkit/08-lause.py" osa="nollat"}
-```
-
-```{.tuloste tiedosto="esimerkit/08-lause.odotettu"}
-```
-
-Ilman täyttöä kahden viimeisen näytteen arvot kiertyvät alkuun ja
-summautuvat kahteen ensimmäiseen. Tällä on käytännön merkitystä:
-pitkät konvoluutiot lasketaan FFT:llä nopeammin kuin suoraan, ja
-nollilla täyttö on silloin pakollinen. `scipy.signal.fftconvolve`
-tekee tämän valmiiksi.
-
-## Suodatin taajuustasossa
-
-Konvoluutiolauseen mukaan suodattimen vaikutus taajuudella $f$ on
-kertolasku luvulla $H(f)$, jota kutsutaan **taajuusvasteeksi**.
-Liukuvan keskiarvon taajuusvaste on geometrinen summa, ja luvun 5
-tapaan sen itseisarvo on
-
-$$|H(f)| = \Big|\frac{1}{M}\sum_{n=0}^{M-1} e^{-2\pi i f n}\Big|
-= \Big|\frac{\sin(\pi f M)}{M\sin(\pi f)}\Big|,$$
-
-missä $f$ on taajuus jaksoina näytettä kohti. Ohjelma laskee
-taajuusvasteen täyttämällä impulssivasteen nollilla 512 näytteeseen ja
-ottamalla DFT:n, jolloin taajuushila on tiheä.
-
-```{.python tiedosto="esimerkit/08-taajuusvaste.py" osa="taajuusvaste"}
-```
-
-```{.tuloste tiedosto="esimerkit/08-taajuusvaste.odotettu"}
-```
-
-Liukuva keskiarvo päästää matalat taajuudet läpi ja vaimentaa korkeita:
-se on **alipäästösuodatin**. Taajuudet $1/M, 2/M, \ldots$ se poistaa
-kokonaan, koska niiden aalto tekee ikkunan aikana kokonaisen määrän
-jaksoja ja keskiarvo on nolla. Väliin jäävät sivukeilat kuitenkin
-päästävät osan korkeista taajuuksista läpi: $|H|$ on taajuudella
-$3/16$ vielä $0.225$. Tämä on Dirichlet'n ytimen aaltoilu, ja paremmat
-suodattimet suunnitellaan juuri niin, että taajuusvasteen muoto on
-halutunlainen. Edellisen esimerkin signaalin taajuus oli $1/200$, ja
-64 näytteen ikkunalla $|H(1/200)| \approx 0.84$, mikä selittää
-havaitun vaimennuksen.
+Diskreeteille jonoille konvoluutiolause tarvitsee diskreetin
+Fourier-muunnoksen. Syklinen konvoluutio, nopea konvoluutio FFT:llä ja
+liukuvan keskiarvon taajuusvaste lasketaan siksi seuraavan luvun
+lopussa, kun DFT on määritelty.
 
 ## Käytännössä
 
 - **Tunnista konvoluutio.** Kun jokainen ulostulo on samoin painoin
   laskettu summa sisääntulon naapurustosta, kyseessä on konvoluutio,
   ja painojono on impulssivaste.
-- **Käytä `numpy.convolve`:a lyhyille ja FFT:tä pitkille jonoille.**
-  Suora konvoluutio vaatii $N_x N_h$ kertolaskua, FFT-menetelmä noin
-  $L \log_2 L$.
-- **Täytä nollilla ennen FFT-konvoluutiota.** Pituuden on oltava
-  vähintään $N_x + N_h - 1$, tai tulos kiertyy.
 - **Valitse `mode` tietoisesti.** `"full"` antaa kaikki
   $N_x + N_h - 1$ näytettä, `"same"` sisääntulon pituisen keskiosan ja
   `"valid"` vain näytteet, joissa ikkuna on kokonaan sisällä.
-- **Katso suodatinta taajuustasossa.** Taajuusvaste kertoo, mitkä
-  taajuudet säilyvät, ja selittää esimerkiksi liukuvan keskiarvon
-  sivukeilat.
+- **Muista konvoluutiolause.** Konvoluutio aikatasossa on kertolasku
+  taajuustasossa, joten suodattimen vaikutuksen näkee sen muunnoksesta.
 
 ## Itsearviointi
 
@@ -199,7 +139,5 @@ havaitun vaimennuksen.
   silmukoilla.
 - Osaat selittää impulssivasteen ja perustella, miksi liukuva keskiarvo
   pienentää riippumatonta kohinaa kertoimella $1/\sqrt M$.
-- Osaat muotoilla konvoluutiolauseen ja tarkistaa sen numeerisesti
-  sekä jatkuvassa että syklisessä muodossa.
-- Osaat selittää, miksi FFT-konvoluutio vaatii nollilla täyttöä, ja
-  laskea liukuvan keskiarvon taajuusvasteen.
+- Osaat muotoilla konvoluutiolauseen, perustella sen aikasiirron
+  avulla ja tarkistaa sen numeerisesti jatkuvalle signaalille.

@@ -65,6 +65,10 @@ $1.5\sin(2\pi f t)$ on osoitin $1.5e^{-i\pi/2} = -1.5i$.
 ```{.tuloste tiedosto="esimerkit/04-osoitin.odotettu"}
 ```
 
+![Esimerkin osoitin $X = 2\angle 60°$ kompleksitasossa, sen reaaliosa
+ajan funktiona ja kolmen osoittimen summa nuoliketjuna. Summan
+laskeminen on vektorien yhteenlaskua.](kuvat/osoitin.png){width=100%}
+
 Summasignaalin huippuarvo näytteistä on hieman pienempi kuin osoittimen
 itseisarvo, koska näytteet eivät osu täsmälleen huipun kohdalle.
 Osoitin antaa tarkan amplitudin.
@@ -119,9 +123,9 @@ $$|1 + e^{i\delta}| = |e^{i\delta/2}|\,|e^{-i\delta/2} + e^{i\delta/2}|
 Samassa vaiheessa ($\delta = 0$) aallot vahvistavat toisiaan, ja
 amplitudi kaksinkertaistuu; vastakkaisessa vaiheessa ($\delta = \pi$)
 ne kumoavat toisensa. Esimerkki tulostaa myös summan tehon desibeleinä
-suhteessa täyteen vahvistukseen. Desibeli on tehosuhteen logaritmi,
-$10\log_{10}(P/P_0)$; amplitudisuhteelle kerroin on 20, koska teho on
-verrannollinen amplitudin neliöön.
+suhteessa täyteen vahvistukseen. **Desibeli** (dB) on tehosuhteen
+logaritmi, $10\log_{10}(P/P_0)$; amplitudisuhteelle kerroin on 20,
+koska teho on verrannollinen amplitudin neliöön.
 
 ```{.python tiedosto="esimerkit/04-interferenssi.py" osa="interferenssi"}
 ```
@@ -155,6 +159,21 @@ taajuudet ovat samat.
 ```
 
 ```{.tuloste tiedosto="esimerkit/04-interferenssi.odotettu"}
+```
+
+![Esimerkin summa-aalto 0,6 sekunnin ajalta. Nopea värähtely (442 Hz)
+näkyy täyttönä, ja sen amplitudi seuraa hidasta
+verhokäyrää.](kuvat/huojunta.png){width=95%}
+
+Huojunnan voi myös kuunnella. Seuraava ohjelma kirjoittaa saman
+summan kolmen sekunnin äänitiedostoksi standardikirjaston
+`wave`-moduulilla. Äänessä kuuluu yksi sävel, jonka voimakkuus
+sykkii neljä kertaa sekunnissa.
+
+```{.python tiedosto="esimerkit/04-aani.py" osa="wav"}
+```
+
+```{.tuloste tiedosto="esimerkit/04-aani.odotettu"}
 ```
 
 Verhokäyrän $2|\cos(\pi \Delta f\, t)|$ jakso on $1/\Delta f$, koska

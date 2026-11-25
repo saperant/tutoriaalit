@@ -160,6 +160,11 @@ termit ovat ykkösiä ja summa on $N$.
 ```{.tuloste tiedosto="esimerkit/03-juuret.odotettu"}
 ```
 
+![Vasemmalla yhtälön $z' = iz$ ratkaisu askelina $(1 + i\theta/n)^k$:
+mitä pienempi askel, sitä tarkemmin polku seuraa yksikköympyrää ja
+päätyy pisteeseen $e^{i\theta}$. Oikealla ykkösen kahdeksannet juuret,
+jotka jakavat ympyrän tasan.](kuvat/euler.png){width=95%}
+
 Tämä summa on luvun 5 ortogonaalisuusrelaatioiden diskreetti versio ja
 luvun 9 DFT-matriisin ortogonaalisuuden syy. Tietoliikennetekniikassa
 sama ilmiö näkyy OFDM:ssä: alikantoaallot on valittu niin, että niiden

@@ -143,6 +143,10 @@ eli kiertomatriisia kerrottuna luvulla $|w|$.
 ```{.tuloste tiedosto="esimerkit/02-kierto.odotettu"}
 ```
 
+![Neliö ennen kertolaskua ja sen jälkeen. Jokainen kärki kiertyy 30
+astetta origon ympäri ja etääntyy siitä
+kaksinkertaiseksi.](kuvat/kierto.png){width=50%}
+
 Kompleksilukujen kertolasku on siis tason kiertojen ja skaalausten
 ryhmä tiiviissä muodossa. Matriisissa on neljä lukua, joista vain kaksi
 on vapaita; kompleksiluku tallentaa juuri ne kaksi. Lisäksi

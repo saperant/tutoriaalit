@@ -114,6 +114,11 @@ derivaatta hyppää huippukohdissa.
 ```{.tuloste tiedosto="esimerkit/06-energia.odotettu"}
 ```
 
+![Kanttiaallon osasummat. Vasemmalla 1, 3 ja 25 termiä: osasumma
+seuraa aaltoa yhä tarkemmin, mutta hypyn viereen jää piikki. Oikealla
+suurennos hypyn vierestä: piikki kapenee, kun termejä lisätään, mutta
+sen korkeus pysyy arvossa 1,179.](kuvat/osasummat.png){width=100%}
+
 Kanttiaallon tehosta 81 prosenttia on perustaajuudella, koska
 $8/\pi^2 \approx 0.81$. Saha-aallon teho jakautuu laajemmalle, koska
 siinä ovat myös parilliset harmoniset. Kolmioaallon kertoimet
@@ -131,6 +136,24 @@ spektriä: digitaalisen signaalin jyrkät bittirajat levittävät tehoa
 korkeille taajuuksille, ja siksi lähetin suodattaa pulssinsa
 pyöreämmiksi.
 
+![Kertoimien itseisarvot logaritmisilla asteikoilla. Kantti- ja
+saha-aallon pisteet laskevat kulmakertoimella −1 (kuten $1/k$),
+kolmioaallon kulmakertoimella −2 (kuten
+$1/k^2$).](kuvat/kertoimet.png){width=68%}
+
+Harmonisten jakauma on myös se, minkä korva kuulee **sointivärinä**.
+Seuraava ohjelma kirjoittaa saman sävelen (220 Hz) äänitiedostoiksi
+sini-, kantti- ja saha-aaltona. Harmonisia otetaan mukaan vain puoleen
+näytetaajuudesta asti; syyn kertoo taidon *Signaalit ja järjestelmät*
+näytteistysteoreema. Sini kuulostaa pehmeältä, kanttiaalto ontolta ja
+saha-aalto terävältä, vaikka sävelkorkeus on sama.
+
+```{.python tiedosto="esimerkit/06-sointi.py" osa="sointi"}
+```
+
+```{.tuloste tiedosto="esimerkit/06-sointi.odotettu"}
+```
+
 ## Gibbsin ilmiö
 
 Hyppykohdan lähellä osasumma ylittää signaalin arvon. Ylityksen voi
@@ -138,8 +161,8 @@ olettaa pienenevän, kun termejä lisätään, mutta niin ei käy: ylitys
 kapenee ja siirtyy lähemmäs hyppyä, mutta sen korkeus lähestyy noin
 9 prosenttia hypyn suuruudesta. Tätä kutsutaan **Gibbsin ilmiöksi**.
 
-Ohjelma etsii kanttiaallon osasumman ensimmäisen huipun hienojakoisesta
-hilasta. Huippu on kohdassa $t = \pi/(2n)$, kun osasummassa on $n$
+Edellinen kuva näytti ilmiön; ohjelma mittaa sen. Se etsii
+kanttiaallon osasumman ensimmäisen huipun hienojakoisesta hilasta. Huippu on kohdassa $t = \pi/(2n)$, kun osasummassa on $n$
 parittoman taajuuden termiä.
 
 ```{.python tiedosto="esimerkit/06-gibbs.py" osa="gibbs"}

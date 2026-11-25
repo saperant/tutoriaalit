@@ -31,13 +31,27 @@ Tutoriaali opettaa asiat kolmella tavalla yhtä aikaa:
   laskemalla, ja ero verrataan toleranssiin. Kun kaava ja numeerinen
   tulos täsmäävät, kaavaan voi luottaa ja sitä voi käyttää.
 
-## Kenelle ja mitä tarvitaan
+## Esitiedot ja rajaus
 
 Lukija osaa ohjelmoida Pythonilla ja tuntee lineaarialgebran perusteet:
 pistetulon, kannan, ortogonaalisuuden ja matriisitulon (taito
-*Lineaarialgebra*). Koulumatematiikasta tarvitaan trigonometriaa ja
-derivaatan ja integraalin idea; integraalit lasketaan tutoriaalissa
-summina, joten integroimistekniikoita ei tarvita.
+*Lineaarialgebra*). Lisäksi tarvitaan trigonometriaa sekä derivaatan ja
+integraalin idea. Integraalit lasketaan tutoriaalissa summina, joten
+integroimistekniikoita ei tarvita, mutta kolme johtoa käyttää
+analyysin työkaluja: Eulerin kaava johdetaan Taylorin sarjasta ja
+differentiaaliyhtälöstä, ja kanttiaallon kertoimet lasketaan
+integroimalla. Jos ne ovat vieraita, taito *Differentiaali- ja
+integraalilaskenta* opettaa ne (luvut sarjoista ja integraalista).
+
+Tutoriaali on signaalinkäsittelyn matemaattinen perusta. Näytteistys,
+aliasointi, diskreettiaikaiset järjestelmät, Z-muunnos ja DFT:n
+käytännön kysymykset kuten ikkunointi ja vuotaminen ovat taidon
+*Signaalit ja järjestelmät* aiheita; tässä niitä sivutaan vain siellä,
+missä ne selittävät tuloksia. Laplace-muunnos, siirtofunktio ja
+jatkuva-aikaisen järjestelmän taajuusvaste ovat taidossa
+*Differentiaaliyhtälöt ja Laplace-muunnos*. Kompleksianalyysin
+integraalilauseet ja jakaumateoria (Diracin delta täsmällisesti) jäävät
+matematiikan kirjallisuuteen.
 
 | Luku | Kysymys |
 |------|---------|
@@ -63,6 +77,10 @@ itseisarvosta saadaan vastaavan taajuuden amplitudi.
 
 ```{.tuloste tiedosto="esimerkit/01-taajuudet.odotettu"}
 ```
+
+![Esimerkin signaalin ensimmäiset 100 millisekuntia ja sen
+amplitudispektri. Sama tieto kahdessa
+esityksessä.](kuvat/taajuudet.png){width=92%}
 
 Ohjelma löytää molemmat aallot ja niiden amplitudit, eikä muita
 taajuuksia ole. Aikatasossa signaali näyttää sekavalta käyrältä, mutta
@@ -95,7 +113,11 @@ merkkejä.
 
 Esimerkit toimivat Python 3.12:lla ja NumPy 2:lla. Tyypit tarkistetaan
 `mypy --strict` -tilassa ja tyyli `ruff`illa. Kehityskontissa
-(`.devcontainer/signaalimatematiikka`) kaikki on valmiina. Jokainen
+(`.devcontainer/signaalimatematiikka`) kaikki on valmiina, ja yksittäinen
+esimerkki ajetaan komennolla `python3 esimerkit/04-osoitin.py`. Kaksi
+esimerkkiä kirjoittaa äänitiedoston (WAV) työhakemistoon, jotta tuloksen
+voi myös kuunnella. Kuvat on piirretty skriptillä `kuvat/piirra.py`
+samoilla parametreilla kuin esimerkit (`make kuvat`). Jokainen
 esimerkki ajetaan testeissä, ja sen tulostetta verrataan tallennettuun
 tulosteeseen. Siksi tulosteet on pyöristetty, ja numeerisista virheistä
 tulostetaan usein vain vertailu kuten `virhe < 1e-12: True`: liukulukujen
@@ -103,12 +125,3 @@ viimeiset desimaalit voivat vaihdella koneittain, mutta toleranssin
 alittuminen ei vaihtele. Satunnaisdata tuotetaan aina kiinteällä
 siemenellä (`numpy.random.default_rng(2026)`).
 
-## Mitä tutoriaali ei kata
-
-Tutoriaali on signaalinkäsittelyn matemaattinen perusta. Näytteistys,
-aliasointi, diskreettiaikaiset järjestelmät, Z-muunnos ja DFT:n
-käytännön kysymykset kuten ikkunointi ja vuotaminen ovat taidon
-*Signaalit ja järjestelmät* aiheita; tässä niitä sivutaan vain siellä,
-missä ne selittävät tuloksia. Laplace-muunnos, kompleksianalyysin
-integraalilauseet ja jakaumateoria (Diracin delta täsmällisesti) jäävät
-matematiikan kirjallisuuteen.
