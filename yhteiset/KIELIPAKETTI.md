@@ -94,7 +94,25 @@ RAKENNE := taito             # kieli tai taito
 include ../yhteiset/paketti.mk
 ```
 
+## Johdanto ja viimeinen luku
+
+Jokaisen paketin johdannossa on osio **`## Esitiedot ja rajaus`**: mitä
+lukijan oletetaan osaavan (taidot taitopuun nimillä kursivoituna, samat
+kuin taitopuun `edellyttaa`-kentässä), mitä paketti ei käsittele ja
+missä taidossa se käsitellään. Johdanto kertoo myös, miten esimerkit
+ajetaan, ja lukuohjeen tulee vastata paketin lukuja.
+
+Viimeisessä luvussa on osio **`## Jatkotaidot`**: taidot, joihin tästä
+edetään. Viimeinen luku kokoaa ja ohjaa eteenpäin; uusi asia kuuluu
+sisältölukuihin. Muihin paketteihin viitataan taidon nimellä, ei
+lukunumerolla, koska lukujen numerointi muuttuu.
+
 ## Luvun rakenne
+
+Luku alkaa kappaleella, joka kertoo, mitä luvussa tehdään ja miksi se
+tulee nyt. Käsite esitellään ennen kuin sitä käytetään; jos se on
+pakko mainita aiemmin, viitataan eteenpäin.
+
 
 Jokainen sisältöluku (muut kuin johdanto, kokeneelle, käytännöt ja
 lähteet) päättyy kahteen osioon:
