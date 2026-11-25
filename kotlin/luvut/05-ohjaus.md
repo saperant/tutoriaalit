@@ -1,11 +1,20 @@
 # Ohjausrakenteet ja funktiot {.runko-ohjaus}
 
+Tyypit ja null-turvallisuus on nyt käsitelty, joten seuraavaksi
+kootaan lausekkeista ohjelmia. Silmukat ja ehdot poikkeavat Javasta
+vähän, funktiot paljon: oletusargumentit, laajennusfunktiot ja
+lambdan kirjoittaminen sulkujen jälkeen ovat piirteitä, joiden varaan
+vakiokirjasto ja seuraavien lukujen esimerkit rakentuvat.
+
 ## Silmukat, välit ja when
 
 Kotlinissa ei ole Javan kolmiosaista `for`-silmukkaa. `for` käy läpi
 minkä tahansa iteroitavan: kokoelman, välin tai merkkijonon. Välit
 kirjoitetaan `a..b` (suljettu), `a..<b` (puoliavoin), `b downTo a` ja
-`step n`. `in` tarkistaa kuulumisen väliin tai kokoelmaan.
+`step n`. `in` tarkistaa kuulumisen väliin tai kokoelmaan. Luvussa 3
+`when` oli lauseke, joka valitsi arvon; seuraava lekseri käyttää sen
+kaikkia haaramuotoja ja näyttää silmukat oikeassa tehtävässä,
+merkkijonon pilkkomisessa sanasiksi:
 
 ```{.kotlin tiedosto="esimerkit/05-lekseri.kt"}
 ```

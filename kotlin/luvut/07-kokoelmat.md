@@ -22,6 +22,22 @@ lambdoista ei synny olioita.
 silti muuttua toisen viittauksen kautta, ja Java-koodi voi muuttaa sitä
 suoraan.
 
+```{.dot otsikko="Kokoelmarajapinnat. Jokainen muokattava rajapinta laajentaa vain luku -rajapintaa, joten sama `ArrayList`-olio kelpaa sekä `List`- että `MutableList`-tyyppiseen muuttujaan."}
+digraph {
+  rankdir=BT; nodesep=0.5; ranksep=0.4;
+  node [fontsize=9, height=0.3];
+  { node [style="rounded,dashed", fillcolor="white"];
+    Iterable; Collection; List; MutableIterable; MutableCollection; MutableList; }
+  Collection -> Iterable; List -> Collection;
+  MutableCollection -> MutableIterable; MutableList -> MutableCollection;
+  MutableIterable -> Iterable; MutableCollection -> Collection; MutableList -> List;
+  ArrayList -> MutableList;
+  { rank=same; Iterable; MutableIterable; }
+  { rank=same; Collection; MutableCollection; }
+  { rank=same; List; MutableList; }
+}
+```
+
 ```{.kotlin tiedosto="esimerkit/07-kokoelmat.kt"}
 ```
 

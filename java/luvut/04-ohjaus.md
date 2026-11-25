@@ -1,5 +1,12 @@
 # Ohjausrakenteet, metodit ja lambdat {.runko-ohjaus}
 
+Kun arvot ja tyypit ovat tuttuja, seuraavaksi tarvitaan tavat ohjata
+suoritusta ja jakaa koodi osiin. Silmukat ja ehdot ovat Javassa
+C:n kaltaisia, ja Pythonia osaava lukee niitä suoraan. Luvun pääasiat
+ovat siksi Javan omat piirteet: `switch`-lauseke, jonka kattavuuden
+kääntäjä tarkistaa, metodien parametrinvälitys sekä lambdat, joilla
+toiminnon voi välittää arvona.
+
 ## Ohjausrakenteet
 
 Javan `if`, `while`, `do`–`while` ja `for` ovat C:n kaltaisia. Ehdon on
@@ -10,6 +17,16 @@ Sisäkkäisistä silmukoista poistutaan nimetyllä `break ulompi;` -lauseella.
 Moderni Java käyttää valintaan `switch`-*lauseketta* (Java 14), joka
 palauttaa arvon. Nuolisyntaksissa (`case X ->`) haara ei valu
 seuraavaan, ja kääntäjä tarkistaa, että kaikki arvot on käsitelty.
+
+Tarkistus edellyttää, että kääntäjä tuntee kaikki mahdolliset arvot.
+Sitä varten on *lueteltu tyyppi* `enum`: tyyppi, jonka arvot ovat
+kiinteä joukko nimettyjä vakioita, esimerkiksi
+`enum Tila { AVOIN, MAKSETTU }`. Arvoon viitataan tyypin nimellä
+(`Tila.AVOIN`), ja muuttuja, jonka tyyppi on `Tila`, ei voi sisältää
+muuta kuin jonkin luetelluista arvoista (tai `null`in). Pythonissa
+vastaava on `enum.Enum`. `enum`in muut piirteet, kuten kentät ja
+metodit, esitellään luvussa 5.
+
 Tilakone on luonteva kirjoittaa kahtena `enum`-tyyppinä ja
 sisäkkäisinä `switch`-lausekkeina:
 
@@ -42,10 +59,12 @@ Uudessa koodissa käytetään nuolisyntaksia.
 ## Metodit
 
 Metodi kuuluu aina luokkaan. Staattinen metodi (`static`) ei tarvitse
-oliota, instanssimetodi saa olion `this`-viitteenä. Javassa ei ole
+oliota, instanssimetodi saa olion `this`-viitteenä (luku 5). Tämän
+luvun esimerkit käyttävät vain staattisia metodeja, jotka vastaavat
+Pythonin moduulitason funktioita. Javassa ei ole
 oletusparametreja eikä nimettyjä argumentteja. Niiden sijaan
 käytetään ylikuormitusta (samanniminen metodi eri parametreilla),
-rakentajaa (luku 7) tai parametrioliota (`record`).
+rakentajaa (luku 8) tai parametrioliota (`record`).
 
 Parametrit välitetään aina arvona. Viitetyypin arvo on viite, joten
 metodi voi muuttaa olion tilaa mutta ei kutsujan muuttujaa. Tämä
@@ -54,9 +73,11 @@ mutta ei korvata kutsujan listaa uudella.
 
 ## Lambdat ja funktionaaliset rajapinnat
 
-Lambda on lyhyt nimetön funktio, jonka tyyppi on *funktionaalinen
-rajapinta* eli rajapinta, jossa on yksi abstrakti metodi. Pakkaus
-`java.util.function` sisältää yleisimmät:
+Lambda on lyhyt nimetön funktio. Javassa funktiolla ei ole omaa
+tyyppiään, vaan lambdan tyyppi on *funktionaalinen rajapinta*.
+Rajapinta (luku 5) on tyyppi, joka luettelee metodit ilman toteutusta,
+ja funktionaalisessa rajapinnassa niitä on täsmälleen yksi: lambda on
+sen toteutus. Pakkaus `java.util.function` sisältää yleisimmät:
 
 | Rajapinta | Metodi | Esimerkki |
 |-----------|--------|-----------|
@@ -73,7 +94,7 @@ jotka välttävät boksauksen. *Metodiviittaus* (`String::length`,
 joka vain kutsuu metodia.
 
 Lambdat tekevät säännöistä dataa. Esimerkki tallentaa
-validointisäännöt taulukkoon nimen ja ehdon pareina:
+validointisäännöt tauluun (`Map`) nimen ja ehdon pareina:
 
 ```{.java tiedosto="esimerkit/04-saannot.java" osa="tehdas"}
 ```
@@ -89,7 +110,7 @@ validointisäännöt taulukkoon nimen ja ehdon pareina:
 
 `enintaan(12)` on *funktiotehdas*: se palauttaa lambdan, joka *sulkee
 sisäänsä* (*closure*) parametrin `pituus`. `andThen` koostaa kaksi
-funktiota yhdeksi. `Map.copyOf` tekee taulukosta muuttumattoman.
+funktiota yhdeksi. `Map.copyOf` tekee taulusta muuttumattoman.
 
 ## Sulkeuman rajoitus
 
@@ -125,7 +146,7 @@ Kiertotie `int[] laskuri = {0}` toimii, mutta ei ole säieturvallinen.
 - **Pidä metodit lyhyinä ja parametrit vähissä.** Yli kolme tai neljä
   parametria on merkki puuttuvasta tyypistä: kokoa ne `record`iksi.
 - **Säännöt datana.** Kun ehtoja on monta ja ne muuttuvat, kokoa ne
-  taulukkoon tai listaan (`Map<String, Predicate<T>>`). Uusi sääntö on
+  tauluun tai listaan (`Map<String, Predicate<T>>`). Uusi sääntö on
   yksi rivi, ja säännöt voi testata erikseen.
 - **Metodiviittaus, kun lambda vain kutsuu metodia.** `String::strip`
   on selkeämpi kuin `s -> s.strip()`.

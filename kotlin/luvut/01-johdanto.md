@@ -15,6 +15,23 @@ funktionaalisen ohjelmoinnin välineet ilman uutta ajonaikaista
 ympäristöä. Kotlin-koodi kutsuu Javaa ja Java Kotlinia suoraan, joten
 kielen voi ottaa käyttöön tiedosto kerrallaan.
 
+## Esitiedot ja rajaus
+
+Esitietona on taito *Java*: luokat ja rajapinnat, geneerisyys,
+kokoelmat, poikkeukset sekä JVM:n muistimalli, roskienkeruu ja säikeet
+oletetaan tunnetuiksi. Tämä tutoriaali kertoo, mikä Kotlinissa on
+toisin, ja vertaa ratkaisuja Javaan.
+
+Tutoriaali ei käsittele seuraavia aiheita:
+
+- JVM:n muistimalli, roskienkeruu, JIT ja `java.util.concurrent`:
+  taito *Java*
+- rinnakkaisuuden yleiset käsitteet: taito *Rinnakkaisohjelmointi*
+- Android ja Jetpack Compose: taito *Android-sovellukset*
+- palvelinkehykset (Spring Boot, Ktor) ja tietokannat: taito
+  *Taustapalvelut*
+- Kotlin Multiplatform, Kotlin/Native ja Kotlin/JS.
+
 ## Mihin Kotlin sopii ja mihin ei
 
 Kotlin on vakiintunut erityisesti
@@ -77,8 +94,10 @@ kotlinc -Werror -include-runtime -d myynti.jar 01-myynti.kt
 java -jar myynti.jar < 01-myynti.syote
 ```
 
-Oikea projekti käyttää Gradlea (luku 13). Kehityskontissa
-(`.devcontainer/kotlin`) on JDK 21 ja `kotlinc`.
+Oikea projekti käyttää Gradlea (luvut 11 ja 13). Kehityskontissa
+(`.devcontainer/kotlin`) on JDK 21 ja `kotlinc`. Korutiini- ja
+testiesimerkit tarvitsevat kääntäjän mukana tulevia kirjastoja, ja ne
+käännetään ja ajetaan komennolla `make` hakemistossa `esimerkit`.
 
 ## Ensimmäinen ohjelma
 
@@ -127,8 +146,3 @@ geneerisyyden. Luku 9 käsittelee virheet, luku 10 DSL:t ja delegoinnin,
 luku 11 paketit ja yhteiskäytön Javan kanssa, luku 12 rinnakkaisuuden
 ja korutiinit ja luku 13 työkalut ja testauksen. Luku 14 kokoaa mallit,
 hinnat ja lähteet.
-
-Taitopuussa Kotlinin esitieto on *Java*. JVM:n muistimalli,
-roskienkeruu, JIT ja `java.util.concurrent` opetetaan siellä, ja tämä
-tutoriaali kertoo, mikä Kotlinissa on toisin. Kotlinia käytetään
-taidoissa *Android-sovellukset* ja *Taustapalvelut*.

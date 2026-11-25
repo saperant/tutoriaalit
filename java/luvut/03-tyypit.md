@@ -1,5 +1,13 @@
 # Tyypit, lausekkeet ja syöte {.runko-tyypit}
 
+Java on staattisesti tyypitetty: jokaisella muuttujalla on
+käännösaikana tunnettu tyyppi, ja lukutyypeillä on kiinteä koko. Tämä
+luku käy läpi arvot, joista ohjelmat rakentuvat – luvut, merkit,
+merkkijonot ja taulukot – sekä niiden tulostamisen ja lukemisen.
+Pythonista tulevalle uutta ovat ylivuoto, kieliasetuksen ja merkistön
+vaikutus tulosteeseen ja se, että merkkijonon pituus ei ole merkkien
+määrä. Nämä ovat yleisiä virhelähteitä, joten ne käsitellään heti.
+
 ## Primitiivityypit ja viitetyypit
 
 Javassa on kahdeksan primitiivityyppiä. Niiden koko ja käyttäytyminen
@@ -16,11 +24,12 @@ ovat samat kaikilla alustoilla:
 | `float` | 32 bittiä | IEEE 754 | literaali `1.5f`; vältä |
 | `double` | 64 bittiä | IEEE 754 | oletusliukuluku |
 
-Kaikki muut tyypit ovat viitetyyppejä: luokkia, rajapintoja, taulukoita,
-`enum`eja ja `record`eja. Viitetyyppinen muuttuja sisältää viitteen
-olioon tai arvon `null`. Jokaisella primitiivillä on kääreluokka
-(`Integer`, `Long`, `Double` …), jota tarvitaan kokoelmissa, koska
-geneeriset tyypit eivät hyväksy primitiivejä (luku 5).
+Kaikki muut tyypit ovat viitetyyppejä: taulukoita, luokkia ja
+rajapintoja sekä luokan erikoismuotoja `enum` ja `record` (luvut 5 ja
+8). Viitetyyppinen muuttuja sisältää viitteen olioon tai arvon `null`.
+Jokaisella primitiivillä on kääreluokka (`Integer`, `Long`, `Double` …),
+jota tarvitaan kokoelmissa, koska geneeriset tyypit eivät hyväksy
+primitiivejä (luku 6).
 
 Paikallisen muuttujan tyypin voi jättää kääntäjän pääteltäväksi
 sanalla `var` (Java 10), esimerkiksi `var summa = 0L;` (tyyppi `long`).
@@ -116,7 +125,52 @@ kuten useimmat emojit, vievät kaksi `char`ia (*surrogaattipari*):
 
 `length()` palauttaa siis koodiyksiköiden määrän. Kun käsitellään
 käyttäjän tekstiä merkki kerrallaan, käytetään `codePoints()`-virtaa.
-Merkkijonojen käsittely jatkuu luvussa 6.
+Merkkijonojen käsittely jatkuu luvussa 7.
+
+## Taulukot
+
+Taulukko on kiinteän kokoinen jono samantyyppisiä alkioita. Tyyppi
+kirjoitetaan `int[]`, `String[]` tai `double[][]`, ja koko annetaan
+luotaessa eikä muutu sen jälkeen. Pythonin `list`iä vastaa lähinnä
+kokoelma `ArrayList` (luku 7); taulukko on sen alla oleva matalan tason
+rakenne, jota käytetään suoraan, kun koko tiedetään tai suorituskyky
+ratkaisee (luku 6).
+
+```{.java tiedosto="esimerkit/03-taulukot.java" osa="perus"}
+```
+
+```{.tuloste tiedosto="esimerkit/03-taulukot.odotettu" rivit="1-3"}
+```
+
+`new` täyttää taulukon oletusarvoilla (`0`, `false` tai `null`).
+Pituus on kenttä `length`, ei metodi. Indeksit alkavat nollasta, ja
+jokainen indeksointi tarkistetaan: virheellinen indeksi heittää
+poikkeuksen eikä lue viereistä muistia. Negatiivisia indeksejä ja
+viipaleita (`a[-1]`, `a[1:3]`) ei ole; osataulukko kopioidaan metodilla
+`Arrays.copyOfRange`.
+
+Taulukko on olio, ja muuttuja sisältää viitteen siihen. Sijoitus ei
+kopioi alkioita, ja `equals` vertaa viitteitä. Tulostus, vertailu ja
+kopiointi tehdään apuluokalla `java.util.Arrays`:
+
+```{.java tiedosto="esimerkit/03-taulukot.java" osa="viite"}
+```
+
+```{.tuloste tiedosto="esimerkit/03-taulukot.odotettu" rivit="4-5"}
+```
+
+Moniulotteinen taulukko on taulukko taulukoita, joten rivit voivat
+olla eripituisia:
+
+```{.java tiedosto="esimerkit/03-taulukot.java" osa="moni"}
+```
+
+```{.tuloste tiedosto="esimerkit/03-taulukot.odotettu" rivit="6-6"}
+```
+
+Pelkkä `System.out.println(taulukko)` tulostaa tyypin ja hajautusarvon
+(`[I@1b6d3586`), ei alkioita. Lajittelu, haku ja muunnokset
+kokoelmiksi ovat luvussa 7.
 
 ## Syötteen lukeminen
 
@@ -145,6 +199,9 @@ Huomioita:
   virheelle tehdään: tässä rivi ohitetaan ja virhe raportoidaan.
 - Tekstilohko (`"""`, Java 15) poistaa yhteisen sisennyksen, ja
   `formatted` on `String.format` metodina.
+- `Rivi` on tietue `record Rivi(String tuote, int maara)`: muuttumaton
+  arvo, jolla on nimetyt kentät ja lukumetodit `tuote()` ja `maara()`
+  (luku 8). `try`–`catch` ja poikkeukset käsitellään luvussa 9.
 
 ## Käytännössä
 
@@ -163,6 +220,9 @@ Huomioita:
   sisäosat eivät käsittele merkkijonoja.
 - **`var` paikallisiin muuttujiin, kun tyyppi on ilmeinen.** Kenttien,
   parametrien ja paluuarvojen tyypit kirjoitetaan aina.
+- **Taulukko vai lista?** Oletus on `List` (luku 7). Taulukko sopii
+  primitiiveille kuumassa koodissa, kiinteän kokoisille puskureille ja
+  rajapintoihin, jotka vaativat sen (`main(String[] args)`).
 - **Hinta.** Primitiivit ovat pinossa tai olion kentissä ilman
   allokaatiota. `BigDecimal`-laskutoimitus luo uuden olion ja on
   kymmeniä kertoja hitaampi kuin `long`, mikä merkitsee vain hyvin
@@ -176,4 +236,6 @@ Huomioita:
 - Osaat muotoilla tulosteen kieliasetuksesta riippumatta ja kertoa,
   miksi tulostevirran merkistö on annettava erikseen.
 - Osaat kertoa, miksi `String.length()` ei ole merkkien määrä.
+- Osaat luoda, kopioida, verrata ja tulostaa taulukon ja kertoa, miten
+  se eroaa Pythonin listasta.
 - Osaat lukea rivipohjaisen syötteen, jäsentää sen ja raportoida virheet.

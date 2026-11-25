@@ -1,0 +1,5 @@
+[58, 72, 81, 95], 81 on indeksissä 2
+[81, 95], keskiarvo 76.5
+Sari Liisa
+3
+ArrayStoreException: java.lang.Integer

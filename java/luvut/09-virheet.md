@@ -1,18 +1,44 @@
 # Poikkeukset ja virheenkäsittely {.runko-virheet}
 
+Aiempien lukujen esimerkit ovat heittäneet ja ottaneet kiinni
+poikkeuksia selittämättä mekanismia. Tämä luku kokoaa
+virheenkäsittelyn: mitä poikkeustyypit tarkoittavat, miten virhe
+välitetään kerrokselta toiselle hukkaamatta syytä ja milloin poikkeus
+on väärä väline. Syntaksi on Pythonista tuttu (`try`, `catch`,
+`finally`, `throw`), mutta kaksi asiaa on toisin: osa poikkeuksista
+kuuluu metodin tyyppiin, ja poikkeus on kallis.
+
 ## Poikkeushierarkia
 
-Kaikki poikkeukset periytyvät `Throwable`-luokasta:
+Poikkeus on olio, jonka luokka periytyy luokasta `Throwable`
+(periytyminen: luku 5). `catch (IOException e)` ottaa kiinni myös
+kaikki `IOException`in aliluokat, joten hierarkia määrää, mitä
+kukin käsittelijä sieppaa:
 
-- `Error` (esim. `OutOfMemoryError`, `StackOverflowError`): JVM:n tai
-  ympäristön vakava ongelma. Näitä ei yleensä käsitellä.
-- `Exception`: *tarkistettu* poikkeus (*checked*). Metodin on joko
-  käsiteltävä se tai ilmoitettava `throws`-määreellä. Esimerkkejä:
-  `IOException`, `SQLException`, `InterruptedException`.
-- `RuntimeException`: *tarkistamaton* poikkeus (*unchecked*), jota ei
-  tarvitse ilmoittaa. Esimerkkejä: `IllegalArgumentException`,
-  `IllegalStateException`, `NullPointerException`,
-  `UnsupportedOperationException`.
+```{.dot otsikko="Poikkeushierarkia. Tarkistetut poikkeukset (tummennettu) on käsiteltävä tai ilmoitettava `throws`-määreellä; `RuntimeException` aliluokkineen ja `Error` ovat tarkistamattomia."}
+digraph {
+  rankdir=BT; nodesep=0.2; ranksep=0.4;
+  node [fontsize=8, height=0.3, fillcolor="white"];
+  Throwable; Error; RuntimeException;
+  oom [label="OutOfMemoryError\nStackOverflowError"];
+  rt [label="IllegalArgumentException\nIllegalStateException\nNullPointerException"];
+  { node [fillcolor="#D5DEC4"];
+    Exception; IOException; muut [label="InterruptedException\nSQLException"];
+    io [label="NoSuchFileException\nFileNotFoundException"]; }
+  Error -> Throwable; Exception -> Throwable;
+  oom -> Error;
+  RuntimeException -> Exception; IOException -> Exception; muut -> Exception;
+  rt -> RuntimeException; io -> IOException;
+}
+```
+
+- `Error`: JVM:n tai ympäristön vakava ongelma. Näitä ei yleensä
+  käsitellä.
+- `Exception` ja sen aliluokat, paitsi `RuntimeException`:
+  *tarkistettu* poikkeus (*checked*). Metodin on joko käsiteltävä se
+  tai ilmoitettava `throws`-määreellä, ja kääntäjä valvoo tämän.
+- `RuntimeException` aliluokkineen: *tarkistamaton* poikkeus
+  (*unchecked*), jota ei tarvitse ilmoittaa.
 
 Tarkistetut poikkeukset ovat Javan erikoisuus, eikä mikään myöhempi
 valtavirtakieli ole kopioinut niitä. Käytännön sääntö: tarkistettu
@@ -27,23 +53,23 @@ Jokainen kerros kääntää alemman tason poikkeuksen omalle
 abstraktiotasolleen ja säilyttää alkuperäisen syynä (*cause*). Oma
 poikkeusluokka on pieni:
 
-```{.java tiedosto="esimerkit/08-asetukset.java" osa="virhe"}
+```{.java tiedosto="esimerkit/09-asetukset.java" osa="virhe"}
 ```
 
 `Exception` on `Serializable`, joten `-Xlint:all` vaatii
 `serialVersionUID`-kentän. `@Serial`-annotaatio (Java 14) kertoo, että
 kenttä kuuluu sarjallistamiseen.
 
-```{.java tiedosto="esimerkit/08-asetukset.java" osa="jasennys"}
+```{.java tiedosto="esimerkit/09-asetukset.java" osa="jasennys"}
 ```
 
-```{.java tiedosto="esimerkit/08-asetukset.java" osa="ketju"}
+```{.java tiedosto="esimerkit/09-asetukset.java" osa="ketju"}
 ```
 
-```{.java tiedosto="esimerkit/08-asetukset.java" osa="kaytto"}
+```{.java tiedosto="esimerkit/09-asetukset.java" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/08-asetukset.odotettu"}
+```{.tuloste tiedosto="esimerkit/09-asetukset.odotettu"}
 ```
 
 Huomioita:
@@ -62,18 +88,18 @@ Huomioita:
 poikkeuksia, joten lambda, joka kutsuu `IOException`ia heittävää
 metodia, ei käänny:
 
-```{.java tiedosto="esimerkit/08-lambda.ei-kaanny.java" osa="koodi"}
+```{.java tiedosto="esimerkit/09-lambda.ei-kaanny.java" osa="koodi"}
 ```
 
 ```
-08-lambda.ei-kaanny.java:28: error: unreported exception IOException;
+09-lambda.ei-kaanny.java:28: error: unreported exception IOException;
 must be caught or declared to be thrown
 ```
 
 Ratkaisu on kääriä poikkeus tarkistamattomaksi apumetodissa, ja
 `UncheckedIOException` on tähän tarkoitettu:
 
-```{.java tiedosto="esimerkit/08-lambda.ei-kaanny.java" osa="apu"}
+```{.java tiedosto="esimerkit/09-lambda.ei-kaanny.java" osa="apu"}
 ```
 
 Jos koko putki on I/O:ta, tavallinen silmukka on usein selkeämpi kuin
@@ -86,13 +112,13 @@ Poikkeusolion luonti on kallis, koska konstruktori kerää pinojäljen
 kiinniottaminen itsessään ovat halvempia, kun JIT näkee molemmat.
 Esimerkki tarkistaa merkkijonoja kolmella tavalla:
 
-```{.java tiedosto="esimerkit/08-hinta.java" osa="tavat"}
+```{.java tiedosto="esimerkit/09-hinta.java" osa="tavat"}
 ```
 
-```{.java tiedosto="esimerkit/08-hinta.java" osa="kevyt"}
+```{.java tiedosto="esimerkit/09-hinta.java" osa="kevyt"}
 ```
 
-```{.tuloste tiedosto="esimerkit/08-hinta.odotettu"}
+```{.tuloste tiedosto="esimerkit/09-hinta.odotettu"}
 ```
 
 Tyypillisellä koneella `parseInt` poikkeuksineen on 30–60 kertaa
@@ -110,13 +136,13 @@ ilmaistaan paluuarvolla.
 puuttua. Kutsuja ei voi unohtaa käsitellä puuttumista samalla tavalla
 kuin `null`-paluuarvon:
 
-```{.java tiedosto="esimerkit/08-optional.java" osa="haku"}
+```{.java tiedosto="esimerkit/09-optional.java" osa="haku"}
 ```
 
-```{.java tiedosto="esimerkit/08-optional.java" osa="kaytto"}
+```{.java tiedosto="esimerkit/09-optional.java" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/08-optional.odotettu"}
+```{.tuloste tiedosto="esimerkit/09-optional.odotettu"}
 ```
 
 `map` muuntaa `null`-tuloksen tyhjäksi, joten ketju ei kaadu
@@ -131,20 +157,20 @@ Kun kutsuja tarvitsee tiedon *kaikista* virheistä, kuten lomakkeen
 validoinnissa, virheet palautetaan arvona. Suljettu tulostyyppi pakottaa
 käsittelemään molemmat tapaukset:
 
-```{.java tiedosto="esimerkit/08-tulos.java" osa="tulos"}
+```{.java tiedosto="esimerkit/09-tulos.java" osa="tulos"}
 ```
 
-```{.java tiedosto="esimerkit/08-tulos.java" osa="kaytto"}
+```{.java tiedosto="esimerkit/09-tulos.java" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/08-tulos.odotettu"}
+```{.tuloste tiedosto="esimerkit/09-tulos.odotettu"}
 ```
 
 ## `NullPointerException`
 
 Selittävä viesti (Java 14) kertoo, mikä lausekkeen osa oli `null`:
 
-```{.java tiedosto="esimerkit/08-npe.kaatuu.java" osa="koodi"}
+```{.java tiedosto="esimerkit/09-npe.kaatuu.java" osa="koodi"}
 ```
 
 ```

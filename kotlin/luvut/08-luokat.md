@@ -1,5 +1,12 @@
 # Luokat, suljetut hierarkiat ja geneerisyys {.runko-omat-tyypit}
 
+Kotlinin oliomalli on Javan oliomalli, jonka oletukset on käännetty
+Effective Javan suositusten mukaisiksi: luokat ovat `final`, jäsenet
+julkisia ominaisuuksia ilman gettereitä ja arvo-oliot yhden rivin
+mittaisia. Tämä luku käy läpi luokan osat, data- ja suljetut luokat,
+periytymisen ja geneerisyyden. Edellisten lukujen esimerkit ovat jo
+käyttäneet `data class` -luokkia; tässä ne selitetään.
+
 ## Luokat ja ominaisuudet
 
 Kotlinin luokan pääkonstruktori kirjoitetaan luokan nimen perään, ja
@@ -69,9 +76,34 @@ Rajapinnoissa voi olla oletustoteutuksia ja abstrakteja ominaisuuksia.
 ```{.tuloste tiedosto="esimerkit/08-rajapinnat.odotettu"}
 ```
 
+`abstract`-luokka toimii kuten Javassa: siitä ei voi luoda oliota, ja
+sen abstraktit jäsenet (tässä ominaisuus `sivut`) on toteutettava
+alaluokassa. Abstrakti jäsen on aina avoin, joten `open`-sanaa ei
+tarvita. `final override` estää korvaamisen alempana hierarkiassa.
+
 `enum class` on Javan `enum`. `entries` (Kotlin 1.9) palauttaa arvot
 muuttumattomana listana, ja se korvaa `values()`-metodin, joka luo
 uuden taulukon joka kutsulla.
+
+## Oliolausekkeet ja sisäkkäiset luokat
+
+Javan nimetöntä luokkaa vastaa *oliolauseke* `object : Tyyppi { … }`.
+Sitä tarvitaan, kun rajapinnassa on useampi metodi; yhden metodin
+`fun interface` toteutetaan lambdalla. Sisäkkäisten luokkien oletus on
+päinvastainen kuin Javassa: luokan sisään kirjoitettu luokka on
+staattinen, ja viite ulompaan olioon pyydetään sanalla `inner`.
+
+```{.kotlin tiedosto="esimerkit/08-sisakkaiset.kt"}
+```
+
+```{.tuloste tiedosto="esimerkit/08-sisakkaiset.odotettu"}
+```
+
+Oletus on turvallisempi: `inner`-luokan olio pitää ulomman olion
+elossa, ja Javassa unohtunut `static` on tavallinen muistivuodon syy.
+Sama sana `object` esiintyy siis kolmessa merkityksessä: `object Nimi`
+on singleton, `companion object` luokan yhteinen olio ja
+`object : Tyyppi` kertakäyttöinen nimetön olio.
 
 ## Geneerisyys ja varianssi
 
@@ -139,3 +171,5 @@ Ylärajoite kirjoitetaan `T : Comparable<T>`, useampi rajoite
   `enum`-luokan välillä.
 - Osaat selittää `out`- ja `in`-varianssin ja sen, miksi `MutableList`
   on invariantti.
+- Osaat kirjoittaa oliolausekkeen ja kertoa, miten sisäkkäinen ja
+  `inner`-luokka eroavat Javan vastaavista.

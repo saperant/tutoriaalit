@@ -1,0 +1,18 @@
+[csv]
+tuote;kpl;snt
+kahvi;3;2085
+suodatinpussit;1;249
+yhteensä;4;2334
+
+[teksti]
+Tuote          kpl    euroa
+kahvi            3    20,85
+suodatinpussit   1     2,49
+---------------------------
+yhteensä         4    23,34
+
+[määrä]
+2 riviä
+
+true
+false

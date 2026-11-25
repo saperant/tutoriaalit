@@ -18,13 +18,13 @@ säikeestä, joka voi sillä välin ajaa muita virtuaalisäikeitä.
 Virtuaalisäikeitä voi olla miljoonia, joten tavallista, peräkkäin
 kirjoitettua estävää koodia voi ajaa säie pyyntöä kohden:
 
-```{.java tiedosto="esimerkit/10-virtuaali.java" osa="haku"}
+```{.java tiedosto="esimerkit/11-virtuaali.java" osa="haku"}
 ```
 
-```{.java tiedosto="esimerkit/10-virtuaali.java" osa="kaytto"}
+```{.java tiedosto="esimerkit/11-virtuaali.java" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-virtuaali.odotettu"}
+```{.tuloste tiedosto="esimerkit/11-virtuaali.odotettu"}
 ```
 
 Kymmenentuhatta 50 millisekunnin odotusta valmistuu noin sekunnissa.
@@ -51,13 +51,13 @@ välillä ole *happens-before*-suhdetta. Suhde syntyy lukosta
 ja `join`ista sekä `java.util.concurrent`-rakenteista. Kolme oikeaa
 laskuria:
 
-```{.java tiedosto="esimerkit/10-laskurit.java" osa="laskurit"}
+```{.java tiedosto="esimerkit/11-laskurit.java" osa="laskurit"}
 ```
 
-```{.java tiedosto="esimerkit/10-laskurit.java" osa="kaytto"}
+```{.java tiedosto="esimerkit/11-laskurit.java" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-laskurit.odotettu"}
+```{.tuloste tiedosto="esimerkit/11-laskurit.odotettu"}
 ```
 
 | Väline | Milloin |
@@ -82,16 +82,16 @@ kuluttajat eivät ehdi, tuottaja odottaa `put`issa eikä muisti kasva.
 Kuluttajat lopetetaan lähettämällä jokaiselle lopetusviesti (*poison
 pill*):
 
-```{.java tiedosto="esimerkit/10-jono.java" osa="tyypit"}
+```{.java tiedosto="esimerkit/11-jono.java" osa="tyypit"}
 ```
 
-```{.java tiedosto="esimerkit/10-jono.java" osa="kuluttaja"}
+```{.java tiedosto="esimerkit/11-jono.java" osa="kuluttaja"}
 ```
 
-```{.java tiedosto="esimerkit/10-jono.java" osa="kaytto"}
+```{.java tiedosto="esimerkit/11-jono.java" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-jono.odotettu"}
+```{.tuloste tiedosto="esimerkit/11-jono.odotettu"}
 ```
 
 Viesti on suljettu tyyppi, joten lopetusviesti ei ole erikoisarvo
@@ -104,10 +104,10 @@ Viesti on suljettu tyyppi, joten lopetusviesti ei ole erikoisarvo
 `orTimeout` asettaa aikarajan. Ketju ei estä säiettä ennen
 viimeistä `join`ia:
 
-```{.java tiedosto="esimerkit/10-yhdistelma.java" osa="palvelut"}
+```{.java tiedosto="esimerkit/11-yhdistelma.java" osa="palvelut"}
 ```
 
-```{.java tiedosto="esimerkit/10-yhdistelma.java" osa="ketju"}
+```{.java tiedosto="esimerkit/11-yhdistelma.java" osa="ketju"}
 ```
 
 `ConcurrentHashMap.computeIfAbsent` laskee puuttuvan arvon atomisesti:
@@ -115,10 +115,10 @@ vaikka sata tehtävää pyytää kahta avainta yhtä aikaa, kumpikin arvo
 lasketaan vain kerran. Ehto "jos puuttuu, laske ja lisää" kahtena
 erillisenä kutsuna (`containsKey` + `put`) laskisi arvon useasti:
 
-```{.java tiedosto="esimerkit/10-yhdistelma.java" osa="muisti"}
+```{.java tiedosto="esimerkit/11-yhdistelma.java" osa="muisti"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-yhdistelma.odotettu"}
+```{.tuloste tiedosto="esimerkit/11-yhdistelma.odotettu"}
 ```
 
 Virtuaalisäikeiden myötä moni `CompletableFuture`-ketju on

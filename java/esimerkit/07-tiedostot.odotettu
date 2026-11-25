@@ -1,0 +1,8 @@
+palvelu.log lokit/palvelu.log asetukset.conf
+4 riviä, 100 tavua
+08:01 WARN levytila 91 %
+08:02 ERROR yhteys katkesi
+lokit/palvelu.log
+varmuuskopio.log
+ei löydy: puuttuu.txt
+siivottu: true

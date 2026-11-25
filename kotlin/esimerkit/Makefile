@@ -2,7 +2,7 @@
 # (kotlinx.coroutines ja kotlin.test). Yksittäiset ohjelmat testaa
 # yhteinen testaaja; tämä Makefile kääntää ja ajaa hakemistojen
 #
-#   12-korutiinit/src  rakenteinen rinnakkaisuus ja Flow
+#   12-korutiinit/src  rakenteinen rinnakkaisuus, jaettu tila ja Flow
 #   13-testit          kirjasto ja sen yksikkötestit
 #
 # ohjelmat ja vertaa tulosteet .odotettu-tiedostoihin.
@@ -33,17 +33,25 @@ $(KOHDE)/virta.jar: 12-korutiinit/src/Virta.kt
 	    | grep -v '^Picked up' || true
 	@test -f $@
 
+$(KOHDE)/jaettu.jar: 12-korutiinit/src/Jaettu.kt
+	@mkdir -p $(KOHDE)
+	$(KOTLINC) -Werror -cp $(KORUT) -include-runtime -d $@ $< 2>&1 \
+	    | grep -v '^Picked up' || true
+	@test -f $@
+
 $(KOHDE)/testit.jar: $(wildcard 13-testit/src/*.kt 13-testit/testit/*.kt)
 	@mkdir -p $(KOHDE)
 	$(KOTLINC) -Werror -cp $(TESTI) -include-runtime -d $@ $^ 2>&1 \
 	    | grep -v '^Picked up' || true
 	@test -f $@
 
-korutiinit: $(KOHDE)/rakenteinen.jar $(KOHDE)/virta.jar
+korutiinit: $(KOHDE)/rakenteinen.jar $(KOHDE)/virta.jar $(KOHDE)/jaettu.jar
 	$(JAVA) -cp $(KOHDE)/rakenteinen.jar:$(KORUT) RakenteinenKt 2>/dev/null \
 	    | diff -u 12-korutiinit/rakenteinen.odotettu -
 	$(JAVA) -cp $(KOHDE)/virta.jar:$(KORUT) VirtaKt 2>/dev/null \
 	    | diff -u 12-korutiinit/virta.odotettu -
+	$(JAVA) -cp $(KOHDE)/jaettu.jar:$(KORUT) JaettuKt 2>/dev/null \
+	    | diff -u 12-korutiinit/jaettu.odotettu -
 
 testit: $(KOHDE)/testit.jar
 	$(JAVA) -cp $(KOHDE)/testit.jar:$(TESTI) \

@@ -23,8 +23,9 @@ JDK 21). Valmis dokumentti: [kotlin.pdf](https://saperant.github.io/tutoriaalit/
 10. DSL:t, operaattorit ja delegointi
 11. Paketit, moduulit ja yhteiskäyttö Javan kanssa
 12. Rinnakkaisuus ja korutiinit – virtuaalisäikeet, `suspend`,
-    rakenteinen rinnakkaisuus, `Flow`
-13. Työkalut, testaus ja laatu – Gradle, `kotlin.test`, ktlint, detekt
+    rakenteinen rinnakkaisuus, jaettu tila ja kanavat, `Flow`
+13. Työkalut, testaus ja laatu – Gradle, `kotlin.test`, ktlint, detekt,
+    KDoc ja Dokka
 14. Lopuksi – mallit, nyrkkisäännöt, hinnat, kirjastot ja lähteet
 
 ## Rakentaminen
@@ -39,3 +40,5 @@ testiesimerkit (`esimerkit/12-korutiinit`, `esimerkit/13-testit`)
 tarvitsevat `kotlinc`-jakelun mukana tulevat kirjastot, ja ne
 testataan tiedostolla `esimerkit/Makefile`. Kehityskontti:
 `.devcontainer/kotlin`.
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks. [Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.

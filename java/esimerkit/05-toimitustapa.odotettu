@@ -1,0 +1,6 @@
+NOUTO 0 snt, ehtii huomiseksi: true
+POSTI 590 snt, ehtii huomiseksi: false
+KURIIRI 1290 snt, ehtii huomiseksi: true
+true
+POSTI 1
+{NOUTO=1, POSTI=2}

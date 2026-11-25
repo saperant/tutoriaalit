@@ -11,6 +11,9 @@ subtitle: Pikaopas kokeneelle kehittäjälle · Java 21
 | Ajo | `java -cp out Main`, suoraan `java Main.java` |
 | Kokeilu | `jshell` |
 | Rakennus | `mvn verify`, `./gradlew build` |
+| Testit | `./mvnw test` (JUnit), `./gradlew test` |
+| Dokumentaatio | `javadoc -Xdoclint:all -Werror -d doc` |
+| Paketointi | `jar --create --file a.jar --main-class Main -C out .` |
 | Riippuvuudet | `mvn dependency:tree`, `./gradlew dependencies` |
 | Säievedos | `jcmd <pid> Thread.print` |
 | Profiili | `jcmd <pid> JFR.start duration=60s filename=a.jfr` |
@@ -39,7 +42,11 @@ subtitle: Pikaopas kokeneelle kehittäjälle · Java 21
 - `record`: muuttumaton, `equals`/`hashCode`/`toString` valmiina;
   kompakti konstruktori validoi, `List.copyOf` kokoelmakentille.
 - `sealed` + recordit + `switch`-kuviot = summatyyppi; `when` ehtona.
-- Luokat `final`, kentät `private final`; koostaminen periytymisen sijaan.
+- Luokka: kentät `private final`, konstruktori validoi, `static` kuuluu
+  luokalle. Yksi `extends`, monta `implements`; `@Override` aina.
+- Luokat `final`; koostaminen periytymisen sijaan. Sisäkkäinen luokka
+  `static`, ellei se tarvitse ulompaa oliota.
+- `enum`: kiinteä joukko olioita, kentät ja metodit; vertailu `==`.
 - Rajapinnassa `default`-metodit; funktionaalinen rajapinta = lambda.
 - Geneerisyys poistetaan ajossa. PECS: `? extends T` luetaan,
   `? super T` kirjoitetaan.
@@ -62,6 +69,9 @@ subtitle: Pikaopas kokeneelle kehittäjälle · Java 21
 | vertailija | `Comparator.comparing(f).thenComparing(g)` |
 | jako | `split(";", -1)`; parametri on säännöllinen lauseke |
 | kokoaminen | `StringBuilder`, `String.join`, `Collectors.joining` |
+| taulukko | `Arrays.toString`, `equals`, `copyOf`, `sort` |
+| tiedosto | `Files.readString`, `writeString`; `Files.lines` `try`-lohkossa |
+| aika | `Instant`, `Duration`, `LocalDate`, `ZonedDateTime`; ei `Date` |
 
 # Virheet
 

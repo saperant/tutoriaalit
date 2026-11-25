@@ -13,6 +13,7 @@ subtitle: Pikaopas Java-kehittäjälle · Kotlin 2.4, JDK 21
 | Gradle | `./gradlew build`, `run`, `test --continuous` |
 | Tyyli, analyysi | `ktlint --format`, `detekt` |
 | Kattavuus | Kover: `./gradlew koverHtmlReport` |
+| Dokumentaatio | KDoc `/** [Nimi] @param @return */`, Dokka |
 | Tavukoodi | `javap -c -p Luokka.class`, IntelliJ *Show Kotlin Bytecode* |
 
 # Perussyntaksi
@@ -102,6 +103,8 @@ subtitle: Pikaopas Java-kehittäjälle · Kotlin 2.4, JDK 21
 | `launch`, `async`/`await` | käynnistä; tulos myöhemmin |
 | `withContext(Dispatchers.IO)` | estävä I/O pois pääaltaasta |
 | `withTimeoutOrNull(ms) { }` | aikaraja |
+| `Mutex.withLock`, atomit | jaettu tila; ei `synchronized` |
+| `Channel` | työjono korutiinien välillä, vastapaine |
 | `Flow`, `StateFlow` | kylmä virta, tila |
 
 # Hinnat

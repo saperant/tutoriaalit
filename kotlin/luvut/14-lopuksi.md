@@ -1,5 +1,8 @@
 # Lopuksi {.runko-kaytannot .runko-lahteet}
 
+Tämä luku ei tuo uutta asiaa. Se kokoaa edellisten lukujen mallit,
+säännöt ja hinnat yhteen paikkaan ja kertoo, mistä jatkaa.
+
 ## Mallit ja idiomit
 
 | Malli | Ongelma, jonka se ratkaisee | Luku |
@@ -21,6 +24,7 @@
 | Luokan delegointi `by` | koristelija ilman periytymistä | 10 |
 | Ohut pääohjelma, `internal`-toteutus | testattava ja vaihdettava logiikka | 11 |
 | Rakenteinen rinnakkaisuus | vuotavat ja peruuttamattomat tehtävät | 12 |
+| `Mutex` tai kanava | korutiinien jaettu muuttuva tila | 12 |
 
 ## Nyrkkisäännöt
 
@@ -37,7 +41,7 @@
    operaatioita; sekvenssi, kun aineisto on suuri.
 7. Scope-funktio vain, kun se lyhentää koodia selkeyttä menettämättä.
 8. Julkinen rajapinta pieneksi, tyypit siinä näkyviin, toteutus
-   `internal`.
+   `internal`. Julkinen rajapinta dokumentoidaan KDocilla.
 9. Korutiinit aina näkyvyysalueessa, estävä I/O `Dispatchers.IO`-
    altaaseen, peruutusta ei niellä.
 10. Javan rajalla nullable-tiedot ja annotaatiot kuntoon, jotta
@@ -72,9 +76,15 @@
 | Funktionaaliset tyypit | [Arrow](https://arrow-kt.io/) |
 | Android-käyttöliittymä | [Jetpack Compose](https://developer.android.com/compose) |
 
-Taitopuussa jatkotaitoja ovat *Android-sovellukset* (Compose,
-elinkaari, korutiinit käyttöliittymässä) ja *Taustapalvelut*
-(rajapinnat, tietokannat ja palvelujen rakenne).
+## Jatkotaidot
+
+- *Android-sovellukset*: Compose, elinkaari ja korutiinit
+  käyttöliittymässä.
+- *Taustapalvelut*: rajapinnat, tietokannat ja palvelujen rakenne.
+- *Rinnakkaisohjelmointi*: kilpailutilanteet, lukot ja muistimallit
+  kieliriippumattomasti.
+- *Tekninen dokumentaatio*: rajapintadokumentaation periaatteet ja
+  dokumentaation testaus.
 
 ## Lähteet ja jatkolukeminen
 
@@ -87,6 +97,9 @@ elinkaari, korutiinit käyttöliittymässä) ja *Taustapalvelut*
   [kotlinlang.org/docs/coding-conventions.html](https://kotlinlang.org/docs/coding-conventions.html).
 - *Coroutines guide*:
   [kotlinlang.org/docs/coroutines-guide.html](https://kotlinlang.org/docs/coroutines-guide.html).
+- *KDoc* ja *Dokka*:
+  [kotlinlang.org/docs/kotlin-doc.html](https://kotlinlang.org/docs/kotlin-doc.html),
+  [kotlinlang.org/docs/dokka-introduction.html](https://kotlinlang.org/docs/dokka-introduction.html).
 - Roman Elizarov: *Structured concurrency* (2018), blogikirjoitus
   rakenteisen rinnakkaisuuden perusteista.
 - Sebastian Aigner, Roman Elizarov, Svetlana Isakova, Dmitry Jemerov:

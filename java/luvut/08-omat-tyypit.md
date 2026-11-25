@@ -1,4 +1,12 @@
-# Luokat, recordit, rajapinnat ja geneerisyys {.runko-omat-tyypit}
+# Recordit, suljetut hierarkiat ja geneerisyys {.runko-omat-tyypit}
+
+Luku 5 esitteli luokan, rajapinnan ja periytymisen. Tämä luku käsittelee
+välineet, joilla moderni Java mallintaa dataa ja vaihtoehtoja: `record`
+arvoille, `sealed`-hierarkia ja kuvioiden sovitus vaihtoehdoille,
+koostaminen periytymisen tilalle ja geneerisyys tyyppien
+parametrointiin. Luku tulee kokoelmien jälkeen, koska esimerkit
+käyttävät listoja ja tauluja ja koska geneerisyys on helpointa
+ymmärtää, kun `List<T>` on jo tuttu.
 
 ## Arvotyypit: `record`
 
@@ -9,13 +17,13 @@ tunnisteille, viesteille ja tuloksille. *Kompakti konstruktori*
 validoi tai normalisoi parametrit ennen kenttien asettamista, joten
 virheellistä oliota ei voi olla olemassa:
 
-```{.java tiedosto="esimerkit/07-raha.java" osa="raha"}
+```{.java tiedosto="esimerkit/08-raha.java" osa="raha"}
 ```
 
-```{.java tiedosto="esimerkit/07-raha.java" osa="kaytto"}
+```{.java tiedosto="esimerkit/08-raha.java" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/07-raha.odotettu"}
+```{.tuloste tiedosto="esimerkit/08-raha.odotettu"}
 ```
 
 Malleja esimerkissä:
@@ -39,16 +47,16 @@ recordien ja `switch`-kuvioiden (Java 21) kanssa se on Javan
 *algebrallinen tietotyyppi*: arvo on täsmälleen yksi tunnetuista
 muodoista, ja kääntäjä tarkistaa, että jokainen muoto käsitellään:
 
-```{.java tiedosto="esimerkit/07-maksut.java" osa="tyypit"}
+```{.java tiedosto="esimerkit/08-maksut.java" osa="tyypit"}
 ```
 
-```{.java tiedosto="esimerkit/07-maksut.java" osa="kulut"}
+```{.java tiedosto="esimerkit/08-maksut.java" osa="kulut"}
 ```
 
-```{.java tiedosto="esimerkit/07-maksut.java" osa="kaytto"}
+```{.java tiedosto="esimerkit/08-maksut.java" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/07-maksut.odotettu"}
+```{.tuloste tiedosto="esimerkit/08-maksut.odotettu"}
 ```
 
 *Record-kuvio* `Kortti(long s, String verkko)` purkaa recordin kentät
@@ -56,11 +64,11 @@ muuttujiksi, ja `when` lisää ehdon. Haarat tarkistetaan järjestyksessä,
 joten tarkempi haara kirjoitetaan ensin. Kun hierarkiaan lisätään uusi
 tyyppi, jokainen `switch` ilman `default`-haaraa lakkaa kääntymästä:
 
-```{.java tiedosto="esimerkit/07-kattavuus.ei-kaanny.java" osa="koodi"}
+```{.java tiedosto="esimerkit/08-kattavuus.ei-kaanny.java" osa="koodi"}
 ```
 
 ```
-07-kattavuus.ei-kaanny.java:22: error: the switch expression does not
+08-kattavuus.ei-kaanny.java:22: error: the switch expression does not
 cover all possible input values
 ```
 
@@ -75,38 +83,25 @@ rajapinnan metodiksi. Jos operaatioita lisätään usein ja tyyppijoukko on
 vakaa, kuten tapahtumissa, viesteissä ja syntaksipuussa, käytetään
 `sealed`-tyyppiä ja `switch`iä.
 
-## Luokat, kapselointi ja periytyminen
-
-Tavallinen luokka on oikea valinta, kun oliolla on muuttuvaa tilaa ja
-invariantteja: yhteys, välimuisti, tilakone, laskuri. Kentät ovat
-`private` ja mieluiten `final`; tilaa muutetaan vain metodeilla, jotka
-säilyttävät invariantit. Näkyvyysmääreet ovat `private`, pakkauksen
-sisäinen (ei määrettä), `protected` ja `public`.
-
-Periytyminen (`extends`) kytkee aliluokan yliluokan toteutukseen.
-Yliluokan muutos voi rikkoa aliluokan (*fragile base class*), ja
-konstruktorista kutsuttu ylikirjoitettava metodi näkee keskeneräisen
-olion (`-Xlint:this-escape` varoittaa). Siksi luokat tehdään `final`iksi,
-ellei niitä ole suunniteltu perittäviksi, ja toiminnallisuutta
-yhdistetään *koostamalla*: olio sisältää toisen olion ja delegoi sille.
-
 ## Rajapinnat ja koostaminen
 
-Rajapinta määrittää käyttäytymisen. Oletusmetodi (`default`, Java 8)
-antaa rajapinnalle toteutuksen, joka rakentuu abstraktien metodien
-päälle. *Koristelija* (*decorator*) toteuttaa saman rajapinnan ja lisää
+Luvun 5 mukaan periytyminen kytkee aliluokan yliluokan toteutukseen.
+Vaihtoehto on *koostaminen*: olio sisältää toisen olion ja delegoi
+sille. Rajapinnan oletusmetodi (`default`, Java 8) antaa rajapinnalle
+toteutuksen, joka rakentuu abstraktien metodien päälle, joten yhteinen
+koodi ei vaadi yliluokkaa. *Koristelija* (*decorator*) toteuttaa saman rajapinnan ja lisää
 toiminnallisuutta delegoimalla:
 
-```{.java tiedosto="esimerkit/07-koostaminen.java" osa="rajapinta"}
+```{.java tiedosto="esimerkit/08-koostaminen.java" osa="rajapinta"}
 ```
 
-```{.java tiedosto="esimerkit/07-koostaminen.java" osa="koristelija"}
+```{.java tiedosto="esimerkit/08-koostaminen.java" osa="koristelija"}
 ```
 
-```{.java tiedosto="esimerkit/07-koostaminen.java" osa="kaytto"}
+```{.java tiedosto="esimerkit/08-koostaminen.java" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/07-koostaminen.odotettu"}
+```{.tuloste tiedosto="esimerkit/08-koostaminen.odotettu"}
 ```
 
 Koska `Hinnoittelu` on funktionaalinen rajapinta, perustoteutus on
@@ -119,13 +114,13 @@ Kun oliolla on monta valinnaista kenttää, konstruktori, jolla on
 kymmenen parametria, on altis virheille. *Rakentaja* (*builder*)
 kerää arvot nimetyillä metodeilla ja validoi kokonaisuuden lopuksi:
 
-```{.java tiedosto="esimerkit/07-rakentaja.java" osa="pyynto"}
+```{.java tiedosto="esimerkit/08-rakentaja.java" osa="pyynto"}
 ```
 
-```{.java tiedosto="esimerkit/07-rakentaja.java" osa="kaytto"}
+```{.java tiedosto="esimerkit/08-rakentaja.java" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/07-rakentaja.odotettu"}
+```{.tuloste tiedosto="esimerkit/08-rakentaja.odotettu"}
 ```
 
 Pakolliset arvot annetaan tehdasmetodille (`Pyynto.get(osoite)`), joten
@@ -140,16 +135,16 @@ poistetaan (*type erasure*): `List<Integer>` ja `List<String>` ovat sama
 luokka. Siksi `new T()`, `T[]` ja `instanceof List<String>` eivät ole
 mahdollisia, eikä primitiivi kelpaa tyyppiparametriksi.
 
-```{.java tiedosto="esimerkit/07-geneerinen.java" osa="suurin"}
+```{.java tiedosto="esimerkit/08-geneerinen.java" osa="suurin"}
 ```
 
-```{.java tiedosto="esimerkit/07-geneerinen.java" osa="pecs"}
+```{.java tiedosto="esimerkit/08-geneerinen.java" osa="pecs"}
 ```
 
-```{.java tiedosto="esimerkit/07-geneerinen.java" osa="kaytto"}
+```{.java tiedosto="esimerkit/08-geneerinen.java" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/07-geneerinen.odotettu"}
+```{.tuloste tiedosto="esimerkit/08-geneerinen.odotettu"}
 ```
 
 Jokerit (*wildcards*) tekevät rajapinnasta joustavan. Sääntö on *PECS*:
@@ -164,25 +159,14 @@ Raakatyyppejä (`List` ilman tyyppiparametria) ei käytetä; ne ovat
 olemassa vain yhteensopivuuden vuoksi, ja `-Xlint:rawtypes` varoittaa
 niistä.
 
-## `enum`
-
-`enum` on luokka, jolla on kiinteä joukko instansseja. Sillä voi olla
-kenttiä, konstruktori ja metodeja, ja se on oikea tapa toteuttaa
-*singleton* (`enum Asetukset { INSTANSSI; }`). `EnumMap` ja `EnumSet`
-ovat nopeimmat kokoelmat `enum`-avaimille. `ordinal()`-arvoa ei
-tallenneta tiedostoon tai tietokantaan, koska se muuttuu, kun arvojen
-järjestys muuttuu; tallennetaan `name()`.
-
 ## Käytännössä
 
 - **Data `record`eiksi, tila luokiksi.** Recordin ja tavallisen luokan
-  raja on muuttuva tila. Getterit ja setterit jokaiselle kentälle ovat
-  vanhan Javan (JavaBeans) perintöä.
+  (luku 5) raja on muuttuva tila: yhteys, välimuisti ja laskuri ovat
+  luokkia, rahasumma ja viesti recordeja.
 - **Tee virheellisistä tiloista mahdottomia.** Validoi konstruktorissa,
   käytä vahvoja tyyppejä (`Raha`, `Sahkoposti`) primitiivien sijaan ja
   mallinna vaihtoehdot `sealed`-tyypeillä nollattavien kenttien sijaan.
-- **`final` oletuksena.** Luokat, kentät ja mieluiten paikalliset
-  muuttujat. Periytyminen on suunniteltu ominaisuus, ei oletus.
 - **Koostaminen periytymisen sijaan.** Koristelija, strategia
   (funktionaalinen rajapinta) ja delegointi.
 - **Staattiset tehdasmetodit ja rakentajat** konstruktorien sijaan, kun

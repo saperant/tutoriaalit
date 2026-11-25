@@ -1,0 +1,6 @@
+7 mittausta, summa 2, viimeinen 3
+[0.0, 0.0, 0.0] [null, null]
+virhe: Index 7 out of bounds for length 7
+99 -3
+false true
+[[0, 0, 0], [0, 0, 7]] 3

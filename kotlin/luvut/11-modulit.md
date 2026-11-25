@@ -1,5 +1,12 @@
 # Paketit, moduulit ja yhteiskäyttö Javan kanssa {.runko-modulit}
 
+Kielen rakenteet on nyt käyty läpi, ja tämä luku siirtyy yhdestä
+tiedostosta projektiin: miten koodi jaetaan paketteihin ja
+moduuleihin, miten Gradle-projekti rakentuu ja miten Kotlin ja Java
+elävät samassa koodikannassa. Viimeinen on käytännössä tärkein, koska
+useimmat Kotlin-projektit käyttävät Java-kirjastoja tai alkavat
+Java-projektin osana.
+
 ## Paketit ja tiedostot
 
 Kotlinin paketti (`package varasto`) vastaa Javan pakettia, mutta
@@ -32,9 +39,26 @@ ei tarvita.
   tiedostoja, jotka käännetään yhdessä: Gradle-aliprojekti,
   Maven-moduuli tai yksi `kotlinc`-kutsu.
 - Paketti `varasto.malli` ei tunne pakettia `varasto`. Riippuvuudet
-  kulkevat yhteen suuntaan: malli ← logiikka ← pääohjelma.
+  kulkevat yhteen suuntaan, pääohjelmasta kohti mallia.
 - Pääohjelma on ohut: se kokoaa osat ja tulostaa. Logiikkaa voi
   testata ilman sitä (luku 13).
+- Julkiset tyypit ja funktiot on dokumentoitu KDoc-kommenteilla
+  `/** … */` (luku 13).
+
+```{.dot otsikko="Esimerkin paketit. Nuoli osoittaa riippuvuuden suunnan. `Muistivarasto` on `internal`, joten moduulin ulkopuolinen koodi näkee paketista `varasto` vain rajapinnan, tulostyypin ja tehdasfunktion."}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.8;
+  node [fontsize=9, height=0.4];
+  main [label="main.kt\npääohjelma"];
+  subgraph cluster_v { label="paketti varasto"; fontsize=10; color="#D9E0E3";
+    api [label="Varasto, Otto\nmuistivarasto()"];
+    impl [label="internal\nMuistivarasto", style="rounded,dashed", fillcolor="white"]; }
+  subgraph cluster_m { label="paketti varasto.malli"; fontsize=10; color="#D9E0E3";
+    malli [label="Koodi, Tuote"]; }
+  main -> api; impl -> api [style=dashed, label="toteuttaa"];
+  api -> malli; main -> malli;
+}
+```
 
 ## Projektin rakenne
 
@@ -49,6 +73,11 @@ tilaukset/
   src/main/kotlin/fi/esim/tilaukset/...
   src/test/kotlin/fi/esim/tilaukset/...
 ```
+
+Käännösskripti `build.gradle.kts` on Kotlinia (luku 10 selittää,
+miten tällainen DSL on tehty). Seuraava luonnos näyttää tyypillisen
+sisällön; sitä ei käännetä tämän tutoriaalin testeissä, koska
+esimerkit käännetään suoraan `kotlinc`-kääntäjällä:
 
 ```
 plugins {

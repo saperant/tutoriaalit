@@ -4,20 +4,44 @@ package varasto
 import varasto.malli.Koodi
 import varasto.malli.Tuote
 
+/** Oton tulos. Suljettu tyyppi: `when` käsittelee kaikki tapaukset. */
 sealed interface Otto {
+    /** Otto onnistui, ja hyllyyn jäi [jaljella] kappaletta. */
     data class Ok(val jaljella: Int) : Otto
+
+    /** Tuotetta oli vain [saatavilla] kappaletta; mitään ei otettu. */
     data class EiRiita(val saatavilla: Int) : Otto
+
+    /** Koodilla ei ole tuotetta. */
     data object Tuntematon : Otto
 }
 
-// Julkinen rajapinta: kutsuja ei näe tallennustapaa.
+/**
+ * Tuotevarasto. Kutsuja ei näe tallennustapaa; toteutus luodaan
+ * funktiolla [muistivarasto].
+ */
 interface Varasto {
+    /**
+     * Lisää tuotteen varastoon. Jos [Tuote.koodi] on jo varastossa,
+     * kappalemäärät lasketaan yhteen.
+     */
     fun lisaa(tuote: Tuote)
+
+    /**
+     * Ottaa varastosta tuotetta.
+     *
+     * @param koodi otettavan tuotteen koodi
+     * @param maara otettava kappalemäärä
+     * @return [Otto.Ok], jos määrä riitti, muuten [Otto.EiRiita] tai
+     *   [Otto.Tuntematon]. Epäonnistunut otto ei muuta varastoa.
+     */
     fun ota(koodi: Koodi, maara: Int): Otto
+
+    /** Varaston tuotteet lisäysjärjestyksessä. */
     fun hyllyssa(): List<Tuote>
 }
 
-// Tehdasfunktio paketin tasolla: ei luokkaa staattisille metodeille.
+/** Luo tyhjän varaston, joka säilyttää tuotteet muistissa. */
 fun muistivarasto(): Varasto = Muistivarasto()
 
 // internal: näkyy vain saman moduulin (käännösyksikön) koodille.

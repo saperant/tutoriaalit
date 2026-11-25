@@ -57,7 +57,8 @@ lisätä alaviivoja (`1_500_000`), `L` tekee siitä `Long`-tyyppisen ja
 
 `if`, `when` ja `try` ovat lausekkeita, joten Javan ehto-operaattoria
 `a ? b : c` ei ole. `when` korvaa sekä `switch`-lauseen että
-`if-else`-ketjun, ja haarassa voi olla useita arvoja tai väli:
+`if-else`-ketjun; sen haaramuodot käydään läpi luvussa 5. Tässä
+olennaista on, että rakenne tuottaa arvon:
 
 ```{.kotlin tiedosto="esimerkit/03-lausekkeet.kt"}
 ```
