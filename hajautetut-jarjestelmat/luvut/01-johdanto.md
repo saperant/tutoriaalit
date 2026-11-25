@@ -48,7 +48,7 @@ järjestelmiä oikeassa verkossa vikoja aiheuttamalla ja tarkistaa
 historiat linearisoituvuuden kaltaisia malleja vastaan. Luvussa
 *Konsistenssimallit* tehdään pieni versio Jepsenin tarkistimesta.
 
-## Esitiedot ja rajaukset
+## Esitiedot ja rajaus
 
 Tutoriaali olettaa taidot *Verkko-ohjelmointi*, *Rinnakkaisohjelmointi*
 ja *Algoritmit*. Verkko-ohjelmoinnista tarvitaan käsitys soketeista,
@@ -61,9 +61,10 @@ viestien tuomaa ja siksi vanhaa.
 
 Arkkitehtuuritason asiat, kuten mikropalvelut, viestinvälittäjät ja
 SAGA-malli, käsitellään taidossa *Palveluarkkitehtuurit*, ja
-tietokantatransaktiot eristystasoineen taidossa *SQL*. Kapasiteetin
-mitoitus, välimuistit ja kuormantasaus kuuluvat jatkotaitoon
-*Skaalautuvien järjestelmien suunnittelu*.
+tietokantatransaktiot eristystasoineen taidossa *SQL ja
+relaatiotietokannat*. Kapasiteetin mitoitus, välimuistit ja
+kuormantasaus kuuluvat jatkotaitoon *Skaalautuvien järjestelmien
+suunnittelu*.
 
 ## Tutoriaalin rakenne
 
@@ -74,7 +75,8 @@ Luvut 2–11 etenevät perusteista konsensukseen ja testaukseen:
 3. *Aika ja järjestys*: fyysiset kellot, Lamportin kellot,
    vektorikellot ja hybridikellot.
 4. *Replikointi*: johtaja ja seuraajat, synkroninen ja asynkroninen
-   replikointi sekä johtajaton replikointi kvoorumeilla.
+   replikointi, vuokrat ja aitausmerkit sekä johtajaton replikointi
+   kvoorumeilla.
 5. *CRDT:t*: tietorakenteet, jotka yhdistyvät ilman koordinointia.
 6. *Konsistenssimallit*: linearisoituvuus ja sen tarkistin, istunto-
    takuut ja niiden rikkeet.

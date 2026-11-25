@@ -59,6 +59,11 @@ Esimerkit tarvitsevat ohjelmat `redis-server`, `haproxy` ja
 PostgreSQL 16:n sekä Python-paketin psycopg. Ne käynnistetään
 väliaikaishakemistoihin ja vapaisiin portteihin, kuuntelevat vain
 osoitetta 127.0.0.1 ja pysäytetään lopuksi. Kehityskontissa
-(`.devcontainer/jarjestelmasuunnittelu`) kaikki on valmiina.
+(`.devcontainer/jarjestelmasuunnittelu`) kaikki on valmiina. Lukujen
+kuvaajat piirtää `make kuvat` (Matplotlib) samoista simulaatioista ja
+laskelmista, ja PNG-tiedostot ovat versionhallinnassa.
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 Lisenssi: CC BY-SA 4.0.

@@ -43,6 +43,54 @@ ja korvata sen (Raft-artikkelin kuva 8). Kun johtaja sitouttaa oman
 termin merkinnän, kaikki sitä edeltävät tulevat sitoutetuiksi
 samalla.
 
+```{.dot otsikko="Viiden solmun lokit; ruudussa on merkinnän termi. Keskellä S1 on termin 4 johtaja ja termin 2 merkintä on enemmistöllä. Vasemmalla S1 kaatui ja S5 voitti vaalin: merkintä katosi. Oikealla S1 ehti replikoida oman terminsä merkinnän enemmistölle, eikä S5 voi enää voittaa."}
+digraph {
+  rankdir=LR; nodesep=0.5;
+  node [shape=plain, fontsize=9];
+  a [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0"></td><td border="0">1</td><td border="0">2</td><td border="0">3</td></tr>
+    <tr><td border="0"><b>S1</b></td><td>1</td><td bgcolor="#D5DCE3">2</td><td bgcolor="#546676"><font color="white">4</font></td></tr>
+    <tr><td border="0">S2</td><td>1</td><td bgcolor="#D5DCE3">2</td><td border="0"></td></tr>
+    <tr><td border="0">S3</td><td>1</td><td bgcolor="#D5DCE3">2</td><td border="0"></td></tr>
+    <tr><td border="0">S4</td><td>1</td><td border="0"></td><td border="0"></td></tr>
+    <tr><td border="0">S5</td><td>1</td><td bgcolor="#E8C9A0">3</td><td border="0"></td></tr>
+    <tr><td border="0" colspan="4">termin 2 merkintä<br/>kolmella solmulla</td></tr>
+  </table>>];
+  b [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0"></td><td border="0">1</td><td border="0">2</td><td border="0">3</td></tr>
+    <tr><td border="0">S1</td><td>1</td><td bgcolor="#E8C9A0">3</td><td border="0"></td></tr>
+    <tr><td border="0">S2</td><td>1</td><td bgcolor="#E8C9A0">3</td><td border="0"></td></tr>
+    <tr><td border="0">S3</td><td>1</td><td bgcolor="#E8C9A0">3</td><td border="0"></td></tr>
+    <tr><td border="0">S4</td><td>1</td><td bgcolor="#E8C9A0">3</td><td border="0"></td></tr>
+    <tr><td border="0"><b>S5</b></td><td>1</td><td bgcolor="#E8C9A0">3</td><td border="0"></td></tr>
+    <tr><td border="0" colspan="4">S5 johtajana korvaa<br/>termin 2 merkinnän</td></tr>
+  </table>>];
+  c [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0"></td><td border="0">1</td><td border="0">2</td><td border="0">3</td></tr>
+    <tr><td border="0"><b>S1</b></td><td>1</td><td bgcolor="#D5DCE3">2</td><td bgcolor="#546676"><font color="white">4</font></td></tr>
+    <tr><td border="0">S2</td><td>1</td><td bgcolor="#D5DCE3">2</td><td bgcolor="#546676"><font color="white">4</font></td></tr>
+    <tr><td border="0">S3</td><td>1</td><td bgcolor="#D5DCE3">2</td><td bgcolor="#546676"><font color="white">4</font></td></tr>
+    <tr><td border="0">S4</td><td>1</td><td border="0"></td><td border="0"></td></tr>
+    <tr><td border="0">S5</td><td>1</td><td bgcolor="#E8C9A0">3</td><td border="0"></td></tr>
+    <tr><td border="0" colspan="4">termin 4 merkintä enemmistöllä:<br/>indeksit 2 ja 3 sitoutettu</td></tr>
+  </table>>];
+  b -> a [dir=back, label="S1 kaatuu"];
+  a -> c [label="S1 replikoi\ntermin 4"];
+}
+```
+
+Kuvan keskimmäisessä tilanteessa S5 on aiemmin ollut termin 3 johtaja
+ja ehtinyt kirjata yhden merkinnän vain omaan lokiinsa. Jos S1 nyt
+kaatuu, S5 saa äänet solmuilta S2, S3 ja S4, koska sen lokin viimeinen
+termi 3 on suurempi kuin niiden 2, ja se korvaa termin 2 merkinnän
+omallaan (vasemmalla). Jos johtaja olisi keskimmäisessä tilanteessa
+ilmoittanut indeksin 2 sitoutetuksi pelkän enemmistön perusteella,
+sitoutettu merkintä olisi kadonnut. Oikeanpuoleisessa tilanteessa S1 on
+saanut termin 4
+merkinnän enemmistölle. Nyt S5 ei voi voittaa vaalia, koska S1, S2 ja S3
+kieltäytyvät äänestämästä ehdokasta, jonka loki päättyy termiin 3, ja
+indeksit 2 ja 3 ovat turvassa.
+
 Tästä syystä uusi johtaja lisää termin alussa tyhjän merkinnän. Ilman
 sitä edellisten termien merkinnät jäisivät odottamaan, kunnes joku
 asiakas lähettää komennon, ja siihen asti johtaja ei voisi vastata

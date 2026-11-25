@@ -143,10 +143,46 @@ päivittävät molemmat kellot edellä kuvatulla tavalla:
 ```{.cpp tiedosto="esimerkit/03-vektorikellot.cpp" osa="tapahtumat"}
 ```
 
-```{.tuloste tiedosto="esimerkit/03-vektorikellot.odotettu"}
+```{.tuloste tiedosto="esimerkit/03-vektorikellot.odotettu" asti="g P2"}
 ```
 
-Taulukon parit näyttävät eron. Tapahtumat a ja g ovat ketjussa
+Samat tapahtumat aikajanoilla vektoreineen:
+
+```{.dot otsikko="Tulosteen tapahtumat a–g ja niiden vektorikellot"}
+digraph {
+  nodesep=1.2; ranksep=0.3;
+  node [shape=point, width=0.04, color="#5B6B70"];
+  edge [arrowhead=none, style=dashed, color="#B8C4C8"];
+  t0 [shape=box, width=1, label="P0"];
+  t0 -> t0_0 -> t0_1 -> t0_2 -> t0_3 -> t0_4;
+  t1 [shape=box, width=1, label="P1"];
+  t1 -> t1_0 -> t1_1 -> t1_2 -> t1_3 -> t1_4;
+  t2 [shape=box, width=1, label="P2"];
+  t2 -> t2_0 -> t2_1 -> t2_2 -> t2_3 -> t2_4;
+  {rank=same; t0_0; t1_0; t2_0;}
+  {rank=same; t0_1; t1_1; t2_1;}
+  {rank=same; t0_2; t1_2; t2_2;}
+  {rank=same; t0_3; t1_3; t2_3;}
+  {rank=same; t0_4; t1_4; t2_4;}
+  {rank=same; t0; t1; t2;}
+  t0 -> t1 -> t2 [style=invis];
+  t0_1 -> t1_2 [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, label="m1"];
+  t1_3 -> t2_4 [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, label="m2"];
+  t0_0 [xlabel="a [1,0,0]"]; t0_1 [xlabel="b [2,0,0]"];
+  t1_0 [xlabel="c [0,1,0]"]; t1_2 [xlabel="d [2,2,0]"];
+  t1_3 [xlabel="e [2,3,0]"];
+  t2_0 [xlabel="f [0,0,1]"]; t2_4 [xlabel="g [2,3,2]"];
+}
+```
+
+Kuvassa tapahtumasta toiseen on syy-seurausketju täsmälleen silloin,
+kun toiseen pääsee seuraamalla aikajanoja alaspäin ja viestejä nuolen
+suuntaan. Pisteestä f ei pääse pisteeseen d eikä päinvastoin.
+
+```{.tuloste tiedosto="esimerkit/03-vektorikellot.odotettu" alkaen="pari" asti="c-d"}
+```
+
+Parit näyttävät kellojen eron. Tapahtumat a ja g ovat ketjussa
 viestien m1 ja m2 kautta, ja kumpikin kello järjestää ne oikein.
 Tapahtumat f ja d ovat samanaikaisia, mutta Lamportin leimoista
 1 < 3 voisi päätellä, että f oli ensin. Vain vektorikello kertoo, ettei
@@ -166,7 +202,10 @@ jotka se kattaa, ja samanaikaiset versiot säilyvät *sisaruksina*
 ```{.cpp tiedosto="esimerkit/03-vektorikellot.cpp" osa="kori"}
 ```
 
-Tulosteen lopusta näkyy ostoskori. Replika 1 lisäsi leivän nähtyään
+```{.tuloste tiedosto="esimerkit/03-vektorikellot.odotettu" alkaen="r0 kirjoittaa"}
+```
+
+Replika 1 lisäsi leivän nähtyään
 maidon, joten sen versio korvasi alkuperäisen. Replika 2 lisäsi kahvin
 näkemättä leipää, joten versiot jäivät rinnakkain. Asiakas yhdisti
 sisarukset, ja yhdistetyn version kello kattaa molemmat. LWW olisi

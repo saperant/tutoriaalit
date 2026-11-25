@@ -35,7 +35,7 @@ verkkopalveluissa yleensä: muutama tuote saa suuren osan katseluista.
 ```{.python tiedosto="esimerkit/luku06/valimuisti.py" osa="osumat"}
 ```
 
-```{.tuloste tiedosto="esimerkit/luku06/valimuisti.odotettu"}
+```{.tuloste tiedosto="esimerkit/luku06/valimuisti.odotettu" rivit="1-2"}
 ```
 
 Ensimmäisellä kierroksella välimuisti on kylmä, ja osumasuhde jää 56
@@ -57,10 +57,47 @@ Cache-aside-mallissa on kilpatilanne, joka jättää vanhan arvon muistiin
 invalidoinnista huolimatta. Pyyntö A toteaa hudin ja hakee arvon
 kannasta, mutta haku on hidas. Sillä välin B päivittää kannan ja
 poistaa arvon muistista. Kun A:n haku valmistuu, A tallentaa vanhan
-arvonsa, ja se jää muistiin TTL:n ajaksi. Lomitus näytetään
-vaiheittain, jotta tulos on joka ajolla sama:
+arvonsa, ja se jää muistiin TTL:n ajaksi.
+
+```{.dot otsikko="Cache-aside-kilpatilanne: A:n hidas haku ohittaa B:n invalidoinnin"}
+digraph {
+  nodesep=0.9; ranksep=0.3;
+  node [shape=point, width=0.04, color="#5B6B70"];
+  edge [arrowhead=none, style=dashed, color="#B8C4C8"];
+  t0 [shape=box, width=1, label="pyyntö A"];
+  t0 -> t0_0 -> t0_1 -> t0_2 -> t0_3 -> t0_4 -> t0_5;
+  t1 [shape=box, width=1, label="välimuisti"];
+  t1 -> t1_0 -> t1_1 -> t1_2 -> t1_3 -> t1_4 -> t1_5;
+  t2 [shape=box, width=1, label="tietokanta"];
+  t2 -> t2_0 -> t2_1 -> t2_2 -> t2_3 -> t2_4 -> t2_5;
+  t3 [shape=box, width=1, label="pyyntö B"];
+  t3 -> t3_0 -> t3_1 -> t3_2 -> t3_3 -> t3_4 -> t3_5;
+  {rank=same; t0; t1; t2; t3;}
+  {rank=same; t0_0; t1_0; t2_0; t3_0;}
+  {rank=same; t0_1; t1_1; t2_1; t3_1;}
+  {rank=same; t0_2; t1_2; t2_2; t3_2;}
+  {rank=same; t0_3; t1_3; t2_3; t3_3;}
+  {rank=same; t0_4; t1_4; t2_4; t3_4;}
+  {rank=same; t0_5; t1_5; t2_5; t3_5;}
+  t0 -> t1 -> t2 -> t3 [style=invis];
+  t0_0 -> t1_0 [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, label="GET: huti"];
+  t0_1 -> t1_1 [style=solid, color="#1F2A2E", constraint=false];
+  t1_1 -> t2_1 [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, label="hae: 10.00"];
+  t3_2 -> t2_2 [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, label="päivitä: 12.00"];
+  t3_3 -> t2_3 [style=solid, color="#1F2A2E", constraint=false];
+  t2_3 -> t1_3 [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, label="DEL"];
+  t0_4 -> t1_4 [style=solid, arrowhead=normal, color="#B4532A", fontcolor="#B4532A", constraint=false, label="SET 10.00"];
+  t1_5 [xlabel="muistissa 10.00"]; t2_5 [xlabel="kannassa 12.00"];
+}
+```
+
+Esimerkki ajaa saman lomituksen vaiheittain yhdessä säikeessä, jotta
+tulos on joka ajolla sama:
 
 ```{.python tiedosto="esimerkit/luku06/valimuisti.py" osa="kilpa"}
+```
+
+```{.tuloste tiedosto="esimerkit/luku06/valimuisti.odotettu" alkaen="ilman vuokraa"}
 ```
 
 Ilman suojaa muistiin jää vanha hinta 10.00, vaikka kannassa on 12.00.
@@ -138,11 +175,22 @@ instansseikseen.
   lyhyellä TTL:llä jaetun välimuistin edessä auttaa kuumiin avaimiin.
 - **CDN** on välimuisti käyttäjän lähellä staattiselle ja julkiselle
   sisällölle: kuvat, skriptit, julkiset sivut. Se vähentää sekä
-  latenssia että omaa kaistaa (luku 2). Invalidointi tehdään
-  versioimalla osoitteet (`kuva.3f2a.jpg`) eikä poistopyynnöillä.
+  latenssia että omaa kaistaa (luku 2).
 - **Negatiivinen välimuisti.** Myös "ei löydy" kannattaa tallentaa
   lyhyeksi ajaksi, jotta olemattomien avainten pyynnöt eivät kuormita
   kantaa (luku 12).
+
+Selain ja CDN noudattavat vastauksen `Cache-Control`-otsaketta, joten
+niiden TTL päätetään sovelluksessa: `public, max-age=31536000,
+immutable` sopii tiedostolle, jonka osoite vaihtuu sisällön mukana, ja
+`s-maxage` antaa jaetulle välimuistille eri ajan kuin selaimelle.
+Reunalla invalidointi on hidasta ja epävarmaa, koska kopioita on
+sadoissa paikoissa ja käyttäjien selaimissa. Siksi muuttuva sisältö
+julkaistaan uudella osoitteella (`kuva.3f2a.jpg`) eikä poisteta
+välimuisteista, ja sivulle, jonka osoite ei voi vaihtua, annetaan lyhyt
+`max-age`. Ehdolliset pyynnöt ja `ETag`, joilla vanhentunut kopio
+tarkistetaan siirtämättä sisältöä uudelleen, käsitellään taidossa
+*Taustapalvelut*.
 
 ## Käytännössä
 
@@ -168,3 +216,6 @@ instansseikseen.
 - Osaat tunnistaa välimuistiryntäyksen ja estää sen.
 - Osaat valita Redisin häätöpolitiikan sen mukaan, onko Redis
   välimuisti vai tallennus.
+- Osaat valita `Cache-Control`-arvot selaimen ja CDN:n välimuistille ja
+  perustella, miksi reunalla muuttuva sisältö julkaistaan uudella
+  osoitteella.

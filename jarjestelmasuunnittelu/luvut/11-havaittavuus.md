@@ -125,9 +125,10 @@ tai tiivistetään, ja säilytysaika rajataan.
 ## Hälytykset tavoitteesta
 
 Hälytys herättää ihmisen, joten sen on tarkoitettava, että käyttäjät
-kärsivät nyt tai pian. Hyvä peruste on SLO:n virhebudjetin
-kulumisnopeus (luku 10). Monen ikkunan sääntö hälyttää, kun budjetti
-kuluu nopeasti sekä pitkällä että lyhyellä ikkunalla:
+kärsivät nyt tai pian. Peruste on luvussa 10 laskettu virhebudjetin
+kulumisnopeus; tässä sama raja kirjoitetaan säännöksi. Monen ikkunan
+sääntö hälyttää vasta, kun budjetti kuluu nopeasti sekä pitkällä että
+lyhyellä ikkunalla, jolloin lyhyt piikki ei herätä ketään:
 
 ```{.yaml tiedosto="esimerkit/luku11/halytykset.yaml" osa="saanto"}
 ```

@@ -13,6 +13,8 @@
   pysyvyyden halvalla, kunhan kuittaus odottaa sitä.
 - **Älä järjestä seinäkelloilla.** Käytä loogista kelloa, hybridikelloa
   tai johtajan järjestysnumeroa.
+- **Vuokra tarvitsee aitausmerkin.** Tauon jälkeen heräävä haltija ei
+  tiedä vuokransa vanhentuneen; resurssin on tarkistettava merkki.
 - **Enemmistö ratkaisee.** Leikkaavat kvoorumit tekevät vaaleista ja
   sitoutumisesta turvallisia, ja pariton määrä solmuja sietää
   enemmistön verran vähemmän vikoja.
@@ -42,19 +44,22 @@ puuttuvat anti-entropia ja löysät kvoorumit, ja CRDT:istä hautakivien
 karsinta. Jokainen niistä on oma virhelähteensä, ja jokainen testataan
 samalla menetelmällä.
 
-## Mihin seuraavaksi
+## Jatkotaidot
 
-- *Skaalautuvien järjestelmien suunnittelu*: osittaminen, välimuistit,
+- *Skaalautuvien järjestelmien suunnittelu*: osiointi, välimuistit,
   kuormantasaus ja kapasiteetin mitoitus tämän tutoriaalin periaatteiden
   päälle.
 - *Palveluarkkitehtuurit*: SAGA, viestinvälittäjät ja mikropalvelut,
   joissa hajautetun järjestelmän ongelmat näkyvät palveluiden
   rajapinnoissa.
-- *SQL*: transaktiot ja eristystasot yhden tietokannan sisällä, joihin
-  hajautetut transaktiot vertautuvat.
-- *Rinnakkaisohjelmointi*: muistimallit ja lukottomat rakenteet, jotka
-  ovat jaetun muistin vastine tämän tutoriaalin viestipohjaisille
-  ratkaisuille.
+- *NoSQL-tietokannat*: tietokannat, joissa replikointi, kvoorumit ja
+  konsistenssitaso ovat käyttäjän valittavia asetuksia.
+
+Vertailukohdaksi sopivat *SQL ja relaatiotietokannat*, jossa
+transaktiot ja eristystasot toteutuvat yhden tietokannan sisällä, ja
+esitietona ollut *Rinnakkaisohjelmointi*, jonka muistimallit ja
+lukottomat rakenteet ovat jaetun muistin vastine tämän tutoriaalin
+viestipohjaisille ratkaisuille.
 
 ## Lähteet ja jatkolukeminen
 

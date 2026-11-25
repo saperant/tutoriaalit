@@ -83,29 +83,37 @@ tunnus voi koostua ajasta, solmun numerosta ja laskurista
 
 ## Arkkitehtuuri
 
-```text
-             +-------------------+
- asiakas --> |  HAProxy (2 kpl)  |    terveystarkistus /terveys
-             +---------+---------+
-                       |  kierto, uudelleenyritys yhteysvirheessä
-          +------------+------------+
-          v                         v
-   +-------------+           +-------------+
-   | sovellus a  |   ...     | sovellus b  |   tilattomia
-   +------+------+           +------+------+
-          |   cache-aside, TTL 1 h, negatiivinen TTL 60 s
-          +------------+------------+
-          v                         v
-   +-------------+           +-------------------------+
-   |    Redis    |           |  PostgreSQL + replika   |
-   +-------------+           +-------------------------+
+```{.dot otsikko="Lyhytosoitepalvelun tavoitearkkitehtuuri"}
+digraph {
+  nodesep=0.5; ranksep=0.45;
+  asiakas [shape=plaintext];
+  tasaaja [label="HAProxy (2 kpl)"];
+  subgraph cluster_sovellus {
+    label="tilattomat sovelluspalvelimet"; fontsize=9; color="#B8C4C8";
+    a [label="sovellus a"]; b [label="sovellus b"];
+  }
+  redis [label="Redis"];
+  subgraph cluster_kanta {
+    label="PostgreSQL"; fontsize=9; color="#B8C4C8";
+    kanta [label="ensisijainen"]; replika;
+    {rank=same; kanta; replika;}
+  }
+  asiakas -> tasaaja;
+  tasaaja -> a [label="  kierto,\l  terveystarkistus\l"];
+  tasaaja -> b [label="  uudelleenyritys\l  yhteysvirheessä\l"];
+  a -> redis [label="  cache-aside\l"];
+  b -> redis;
+  a -> kanta; b -> kanta [label="  huti, luonti\l"];
+  kanta -> replika [style=dashed, label="replikointi"];
+}
 ```
 
 Kaavio on tavoitearkkitehtuuri; koeajossa on yksi tasaaja ja kanta
-ilman replikaa. Ohjaus lukee välimuistista ja hutilla kannasta; olematonkin koodi
-tallennetaan hetkeksi välimuistiin, jotta virheelliset tai haitalliset
-pyynnöt eivät kuormita kantaa. Jos Redis ei vastaa, ohjaus jatkaa
-kannan varassa:
+ilman replikaa. Välimuistin TTL on tunti ja negatiivisen välimuistin
+60 sekuntia. Ohjaus lukee välimuistista ja hutilla kannasta;
+olematonkin koodi tallennetaan hetkeksi välimuistiin, jotta
+virheelliset tai haitalliset pyynnöt eivät kuormita kantaa. Jos Redis
+ei vastaa, ohjaus jatkaa kannan varassa:
 
 ```{.python tiedosto="esimerkit/jarjestelma/lyhyt.py" osa="haku"}
 ```
@@ -152,19 +160,22 @@ Tuloksista näkyy:
   onnistuivat suoraan kannasta (`ohitettu`). Kuorma kannassa kasvoi,
   mikä on mitoitettava tai rajattava (luku 9).
 
-Kehitysvaiheessa koeajo kesti ensin yli minuutin, vaikka pyyntöjä oli
-vain 3 000. Syy oli verkkopinossa: `http.server` kirjoitti otsakkeet ja
-rungon eri kirjoituksina, ja pysyvällä yhteydellä Naglen algoritmi ja
-vastapuolen viivästetty kuittaus pidättivät jokaista vastausta noin
-40 ms. `TCP_NODELAY` pudotti ajon kolmeen sekuntiin. Tällaiset viiveet
-näkyvät vain mittaamalla oikeaa kokoonpanoa.
+Koko kokoonpanon mittaaminen paljastaa viiveitä, joita osien testit
+eivät näytä. Tässä palvelussa sellainen on verkkopinossa: `http.server`
+kirjoittaa otsakkeet ja rungon eri kirjoituksina, ja pysyvällä
+yhteydellä Naglen algoritmi ja vastapuolen viivästetty kuittaus
+pidättävät silloin jokaista vastausta noin 40 ms (taito
+*Verkko-ohjelmointi*). Ilman asetusta `TCP_NODELAY` 3 000 pyynnön
+koeajo kesti kehityskoneella yli minuutin, sen kanssa kolme sekuntia.
+Siksi esimerkkien HTTP-palvelin kytkee Naglen algoritmin pois
+(`disable_nagle_algorithm` tiedostossa `jarjestelma/http_apu.py`).
 
 ## Sama kontteina
 
 Tuotannossa sama kokoonpano ajetaan kontteina. Compose-tiedosto kuvaa
 sovelluspalvelimet ja niiden riippuvuudet terveystarkistuksineen, ja
 salasana luetaan salaisuudesta eikä ympäristömuuttujasta (taito
-*Säiliöt ja pilvi-infrastruktuuri*):
+*Kontit ja pilvi-infrastruktuuri*):
 
 ```{.yaml tiedosto="esimerkit/luku12/compose.yaml" osa="sovellus"}
 ```

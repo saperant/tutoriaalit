@@ -28,12 +28,17 @@ rinnakkain ja odottaa kaikkia, on yhtä hidas kuin hitain vastaus:
 ```{.tuloste tiedosto="esimerkit/luku03/hantalatenssi.odotettu"}
 ```
 
+![Saman ajon latenssijakaumat: kuinka suuri osa pyynnöistä kestää
+vaaka-akselin arvoa kauemmin. Pystyakseli on logaritminen, joten häntä
+näkyy. Hajautus nostaa koko käyrää, ja varmistettu pyyntö leikkaa
+hännän.](kuvat/hanta.png){width=70%}
+
 Yhden kutsun p99 on 105 ms. Kymmenen kutsun pyynnön mediaani on vielä
 14 ms, mutta p99 on 280 ms, lähellä hitaimman mahdollisen kutsun kestoa.
 Sadan kutsun pyynnön mediaani on 160 ms: 63 % pyynnöistä osuu ainakin
-yhteen hitaaseen kutsuun, joten tyypillinen pyyntö on hidas. Ilmiö tunnetaan nimellä
-*tail at scale*: mitä laajemmin pyyntö hajautuu, sitä enemmän häntä
-ratkaisee.
+yhteen hitaaseen kutsuun, joten tyypillinen pyyntö on hidas. Ilmiö
+tunnetaan nimellä *tail at scale*: mitä laajemmin pyyntö hajautuu, sitä
+enemmän häntä ratkaisee.
 
 Varmistettu pyyntö (*hedged request*) lähettää saman kyselyn toiselle
 kopiolle, jos ensimmäinen ei vastaa tietyn ajan kuluessa. Raja asetetaan
@@ -68,14 +73,20 @@ odottamaan, kun rinnakkaisia käsittelijöitä on *c*:
 ```{.tuloste tiedosto="esimerkit/luku03/kapasiteetti.odotettu"}
 ```
 
+![Saman kaavan antama keskimääräinen jonotusaika palveluajan
+kerrannaisena. Mitä suurempi yhteinen allas, sitä korkeammalla
+käyttöasteella jono pysyy lyhyenä, mutta jokainen käyrä nousee lopulta
+pystyyn.](kuvat/kayttoaste.png){width=68%}
+
 Kuusi palvelinta riittää keskimäärin juuri ja juuri, mutta käyttöaste
 100 % tarkoittaa rajatonta jonoa. Seitsemällä palvelimella 19 %
 pyynnöistä joutuu odottamaan. Tulos näyttää myös *yhdistämisen edun*: kun
 yhteisessä altaassa on 56 käsittelijää, 86 % käyttöaste on vielä
 kohtuullinen (jonotus 0,47 ms), kun taas yhdellä käsittelijällä
-keskimääräinen jonotus olisi kuusinkertainen palveluaikaan nähden. Siksi yksi suuri jono useamman palvelimen
-edessä on parempi kuin erillinen jono kullekin, kunhan kuormantasaaja
-jakaa työn hyvin (luku 4).
+keskimääräinen jonotus olisi kuusinkertainen palveluaikaan nähden.
+Siksi yksi suuri jono useamman palvelimen edessä on parempi kuin
+erillinen jono kullekin, kunhan kuormantasaaja jakaa työn hyvin
+(luku 4).
 
 Viimeinen rivi on tavallinen mitoitussääntö: kapasiteetin on riitettävä
 myös silloin, kun yksi palvelin on poissa (N + 1), ja käyttöasteen on

@@ -42,6 +42,24 @@ vaatii kahden replikan kuittauksen, AP-tilassa paikallinen replika
 kuittaa heti ja levittää tilansa 50 ms välein, joko korvaamalla koko
 arvon (LWW) tai yhdistämällä (CRDT, ks. luku 5):
 
+```{.dot otsikko="Kokeen kokoonpano. Katkoviivalla piirretyt konesalien väliset yhteydet katkeavat sekunniksi."}
+graph {
+  rankdir=LR; nodesep=0.35; ranksep=1.1;
+  subgraph cluster_1 {
+    label="konesali 1 (enemmistö)"; fontsize=9; color="#B8C4C8";
+    A [label="asiakas A", shape=ellipse]; r0; r1;
+    A -- r0; r0 -- r1;
+  }
+  subgraph cluster_2 {
+    label="konesali 2 (vähemmistö)"; fontsize=9; color="#B8C4C8";
+    r2; B [label="asiakas B", shape=ellipse];
+    r2 -- B;
+  }
+  r0 -- r2 [style=dashed, label="+40 ms"];
+  r1 -- r2 [style=dashed];
+}
+```
+
 ```{.cpp tiedosto="esimerkit/09-cap.cpp" osa="replika"}
 ```
 

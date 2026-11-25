@@ -1,4 +1,4 @@
-# Lyhytosoitepalvelun säiliökuva. Rakennetaan esimerkit-hakemistosta:
+# Lyhytosoitepalvelun konttikuva. Rakennetaan esimerkit-hakemistosta:
 #   docker build -f luku12/Dockerfile -t lyhyt:1.0.0 .
 FROM python:3.12-slim-bookworm
 

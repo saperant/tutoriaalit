@@ -32,18 +32,23 @@
 - **Histogrammit, jäljet ja oireisiin perustuvat hälytykset.** Persentiilejä
   ei voi keskiarvoistaa, ja jäljen tunnus yhdistää signaalit.
 
-## Mihin tästä
+## Jatkotaidot
 
 Tutoriaali käsitteli rakennuspalikat yksi kerrallaan ja kokosi ne yhdeksi
 pieneksi palveluksi. Seuraavat askeleet ovat:
 
-- **Hajautettujen järjestelmien teoria syvemmin**: konsensus, konsistenssi
-  ja simulointitestaus (taito *Hajautetut järjestelmät*).
 - **Palvelujen väliset mallit**: saga, outbox, yhdyskäytävä ja
   perintöjärjestelmän uudistaminen (taito *Palveluarkkitehtuurit*).
-- **Käyttö ja ylläpito**: kontit, Kubernetes ja käyttöönottoputket (taito
-  *Säiliöt ja pilvi-infrastruktuuri*) sekä palvelutasot ja valvonta
-  (taito *Palvelinympäristöt*).
+- **Käyttö ja ylläpito**: kontit ja Kubernetes (taito *Kontit ja
+  pilvi-infrastruktuuri*), käyttöönottoputket ja julkaisustrategiat
+  (taito *Jatkuva integraatio ja toimitus*) sekä palvelutasot ja
+  valvonta (taito *Palvelinympäristöt*).
+- **Tietokannan valinta**: avain-arvo-, dokumentti- ja
+  leveäsaraketietokannat ja niiden replikointimallit (taito
+  *NoSQL-tietokannat*).
+- **Organisaatio**: järjestelmän rakenne seuraa tiimien rakennetta, ja
+  palvelurajat ovat myös omistajuusrajoja (taito *Tiimit ja
+  organisaatiomallit*).
 - **Tietoturva**: todennus palvelujen välillä, salaisuudet ja
   hyökkäyspinta (taito *Palveluarkkitehtuurin tietoturva*).
 - **Harjoittelu**: suunnittele syötepalvelu, chat, tiedostojen
@@ -105,11 +110,12 @@ Verkossa:
 - OpenTelemetry-dokumentaatio, opentelemetry.io.
 - Prometheus: *Histograms and summaries* ja *Exposition formats*,
   prometheus.io/docs.
-- PostgreSQL 16 -dokumentaatio: *High Availability, Load Balancing, and
-  Replication* ja *Write-Ahead Log* -asetukset, postgresql.org/docs/16.
+- PostgreSQL-dokumentaatio: *High Availability, Load Balancing, and
+  Replication* ja *Write-Ahead Log* -asetukset,
+  postgresql.org/docs/current. Esimerkit on ajettu versiolla 16.
 - Redis-dokumentaatio: *Streams*, *Key eviction* ja *Lua scripting*,
   redis.io/docs.
-- HAProxy 2.8: *Configuration Manual* ja *Management Guide* (Runtime
-  API), docs.haproxy.org.
+- HAProxy: *Configuration Manual* ja *Management Guide* (Runtime
+  API), docs.haproxy.org. Esimerkit on ajettu versiolla 2.8.
 - psycopg 3 -dokumentaatio, psycopg.org/psycopg3/docs.
 - Compose Specification, compose-spec.io.

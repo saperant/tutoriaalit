@@ -45,6 +45,11 @@ hitaampi. Kuorma on 75 % yhteisestä kapasiteetista:
 ```{.tuloste tiedosto="esimerkit/luku04/algoritmit.odotettu"}
 ```
 
+![Sama simulaatio kuvana. Hidas palvelin ehtii käsitellä 19 %
+kuormasta (katkoviiva); algoritmit, jotka antavat sille enemmän,
+kasvattavat sen jonoa rajatta, ja p99 on satoja kertoja
+suurempi.](kuvat/tasaus.png){width=85%}
+
 Kierto (*round robin*) ja satunnainen valinta antavat hitaalle
 palvelimelle neljänneksen pyynnöistä, eli 66 pyyntöä sekunnissa, kun se
 ehtii 50. Sen jono kasvaa koko simulaation ajan, ja p99 on lähes minuutti,
@@ -77,6 +82,14 @@ palauttaa sen vasta kahden onnistuneen jälkeen, jotta juuri käynnistyvä
 tai vaihteleva palvelin ei saa liikennettä liian aikaisin. Tuotannossa
 väli on tyypillisesti 1–5 sekuntia; tiheä tarkistus huomaa vian nopeasti
 mutta kuormittaa palvelimia ja reagoi hetkellisiin hikkoihin.
+
+```{.ajoituskaavio otsikko="Asetusten inter 200ms, fall 2 ja rise 2 vaikutus: yksi ruutu on 100 ms. Kaatumisen ja alas merkitsemisen väliin jää ikkuna, jonka aikana pyyntöjä ohjataan vielä kaatuneelle palvelimelle."}
+{"signal": [
+  {"name": "palvelin b", "wave": "1..0.......1....."},
+  {"name": "tarkistus", "wave": "=.=.=.=.=.=.=.=.=", "data": ["ok", "ok", "virhe", "virhe", "virhe", "virhe", "ok", "ok", "ok"]},
+  {"name": "tila tasaajassa", "wave": "=.....=.......=..", "data": ["ylhäällä", "alhaalla", "ylhäällä"]}
+]}
+```
 
 Ennen kuin tarkistus huomaa kaatumisen, pyyntöjä menee vielä kaatuneelle
 palvelimelle. Siihen auttavat `retries` ja `option redispatch`: kun
@@ -116,7 +129,9 @@ Terveystarkistus vastaa kysymykseen "saako tämä palvelin liikennettä
 juuri nyt". Se on eri asia kuin "onko prosessi elossa": palvelin voi
 olla elossa mutta käynnistymässä, ylikuormitettu tai ilman
 tietokantayhteyttä. Kubernetes erottaa elävyyden (*liveness*, kaatuneen
-uudelleenkäynnistys) ja valmiuden (*readiness*, liikenteen ohjaus).
+uudelleenkäynnistys) ja valmiuden (*readiness*, liikenteen ohjaus);
+tarkistusten määrittely ja päivitysten kulku siellä käsitellään
+taidossa *Kontit ja pilvi-infrastruktuuri*.
 Valmiustarkistus saa tarkistaa riippuvuudet, joita ilman pyyntöjä ei voi
 palvella, mutta elävyystarkistus ei: muuten tietokannan katko käynnistää
 kaikki sovelluspalvelimet uudelleen yhtä aikaa.

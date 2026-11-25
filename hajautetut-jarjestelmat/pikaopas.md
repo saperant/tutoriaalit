@@ -60,6 +60,8 @@ lang: fi
 - **Lukukorjaus** päivittää jäljessä olevan, **anti-entropia** loput.
 - Kvoorumi ei yksin ole linearisoituva: luku tarvitsee
   takaisinkirjoituksen (ABD).
+- **Vuokra + aitausmerkki:** vuokralla kasvava numero, resurssi hylkää
+  pienemmän; tauon jälkeen heräävä vanha haltija ei pääse kirjoittamaan.
 
 # CRDT
 

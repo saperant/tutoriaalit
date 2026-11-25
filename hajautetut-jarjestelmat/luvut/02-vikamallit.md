@@ -199,6 +199,13 @@ aikarajaa havaittuihin viiveisiin; esimerkiksi Cassandran ja Akkan
 käyttämä φ-kertymäilmaisin (*phi accrual*) arvioi viiveiden jakaumaa
 ja ilmoittaa epäilyn todennäköisyytenä.
 
+Kun solmuja on satoja, jokainen ei voi lähettää sykettä jokaiselle.
+SWIM-protokollan tyyppiset ilmaisimet (Consul, Cassandran jäsenyys)
+kysyvät kerrallaan yhdeltä satunnaiselta solmulta, pyytävät
+vastaamatta jääneestä toisen mielipiteen muutamalta muulta ja
+levittävät jäsenlistan muutokset juoruamalla, kuten luvun *CRDT:t*
+koe levittää tilaa.
+
 ## Kaatuminen ja pysyvä tila
 
 Viimeinen esimerkki näyttää, miksi kaatumisen ja palautumisen malli

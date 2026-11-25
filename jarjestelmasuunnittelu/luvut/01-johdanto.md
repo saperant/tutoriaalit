@@ -55,11 +55,11 @@ kolmeen ryhmään:
   ajetaan oikeina ohjelmina, ja omat palvelut on kirjoitettu Pythonin
   vakiokirjastolla (`http.server`). PostgreSQLiin yhdistetään
   psycopg-kirjastolla, Redisiin pienellä omalla asiakkaalla.
-- **Säiliökuvaukset**: luvun 12 palvelu on kuvattu myös Compose-
+- **Konttikuvaukset**: luvun 12 palvelu on kuvattu myös Compose-
   tiedostona ja Dockerfilenä, jotka tarkistetaan skeemaa ja
   tyylisääntöjä vasten.
 
-Tuotannossa palvelut olisivat kontteja (taito *Säiliöt ja
+Tuotannossa palvelut olisivat kontteja (taito *Kontit ja
 pilvi-infrastruktuuri*). Testeissä kontteja ei voi aina ajaa, esimerkiksi
 kehityskontin sisällä, joten esimerkkien apukirjasto käynnistää saman
 kokoonpanon tavallisina prosesseina. Jokainen esimerkki saa oman
@@ -85,7 +85,8 @@ Ajoitukset vaihtelevat koneen kuorman mukaan, joten verrattavissa
 tulosteissa ei ole kestoja eikä suoritustehoja. Niissä on laskureita,
 osumasuhteita ja vertailujen tuloksia ("synkroninen kirjoitus odotti
 replikaa: True"). Simulaatioiden latenssit ovat simuloitua aikaa, ja ne
-ovat samat joka ajolla.
+ovat samat joka ajolla. Lukujen kuvaajat on piirretty samoista
+simulaatioista ja laskelmista kuin tulosteet (`make kuvat`).
 
 Esimerkit ajetaan komennolla:
 
@@ -108,8 +109,10 @@ Lähellä olevia aiheita käsitellään muissa taidoissa:
 |------|-------|
 | aikarajat, uudelleenyritys, katkaisija, saga, outbox | *Palveluarkkitehtuurit* |
 | HTTP-palvelun rakenne, REST, idempotenssi | *Taustapalvelut* |
-| kontit, Compose, Kubernetes | *Säiliöt ja pilvi-infrastruktuuri* |
+| kontit, Compose, Kubernetes | *Kontit ja pilvi-infrastruktuuri* |
 | SLI, SLO ja hälytysten hygienia | *Palvelinympäristöt* |
+| avain-arvo-, dokumentti- ja leveäsaraketietokantojen käyttö | *NoSQL-tietokannat* |
+| käyttöönottoputki ja julkaisustrategiat | *Jatkuva integraatio ja toimitus* |
 | jonoteoria ja mallien validointi | *Arkkitehtuurin mallinnus ja suunnittelutilan tutkiminen* |
 | soketit, aikakatkaisut, vastapaine | *Verkko-ohjelmointi* |
 | mittaaminen ja profilointi | *Suorituskyvyn analyysi ja optimointi* |

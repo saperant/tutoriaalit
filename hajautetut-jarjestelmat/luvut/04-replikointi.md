@@ -67,8 +67,77 @@ muutakin vaaraa. *Halkeama-aivot* (*split brain*): vanha johtaja ei
 ole kaatunut vaan erillään verkosta, ja se jatkaa kirjoitusten
 vastaanottamista uuden johtajan rinnalla. *Väärä vaihto*: vikailmaisin
 epäilee turhaan (ks. edellinen luku), ja vaihto aiheuttaa enemmän
-haittaa kuin hidas johtaja. Kumpaankin tarvitaan termejä ja
-kvoorumeja, jotka esitellään Raftin yhteydessä.
+haittaa kuin hidas johtaja. Väärää vaihtoa vastaan auttavat kvoorumit
+ja termit, jotka esitellään Raftin yhteydessä. Halkeama-aivoja vastaan
+on yleisempi väline, joka toimii myös ilman konsensusta
+replikoiden välillä.
+
+## Vuokrat ja aitausmerkit
+
+*Vuokra* (*lease*) on määräaikainen lukko. Lukkopalvelu lupaa
+johtajuuden tai resurssin yhdelle solmulle esimerkiksi kymmeneksi
+sekunniksi, ja haltija uusii vuokran ennen sen päättymistä. Jos haltija
+kaatuu tai jää verkon taakse, vuokra vanhenee itsestään ja seuraava
+pyytäjä saa sen. ZooKeeperin ja etcd:n lukot ja Kubernetesin
+johtajanvalinta toimivat näin.
+
+Vuokra ei yksin estä kahta kirjoittajaa. Haltija ja palvelu mittaavat
+aikaa eri kelloilla (ks. edellinen luku), eikä haltija aina edes huomaa
+ajan kuluvan: prosessi voi pysähtyä minkä tahansa kahden käskyn väliin
+roskienkeruun, sivutuksen tai pysäytetyn virtuaalikoneen takia. Jos
+tauko osuu vuokran tarkistuksen ja kirjoituksen väliin, prosessi herää,
+uskoo yhä omistavansa vuokran ja kirjoittaa. Lyhyempi vuokra tai
+varmuusmarginaali ei poista ongelmaa, koska tauon pituudella ei ole
+ylärajaa.
+
+*Aitausmerkki* (*fencing token*) siirtää tarkistuksen sinne, missä
+vahinko tapahtuisi. Lukkopalvelu antaa jokaiselle vuokralle edellistä
+suuremman numeron:
+
+```{.cpp tiedosto="esimerkit/04-aitaus.cpp" osa="lukko"}
+```
+
+Haltija lähettää merkin jokaisen kirjoituksen mukana, ja tallennus
+hylkää kirjoituksen, jonka merkki on pienempi kuin suurin sen näkemä:
+
+```{.cpp tiedosto="esimerkit/04-aitaus.cpp" osa="tallennus"}
+```
+
+Työntekijä tarkistaa vuokran ja pysähtyy sitten. Simulaattorissa tauko
+on ajastin, jonka jälkeen kirjoitus lähtee:
+
+```{.cpp tiedosto="esimerkit/04-aitaus.cpp" osa="tyontekija"}
+```
+
+Kokeessa vuokra kestää 200 ms. Työntekijä A saa sen ensin ja pysähtyy
+400 ms:ksi, ja B pyytää vuokraa hetkestä 150 alkaen:
+
+```{.cpp tiedosto="esimerkit/04-aitaus.cpp" osa="koe"}
+```
+
+Ilman aitausta tallennus hyväksyy kaiken:
+
+```{.tuloste tiedosto="esimerkit/04-aitaus.odotettu" alkaen="ilman aitausta" asti="lopputila"}
+```
+
+Lukkopalvelu toimi oikein: vuokria oli voimassa yksi kerrallaan, ja B
+sai omansa vasta, kun A:n vuokra oli vanhentunut hetkellä 201. Silti
+A:n vanha arvo 100 korvasi B:n uudemman arvon 200 hetkellä 407, koska
+A ei tiennyt nukkuneensa. Kun tallennus tarkistaa merkin, sama ajo
+päättyy toisin:
+
+```{.tuloste tiedosto="esimerkit/04-aitaus.odotettu" alkaen="aitausmerkilla" asti="lopputila"}
+```
+
+Tallennus oli jo nähnyt merkin 2, joten merkillä 1 tullut kirjoitus
+hylättiin. A saa hylkäyksestä tiedon ja voi luopua johtajuudesta.
+Aitaus vaatii, että suojattava resurssi osaa verrata merkkejä: oma
+tallennuskerros, tietokannan ehdollinen päivitys (`UPDATE … WHERE
+merkki <= ?`) tai objektitallennuksen ehdollinen kirjoitus käyvät,
+mutta ulkoinen palvelu, joka ei tunne merkkejä, jää suojatta. Raftin
+termi on sama ajatus protokollan sisällä: seuraaja hylkää viestin,
+jonka termi on sen omaa pienempi, joten vanha johtaja ei voi kirjoittaa
+uuden ohi.
 
 ## Monta johtajaa
 
@@ -166,9 +235,11 @@ kuin arvon omille replikoille, heikentävät takuuta entisestään.
   konsensukseen perustuvaa vaihtoa (etcd, ZooKeeper, Patroni, Raft
   tietokannan sisällä).
 - **Estä halkeama-aivot.** Vanhan johtajan on lakattava kirjoittamasta,
-  kun uusi valitaan: termit tai aitausmerkit (*fencing token*), joita
-  tallennuskerros tarkistaa, ovat luotettavampia kuin vanhan solmun
-  sammuttaminen.
+  kun uusi valitaan: termit tai aitausmerkit, joita tallennuskerros
+  tarkistaa, ovat luotettavampia kuin vanhan solmun sammuttaminen.
+- **Älä luota vuokraan ilman aitausta.** Vuokra kertoo, kenen pitäisi
+  kirjoittaa; vasta merkin tarkistus resurssissa estää muita
+  kirjoittamasta.
 - **Valitse R ja W kuorman mukaan.** $R = W = \lceil (N + 1)/2 \rceil$ on tasapainoinen
   oletus. Kirjoita ylös, mitä takuuta sovellus odottaa, ja testaa se.
 - **Johtajaton ei tarkoita ristiriidatonta.** Samanaikaiset kirjoitukset
@@ -180,6 +251,8 @@ kuin arvon omille replikoille, heikentävät takuuta entisestään.
   synkronisen ja puolisynkronisen kuittauksen hinnat.
 - Osaat selittää, miksi johtajan vaihto voi hukata kuitattuja
   kirjoituksia ja mitä halkeama-aivot tarkoittavat.
+- Osaat selittää, miksi vuokra ei yksin estä kahta kirjoittajaa, ja
+  toteuttaa aitausmerkin, jonka tallennus tarkistaa.
 - Osaat perustella ehdon R + W > N ja valita R:n ja W:n kuorman mukaan.
 - Osaat toteuttaa kvoorumiluvun ja -kirjoituksen sekä lukukorjauksen
   simulaattorissa ja mitata vanhentuneiden lukujen osuuden.

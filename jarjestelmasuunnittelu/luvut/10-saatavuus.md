@@ -17,13 +17,33 @@ tietokanta), saatavuudet kerrotaan: kokonaisuus on huonompi kuin heikoin
 osa. Kun riittää, että yksi kopioista toimii, kerrotaan
 epäsaatavuudet:
 
+```{.dot otsikko="Esimerkin neljäs kokoonpano. Sarjassa pyyntö tarvitsee jokaisen osan, rinnan riittää yksi kopioista. Välimuisti on ketjun ainoa yhden kappaleen osa tasaajan lisäksi."}
+digraph {
+  rankdir=LR; nodesep=0.25; ranksep=0.45;
+  pyynto [label="pyyntö", shape=plaintext];
+  tasaaja; muisti [label="välimuisti"];
+  subgraph cluster_api {
+    label="rinnan"; fontsize=9; color="#B8C4C8";
+    api1 [label="api"]; api2 [label="api"]; api3 [label="api"];
+  }
+  subgraph cluster_kanta {
+    label="rinnan"; fontsize=9; color="#B8C4C8";
+    kanta; replika;
+  }
+  pyynto -> tasaaja;
+  tasaaja -> api1; tasaaja -> api2; tasaaja -> api3;
+  api1 -> muisti; api2 -> muisti; api3 -> muisti;
+  muisti -> kanta; muisti -> replika;
+}
+```
+
 ```{.python tiedosto="esimerkit/luku10/saatavuus.py" osa="kaavat"}
 ```
 
 ```{.python tiedosto="esimerkit/luku10/saatavuus.py" osa="kokoonpanot"}
 ```
 
-```{.tuloste tiedosto="esimerkit/luku10/saatavuus.odotettu"}
+```{.tuloste tiedosto="esimerkit/luku10/saatavuus.odotettu" asti="2 vyöhykettä"}
 ```
 
 Neljä osaa sarjassa, joista mikään ei ole alle 99,9 %, tuottaa 99,7 %:n
@@ -89,6 +109,9 @@ vuorokaudessa.
 ```{.python tiedosto="esimerkit/luku10/saatavuus.py" osa="budjetti"}
 ```
 
+```{.tuloste tiedosto="esimerkit/luku10/saatavuus.odotettu" alkaen="virhebudjetti 30"}
+```
+
 Taulukko kertoo, mikä virhesuhde laukaisee nopean hälytyksen kullakin
 tavoitteella. Neljän ysin tavoitteella 0,14 % virheitä tunnin ajan on
 jo hälytyksen arvoinen; kahden ysin tavoitteella vasta 14 %. Luvussa 11
@@ -110,6 +133,9 @@ otetaan käyttöön:
   vanha), jotta vanha ja uusi versio toimivat yhtä aikaa.
 - **Ominaisuusliput** erottavat käyttöönoton julkaisusta: koodi on
   tuotannossa, mutta toiminto kytketään päälle erikseen.
+
+Julkaisustrategiat, toimitusputki ja tietokantamuutokset ilman katkoa
+käsitellään kokonaisuutena taidossa *Jatkuva integraatio ja toimitus*.
 
 ## Käytännössä
 

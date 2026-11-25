@@ -23,8 +23,8 @@ Linearisoituvuus (Herlihy ja Wing 1990) koskee yksittäisiä olioita,
 kuten rekisteriä tai jonoa, ja reaaliaikaa. Sarjallistuvuus koskee
 usean olion transaktioita mutta ei reaaliaikaa: tietokanta saa
 järjestää transaktiot miten tahansa, kunhan tulos vastaa jotakin
-järjestystä (ks. eristystasot taidossa *SQL*). Nimet sekoittuvat usein,
-mutta ne vastaavat eri kysymyksiin.
+järjestystä (ks. eristystasot taidossa *SQL ja relaatiotietokannat*).
+Nimet sekoittuvat usein, mutta ne vastaavat eri kysymyksiin.
 
 Kausaalinen konsistenssi on vahvin malli, joka säilyy käytettävänä
 verkon jakautuessa. Istuntotakuut (Terry ym. 1994) ovat sen osia
@@ -69,14 +69,23 @@ vastaus tiedetään:
 ```{.tuloste tiedosto="esimerkit/06-tarkistin.odotettu"}
 ```
 
-Kolmas historia on tärkein: luku näki uuden arvon 1, ja sen jälkeen
-alkanut luku näki vanhan arvon 0, vaikka kirjoitus oli yhä kesken.
-Kumpikin luku on erikseen mahdollinen, mutta yhdessä ne eivät ole,
-koska linearisointipisteen jälkeen kaikki näkevät uuden arvon. Tämä
+![Kolme historioista aikajanalla. Palkki on operaation kesto alusta
+loppuun, ja numero on operaation paikka tarkistimen löytämässä
+järjestyksessä. Keskimmäiselle historialle järjestystä ei
+ole.](kuvat/linearisoituvuus.png){width=85%}
+
+Kolmas historia (kuvassa keskimmäinen) on tärkein: luku näki uuden
+arvon 1, ja sen jälkeen alkanut luku näki vanhan arvon 0, vaikka
+kirjoitus oli yhä kesken. Kumpikin luku on erikseen mahdollinen, mutta
+yhdessä ne eivät ole, koska linearisointipisteen jälkeen kaikki näkevät
+uuden arvon: asiakkaan 1 luku pakottaa kirjoituksen pisteen ennen
+hetkeä 20, ja asiakkaan 2 luku vaatisi sen hetken 30 jälkeen. Tämä
 *uusi ja sitten vanha* -rike on replikoitujen rekisterien tyypillinen
 virhe. Viimeinen historia näyttää, että tarkistin löytää myös
 järjestyksen, joka poikkeaa alkuhetkien järjestyksestä: kirjoitus 2
-linearisoituu ennen kirjoitusta 1, vaikka se alkoi myöhemmin.
+linearisoituu ennen kirjoitusta 1, vaikka se alkoi myöhemmin. Kuvasta
+näkyy, miksi se on sallittua: kirjoitukset ovat päällekkäin, joten
+kumpi tahansa voi olla ensin.
 
 Jepsen ja sen Knossos- ja Elle-tarkistimet tekevät saman oikeille
 tietokannoille: asiakkaat kirjaavat jokaisen operaation alun ja lopun,

@@ -1,0 +1,24 @@
+s0 lukkopalvelu, s1 tallennus, s2 tyontekija A, s3 tyontekija B
+
+ilman aitausta
+     1 s0: vuokra solmulle s2, merkki 1
+     5 s2: sai vuokran, tarkisti sen ja pysahtyy 400 ms
+   255 s0: vuokra solmulle s3, merkki 2
+   258 s3: sai vuokran ja tarkisti sen
+   258 s3: kirjoittaa arvon 200 merkilla 2
+   263 s1: tallentaa arvon 200, merkki 2
+   405 s2: kirjoittaa arvon 100 merkilla 1
+   407 s1: tallentaa arvon 100, merkki 1
+lopputila: arvo 100 (vanha haltija ylikirjoitti uuden)
+
+aitausmerkilla
+     1 s0: vuokra solmulle s2, merkki 1
+     5 s2: sai vuokran, tarkisti sen ja pysahtyy 400 ms
+   255 s0: vuokra solmulle s3, merkki 2
+   258 s3: sai vuokran ja tarkisti sen
+   258 s3: kirjoittaa arvon 200 merkilla 2
+   263 s1: tallentaa arvon 200, merkki 2
+   405 s2: kirjoittaa arvon 100 merkilla 1
+   407 s1: HYLKAA arvon 100: merkki 1 < 2
+lopputila: arvo 200 (uusimman haltijan)
+

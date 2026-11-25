@@ -3,7 +3,8 @@
 Tiivis suomenkielinen tutoriaali useasta solmusta koostuvien
 järjestelmien periaatteista: vikamallit ja vikailmaisimet, fyysiset ja
 loogiset kellot (Lamport, vektorikello, hybridikello), replikointi
-johtajalla ja kvoorumeilla, CRDT:t, konsistenssimallit ja
+johtajalla ja kvoorumeilla, vuokrat ja aitausmerkit, CRDT:t,
+konsistenssimallit ja
 linearisoituvuuden tarkistin, Raft-konsensus, CAP ja PACELC,
 kaksivaiheinen sitoutuminen ja idempotenssi sekä deterministinen
 simulointitestaus. Kaikki toteutetaan C++23:lla deterministisessä
@@ -29,7 +30,11 @@ make pdf      # PDF:t
 ```
 
 Kehityskontissa (`.devcontainer/hajautetut-jarjestelmat`) on kääntäjät ja
-dokumenttityökalut.
+dokumenttityökalut. Kuvan `kuvat/linearisoituvuus.png` piirtää
+`make kuvat` (Matplotlib) testatun esimerkin historioista.
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 ## Lisenssi
 

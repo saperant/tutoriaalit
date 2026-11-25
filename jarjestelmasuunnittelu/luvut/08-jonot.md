@@ -23,6 +23,10 @@ määrän tilauksia, ja käsittelijät ehtivät 80 tilausta sekunnissa:
 ```{.tuloste tiedosto="esimerkit/luku08/tasaus.odotettu"}
 ```
 
+![Sama laskelma kuvana. Jono kasvaa niin kauan kuin saapuva kuorma
+ylittää kapasiteetin, ja purkautuu sen jälkeen kulmakertoimella, jonka
+määrää ylijäämäkapasiteetti.](kuvat/jono.png){width=72%}
+
 Ilman jonoa 108 000 tilausta hylättäisiin. Jonon kanssa yksikään ei
 katoa, mutta pahimmillaan tilaus odottaa käsittelyä 22 minuuttia, ja jono
 tyhjenee vasta tunti kampanjan jälkeen. Purkuaika riippuu vain
@@ -38,11 +42,12 @@ automaattisen skaalauksen perusteet.
 
 ## Vähintään kerran ja idempotentti kuluttaja
 
-Viestijono voi luvata kolme asiaa: *enintään kerran* (viesti voi kadota),
-*vähintään kerran* (viesti voi tulla useasti) tai *täsmälleen kerran*.
-Täsmälleen kerran ei ole saavutettavissa verkon yli ilman, että kuluttaja
-osallistuu: kuluttaja voi kaatua sen jälkeen, kun se on tehnyt työn, mutta
-ennen kuin se on kuitannut viestin. Käytännön malli on vähintään kerran
+Toimitusmallit ovat tuttuja taidosta *Hajautetut järjestelmät*:
+täsmälleen kerran on mahdollinen vain vaikutuksena, kun vähintään
+kerran toimitetun viestin vastaanottaja tunnistaa toiston. Jonossa
+toisto syntyy kuluttajan päässä: kuluttaja voi kaatua sen jälkeen, kun
+se on tehnyt työn, mutta ennen kuin se on kuitannut viestin, ja jono
+toimittaa viestin uudelleen. Käytännön malli on siksi vähintään kerran
 -toimitus ja idempotentti kuluttaja.
 
 Redis Streams toteuttaa vähintään kerran -toimituksen kuluttajaryhmillä:
@@ -111,6 +116,10 @@ täynnä:
   tietoon, jonka arvo laskee nopeasti, kuten sijainteihin ja mittauksiin.
 
 ## Kafka, RabbitMQ ja muut
+
+Jonojärjestelmät eroavat siinä, säilyykö viesti lukemisen jälkeen,
+missä laajuudessa järjestys pätee ja kuka järjestelmää ylläpitää.
+Taulukko vertaa tavallisimpia näiden ominaisuuksien mukaan:
 
 | Ominaisuus  | Kafka              | RabbitMQ              | Redis Streams          | pilven jonot (SQS, Pub/Sub) |
 |------------------|------------------|------------------|------------------|------------------|

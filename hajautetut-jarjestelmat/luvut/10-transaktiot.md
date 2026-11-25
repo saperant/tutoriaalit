@@ -2,9 +2,10 @@
 
 Transaktio muuttaa useaa asiaa niin, että joko kaikki muutokset
 tapahtuvat tai mikään ei tapahdu. Yhdessä tietokannassa atomisuuden
-takaa loki (ks. *SQL*). Kun muutettavat tiedot ovat eri solmuilla, eri
-tietokannoissa tai eri palveluissa, solmujen on sovittava
-lopputuloksesta, ja sopiminen on taas konsensusongelma. Tämä luku
+takaa loki (ks. taito *SQL ja relaatiotietokannat*). Kun muutettavat
+tiedot ovat eri solmuilla, eri tietokannoissa tai eri palveluissa,
+solmujen on sovittava lopputuloksesta, ja sopiminen on taas
+konsensusongelma. Tämä luku
 toteuttaa kaksivaiheisen sitoutumisen, näyttää sen tunnetun estotilan
 ja käsittelee idempotenssin, joka tekee uudelleenyrityksistä
 turvallisia.
@@ -136,10 +137,12 @@ on kolme toimitusmallia:
   *vaikutuksena*: vähintään kerran -toimitus ja vastaanottaja, joka
   tunnistaa toiston.
 
-Toiston tunnistaa *idempotenssiavaimella*: asiakas antaa jokaiselle
-loogiselle operaatiolle yksilöllisen tunnisteen ja lähettää saman
-tunnisteen jokaisessa yrityksessä. Palvelin kirjaa käsitellyt avaimet
-ja vastaa toistoon tallennetulla tuloksella:
+Toiston tunnistaa *idempotenssiavaimella*, joka on tuttu taidosta
+*Verkko-ohjelmointi*: asiakas lähettää saman yksilöllisen tunnisteen
+jokaisessa yrityksessä, ja palvelin vastaa toistoon tallennetulla
+tuloksella. Uutta tässä on kysymys, mihin avain tallennetaan, kun
+palvelinkin voi kaatua. Esimerkin palvelin pitää avaimet joko muistissa
+tai levyllä samassa kirjoituksessa kuin siirron:
 
 ```{.cpp tiedosto="esimerkit/10-idempotenssi.cpp" osa="palvelin"}
 ```

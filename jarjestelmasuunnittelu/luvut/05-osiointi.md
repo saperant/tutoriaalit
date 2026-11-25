@@ -34,6 +34,11 @@ sijoitetaan kehälle monta kertaa *virtuaalisolmuina*:
 ```{.python tiedosto="esimerkit/jarjestelma/hajautus.py" osa="rengas"}
 ```
 
+![Saman luokan kehä neljällä virtuaalisolmulla solmua kohden. Piste on
+virtuaalisolmu, ja sitä edeltävä kaari on sen avainalue. Kun s5
+lisätään, omistaja vaihtuu vain kaarilla, jotka s5 leikkaa
+naapureiltaan; muu kehä pysyy ennallaan.](kuvat/rengas.png){width=80%}
+
 *Rendezvous*-hajautus (*highest random weight*) saavuttaa saman ilman
 kehää: avain kuuluu solmulle, jonka yhdistetty tiiviste on suurin.
 

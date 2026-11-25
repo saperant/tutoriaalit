@@ -17,7 +17,9 @@ liikaa: virheellinen skripti, kaavija, hyökkäys tai vain suuri asiakas.
 Yleisin menetelmä on *token bucket*. Sankoon mahtuu tietty määrä merkkejä,
 ja sinne valuu merkkejä tasaisella nopeudella. Pyyntö kuluttaa merkin,
 ja tyhjästä sangosta pyyntö hylätään. Pitkän ajan nopeus on rajattu,
-mutta lyhyt purske sallitaan:
+mutta lyhyt purske sallitaan. Sama algoritmi muotoilee liikennettä
+linkillä; taidossa *Tietoliikennetekniikka* sen nimi on rahakkeen
+ämpäri.
 
 ```{.python tiedosto="esimerkit/jarjestelma/rajoitin.py" osa="sanko"}
 ```
@@ -61,6 +63,11 @@ on luopunut, joten se käsittelee jonossa odottavan pyynnön silti:
 
 ```{.tuloste tiedosto="esimerkit/luku09/myrsky.odotettu"}
 ```
+
+![Tulosteen kolme riviä ajan funktiona. Häiriö kestää kymmenen
+sekuntia; naiivilla uudelleenyrityksellä onnistuneiden vastausten määrä
+putoaa nollaan eikä palaa, vaikka kapasiteetti on jälleen
+täysi.](kuvat/myrsky.png){width=72%}
 
 Naiiveilla uudelleenyrityksillä palvelu ei palaudu koskaan. Häiriö
 loppuu 20 sekunnin kohdalla, mutta silloin jonossa on jo niin paljon
