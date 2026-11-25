@@ -26,7 +26,7 @@ def tsebysov(n: int) -> Taulukko:
 # @alku vertailu
 tiheä = np.linspace(-1.0, 1.0, 2001)
 print(" n  tasavali  Tsebysov")
-for n in (4, 8, 16, 32, 64):
+for n in (4, 8, 16, 32):
     rivi = f"{n:2d}"
     for solmut in (tasavali, tsebysov):
         x = solmut(n)

@@ -77,9 +77,10 @@ ja niillä interpolointi suppenee kaikille sileille funktioille.
 heilahtelee voimakkaasti välin reunoilla, Tšebyšovin solmuilla se
 noudattaa funktiota.](kuvat/runge.png){width=68%}
 
-Tasavälisellä pisteistöllä 64 pisteen virhe on $3 \cdot 10^9$, kun
-Tšebyšovin solmuilla se on $2 \cdot 10^{-6}$ ja pienenee
-eksponentiaalisesti. Jos data on pakko mitata tasavälisesti, korkean
+Asteella 32 tasavälisen interpoloinnin virhe on jo $5 \cdot 10^3$, kun
+Tšebyšovin solmuilla se on $10^{-3}$ ja pienenee eksponentiaalisesti.
+Vielä korkeammilla asteilla tasavälisen interpoloinnin tulosta
+hallitsevat pyöristysvirheet, ja luku vaihtelee koneesta toiseen. Jos data on pakko mitata tasavälisesti, korkean
 asteen polynomin sijaan käytetään splinejä tai pienimmän neliösumman
 sovitusta matalalla asteella.
 

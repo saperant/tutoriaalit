@@ -71,7 +71,8 @@ doxygen:
 
 # @alku sphinx
 # -W tekee varoituksista virheitä, --keep-going näyttää ne kaikki.
-SPHINX := sphinx-build -W --keep-going -q
+# --no-color: tuloste on sama päätteessä ja CI:ssä.
+SPHINX := sphinx-build -W --keep-going -q --no-color
 
 sphinx:
 	@$(SPHINX) -b html sphinx $(B)/sphinx/html
