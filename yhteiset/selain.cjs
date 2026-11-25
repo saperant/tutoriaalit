@@ -79,6 +79,13 @@ async function main() {
     await sivu.goto(osoite, { waitUntil: "load" });
     await sivu.addStyleTag({ content: OLETUSFONTTI });
     await sivu.evaluate(() => document.fonts.ready);
+    // autofocus käsitellään vasta ensimmäisen piirron yhteydessä, joten
+    // kuormitetulla koneella mittaus voi ehtiä ennen sitä: odotetaan,
+    // että autofocus-elementti on saanut fokuksen.
+    await sivu.waitForFunction(() => {
+      const e = document.querySelector("[autofocus]");
+      return !e || document.activeElement === e;
+    }, null, { timeout: 10000 }).catch(() => {});
 
     const meta = (nimi) => sivu.evaluate((n) => {
       const e = document.querySelector(`meta[name="${n}"]`);
