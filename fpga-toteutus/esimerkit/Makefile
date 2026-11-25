@@ -3,9 +3,13 @@
 # tämä Makefile ajaa Yosysin ja nextpnr:n ja vertaa raporttien
 # tiivistelmät tiedostoihin raportit/*.odotettu.
 #
-#   make           kaikki vuot ja tarkistukset
-#   make vilkku    vilkun bittivirta rakennus/vilkku.bin
-#   make siivoa    poistaa käännöstuotteet
+#   make             kaikki vuot ja tarkistukset
+#   make vilkku      vilkun bittivirta rakennus/vilkku.bin
+#   make kortti-sim  luvun 10 suunnitelma simuloidulla kortilla
+#   make siivoa      poistaa käännöstuotteet
+#
+# PAIVITA=1 kirjoittaa simulaatiosta tuotetut kaaviot ja simuloidun
+# kortin odotetun tulosteen uudelleen.
 
 R      := rakennus
 VUO    := bash tyokalut/vuo.sh
@@ -16,10 +20,11 @@ UART   := 10-uart-debug/uart_rx.sv 10-uart-debug/uart_tx.sv \
 RAPORTIT := vilkku kertyma muisti-synk muisti-komb kertoja-dsp \
             kertoja-lut liukuhihna-1 liukuhihna-2 liukuhihna-1-retime \
             siemenet pll kaksi-kelloa suodin-rinnakkain suodin-jaettu \
-            debug
+            debug kortti
+KORTTI   := kortti-sim kortti-kaaviot kortti-bittivirta
 
-.PHONY: kaikki tyokalut siivoa kaavio $(RAPORTIT)
-kaikki: tyokalut $(RAPORTIT) kaavio
+.PHONY: kaikki tyokalut siivoa kaavio $(RAPORTIT) $(KORTTI)
+kaikki: tyokalut $(RAPORTIT) kaavio $(KORTTI)
 
 # Apuohjelmien laatu, jos työkalut ovat asennettuina.
 tyokalut:
@@ -177,6 +182,110 @@ debug:
 	@$(RAP) debug $(R)/debug.stat.json $(R)/debug.pnr.json \
 	    --solut-alle 300 --fmax-yli 12 > $(R)/debug.tulos
 	@$(call vertaa,debug)
+
+# --- Simuloitu kortti (luku 10) ------------------------------------
+
+K10        := 10-kortti
+KORTTI_RTL := $(K10)/rtl/fontti.sv $(K10)/rtl/vga_ajoitus.sv \
+              $(K10)/rtl/painike.sv $(K10)/rtl/pallo.sv \
+              $(K10)/rtl/kuva.sv $(K10)/rtl/demo.sv \
+              $(K10)/rtl/kortti_ylin.sv \
+              10-uart-debug/uart_rx.sv 10-uart-debug/uart_tx.sv
+MALLI      := $(abspath $(K10)/malli/kortti.cpp)
+
+# @alku kortti-sim
+# Verilator kääntää suunnitelman C++:ksi ja linkittää sen kortin
+# malliin. Tuloksena on tavallinen ohjelma.
+$(R)/kortti-sim/kortti: $(KORTTI_RTL) $(MALLI)
+	@mkdir -p $(R)
+	verilator --cc --exe --build -Wall -Wno-DECLFILENAME -O3 \
+	    -CFLAGS "-O2 -std=c++20" --top-module kortti_ylin \
+	    -Mdir $(R)/kortti-sim -o kortti $(KORTTI_RTL) $(MALLI) \
+	    > $(R)/kortti-sim.loki 2>&1 || { cat $(R)/kortti-sim.loki; false; }
+
+kortti-sim: $(R)/kortti-sim/kortti
+	@$< > $(R)/kortti-sim.tulos
+	@if [ "$(PAIVITA)" = 1 ]; then \
+	    cp $(R)/kortti-sim.tulos $(K10)/kortti.odotettu; fi
+	@diff -u $(K10)/kortti.odotettu $(R)/kortti-sim.tulos
+	@echo "OK: simuloitu kortti"
+# @loppu kortti-sim
+
+# Lukujen ajoituskaaviot kortin logiikka-analysaattorista.
+kortti-kaaviot: $(R)/kortti-sim/kortti
+	@$< --vcd $(R)/ledit.vcd --vali-us 25000 --naytteita 20 > /dev/null
+	@$(KAAVIO) $(R)/ledit.vcd --kello nayte --jaksot 20 --hscale 0.7 \
+	    --signaalit btn1,btn2,led1,led2,led3,led4,led5 \
+	    | sed 's/"name": "nayte"/"name": "25 ms"/' > $(R)/ledit.json
+	@$< --kehyksia 4 --vcd $(R)/varahtely.vcd --alku-us 39500 \
+	    --vali-us 250 --naytteita 38 > /dev/null
+	@$(KAAVIO) $(R)/varahtely.vcd --kello nayte --jaksot 38 \
+	    --hscale 0.45 --signaalit btn1,led5 \
+	    | sed 's/"name": "nayte"/"name": "0,25 ms"/' \
+	    > $(R)/varahtely.json
+	@rm -f $(R)/ledit.vcd $(R)/varahtely.vcd
+	@for k in ledit varahtely; do \
+	    if [ "$(PAIVITA)" = 1 ]; then cp $(R)/$$k.json kaaviot/; fi; \
+	    diff -u kaaviot/$$k.json $(R)/$$k.json || exit 1; \
+	done
+	@echo "OK: kaaviot ledit ja varahtely"
+
+kortti:
+	@$(VUO) kortti kortti_ylin "$(KORTTI_RTL)" "" \
+	    "--freq 25.125 --pcf $(K10)/icebreaker.pcf"
+	@$(RAP) kortti $(R)/kortti.stat.json $(R)/kortti.pnr.json \
+	    --solut-alle 1200 --fmax-yli 25.125 > $(R)/kortti.tulos
+	@$(call vertaa,kortti)
+
+# @alku takaisin
+# Bittivirta takaisin Verilogiksi. icebox_vlog ei tiedä, että PLL:n
+# tulo on kotelon nasta, joten kytkentä lisätään sed-komennolla. Yosys
+# siistii tuloksen simulaattorille kelpaavaan muotoon.
+$(R)/kortti-bittivirta.v: kortti
+	@sed 's/ -nowarn//' $(K10)/icebreaker.pcf > $(R)/kortti.pcf
+	PYTHONWARNINGS=ignore icebox_vlog -s -p $(R)/kortti.pcf \
+	    $(R)/kortti.asc \
+	    | sed 's/\.PACKAGEPIN([^)]*)/.PACKAGEPIN(clk_12)/' \
+	    > $(R)/kortti-icebox.v
+	yosys -q -p 'read_verilog $(R)/kortti-icebox.v' -p proc \
+	    -p 'write_verilog -noattr $@'
+
+# Sama kortin malli ajaa bittivirrasta palautettua piiriä, ja tulosteen
+# on oltava sama kuin RTL-simulaatiossa.
+kortti-bittivirta: $(R)/kortti-bittivirta.v
+	verilator --cc --exe --build -Wno-fatal -Wno-lint -Wno-style -O3 \
+	    -CFLAGS "-O2 -std=c++20" --top-module kortti_ylin \
+	    -Mdir $(R)/bittivirta-sim -o kortti $< \
+	    $(K10)/bittivirta/kaare.sv $(MALLI) \
+	    > $(R)/bittivirta-sim.loki 2>&1 \
+	    || { cat $(R)/bittivirta-sim.loki; false; }
+	@timeout 300 $(R)/bittivirta-sim/kortti > $(R)/bittivirta.tulos
+	@diff -u $(K10)/kortti.odotettu $(R)/bittivirta.tulos
+	@echo "OK: bittivirrasta palautettu piiri toimii kuten RTL"
+# @loppu takaisin
+
+# --- Kuvien lähtötiedot (make kuvat paketin juuressa) ---------------
+# Sijoittelut (nextpnr --write), simuloidun kortin kehykset ja Yosysin
+# piirikaaviot. Kuvat piirtää ../kuvat/piirra.py.
+.PHONY: kuvadata
+kuvadata: kaikki
+	@mkdir -p $(R)/kuvat
+	@$(R)/kortti-sim/kortti --kuvat $(R)/kuvat > /dev/null
+	@$(VUO) kortti kortti_ylin "$(KORTTI_RTL)" "" "--freq 25.125 \
+	    --pcf $(K10)/icebreaker.pcf --write $(R)/kortti.sij.json"
+	@for s in 1 2 3 4 5; do \
+	    SIEMEN=$$s $(VUO) siemen-$$s kertoja_lh \
+	        06-liukuhihna/kertoja_lh.sv "" \
+	        "--freq 12 --write $(R)/siemen-$$s.sij.json" VAIHEET=1 \
+	        || exit 1; \
+	done
+# @alku piirikaavio
+	@yosys -q -p 'read_verilog -sv 01-vilkku/vilkku.sv' \
+	    -p 'chparam -set BITIT 2 vilkku; proc; opt' \
+	    -p 'show -format dot -notitle -prefix $(R)/vilkku-rtl' \
+	    -p 'synth_ice40 -top vilkku; splitnets; opt_clean -purge' \
+	    -p 'show -format dot -notitle -prefix $(R)/vilkku-portit'
+# @loppu piirikaavio
 
 siivoa:
 	rm -rf $(R)

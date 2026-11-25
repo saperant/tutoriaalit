@@ -107,6 +107,18 @@ rekistereitä logiikan läpi:
 | 2 vaihetta | 49,4 MHz | 148 | 3 jaksoa |
 | 1 vaihe, uudelleenajoitus | 55,8 MHz | 192 | 2 jaksoa |
 
+Kuvassa on kunkin version kriittinen polku osiinsa jaettuna, mukana
+vertailun vuoksi luvun 10 esittelysuunnitelma. Luvut ovat nextpnr:n
+raportista; raportin oma yhteenveto laskee kiikun lähtöviiveen ja
+asetusajan logiikkaan.
+
+![Kriittisen polun viive osiinsa jaettuna](kuvat/polku.png){width=100%}
+
+Reititys on jokaisessa versiossa suurin yksittäinen osa. Liukuhihnavaihe ja
+uudelleenajoitus lyhensivät logiikkaa vain vajaat kaksi nanosekuntia,
+mutta reititystä 3–5 ns: kun logiikkatasoja on vähemmän, myös niiden
+välisiä johtimia on vähemmän.
+
 Lisävaihe nosti Fmax:ia neljänneksellä ja jopa pienensi solumäärää,
 koska kaksi kapeaa osatuloa on edullisempi rakentaa kuin yksi leveä.
 Uudelleenajoitus pääsi vielä pidemmälle siirtämällä tulorekisterit

@@ -6,8 +6,11 @@ lohko-RAM, DSP, kellot ja IO), avoin työkaluketju Yosys → nextpnr →
 IceStorm, synteesiraportit ja koodaustyyli, sijoittelu ja reititys,
 ajoitusanalyysi ja liukuhihnoitus, PLL ja nollaukset,
 kellotusalueiden ylitykset käytännössä, resurssien ja ajoituksen
-optimointi sekä testaus kortilla. Esitietona on taito
-*RTL-suunnittelu SystemVerilogilla*.
+optimointi, simuloitu kortti (painikkeet, ledit, sarjaportti ja
+VGA-näyttö Verilatorilla) sekä testaus oikealla kortilla. Korttia ei
+tarvita: koko suunnitelma ajetaan simuloidulla kortilla, ja valmis
+bittivirta todennetaan muuntamalla se takaisin Verilogiksi. Esitietona
+on taito *RTL-suunnittelu SystemVerilogilla*.
 Valmis dokumentti: [fpga-toteutus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/fpga-toteutus.pdf),
 pikaopas: [fpga-toteutus-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/fpga-toteutus-pikaopas.pdf).
 
@@ -28,13 +31,15 @@ pikaopas: [fpga-toteutus-pikaopas.pdf](https://saperant.github.io/tutoriaalit/ma
    SDC/XDC-rajoitteet, MTBF
 9. Resurssien ja ajoituksen optimointi – rinnakkainen ja jaettu
    FIR-suodin, keinot mittareittain
-10. Testaus kortilla – lataus, käyttöönotto, UART-virheenjäljitysydin,
+10. Simuloitu kortti – kortin malli C++:lla, kosketinvärähtely,
+    VGA-näyttö, sarjaportti, bittivirta takaisin Verilogiksi
+11. Testaus kortilla – lataus, käyttöönotto, UART-virheenjäljitysydin,
     ILA, vikojen jäljitys
-11. Lopuksi – nyrkkisäännöt, mallit ja lähteet
+12. Lopuksi – nyrkkisäännöt, mallit ja lähteet
 
 ## Esimerkit
 
-Hakemistossa `esimerkit/` on kymmenen SystemVerilog-esimerkkiä
+Hakemistossa `esimerkit/` on yhdeksän SystemVerilog-esimerkkiä
 testipenkkeineen. Jokainen simuloidaan Verilatorilla ja verrataan
 odotettuun tulosteeseen. Lisäksi `esimerkit/Makefile` ajaa jokaisen
 suunnitelman oikean vuon läpi iCE40UP5K-piirille (Yosys
@@ -45,14 +50,28 @@ solumäärät ja taajuudet vaihtelevat työkaluversioittain, joten ne
 tarkistetaan raja-arvoja vasten. Kortille lataus (`iceprog`) kuvataan
 tekstinä, eikä sitä testata.
 
+Hakemistossa `esimerkit/10-kortti/` on luvun 10 esittelysuunnitelma
+(`rtl/`), simuloitu kortti (`malli/kortti.cpp`) ja bittivirran
+paluumatkan kääre (`bittivirta/`). Sama Makefile ajaa suunnitelman
+simuloidulla kortilla, vertaa tapahtumalokia ja näytön kehysten
+tarkisteita odotettuun, piirtää ajoituskaaviot mallin nastoista ja
+ajaa lopuksi saman testin bittivirrasta palautetulle piirille.
+
 ```text
-make testaa        # rakenne, simulaatiot ja FPGA-vuo
+make testaa        # rakenne, simulaatiot, simuloitu kortti ja FPGA-vuo
+make kuvat         # kuvat/*.png raporteista ja simuloidusta kortista
 make pdf           # fpga-toteutus.pdf ja fpga-toteutus-pikaopas.pdf
 ```
 
+Hakemiston `kuvat/` kuvat (resurssit, kriittinen polku, sijoittelu,
+Yosysin piirikaaviot ja näytön kehykset) ovat versionhallinnassa.
+`kuvat/piirra.py` piirtää ne uudelleen samoista raporteista, jotka
+testit tarkistavat.
+
 Tarvittavat työkalut: Verilator, Yosys, nextpnr-ice40, IceStorm
 (`fpga-icestorm`) sekä Python 3, ruff ja mypy raporttien apuohjelmaa
-varten. Ne ovat valmiina kehityskontissa `.devcontainer/fpga-toteutus`.
+varten. Kuvien piirtämiseen tarvitaan lisäksi Matplotlib ja Graphviz.
+Kaikki ovat valmiina kehityskontissa `.devcontainer/fpga-toteutus`.
 
 ## Lisenssi
 

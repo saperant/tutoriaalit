@@ -1,0 +1,27 @@
+# iCEBreaker: kide, USB-sarjaportti, lisäkortin painikkeet ja ledit
+# (PMOD 2) sekä VGA-lisäkortti (PMOD 1A ja 1B).
+set_io -nowarn clk_12 35
+set_io -nowarn rx     6
+set_io -nowarn tx     9
+set_io -nowarn btn1   20
+set_io -nowarn btn2   19
+set_io -nowarn btn3   18
+set_io -nowarn led1   26
+set_io -nowarn led2   27
+set_io -nowarn led3   25
+set_io -nowarn led4   23
+set_io -nowarn led5   21
+set_io -nowarn vga_r[0] 4
+set_io -nowarn vga_r[1] 2
+set_io -nowarn vga_r[2] 47
+set_io -nowarn vga_r[3] 45
+set_io -nowarn vga_b[0] 3
+set_io -nowarn vga_b[1] 48
+set_io -nowarn vga_b[2] 46
+set_io -nowarn vga_b[3] 44
+set_io -nowarn vga_g[0] 43
+set_io -nowarn vga_g[1] 38
+set_io -nowarn vga_g[2] 34
+set_io -nowarn vga_g[3] 31
+set_io -nowarn vga_hs 42
+set_io -nowarn vga_vs 36

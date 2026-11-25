@@ -37,7 +37,23 @@ Sama suunnitelma eri siemenillä tuottaa eri sijoittelun ja eri Fmax:n:
 ```
 
 Tarkat taajuudet olivat 40,0, 41,0, 39,5, 41,5 ja 41,3 MHz: noin 5 %
-vaihtelu pelkästä satunnaisuudesta. Siksi
+vaihtelu pelkästä satunnaisuudesta. Kuvassa ovat hitain ja nopein
+sijoittelu. Ruudukko on piirin logiikkalohkot, harmaat pystykaistat
+lohko-RAMien sarakkeet ja reunan neliöt IO-soluja. Sama logiikka on
+päätynyt eri paikkoihin ja eri muotoon, ja kriittinen polku kulkee eri
+solujen kautta.
+
+![Sama kertoja kahdella siemenellä: sijoittelu ja kriittinen polku](kuvat/siemenet.png){width=85%}
+
+Suunnitelma on pieni, joten sijoittelija pakkaa sen IO-solujen viereen
+kuvan alareunaan ja suurin osa piiristä jää tyhjäksi. Sijoittelun saa
+näkyviin omastakin suunnitelmasta: nextpnr kirjoittaa sen valinnalla
+`--write` JSON-tiedostoon, josta `kuvat/piirra.py` piirtää kuvan, ja
+valinnoilla `--placed-svg` ja `--routed-svg` suoraan SVG-kuviksi.
+Graafinen versio (Ubuntun paketti `nextpnr-ice40-qt`, valinta `--gui`)
+näyttää sijoittelun ja reitityksen johdin johtimelta.
+
+Vaihtelun takia
 
 - ajo tehdään kiinteällä siemenellä, jotta tulos on toistettava, ja
 - suunnitelman marginaali ei saa olla muutaman prosentin varassa. Jos
@@ -109,6 +125,7 @@ tässä tutoriaalissa.
   päätetään.
 - Osaat selittää, miksi siemen vaikuttaa tulokseen ja miksi siementen
   kokeilu ei korvaa marginaalia.
+- Osaat tuottaa sijoittelusta kuvan ja löytää siitä kriittisen polun.
 - Osaat antaa nastat ja kellotaajuuden rajoitteina.
 - Osaat tunnistaa ruuhkan syitä: tuulettuvuus, leveät multiplekserit,
   huono nastajärjestys.

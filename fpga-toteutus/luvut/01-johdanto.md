@@ -54,8 +54,11 @@ raporttien lukeminen siirtyvät niihin suoraan.
 
 Esimerkkien kortti on **iCEBreaker**, avoin kehityskortti, jossa on
 iCE40UP5K, 12 MHz:n kide, ledejä, painikkeita ja USB-sarjaportti.
-Korttia ei tarvita tutoriaalin seuraamiseen: kaikki esimerkit
-simuloidaan ja viedään bittivirraksi asti ilman korttia.
+Korttia ei tarvita tutoriaalin seuraamiseen. Kaikki esimerkit
+simuloidaan ja viedään bittivirraksi asti ilman korttia, ja luvussa 10
+kortti korvataan mallilla: suunnitelma ajetaan simuloidulla kortilla,
+jossa on painikkeet, ledit, sarjaportti ja näyttö. Oikea kortti on
+valinnainen viimeinen askel (luku 11).
 
 ## Ensimmäinen suunnitelma
 
@@ -103,6 +106,8 @@ Bittivirran koko ei riipu suunnitelmasta: se kattaa aina koko piirin.
 | Resurssit | Yosys, nextpnr | solutyyppien määrät ja raja-arvot, verrataan odotettuun |
 | Ajoitus | nextpnr | saavutettu Fmax yli raja-arvon |
 | Bittivirta | icepack | syntyy ja on oikean kokoinen |
+| Simuloitu kortti | Verilator, C++-malli | ledit, sarjaportti ja näytön kehykset, verrataan odotettuun |
+| Bittivirta takaisin | icebox_vlog, Verilator | bittivirrasta palautettu piiri toimii kuten RTL |
 | Kortilla ajo | iceprog | kuvataan tekstinä, ei testata |
 
 Tarkat solumäärät ja maksimitaajuudet vaihtelevat työkaluversioittain.
@@ -110,11 +115,18 @@ Siksi testit vertaavat niitä väljiin raja-arvoihin ja tulostavat tarkat
 luvut vain raporttitiedostoihin. Tekstissä mainitut luvut ovat Ubuntu
 24.04:n versioista (Yosys 0.33, nextpnr 0.6).
 
+Raporttien luvut on myös piirretty kuviksi: resurssien käyttö,
+kriittisen polun viiveet ja sijoittelu. Kuvat tuottaa skripti
+`kuvat/piirra.py` samoista raporteista, jotka testit tarkistavat
+(`make kuvat`), joten ne voi piirtää uudelleen omasta suunnitelmasta.
+
 ## Tutoriaalin rakenne
 
 Luku 2 esittelee FPGA:n rakennuspalikat ja luku 3 työkaluketjun.
 Luvut 4–6 käsittelevät synteesiä, sijoittelua ja ajoitusta: miten
 kuvaus muuttuu resursseiksi ja kuinka nopea siitä tulee. Luvut 7 ja 8
 koskevat kelloja, nollauksia ja kellotusalueita, luku 9 resurssien ja
-nopeuden vaihtokauppaa ja luku 10 suunnitelman testausta kortilla.
-Viimeinen luku kokoaa nyrkkisäännöt ja lähteet.
+nopeuden vaihtokauppaa. Luvussa 10 kokonainen suunnitelma ajetaan
+simuloidulla kortilla ja sen bittivirta todennetaan ilman laitteistoa,
+ja luku 11 käsittelee testausta oikealla kortilla. Viimeinen luku
+kokoaa nyrkkisäännöt ja lähteet.

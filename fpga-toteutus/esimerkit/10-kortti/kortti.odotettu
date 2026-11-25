@@ -1,0 +1,41 @@
+[  0 ms] ledit #... .
+[ 40 ms] painike 1 painetaan
+[ 48 ms] ledit #... #
+[ 48 ms] sarjaportti <- "N=01"
+[ 49 ms] näyttö: kehys 2, tarkiste 739b61ed
+[ 50 ms] ledit .#.. #
+[ 90 ms] painike 1 vapautetaan
+[ 98 ms] ledit .#.. .
+[100 ms] ledit ..#. .
+[140 ms] painike 1 painetaan
+[148 ms] ledit ..#. #
+[148 ms] sarjaportti <- "N=02"
+[150 ms] ledit ...# #
+[180 ms] painike 1 vapautetaan
+[188 ms] ledit ...# .
+[200 ms] sarjaportti -> '3'
+[200 ms] sarjaportti <- "3"
+[200 ms] ledit #... .
+[249 ms] näyttö: kehys 14, tarkiste a597a3ed
+[250 ms] ledit .#.. .
+[260 ms] painike 2 painetaan
+[300 ms] painike 2 vapautetaan
+[300 ms] ledit #... .
+[330 ms] sarjaportti -> 'x'
+[330 ms] sarjaportti <- "?"
+[351 ms] ledit ...# .
+[380 ms] painike 1 painetaan
+[388 ms] ledit ...# #
+[388 ms] sarjaportti <- "N=03"
+[401 ms] ledit ..#. #
+[420 ms] painike 1 vapautetaan
+[428 ms] ledit ..#. .
+[450 ms] näyttö: kehys 26, tarkiste bf13756d
+[451 ms] ledit .#.. .
+[460 ms] painike 3 painetaan
+[501 ms] ledit #... .
+kehyksiä 30
+näyttö: rivi 800 jaksoa (tahdistus 96), kehys 525 riviä (tahdistus 2)
+näyttö: virkistystaajuus 59,82 Hz
+näyttö: värillisiä pikseleitä kuva-alueen ulkopuolella 0
+kaksi viimeistä kehystä samat (pallo pysäytetty): kyllä

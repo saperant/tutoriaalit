@@ -4,13 +4,14 @@ Kortilla ajo on viimeinen vaihe, ei ensimmäinen. Kortilla näkyy vain
 se, mitä nastoissa tapahtuu, ja jokainen muutos vaatii synteesin,
 sijoittelun ja latauksen. Simulaatiossa näkyy jokainen signaali, ja
 testi toistuu sekunneissa. Siksi tämän tutoriaalin esimerkit on
-testattu simulaatiossa ja raporteilla; tämä luku kertoo, miten
-suunnitelma viedään kortille ja mitä tehdään, kun se ei toimi siellä.
+testattu simulaatiossa ja raporteilla, ja luvussa 10 koko suunnitelma
+ajettiin simuloidulla kortilla. Tämä luku kertoo, miten suunnitelma
+viedään oikealle kortille ja mitä tehdään, kun se ei toimi siellä.
 
-Kortilla ajoa ei testata automaattisesti tämän tutoriaalin vuossa,
-joten luvun komennot ovat tekstiä. Virheenjäljitysydin, jota luku
-käyttää, on kuitenkin simuloitu ja syntetisoitu kuten muutkin
-esimerkit.
+Luku on valinnainen siinä mielessä, että tutoriaalin voi käydä läpi
+ilman korttia. Kortilla ajoa ei testata automaattisesti, joten luvun
+latauskomennot ovat tekstiä. Virheenjäljitysydin, jota luku käyttää, on
+kuitenkin simuloitu ja syntetisoitu kuten muutkin esimerkit.
 
 ## Lataus
 
@@ -26,7 +27,9 @@ iceprog -S rakennus/vilkku.bin   # suoraan piiriin, katoaa virran mukana
 
 Linuxissa käyttäjällä on oltava oikeus USB-laitteeseen (udev-sääntö),
 ja kehityskontista laite on erikseen jaettava konttiin. Lataus kestää
-muutaman sekunnin.
+muutaman sekunnin. Luvun 10 esittelysuunnitelman bittivirta syntyy
+samalla vuolla kuin muutkin (`make kortti` hakemistossa `esimerkit/`),
+ja sen rajoitetiedosto olettaa painike- ja VGA-lisäkortit.
 
 ## Käyttöönoton järjestys
 
@@ -45,6 +48,10 @@ yhden asian:
    tarkkailla ja ohjata.
 4. **Oma suunnitelma** ytimen rinnalla.
 
+Simuloitu kortti ei korvaa tätä järjestystä vaan lyhentää sitä: kun
+suunnitelman logiikka on jo ajettu mallilla, kortilla jokainen vaihe
+testaa enää nastoja, kelloa ja kytkentöjä.
+
 ## Virheenjäljitysydin
 
 Kortilla tärkein työkalu on keino nähdä suunnitelman sisälle. Pieni
@@ -54,21 +61,8 @@ pitkälle:
 ```{.systemverilog tiedosto="esimerkit/10-uart-debug/debug_ylin.sv" osa="debug"}
 ```
 
-Ydin käyttää UART-vastaanotinta ja -lähetintä. Vastaanotin tahdistaa
-linjan kahdella kiikulla (linja on asynkroninen tulo, luku 8), odottaa
-aloitusbitin reunaa ja näytteistää bitit bittiajan keskeltä:
-
-```{.systemverilog tiedosto="esimerkit/10-uart-debug/uart_rx.sv"}
-```
-
-Lähetin siirtää kehyksen ulos bitti kerrallaan. Ajastin laskee
-bittiajan kellojaksoja, ja kehys siirtyy vain, kun ajastin on nollassa:
-tämä on luvussa 7 kuvattu sallinta johdetun kellon sijaan.
-
-```{.systemverilog tiedosto="esimerkit/10-uart-debug/uart_tx.sv"}
-```
-
-Komentojen tulkinta on pieni tilakone. Komento `L` ja osoite
+Ydin käyttää samaa UART-vastaanotinta ja -lähetintä kuin luvun 10
+esittelysuunnitelma. Komentojen tulkinta on pieni tilakone. Komento `L` ja osoite
 palauttavat rekisterin arvon, komento `K`, osoite ja arvo kirjoittavat
 rekisterin ja palauttavat kuittauksen `K`:
 
@@ -148,20 +142,22 @@ on simuloitu. Ne ovat vikoja simuloinnin ulkopuolella:
 | Toimii joskus, ei aina | ajoitusvirhe, tahdistamaton tulo | nextpnr:n raportti: `PASS`? ylitykset luettelossa? |
 | Toimii vain ensimmäisellä kerralla | nollaus puuttuu, alkuarvo vain bittivirrassa | nollaus PLL:n lukitukselle ja painikkeelle |
 | Sarjaliikenne sekaisin | väärä baudinopeus, kellotaajuus väärin | tunnisterekisterin luku, PLL:n parametrit |
-| Painike tuottaa monta painallusta | kosketinvärähtely | tahdistus ja suodatus: tila hyväksytään, kun se on pysynyt millisekunteja |
+| Painike tuottaa monta painallusta | kosketinvärähtely | tahdistus ja suodatus (luku 10) |
+| Näyttö ei tahdistu tai kuva on sivussa | pikselikello, tahdistuksen napaisuus, värit ja tahdistus eri vaiheessa | PLL:n parametrit, simuloidun näytön yhteenveto (luku 10) |
 | Eri käytös kuin simulaatiossa | `ifdef SYNTHESIS`, `initial`-lohkot, X-arvot | synteesin varoitukset, porttitason simulaatio |
 
 Viimeinen rivi on harvinainen mutta hankala. Kun simulaatio ja kortti
-eroavat, syntetisoitu netlista voidaan simuloida: Yosys kirjoittaa sen
-Verilogiksi (`write_verilog`), ja sama testipenkki ajetaan sitä vasten.
-Ero RTL- ja porttitason simulaation välillä paljastaa
+eroavat, simuloidaan se, mikä kortille oikeasti meni: Yosys kirjoittaa
+syntetisoidun netlistan Verilogiksi (`write_verilog`), ja luvun 10
+tapaan koko bittivirran voi palauttaa simuloitavaksi. Sama testi ajetaan
+sitä vasten. Ero RTL- ja porttitason simulaation välillä paljastaa
 synteesikelvottoman kuvauksen.
 
 ## Käytännössä
 
 - **Simulaatio ensin, aina.** Jokainen kortilla löytynyt logiikkavika
-  on testi, joka puuttui simulaatiosta. Lisää se testipenkkiin ennen
-  korjausta.
+  on testi, joka puuttui simulaatiosta. Lisää se testipenkkiin tai
+  simuloidun kortin skenaarioon ennen korjausta.
 - **Käyttöönotto vaiheittain.** Vilkku, silmukka, virheenjäljitysydin
   ja vasta sitten oma suunnitelma.
 - **Virheenjäljitys suunnitelman osaksi.** Tunnisterekisteri,

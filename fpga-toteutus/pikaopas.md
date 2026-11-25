@@ -1,6 +1,6 @@
 ---
 title: FPGA-toteutus
-subtitle: Pikaopas · iCE40, Yosys, nextpnr, ajoitus, kellot ja kortti
+subtitle: Pikaopas · iCE40, Yosys, nextpnr, ajoitus, kellot, simuloitu kortti
 ---
 
 # Vuo
@@ -31,6 +31,8 @@ subtitle: Pikaopas · iCE40, Yosys, nextpnr, ajoitus, kellot ja kortti
 | `--pcf x.pcf` | nastat; ilman sitä vain `--pcf-allow-unconstrained` |
 | `--seed N` | sijoittelun siemen (vaihtelu noin 5 %) |
 | `--report r.json` | Fmax, käyttöaste, kriittiset polut |
+| `--write s.json`, `--placed-svg s.svg` | sijoittelu tiedostoon tai kuvaksi |
+| `show -format dot` (Yosys) | netlista piirikaaviona |
 
 # iCE40UP5K
 
@@ -108,6 +110,22 @@ f = f_tulo · (DIVF + 1) / ((DIVR + 1) · 2^DIVQ), VCO 533–1066 MHz.
 
 ```{tiedosto="esimerkit/01-vilkku/icebreaker.pcf"}
 ```
+
+# Simuloitu kortti
+
+```text
+make -C esimerkit kortti-sim         # RTL kortin mallilla
+make -C esimerkit kortti-bittivirta  # bittivirta takaisin ja sama ajo
+make kuvat                           # raportit ja kehykset kuviksi
+```
+
+- Malli (C++, Verilator) käyttää vain nastoja: kello, painikkeet
+  värähtelyineen, ledit, UART-pääte, VGA-näyttö.
+- Näyttö laskee paikan tahdistuksesta: rivi 800 jaksoa, kehys 525
+  riviä, pimennysaikana musta. Kehyksen tarkiste testiin.
+- Bittivirta takaisin: `icebox_vlog -s -p pcf asc`, sama testi,
+  sama loki. Ei todista ajoitusta.
+- Painike: kaksi kiikkua + laskuri, tila hyväksytään noin 5 ms:n jälkeen.
 
 # Kortilla
 

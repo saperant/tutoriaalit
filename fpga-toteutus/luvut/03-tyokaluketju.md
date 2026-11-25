@@ -115,6 +115,35 @@ tavoitetaajuus saavutettiin. `FAIL` ei estä bittivirran tekemistä,
 mutta piiri ei silloin toimi luotettavasti tavoitetaajuudella:
 ajoitusvirhe on suunnitteluvirhe, ei varoitus.
 
+## Piirikaavio synteesistä
+
+Raportti kertoo solujen määrät, mutta ei sitä, miten ne on kytketty.
+Yosysin komento `show` piirtää netlistan piirikaaviona missä tahansa
+synteesin vaiheessa. Alla sama vilkku kahdessa vaiheessa, laskuri
+lyhennettynä kahteen bittiin, jotta kaavio pysyy luettavana:
+
+```{.makefile tiedosto="esimerkit/Makefile" osa="piirikaavio"}
+```
+
+Ensimmäinen kaavio on otettu heti RTL:n lukemisen jälkeen. Siinä on
+vielä sanan levyisiä operaatioita: rekisteri (`$dff`), summain (`$add`)
+ja invertteri (`$not`). Paksu viiva on kahden bitin väylä.
+
+![Vilkku RTL-tasolla: rekisteri, summain ja invertteri](kuvat/vilkku-rtl.png){width=80%}
+
+Toinen kaavio on sama piiri `synth_ice40`:n jälkeen. Summain ja
+invertteri ovat muuttuneet kolmeksi LUT:ksi ja rekisteri kahdeksi
+kiikuksi. Kumpikin laskurin bitti kiertää kiikusta LUT:n kautta takaisin
+kiikkuun, ja kolmas LUT kääntää ylimmän bitin ledille. Käyttämättömät
+LUT:n tulot on kytketty nollaan.
+
+![Vilkku synteesin jälkeen: iCE40:n LUT:t ja kiikut](kuvat/vilkku-portit.png){width=100%}
+
+Kaavio on hyvä työkalu pienen lohkon tutkimiseen: näkyykö muisti
+muistina, montako LUT:ia on peräkkäin, mihin signaali haarautuu.
+Kokonaisesta suunnitelmasta siitä tulee lukukelvoton, joten rajaa se
+yhteen moduuliin (`show moduulin_nimi`) tai muutamaan soluun.
+
 ## Simulointi vuon osana
 
 Synteesi ei tarkista toimintaa, ja kortilla vian etsiminen on hidasta.
@@ -123,6 +152,10 @@ simuloinnin on mentävä läpi ennen kuin vuo ajetaan. Synteesiä varten
 kirjoitettu RTL on samaa koodia, jota simuloidaan; erot (esimerkiksi
 PLL, jota simulaattori ei tunne) rajataan selvästi `ifdef SYNTHESIS`
 -lohkoihin (luku 7).
+
+Yksittäisen moduulin testipenkki ei vielä näytä, miltä suunnitelma
+näyttää kortilla. Luvussa 10 simuloidaan koko kortti oheislaitteineen
+ja lopuksi myös valmis bittivirta.
 
 ## Käytännössä
 
@@ -147,4 +180,6 @@ PLL, jota simulaattori ei tunne) rajataan selvästi `ifdef SYNTHESIS`
 - Osaat ajaa Yosysin ja nextpnr:n komentoriviltä ja tehdä niistä
   Make-vuon.
 - Osaat lukea käyttöasteen ja Fmax:n nextpnr:n raportista.
+- Osaat piirtää netlistan piirikaaviona Yosysin `show`-komennolla ja
+  tunnistaa siitä LUT:t ja kiikut.
 - Osaat kirjoittaa PCF-rajoitteet ja kertoa, miksi ne ovat tarpeen.

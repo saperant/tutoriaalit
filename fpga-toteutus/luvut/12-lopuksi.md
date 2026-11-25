@@ -5,7 +5,8 @@
 1. **Ajattele palikoina.** LUT ja kiikku, kantoketju, lohko-RAM, DSP.
    Kuvaus, joka ei osu palikkaan, rakentuu kalliisti logiikkasoluista.
 2. **Simulaatio ennen synteesiä, synteesi ennen korttia.** Jokainen
-   vaihe on hitaampi ja näkee vähemmän kuin edellinen.
+   vaihe on hitaampi ja näkee vähemmän kuin edellinen. Simuloi myös
+   kortti: painikkeet, sarjaportti ja näyttö mallina nastojen takana.
 3. **Skriptattu, toistettava vuo.** Kiinteät työkaluversiot ja siemen,
    raportit tarkistetaan automaattisesti.
 4. **Lue raportit.** Solutyypit kertovat, osuiko kuvaus palikkaan;
@@ -33,7 +34,11 @@
 | Kellon sallinta | 7 | hidas tahti ilman uutta kelloa |
 | Asynkroninen FIFO | 8 | tieto kellotusalueiden välillä |
 | Jaettu laskentayksikkö | 9 | vähemmän erikoislohkoja |
-| UART-virheenjäljitysydin | 10 | sisäinen tila näkyviin kortilla |
+| Painikkeen tahdistus ja suodatus | 10 | yksi pulssi painalluksesta |
+| Rekisteröidyt lähdöt samalla reunalla | 10 | värit ja tahdistus kohdakkain |
+| Kortin malli C++:lla | 10 | koko suunnitelma ajoon ilman laitteistoa |
+| Bittivirta takaisin simulaatioon | 10 | vuo ei muuttanut toimintaa |
+| UART-virheenjäljitysydin | 11 | sisäinen tila näkyviin kortilla |
 
 ## Mihin tästä
 
@@ -62,7 +67,11 @@
   `SB_LUT4`, `SB_CARRY`, `SB_RAM40_4K`, `SB_MAC16`, `SB_PLL40_*`.
 - Project IceStorm: <https://prjicestorm.readthedocs.io/>. iCE40:n
   bittivirran dokumentaatio ja työkalut `icepack`, `iceprog`,
-  `icepll`.
+  `icepll`, `icebox_vlog`.
+- Verilator: <https://verilator.org/guide/latest/>. Käyttöohje, myös
+  C++-testipenkin kirjoittaminen (luku 10).
+- VESA: *Monitor Timing Standard* (DMT). Näyttötilojen ajoitukset,
+  myös luvun 10 tila 640 × 480, 60 Hz.
 - Yosys-käsikirja: <https://yosyshq.readthedocs.io/>. Synteesin
   komennot, `synth_ice40` ja sen vaiheet.
 - nextpnr: <https://github.com/YosysHQ/nextpnr>. Sijoittelijan ja
@@ -71,6 +80,14 @@
   Kortin kytkentäkaavio ja esimerkit.
 - P. Chu: *FPGA Prototyping by SystemVerilog Examples*. Wiley.
   Käytännön FPGA-suunnittelu esimerkkien kautta.
+- S. Harris, D. Harris: *Digital Design and Computer Architecture*.
+  Morgan Kaufmann. Digitaalitekniikan perusteet porteista suorittimeen,
+  kun tämän tutoriaalin esitiedot kaipaavat kertausta.
+- Project F: <https://projectf.io/>, ZipCPU: <https://zipcpu.com/>,
+  nandland: <https://nandland.com/> ja fpga4fun:
+  <https://www.fpga4fun.com/>. Verkkomateriaaleja, joissa on lisää
+  harjoitusprojekteja: grafiikkaa, väyliä, formaalia verifiointia ja
+  oheislaitteiden liitäntöjä.
 - C. Cummings: *Clock Domain Crossing (CDC) Design & Verification
   Techniques Using SystemVerilog*. SNUG 2008. Tahdistimet ja
   asynkroninen FIFO.

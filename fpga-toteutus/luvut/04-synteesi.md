@@ -99,6 +99,20 @@ guidelines", Intelillä "Recommended HDL Coding Styles"). Mallit ovat
 pääpiirteissään samoja kuin tässä, mutta yksityiskohdat, kuten
 lohko-RAMin lukutilat ja DSP:n rekisterit, vaihtelevat piireittäin.
 
+## Resurssit kuvana
+
+Kuvassa on tämän tutoriaalin suunnitelmien logiikkasolujen käyttö
+nextpnr:n raporteista. Asteikko on logaritminen, koska erot ovat
+satakertaisia. Kuvasta näkyy luvun kaksi tulosta: sama muisti vie
+lukutavasta riippuen 41 tai 3 920 solua, ja sama kertoja 2 tai 157
+solua. Mikään muu yksittäinen valinta tässä tutoriaalissa ei vaikuta
+resursseihin yhtä paljon.
+
+![Logiikkasolujen käyttö suunnitelmittain iCE40UP5K-piirillä](kuvat/resurssit.png){width=100%}
+
+Kuvan piirtää `kuvat/piirra.py` samoista raporteista, joita testit
+lukevat (`make kuvat`).
+
 ## Synteesin tarkistaminen
 
 Synteesi onnistuu lähes aina; virheet ovat hiljaisia. Siksi tulos

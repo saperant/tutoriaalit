@@ -1,0 +1,5 @@
+== kortti
+kantoketjun soluja (SB_CARRY): 334
+PLL (SB_PLL40_PAD): 1
+logiikkasoluja alle 1200: kyllä
+Fmax clk yli 25.125 MHz: kyllä
