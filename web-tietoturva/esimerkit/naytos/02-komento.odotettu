@@ -1,0 +1,4 @@
+nimi                       haavoittuva     korjattu
+raportti.txt               5 raportti.txt  5 raportti.txt
+raportti.txt; touch PWNED  PWNED syntyi    virhe: virheellinen tiedostonimi
+-rf                        virhe (wc)      virhe: virheellinen tiedostonimi

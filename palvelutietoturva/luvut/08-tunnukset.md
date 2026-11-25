@@ -56,9 +56,9 @@ lopuksi vanha poistetaan. Vertailu tehdään vakioaikaisesti
 
 ## Käytännössä
 
-- **Dynaamiset tunnukset tietokantoihin.** Vault, pilvien IAM-
-  todennus tietokantoihin (RDS IAM, Cloud SQL IAM) ja Kubernetes-
-  operaattorit tarjoavat ne valmiina.
+- **Dynaamiset tunnukset tietokantoihin.** Vault, pilvien
+  IAM-todennus tietokantoihin (RDS IAM, Cloud SQL IAM) ja
+  Kubernetes-operaattorit tarjoavat ne valmiina.
 - **Vuokra lyhyeksi, uusiminen automaattiseksi.** Tunnin vuokra, jota
   uusitaan puolivälissä, on tyypillinen.
 - **Yhteysallas ja vuokrat yhteen.** Yhteysaltaan yhteydet pitää

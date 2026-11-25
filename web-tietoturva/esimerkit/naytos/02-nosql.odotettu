@@ -1,0 +1,3 @@
+tunnus  salasana            haavoittuva       korjattu
+aino    "kissa-ja-koira-2"  kirjautui: aino   kirjautui: aino
+admin   {"$ne": null}       kirjautui: admin  hylätty

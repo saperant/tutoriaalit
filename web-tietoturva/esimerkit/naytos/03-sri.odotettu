@@ -1,0 +1,5 @@
+CDN:n kirjasto  sivu            window.kirjasto
+aito            ei tarkistusta  aito
+aito            integrity       aito
+muutettu        ei tarkistusta  muutettu
+muutettu        integrity       ei ajettu

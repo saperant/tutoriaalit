@@ -48,6 +48,14 @@ lainkaan:
 ```{.java tiedosto="esimerkit/luottamus/src/test/java/fi/tutoriaalit/palveluturva/luottamus/MtlsTest.java" osa="mtls"}
 ```
 
+Näytösajossa on kaksi kutsujaa lisää: vanhentunut varmenne ja kutsuja
+ilman varmennetta, joka yrittää luvun 2 otsakkeella. "Ei yhteyttä"
+tarkoittaa, että TLS-kättely hylättiin eikä pyyntö päässyt
+käsittelijään asti:
+
+```{.tuloste tiedosto="esimerkit/naytos/04-mtls.odotettu"}
+```
+
 Jos palvelu olisi tyytynyt tarkistamaan, että varmenteen on myöntänyt
 oma varmentaja, suosituspalvelun murtanut hyökkääjä olisi saanut
 maksutiedot. Luottamusalueen jäsenyys ei ole oikeus mihinkään.

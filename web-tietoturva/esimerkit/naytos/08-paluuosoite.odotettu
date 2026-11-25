@@ -1,0 +1,3 @@
+redirect_uri                               haavoittuva   korjattu
+https://kauppa.example                     302 ja koodi  302 ja koodi
+https://kauppa.example.hyokkaaja.example/  302 ja koodi  400

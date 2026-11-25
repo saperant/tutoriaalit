@@ -70,6 +70,9 @@ tarkistuspisteisiin:
 ```{.java tiedosto="esimerkit/havainnointi/src/test/java/fi/tutoriaalit/palveluturva/havainnointi/HavainnointiTest.java" osa="lokiTesti"}
 ```
 
+```{.tuloste tiedosto="esimerkit/naytos/12-loki.odotettu"}
+```
+
 Pilvessä sama saadaan valmiina: auditointilokit kirjoitetaan
 erilliselle tilille, tallennuksen muuttumattomuuslukolla (*object
 lock*, WORM), ja palvelu allekirjoittaa lokitiedostojen tiivisteet

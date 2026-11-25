@@ -38,6 +38,13 @@ Korjattu toteutus:
 ```{.typescript tiedosto="esimerkit/src/11-tiedostot/tiedostot.test.ts" osa="lataus"}
 ```
 
+Näytösajossa kolme viimeistä riviä ovat otsakkeet, joilla ladattu kuva
+jaetaan takaisin. Korjattu versio vastaa skriptin lataukseen tilalla
+415 (*unsupported media type*):
+
+```{.tuloste tiedosto="esimerkit/naytos/11-lataus.odotettu"}
+```
+
 Parhaassa tapauksessa käyttäjien tiedostot jaetaan **eri
 verkkotunnuksesta** (esimerkiksi `kayttajasisalto.example`), jolloin
 selain eristää ne sovelluksesta kokonaan. Kuvat voidaan lisäksi
@@ -58,6 +65,9 @@ vuotaa valtuutuskoodin (luku 8).
 ```
 
 ```{.typescript tiedosto="esimerkit/src/11-tiedostot/tiedostot.test.ts" osa="ohjaus-testi"}
+```
+
+```{.tuloste tiedosto="esimerkit/naytos/11-ohjaus.odotettu"}
 ```
 
 Selaimet tulkitsevat `//pankki-kirjaudu.example` ja

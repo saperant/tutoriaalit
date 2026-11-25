@@ -72,8 +72,8 @@ lasku) jäävät sovellukselle.
 
 ## Käytännössä
 
-- **SAN, ei CN.** SPIFFE-tunniste ja muut identiteetit ovat SAN-
-  kentässä. CN on vanhentunut ja usein tyhjä.
+- **SAN, ei CN.** SPIFFE-tunniste ja muut identiteetit ovat
+  SAN-kentässä. CN on vanhentunut ja usein tyhjä.
 - **Tunnistamaton varmenne ei saa oikeuksia.** Luotetun varmentajan
   myöntämä tuntematon palvelu todennetaan, mutta sen oikeuksien
   joukko on tyhjä.

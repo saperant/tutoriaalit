@@ -1,6 +1,14 @@
 import { test, expect, type Page } from "@playwright/test";
 import { kaynnista, type Palvelin } from "../src/http.ts";
 import { palsta, type Puolustus } from "../src/03-xss/xss.ts";
+import { taulu, tallenna } from "../src/taulu.ts";
+
+// Näytöstaulu (naytos/03-xss.odotettu): reitti x kokoonpano.
+const REITIT = ["heijastettu", "DOM-pohjainen", "tallennettu"];
+const tulokset = new Map<string, string[]>();
+const kirjaa = (nimi: string, ajettiin: boolean) =>
+  tulokset.set(nimi, [...(tulokset.get(nimi) ?? []),
+                      ajettiin ? "ajettiin" : "estetty"]);
 
 // Hyökkäys onnistuu, jos sivulle ujutettu koodi asettaa
 // window.pwned-muuttujan.
@@ -19,6 +27,7 @@ async function palvelin(p: Puolustus): Promise<Palvelin> {
 // @alku testit
 const TAPAUKSET: [string, Puolustus, boolean][] = [
   ["ei puolustusta", { escapoi: false, csp: false }, true],
+  ["vain koodaus", { escapoi: true, csp: false }, false],
   ["vain CSP", { escapoi: false, csp: true }, false],
   ["koodaus ja CSP", { escapoi: true, csp: true }, false],
 ];
@@ -29,21 +38,30 @@ for (const [nimi, puolustus, onnistuu] of TAPAUKSET) {
     try {
       // Heijastettu: hyötykuorma hakuparametrissa.
       const q = encodeURIComponent(KUVA);
-      expect(await hyokkaa(page, `${s.url}/?q=${q}`)).toBe(onnistuu);
+      const heijastettu = await hyokkaa(page, `${s.url}/?q=${q}`);
       // DOM-pohjainen: hyötykuorma fragmentissa, ei koskaan palvelimelle.
-      expect(await hyokkaa(page, `${s.url}/#${encodeURIComponent(KUVA)}`))
-        .toBe(onnistuu);
+      const dom = await hyokkaa(page,
+                                `${s.url}/#${encodeURIComponent(KUVA)}`);
       // Tallennettu: kommentti lomakkeen kautta.
       await page.goto(s.url);
       await page.fill("input[name=teksti]", SKRIPTI);
       await page.click("button");
-      expect(await page.evaluate(() => "pwned" in window)).toBe(onnistuu);
+      const tallennettu = await page.evaluate(() => "pwned" in window);
+      expect([heijastettu, dom, tallennettu])
+        .toEqual([onnistuu, onnistuu, onnistuu]);
+      for (const t of [heijastettu, dom, tallennettu]) kirjaa(nimi, t);
     } finally {
       await s.sulje();
     }
   });
 }
 // @loppu testit
+
+test.afterAll(() => {
+  const sarakkeet = [...tulokset.keys()];
+  tallenna("03-xss", taulu(["reitti", ...sarakkeet], REITIT.map((r, i) =>
+    [r, ...sarakkeet.map((s) => tulokset.get(s)![i]!)])));
+});
 
 // @alku tt
 test("Trusted Types estää merkkijonon innerHTML-sijoituksen", async ({

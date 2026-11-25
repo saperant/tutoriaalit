@@ -1,0 +1,4 @@
+vaihe          sivun alkuperä  tulos
+rekisteröinti  localhost       {"ok":true}
+kirjautuminen  localhost       {"kayttaja":"aino"}
+kirjautuminen  127.0.0.1       SecurityError

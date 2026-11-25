@@ -80,6 +80,13 @@ omat uhkansa:
 Pitkä elinkaari tarkoittaa myös, että laitteessa on kryptografiaa, jota
 pitää voida vaihtaa (*crypto agility*): allekirjoitusalgoritmi, joka
 on turvallinen vuonna 2026, ei välttämättä ole sitä vuonna 2040.
+Tärkein kohde on käynnistimen allekirjoitustarkistus, koska ROM:ia ei
+voi päivittää. Jos riittävän suuri kvanttitietokone rakennetaan
+laitteen elinaikana, se murtaa RSA:n ja elliptiset käyrät, myös
+luvun 3 Ed25519:n. Siksi pitkäikäisten laitteiden käynnistimiin
+suositellaan jo nyt tiivistepohjaisia allekirjoituksia (LMS ja XMSS,
+NIST SP 800-208), joiden turvallisuus nojaa vain tiivistefunktioon,
+tai vähintään paikkaa toiselle avaimelle ja algoritmille.
 
 ## Käytännössä
 

@@ -1,0 +1,5 @@
+osoite                       haavoittuva     korjattu
+http://127.0.0.1:P/          salainen-avain  virhe: kohde 127.0.0.1 on estetty
+http://2130706433:P/         salainen-avain  virhe: kohde 127.0.0.1 on estetty
+http://127.0.0.2:Q/ (ohjaa)  salainen-avain  virhe: uudelleenohjaus estetty
+file:///etc/passwd           virhe           virhe: vain http ja https

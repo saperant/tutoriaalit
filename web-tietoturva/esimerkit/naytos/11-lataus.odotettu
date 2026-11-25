@@ -1,0 +1,8 @@
+lataus               haavoittuva             korjattu
+kuva.html (skripti)  201, jaetaan text/html  415
+../ohitus.png        ulos hakemistosta       palvelimen nimellä
+
+kuvan a.png jakelu       haavoittuva  korjattu
+Content-Disposition      –            attachment
+X-Content-Type-Options   –            nosniff
+Content-Security-Policy  –            sandbox; default-src 'none'

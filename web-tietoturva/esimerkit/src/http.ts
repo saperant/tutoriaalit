@@ -57,12 +57,14 @@ export function html(sivu: string, otsakkeet: Record<string, string> = {}):
   };
 }
 
-// Escapoi tekstin HTML-elementin sisältöön tai lainausmerkeissä
+// @alku h
+// Koodaa tekstin HTML-elementin sisältöön tai lainausmerkeissä
 // olevaan attribuuttiin. Muihin konteksteihin (URL, JavaScript, CSS)
-// tarvitaan oma koodaus, ks. luku 3.
+// tarvitaan oma koodaus.
 export function h(teksti: string): string {
   return teksti.replace(/[&<>"']/g, (m) => `&#${m.charCodeAt(0)};`);
 }
+// @loppu h
 
 export async function kaynnista(kasittelija: Kasittelija,
                                 isanta = "127.0.0.1"): Promise<Palvelin> {

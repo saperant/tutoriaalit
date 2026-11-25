@@ -1,0 +1,7 @@
+token                       haavoittuva         korjattu
+alg: none                   kelpaa, sub: admin  virhe: väärä muoto
+HS256 julkisella avaimella  kelpaa, sub: admin  virhe: väärä algoritmi
+vanhentunut tunti sitten    kelpaa, sub: aino   virhe: vanhentunut
+aud: toinen                 kelpaa, sub: aino   virhe: väärä iss/aud
+kumottu (jti)               kelpaa, sub: aino   virhe: kumottu
+oikea token                 kelpaa, sub: aino   kelpaa, sub: aino

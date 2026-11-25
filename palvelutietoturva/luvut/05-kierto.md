@@ -34,6 +34,18 @@ muuttuu koko kokonaisuudessa. Turvallinen järjestys:
 ```{.java tiedosto="esimerkit/luottamus/src/test/java/fi/tutoriaalit/palveluturva/luottamus/KiertoTest.java" osa="kierto"}
 ```
 
+Näytösajo kutsuu tilauspalvelua jokaisessa vaiheessa kahdella
+laskutuksen varmenteella, vanhan ja uuden varmentajan myöntämällä.
+Sarake *nippu* kertoo, mihin juuriin kaikki sillä hetkellä luottavat,
+ja *palvelin*, kumman varmentajan varmennetta tilauspalvelu esittää:
+
+```{.tuloste tiedosto="esimerkit/naytos/05-kierto.odotettu"}
+```
+
+Vaiheissa 1 ja 2 molemmat varmenteet kelpaavat, joten palvelut voi
+päivittää yksi kerrallaan missä järjestyksessä tahansa. Viimeinen rivi
+on virhetilanne, jossa vaihe 1 on ohitettu.
+
 Jos vaihe 1 jää tekemättä, ensimmäinen uuden varmenteen saanut
 palvelu katkaisee yhteydet kaikkiin, jotka eivät vielä tunne uutta
 juurta. Testi `liianAikainenPoistoKatkaiseeYhteydet` osoittaa tämän.

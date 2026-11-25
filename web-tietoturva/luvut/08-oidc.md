@@ -24,6 +24,51 @@ ainoan sallitun virran.
 4. Sovellus tarkistaa ID-tokenin: allekirjoitus, myöntäjä, yleisö,
    vanheneminen ja `nonce`.
 
+```{.dot otsikko="Valtuutuskoodivirta PKCE:llä. Yhtenäiset nuolet kulkevat selaimen osoiterivin kautta ja voivat vuotaa; katkoviivalla piirretty koodin vaihto (6–7) on sovelluksen ja tunnistuspalvelun suora yhteys. Arvo code_verifier kulkee vain siinä."}
+digraph {
+  layout=neato; splines=false;
+  node [shape=point, width=0.01, height=0.01, style=invis];
+  edge [arrowsize=0.7];
+  a0 [label="sovellus (BFF)", shape=box, style="rounded,filled", width=0, height=0.3, pos="0.00,0!"];
+  aL [pos="0.00,-3.28!"];
+  a0 -> aL [arrowhead=none, style=dotted];
+  s0 [label="selain", shape=box, style="rounded,filled", width=0, height=0.3, pos="2.50,0!"];
+  sL [pos="2.50,-3.28!"];
+  s0 -> sL [arrowhead=none, style=dotted];
+  i0 [label="tunnistuspalvelu", shape=box, style="rounded,filled", width=0, height=0.3, pos="5.00,0!"];
+  iL [pos="5.00,-3.28!"];
+  i0 -> iL [arrowhead=none, style=dotted];
+  s1 [pos="2.50,-0.51!"]; a1_ [pos="0.00,-0.51!"];
+  s1 -> a1_ [];
+  t1 [shape=plain, style="", fontsize=9, label="1. GET /kirjaudu", pos="1.25,-0.41!"];
+  a2 [pos="0.00,-0.87!"]; s2_ [pos="2.50,-0.87!"];
+  a2 -> s2_ [];
+  t2 [shape=plain, style="", fontsize=9, label="2. 302: state, nonce, code_challenge", pos="1.25,-0.77!"];
+  s3 [pos="2.50,-1.23!"]; i3_ [pos="5.00,-1.23!"];
+  s3 -> i3_ [];
+  t3 [shape=plain, style="", fontsize=9, label="3. GET /authorize?state&code_challenge", pos="3.75,-1.13!"];
+  i4 [pos="5.00,-1.59!"]; s4_ [pos="2.50,-1.59!"];
+  i4 -> s4_ [];
+  t4 [shape=plain, style="", fontsize=9, label="4. kirjautuminen; 302: code, state", pos="3.75,-1.49!"];
+  s5 [pos="2.50,-1.95!"]; a5_ [pos="0.00,-1.95!"];
+  s5 -> a5_ [];
+  t5 [shape=plain, style="", fontsize=9, label="5. GET /paluu?code&state", pos="1.25,-1.85!"];
+  a6 [pos="0.00,-2.31!"]; i6_ [pos="5.00,-2.31!"];
+  a6 -> i6_ [style=dashed];
+  t6 [shape=plain, style="", fontsize=9, label="6. POST /token: code + code_verifier", pos="1.25,-2.21!"];
+  i7 [pos="5.00,-2.67!"]; a7_ [pos="0.00,-2.67!"];
+  i7 -> a7_ [style=dashed];
+  t7 [shape=plain, style="", fontsize=9, label="7. ID-token ja access-token", pos="3.75,-2.57!"];
+  a8 [pos="0.00,-3.03!"]; s8_ [pos="2.50,-3.03!"];
+  a8 -> s8_ [];
+  t8 [shape=plain, style="", fontsize=9, label="8. Set-Cookie: istunto (HttpOnly)", pos="1.25,-2.93!"];
+}
+```
+
+Kaavion numerot eivät ole samat kuin luettelon: luettelon vaihe 1 on
+kaavion nuolet 1–3, vaihe 2 nuolet 4–5, vaihe 3 nuolet 6–7 ja vaihe 4
+tapahtuu sovelluksessa ennen nuolta 8.
+
 ```{.typescript tiedosto="esimerkit/src/08-oidc/asiakas.ts" osa="aloitus"}
 ```
 
@@ -51,6 +96,9 @@ tilille korttitietonsa tai tiedostojaan, ne päätyvät hyökkääjälle.
 ```{.typescript tiedosto="esimerkit/src/08-oidc/oidc.test.ts" osa="kirjautumis-csrf"}
 ```
 
+```{.tuloste tiedosto="esimerkit/naytos/08-kirjautumis-csrf.odotettu"}
+```
+
 ## PKCE ja kaapattu koodi
 
 Valtuutuskoodi kulkee selaimen osoitteessa ja voi vuotaa:
@@ -68,6 +116,9 @@ vaatii arvon, joka ei koskaan kulkenut selaimen osoitteessa:
 ```{.typescript tiedosto="esimerkit/src/08-oidc/oidc.test.ts" osa="pkce"}
 ```
 
+```{.tuloste tiedosto="esimerkit/naytos/08-pkce.odotettu"}
+```
+
 ## Paluuosoitteen tarkistus
 
 Tunnistuspalvelu lähettää koodin vain rekisteröityyn paluuosoitteeseen.
@@ -79,6 +130,12 @@ tunnistuspalvelujen haavoittuvuuksiin:
 ```
 
 ```{.typescript tiedosto="esimerkit/src/08-oidc/oidc.test.ts" osa="paluuosoite-testi"}
+```
+
+Rekisteröity osoite kelpaa kummallekin versiolle. Alkuosaa vertaava
+versio lähettää koodin myös osoitteeseen, joka vain alkaa samoin:
+
+```{.tuloste tiedosto="esimerkit/naytos/08-paluuosoite.odotettu"}
 ```
 
 ## Tokenien säilytys ja BFF
@@ -96,6 +153,22 @@ palvelin hoitaa koko virran luottamuksellisena asiakkaana
 kautta, joka liittää access-tokenin. Esimerkin asiakas on BFF. Selain
 ei näe tokeneita lainkaan, ja istunnon voi mitätöidä palvelimella.
 Hinta on se, että CSRF-suojaus tulee jälleen tarpeelliseksi (luku 4).
+
+```{.dot otsikko="BFF-malli. Tokenit pysyvät katkoviivan rajaamalla palvelinpuolella. Sivulle ujutettu skripti voi tehdä pyyntöjä käyttäjän istunnolla, mutta se ei saa tokenia mukaansa eikä voi käyttää rajapintaa muualta."}
+digraph {
+  rankdir=LR; nodesep=0.5;
+  selain [label="selain\n(vain HttpOnly-eväste)"];
+  subgraph cluster_p {
+    label="palvelinpuoli"; style="rounded,dashed"; fontsize=10;
+    bff [label="BFF\n(istunnot ja tokenit)"];
+    api [label="rajapinta"];
+  }
+  idp [label="tunnistuspalvelu"];
+  selain -> bff [label="istuntoeväste"];
+  bff -> api [label="access-token"];
+  bff -> idp [label="koodin vaihto,\ntokenin uusiminen"];
+}
+```
 
 ## Valmiit kirjautumispalvelut
 

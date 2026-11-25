@@ -58,11 +58,53 @@ mTLS-yhteydestä ja päättää käytännön mukaan:
 ```{.java tiedosto="esimerkit/luottamus/src/main/java/fi/tutoriaalit/palveluturva/luottamus/Vaihtopalvelu.java" osa="vaihto"}
 ```
 
+```{.dot otsikko="Tokenien vaihto. Käyttäjän token A päättyy tilauspalveluun. Laskutus saa tokenin B, joka on myönnetty vain sille ja jossa näkyvät sekä käyttäjä (sub) että välittäjä (act)."}
+digraph {
+  layout=neato; splines=false;
+  node [shape=point, width=0.01, height=0.01, style=invis];
+  edge [arrowsize=0.7];
+  y0 [label="yhdyskäytävä", shape=box, style="rounded,filled", width=0, height=0.3, pos="0.00,0!"];
+  yL [pos="0.00,-2.20!"];
+  y0 -> yL [arrowhead=none, style=dotted];
+  i0 [label="tilaus", shape=box, style="rounded,filled", width=0, height=0.3, pos="1.75,0!"];
+  iL [pos="1.75,-2.20!"];
+  i0 -> iL [arrowhead=none, style=dotted];
+  v0 [label="vaihtopalvelu", shape=box, style="rounded,filled", width=0, height=0.3, pos="3.50,0!"];
+  vL [pos="3.50,-2.20!"];
+  v0 -> vL [arrowhead=none, style=dotted];
+  l0 [label="laskutus", shape=box, style="rounded,filled", width=0, height=0.3, pos="5.25,0!"];
+  lL [pos="5.25,-2.20!"];
+  l0 -> lL [arrowhead=none, style=dotted];
+  y1 [pos="0.00,-0.51!"]; i1_ [pos="1.75,-0.51!"];
+  y1 -> i1_ [];
+  t1 [shape=plain, style="", fontsize=9, label="1. token A: aud=kauppa-api", pos="0.88,-0.41!"];
+  i2 [pos="1.75,-0.87!"]; v2_ [pos="3.50,-0.87!"];
+  i2 -> v2_ [];
+  t2 [shape=plain, style="", fontsize=9, label="2. vaihda A laskutukselle", pos="2.62,-0.77!"];
+  v3 [pos="3.50,-1.23!"]; i3_ [pos="1.75,-1.23!"];
+  v3 -> i3_ [];
+  t3 [shape=plain, style="", fontsize=9, label="3. token B: aud=laskutus", pos="2.62,-1.13!"];
+  i4 [pos="1.75,-1.59!"]; l4_ [pos="5.25,-1.59!"];
+  i4 -> l4_ [];
+  t4 [shape=plain, style="", fontsize=9, label="4. pyyntö + token B (mTLS)", pos="2.62,-1.49!"];
+  l5 [pos="5.25,-1.95!"]; i5_ [pos="1.75,-1.95!"];
+  l5 -> i5_ [];
+  t5 [shape=plain, style="", fontsize=9, label="5. asiakkaan 7 laskut", pos="4.38,-1.85!"];
+}
+```
+
 Uusi token on rajattu joka suunnasta: se kelpaa vain laskutukselle,
 sisältää vain oikeuksien leikkauksen, kertoo välittäjän ja vanhenee
 viidessä minuutissa:
 
 ```{.java tiedosto="esimerkit/luottamus/src/test/java/fi/tutoriaalit/palveluturva/luottamus/TokenitTest.java" osa="vaihtoTesti"}
+```
+
+Näytösajo tulostaa kummankin tokenin väitteet ja sen, mitä laskutus
+niistä päättää. Viimeinen rivi on murrettu suosituspalvelu, jolla ei
+ole lupaa pyytää tokenia laskutukselle:
+
+```{.tuloste tiedosto="esimerkit/naytos/06-tokenit.odotettu"}
 ```
 
 Laskutus näkee nyt sekä käyttäjän (`sub`) että välittäjän (`act`) ja

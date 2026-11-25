@@ -34,6 +34,11 @@ ennen kuin pyyntö kuormittaa palveluja:
 ```{.java tiedosto="esimerkit/luottamus/src/test/java/fi/tutoriaalit/palveluturva/luottamus/reuna/YhdyskaytavaTest.java" osa="hylkaykset"}
 ```
 
+Näytösajossa yhdyskäytävä saa viisi pyyntöä:
+
+```{.tuloste tiedosto="esimerkit/naytos/10-reuna.odotettu" asti="429"}
+```
+
 ## Todennus reunalla vai jokaisessa palvelussa
 
 Yleinen virhe on olettaa, että koska yhdyskäytävä todentaa, palvelun
@@ -47,6 +52,9 @@ Kun hyökkääjä on sisäverkossa, se kutsuu palvelua suoraan
 yhdyskäytävän ohi:
 
 ```{.java tiedosto="esimerkit/luottamus/src/test/java/fi/tutoriaalit/palveluturva/luottamus/reuna/YhdyskaytavaTest.java" osa="ohitusTesti"}
+```
+
+```{.tuloste tiedosto="esimerkit/naytos/10-reuna.odotettu" alkaen="suora kutsu"}
 ```
 
 Korjattu palvelu hyväksyy otsakkeen vain, jos sen toi yhdyskäytävä,
@@ -89,6 +97,54 @@ samoin: palvelu, jonka ei tarvitse puhua internetiin, ei saa avata
 yhteyttä sinne, mikä vaikeuttaa tietojen vientiä ja komentopalvelimen
 käyttöä.
 
+Verkkokäytäntö rajaa, kuka saa yhteyden. Sen, mitä murrettu kontti
+pystyy itse tekemään (pääkäyttäjyys, tiedostojärjestelmän kirjoitus,
+järjestelmäkutsut), rajaa työkuorman koventaminen taidossa *Kontit ja
+pilvi-infrastruktuuri*. Sen, että klusteriin pääsee vain
+allekirjoitettu ja tarkastettu kuva, varmistaa pääsynvalvoja, jonka
+vaatimukset tulevat taidosta *Tietoturva kehitystyössä*.
+
+## Viestinvälityksen suojaus
+
+Kaikki palvelujen välinen liikenne ei ole kutsuja. Kun tilauspalvelu
+julkaisee tapahtuman ja laskutus kuluttaa sen (*Palveluarkkitehtuurit*),
+välissä on viestinvälitin, ja mTLS todentaa vain kummankin yhteyden
+välittimeen. Laskutus tietää puhuvansa välittimelle; se ei tiedä,
+kuka viestin julkaisi. Murrettu suosituspalvelu, jolla on yhteys
+välittimeen, voisi julkaista tilausaiheeseen omia viestejään.
+
+Suojaus on kolmessa kerroksessa:
+
+| Kerros | Mitä tehdään | Mitä se torjuu |
+|--------|--------------|----------------|
+| välitin | palvelut todennetaan identiteetillä (mTLS); aihekohtaiset oikeudet: kuka saa julkaista, kuka tilata | väärä palvelu ei pääse aiheeseen |
+| viesti | tuottaja allekirjoittaa kuoren; kuluttaja tarkistaa tuottajan, eheyden, iän ja toiston | väärennös ja muutos, vaikka välitin tai sen oikeudet pettäisivät |
+| sisältö | arkaluonteinen runko salataan vastaanottajalle (luku 7) | välittimen levyn ja varmuuskopioiden lukija |
+
+Viestitason tarkistus on sama periaate kuin tokenin `aud` ja `iss`
+luvussa 6: kuluttaja ei luota kuljetukseen vaan todisteeseen, joka
+kulkee viestin mukana.
+
+```{.java tiedosto="esimerkit/luottamus/src/main/java/fi/tutoriaalit/palveluturva/luottamus/Viestit.java" osa="kuori"}
+```
+
+```{.java tiedosto="esimerkit/luottamus/src/main/java/fi/tutoriaalit/palveluturva/luottamus/Viestit.java" osa="kuluttaja"}
+```
+
+```{.java tiedosto="esimerkit/luottamus/src/test/java/fi/tutoriaalit/palveluturva/luottamus/ViestitTest.java" osa="testi"}
+```
+
+```{.tuloste tiedosto="esimerkit/naytos/10-viestit.odotettu"}
+```
+
+Toiston esto on turvallisuuden lisäksi oikeellisuutta: välittimet
+toimittavat viestin vähintään kerran, joten kuluttajan on joka
+tapauksessa oltava idempotentti. Nähtyjen tunnisteiden joukko
+tallennetaan samassa transaktiossa kuin viestin vaikutus, ja siitä
+poistetaan enimmäisikää vanhemmat. Myös käsittelemättä jääneiden
+viestien jono (*dead letter queue*) sisältää asiakasdataa, ja sen
+lukuoikeus rajataan kuten varsinaisen aiheen.
+
 ## Käytännössä
 
 - **Jokainen palvelu todentaa ja valtuuttaa itse.** Yhdyskäytävä
@@ -103,6 +159,9 @@ käyttöä.
   Lähtevä liikenne rajataan samoin.
 - **Hallintarajapinnat omaan verkkoonsa.** Actuator, metriikat ja
   ylläpidon rajapinnat eivät kuulu julkiseen yhdyskäytävään.
+- **Aihekohtaiset oikeudet välittimeen**, ja viestin aitous
+  tarkistetaan kuluttajassa. "Kaikki sisäiset palvelut saavat
+  julkaista kaikkialle" on sama virhe kuin jaettu API-avain.
 
 ## Itsearviointi
 

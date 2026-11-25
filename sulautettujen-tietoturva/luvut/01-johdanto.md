@@ -22,13 +22,47 @@ sulautetuille järjestelmille ominaisia:
 - **sääntely**: mitä EU:n kyberkestävyyssäädös ja alan standardit
   vaativat laitteelta ja valmistajalta
 
-Kryptografian perusteet (tiivisteet, allekirjoitukset, AEAD, HKDF)
-ovat tutoriaalissa *Kryptografia*, yleinen uhkamallinnus
-tutoriaalissa *Tietoturvan perusteet* ja kehitysprosessin
-turvallisuus tutoriaalissa *Tietoturva kehitystyössä*. Mikrokontrollerin
-rakenne (muistikartta, vektoritaulu, käynnistyskoodi) on taidon
-*Mikrokontrollerit ja bare-metal-ohjelmointi* aihe; tässä siitä kerrataan vain se, mitä
-käynnistysketjun ymmärtäminen vaatii.
+## Esitiedot ja rajaus
+
+Esitietoina ovat taidot *Mikrokontrollerit ja bare-metal-ohjelmointi*
+ja *Kryptografia*. Edellisestä oletetaan mikrokontrollerin rakenne
+(muistikartta, vektoritaulu, käynnistyskoodi) ja C-ohjelman
+ristikääntäminen; tässä kerrataan vain se, mitä käynnistysketjun
+ymmärtäminen vaatii. Jälkimmäisestä oletetaan tiivisteet,
+allekirjoitukset, AEAD ja HKDF. Esimerkit ovat C:tä ja Pythonia.
+
+Muualla käsitellään:
+
+- yleinen uhkamallinnus: *Tietoturvan perusteet*
+- kehitysprosessin turvallisuus, ohjelmistoluettelo ja toimitusketju:
+  *Tietoturva kehitystyössä*
+- muistivirheet ja niiden torjunta C-koodissa: *Haavoittuvuuksien
+  analyysi ja torjunta*
+- laitteiden taustajärjestelmän identiteetit ja salaisuudet:
+  *Palveluarkkitehtuurin tietoturva*
+- valmiin laiteohjelmistokuvan tutkiminen: *Laiteohjelmiston
+  takaisinmallinnus*
+
+## Vastuulauseke
+
+Materiaali on tarkoitettu opetukseen ja omien laitteiden
+suojaamiseen. Luvuissa 8–10 kuvataan fyysisiä hyökkäyksiä, koska
+vastatoimia ei voi suunnitella tuntematta niitä. Hyökkäykset ajetaan
+simulaatioina: virrankulutus, ajoitus ja häiriöt ovat paketin omia
+malleja, ja käynnistysketju ajetaan QEMU:ssa itse käännetyllä
+ohjelmistolla ja julkisilla testiavaimilla.
+
+- **Mittaa, avaa ja häiritse vain laitteita, jotka omistat tai joiden
+  testaamiseen sinulla on kirjallinen lupa.** Toisen laitteen
+  suojausten kiertäminen, sen tietojen lukeminen ja sen toiminnan
+  häiritseminen voivat olla rikoksia (rikoslain 38. luku), ja laitteen
+  ostaminen ei anna oikeutta sen taustajärjestelmään.
+- **Tekijät eivät vastaa materiaalin väärinkäytöstä.** Paketissa ei
+  ole työkaluja vieraiden laitteiden tai palvelujen murtamiseen.
+
+Omien tuotteiden koettelu näillä menetelmillä ennen kuin joku muu
+tekee sen on juuri se, mihin tutoriaali kannustaa. Luvussa 12
+kerrotaan, millä välineillä harjoittelun voi aloittaa laillisesti.
 
 ## Laboratorio
 
@@ -59,9 +93,10 @@ tuotantoavaimet luodaan ja säilytetään laitteistoturvamoduulissa
 
 ## Esimerkkien ajaminen
 
-Kehityskontissa (`.devcontainer/sulautettujen-tietoturva`) on ARM-
-ristikääntäjä, QEMU ja Pythonin `cryptography`-kirjasto. Ilman
-konttia tarvitaan Debian- tai Ubuntu-paketit `gcc-arm-none-eabi`,
+Kehityskontissa (`.devcontainer/sulautettujen-tietoturva`) on
+ARM-ristikääntäjä, QEMU ja Pythonin `cryptography`-kirjasto; kontin
+avaaminen on kuvattu taidossa *Kehitysympäristöt ja Dev Containers*.
+Ilman konttia tarvitaan Debian- tai Ubuntu-paketit `gcc-arm-none-eabi`,
 `libnewlib-arm-none-eabi` ja `qemu-system-arm` sekä
 `pip install cryptography`.
 

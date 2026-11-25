@@ -4,8 +4,9 @@ Laite tarvitsee salaisuuksia: identiteetin pilvipalveluun, avaimen
 tallennettujen tietojen salaukseen, todennusavaimen. Ongelma on, että
 laite on hyökkääjän käsissä. Tavallinen flash on luettavissa
 debug-portista, ulkoinen flash irrottamalla piiri. Tässä luvussa käydään
-läpi, mihin avaimet laitetaan, miten jokainen laite saa omansa ja
-miten avain voidaan johtaa piirin fysiikasta.
+läpi, mihin avaimet laitetaan, miten jokainen laite saa omansa, mistä
+laite saa satunnaislukunsa, miten avain voidaan johtaa piirin
+fysiikasta ja miten laite esittäytyy taustajärjestelmälle.
 
 ## Säilytyspaikat
 
@@ -33,6 +34,20 @@ niihin. Sovellusprosessoreissa (TrustZone-A) turvallisella puolella ajetaan
 erillistä käyttöjärjestelmää (*trusted execution environment*, esim.
 OP-TEE).
 
+Piireissä, joissa TrustZonea ei ole, sama jako tehdään kevyemmin
+**muistinsuojausyksiköllä** (MPU) ja suorittimen etuoikeustasoilla.
+Reaaliaikakäyttöjärjestelmä ajaa tehtävät etuoikeudettomassa tilassa
+ja antaa kullekin vain omat muistialueensa, jolloin verkkopinon virhe
+ei yllä avaimia käsittelevän tehtävän muistiin (taito
+*Reaaliaikakäyttöjärjestelmät*). Eristys on ohjelmiston varassa:
+etuoikeutetun koodin virhe kaataa sen, toisin kuin turvaelementissä.
+
+Avaimen lisäksi suojataan data. Ulkoisen flashin sisältö salataan
+laitekohtaisella avaimella, jotta piirin irrottaminen ei paljasta
+asetuksia, lokeja tai asiakkaan tietoja. Korkean riskin laitteissa
+(maksupäätteet, mittarit) kotelon avaaminen havaitaan kytkimellä tai
+verkolla, ja havainto pyyhkii avaimet (*tamper response*).
+
 ## Laitekohtaiset avaimet
 
 Luvun 2 tärkein periaate oli, ettei laitteilla ole yhteisiä
@@ -54,6 +69,25 @@ yhden käytön avaimesta laitteen juuriavainta. Pääavain on HSM:ssä, eikä
 sitä ole koskaan laitteessa. Käyttötarkoituksen nimessä on versio
 (`/v1`), jotta avaimen voi kierrättää ilman, että johtamisen kaava
 muuttuu.
+
+## Satunnaisuus laitteessa
+
+Avaimet, haasteet ja maskit (luku 9) tarvitsevat satunnaislukuja, ja
+pieni laite on niille huono ympäristö: heti käynnistyksen jälkeen ei
+ole käyttäjän syötettä, levyn ajoitusta eikä verkkoliikennettä, joista
+käyttöjärjestelmät keräävät satunnaisuutta. Kaksi samanlaista
+laitetta, jotka luovat avaimen ensimmäisellä käynnistyksellä pelkästä
+ohjelmallisesta generaattorista, luovat saman avaimen. Internetistä
+kerätyistä varmenteista on löydetty juuri tästä syystä yhteisiä
+alkulukuja ja toistuvia avaimia.
+
+Lähteeksi kelpaa piirin laitteistogeneraattori (TRNG), jonka tuloste
+syötetään kryptografiseen generaattoriin (DRBG) eikä käytetä
+sellaisenaan. Generaattorin tila tallennetaan sammutuksen yli, jotta
+seuraava käynnistys ei ala tyhjästä, ja laitteistolähteen
+terveystestit (jumittunut tai toistuva tuloste) pysäyttävät avainten
+luonnin, jos lähde pettää. Generaattorien rakenne on taidossa
+*Kryptografia*.
 
 ## PUF: avain piirin fysiikasta
 
@@ -103,6 +137,26 @@ Molemmissa tapauksissa laitteen julkinen avain tai varmenne
 rekisteröidään taustajärjestelmään, mikä paljastaa myös
 ylituotetut laitteet.
 
+## Laitteen identiteetti taustajärjestelmälle
+
+Rekisteröity avain on laitteen identiteetti myös kentällä. Kun laite
+ottaa yhteyden taustajärjestelmään, kumpikin todentaa toisensa samalla
+periaatteella kuin palvelut keskenään (molemminpuolinen TLS, taito
+*Palveluarkkitehtuurin tietoturva*), mutta laitteen ehdoilla:
+
+| Kohta | Laitteessa |
+|-------|------------|
+| identiteetti | tehtaalla varmennettu laitevarmenne (*IDevID*, IEEE 802.1AR), yksityisavain turvaelementissä tai johdettu juuriavaimesta |
+| yhteys | TLS 1.3 tai rajoitetussa laitteessa DTLS; laite luottaa vain valmistajan omaan juureen, ei julkisiin varmentajiin |
+| valtuutus | taustajärjestelmä rajaa jokaisen laitteen omiin resursseihinsa (oma aihe, oma jono), jolloin yhden laitteen avain ei avaa muiden dataa |
+| käyttöönotto | omistaja liitetään laitteeseen todennetusti (laitekohtainen koodi tai omistajuuden siirto valmistajan kautta), ei oletussalasanalla |
+| kumoaminen | varastettu tai käytöstä poistettu laite merkitään rekisteriin, eikä sen varmenne enää kelpaa |
+
+Luvun 2 periaate näkyy tässäkin: mikään näistä ei saa nojata
+salaisuuteen, joka on sama kaikissa laitteissa. Yhteinen API-avain
+laiteohjelmistossa on koko laitekannan salasana, ja se on luettavissa
+yhdestä kappaleesta.
+
 ## Käytännössä
 
 - **Älä tallenna avaimia selväkielisinä flashiin.** Käytä
@@ -112,6 +166,11 @@ ylituotetut laitteet.
   julkinen avain tehtaalla.
 - **Yksi avain, yksi käyttö.** Johda avaimet juuriavaimesta
   käyttötarkoituksen mukaan ja versioi käyttötarkoitukset.
+- **Laitekohtainen identiteetti myös verkossa.** Laitevarmenne ja
+  molemminpuolinen TLS, laitekohtaiset oikeudet taustajärjestelmässä,
+  ei yhteisiä API-avaimia.
+- **Satunnaisluvut laitteistolähteestä generaattorin kautta**, ja
+  tila talteen sammutuksen yli.
 - **Turvaelementti ei estä väärinkäyttöä.** Jos sovellus on murrettu,
   hyökkääjä voi pyytää piiriä allekirjoittamaan; avain ei vuoda, mutta
   laitteen identiteettiä voidaan käyttää. Rajaa, mitä piiriltä voi
@@ -123,6 +182,11 @@ ylituotetut laitteet.
   uhkamallin mukaan.
 - Osaat johtaa laitekohtaiset ja käyttötarkoituskohtaiset avaimet
   HKDF:llä ja perustella, miksi johtaminen on yksisuuntaista.
+- Osaat selittää, miksi laite ei saa luoda avaimia pelkällä
+  ohjelmallisella generaattorilla heti ensimmäisen käynnistyksen
+  jälkeen.
+- Osaat kuvata, miten laite ja taustajärjestelmä todentavat toisensa
+  ilman kaikille laitteille yhteistä salaisuutta.
 - Osaat selittää PUF:n ja sumean poimijan toiminnan sekä sen, miksi
   epävakaat solut jätetään pois.
 - Osaat kuvata TrustZonen roolin avainten suojaamisessa.

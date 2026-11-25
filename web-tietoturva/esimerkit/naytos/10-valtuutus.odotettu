@@ -1,0 +1,6 @@
+käyttäjä  pyyntö               haavoittuva             korjattu
+aino      GET /tilaukset/1     200                     200
+aino      GET /tilaukset/2     200                     404
+aino      PATCH /oma           200, rooli: yllapitaja  200, rooli: asiakas
+paula     GET /tilaukset/2     200                     200
+ville     DELETE /tilaukset/2  204                     403

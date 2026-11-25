@@ -3,6 +3,12 @@ title: Sulautettujen järjestelmien tietoturva
 subtitle: Pikaopas · luottamusketju, avaimet, päivitykset, fyysiset hyökkäykset
 ---
 
+# Vastuulauseke
+
+Mittaa, avaa ja häiritse vain omia laitteitasi tai kirjallisella
+luvalla testattavia kohteita. Luvaton tunkeutuminen on rikos
+(rikoslain 38. luku). Paketin hyökkäykset ovat simulaatioita.
+
 # Uhkamalli
 
 | Pääsy | Pinnat | Vastatoimi |
@@ -95,7 +101,7 @@ Pääsääntö: yhden laitteen murto ei saa helpottaa muiden murtamista.
 | ETSI EN 303 645 | kuluttaja-IoT, 13 perusvaatimusta |
 | EN 18031-1/2/3 | radiolaitteet, sovellettava 1.8.2025 |
 | IEC 62443-4-1/-4-2 | kehitysprosessi; komponentit, SL 1–4 |
-| CRA (EU) 2024/2847 | ilmoitukset 11.9.2026, muu 11.12.2027 |
+| CRA (EU) 2024/2847 | ilmoitukset 11.9.2026 alkaen, muu 11.12.2027 |
 
 CRA-ilmoitus hyödynnetystä haavoittuvuudesta: varoitus 24 h,
 ilmoitus 72 h, loppuraportti 14 vrk korjauksesta. Tukiaika vastaa

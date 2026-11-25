@@ -43,6 +43,31 @@ poistu laitteesta (TPM:ssä *attestation key*). Todentaja tarkistaa
 allekirjoituksen, toistaa lokin ja vertaa mittauksia hyväksyttyjen
 versioiden luetteloon:
 
+```{.dot otsikko="Etätodennus. Haaste tekee lainauksesta kertakäyttöisen, ja rekisterin arvo sitoo sen siihen, mitä laite todella käynnisti. Loki kertoo todentajalle, mistä osista rekisterin arvo syntyi."}
+digraph {
+  layout=neato; splines=false;
+  node [shape=point, width=0.01, height=0.01, style=invis];
+  edge [arrowsize=0.7];
+  d0 [label="todentaja (taustajärjestelmä)", shape=box, style="rounded,filled", width=0, height=0.3, pos="0.00,0!"];
+  dL [pos="0.00,-2.20!"];
+  d0 -> dL [arrowhead=none, style=dotted];
+  l0 [label="laite", shape=box, style="rounded,filled", width=0, height=0.3, pos="3.40,0!"];
+  lL [pos="3.40,-2.20!"];
+  l0 -> lL [arrowhead=none, style=dotted];
+  d1 [pos="0.00,-0.51!"]; l1_ [pos="3.40,-0.51!"];
+  d1 -> l1_ [];
+  t1 [shape=plain, style="", fontsize=9, label="1. haaste (satunnainen, kertakäyttöinen)", pos="1.70,-0.41!"];
+  l2 [pos="3.40,-0.87!"]; d2_ [pos="0.00,-0.87!"];
+  l2 -> d2_ [];
+  t2 [shape=plain, style="", fontsize=9, label="2. lainaus: allekirjoitus(haaste, rekisteri)", pos="1.70,-0.77!"];
+  l3 [pos="3.40,-1.23!"]; d3_ [pos="0.00,-1.23!"];
+  l3 -> d3_ [];
+  t3 [shape=plain, style="", fontsize=9, label="3. tapahtumaloki: mitä mitattiin", pos="1.70,-1.13!"];
+  o4 [shape=plain, style="", fontsize=9, label=<<i>todentaja: tarkistaa allekirjoituksen,</i>>, pos="1.70,-1.59!"];
+  o5 [shape=plain, style="", fontsize=9, label=<<i>toistaa lokin ja vertaa hyväksyttyihin</i>>, pos="1.70,-1.95!"];
+}
+```
+
 ```{.python tiedosto="esimerkit/05-mittaus.py" osa="todentaja"}
 ```
 

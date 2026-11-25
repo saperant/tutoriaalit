@@ -4,7 +4,8 @@
 pettää. Tämä luku käy läpi kolme XSS:n reittiä palvelimen näkökulmasta
 ja kolme puolustuskerrosta: kontekstin mukaisen koodauksen,
 sisältöturvakäytännön (CSP) ja Trusted Typesin. Ne ovat erillisiä
-kerroksia: kun yksi pettää, seuraava pysäyttää hyökkäyksen.
+kerroksia: kun yksi pettää, seuraava pysäyttää hyökkäyksen. Lopuksi
+käsitellään skriptit, jotka sivu lataa muilta palvelimilta.
 
 ## Kolme reittiä
 
@@ -30,16 +31,20 @@ yksitellen:
 ## Koodaus kontekstin mukaan
 
 Ensimmäinen puolustus on koodata data siihen kontekstiin, johon se
-päätyy. Funktio `h` (luku 1) koodaa HTML-elementin sisällön ja
-lainausmerkeissä olevan attribuutin. Muut kontekstit tarvitsevat oman
-koodauksensa:
+päätyy. Esimerkkien apukehyksen funktio `h` koodaa HTML-elementin
+sisällön ja lainausmerkeissä olevan attribuutin:
+
+```{.typescript tiedosto="esimerkit/src/http.ts" osa="h"}
+```
+
+Muut kontekstit tarvitsevat oman koodauksensa:
 
 | Konteksti | Esimerkki | Koodaus |
 |-----------|-----------|---------|
 | HTML-sisältö | `<p>${x}</p>` | HTML-entiteetit: `& < > " '` |
 | Attribuutti | `<a title="${x}">` | sama, ja arvo aina lainausmerkeissä |
 | URL | `<a href="${x}">` | tarkista skeema (`https:`), sitten `encodeURIComponent` osille |
-| JavaScript | `<script>let x = ${x}</script>` | `JSON.stringify` ja `<` → `<`; mieluummin `data-`-attribuutti |
+| JavaScript | `<script>let x = ${x}</script>` | `JSON.stringify` ja `<` → `\u003c`; mieluummin `data-`-attribuutti |
 | CSS | `style="color: ${x}"` | sallittujen arvojen luettelo |
 | DOM | `el.innerHTML = x` | `textContent`, `createElement` |
 
@@ -63,8 +68,8 @@ käytettävää (JSONP-rajapintoja, vanhoja kirjastoja). Suositus on
 
 - `'nonce-…'`: vain skriptit, joiden `nonce`-attribuutti vastaa
   otsakkeen arvoa, ajetaan. Arvo arvotaan joka vastaukselle, joten
-  hyökkääjä ei voi tietää sitä. Ujutettu `<script>` ja tapahtuma-
-  käsittelijä `onerror="…"` jäävät ajamatta.
+  hyökkääjä ei voi tietää sitä. Ujutettu `<script>` ja
+  tapahtuma-käsittelijä `onerror="…"` jäävät ajamatta.
 - `'strict-dynamic'`: luotettu skripti saa ladata muita skriptejä.
   Tämä tekee tiukasta CSP:stä käyttökelpoisen modernien
   sovellusten kanssa.
@@ -88,23 +93,76 @@ tarvitse tarkistaa käsin.
 
 ## Hyökkäystestit
 
-Playwright-testi ajaa kaikki kolme reittiä kolmea kokoonpanoa vastaan.
+Playwright-testi ajaa kaikki kolme reittiä neljää kokoonpanoa vastaan.
 Hyökkäys onnistuu, jos sivulle ujutettu koodi asettaa muuttujan
 `window.pwned`:
 
 ```{.typescript tiedosto="esimerkit/e2e/xss.spec.ts" osa="testit"}
 ```
 
-Rivi *vain CSP* on syvyyspuolustus näkyvissä: koodaus on unohdettu,
-mutta CSP estää kaikki kolme hyökkäystä. Silti kumpaakaan ei jätetä
+Testi kirjaa jokaisen yrityksen tuloksen. Taulussa on reitti riveinä
+ja kokoonpano sarakkeina; "ajettiin" tarkoittaa, että ujutettu koodi
+suoritettiin selaimessa:
+
+```{.tuloste tiedosto="esimerkit/naytos/03-xss.odotettu"}
+```
+
+Kumpikin puolustus pysäyttää hyökkäykset yksinäänkin. Sarake *vain
+CSP* on syvyyspuolustus näkyvissä: koodaus on unohdettu, mutta CSP
+estää kaikki kolme hyökkäystä. Silti kumpaakaan ei jätetä
 pois. CSP ei estä HTML-injektiota (väärennetty kirjautumislomake
 sivun keskellä toimii ilman skriptiä), ja koodaus voi pettää yhdessä
 paikassa sadoista.
 
+Saman palstan saa omaan selaimeen komennolla `make kokeile`
+hakemistossa `esimerkit`. Se käynnistää haavoittuvan version
+osoitteeseen `127.0.0.1` ja tulostaa osoitteet, joilla kutakin reittiä
+voi kokeilla. `make kokeile PUOLUSTUS="csp"` kytkee CSP:n päälle,
+jolloin selaimen kehittäjätyökalujen konsolissa näkyy, minkä skriptin
+käytäntö esti.
+
+## Kolmannen osapuolen skriptit ja SRI
+
+Sivun oma koodi ei ole ainoa skriptien lähde. Analytiikka,
+maksupainikkeet, chat-ikkunat ja CDN:stä ladatut kirjastot ajetaan
+sivun alkuperässä samoin oikeuksin kuin oma koodi: ne voivat lukea
+lomakkeet ja lähettää pyyntöjä käyttäjän nimissä. Jos jakelupalvelin
+murretaan tai kirjaston ylläpitäjä vaihtuu, muutettu skripti päätyy
+jokaisen sivuston jokaiselle käyttäjälle. Näin on käynyt useita
+kertoja; tunnetuin tapaus on verkkokauppojen maksusivuille ujutettu
+kortinlukukoodi.
+
+**SRI** (*Subresource Integrity*) sitoo ladattavan tiedoston sisältöön.
+Sivu ilmoittaa `integrity`-määritteessä tiedoston tiivisteen, ja selain
+jättää skriptin ajamatta, jos ladattu sisältö ei vastaa sitä:
+
+```{.typescript tiedosto="esimerkit/src/03-xss/sri.ts" osa="sri"}
+```
+
+Määrite `crossorigin="anonymous"` on pakollinen toisen alkuperän
+tiedostolle: selain tarkistaa tiivisteen vain, jos palvelin sallii
+vastauksen lukemisen CORS-otsakkeella. Testissä "CDN" on toisessa
+osoitteessa ja jakaa joko alkuperäisen tai muutetun kirjaston:
+
+```{.typescript tiedosto="esimerkit/e2e/sri.spec.ts" osa="testi"}
+```
+
+```{.tuloste tiedosto="esimerkit/naytos/03-sri.odotettu"}
+```
+
+SRI sopii tiedostoille, joiden sisältö on kiinnitetty versioon. Se ei
+sovi skripteille, joita toimittaja päivittää samassa osoitteessa
+(useimmat analytiikka- ja maksuskriptit). Niiden riski rajataan
+toisin: skripti ladataan vain sivuille, joilla sitä tarvitaan,
+maksulomake eristetään toimittajan omaan kehykseen, ja kirjastot
+jaetaan mieluiten omalta palvelimelta, jolloin ne kulkevat saman
+katselmoinnin ja riippuvuuksien tarkistuksen läpi kuin muu koodi
+(*Tietoturva kehitystyössä*).
+
 ## Käytännössä
 
-- **Koodaus mallipohjalla, tekstinä DOM:iin.** Käsin kootut HTML-
-  merkkijonot ovat XSS:n yleisin lähde. Jos HTML:ää on pakko
+- **Koodaus mallipohjalla, tekstinä DOM:iin.** Käsin kootut
+  HTML-merkkijonot ovat XSS:n yleisin lähde. Jos HTML:ää on pakko
   näyttää (rikastettu teksti), se puhdistetaan DOMPurifylla tai
   palvelimella sallittujen elementtien luettelolla.
 - **Tiukka CSP noncella** heti projektin alussa. Jälkikäteen
@@ -116,6 +174,9 @@ paikassa sadoista.
 - **`HttpOnly`-eväste** rajaa XSS:n vahinkoa: skripti ei voi lukea
   istuntotunnistetta. Se ei estä skriptiä tekemästä pyyntöjä
   käyttäjän nimissä, joten se ei korvaa XSS:n torjuntaa.
+- **Kolmannen osapuolen skriptit ovat omaa koodia.** Kiinnitä versio
+  ja `integrity`, tai jaa kirjasto itse. Mitä vähemmän vieraita
+  skriptejä kirjautumis- ja maksusivuilla, sen parempi.
 - **Hinta:** nonce vaatii, että HTML luodaan joka pyynnölle (ei
   staattista välimuistia sellaisenaan). CDN:llä nonce lisätään
   reunapalvelimella, tai käytetään tiivisteisiin perustuvaa CSP:tä
@@ -130,3 +191,5 @@ paikassa sadoista.
   `object-src`- ja `base-uri`-direktiivien merkityksen.
 - Osaat kertoa, mitä Trusted Types muuttaa DOM-rajapinnoissa.
 - Osaat kirjoittaa Playwright-testin, joka todentaa XSS-suojauksen.
+- Osaat kertoa, mitä SRI takaa, mitä se vaatii palvelimelta ja milloin
+  se ei sovi.

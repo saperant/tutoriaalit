@@ -5,7 +5,7 @@
     "context": "..",
     "args": {
       "LISAPAKETIT": "gcc-arm-none-eabi libnewlib-arm-none-eabi qemu-system-arm",
-      "PIP_PAKETIT": "cryptography==50.0.1 ruff mypy"
+      "PIP_PAKETIT": "cryptography==50.0.1 ruff mypy matplotlib"
     }
   },
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/sulautettujen-tietoturva/esimerkit",

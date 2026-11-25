@@ -26,6 +26,9 @@ otsakkeen itse:
 ```{.java tiedosto="esimerkit/luottamus/src/test/java/fi/tutoriaalit/palveluturva/luottamus/MtlsTest.java" osa="hyokkays"}
 ```
 
+```{.tuloste tiedosto="esimerkit/naytos/02-otsake.odotettu"}
+```
+
 Otsake, IP-osoite ja verkkosegmentti kertovat vain, mistä pyyntö
 näyttää tulevan. Ne eivät todista mitään, koska hyökkääjä hallitsee
 niitä kaikkia omalla koneellaan. Todiste on jotain, mitä vain oikea
@@ -57,6 +60,23 @@ kulkee: palvelun suodatin, sivuvaunuvälityspalvelin tai
 yhdyskäytävä. **Hallintapiste** (*policy administrator*) välittää
 päätöksen täytäntöönpanopisteelle ja hallitsee istuntoja.
 
+```{.dot otsikko="Päätöspiste ja täytäntöönpanopiste. Pyyntö ei pääse resurssiin muuta kautta kuin täytäntöönpanopisteen läpi, ja päätös tehdään jokaiselle pyynnölle erikseen."}
+digraph {
+  rankdir=LR; nodesep=0.35;
+  kutsuja [label="kutsuja"];
+  pep [label="täytäntöönpanopiste (PEP)\nsuodatin, sivuvaunu tai\nyhdyskäytävä"];
+  resurssi [label="resurssi"];
+  pdp [label="päätöspiste (PDP)\nkäytäntömoottori"];
+  kaytannot [label="käytännöt", shape=note];
+  tila [label="tilannetieto:\nlaite, aika, käyttäytyminen", shape=note];
+  kutsuja -> pep [label="pyyntö +\nidentiteetti"];
+  pep -> resurssi [label="vain jos\nsallittu"];
+  pep -> pdp [label="saako?", dir=both];
+  kaytannot -> pdp; tila -> pdp;
+  { rank=same; pep; pdp; }
+}
+```
+
 ## Päätös pyyntö kerrallaan
 
 Luvun 9 käytäntömoottori on päätöspiste. Seuraava käytäntö sallii
@@ -70,6 +90,13 @@ Sama käyttäjä saa eri vastauksen eri tilanteessa. Päätös tehdään
 jokaiselle pyynnölle, ei kerran kirjautuessa:
 
 ```{.java tiedosto="esimerkit/kaytannot/src/test/java/fi/tutoriaalit/palveluturva/kaytannot/KaytannotTest.java" osa="nollaluottamus"}
+```
+
+Asiakas `a-7` tekee kolme pyyntöä. Moottori kertoo päätöksen
+perusteen: salliva lauseke tai oletusesto, kun mikään lauseke ei
+osunut.
+
+```{.tuloste tiedosto="esimerkit/naytos/02-paatos.odotettu"}
 ```
 
 ## Mitä nollaluottamus ei ole

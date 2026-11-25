@@ -1,0 +1,12 @@
+käytännöt: laskutus-laaja
+  tilaukset:Lue     tilaukset/1001  sallittu: laskutus-laaja/Kaikki
+  tilaukset:Poista  tilaukset/1001  sallittu: laskutus-laaja/Kaikki
+  salaisuudet:Lue   salaisuudet/db  sallittu: laskutus-laaja/Kaikki
+käytännöt: organisaatio + laskutus
+  tilaukset:Lue     tilaukset/1001  sallittu: laskutus/LueTilaukset
+  tilaukset:Poista  tilaukset/1001  esto: organisaatio/EiPoistojaTuotannossa
+  salaisuudet:Lue   salaisuudet/db  oletuksena estetty
+käytännöt: organisaatio + laskutus-laaja
+  tilaukset:Lue     tilaukset/1001  sallittu: laskutus-laaja/Kaikki
+  tilaukset:Poista  tilaukset/1001  esto: organisaatio/EiPoistojaTuotannossa
+  salaisuudet:Lue   salaisuudet/db  sallittu: laskutus-laaja/Kaikki

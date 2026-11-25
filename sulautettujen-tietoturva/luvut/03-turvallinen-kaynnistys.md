@@ -30,11 +30,61 @@ alussa, ja julkinen avain on käännetty sen sisään. Oikeassa piirissä
 avaimen tiiviste olisi OTP:ssa, jolloin avaimen voi valita vasta
 tehtaalla.
 
+```{.dot otsikko="Luottamusketju. Jokainen vaihe tarkistaa seuraavan allekirjoituksen ennen kuin siirtää sille suorituksen. Ketjun alku on se, mitä ei voi muuttaa: ROM ja OTP-muistin avain."}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.3;
+  subgraph cluster_labra {
+    label="tämän tutoriaalin laboratorio (QEMU)"; labeljust=l; style="rounded,dashed"; fontsize=10;
+    avain [label="avain käännetty\nsisään", shape=box, style="filled"];
+    kaynnistin [label="käynnistin\n(ROM:n roolissa)"];
+    sovellus [label="sovellus\n(paikka A tai B)"];
+    avain -> kaynnistin [style=dashed];
+    kaynnistin -> sovellus [label="tarkistaa"];
+  }
+  subgraph cluster_piiri {
+    label="tyypillinen mikrokontrolleri"; labeljust=l; style="rounded,dashed"; fontsize=10;
+    otp [label="OTP: avaimen\ntiiviste", shape=box, style="filled"];
+    rom [label="ROM-käynnistin\n(ei muutettavissa)"];
+    bl [label="1. vaiheen\nkäynnistin"];
+    app [label="sovellus"];
+    otp -> rom [style=dashed];
+    rom -> bl [label="tarkistaa"];
+    bl -> app [label="tarkistaa"];
+  }
+}
+```
+
 ## Kuvan muoto
 
 Laiteohjelmistokuva on otsake ja sovellus peräkkäin:
 
 ```{.c tiedosto="esimerkit/laite/lahde/otsake.h"}
+```
+
+```{.dot otsikko="Kuvan asettelu tavusiirtymineen. Allekirjoitus lasketaan otsakkeen 80 ensimmäisestä tavusta. Sovellus ei ole allekirjoitetussa osassa, mutta sen tiiviste on, joten yhdenkin sovelluksen tavun muutos mitätöi allekirjoituksen."}
+digraph {
+  node [shape=plain, style=""];
+  kuva [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr>
+      <td border="0" align="left">0</td><td border="0" align="left">4</td>
+      <td border="0" align="left">8</td><td border="0" align="left">12</td>
+      <td border="0" align="left">16</td><td border="0" align="left">80</td>
+      <td border="0" align="left">144</td><td border="0" align="left">256</td>
+    </tr>
+    <tr>
+      <td bgcolor="#E3EEEA">taika</td><td bgcolor="#E3EEEA">versio</td>
+      <td bgcolor="#E3EEEA">koko</td><td bgcolor="#E3EEEA">varattu</td>
+      <td bgcolor="#E3EEEA">tiiviste (SHA-512)</td>
+      <td>allekirjoitus (Ed25519)</td><td>täyte</td>
+      <td bgcolor="#F1E3EC">sovellus</td>
+    </tr>
+    <tr>
+      <td colspan="5" border="0">allekirjoitettu osa (80 tavua)</td>
+      <td colspan="2" border="0"> </td>
+      <td border="0">tiivisteen kattama</td>
+    </tr>
+  </table>>];
+}
 ```
 
 Allekirjoitus kattaa otsakkeen alkuosan, ja siinä on sovelluksen

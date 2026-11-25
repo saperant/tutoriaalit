@@ -63,6 +63,15 @@ Organisaation suojakaide estää poistot tuotannossa kaikilta:
 ```{.java tiedosto="esimerkit/kaytannot/src/test/java/fi/tutoriaalit/palveluturva/kaytannot/KaytannotTest.java" osa="rajattu"}
 ```
 
+Samat kolme pyyntöä kolmella käytäntöyhdistelmällä. Jokaisen
+päätöksen perään moottori kirjaa perusteen: mikä lauseke salli, mikä
+esti vai jäikö pyyntö oletuseston varaan. Viimeisessä ryhmässä
+organisaation suojakaide pysäyttää poiston, vaikka palvelun oma
+käytäntö sallisi kaiken:
+
+```{.tuloste tiedosto="esimerkit/naytos/09-paatokset.odotettu"}
+```
+
 ## Oikeudet käytön perusteella
 
 Vähimpiä oikeuksia on vaikea kirjoittaa etukäteen. Käytännöllisempää
@@ -101,6 +110,23 @@ käytäntö vastaa. Käytännöille kirjoitetaan yksikkötestejä kuten
 koodille, ja tarkastus kuuluu samaan CI-putkeen kuin
 infrastruktuurikoodi.
 
+## Monta asiakasta samassa palvelussa
+
+Kun sama palvelu ja tietokanta palvelevat useaa asiakasorganisaatiota
+(*multi-tenancy*), vuokralaisen tunniste on osa jokaista
+valtuutuspäätöstä. Luvun 2 käytäntö teki tämän yhdelle käyttäjälle
+muuttujalla `${asiakas}`; sama rakenne rajaa kokonaisen organisaation
+resurssit (`krn:kauppa:tiedostot/${vuokralainen}/*`). Kolme sääntöä:
+
+- **Tunniste tulee todennetusta identiteetistä**, tokenin väitteestä,
+  ei pyynnön osoitteesta tai rungosta.
+- **Rajaus tehdään mahdollisimman alhaalla:** tietokannassa
+  rivitason käytännöllä tai vuokralaiskohtaisella skeemalla ja
+  avaimella (luku 7), jolloin sovelluskoodin unohtunut ehto ei vuoda
+  toisen dataa.
+- **Eristys testataan** samoin kuin muu valtuutus: testi kirjautuu
+  vuokralaisena A ja yrittää lukea vuokralaisen B resurssin.
+
 ## Käytännössä
 
 - **Ei jokerimerkkiä toimintoihin eikä resursseihin.** `*:*` on
@@ -122,6 +148,8 @@ infrastruktuurikoodi.
   (oletusesto, nimenomainen esto, ehdot).
 - Osaat tunnistaa liian laajan käytännön ja kaventaa sen vähimpiin
   oikeuksiin.
+- Osaat kertoa, mistä vuokralaisen tunniste saadaan ja missä kerroksessa
+  usean asiakkaan palvelun rajaus tehdään.
 - Osaat käyttää auditointilokia käyttämättömien oikeuksien
   löytämiseen.
 - Osaat tarkastaa käytännöt automaattisesti CI:ssä.

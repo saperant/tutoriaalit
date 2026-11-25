@@ -32,9 +32,14 @@ lokit:
 ```{.java tiedosto="esimerkit/havainnointi/src/test/java/fi/tutoriaalit/palveluturva/havainnointi/HavainnointiTest.java" osa="poikkeamaTesti"}
 ```
 
+```{.tuloste tiedosto="esimerkit/naytos/13-poikkeama.odotettu"}
+```
+
 Suosituspalvelu luki ensin tilauksen kuten tavallisesti, sitten
-tietokannan salaisuuden ja yritti viedä asiakasrekisterin. Kaksi
-jälkimmäistä ovat poikkeavia.
+tietokannan salaisuuden ja vei asiakasrekisterin. Kaksi jälkimmäistä
+ovat poikkeavia. Aikajanan viimeinen sarake kertoo, että jokainen
+pyyntö sallittiin: tässä esimerkissä suosituspalvelun oikeudet olivat
+liian laajat, ja murto näkyi vasta poikkeavana käyttönä.
 
 ## Rajaaminen
 

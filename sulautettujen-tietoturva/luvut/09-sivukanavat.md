@@ -24,7 +24,10 @@ hyökkäyksessä mitataan kelloa ja keskiarvoistetaan kohina pois.
 ```{.c tiedosto="esimerkit/09-vertailu.c" osa="hyokkays"}
 ```
 
-Vakioaikainen vertailu käy kaikki tavut läpi ja kerää erot yhteen:
+Vakioaikainen vertailu käy kaikki tavut läpi ja kerää erot yhteen.
+Sama periaate ja sen syyt ovat taidossa *Kryptografia*; tässä se on
+C:llä, koska laitteessa vertailun kirjoittaa usein itse tai valitsee
+kirjastosta:
 
 ```{.c tiedosto="esimerkit/09-vertailu.c" osa="vakioaikainen"}
 ```
@@ -67,6 +70,11 @@ Mittaus on tuloksen Hammingin paino ja kohina. Hyökkäys kokeilee kaikki
 ```{.tuloste tiedosto="esimerkit/09-tehoanalyysi.odotettu"}
 ```
 
+![Korrelaatio jokaiselle 256 avainarvaukselle 2000 mittauksen jälkeen
+samoilla mittauksilla kuin tulosteen viimeisessä sarakkeessa.
+Maskaamattomassa toteutuksessa oikea avain erottuu selvästi muista.
+Maskatussa se ei eroa kohinasta.](kuvat/tehoanalyysi.png){width=92%}
+
 Satakin mittausta riittää maskaamattoman toteutuksen avaintavuun,
 ja sama toistetaan jokaiselle 16 tavulle. **Maskaus** käsittelee
 väliarvoja satunnaisella maskilla, joka vaihtuu joka suorituksella, joten
@@ -98,8 +106,9 @@ tarkemman laitteiston.
 - **Arvioi tehoanalyysi uhkamallin mukaan.** Jos hyökkääjä voi mitata
   laitetta (maksukortti, älylukko, autoavain), käytä suojattua
   laitteistoa tai sertifioitua turvaelementtiä.
-- **Harjoittele itse.** Avoimet työkalut kuten ChipWhisperer tekevät
-  tehoanalyysistä kokeiltavan muutamalla sadalla eurolla.
+- **Harjoittele itse omalla kortilla.** Avoimet työkalut kuten
+  ChipWhisperer harjoituskohteineen tekevät tehoanalyysistä
+  kokeiltavan muutamalla sadalla eurolla.
 
 ## Itsearviointi
 

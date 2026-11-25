@@ -41,18 +41,30 @@
 | organisaation suojakaide | liian laajat oikeudet | 9 |
 | politiikat koodina | käytäntövirheet tuotannossa | 9 |
 | otsakkeiden siivous reunalla | sisäisten otsakkeiden väärennys | 10 |
+| allekirjoitettu viestikuori | väärennetty tai toistettu viesti | 10 |
 | allekirjoitettu tarkistuspiste | lokien muokkaus | 12 |
 | kumoamislista | murretun palvelun eristys | 13 |
 
-## Mihin tästä eteenpäin
+## Jatkotaidot
 
-- *Hajautetut järjestelmät* ja *Järjestelmäsuunnittelu*:
+- *Hajautetut järjestelmät* ja *Skaalautuvien järjestelmien
+  suunnittelu*:
   saatavuus ja skaalautuvuus, joita tietoturvaratkaisut eivät saa
   heikentää (varmentaja ja salaisuusvarasto ovat kriittisiä
   riippuvuuksia).
 - *Palvelinympäristöt*: hakemistopalvelut, koventaminen ja valvonta.
 - *Sulautettujen järjestelmien tietoturva*: laitteiden identiteetit ja
   luottamusketju, joissa samat periaatteet toteutetaan raudassa.
+- *Tietoturva kehitystyössä*: toimitusketju ja allekirjoitetut kuvat,
+  joista tämän tutoriaalin palvelut rakennetaan.
+
+Näitä asioita voi harjoitella laillisesti omassa ympäristössä:
+paikallinen Kubernetes-klusteri (kind, minikube), SPIRE ja Vault
+kehitystilassa sekä pilvipalvelujen ilmaiset kokeilutilit, joissa
+oman tilin oikeuksia saa koetella vapaasti. Harjoituskohteeksi
+tehtyjä ympäristöjä ja kilpailuja (CTF) luettelee taito
+*Haavoittuvuuksien analyysi ja torjunta*. Muiden järjestelmiä
+testataan vain kirjallisella luvalla.
 
 ## Lähteet ja dokumentaatio
 

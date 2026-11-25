@@ -3,6 +3,12 @@ title: Palveluarkkitehtuurin tietoturva
 subtitle: Pikaopas · nollaluottamus · mTLS · tokenit · salaisuudet · IAM
 ---
 
+# Vastuulauseke
+
+Vain omat järjestelmät tai kirjallisella luvalla testattavat kohteet.
+Luvaton tunkeutuminen on rikos (rikoslain 38. luku). Esimerkkien
+hyökkäystestit ajetaan paketin omia, paikallisia palveluja vastaan.
+
 # Nollaluottamus
 
 - Verkon sijainti, IP ja otsake **eivät todista** mitään.
@@ -64,7 +70,8 @@ versionhallintaan, katselmointiin ja CI:hin (OPA/Rego, Cedar).
 Yhdyskäytävä: **siivoa sisäiset otsakkeet** → todenna → rajoita
 identiteettiä kohti → validoi skeema. Palvelu todentaa silti itse.
 NetworkPolicy: oletuksena esto, sallitut yhteydet nimeltä, myös
-lähtevä liikenne.
+lähtevä liikenne. Viestinvälitys: aihekohtaiset oikeudet, tuottajan
+allekirjoitus, kuluttaja tarkistaa tuottajan, iän ja toiston.
 
 # Auditointi ja poikkeamat
 

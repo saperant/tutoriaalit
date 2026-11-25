@@ -1,0 +1,8 @@
+haavoittuva palsta:
+  /  puuttuu Content-Security-Policy
+  /  puuttuu kehystyssuojaus
+  /  puuttuu X-Content-Type-Options
+  /  parametri q heijastuu koodaamatta
+korjattu palsta:
+  /  puuttuu kehystyssuojaus
+  /  puuttuu X-Content-Type-Options

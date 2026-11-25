@@ -1,0 +1,6 @@
+vaihe                  nippu         palvelin  asiakas: vanha  asiakas: uusi
+alussa                 vanha         vanha     200             ei yhteyttä
+1. uusi juuri nippuun  vanha + uusi  vanha     200             200
+2. uudet varmenteet    vanha + uusi  uusi      200             200
+3. vanha juuri pois    uusi          uusi      ei yhteyttä     200
+vaihe 1 ohitettu       vain vanha    uusi      ei yhteyttä     –

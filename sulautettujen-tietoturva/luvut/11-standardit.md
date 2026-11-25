@@ -55,8 +55,8 @@ erityisesti kaksi osaa:
 
 Kyberkestävyyssäädös (*Cyber Resilience Act*, CRA, asetus (EU)
 2024/2847) tuli voimaan 10.12.2024. Haavoittuvuuksien ja vakavien
-poikkeamien **ilmoitusvelvollisuus** alkaa 11.9.2026 ja muut
-velvoitteet 11.12.2027. Se koskee kaikkia EU:ssa myytäviä tuotteita,
+poikkeamien **ilmoitusvelvollisuus** on ollut voimassa 11.9.2026
+alkaen, ja muita velvoitteita sovelletaan 11.12.2027 alkaen. Se koskee kaikkia EU:ssa myytäviä tuotteita,
 joissa on digitaalisia osia, ja edellyttää CE-merkintää.
 
 Keskeiset vaatimukset valmistajalle:
@@ -103,8 +103,9 @@ mutta kattaa osan vaatimuksista.
   vaatimukset (uhkamalli, SBOM, haavoittuvuusprosessi, päivitykset) ovat
   samoja, joita tässä ja tutoriaalissa *Tietoturva kehitystyössä* on
   käyty läpi; dokumentoi ne kehityksen aikana.
-- **Valmistele ilmoitusprosessi** ennen kuin velvoite alkaa:
-  vastuuhenkilöt, yhteystiedot, ilmoituspohjat ja harjoitus.
+- **Pidä ilmoitusprosessi valmiina.** Velvoite on jo voimassa:
+  vastuuhenkilöt, yhteystiedot ja ilmoituspohjat ovat olemassa, ja
+  prosessia on harjoiteltu ennen ensimmäistä oikeaa tapausta.
 - **Päätä tukiaika tuotesuunnittelussa.** Se vaikuttaa komponenttien,
   kryptografian ja päivitysmekanismin valintaan.
 - **Jäljitä vaatimukset.** Vaatimus–ratkaisu–testi-taulukko on

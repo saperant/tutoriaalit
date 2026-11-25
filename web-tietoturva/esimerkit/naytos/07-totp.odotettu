@@ -1,0 +1,5 @@
+koodi   laskettu  tarkistus             tulos
+702344  T         T + 25 s              hyväksytty
+702344  T         T + 25 s (uudelleen)  hylätty
+569319  T − 90 s  T                     hylätty
+000000  arvaus    T                     hylätty

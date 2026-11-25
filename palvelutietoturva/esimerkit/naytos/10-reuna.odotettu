@@ -1,0 +1,11 @@
+pyyntö                  yhdyskäytävän päätös
+ei tokenia              401 token puuttuu
+ylimääräinen kenttä     400 skeema: Unrecognized property "hinta"
+maara: 0                400 skeema: maara 1–100
+X-Kayttaja: yllapitaja  välitetty: X-Kayttaja=asiakas-7, rooliotsake poistettu
+11. pyyntö minuutissa   429 liian monta pyyntöä
+
+suora kutsu, X-Kayttaja: asiakas-1  palvelun näkemä käyttäjä
+haavoittuva palvelu, kuka tahansa   asiakas-1
+korjattu, kutsuja suositukset       hylätty
+korjattu, kutsuja yhdyskaytava      asiakas-1

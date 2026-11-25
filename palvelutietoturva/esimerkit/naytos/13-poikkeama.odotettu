@@ -1,0 +1,8 @@
+poikkeavat toiminnot (ei perustasossa):
+  suositukset: salaisuudet:Lue
+  suositukset: asiakkaat:Vie
+
+aikajana korrelaatiotunnisteella x-42:
+  2026-11-24T10:01:40Z tilaus: tilaukset:Lue tilaukset/7 -> sallittu
+  2026-11-24T10:01:41Z salaisuudet: salaisuudet:Lue salaisuudet/db -> sallittu
+  2026-11-24T10:01:42Z asiakkaat: asiakkaat:Vie asiakkaat/* -> sallittu

@@ -10,6 +10,14 @@ auditointi sekä poikkeamien käsittely. Valmis dokumentti:
 
 Esitiedot: taidot *Palveluarkkitehtuurit* ja *Kryptografia*.
 
+**Vastuulauseke.** Materiaali on tarkoitettu opetukseen ja oman
+järjestelmän suojaamiseen. Esimerkkien hyökkäystestit kohdistuvat
+paketin omiin palveluihin, jotka käynnistyvät testin sisällä omalla
+koneella. Käytä tekniikoita vain omiin järjestelmiisi tai kohteisiin,
+joihin sinulla on kirjallinen lupa. Luvaton tunkeutuminen ja
+tietojärjestelmän häirintä ovat rikoksia (rikoslain 38. luku). Tekijät
+eivät vastaa materiaalin väärinkäytöstä.
+
 ## Sisältö
 
 1. Johdanto – esimerkkijärjestelmä ja uhkamalli
@@ -22,7 +30,7 @@ Esitiedot: taidot *Palveluarkkitehtuurit* ja *Kryptografia*.
 8. Dynaamiset tunnukset ja jaetut avaimet
 9. Pääsynhallinta pilvessä – käytäntömoottori, vähimmät oikeudet,
    politiikat koodina
-10. Segmentointi ja yhdyskäytävä
+10. Segmentointi ja yhdyskäytävä – myös viestinvälityksen suojaus
 11. mTLS Spring Boot -palvelussa
 12. Auditointi ja havainnointi – peittäminen, muuttumaton loki
 13. Tietoturvapoikkeamien käsittely
@@ -34,6 +42,9 @@ Esitiedot: taidot *Palveluarkkitehtuurit* ja *Kryptografia*.
 BouncyCastle), jossa on viisi modulia: `luottamus`, `salaisuudet`,
 `kaytannot`, `havainnointi` ja `palvelu`. Testit eivät tarvitse
 Dockeria eivätkä verkkoa riippuvuuksien latauksen jälkeen.
+Näytösajot (`NaytosTest.java`) kirjoittavat kokeiden tulokset
+tauluiksi ja vertaavat niitä tiedostoihin `esimerkit/naytos/`, jotka
+näytetään tutoriaalissa tulosteina.
 
 ```text
 cd esimerkit
@@ -48,5 +59,8 @@ Kehityskontti: `.devcontainer/palvelutietoturva`.
 make testaa     # rakenteen tarkistus ja esimerkkien testit
 make pdf        # tutoriaali ja pikaopas PDF:ksi
 ```
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 Lisenssi: CC BY-SA 4.0.

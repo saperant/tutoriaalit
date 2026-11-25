@@ -11,10 +11,19 @@
 
 MVN := ./mvnw -B -q
 
-.PHONY: kaikki siivoa
+.PHONY: kaikki paivita-naytokset siivoa
 
+# Testien joukossa ovat näytösajot (NaytosTest.java): ne kirjoittavat
+# kokeiden tulokset tauluiksi hakemistoon target/naytos ja vertaavat
+# niitä tiedostoihin naytos/*.odotettu, jotka näytetään kirjassa.
 kaikki:
 	$(MVN) verify
+
+# Tallentaa viimeisimmän ajon taulut odotetuiksi.
+paivita-naytokset:
+	$(MVN) -Dmaven.test.failure.ignore=true verify > /dev/null
+	@for t in */target/naytos/*.txt; do \
+	  cp $$t naytos/$$(basename $$t .txt).odotettu; done
 
 siivoa:
 	$(MVN) clean

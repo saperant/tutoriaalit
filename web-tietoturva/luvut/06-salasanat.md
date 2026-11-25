@@ -1,9 +1,11 @@
 # Salasanat ja tunnusten arvailu
 
 Salasana on edelleen yleisin tunnistustapa ja yleisin murron syy:
-vuotaneet salasanat, uudelleenkäyttö ja arvailu. Tämä luku käy läpi
-salasanojen tallennuksen, käytännön, vuotaneiden salasanojen
-tarkistuksen ja kirjautumisen suojauksen arvailulta.
+vuotaneet salasanat, uudelleenkäyttö ja arvailu. *Tietoturvan
+perusteet* käsitteli salasanaa käyttäjän ja käytännön näkökulmasta.
+Tämä luku on palvelun toteuttajan näkökulma: tallennus, käytännön
+tarkistus koodina, vuotaneiden salasanojen tarkistus, kirjautumisen
+suojaus arvailulta ja salasanan palautus.
 
 ## Tallennus
 
@@ -45,6 +47,12 @@ salasanoja (`Kesä2026!`):
 ```{.typescript tiedosto="esimerkit/src/06-salasanat/salasanat.test.ts" osa="kaytanto-testi"}
 ```
 
+```{.tuloste tiedosto="esimerkit/naytos/06-kaytanto.odotettu"}
+```
+
+Ensimmäinen rivi täyttäisi vanhan käytännön jokaisen ehdon, ja
+viimeinen rikkoisi niistä kolme.
+
 ## Vuotaneiden salasanojen tarkistus
 
 Palvelu kuten *Have I Been Pwned* tuntee miljardeja vuotaneita
@@ -71,8 +79,12 @@ kalastelua tai arvailua varten.
 ```{.typescript tiedosto="esimerkit/src/06-salasanat/kirjautuminen.ts" osa="korjattu"}
 ```
 
-Sama koskee rekisteröitymistä ja salasanan palautusta: "Jos tunnus on
-olemassa, lähetimme ohjeet sähköpostiin" kaikille syötteille.
+```{.tuloste tiedosto="esimerkit/naytos/06-arvailu.odotettu"}
+```
+
+Sama koskee rekisteröitymistä ja salasanan palautusta (osio
+*Salasanan palautus*): "Jos tunnus on olemassa, lähetimme ohjeet
+sähköpostiin" kaikille syötteille.
 
 ## Nopeusrajoitus
 
@@ -88,11 +100,54 @@ lähdeosoitetta kohden. Esimerkissä on merkkiämpäri:
 ```{.typescript tiedosto="esimerkit/src/06-salasanat/salasanat.test.ts" osa="rajoitus"}
 ```
 
+Viisi ensimmäistä yritystä tyhjentävät ämpärin. Minuutin kuluttua
+siihen on palannut yksi merkki:
+
+```{.tuloste tiedosto="esimerkit/naytos/06-rajoitus.odotettu"}
+```
+
 Tilin lukitseminen pysyvästi tietyn yritysmäärän jälkeen on huono
 ratkaisu: hyökkääjä voi lukita minkä tahansa tilin
 (palvelunestohyökkäys). Kasvava viive ja väliaikainen rajoitus ovat
 parempia. Lisäksi monivaiheinen tunnistus (luku 7) tekee arvatusta
 salasanasta lähes hyödyttömän.
+
+## Salasanan palautus
+
+Palautus on toinen kirjautumistapa, ja hyökkääjä valitsee näistä
+heikomman. Sähköpostiin lähetettävä palautuslinkki on kertakäyttöinen
+salasana, joten sitä koskevat samat vaatimukset kuin
+istuntotunnistetta (luku 5) ja muutama lisää:
+
+- **Arvaamaton.** Vähintään 128 bittiä kryptografisesta
+  satunnaislähteestä, ei aikaleimaa tai käyttäjän tunnistetta.
+- **Kertakäyttöinen ja lyhytikäinen.** Token poistetaan heti
+  käytettäessä ja vanhenee kymmenissä minuuteissa. Uusi pyyntö
+  mitätöi aiemmat.
+- **Vain tiiviste tietokantaan.** Tietokannan lukemaan päässyt
+  hyökkääjä ei saa käyttökelpoisia tokeneita. Token on jo
+  satunnainen, joten tavallinen SHA-256 riittää; hidasta
+  salasanatiivistettä ei tarvita.
+- **Sama vastaus kaikille.** Palautuspyyntö ei kerro, onko tunnus
+  olemassa.
+
+```{.typescript tiedosto="esimerkit/src/06-salasanat/palautus.ts" osa="palautus"}
+```
+
+```{.typescript tiedosto="esimerkit/src/06-salasanat/palautus.test.ts" osa="testi"}
+```
+
+```{.tuloste tiedosto="esimerkit/naytos/06-palautus.odotettu"}
+```
+
+Kun salasana on vaihdettu, kaikki käyttäjän istunnot mitätöidään ja
+vaihdosta ilmoitetaan sähköpostiin. Palautuslinkin osoite rakennetaan
+palvelimen omasta asetuksesta, ei pyynnön `Host`-otsakkeesta: muuten
+hyökkääjä voi pyytää uhrin palautusta väärennetyllä otsakkeella ja saada
+linkin osoittamaan omalle palvelimelleen. Sivu, jolle linkki tuo,
+asettaa otsakkeen `Referrer-Policy: no-referrer`, jottei token vuoda
+sivun lataamille kolmansille osapuolille. Jos tilillä on monivaiheinen
+tunnistus, palautus ei ohita sitä (luku 7).
 
 ## Käytännössä
 
@@ -105,6 +160,9 @@ salasanasta lähes hyödyttömän.
 - **Rajoita tiliä ja lähdettä kohden**, mieluummin kasvavalla
   viiveellä kuin pysyvällä lukituksella. Kirjaa epäonnistuneet
   yritykset ja hälytä poikkeamista (*Tietoturvan perusteet*).
+- **Palautus yhtä vahvaksi kuin kirjautuminen:** satunnainen,
+  kertakäyttöinen ja vanheneva token tiivisteenä, sama vastaus
+  kaikille, istunnot mitätöidään vaihdon jälkeen.
 - **Hinta:** hidas tiiviste maksaa palvelimelle saman kuin
   hyökkääjälle, esimerkiksi 50 ms prosessoriaikaa ja 32 Mt muistia
   kirjautumista kohden. Parametrit mitoitetaan kirjautumisten
@@ -119,3 +177,6 @@ salasanasta lähes hyödyttömän.
 - Osaat selittää k-anonymiteettiin perustuvan vuototarkistuksen.
 - Osaat estää käyttäjätunnusten arvailun viesteistä ja vastausajoista.
 - Osaat toteuttaa nopeusrajoituksen tiliä ja lähdettä kohden.
+- Osaat toteuttaa salasanan palautuksen niin, että token on
+  arvaamaton, kertakäyttöinen ja vanheneva eikä pyyntö paljasta
+  tunnuksen olemassaoloa.

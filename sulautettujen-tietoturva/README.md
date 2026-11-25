@@ -9,6 +9,17 @@ kyberkestävyyssäädös. Valmiit dokumentit:
 ja pikaopas
 [sulautettujen-tietoturva-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/sulautettujen-tietoturva-pikaopas.pdf).
 
+Esitiedot: taidot *Mikrokontrollerit ja bare-metal-ohjelmointi* ja
+*Kryptografia*.
+
+**Vastuulauseke.** Materiaali on tarkoitettu opetukseen ja omien
+laitteiden suojaamiseen. Fyysiset hyökkäykset (sivukanavat, viat,
+debug-portit) ajetaan simulaatioina ja QEMU:ssa itse käännetyllä
+ohjelmistolla. Mittaa, avaa ja häiritse vain laitteita, jotka omistat
+tai joiden testaamiseen sinulla on kirjallinen lupa. Luvaton
+tunkeutuminen ja tietojärjestelmän häirintä ovat rikoksia (rikoslain
+38. luku). Tekijät eivät vastaa materiaalin väärinkäytöstä.
+
 ## Sisältö
 
 1. Johdanto – laboratorio: QEMU, Cortex-M3 ja testiavaimet
@@ -19,7 +30,8 @@ ja pikaopas
 4. Versionpalautuksen esto – turvaversio, OTP-laskuri
 5. Mittauskäynnistys ja etätodennus – PCR, tapahtumaloki, TPM, DICE
 6. Avainten säilytys – turvaelementti, TrustZone, laitekohtaiset
-   avaimet, PUF ja sumea poimija
+   avaimet, satunnaisuus, PUF ja sumea poimija, laitteen identiteetti
+   taustajärjestelmälle
 7. Päivitykset – A/B ja kokeilukäynnistys, manifesti, delta
 8. Debug-portit – lukitustasot, todennettu debug, sarjakonsoli
 9. Sivukanavat – ajoitushyökkäys, korrelaatiotehoanalyysi, maskaus
@@ -47,7 +59,11 @@ Kokeiluissa käytetään RFC 8032:n julkisia testiavaimia.
 ```text
 make testaa   # rakenne, esimerkit ja QEMU-skenaariot
 make pdf      # tutoriaali ja pikaopas
+make kuvat    # piirtää kuvat/-hakemiston kuvaajat (Matplotlib)
 ```
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 Tarvitaan `gcc-arm-none-eabi`, `libnewlib-arm-none-eabi`,
 `qemu-system-arm` ja Pythonin `cryptography`; kehityskontissa

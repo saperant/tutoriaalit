@@ -36,6 +36,20 @@ kaatuu ennen yhteyttä palvelimeen, käynnistin palaa vanhaan kuvaan:
 ```{.python tiedosto="esimerkit/07-ab-paivitys.py" osa="kaynnistin"}
 ```
 
+```{.dot otsikko="A/B-päivityksen tilat esimerkin käynnistimessä. Laite on joka hetki tilassa, josta se käynnistyy: keskeneräinen kirjoitus ei muuta aktiivista paikkaa, ja vahvistamaton kokeilu palaa vanhaan versioon."}
+digraph {
+  rankdir=LR; nodesep=0.5; ranksep=0.4;
+  a [label="A aktiivinen\n(versio 1)"];
+  k [label="B kokeilussa\n(yritys 1–3)"];
+  b [label="B aktiivinen\n(versio 2)"];
+  a -> a [label="B:n kirjoitus\nkesken tai katkennut"];
+  a -> k [label="B valmis:\natominen merkintä"];
+  k -> k [label="kaatuu ennen\nvahvistusta"];
+  k -> b [label="sovellus vahvistaa\nitsensä"];
+  k -> a [label="3 yritystä käytetty\ntai kuva ei kelpaa"];
+}
+```
+
 Ohjelma kokeilee katkoa jokaisen kirjoituksen jälkeen ja kertoo, mikä
 versio käynnistyy (viiva: laite ei käynnisty):
 

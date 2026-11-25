@@ -3,6 +3,13 @@ title: Web-sovellusten tietoturva
 subtitle: Pikaopas · hyökkäykset, torjunta, tunnistus ja valtuutus
 ---
 
+# Vastuulauseke
+
+Vain omat sovellukset ja järjestelmät tai kirjallisella luvalla
+testattavat kohteet. Luvaton tunkeutuminen on rikos (rikoslain
+38. luku). Laillinen harjoittelu: paketin omat esimerkit, OWASP Juice
+Shop, PortSwigger Web Security Academy, picoCTF.
+
 # Hyökkäys ja torjunta
 
 | Hyökkäys | Torjunta |
@@ -13,7 +20,9 @@ subtitle: Pikaopas · hyökkäykset, torjunta, tunnistus ja valtuutus
 | SSRF | tarkista IP (ei teksti), estä yksityiset verkot, ei uudelleenohjauksia |
 | XSS | koodaus kontekstin mukaan, `textContent`, tiukka CSP, Trusted Types |
 | CSRF | `SameSite=Lax`, CSRF-tunniste, `Origin`/`Sec-Fetch-Site` |
+| Muutettu CDN-skripti | `integrity` (SRI) + `crossorigin`, tai oma jakelu |
 | Clickjacking | `frame-ancestors 'none'`, `X-Frame-Options: DENY` |
+| CORS-heijastus | täsmällinen alkuperäluettelo, ei `null` |
 | Istunnon kiinnitys | uusi tunniste kirjautuessa, ei tunnistetta osoitteessa |
 | Tunnusten arvailu | sama viesti ja sama työ, nopeusrajoitus |
 | Kirjautumis-CSRF (OIDC) | `state` |
@@ -48,6 +57,8 @@ subtitle: Pikaopas · hyökkäykset, torjunta, tunnistus ja valtuutus
 - Ei merkkiluokkia, ei määräaikaista vaihtoa, ei vihjeitä.
 - Vuotaneet estetään (k-anonymiteetti).
 - Rajoitus tiliä ja lähdettä kohden, ei pysyvää lukitusta.
+- Palautus: satunnainen, kertakäyttöinen, vanheneva token tiivisteenä;
+  sama vastaus kaikille.
 
 # MFA
 

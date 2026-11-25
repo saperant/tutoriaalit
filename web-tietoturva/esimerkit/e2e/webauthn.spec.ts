@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { kaynnista, type Kasittelija } from "../src/http.ts";
 import { palvelu } from "../src/07-mfa/webauthn.ts";
+import { taulu, tallenna } from "../src/taulu.ts";
 
 // @alku testi
 test("pääsyavain: rekisteröinti, kirjautuminen ja kalastelu", async ({
@@ -19,10 +20,10 @@ test("pääsyavain: rekisteröinti, kirjautuminen ja kalastelu", async ({
     hasUserVerification: true, isUserVerified: true } });
   try {
     await page.goto(oikea);
-    expect(await page.evaluate(() => rekisteroi("aino")))
-      .toEqual({ ok: true });
-    expect(await page.evaluate(() => kirjaudu()))
-      .toEqual({ kayttaja: "aino" });
+    const rekisterointi = await page.evaluate(() => rekisteroi("aino"));
+    expect(rekisterointi).toEqual({ ok: true });
+    const kirjautuminen = await page.evaluate(() => kirjaudu());
+    expect(kirjautuminen).toEqual({ kayttaja: "aino" });
 
     // Sama sivu eri alkuperästä (127.0.0.1), kuten kalastelusivu:
     // selain ei anna käyttää localhostin avainta.
@@ -30,6 +31,10 @@ test("pääsyavain: rekisteröinti, kirjautuminen ja kalastelu", async ({
     const virhe = await page.evaluate(() =>
       kirjaudu().then(() => "onnistui", (e: Error) => e.name));
     expect(virhe).toBe("SecurityError");
+    tallenna("07-paasyavain", taulu(["vaihe", "sivun alkuperä", "tulos"], [
+      ["rekisteröinti", "localhost", JSON.stringify(rekisterointi)],
+      ["kirjautuminen", "localhost", JSON.stringify(kirjautuminen)],
+      ["kirjautuminen", "127.0.0.1", virhe]]));
   } finally {
     await s.sulje();
   }

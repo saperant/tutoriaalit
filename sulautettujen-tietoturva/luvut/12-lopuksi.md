@@ -41,13 +41,38 @@
 | Vakioaikainen vertailu, maskaus | sivukanavat | 9 |
 | Kovennettu päätös | vikahyökkäykset | 10 |
 
+## Miten jatkaa laillisesti
+
+Fyysisiä hyökkäyksiä ja niiden vastatoimia oppii kokeilemalla, ja
+siihen riittävät omat välineet:
+
+- **Tämän paketin simulaatiot.** Muuta kohinaa, mittausten määrää tai
+  vikamallia ja katso, milloin hyökkäys lakkaa toimimasta ja mitä
+  vastatoimi maksaa.
+- **Oma kehityskortti.** Lukitse debug-portti, ota turvallinen
+  käynnistys käyttöön ja yritä päivittää allekirjoittamaton kuva.
+  Kokeile ensin kortilla, jonka voi menettää: lukitus on usein
+  peruuttamaton.
+- **Harjoituskohteiksi tehdyt alustat.** ChipWhispererin
+  harjoituskortit ja niiden ohjatut harjoitukset on tehty
+  tehoanalyysin ja vikahyökkäysten opetteluun.
+- **Kilpailut.** CTF-kilpailuissa (*capture the flag*) on usein
+  laitteisto- ja laiteohjelmistotehtäviä; kalenteri on osoitteessa
+  `ctftime.org` ja aloittelijan tehtäviä osoitteessa `picoctf.org`.
+
+Toisen omistamaa laitetta, käytössä olevaa mittaria tai lukkoa tai
+laitteen taustajärjestelmää tutkitaan vain kirjallisella luvalla.
+Tuotteesta löydetty haavoittuvuus ilmoitetaan valmistajalle
+koordinoidusti (taito *Haavoittuvuuksien analyysi ja torjunta*).
+
 ## Jatkotaidot
 
 - *Mikrokontrollerit ja bare-metal-ohjelmointi* ja *Sulautettu Linux*:
   laitteistotason perusta,
   jonka päälle tässä esitetyt mekanismit rakennetaan.
-- *Laiteohjelmiston takaisinmallinnus*: sama aihe hyökkääjän
-  näkökulmasta.
+- *Laiteohjelmiston takaisinmallinnus*: sama laite analyytikon
+  näkökulmasta, eli mitä valmiista kuvasta saa selville ja mitä
+  auditoinnissa tarkistetaan.
 - *Reaaliaikakäyttöjärjestelmät* ja *Linux-laiteajurit*: tietoturva käyttöjärjestelmän ja
   ajurien tasolla.
 - *Palveluarkkitehtuurin tietoturva*: laitteiden taustajärjestelmän

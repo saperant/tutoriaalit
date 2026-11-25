@@ -1,0 +1,7 @@
+vaihe                               tulos
+pyyntö tunnukselle aino             token sähköpostiin
+pyyntö tuntemattomalle tunnukselle  –
+arvattu token                       hylätty
+oikea token                         salasanan saa vaihtaa: aino
+sama token uudelleen                hylätty
+uusi token 31 minuutin kuluttua     hylätty

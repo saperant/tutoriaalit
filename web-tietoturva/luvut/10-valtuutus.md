@@ -2,9 +2,9 @@
 
 Tunnistus kertoo, kuka käyttäjä on; valtuutus päättää, mitä hän saa
 tehdä. *Tietoturvan perusteet* esitteli pääsynhallinnan mallit (RBAC,
-ABAC). Tämä luku käsittelee niitä virheitä, jotka johtavat OWASP:n
-API-listan kärkeen: valtuutus puuttuu yksittäisestä objektista,
-toiminnosta tai kentästä.
+ABAC) ja IDOR-virheen periaatteen. Tämä luku käsittelee niitä virheitä,
+jotka johtavat OWASP:n API-listan kärkeen: valtuutus puuttuu
+yksittäisestä objektista, toiminnosta tai kentästä.
 
 ## Kolme tasoa
 
@@ -69,9 +69,31 @@ Sama koskee vastauksia: olio sarjallistetaan vastaukseksi rajatun
 vastausolion kautta, jotta salasanatiiviste tai sisäiset kentät
 eivät vuoda (*excessive data exposure*).
 
+## Resurssirajat
+
+Valtuutettukin pyyntö voi olla hyökkäys, jos se saa palvelun tekemään
+rajattomasti työtä. OWASP:n API-listassa tämä on oma luokkansa
+(*unrestricted resource consumption*). Rajat asetetaan palvelimella,
+koska asiakkaan ilmoittamaan arvoon ei voi luottaa:
+
+| Kohta | Raja |
+|-------|------|
+| listaus | sivukoolla on yläraja (`?koko=100000` leikataan esimerkiksi sataan) |
+| pyynnön runko | enimmäiskoko ennen jäsentämistä; esimerkin tiedostolataus (luku 11) hylkää yli 5 Mt |
+| kysely | aikakatkaisu tietokantakyselylle ja ulospäin lähteville pyynnöille |
+| kalliit toiminnot | nopeusrajoitus käyttäjää kohden (luvun 6 merkkiämpäri): viennit, raportit, sähköpostin lähetys |
+| sisäkkäinen data | syvyys- ja kokoraja JSONille ja GraphQL-kyselylle |
+
 ## Testit
 
 ```{.typescript tiedosto="esimerkit/src/10-valtuutus/valtuutus.test.ts" osa="testit"}
+```
+
+Sama taulukkona. Aino ja Ville ovat asiakkaita, Paula ylläpitäjä, ja
+tilaus 2 on Villen. Jokainen rivi, jolla sarakkeet eroavat, on
+puuttuva tarkistus:
+
+```{.tuloste tiedosto="esimerkit/naytos/10-valtuutus.odotettu"}
 ```
 
 Valtuutustestit kirjoitetaan **toisen käyttäjän näkökulmasta**: jokaiselle
@@ -87,6 +109,8 @@ jokaisessa solussa, löytää puuttuvat tarkistukset järjestelmällisesti.
   rajapinnasta. Käyttöliittymän piilottama painike ei ole tarkistus.
 - **Rajaa kysely käyttäjään**, älä tarkista jälkikäteen.
 - **Syöte- ja vastausoliot** rajaavat kentät molempiin suuntiin.
+- **Rajat palvelimella:** sivukoko, rungon koko, aikakatkaisut ja
+  kalliiden toimintojen nopeusrajoitus.
 - **Hinta:** objektitason tarkistus on yksi ehto kyselyssä; politiikan
   keskittäminen maksaa hieman suunnittelua alussa ja säästää
   tietomurron selvittämisen.
@@ -98,3 +122,5 @@ jokaisessa solussa, löytää puuttuvat tarkistukset järjestelmällisesti.
 - Osaat keskittää valtuutuspolitiikan ja kutsua sitä rajapinnoista.
 - Osaat estää massamäärityksen ja liian laajat vastaukset.
 - Osaat kirjoittaa valtuutustestit toisen käyttäjän näkökulmasta.
+- Osaat luetella rajat, joilla valtuutetun käyttäjän pyyntö ei pääse
+  kuluttamaan palvelun resursseja loppuun.

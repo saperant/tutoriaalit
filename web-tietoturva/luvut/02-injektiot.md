@@ -8,8 +8,8 @@ injektiota ja niiden rakenteellinen torjunta.
 
 ## SQL-injektio
 
-*Tietoturvan perusteet* näytti SQL-injektion periaatteen. Web-
-sovelluksessa se löytyy tavallisimmin hakuehdoista, lajittelusta ja
+*Tietoturvan perusteet* näytti SQL-injektion periaatteen.
+Web-sovelluksessa se löytyy tavallisimmin hakuehdoista, lajittelusta ja
 raporteista, joissa kysely kootaan pala palalta:
 
 ```{.typescript tiedosto="esimerkit/src/02-injektiot/sql.ts" osa="haavoittuva"}
@@ -26,6 +26,13 @@ ja taulujen nimet ovat lauseen rakennetta, joten ne valitaan
 ```
 
 ```{.typescript tiedosto="esimerkit/src/02-injektiot/injektiot.test.ts" osa="sql"}
+```
+
+Näytösajo tekee saman haun kummallekin versiolle. Haavoittuva versio
+palauttaa hyökkäyssyötteellä kaikkien asiakkaiden tilaukset, korjattu
+etsii asiakasta, jonka nimi on koko syöte:
+
+```{.tuloste tiedosto="esimerkit/naytos/02-sql.odotettu"}
 ```
 
 ORM-kirjastot (Prisma, Drizzle, TypeORM) parametroivat tavalliset
@@ -54,6 +61,9 @@ skeemasta generoidulla validoinnilla.
 ```{.typescript tiedosto="esimerkit/src/02-injektiot/injektiot.test.ts" osa="nosql"}
 ```
 
+```{.tuloste tiedosto="esimerkit/naytos/02-nosql.odotettu"}
+```
+
 ## Komentoinjektio
 
 Kun palvelin käynnistää ulkoisen ohjelman komentotulkin kautta,
@@ -74,6 +84,13 @@ sallitulla muodolla.
 ```
 
 ```{.typescript tiedosto="esimerkit/src/02-injektiot/injektiot.test.ts" osa="komento"}
+```
+
+Kolmas rivi on valitsimen injektio. Haavoittuvassa versiossa `wc` saa
+nimen `-rf` valitsimena ja päättyy virheeseen; vaarallisemmalla
+ohjelmalla sama syöte muuttaisi sen toimintaa.
+
+```{.tuloste tiedosto="esimerkit/naytos/02-komento.odotettu"}
 ```
 
 ## SSRF
@@ -108,6 +125,13 @@ osoitteessa 127.0.0.2, joka ohjaa sisäverkkoon:
 ```{.typescript tiedosto="esimerkit/src/02-injektiot/injektiot.test.ts" osa="ssrf"}
 ```
 
+Tulosteessa portit ovat `P` ja `Q`, koska ne vaihtuvat ajosta toiseen.
+Toinen rivi on sama osoite kokonaislukuna, ja kolmannella "julkinen"
+palvelin vastaa uudelleenohjauksella sisäverkkoon:
+
+```{.tuloste tiedosto="esimerkit/naytos/02-ssrf.odotettu"}
+```
+
 Esimerkin tarkistus jättää yhden aukon: nimipalvelu voi palauttaa
 tarkistuksessa julkisen osoitteen ja varsinaisessa yhteydessä
 sisäisen (*DNS rebinding*). Tuotannossa yhteys avataan suoraan
@@ -115,6 +139,23 @@ tarkistettuun IP-osoitteeseen tai kaikki ulospäin lähtevät pyynnöt
 kulkevat välityspalvelimen kautta, joka tekee tarkistuksen. Paras
 puolustus on verkkotasolla: palvelin, joka hakee käyttäjän osoitteita,
 ei pääse sisäverkkoon lainkaan.
+
+## Sama virhe muissa tulkeissa
+
+Injektio ei rajoitu näihin neljään. Sama rakenne toistuu aina, kun
+syöte päätyy tulkille, joka ei erota sitä koodista:
+
+| Tulkki | Hyökkäys | Rakenteellinen torjunta |
+|--------|----------|-------------------------|
+| XML-jäsennin | ulkoinen entiteetti lukee palvelimen tiedoston tai tekee pyynnön (XXE) | ulkoiset entiteetit ja DTD pois jäsentimen asetuksista |
+| mallipohjakieli | käyttäjän teksti käännetään mallipohjaksi (SSTI) | syöte on mallipohjan muuttuja, ei koskaan mallipohjan lähdettä |
+| LDAP-hakusuodatin, XPath | syöte muuttaa hakuehtoa | kirjaston parametrointi tai koodaus |
+| HTTP-jäsennin | kaksi palvelinta tulkitsee pyynnön rajat eri tavoin (pyyntöjen salakuljetus) | HTTP/2 päästä päähän, sama jäsennin, epäselvät pyynnöt hylätään |
+
+Pyyntöjen salakuljetus ja välimuistin myrkytys ovat välityspalvelimen
+ja sovelluksen yhteispelin virheitä. Ne korjataan palvelinten
+asetuksilla ja päivityksillä, ei sovelluskoodissa; lähteissä mainittu
+PortSwiggerin materiaali käy ne läpi.
 
 ## Käytännössä
 
@@ -143,3 +184,5 @@ ei pääse sisäverkkoon lainkaan.
   valitsimen injektion.
 - Osaat tunnistaa SSRF-riskin ja luetella, miksi osoitteen
   merkkijonovertailu ei riitä.
+- Osaat tunnistaa saman virheen XML-jäsentimessä ja mallipohjakielessä
+  ja nimetä niiden rakenteellisen torjunnan.

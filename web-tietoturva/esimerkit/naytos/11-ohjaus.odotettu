@@ -1,0 +1,6 @@
+?seuraava=             haavoittuva            korjattu
+https://ansa.example/  https://ansa.example/  /
+//ansa.example         //ansa.example         /
+/\ansa.example         /\ansa.example         /
+javascript:alert(1)    javascript:alert(1)    /
+/tilit?sivu=2#saldo    /tilit?sivu=2#saldo    /tilit?sivu=2#saldo

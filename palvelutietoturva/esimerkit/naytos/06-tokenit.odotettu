@@ -1,0 +1,21 @@
+käyttäjän token
+  iss    https://kirjautuminen.example
+  sub    asiakas-7
+  aud    kauppa-api
+  scope  laskut:luku tilaukset:kirjoitus tilaukset:luku
+  act    –
+  exp    nyt + 30 min
+  laskutus, vain allekirjoitus: hyväksytty
+  laskutus, koko tarkistus:     hylätty (väärä yleisö: kauppa-api)
+
+vaihdettu token (tilaus pyysi laskutusta varten)
+  iss    https://sts.kauppa.example
+  sub    asiakas-7
+  aud    spiffe://kauppa.example/laskutus
+  scope  laskut:luku
+  act    spiffe://kauppa.example/tilaus
+  exp    nyt + 5 min
+  laskutus, koko tarkistus:     hyväksytty
+
+suositukset pyytää vaihtoa laskutukseen:
+  hylätty (suositukset ei saa kutsua laskutus käyttäjän puolesta)

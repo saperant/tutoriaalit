@@ -44,6 +44,13 @@ tokenista:
 ```{.typescript tiedosto="esimerkit/src/09-jwt/jwt.test.ts" osa="hyokkaykset"}
 ```
 
+Näytösajo antaa samat kuusi tokenia kummallekin tarkistajalle.
+Haavoittuva hyväksyy ne kaikki; korjattu kertoo jokaisesta, mikä
+tarkistus sen pysäytti:
+
+```{.tuloste tiedosto="esimerkit/naytos/09-jwt.odotettu"}
+```
+
 Tuotannossa tarkistus tehdään kirjastolla, kuten `jose`, ja sille
 annetaan kiinteät odotukset, esimerkiksi
 `jwtVerify(token, JWKS, { algorithms: ["RS256"], issuer, audience })`.

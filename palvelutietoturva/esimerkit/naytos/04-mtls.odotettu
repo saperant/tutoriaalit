@@ -1,0 +1,6 @@
+kutsujan varmenne      tulos
+laskutus               200 asiakas 42: IBAN FI49...
+suositukset            403 ei oikeutta: spiffe://kauppa.example/suositukset
+laskutus, vieras CA    ei yhteyttä
+laskutus, vanhentunut  ei yhteyttä
+ei varmennetta         ei yhteyttä

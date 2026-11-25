@@ -19,6 +19,9 @@ kohtaan kehitystä kukin kuuluu.
 
 Tämän tutoriaalin esimerkit ovat hyökkäystestejä: jokainen
 haavoittuvuus on testi, joka epäonnistuu, jos korjaus poistetaan.
+Näytösajot (`make naytos`) ovat sama asia luettavassa muodossa:
+tallennettu tulostaulu on katselmoitava kuvaus siitä, miten sovellus
+vastaa hyökkäykseen, ja vertailu paljastaa, jos vastaus muuttuu.
 Löydetystä haavoittuvuudesta kirjoitetaan sama testi ennen korjausta,
 jotta se ei palaa (*regressiotesti*).
 
@@ -43,12 +46,22 @@ Esimerkin pieni skanneri näyttää periaatteen:
 ```{.typescript tiedosto="esimerkit/src/12-testaus/skanneri.test.ts" osa="testi"}
 ```
 
+```{.tuloste tiedosto="esimerkit/naytos/12-skanneri.odotettu"}
+```
+
 Korjatussakin palstassa skanneri muistuttaa kahdesta puuttuvasta
 otsakkeesta: palsta torjuu XSS:n, mutta ei asettanut luvun 11 otsakkeita.
 Juuri tällaiset puutteet skannaus löytää halvalla. OWASP ZAP tekee
 saman perusteellisesti, ja sen voi ajaa CI:ssä testiympäristöä vastaan
 (*baseline scan* passiivisesti, *full scan* aktiivisilla hyökkäyksillä
 vain omassa testiympäristössä).
+
+Skanneri kohdistetaan vain omaan sovellukseen tai kohteeseen, jonka
+testaamiseen on kirjallinen lupa. Aktiivinen skannaus lähettää
+tuhansia pyyntöjä ja voi muuttaa tai poistaa dataa, joten sitä ei
+ajeta tuotantoa vastaan, eikä vieraan palvelun skannaaminen ole
+"vain katsomista": se on luvatonta testaamista (ks. johdannon
+vastuulauseke).
 
 ## Mitä automaatio ei löydä
 
