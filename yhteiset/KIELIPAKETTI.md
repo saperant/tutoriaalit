@@ -121,6 +121,11 @@ Esimerkit opettavat oikeita taitoja:
 - Väärä tapa näytetään vain, jos se on yleinen virhe, ja silloin
   testattuna `.ei-kaanny`- tai `.kaatuu`-esimerkkinä.
 
+Tuloste näytetään sen koodin vieressä, joka sen tuottaa. Pitkästä
+tulosteesta näytetään kulloinkin puheena oleva osa attribuuteilla
+`rivit="A-B"` tai `alkaen="…"` ja `asti="…"` (ks. `sisallyta.lua`), ei
+koko tulostetta luvun lopussa.
+
 Koodilohkot kirjoitetaan rivin alkuun, ei luettelon kohdan sisään
 sisennettyinä: tarkistimet etsivät vain sisentämättömiä lohkoja. Taulukon
 solussa olevan koodin pystyviiva näkyy PDF:ssä muodossa `\|`, joten

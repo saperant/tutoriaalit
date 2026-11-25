@@ -23,6 +23,23 @@ väliin jäävät rivit. Kommenttimerkiksi kelpaa kielen mukaan `//`, `#`,
 nimi -->` HTML:ssä; nimen jälkeen välilyönti). Merkintärivit poistetaan
 lopullisesta tekstistä. Valitun osan yhteinen sisennys poistetaan.
 
+Pitkästä tulosteesta voi näyttää osan koodinsa vieressä ilman merkintöjä
+tiedostossa (odotettua tulostetta verrataan sellaisenaan):
+
+    ```{.tuloste tiedosto="esimerkit/ajo.odotettu" rivit="3-8"}
+    ```
+
+    ```{.tuloste tiedosto="esimerkit/ajo.odotettu" alkaen="== vaihe 2"
+        asti="valmis"}
+    ```
+
+`rivit="A-B"` valitsee rivit A–B (1 = ensimmäinen; `"5-"` loppuun asti).
+`alkaen` valitsee ensimmäisestä rivistä, joka sisältää annetun tekstin,
+ja `asti` päättää ensimmäiseen sen jälkeiseen riviin, joka sisältää
+annetun tekstin (molemmat rivit tulevat mukaan). Jos tekstiä ei löydy tai
+rivialue on tiedoston ulkopuolella, rakennus pysähtyy virheeseen, joten
+tulosteen muuttuminen ei jää huomaamatta.
+
 Lohkon oma sisältö korvataan tiedoston sisällöllä, joten koodia ei
 kirjoiteta Markdowniin käsin. Näin kaikki näytetty koodi on samaa
 koodia, joka käännetään ja testataan.
@@ -79,6 +96,46 @@ local function valitse_osa(kaikki, nimi, polku)
   return tulos
 end
 
+-- rivit="A-B": rivit A–B, "A-" loppuun asti.
+local function valitse_rivit(lista, alue, polku)
+  local a, b = alue:match("^(%d+)%-(%d*)$")
+  a = tonumber(a)
+  b = (b ~= nil and b ~= "") and tonumber(b) or #lista
+  if not a or a < 1 or b < a or b > #lista then
+    error("sisallyta.lua: rivit=\"" .. alue .. "\" ei kelpaa (tiedostossa " ..
+          #lista .. " riviä): " .. polku)
+  end
+  local tulos = {}
+  for i = a, b do table.insert(tulos, lista[i]) end
+  return tulos
+end
+
+-- alkaen/asti: rajaus rivien sisällön mukaan (kirjaimellinen teksti).
+local function valitse_kohta(lista, alkaen, asti, polku)
+  local a, b = 1, #lista
+  if alkaen then
+    a = nil
+    for i, rivi in ipairs(lista) do
+      if rivi:find(alkaen, 1, true) then a = i break end
+    end
+    if not a then
+      error("sisallyta.lua: alkaen=\"" .. alkaen .. "\" ei löydy: " .. polku)
+    end
+  end
+  if asti then
+    b = nil
+    for i = a, #lista do
+      if lista[i]:find(asti, 1, true) then b = i break end
+    end
+    if not b then
+      error("sisallyta.lua: asti=\"" .. asti .. "\" ei löydy: " .. polku)
+    end
+  end
+  local tulos = {}
+  for i = a, b do table.insert(tulos, lista[i]) end
+  return tulos
+end
+
 local function poista_sisennys(lista)
   local pienin = nil
   for _, rivi in ipairs(lista) do
@@ -129,12 +186,22 @@ function CodeBlock(lohko)
     end
   end
 
+  local alue = lohko.attributes["rivit"]
+  if alue then valitut = valitse_rivit(valitut, alue, polku) end
+  local alkaen, asti = lohko.attributes["alkaen"], lohko.attributes["asti"]
+  if alkaen or asti then
+    valitut = valitse_kohta(valitut, alkaen, asti, polku)
+  end
+
   for i, rivi in ipairs(valitut) do
     valitut[i] = laajenna_sarkaimet(rivi)
   end
   lohko.text = table.concat(valitut, "\n")
   lohko.attributes["tiedosto"] = nil
   lohko.attributes["osa"] = nil
+  lohko.attributes["rivit"] = nil
+  lohko.attributes["alkaen"] = nil
+  lohko.attributes["asti"] = nil
 
   -- Tulosteet näytetään ilman syntaksikorostusta ja PDF:ssä omalla
   -- tyylillään (ympäristö `tuloste` on määritelty tiedostossa tyyli.tex).
