@@ -38,7 +38,9 @@ tiedostossa (odotettua tulostetta verrataan sellaisenaan):
 ja `asti` päättää ensimmäiseen sen jälkeiseen riviin, joka sisältää
 annetun tekstin (molemmat rivit tulevat mukaan). Jos tekstiä ei löydy tai
 rivialue on tiedoston ulkopuolella, rakennus pysähtyy virheeseen, joten
-tulosteen muuttuminen ei jää huomaamatta.
+tulosteen muuttuminen ei jää huomaamatta. Attribuutin arvo ei saa
+alkaa välilyönnillä (Pandoc ei silloin tunnista lohkoa); sisennetyn
+rivin voi poimia sen tekstillä ilman sisennystä.
 
 Lohkon oma sisältö korvataan tiedoston sisällöllä, joten koodia ei
 kirjoiteta Markdowniin käsin. Näin kaikki näytetty koodi on samaa
@@ -168,6 +170,18 @@ local function laajenna_sarkaimet(rivi)
     end
   end
   return table.concat(tulos)
+end
+
+-- Pandoc ei jäsennä koodilohkon attribuutteja, jos lainausmerkeissä
+-- oleva arvo alkaa välilyönnillä: lohkosta tulee silloin tekstin sekaan
+-- koodinpätkä "{.tuloste tiedosto=...}". Pysäytetään rakennus siihen.
+function Code(el)
+  if el.text:match("^{[^}]*tiedosto=") then
+    error("sisallyta.lua: koodilohkon attribuutit eivät jäsenny: " ..
+          el.text .. "\n(attribuutin arvo ei saa alkaa välilyönnillä; " ..
+          "käytä esim. alkaen=\"n  \" tai rivit=\"A-B\")")
+  end
+  return nil
 end
 
 function CodeBlock(lohko)
