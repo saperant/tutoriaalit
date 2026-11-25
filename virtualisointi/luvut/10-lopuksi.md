@@ -28,7 +28,7 @@
 
 ## Mihin tästä eteenpäin
 
-- *Kontit ja pilvi*: Docker, konttikuvien rakentaminen ja Kubernetes.
+- *Kontit ja pilvi-infrastruktuuri*: Docker, konttikuvien rakentaminen ja Kubernetes.
 - *Palvelinympäristöt*: virtualisointialustojen ylläpito, tallennus ja
   varmuuskopiointi.
 - *Käyttöjärjestelmät* ja *Tietokonearkkitehtuuri*: virtuaalimuisti,

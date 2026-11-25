@@ -19,7 +19,7 @@ liitokset, transaktiot, indeksit) ja *Tietoverkot* (TCP/IP, DNS, TLS).
 Niitä ei toisteta: esimerkiksi transaktioiden eristystasot on selitetty
 SQL-tutoriaalissa, ja tässä katsotaan, miten ne näkyvät sovelluksessa.
 
-Kontit, orkestrointi ja pilvipalvelut ovat taidossa *Kontit ja pilvi*,
+Kontit, orkestrointi ja pilvipalvelut ovat taidossa *Kontit ja pilvi-infrastruktuuri*,
 ja usean palvelun arkkitehtuuri (viestijonot, välimuistit, skaalaus)
 taidossa *Järjestelmäsuunnittelu*. Tämä tutoriaali päättyy siihen,
 mitä yksi palvelu tarvitsee ollakseen valmis niiden osaksi.

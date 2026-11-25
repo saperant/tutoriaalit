@@ -56,8 +56,8 @@
   Router, Remix) yhdistävät palvelimen ja selaimen.
 - **Taustapalvelut.** Rajapinnan, tietokannan, todennuksen ja
   valtuutuksen toteutus palvelimella: taito *Taustapalvelut*.
-- **Kontit ja pilvi.** Sovelluksen julkaisu, CDN ja palvelinasetukset
-  (SPA fallback, otsakkeet): taito *Kontit ja pilvi*.
+- **Kontit ja pilvi-infrastruktuuri.** Sovelluksen julkaisu, CDN ja palvelinasetukset
+  (SPA fallback, otsakkeet): taito *Kontit ja pilvi-infrastruktuuri*.
 - **Muut kehykset.** Vue, Svelte ja Angular perustuvat samoihin
   käsitteisiin; signaalien malli on tuttu luvusta 3. Taito
   *Web-sovelluskehykset ja niiden periaatteet* tekee saman sovelluksen

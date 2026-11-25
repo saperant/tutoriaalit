@@ -11,7 +11,7 @@ integraatiotestit CI:ssä. Valmis dokumentti:
 pikaopas:
 [integraatiotestaus-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/integraatiotestaus-pikaopas.pdf).
 
-Esitiedot: taidot *SQL ja relaatiotietokannat*, *Kontit ja pilvi* ja
+Esitiedot: taidot *SQL ja relaatiotietokannat*, *Kontit ja pilvi-infrastruktuuri* ja
 *Python-työkalut*.
 
 ## Sisältö

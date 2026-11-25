@@ -112,7 +112,7 @@ syntyivät Valkey ja OpenSearch, joita ylläpitävät säätiöt.
 ## Esitiedot ja rajaus
 
 Esitietoina oletetaan taidot *SQL ja relaatiotietokannat* (normalisointi,
-transaktiot, indeksit) ja *Kontit ja pilvi* (Docker). Replikoinnin ja
+transaktiot, indeksit) ja *Kontit ja pilvi-infrastruktuuri* (Docker). Replikoinnin ja
 konsistenssin teoria – kvoorumit, CAP ja PACELC, CRDT:t – on taidossa
 *Hajautetut järjestelmät*; tässä ne näytetään oikeilla tietokannoilla.
 Redis välimuistina ja osioinnin suunnittelu ovat taidossa

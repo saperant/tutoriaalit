@@ -65,7 +65,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Kryptografia | [`kryptografia/`](kryptografia/) | [kryptografia.pdf](https://saperant.github.io/tutoriaalit/materiaalit/kryptografia.pdf) |
 | Miten tietokone laskee | [`tietokonearitmetiikka/`](tietokonearitmetiikka/) | [tietokonearitmetiikka.pdf](https://saperant.github.io/tutoriaalit/materiaalit/tietokonearitmetiikka.pdf) |
 | Virtualisointi | [`virtualisointi/`](virtualisointi/) | [virtualisointi.pdf](https://saperant.github.io/tutoriaalit/materiaalit/virtualisointi.pdf) |
-| Kontit ja pilvi | [`kontit-ja-pilvi/`](kontit-ja-pilvi/) | [kontit-ja-pilvi.pdf](https://saperant.github.io/tutoriaalit/materiaalit/kontit-ja-pilvi.pdf) |
+| Kontit ja pilvi-infrastruktuuri | [`kontit-ja-pilvi/`](kontit-ja-pilvi/) | [kontit-ja-pilvi.pdf](https://saperant.github.io/tutoriaalit/materiaalit/kontit-ja-pilvi.pdf) |
 | Palvelinympäristöt | [`palvelinymparistot/`](palvelinymparistot/) | [palvelinymparistot.pdf](https://saperant.github.io/tutoriaalit/materiaalit/palvelinymparistot.pdf) |
 | Tietoverkot | [`tietoverkot/`](tietoverkot/) | [tietoverkot.pdf](https://saperant.github.io/tutoriaalit/materiaalit/tietoverkot.pdf) |
 | Verkkoinfrastruktuuri | [`verkkoinfrastruktuuri/`](verkkoinfrastruktuuri/) | [verkkoinfrastruktuuri.pdf](https://saperant.github.io/tutoriaalit/materiaalit/verkkoinfrastruktuuri.pdf) |

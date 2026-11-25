@@ -9,7 +9,7 @@ dokumentti:
 pikaopas:
 [nosql-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/nosql-pikaopas.pdf).
 
-Esitiedot: taidot *SQL ja relaatiotietokannat* ja *Kontit ja pilvi*.
+Esitiedot: taidot *SQL ja relaatiotietokannat* ja *Kontit ja pilvi-infrastruktuuri*.
 
 ## Sisältö
 

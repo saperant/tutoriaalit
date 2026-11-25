@@ -3,9 +3,8 @@
 Lineaarinen yhtälöryhmä $Ax = b$ on numeerisen laskennan työjuhta:
 siihen päätyvät pienimmän neliösumman sovitus, Newtonin menetelmä
 yhtälöryhmille, implisiittiset differentiaaliyhtälöiden ratkaisijat,
-elementtimenetelmä ja piirisimulaattorit. Taidon *Lineaarialgebra*
-luvuissa 4, 5 ja 12 esiteltiin Gaussin eliminointi, LU-hajotelma ja
-kuntoluku. Tässä luvussa keskitytään numeriikkaan: miksi tuenta on
+elementtimenetelmä ja piirisimulaattorit. Taidossa *Lineaarialgebra*
+esiteltiin Gaussin eliminointi, LU-hajotelma ja ehtoluku. Tässä luvussa keskitytään numeriikkaan: miksi tuenta on
 välttämätön, mitä hajotelmaa milloin käytetään ja miten ehtoluvusta ja
 jäännöksestä saadaan virheelle raja.
 

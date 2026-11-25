@@ -33,7 +33,7 @@ avulla:
 
 Lukija tuntee Pythonin ja pytestin perusteet (taito *Python-työkalut*:
 fixturet, parametrointi), SQL:n (taito *SQL ja relaatiotietokannat*:
-transaktiot, rajoitteet, indeksit) sekä kontit (taito *Kontit ja pilvi*:
+transaktiot, rajoitteet, indeksit) sekä kontit (taito *Kontit ja pilvi-infrastruktuuri*:
 kuvat, Dockerfile, verkot). Taustapalveluiden puolelta *Taustapalvelut*
 käsittelee testipyramidin ja Testcontainersin lyhyesti Javan ja
 Springin näkökulmasta; tämä tutoriaali syventää aihetta kielestä

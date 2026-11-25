@@ -61,7 +61,7 @@ Java-rajapintana (`@HttpExchange`), jolloin Spring tuottaa asiakkaan.
 
 ## Mihin tästä eteenpäin
 
-- **Kontit ja pilvi**: palvelu konttiin (Spring Bootin `bootBuildImage`
+- **Kontit ja pilvi-infrastruktuuri**: palvelu konttiin (Spring Bootin `bootBuildImage`
   tai Dockerfile), Kubernetes-terveystarkistukset, salaisuuksien
   hallinta ja julkaisuputki.
 - **Järjestelmäsuunnittelu**: usean palvelun arkkitehtuuri,

@@ -149,6 +149,6 @@ tutoriaalin punainen lanka.
 
 Esitietona on taito *Käyttöjärjestelmät*: prosessit,
 järjestelmäkutsut, virtuaalimuisti ja keskeytykset oletetaan
-tutuiksi. Taito *Kontit ja pilvi* jatkaa tästä konttien käyttöön
+tutuiksi. Taito *Kontit ja pilvi-infrastruktuuri* jatkaa tästä konttien käyttöön
 (Docker, Kubernetes) ja taito *Palvelinympäristöt*
 virtualisointialustojen ylläpitoon.

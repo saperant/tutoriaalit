@@ -117,7 +117,7 @@ pitoisuuksille, jotka eivät saa mennä negatiivisiksi).
 
 Kun dataa on enemmän kuin mallin parametreja ja siinä on kohinaa,
 etsitään parametrit $c$, jotka minimoivat jäännösten neliösumman
-$\|Ac - y\|_2^2$. Taidon *Lineaarialgebra* luvussa 9 tehtävä
+$\|Ac - y\|_2^2$. Taidossa *Lineaarialgebra* tehtävä
 ratkaistiin **normaaliyhtälöillä** $A^TAc = A^Ty$ ja QR-hajotelmalla.
 Numeeriselta kannalta valinta on tärkeä:
 
