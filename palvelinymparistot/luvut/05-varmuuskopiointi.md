@@ -18,6 +18,8 @@ työkalusta:
   palattava. Palautuksen siirto, purku, tarkistus ja palvelun käynnistys
   on mahduttava aikaan.
 
+![RPO rajaa, kuinka kaukana viimeinen kopio saa olla häiriöstä, ja RTO, kuinka kauan palautus saa kestää.](kuvat/05-rpo-rto.png){width=80%}
+
 ```{.python tiedosto="esimerkit/05-rpo-rto.py" osa="arvio"}
 ```
 
@@ -122,6 +124,9 @@ ratkaisu on porrastettu säilytys (isoisä–isä–poika, GFS):
 
 Neljän vuoden päivittäisistä kopioista säilyy 21: viikon jokainen
 päivä, kuukauden viikot, vuoden kuukaudet ja kolmen vuoden vuodet.
+
+![Säilytettävät kopiot (tummat) kaikkien päivittäisten kopioiden joukossa, laskettuna esimerkin funktiolla `sailytettavat`. Tiheys harvenee taaksepäin: tuoreesta virheestä palaudutaan päivän tarkkuudella, vuoden takaisesta kuukauden.](kuvat/05-gfs.png){width=90%}
+
 Säilytysaikoja rajoittaa myös lainsäädäntö: henkilötietoja ei saa
 säilyttää varmuuskopioissakaan pidempään kuin käyttötarkoitus vaatii,
 ja kirjanpitoaineistolle on vähimmäisajat.

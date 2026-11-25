@@ -1,5 +1,5 @@
 ---
-title: Kontit ja pilvi
+title: Kontit ja pilvi-infrastruktuuri
 subtitle: Pikaopas · Docker · Compose · Kubernetes 1.35 · Helm 3
 ---
 

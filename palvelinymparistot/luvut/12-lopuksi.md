@@ -23,9 +23,13 @@
 
 - *Virtualisointi*: hypervisorit, laitteistotuki ja kontit ytimen
   tasolla.
-- *Kontit ja pilvi*: säiliöt, Kubernetes ja infrastruktuuri koodina.
-- *Järjestelmäsuunnittelu*: skaalautuvuus, replikointi ja
-  luotettavuusmallit sovellusten näkökulmasta.
+- *Kontit ja pilvi-infrastruktuuri*: tämän taidon esitieto, johon
+  kannattaa palata klusterin käyttäjän näkökulmasta.
+- *Skaalautuvien järjestelmien suunnittelu*: skaalautuvuus,
+  replikointi, havaittavuus ja luotettavuusmallit sovellusten
+  näkökulmasta.
+- *Jatkuva integraatio ja toimitus*: käyttöönottojen automatisointi ja
+  infrastruktuurimuutosten putket.
 - *Tietoturva kehitystyössä* ja *Palveluarkkitehtuurin tietoturva*:
   salaisuuksien hallinta, toimitusketju ja nollaluottamus.
 

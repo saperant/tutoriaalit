@@ -4,7 +4,33 @@ Kun palveluja on monta, kaksi kysymystä tulee vastaan. Miten asiakkaat
 löytävät palvelut, ja kuka hoitaa yhteiset asiat, kuten todennuksen ja
 pyyntörajoituksen? Ja miten tiimi voi muuttaa palvelunsa rajapintaa
 tietäen, ettei se riko muiden palveluja? Ensimmäiseen vastaavat
-yhdyskäytävä ja palveluverkko, toiseen sopimustestit.
+palvelun löytäminen, yhdyskäytävä ja palveluverkko, toiseen
+sopimustestit.
+
+## Palvelun löytäminen
+
+Ennen kuin palvelua voi kutsua, kutsujan on tiedettävä sen osoite.
+Kopioita käynnistyy ja sammuu jatkuvasti, joten osoitteita ei voi
+kirjoittaa asetuksiin. *Palvelun löytäminen* (*service discovery*)
+ratkaistaan yhdellä kolmesta tavasta:
+
+| Tapa | Miten | Käyttö |
+|------|-------|--------|
+| DNS ja kuormantasaaja | palvelulla on pysyvä nimi, jonka takana tasaaja jakaa liikenteen | perinteiset ympäristöt, pilven hallitut tasaajat |
+| Alustan palvelunimet | alusta pitää nimen ja terveiden kopioiden listan ajan tasalla | Kubernetesin Service ja klusterin DNS |
+| Palvelurekisteri | kopiot rekisteröityvät itse, ja asiakaskirjasto kysyy rekisteristä ja valitsee kopion | Consul, Eureka; ympäristöt ilman alustaa |
+
+Kubernetesissa kysymys on jo ratkaistu: palvelua kutsutaan nimellä
+(`http://varasto`), ja alusta ohjaa pyynnön valmiille podille (taito
+*Kontit ja pilvi-infrastruktuuri*). Erillinen rekisteri on perusteltu
+lähinnä silloin, kun palvelut ajetaan usealla alustalla tai asiakkaan
+on itse valittava kopio esimerkiksi sijainnin mukaan. Kaikissa tavoissa
+löytäminen nojaa terveystarkistuksiin: nimi saa osoittaa vain kopioihin,
+jotka pystyvät vastaamaan.
+
+Esimerkeissä palvelut ovat samassa prosessissa, ja osoitteet annetaan
+käynnistyksessä; yhdyskäytävän reittitaulu alla on palvelun löytämisen
+pienin muoto.
 
 ## API-yhdyskäytävä
 
@@ -22,6 +48,9 @@ Esimerkin yhdyskäytävä tekee viisi asiaa:
 3. **Reititys** polun pisimmän osuvan alun mukaan.
 4. **Korrelaatiotunnus**: jos asiakas ei lähettänyt tunnusta,
    yhdyskäytävä luo sen, ja se kulkee jokaiseen palveluun ja takaisin.
+   Tunnus on hajautetun jäljityksen lähtökohta; jäljet, metriikat ja
+   niiden työkalut ovat taidossa *Skaalautuvien järjestelmien
+   suunnittelu*.
 5. **Aikaraja ja virheiden muunto**: hidas palvelu on 504, kaatunut
    palvelu 502.
 
@@ -41,7 +70,9 @@ Tuotannossa yhdyskäytävä on valmis tuote: Kong, Envoy Gateway, NGINX,
 Spring Cloud Gateway tai pilvipalvelun hallittu yhdyskäytävä.
 Kubernetesissa reititys kuvataan Gateway API -resursseilla. Rajoittimen
 tila on silloin jaettu yhdyskäytävän kopioiden kesken (esimerkiksi
-Redisissä), muuten kolme kopiota sallii kolminkertaisen tahdin.
+Redisissä), muuten kolme kopiota sallii kolminkertaisen tahdin; hajautettu
+rajoitin ja ylikuorman hallinta ovat taidossa *Skaalautuvien
+järjestelmien suunnittelu*.
 
 Yhdyskäytävään ei kuulu liiketoimintalogiikkaa. Kun yhdyskäytävä alkaa
 yhdistellä vastauksia ja päättää hinnoista, se on palannut SOA:n
@@ -68,7 +99,7 @@ pois sovelluskoodista: jokaisen palvelun viereen ajetaan välityspalvelin
 (*sivuvaunu*, *sidecar*) tai jokaiselle solmulle yhteinen välittäjä,
 joka käsittelee kaiken liikenteen. Asetukset kirjoitetaan keskitetysti.
 
-| | Kirjasto (Resilience4j) | Palveluverkko |
+| Ominaisuus | Kirjasto (Resilience4j) | Palveluverkko |
 |---|---|---|
 | Kielet | yksi kieli kerrallaan | kaikki samalla tavalla |
 | Hienojakoisuus | metodi, liiketoimintatieto | pyyntö, HTTP-tason tieto |
@@ -140,6 +171,8 @@ Spring-ekosysteemissä.
 
 ## Itsearviointi
 
+- Osaat verrata tapoja, joilla kutsuja löytää palvelun (DNS, alustan
+  palvelunimet, rekisteri).
 - Osaat luetella API-yhdyskäytävän tehtävät ja perustella, miksi
   liiketoimintalogiikka ei kuulu sinne.
 - Osaat toteuttaa merkkiämpäriin perustuvan pyyntörajoittimen ja

@@ -18,7 +18,8 @@ vuosia, se on varma tapahtuma. Siksi palvelinmuisti on *ECC-muistia*
 tarkistusbittiä, joiden avulla muistiohjain korjaa yhden kääntyneen
 bitin ja havaitsee kaksi.
 
-Periaate on Hamming-koodi. Tarkistusbitit ovat paikoissa 1, 2, 4 ja 8,
+Periaate on Hamming-koodi, jonka teoria (etäisyys, korjauskyky) on
+taidossa *Tietoliikennetekniikka*. Tarkistusbitit ovat paikoissa 1, 2, 4 ja 8,
 ja kukin kattaa ne databitit, joiden paikkanumerossa on vastaava bitti.
 Virheen jälkeen epäonnistuneiden tarkistusten summa (oireyhtymä,
 *syndrome*) on suoraan virheellisen bitin paikka:
@@ -65,6 +66,17 @@ jaksaa yksin (*N+1*). Kahdennus suojaa kuitenkin vain, jos:
   katkeaminen ylikuormittaa toisen.
 - **redundanssin menetys hälyttää.** Kone toimii yhdelläkin
   virtalähteellä, joten vika jää muuten huomaamatta kuukausiksi.
+
+```{.dot otsikko="Kahdennettu virransyöttö. Kumpikin virtalähde saa sähkönsä omasta ketjustaan, joten yhden UPS-laitteen, sulakkeen tai jakelukiskon vika ei sammuta palvelinta. Kummankin ketjun on jaksettava koko kuorma yksin."}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.55;
+  a0 [label="syöttö A"]; a1 [label="UPS A"]; a2 [label="jakelukisko A"]; pa [label="virtalähde 1"];
+  b0 [label="syöttö B"]; b1 [label="UPS B"]; b2 [label="jakelukisko B"]; pb [label="virtalähde 2"];
+  s [label="palvelin", penwidth=1.6];
+  a0 -> a1 -> a2 -> pa -> s;
+  b0 -> b1 -> b2 -> pb -> s;
+}
+```
 
 Tuulettimet ja lämpötila-anturit valvotaan samoin. Tuloilman
 lämpötila on usein parempi hälytyksen lähde kuin suorittimen

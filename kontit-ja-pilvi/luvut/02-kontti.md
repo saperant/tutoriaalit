@@ -5,7 +5,18 @@ jolle ydin näyttää rajatun näkymän järjestelmään ja jonka resurssien
 käyttöä ydin rajoittaa. Virtuaalikoneessa on oma ydin ja emuloitu
 laitteisto; kontit jakavat isäntäkoneen ytimen. Siksi kontti
 käynnistyy millisekunneissa ja vie vähän muistia, mutta sen eristys on
-heikompi kuin virtuaalikoneen.
+heikompi kuin virtuaalikoneen. Luku käy läpi ne ytimen mekanismit,
+joista eristys koostuu, ja kuvan rakenteen; luvun lopussa kontteja
+verrataan virtuaalikoneisiin.
+
+```{.dot otsikko="Kontit jakavat isännän ytimen, ja niiden välinen raja on ytimen ohjelmistoa. Virtuaalikoneessa on oma ydin, ja rajan toteuttaa hypervisori laitteiston tuella."}
+digraph {
+  rankdir=TB; nodesep=0.5;
+  node [shape=record, style="filled", fontsize=9];
+  k [label="{ { kontti A:\nprosessit | kontti B:\nprosessit } | konttiajoympäristö | isännän ydin: nimiavaruudet, cgroups | laitteisto }"];
+  v [label="{ { VM A:\nprosessit\n+ oma ydin | VM B:\nprosessit\n+ oma ydin } | hypervisori | laitteisto }"];
+}
+```
 
 ## Nimiavaruudet: mitä prosessi näkee
 
@@ -61,7 +72,7 @@ jaksolla. Liian tiukka suoritinraja näkyy viiveinä, ei virheinä.
 
 ## Kuvat ja kerrokset
 
-*Säiliökuva* on pino tiedostojärjestelmän *kerroksia* (*layer*) ja
+*Konttikuva* on pino tiedostojärjestelmän *kerroksia* (*layer*) ja
 asetustiedosto, joka kertoo käynnistyskomennon, ympäristömuuttujat,
 käyttäjän ja portit. Kuvamuoto on standardoitu (OCI, *Open Container
 Initiative*), joten Dockerilla rakennettu kuva toimii Kubernetesissa,
@@ -76,6 +87,13 @@ Podmanissa ja pilvipalveluiden konttiajoissa.
   volyymiin (luku 5).
 - Kuvan tunniste on sen sisällön tiiviste, *digest* (`sha256:…`). Tagi
   (`3.12-slim`) on siirrettävä nimi, digest ei muutu.
+
+```{.dot otsikko="Kaksi konttia samasta kuvasta. Kuvan kerrokset ovat vain luku -tilassa ja yhteisiä; kumpikin kontti saa oman kirjoitettavan kerroksen, joka katoaa kontin mukana."}
+digraph {
+  node [shape=record, style="filled", fontsize=9];
+  pino [label="{ { kontti 1:\nkirjoitettava kerros | kontti 2:\nkirjoitettava kerros } | kuvan kerros: sovelluksen koodi | kuvan kerros: käyttäjä ja hakemisto /data | peruskuvan kerrokset (python:3.12-slim),\njaettu kaikkien samaa peruskuvaa käyttävien kuvien kesken }"];
+}
+```
 
 ## Rekisterit
 
@@ -93,8 +111,8 @@ olettaa tagin `latest`. Molemmat oletukset kannattaa kirjoittaa auki.
 
 ## Kontti vai virtuaalikone
 
-| | Kontti | Virtuaalikone |
-|-|--------|---------------|
+| Ominaisuus | Kontti | Virtuaalikone |
+|------------|--------|---------------|
 | Ydin | jaettu isännän kanssa | oma |
 | Käynnistys | millisekunteja | sekunteja–minuutteja |
 | Koko | megatavuja | gigatavuja |

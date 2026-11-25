@@ -129,7 +129,7 @@ metadata:
     app.kubernetes.io/version: "1.0.0"
     helm.sh/chart: kaynnit-0.3.0
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   rules:
     - host: kaynnit.example.fi
       http:

@@ -6,6 +6,8 @@ kaataa myynnin, jos myynnin säikeet jäävät odottamaan vastausta, joka
 ei koskaan tule. Michael Nygardin kirja *Release It!* (2007) nimesi
 mallit, joilla tätä vastaan suojaudutaan: aikaraja, uudelleenyritys,
 katkaisija ja laipio. Tämä luku rakentaa ne myynnin saldokyselyyn.
+Samat mallit sokettitasolla toteutettuina ovat taidossa
+*Verkko-ohjelmointi*.
 
 ## Asiakas
 
@@ -75,12 +77,16 @@ lähtemättä verkkoon. Hetken kuluttua katkaisija päästää yhden
 koekutsun läpi (puoliavoin tila), ja jos se onnistuu, katkaisija
 sulkeutuu.
 
-```text
-          virheitä yli rajan
- SULJETTU ──────────────────► AVOIN
-    ▲                           │ odotusaika kulunut
-    │ koekutsu onnistuu         ▼
-    └──────────────────── PUOLIAVOIN ──► AVOIN (koekutsu epäonnistuu)
+```{.dot otsikko="Katkaisijan tilat. Suljettuna kutsut kulkevat läpi ja virheet lasketaan, avoimena kutsut hylätään heti, ja puoliavoimena koekutsu ratkaisee, kumpaan tilaan palataan."}
+digraph {
+  rankdir=LR; nodesep=0.5; ranksep=1.0;
+  s [label="SULJETTU\nkutsut läpi"]; a [label="AVOIN\nkutsut hylätään heti"];
+  p [label="PUOLIAVOIN\nkoekutsu läpi"];
+  s -> a [label="virheitä yli rajan"];
+  a -> p [label="odotusaika kulunut"];
+  p -> s [label="koekutsu onnistuu"];
+  p -> a [label="koekutsu epäonnistuu"];
+}
 ```
 
 Resilience4j:n katkaisija määritellään liukuvalla ikkunalla:

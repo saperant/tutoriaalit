@@ -2,7 +2,7 @@
 
 Kontti paketoi ohjelman ja kaiken, mitä se tarvitsee ajoon:
 tulkin, kirjastot, asetusten oletukset ja käynnistyskomennon. Paketti
-on *säiliökuva* (*container image*), ja sama kuva käynnistyy samalla
+on *konttikuva* (*container image*), ja sama kuva käynnistyy samalla
 tavalla kehittäjän kannettavalla, CI-putkessa ja tuotannon
 klusterissa. Siksi kontit ovat pilvipalveluiden käyttöönoton
 perusyksikkö.
@@ -10,7 +10,7 @@ perusyksikkö.
 Tämä tutoriaali kulkee yhdestä kuvasta palveluksi pilveen:
 
 1. mitä kontti on käyttöjärjestelmän näkökulmasta,
-2. miten hyvä säiliökuva rakennetaan ja miksi se on pieni ja turvallinen,
+2. miten hyvä konttikuva rakennetaan ja miksi se on pieni ja turvallinen,
 3. miten sovellus kirjoitetaan konttiin sopivaksi (twelve-factor),
 4. miten usean kontin sovellus ajetaan Composella,
 5. miten sama sovellus kuvataan Kubernetesille ja paketoidaan Helmillä,
@@ -34,12 +34,15 @@ palvelulta vaaditaan, jotta sitä voi ajaa konteissa luotettavasti.
 ## Esitiedot ja rajaus
 
 Tutoriaali olettaa taidon *Tietoverkot*: IP-osoitteet, portit, DNS,
-HTTP ja TLS. Komentorivi ja Linux (taito *Komentorivi ja Linux*)
-oletetaan tutuiksi. Kontin toteutus ytimessä (nimiavaruudet, cgroups,
+HTTP ja TLS. Sen esitietona on *Komentorivi ja Linux*, joten kuoren
+peruskäyttö oletetaan tutuksi. Kontin toteutus ytimessä (nimiavaruudet, cgroups,
 seccomp) käydään läpi vain sen verran kuin konttien käyttäjä tarvitsee;
 syvällisemmin se on taidossa *Virtualisointi*. Usean palvelun
 arkkitehtuuri on taidossa *Palveluarkkitehtuurit* ja palvelinten
-ylläpito taidossa *Palvelinympäristöt*.
+ylläpito taidossa *Palvelinympäristöt*. Luku 11 näyttää palvelun
+putken konttien näkökulmasta; jatkuvan integraation ja toimituksen
+käytännöt (trunk-pohjainen kehitys, ominaisuusliput, julkaisustrategiat
+mitattuina) ovat taidossa *Jatkuva integraatio ja toimitus*.
 
 ## Mitä on testattu
 
@@ -51,7 +54,7 @@ tavoin:
 | Palvelujen Python- ja Go-koodi | ruff, mypy, yksikkötestit, gofmt, go vet |
 | Dockerfilet | hadolint; kuvat rakennetaan ja ajetaan Dockerilla |
 | Compose-sovellus | skeemavalidointi; sovellus käynnistetään ja sitä kutsutaan |
-| Kubernetes-manifestit | skeemavalidointi Kubernetes 1.35:lle, omat käytännöt |
+| Kubernetes-manifestit | skeemavalidointi (Kubernetes 1.35), omat käytännöt |
 | Helm-kaavio | lint, renderöinti ja renderöidyn tuloksen validointi |
 | CI-putki | GitHub Actionsin skeemavalidointi |
 | Infrastruktuuri koodina | Python-malli, jonka tuloste tarkistetaan |
@@ -60,7 +63,9 @@ Kuvat rakennetaan ja ajetaan siellä, missä Docker on käytettävissä:
 kehittäjän koneella ja CI:ssä. Kubernetes-manifesteja ei ajeta oikeassa
 klusterissa, vaan ne tarkistetaan Kubernetesin omia skeemoja vasten;
 klusterin käyttöä varten luvussa 7 neuvotaan, miten paikallinen klusteri
-(kind tai k3d) käynnistetään. Esimerkkien `make` ajaa kaikki
+(kind tai k3d) käynnistetään. Versio 1.35 on testin kiinnitys, ei
+suositus: skeemat tarkistetaan sitä versiota vasten, jota oma klusteri
+ajaa. Esimerkkien `make` ajaa kaikki
 tarkistukset ja ohittaa ilmoituksella ne, joihin ympäristössä ei ole
 välineitä.
 

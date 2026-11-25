@@ -5,7 +5,8 @@ Virtualisointialusta (VMware vSphere, Proxmox, Hyper-V, OpenStack) tai
 Kubernetes-klusteri jakaa laitteiston palveluille ja siirtää kuorman
 muualle, kun kone hajoaa tai sitä huolletaan. Virtualisoinnin tekniikka
 (hypervisorit, laitteistotuki, kontit ytimen keinoin) on taidon
-*Virtualisointi* aihe, ja Kubernetesin käyttö taidon *Kontit ja pilvi*.
+*Virtualisointi* aihe, ja Kubernetesin käyttö taidon *Kontit ja
+pilvi-infrastruktuuri*.
 Tämä luku käsittelee ylläpitäjän näkökulmaa: kapasiteettia, huoltoa ja
 vikasietoisuutta.
 
@@ -47,8 +48,9 @@ huoltotilaan. Kubernetes-klusterissa vastaava on solmun tyhjennys
 (`kubectl drain`), joka siirtää podit muille solmuille.
 
 Tyhjennys ei saa pudottaa sovellusta alle sen tarvitseman
-kopiomäärän. Kubernetesissa tarve ilmaistaan *PodDisruptionBudgetilla*
-(PDB), esimerkiksi `minAvailable: 2`. Tyhjennys odottaa, kunnes
+kopiomäärän. Kubernetesissa sovelluksen omistaja ilmaisee tarpeen
+*PodDisruptionBudgetilla* (PDB), esimerkiksi `minAvailable: 2`; tässä
+katsotaan, mitä budjetti tekee ylläpitäjän huollolle. Tyhjennys odottaa, kunnes
 budjetti sallii podin poistamisen:
 
 ```{.python tiedosto="esimerkit/09-huolto.py" osa="tyhjennys"}

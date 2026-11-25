@@ -53,6 +53,22 @@ yksi kerrallaan, ja julkisivu ohjaa niiden reitit uudelle:
 ```{.java tiedosto="esimerkit/uudistus/src/main/java/fi/tutoriaalit/palvelut/uudistus/reunat/Kuristaja.java" osa="kasittele"}
 ```
 
+```{.dot otsikko="Reitin `/laskut` kolme vaihetta julkisivun takana. Rinnakkaisajossa uusi saa saman pyynnön, mutta asiakas saa yhä vanhan vastauksen ja erot kirjataan. Muut reitit pysyvät vanhalla, kunnes niiden vuoro tulee."}
+digraph {
+  rankdir=LR; nodesep=0.15; ranksep=0.5;
+  node [height=0.3];
+  subgraph cluster_3 { label="3. reitti uudelle"; style="rounded"; margin=8;
+    j3 [label="julkisivu"]; v3 [label="vanha"]; u3 [label="uusi"];
+    j3 -> u3 [label="/laskut"]; j3 -> v3 [label="/asiakas"]; }
+  subgraph cluster_2 { label="2. rinnakkaisajo"; style="rounded"; margin=8;
+    j2 [label="julkisivu"]; v2 [label="vanha"]; u2 [label="uusi"];
+    j2 -> v2 [label="/laskut\n(vastaus asiakkaalle)"]; j2 -> u2 [label="kopio,\nerot lokiin", style=dashed]; }
+  subgraph cluster_1 { label="1. kaikki vanhalle"; style="rounded"; margin=8;
+    j1 [label="julkisivu"]; v1 [label="vanha"]; u1 [label="uusi", style="rounded,dashed"];
+    j1 -> v1 [label="/laskut"]; j1 -> u1 [style=invis]; }
+}
+```
+
 Reitin siirto etenee kolmessa vaiheessa. Laskujen uudessa
 toteutuksessa on aluksi bugi, ja rinnakkaisajo löytää sen ennen kuin
 yksikään asiakas näkee väärän vastauksen:

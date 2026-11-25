@@ -48,15 +48,21 @@ Tulosteessa näkyvät mallin kolme tärkeintä ominaisuutta:
 - **Suunnitelma ennen toteutusta.** Muutokset näkyvät ennen kuin
   mitään tapahtuu. Putkessa suunnitelma liitetään pull requestiin
   katselmoitavaksi.
-- **Poikkeaman havaitseminen** (*drift*). Konsolista tehty muutos
+- **Ajautumisen havaitseminen** (*drift*). Konsolista tehty muutos
   näkyy seuraavassa suunnitelmassa, ja seuraava toteutus palauttaa
   kuvauksen mukaisen tilan. Käsin tehty korjaus ei siis säily, ellei
   sitä kirjata kuvaukseen.
 
+Sama kolmikko toistuu kaikessa koodina hallitussa infrastruktuurissa:
+palvelinten asetuksissa (Ansible; taito *Palvelinympäristöt*) ja
+verkkolaitteiden kuvauksissa (taito *Verkkoinfrastruktuuri*). Kohde
+vaihtuu, periaate ei.
+
 ## Sama Terraformilla
 
-Oikealla työkalulla klusterin kuvaus näyttää esimerkiksi tältä (ei
-testattu tässä tutoriaalissa, koska se vaatii pilvipalvelun tunnukset):
+Oikealla työkalulla klusterin kuvaus näyttää esimerkiksi tältä.
+Katkelmaa ja sen alla olevia komentoja ei ajeta tämän tutoriaalin
+testeissä, koska ne vaativat pilvipalvelun tunnukset:
 
 ```text
 resource "google_container_cluster" "tuotanto" {
@@ -113,7 +119,7 @@ Packer) ja klustereita (uusi solmuryhmä vanhan päivittämisen sijaan).
 
 - Osaat selittää deklaratiivisen infrastruktuurin suunnitelma–toteutus-
   syklin ja idempotenssin.
-- Osaat kertoa, mitä poikkeama (drift) on ja miten se havaitaan ja
+- Osaat kertoa, mitä ajautuminen (drift) on ja miten se havaitaan ja
   korjataan.
 - Osaat kertoa, miksi tilatiedosto säilytetään etätallennuksessa
   lukittuna ja miksi se ei kuulu versionhallintaan.

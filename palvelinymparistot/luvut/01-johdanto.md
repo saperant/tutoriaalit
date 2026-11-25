@@ -19,7 +19,7 @@ koventamisen.
 ## Mitä tutoriaali kattaa
 
 | Luku | Kysymys, johon luku vastaa |
-|------|----------------------------|
+|--------------------------------|------------------------------------------------------------|
 | Palvelinlaitteisto | Mikä tekee palvelimesta palvelimen, ja miten sen kuntoa valvotaan? |
 | Tallennus ja RAID | Montako levyä saa hajota, ja kuinka riskialtis uudelleenrakennus on? |
 | Tiedostojärjestelmät ja tarkistussummat | Miten hiljainen korruptoituminen havaitaan? |
@@ -31,10 +31,26 @@ koventamisen.
 | Valvonta ja palvelutasot | Milloin päivystäjä herätetään? |
 | Kustannukset ja kapasiteetti | Mitä palvelu maksaa, ja milloin tila loppuu? |
 
-Esitiedoiksi oletetaan Linuxin käyttö komentoriviltä, verkkojen
-perusteet ja taito *Verkkoinfrastruktuuri* (palomuurit, VLANit,
-hallintaverkko) sekä taito *Kontit ja pilvi* (Docker ja Kubernetes).
-Niitä ei toisteta tässä.
+## Esitiedot ja rajaus
+
+Tutoriaali olettaa taidot *Verkkoinfrastruktuuri* (palomuurit, VLANit,
+hallintaverkko) ja *Kontit ja pilvi-infrastruktuuri* (Docker ja
+Kubernetes) sekä niiden esitietoina Linuxin käytön komentoriviltä ja
+verkkojen perusteet. Niitä ei toisteta tässä.
+
+Tutoriaali ei käsittele seuraavia aiheita:
+
+- Hypervisorien ja konttien toteutus on taidossa *Virtualisointi*;
+  tässä alustoja katsotaan ylläpitäjän kannalta.
+- Sovelluksen skaalaus, välimuistit ja havaittavuus sovelluksen sisältä
+  ovat taidossa *Skaalautuvien järjestelmien suunnittelu*. Palvelutasot
+  ja hälytykset opetetaan tässä; siellä niitä sovelletaan
+  suunnitteluun.
+- Salaisuuksien hallinta ja toimitusketjun turvallisuus ovat taidossa
+  *Tietoturva kehitystyössä*.
+- Palvelimen ensiasennuksen automatisointia (verkkoasennus,
+  cloud-init), systemd-palvelujen kirjoittamista ja ajan synkronointia
+  ei käydä läpi; systemd:n käyttö on taidossa *Komentorivi ja Linux*.
 
 ## Kenen työtä palvelinympäristö on
 

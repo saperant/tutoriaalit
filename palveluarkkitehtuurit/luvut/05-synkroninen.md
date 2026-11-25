@@ -80,7 +80,7 @@ sijaan.
 
 ## Nykyiset vaihtoehdot
 
-| | REST (HTTP + JSON) | gRPC | GraphQL |
+| Ominaisuus | REST (HTTP + JSON) | gRPC | GraphQL |
 |---|---|---|---|
 | Malli | resurssit ja HTTP-metodit | proseduurit (`.proto`) | kysely skeemaa vastaan |
 | Muoto | JSON, tekstiä | Protocol Buffers, binääriä | JSON |

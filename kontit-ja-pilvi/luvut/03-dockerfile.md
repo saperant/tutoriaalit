@@ -1,4 +1,4 @@
-# Säiliökuva Dockerfilellä
+# Konttikuva Dockerfilellä
 
 Dockerfile on resepti, jonka jokainen käsky tuottaa kuvaan kerroksen
 tai asetuksen. Hyvä Dockerfile on toistettava (sama lähde tuottaa saman
@@ -7,8 +7,24 @@ joka ajaa vain sitä, mitä tarvitaan.
 
 ## Käyntilaskurin kuva
 
-Käyntilaskurin kuvassa on kolme vaihetta (*stage*). Ensimmäinen,
-`perus`, valitsee peruskuvan ja yhteiset asetukset:
+Käyntilaskurin kuvassa on kolme vaihetta (*stage*):
+
+```{.dot otsikko="Käyntilaskurin Dockerfilen vaiheet. Testit ja ajokuva rakentuvat samasta perusvaiheesta, joten testit ajetaan samalla Pythonilla kuin tuotanto. Rekisteriin julkaistaan vain vaihe `ajo`."}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.7;
+  kuva [label="python:3.12-slim\n@sha256:…", style="rounded,dashed"];
+  perus [label="perus\nyhteiset asetukset"];
+  testit [label="testit\nkoodi + testit,\najaa testit"];
+  ajo [label="ajo\nkoodi, käyttäjä 10001,\nENTRYPOINT", penwidth=1.6];
+  rek [label="rekisteri", shape=cylinder, height=0.5];
+  kuva -> perus [label="FROM"];
+  perus -> testit [label="FROM perus"];
+  perus -> ajo [label="FROM perus"];
+  ajo -> rek [label="push"];
+}
+```
+
+Ensimmäinen vaihe, `perus`, valitsee peruskuvan ja yhteiset asetukset:
 
 ```{.dockerfile tiedosto="esimerkit/sovellus/Dockerfile" osa="perus"}
 ```

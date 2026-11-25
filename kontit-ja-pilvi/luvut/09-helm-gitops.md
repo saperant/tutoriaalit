@@ -116,12 +116,35 @@ klusterissa ajettava agentti (Argo CD, Flux) vetää muutokset sieltä:
 3. Agentti huomaa muutoksen, renderöi manifestit (Helm, Kustomize) ja
    vie ne klusteriin.
 4. Agentti vertaa jatkuvasti klusterin tilaa versionhallintaan ja
-   korjaa tai ilmoittaa poikkeamasta (*drift*).
+   korjaa ajautumisen (*drift*) tai ilmoittaa siitä.
 
-| | Työntävä putki (CI ajaa `helm upgrade`) | GitOps (agentti vetää) |
-|-|-----------------------------------------|-----------------------|
+```{.dot otsikko="Työntävä putki ja vetävä agentti. Työntävässä mallissa klusterin tunnukset ovat CI-järjestelmässä ja käyttöönotto tapahtuu vain putken ajon aikana. GitOpsissa agentti on klusterin sisällä, hakee halutun tilan itse ja vertaa sitä jatkuvasti todelliseen."}
+digraph {
+  rankdir=LR; nodesep=0.35; ranksep=0.55;
+  subgraph cluster_g {
+    label="GitOps: agentti vetää"; style="rounded"; margin=10;
+    c2 [label="CI-putki"];
+    g2 [label="käyttöönotto-\nrepositorio"];
+    subgraph cluster_k { label="klusteri"; style="rounded,dashed"; margin=8;
+      a2 [label="agentti\n(Argo CD, Flux)", penwidth=1.6]; r2 [label="resurssit"];
+      a2 -> r2 [label="vie ja\nvertaa"];
+    }
+    c2 -> g2 [label="pull request:\nuusi kuvan tagi"];
+    g2 -> a2 [label="agentti hakee"];
+  }
+  subgraph cluster_p {
+    label="työntävä putki"; style="rounded"; margin=10;
+    g1 [label="sovellus-\nrepositorio"]; c1 [label="CI-putki\n(klusterin tunnukset)"];
+    k1 [label="klusteri"];
+    g1 -> c1 [label="push"]; c1 -> k1 [label="helm upgrade"];
+  }
+}
+```
+
+| Ominaisuus | Työntävä putki (CI ajaa `helm upgrade`) | GitOps (agentti vetää) |
+|----------------------|----------------------------------------|----------------------------------------|
 | Klusterin tunnukset | CI:ssä | vain klusterissa |
-| Poikkeamat | jäävät huomaamatta | korjataan tai hälytetään |
+| Ajautuminen | jää huomaamatta | korjataan tai hälytetään |
 | Historia ja peruminen | putken lokit | Gitin historia, `git revert` |
 | Monta klusteria | putki jokaiseen | agentti jokaisessa |
 
@@ -141,7 +164,8 @@ tagin käyttöönottorepositorioon.
   tai Secretin ja ConfigMapin nimiin lisätty tiiviste.
 - **GitOps, kun klustereita tai tiimejä on useita.** Versionhallinnan
   historia on silloin käyttöönottojen kirjanpito, ja klusterin
-  tunnukset eivät poistu klusterista.
+  tunnukset eivät poistu klusterista. GitOps osana toimitusputkea ja sen
+  mittareita on taidossa *Jatkuva integraatio ja toimitus*.
 
 ## Itsearviointi
 

@@ -53,6 +53,8 @@ Hankinta on aloitettava hankinta-ajan verran aiemmin:
 ```{.tuloste tiedosto="esimerkit/11-kapasiteetti.odotettu"}
 ```
 
+![Esimerkin mittaukset, niihin sovitettu suora ja ennusteen kolme päivämäärää. Tilaus on tehtävä hankinta-ajan verran ennen kuin hälytysraja ylittyy.](kuvat/11-kapasiteetti.png){width=85%}
+
 Käyttö on nyt 68 %, eikä mitään hälytystä ole lauennut, mutta
 laajennus on tilattava neljän kuukauden kuluessa. Raja 80 % jättää
 varaa uudelleenrakennuksille, tilannevedoksille ja kasvun

@@ -4,7 +4,8 @@ Edellisen luvun Deployment käynnistää podit. Tuotannossa tarvitaan
 lisäksi asetukset ja salaisuudet, koettimet, resurssirajat,
 tietoturvarajaukset, pysyvä tallennus, ulkoinen liikenne ja säännöt
 huoltojen ja kuormanvaihteluiden varalle. Tämä luku käy läpi
-käyntilaskurin loput manifestit.
+käyntilaskurin loput manifestit ja lopuksi sen, miten selvitetään, miksi
+pod ei käynnisty.
 
 ## ConfigMap ja Secret
 
@@ -60,6 +61,16 @@ false`, `readOnlyRootFilesystem: true` ja kaikkien
 (luku 7). Kirjoitettavaa tilaa tarvitseva sovellus saa volyymin
 (`emptyDir` väliaikaiselle, PersistentVolumeClaim pysyvälle).
 
+**Palvelutili ja RBAC.** Vähimmät oikeudet koskevat myös podin
+oikeuksia klusterin rajapintaan. Jokainen pod ajetaan *palvelutilillä*
+(*ServiceAccount*), ja tilin oikeudet annetaan rooleilla (*Role* ja
+*RoleBinding*, koko klusterin laajuisina *ClusterRole*). Oletustilillä
+ei ole oikeuksia, ja useimmat sovellukset eivät tarvitse rajapintaa
+lainkaan: niille tilin tunnuksen liittäminen podiin kytketään pois
+(`automountServiceAccountToken: false`). Oikeuksia tarvitsevat lähinnä
+ohjaimet ja putket, ja niillekin annetaan vain nimetyt resurssit ja
+verbit, ei `cluster-admin`-roolia.
+
 ## StatefulSet ja pysyvä levy
 
 Laskurilla on tila, joten se on StatefulSet:
@@ -83,16 +94,22 @@ replikointia eikä versiopäivityksiä.
 
 ## Ingress ja verkkopolitiikka
 
-Ulkoinen HTTP-liikenne tulee Ingressin kautta. Ingress-ohjain (esim.
-ingress-nginx, Traefik) on klusterissa ajettava välityspalvelin, joka
-toteuttaa säännöt ja TLS:n:
+Ulkoinen HTTP-liikenne tulee klusteriin välityspalvelimen kautta, ja
+sen säännöt kuvataan resursseina. Vanhempi tapa on *Ingress*:
+Ingress-ohjain (esimerkiksi Traefik tai HAProxy Ingress) on klusterissa
+ajettava välityspalvelin, joka toteuttaa säännöt ja TLS:n:
 
 ```{.yaml tiedosto="esimerkit/k8s/40-verkko.yaml" osa="ingress"}
 ```
 
-Uudempi Gateway API (`Gateway`, `HTTPRoute`) jakaa saman tehtävän
-infrastruktuurin ja sovellustiimien kesken ja tukee painotettua
-reititystä; uusissa klustereissa se on Ingressin seuraaja.
+Uusissa klustereissa ensisijainen valinta on *Gateway API*
+(`Gateway`, `HTTPRoute`). Se jakaa saman tehtävän infrastruktuurin ja
+sovellustiimien kesken (alustatiimi omistaa `Gateway`n, sovellustiimi
+reittinsä) ja tukee painotettua reititystä. Ingress-rajapinta säilyy,
+mutta siihen ei tule uusia ominaisuuksia, ja pitkään yleisimmän
+ohjaimen, ingress-nginxin, ylläpito päättyi maaliskuussa 2026.
+Ohjainta valitessa tarkistetaan siis, että sitä ylläpidetään; itse
+resurssit ovat ohjaimesta riippumattomia.
 
 Oletuksena jokainen pod voi ottaa yhteyttä jokaiseen. Verkkopolitiikka
 rajaa liikenteen; tässä laskuriin pääsee vain api:
@@ -103,13 +120,29 @@ rajaa liikenteen; tässä laskuriin pääsee vain api:
 Verkkopolitiikka toimii vain, jos klusterin verkko-osa (CNI, esim.
 Calico tai Cilium) toteuttaa sen.
 
+```{.dot otsikko="Käyntilaskurin liikenne klusterissa. Ulkoinen pyyntö kulkee välityspalvelimen ja Servicen kautta api-podeille, jotka kutsuvat laskuria. Verkkopolitiikka sallii laskuriin vain api-podit; muiden podien yhteydet pudotetaan."}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.6;
+  u [label="selain", shape=plain, style=""];
+  i [label="Ingress-ohjain\ntai Gateway\n(TLS, reititys)"];
+  sa [label="Service\napi"]; a1 [label="pod api"]; a2 [label="pod api"];
+  sl [label="Service\nlaskuri"]; l [label="pod laskuri-0"];
+  x [label="muu pod", style="rounded,dashed"];
+  u -> i [label="HTTPS"]; i -> sa; sa -> a1; sa -> a2;
+  a1 -> sl; a2 -> sl; sl -> l;
+  x -> sl [label="estetty", style=dashed, arrowhead=tee];
+}
+```
+
 ## Saatavuus ja skaalaus
 
 ```{.yaml tiedosto="esimerkit/k8s/50-saatavuus.yaml"}
 ```
 
 - **PodDisruptionBudget** estää huoltotoimia (solmun tyhjennys,
-  klusterin päivitys) poistamasta liikaa podeja kerralla.
+  klusterin päivitys) poistamasta liikaa podeja kerralla. Miten
+  ylläpitäjä tyhjentää solmun ja milloin budjetti jumittaa huollon, on
+  taidossa *Palvelinympäristöt*.
 - **HorizontalPodAutoscaler** muuttaa replikoiden määrää mittarin
   mukaan. Prosentti lasketaan suhteessa suoritinpyyntöön, joten
   skaalaus toimii vain, jos pyyntö on asetettu. Kun HPA on käytössä,
@@ -142,6 +175,44 @@ Jokainen rivi on todellinen riski: `latest` vaihtuu huomaamatta,
 rajaton muisti kaataa naapurit, ilman koettimia rikkinäinen pod saa
 liikennettä, ja root-kontti on murtautujan helpoin reitti solmulle.
 
+## Kun pod ei käynnisty
+
+Deklaratiivisen mallin kääntöpuoli on, että `kubectl apply` onnistuu,
+vaikka sovellus ei käynnistyisi: manifesti hyväksyttiin, ja ohjaimet
+yrittävät yhä. Vianetsintä alkaa podin tilasta ja etenee tapahtumiin ja
+lokeihin:
+
+```text
+kubectl -n kaynnit get pods                  # tila ja uudelleenkäynnistykset
+kubectl -n kaynnit describe pod api-…        # tapahtumat lopussa
+kubectl -n kaynnit logs api-… --previous     # edellisen, kaatuneen kontin loki
+kubectl -n kaynnit get events --sort-by=.lastTimestamp
+kubectl -n kaynnit debug -it api-… --image=busybox --target=api
+```
+
+| Tila | Mitä se tarkoittaa | Tavallinen syy |
+|----------------------------------|----------------------------|--------------------------------------|
+| `Pending` | ajoittaja ei löydä solmua | pyynnöt suuremmat kuin vapaa tila, levyä ei saada, solmun valintasäännöt |
+| `ImagePullBackOff` | kuvaa ei saada haettua | väärä nimi tai tagi, puuttuvat rekisterin tunnukset |
+| `CreateContainerConfigError` | podin asetukset eivät täyty | viitattu ConfigMap tai Secret puuttuu |
+| `CrashLoopBackOff` | kontti käynnistyy ja kaatuu toistuvasti | sovelluksen virhe, puuttuva asetus, kirjoitus vain luku -levylle |
+| `OOMKilled` (päättymisen syy) | muistiraja ylittyi | vuoto tai liian pieni raja |
+| `Running`, mutta ei `Ready` | valmiuskoetin epäonnistuu | riippuvuus alhaalla, väärä polku tai portti koettimessa |
+
+Tapahtumat kertovat syyn useimmiten suoraan ("0/3 nodes are available:
+insufficient memory", "Readiness probe failed: HTTP probe failed with
+statuscode: 503"). `--previous` on tarpeen, koska kaatumissilmukassa
+nykyinen kontti on juuri käynnistynyt eikä sen lokissa ole vielä
+virhettä. `kubectl debug` liittää podiin työkalukontin; se on tapa
+tutkia distroless-konttia, jossa ei ole kuorta (luku 4).
+
+Jos pod on valmis mutta palvelu ei vastaa, tarkistetaan luvun 7
+ketju: onko Servicellä päätepisteitä (`kubectl get endpointslices`;
+tyhjä lista tarkoittaa, ettei valitsin osu yhteenkään valmiiseen
+podiin), vastaako pod suoraan (`kubectl port-forward pod/api-… 8080`)
+ja estääkö verkkopolitiikka yhteyden. Komentoja ei ajeta tämän
+tutoriaalin testeissä, koska ne vaativat klusterin.
+
 ## Käytännössä
 
 - **Asetukset ConfigMapiin, salaisuudet salaisuusvarastoon.** Secret
@@ -157,6 +228,9 @@ liikennettä, ja root-kontti on murtautujan helpoin reitti solmulle.
   tekee murtautujan liikkumisesta klusterissa vaikeaa.
 - **Säännöt koodiksi.** Sama tarkistus putkeen (palaute heti) ja
   klusterin hyväksyntään (ei ohituksia).
+- **Vianetsintä tilasta tapahtumiin ja lokeihin.** `get`, `describe`,
+  `logs --previous`; tapahtumat kertovat, miksi ohjain ei pääse
+  haluttuun tilaan.
 
 ## Itsearviointi
 
@@ -171,3 +245,5 @@ liikennettä, ja root-kontti on murtautujan helpoin reitti solmulle.
   automaattisen skaalauksen.
 - Osaat kirjoittaa organisaation säännöt koodiksi, joka tarkistaa
   manifestit ennen käyttöönottoa.
+- Osaat selvittää podin tilasta, tapahtumista ja lokeista, miksi pod ei
+  käynnisty tai ei saa liikennettä.

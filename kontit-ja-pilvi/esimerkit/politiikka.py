@@ -25,7 +25,7 @@ def poddit(dokumentti: dict[str, Any]) -> Iterator[dict[str, Any]]:
 
 
 # @alku saannot
-def tarkista_sailio(pod: dict[str, Any], s: dict[str, Any]) -> list[str]:
+def tarkista_kontti(pod: dict[str, Any], s: dict[str, Any]) -> list[str]:
     virheet = []
     kuva = s.get("image", "")
     if ":" not in kuva.rsplit("/", 1)[-1] or kuva.endswith(":latest"):
@@ -58,10 +58,10 @@ def main(tiedostot: list[str]) -> int:
                 continue
             for pod in poddit(dok):
                 for s in pod.get("containers", []):
-                    virheet = tarkista_sailio(pod, s)
+                    virheet = tarkista_kontti(pod, s)
                     if virheet:
                         tunnus = f"{dok['kind']}/{dok['metadata']['name']}"
-                        print(f"{nimi}: {tunnus}, säiliö {s['name']}:")
+                        print(f"{nimi}: {tunnus}, kontti {s['name']}:")
                     for virhe in virheet:
                         print(f"  - {virhe}")
                     loydetyt += len(virheet)

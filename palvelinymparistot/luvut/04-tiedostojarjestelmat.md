@@ -38,6 +38,19 @@ väliin kerroksen:
 | VG (volume group) | Yhden tai useamman PV:n tilavaranto |
 | LV (logical volume) | Varannosta jaettu "osio", jolle luodaan tiedostojärjestelmä |
 
+```{.dot otsikko="LVM:n kerrokset. Fyysiset taltiot kootaan varannoksi, josta loogiset taltiot leikataan; tiedostojärjestelmä ei tiedä, millä levyillä sen lohkot ovat."}
+digraph {
+  rankdir=LR; nodesep=0.2; ranksep=0.6;
+  d1 [label="/dev/md0\n(RAID 6)"]; d2 [label="/dev/nvme0n1"];
+  pv1 [label="PV"]; pv2 [label="PV"];
+  vg [label="VG data\n(tilavaranto)", penwidth=1.6];
+  lv1 [label="LV tietokanta"]; lv2 [label="LV lokit"]; vapaa [label="varaamaton tila", style="rounded,dashed"];
+  f1 [label="XFS\n/var/lib/postgresql"]; f2 [label="ext4\n/var/log"];
+  d1 -> pv1 -> vg; d2 -> pv2 -> vg;
+  vg -> lv1 -> f1; vg -> lv2 -> f2; vg -> vapaa;
+}
+```
+
 Tärkeimmät hyödyt ovat kasvattaminen ilman katkoa ja tilannevedokset.
 Komennot vaativat pääkäyttäjän oikeudet ja ytimen device mapperin,
 joten niitä ei ajeta tämän tutoriaalin testeissä:
@@ -101,6 +114,19 @@ kokonaisuudeksi:
 - **Pakkaus** (lz4, zstd) on yleensä nopeampi kuin pakkaamattoman datan
   kirjoittaminen levylle.
 
+```{.dot otsikko="Copy-on-write ja tilannevedos. Kun lohkoa B muutetaan, uusi versio B' kirjoitetaan uuteen paikkaan ja polku juureen asti kopioidaan. Vedos on vanha juuri: se osoittaa yhä vanhoihin lohkoihin, ja muuttumattomat lohkot (A, C) ovat yhteisiä."}
+digraph {
+  rankdir=TB; nodesep=0.3; ranksep=0.4;
+  v [label="vedos\n(vanha juuri)", style="rounded,dashed"];
+  n [label="nykyinen juuri", penwidth=1.6];
+  vo [label="osoitinlohko", style="rounded,dashed"]; no [label="osoitinlohko'"];
+  a [label="A"]; b [label="B", style="rounded,dashed"]; b2 [label="B'"]; c [label="C"];
+  v -> vo; n -> no;
+  vo -> a; vo -> b; vo -> c;
+  no -> a; no -> b2; no -> c;
+}
+```
+
 ```text
 zpool create data raidz2 sdb sdc sdd sde sdf sdg
 zfs create -o compression=zstd data/tietokanta
@@ -115,6 +141,38 @@ rakennetta on vaikea muuttaa jälkikäteen: vdev-ryhmään ei voi helposti
 lisätä levyjä. Varanto suunnitellaan siksi kerralla kasvuvara mukaan
 lukien.
 
+## Lohko, tiedosto vai objekti
+
+Tähän asti tallennus on ollut palvelimen omilla levyillä. Kun tila
+jaetaan usealle koneelle verkon yli, valitaan yksi kolmesta
+rajapinnasta, ja valinta ratkaisee, kuka hoitaa tiedostojärjestelmän ja
+samanaikaisen käytön:
+
+| Rajapinta | Mitä asiakas näkee | Sopii | Rajoitus |
+|-----------|--------------------------|--------------------|----------------------|
+| Lohko | levyn, jolle se tekee oman tiedostojärjestelmän | tietokannat, virtuaalikoneiden levyt | yksi kirjoittaja kerrallaan |
+| Tiedosto | valmiin hakemistopuun | jaetut hakemistot, kotihakemistot | lukitus ja viiveet verkon yli |
+| Objekti | avaimella haettavia kokonaisia objekteja | varmuuskopiot, kuvat, lokiarkistot | ei paikallaan muokkausta |
+
+Lohkotallennusta tarjoavat iSCSI ja Fibre Channel (*SAN*, storage area
+network) sekä pilven verkkolevyt, tiedostotallennusta NFS ja SMB ja
+objektitallennusta S3-yhteensopivat palvelut (Ceph RGW, MinIO,
+pilvipalvelut), joita käytetään HTTP-rajapinnan kautta.
+
+Lohkotallennus käyttäytyy kuin paikallinen levy, ja sen päälle sopii
+kaikki tässä luvussa kuvattu. Tiedostotallennuksessa palvelin omistaa
+tiedostojärjestelmän, ja asiakkaat jakavat sen; sovellus, joka olettaa
+paikallisen levyn lukitukset ja nopeuden (esimerkiksi tietokanta), toimii
+NFS:llä huonosti. Objektitallennus skaalautuu parhaiten ja on halvinta
+tavua kohti, mutta sovelluksen on käytettävä sen rajapintaa.
+Varmuuskopioiden muuttumaton kopio (luku *Varmuuskopiointi*) on
+tyypillisesti objektitallennuksessa.
+
+Verkkotallennus tuo verkon vikatilat tallennukseen: yhteyden katko
+näkyy jumiutuneina prosesseina, ei virheilmoituksena. Tallennusliikenne
+erotetaan siksi omaan verkkoonsa ja kahdennetaan (ks.
+*Verkkoinfrastruktuuri*).
+
 ## Käytännössä
 
 - **Valvo sekä tila että inodet.** `df -h` ja `df -i`; hälytys kasvun
@@ -125,6 +183,9 @@ lukien.
   sovellustason tarkistussummat (esimerkiksi tietokannan sivusummat).
 - **Aja scrub säännöllisesti** ja hälytä sen löydöistä.
 - **Vedos ei ole varmuuskopio**, koska se on samalla levyllä.
+- **Valitse rajapinta kuorman mukaan.** Tietokannalle lohkolaite,
+  jaetuille tiedostoille tiedostopalvelu, suurille muuttumattomille
+  aineistoille objektitallennus.
 
 ## Itsearviointi
 
@@ -135,3 +196,5 @@ lukien.
 - Osaat selittää, miksi tavallinen peili ei havaitse bittimätää ja
   miten tarkistussummat ja scrub korjaavat sen.
 - Osaat kertoa ZFS:n copy-on-write-periaatteen hyödyt ja rajoitukset.
+- Osaat valita lohko-, tiedosto- tai objektitallennuksen kuorman
+  mukaan ja perustella valinnan.

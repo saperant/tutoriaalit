@@ -13,13 +13,15 @@ LDAP (lightweight directory access protocol) on hakemistojen
 standardiprotokolla. Hakemisto on puu, jonka jokaisella merkinnällä on
 yksilöivä nimi (DN, distinguished name):
 
-```text
-dc=esimerkki,dc=fi
-├── ou=ihmiset
-│   ├── uid=aino      (inetOrgPerson, posixAccount)
-│   └── uid=olli
-└── ou=ryhmat
-    └── cn=yllapito   (posixGroup)
+```{.dot otsikko="Esimerkin hakemistopuu. Merkinnän DN luetaan lehdestä juureen: `uid=aino,ou=ihmiset,dc=esimerkki,dc=fi`."}
+digraph {
+  rankdir=TB; nodesep=0.3; ranksep=0.35;
+  j [label="dc=esimerkki,dc=fi"];
+  i [label="ou=ihmiset"]; r [label="ou=ryhmat"];
+  a [label="uid=aino\ninetOrgPerson,\nposixAccount"]; o [label="uid=olli\ninetOrgPerson,\nposixAccount"];
+  y [label="cn=yllapito\nposixGroup"];
+  j -> i; j -> r; i -> a; i -> o; r -> y;
+}
 ```
 
 Merkinnän attribuutit määrää sen objektiluokka (objectClass):
@@ -84,6 +86,44 @@ Kerberos välttää sen: käyttäjä todentaa itsensä kerran avainjakelukeskuks
 palvelukohtaisia lippuja. Palvelu tarkistaa lipun omalla avaimellaan
 (*keytab*), eikä salasana kulje verkossa. Todennin sisältää aikaleiman,
 joten kellojen on oltava tahdissa:
+
+```{.dot otsikko="Kerberos-todennuksen vaiheet. Käyttäjä kirjautuu KDC:lle kerran (1–2) ja hakee sen jälkeen lipun jokaista palvelua varten (3–4). Palvelu ei kysy KDC:ltä mitään, vaan tarkistaa lipun omalla avaimellaan (5–6)."}
+digraph {
+  layout=neato; splines=false;
+  node [shape=point, width=0.01, height=0.01, style=invis];
+  edge [arrowsize=0.7];
+  a0 [label="asiakas (aino)", shape=box, style="rounded,filled", width=0, height=0.3, pos="0.00,0!"];
+  aL [pos="0.00,-2.56!"];
+  a0 -> aL [arrowhead=none, style=dotted];
+  k0 [label="KDC", shape=box, style="rounded,filled", width=0, height=0.3, pos="2.90,0!"];
+  kL [pos="2.90,-2.56!"];
+  k0 -> kL [arrowhead=none, style=dotted];
+  p0 [label="palvelu (tiedostot)", shape=box, style="rounded,filled", width=0, height=0.3, pos="5.80,0!"];
+  pL [pos="5.80,-2.56!"];
+  p0 -> pL [arrowhead=none, style=dotted];
+  a1 [pos="0.00,-0.51!"]; k1_ [pos="2.90,-0.51!"];
+  a1 -> k1_ [];
+  t1 [shape=plain, style="", fontsize=9, label="1. kirjautuminen (salasana ei kulje verkossa)", pos="1.45,-0.41!"];
+  k2 [pos="2.90,-0.87!"]; a2_ [pos="0.00,-0.87!"];
+  k2 -> a2_ [];
+  t2 [shape=plain, style="", fontsize=9, label="2. TGT (voimassa esim. 10 h)", pos="1.45,-0.77!"];
+  a3 [pos="0.00,-1.23!"]; k3_ [pos="2.90,-1.23!"];
+  a3 -> k3_ [];
+  t3 [shape=plain, style="", fontsize=9, label="3. TGT + pyyntö: palvelu", pos="1.45,-1.13!"];
+  k4 [pos="2.90,-1.59!"]; a4_ [pos="0.00,-1.59!"];
+  k4 -> a4_ [];
+  t4 [shape=plain, style="", fontsize=9, label="4. palvelulippu", pos="1.45,-1.49!"];
+  a5 [pos="0.00,-1.95!"]; p5_ [pos="5.80,-1.95!"];
+  a5 -> p5_ [];
+  t5 [shape=plain, style="", fontsize=9, label="5. palvelulippu + todennin (aikaleima)", pos="1.45,-1.85!"];
+  p6 [pos="5.80,-2.31!"]; a6_ [pos="0.00,-2.31!"];
+  p6 -> a6_ [];
+  t6 [shape=plain, style="", fontsize=9, label="6. pääsy, jos lippu ja aika kelpaavat", pos="4.35,-2.21!"];
+}
+```
+
+Alla oleva esimerkki mallintaa vaiheet 4–6: KDC:n myöntämän
+palvelulipun ja sen tarkistuksen palvelussa.
 
 ```{.python tiedosto="esimerkit/06-kerberos.py" osa="palvelu"}
 ```

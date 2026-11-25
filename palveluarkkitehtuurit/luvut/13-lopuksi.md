@@ -53,17 +53,22 @@
 | Korruption estokerros | vieras malli leviää omaan koodiin | 4, 12 |
 | Abstraktiolla haarauttaminen | sisäosan korvaaminen | 12 |
 
-## Mihin tästä eteenpäin
+## Jatkotaidot
 
-- **Palveluarkkitehtuurin tietoturva**: palvelujen välinen todennus
+- *Palveluarkkitehtuurin tietoturva*: palvelujen välinen todennus
   (mTLS, työkuormien identiteetit), nollaluottamus, salaisuudet
   tuotannossa ja pääsynhallinta pilvessä.
-- **Järjestelmäsuunnittelu**: kapasiteetti, välimuistit, replikointi,
-  osiointi ja saatavuuslaskelmat koko järjestelmälle.
-- **Hajautetut järjestelmät**: konsistenssimallit, konsensus ja
+- *Skaalautuvien järjestelmien suunnittelu*: kapasiteetti, välimuistit,
+  replikointi, osiointi, havaittavuus ja saatavuuslaskelmat koko
+  järjestelmälle.
+- *Hajautetut järjestelmät*: konsistenssimallit, konsensus ja
   vikamallit, joiden varaan välittäjät ja tietokannat rakentuvat.
-- **Kontit ja pilvi**: palvelujen julkaisuputket, Kubernetes ja Gateway
-  API.
+- *Tiimit ja organisaatiomallit*: Conwayn laki, tiimityypit ja
+  omistajuus, joiden mukaan palvelujen rajat käytännössä asettuvat.
+- *Jatkuva integraatio ja toimitus*: palvelukohtaiset julkaisuputket,
+  julkaisustrategiat ja tietokantamuutokset ilman katkoa.
+- *Integraatiotestaus ja Testcontainers*: palvelun testaaminen oikeaa
+  välittäjää ja tietokantaa vasten.
 
 ## Lähteet ja dokumentaatio
 

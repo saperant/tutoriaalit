@@ -70,7 +70,10 @@ halutun tilan:
 
 Säännöllisesti ajettu tarkistusajo on halpa tapa havaita *ajautuminen*
 (configuration drift): koneet, joita on muutettu ohi
-konfiguraationhallinnan.
+konfiguraationhallinnan. Periaate on sama kuin pilvi-infrastruktuurin
+suunnitelma–toteutus-syklissä (taito *Kontit ja
+pilvi-infrastruktuuri*): kuvaus on totuus, ja työkalu näyttää eron
+ennen kuin korjaa sen.
 
 Idempotenssi ei synny itsestään. Moduuli `shell` ajaa komennon joka
 kerta, eikä Ansible tiedä, mitä se tekee:
@@ -125,7 +128,7 @@ tarkemmin taito *Tietoturva kehitystyössä*.
 - **Kertakäyttöiset koneet.** Kun koneen voi rakentaa koodista
   minuuteissa, rikkinäistä konetta ei korjata vaan se korvataan
   (*immutable infrastructure*). Konttien ja pilven kanssa tämä on
-  oletus (ks. *Kontit ja pilvi*).
+  oletus (ks. *Kontit ja pilvi-infrastruktuuri*).
 
 ## Itsearviointi
 

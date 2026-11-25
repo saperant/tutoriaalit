@@ -17,7 +17,8 @@ vertaa() {
 
 echo "== Python"
 ruff check --no-cache --quiet .
-mypy --no-error-summary sovellus/*.py politiikka.py iac/tila.py
+mypy --no-error-summary sovellus/*.py politiikka.py iac/tila.py \
+    ci/putki_verkko.py
 (cd sovellus && python3 -m unittest -q 2>&1 | tail -n 1)
 
 echo "== kuoriskriptit"
@@ -39,6 +40,8 @@ yamllint -s compose.yaml k8s k8s-huono ci .yamllint.yaml \
 check-jsonschema -q --builtin-schema vendor.compose-spec compose.yaml
 check-jsonschema -q --builtin-schema vendor.github-workflows ci/palvelu.yml
 echo "OK: compose.yaml ja ci/palvelu.yml vastaavat skeemojaan"
+# Luvun 11 kaavio tuotetaan putkitiedostosta.
+vertaa ci/putki.dot python3 ci/putki_verkko.py ci/palvelu.yml
 
 echo "== Kubernetes"
 kubernetes-validate --quiet -k "$k8s" --strict k8s/*.yaml

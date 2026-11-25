@@ -79,6 +79,25 @@ Kontekstit eivät ole irrallisia; ne tarvitsevat toistensa tietoja.
 | Jaettu ydin | pieni yhteinen malli, jota molemmat muuttavat sopien | rahamäärä ja valuutta |
 | Erilliset tiet | ei integraatiota | eri liiketoiminta-alueet |
 
+Kartta on nimensä mukaisesti kuva. Esimerkkikaupan kontekstit ja
+niiden suhteet:
+
+```{.dot otsikko="Verkkokaupan kontekstikartta. Nuoli kulkee ylävirrasta alavirtaan eli siihen suuntaan, johon malli ja tieto virtaavat. Nuolen teksti kertoo, miten alavirta suhtautuu ylävirran malliin."}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.9;
+  myynti [label="Myynti\n(avoin palvelu,\njulkaistu kieli)", penwidth=1.6];
+  varasto [label="Varasto"]; toimitus [label="Toimitus"];
+  laskutus [label="Laskutus"]; raportointi [label="Raportointi"];
+  vanha [label="Vanha\nasiakasrekisteri", style="rounded,dashed"];
+  asiakkaat [label="Asiakkuudet\n(uusi)"];
+  varasto -> myynti [label="asiakas–toimittaja"];
+  myynti -> toimitus [label="tapahtumat"];
+  myynti -> laskutus [label="tapahtumat;\njaettu ydin: raha"];
+  myynti -> raportointi [label="mukautuja"];
+  vanha -> asiakkaat [label="korruption\nestokerros"];
+}
+```
+
 Myynnin tapahtuma on esimerkki *julkaistusta kielestä*. Se kertoo vain
 sen, mitä tilauksesta on tarpeen tietää muualla, ja sen muoto on
 sopimus:

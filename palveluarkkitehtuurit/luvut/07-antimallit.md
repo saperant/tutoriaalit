@@ -20,6 +20,23 @@ seuraavaa:
 Viiveet laskevat yhteen. Jos kyselyt eivät riipu toisistaan, ne voi
 tehdä rinnakkain, jolloin kokonaisaika on hitaimman kutsun mittainen:
 
+```{.dot otsikko="Testin kaksi asetelmaa. Ketjussa jokainen palvelu odottaa seuraavaa, joten neljän 40 millisekunnin työn viive on vähintään 160 ms. Rinnakkain kutsuttuna neljä riippumatonta palvelua vastaa hitaimman tahdissa, noin 40 ms:ssa."}
+digraph {
+  rankdir=LR; nodesep=0.18; ranksep=0.45;
+  node [height=0.3];
+  r0 [label="kutsuja", shape=plain, style=""];
+  r1 [label="A 40 ms"]; r2 [label="B 40 ms"]; r3 [label="C 40 ms"]; r4 [label="D 40 ms"];
+  r0 -> r1; r0 -> r2; r0 -> r3; r0 -> r4;
+  rs [label="yhteensä ≈ 40 ms", shape=plain, style=""];
+  r2 -> rs [style=invis];
+  k0 [label="kutsuja", shape=plain, style=""];
+  k1 [label="A 40 ms"]; k2 [label="B 40 ms"]; k3 [label="C 40 ms"]; k4 [label="D 40 ms"];
+  k0 -> k1 -> k2 -> k3 -> k4;
+  ks [label="yhteensä ≥ 160 ms", shape=plain, style=""];
+  k4 -> ks [style=invis];
+}
+```
+
 ```{.java tiedosto="esimerkit/etakutsut/src/test/java/fi/tutoriaalit/palvelut/etakutsut/ketju/KetjuTest.java" osa="viive"}
 ```
 
@@ -65,7 +82,7 @@ palvelulla on oma skeemansa ja käyttäjänsä, kuten esimerkin
 | Puhelias rajapinta | näkymä tarvitsee kymmeniä kutsuja | karkeampi rajapinta, BFF (luku 11) |
 | Entiteettipalvelut | palvelu per taulu, logiikka kutsujissa | jako kyvykkyyksien mukaan (luku 4) |
 | Jaettu domain-kirjasto | yhteinen `Tuote`-luokka kaikissa palveluissa | jokaisella kontekstilla oma malli |
-| Hajautettu transaktio (2PC) | palvelut lukitsevat toistensa resurssit | saga (luku 10) |
+| Hajautettu transaktio (2PC) | palvelut lukitsevat toistensa resurssit | saga; perustelu luvussa 10 |
 | Nanopalvelut | enemmän palveluja kuin kehittäjiä | yhdistä, modulaarinen monoliitti |
 | Älykäs väylä | liiketoimintalogiikkaa integraatiokerroksessa | logiikka palveluihin, tyhmät putket |
 
@@ -73,17 +90,6 @@ Jaettu kirjasto ei aina ole antimalli. Tekniset kirjastot (lokitus,
 mittarit, todennus) ovat hyödyllisiä. Ongelma syntyy, kun kirjastossa
 on liiketoiminnan malli, koska silloin sen muutos on kaikkien palvelujen
 yhtäaikainen muutos.
-
-## Kahden vaiheen vahvistus
-
-Hajautettu transaktio *kahden vaiheen vahvistuksella* (*two-phase
-commit*, 2PC, XA) lupaa, että usean tietokannan muutokset tallentuvat
-yhdessä. Koordinaattori kysyy ensin kaikilta, voivatko ne vahvistaa
-(ja nämä lukitsevat resurssinsa), ja käskee sitten vahvistamaan. Jos
-koordinaattori kaatuu vaiheiden välissä, osallistujat odottavat
-lukot päällä. Saatavuus on osallistujien saatavuuksien tulo, kuten
-kutsuketjussa. Siksi mikropalvelut eivät käytä 2PC:tä, vaan korvaavat
-sen sagalla, joka hyväksyy hetkellisen epäjohdonmukaisuuden.
 
 ## Käytännössä
 
@@ -108,5 +114,5 @@ sen sagalla, joka hyväksyy hetkellisen epäjohdonmukaisuuden.
   miksi rinnakkaistaminen auttaa vain viiveeseen.
 - Osaat selittää jaetun tietokannan haitat ja erottaa jaetun
   palvelimen jaetusta skeemasta.
-- Osaat selittää, miksi kahden vaiheen vahvistusta ei käytetä
-  mikropalvelujen välillä.
+- Osaat tunnistaa taulukon muut antimallit oireistaan ja nimetä
+  kunkin korjauksen.

@@ -25,7 +25,9 @@ Palvelut:
 - **Verkko ja nimet.** Compose luo sovellukselle oman verkon, jossa
   palvelut löytävät toisensa nimellä: api kutsuu osoitetta
   `http://laskuri:8080`. Laskurin porttia ei julkaista lainkaan, joten
-  siihen ei pääse verkon ulkopuolelta.
+  siihen ei pääse verkon ulkopuolelta. Verkko on isäntäkoneen
+  Linux-silta, johon jokainen kontti liittyy virtuaalisella
+  Ethernet-parilla; sillan toiminta on taidossa *Tietoverkot*.
 - **Portin julkaisu vain paikallisesti.** `127.0.0.1:…:8080` avaa
   portin vain koneen omaan liitäntään. Pelkkä `8080:8080` avaisi sen
   kaikille verkoille, ja Docker ohittaa siinä isäntäkoneen palomuurin
@@ -89,7 +91,8 @@ rakentaa kuvan uudelleen tarvittaessa.
 
 - **Compose on sovelluksen paikallinen totuus.** Uusi kehittäjä saa
   koko sovelluksen ajoon yhdellä komennolla, ja integraatiotestit
-  ajavat saman kokonaisuuden.
+  ajavat saman kokonaisuuden. Testikohtaiset, koodista käynnistettävät
+  kontit ovat taidossa *Integraatiotestaus ja Testcontainers*.
 - **Terveystarkistukset ja `--wait`.** Kilpailutilanteet käynnistyksessä
   ovat tavallisin syy epävakaisiin integraatiotesteihin.
 - **Julkaise vain tarpeelliset portit ja vain paikallisesti.**

@@ -78,6 +78,8 @@ nopeammin budjetti kuluu kuin tasaisella tahdilla:
 ```{.tuloste tiedosto="esimerkit/10-virhebudjetti.odotettu"}
 ```
 
+![Virhebudjetin kuluminen 30 päivän jaksolla eri palamisnopeuksilla. Nopeudella 1 budjetti riittää tasan jakson; hälytysrajojen 6 ja 14,4 nopeuksilla se loppuu päivissä.](kuvat/10-palaminen.png){width=75%}
+
 Palamisnopeus 14,4 tunnin ajan kuluttaa 2 % kuukauden budjetista;
 se on syy herättää päivystäjä. Nopeus 6 kuuden tunnin ajan kuluttaa
 5 %; se on tiketti seuraavalle työpäivälle. Lyhyt ikkuna (5 min tai
@@ -97,6 +99,30 @@ Prometheusin hälytyssäännöksi PromQL-kielellä.
 - **Hälytysten määrää seurataan.** Päivystäjä, joka saa kymmenen
   turhaa hälytystä viikossa, ei reagoi yhteentoista oikeaan.
 
+## Häiriön jälkiselvitys
+
+Hälytys päättyy, kun palvelu toimii taas, mutta häiriö on käsitelty
+vasta, kun siitä on opittu. Merkittävästä häiriöstä kirjoitetaan
+*jälkiselvitys* (*postmortem*), jossa on aina samat osat:
+
+1. **Vaikutus:** keitä häiriö koski, kuinka kauan ja kuinka paljon
+   virhebudjettia se kulutti.
+2. **Aikajana:** mitä tapahtui, milloin se havaittiin ja mitä tehtiin,
+   lokien ja mittareiden aikaleimoin.
+3. **Syyt:** laukaiseva tapahtuma ja ne olosuhteet, jotka tekivät siitä
+   häiriön. Syitä on lähes aina useita.
+4. **Mikä toimi ja mikä ei:** havaittiinko vika hälytyksestä vai
+   asiakkaan ilmoituksesta, löytyikö ohje, onnistuiko palautus.
+5. **Toimenpiteet:** nimetyt korjaukset omistajineen ja
+   aikatauluineen.
+
+Selvitys on *syyllistämätön* (*blameless*): se kysyy, miksi järjestelmä
+salli virheen, ei kuka sen teki. Jos yksi väärä komento riitti
+kaatamaan palvelun, vika on suojauksen puutteessa. Syyllistävä
+selvitys opettaa ihmiset salaamaan virheensä, ja silloin seuraavan
+häiriön syyt jäävät löytymättä. Käytännön kuvaa tarkemmin Googlen
+SRE-kirjan luku *Postmortem Culture*.
+
 ## Käytännössä
 
 - **Mittaa käyttäjän kokemusta.** SLI lasketaan kuormantasaajalta tai
@@ -106,6 +132,8 @@ Prometheusin hälytyssäännöksi PromQL-kielellä.
 - **Hälytä palamisnopeudesta**, monen ikkunan säännöllä.
 - **Keskitetyt lokit ja korrelaatiotunnisteet**, säilytys ja
   pääsynhallinta sovittuna.
+- **Jälkiselvitys jokaisesta merkittävästä häiriöstä**, syyllistämättä
+  ja nimetyin toimenpitein.
 - **Valvo valvontaa.** Valvontajärjestelmän oma katko on hiljainen;
   "kuolleen miehen kytkin" -hälytys laukeaa, jos säännöllistä
   signaalia ei tule.
@@ -120,3 +148,5 @@ Prometheusin hälytyssäännöksi PromQL-kielellä.
   eron niihin.
 - Osaat kirjoittaa palamisnopeuteen perustuvan hälytyssäännön ja
   perustella sen hyödyt kiinteään rajaan verrattuna.
+- Osaat kuvata häiriön jälkiselvityksen osat ja perustella, miksi se
+  tehdään syyllistämättä.

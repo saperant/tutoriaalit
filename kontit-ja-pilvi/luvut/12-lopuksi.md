@@ -33,23 +33,28 @@
 | sivuvaunu (*sidecar*) | 7 | apuprosessi samaan podiin |
 | ohjaussilmukka | 7, 9, 10 | haluttu tila, jatkuva korjaus |
 | käytännöt koodina | 8 | organisaation säännöt automaattisiksi |
+| vianetsintä tilasta tapahtumiin | 8 | miksi ohjain ei pääse haluttuun tilaan |
 | kultainen tiedosto | 9 | renderöinnin regressiot näkyviin |
 | GitOps | 9 | versionhallinta käyttöönottojen lähteenä |
 | muuttumaton infrastruktuuri | 10 | korvaa, älä korjaa |
 | rakenna kerran, ota käyttöön monesti | 11 | testattu kuva tuotantoon |
 | expand–contract | 11 | skeemamuutokset ilman katkoa |
 
-## Mihin seuraavaksi
+## Jatkotaidot
 
-- **Palvelinympäristöt:** konesalit, tallennus, varmuuskopiot,
+- *Palvelinympäristöt*: konesalit, tallennus, varmuuskopiot,
   käyttäjähallinta ja klusterien ylläpito.
-- **Palveluarkkitehtuurit:** miten sovellus jaetaan palveluihin ja miten
+- *Palveluarkkitehtuurit*: miten sovellus jaetaan palveluihin ja miten
   ne puhuvat keskenään.
-- **Järjestelmäsuunnittelu:** skaalautuvuus, välimuistit, jonot ja
-  luotettavuus.
-- **Virtualisointi:** konttien ja virtuaalikoneiden toteutus ytimessä
+- *Jatkuva integraatio ja toimitus*: trunk-pohjainen kehitys,
+  ominaisuusliput, julkaisustrategiat ja toimituskyvyn mittarit.
+- *Integraatiotestaus ja Testcontainers*: testit oikeita taustapalveluja
+  vasten koodista käynnistetyissä konteissa.
+- *Skaalautuvien järjestelmien suunnittelu*: skaalautuvuus, välimuistit,
+  jonot ja luotettavuus.
+- *Virtualisointi*: konttien ja virtuaalikoneiden toteutus ytimessä
   ja laitteistossa.
-- **Palveluarkkitehtuurin tietoturva:** nollaluottamus, palvelujen
+- *Palveluarkkitehtuurin tietoturva*: nollaluottamus, palvelujen
   identiteetit ja salaisuudet tuotannossa.
 
 ## Lähteet
@@ -63,6 +68,8 @@
 - **Kubernetesin dokumentaatio** (<https://kubernetes.io/docs>):
   käsitteet, Pod Security Standards, resurssien hallinta, rullaavat
   päivitykset. Dokumentaatio on lisensoitu CC BY 4.0 -lisenssillä.
+- **Gateway API** (<https://gateway-api.sigs.k8s.io>): Ingressin
+  seuraajan resurssit ja toteutusten luettelo.
 - **Helmin dokumentaatio** (<https://helm.sh/docs>): kaavioiden
   rakenne ja parhaat käytännöt.
 - **OpenTofu** (<https://opentofu.org/docs>) ja **Terraform**

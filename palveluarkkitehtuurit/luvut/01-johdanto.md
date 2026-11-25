@@ -16,24 +16,49 @@ osaat nimetä hinnan, mitata sen ja valita tietoisesti.
 
 Tutoriaali olettaa taidot *Taustapalvelut* (yhden Spring Boot -palvelun
 rakenne, transaktiot, idempotenssiavain, outbox-taulu) ja *Kontit ja
-pilvi* (kontit, Kubernetesin peruskäsitteet). Niitä ei toisteta.
+pilvi-infrastruktuuri* (kontit, Kubernetesin peruskäsitteet). Niitä ei
+toisteta.
 Esimerkiksi idempotenssiavaimen toteutus on taustapalveluissa; tässä
 katsotaan, mitä idempotenssi tarkoittaa, kun viestejä kulkee palvelujen
 välillä.
 
 Hajautettujen järjestelmien teoria (konsensus, replikointi,
 konsistenssimallit) on taidossa *Hajautetut järjestelmät* ja
-skaalautuvuus, välimuistit ja kapasiteetti taidossa
-*Järjestelmäsuunnittelu*. Palvelujen välisen liikenteen suojaaminen
+skaalautuvuus, välimuistit ja kapasiteetti taidossa *Skaalautuvien
+järjestelmien suunnittelu*. Palvelujen välisen liikenteen suojaaminen
 (mTLS, työkuormien identiteetit, nollaluottamus) on taidossa
-*Palveluarkkitehtuurin tietoturva*.
+*Palveluarkkitehtuurin tietoturva*, ja tiimien rakenne ja vastuut, joita
+palvelujako heijastaa, taidossa *Tiimit ja organisaatiomallit*.
 
 ## Esimerkkijärjestelmä
 
 Kaikki esimerkit käsittelevät samaa verkkokauppaa: asiakas tilaa
 tuotteita, varasto varaa ne, maksupalvelu veloittaa, ja vahvistettu
-tilaus päätyy toimitukseen ja laskutukseen. Sama liiketoiminta
-toteutetaan eri tavoin, jotta erot näkyvät:
+tilaus päätyy toimitukseen ja laskutukseen. Kuva näyttää kaupan
+palvelut ja niiden välisen liikenteen siinä muodossa, johon luvut 8–11
+päätyvät; aiemmat luvut rakentavat sen pala kerrallaan.
+
+```{.dot otsikko="Esimerkkijärjestelmä. Yhtenäinen nuoli on synkroninen kutsu, jonka vastausta kutsuja odottaa, ja katkoviiva viesti välittäjän kautta. Myynti ohjaa varausta ja veloitusta komennoilla; toimitus ja laskutus tilaavat myynnin tapahtumat."}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.55;
+  asiakas [label="asiakas", shape=plain, style=""];
+  gw [label="yhdyskäytävä"];
+  myynti [label="myynti", penwidth=1.6];
+  varasto [label="varasto"]; maksut [label="maksut"];
+  aihe [label="aihe\ntilaukset.tapahtumat", shape=cylinder, height=0.5];
+  toimitus [label="toimitus"]; laskutus [label="laskutus"];
+  asiakas -> gw [label="HTTP"];
+  gw -> myynti;
+  gw -> varasto;
+  myynti -> varasto [label="saldo?"];
+  myynti -> varasto [label="VARAA, VAPAUTA", style=dashed];
+  myynti -> maksut [label="VELOITA", style=dashed];
+  myynti -> aihe [label="TilausVahvistettu", style=dashed];
+  aihe -> toimitus [style=dashed]; aihe -> laskutus [style=dashed];
+}
+```
+
+Sama liiketoiminta toteutetaan eri tavoin, jotta erot näkyvät:
 
 | Moduli | Luvut | Mitä näyttää |
 |--------|-------|--------------|

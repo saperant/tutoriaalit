@@ -6,7 +6,7 @@ metadata:
   name: kaynnit
   namespace: kaynnit
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   tls:
     - hosts: ["kaynnit.example.fi"]
       secretName: kaynnit-tls

@@ -35,6 +35,19 @@ Välittäjät tarjoavat kaksi perusmallia:
   Tapahtumat ("tilaus vahvistettu") julkaistaan aiheisiin, ja uusi
   kiinnostunut palvelu tilaa aiheen muuttamatta julkaisijaa.
 
+```{.dot otsikko="Jono ja aihe. Jonosta kukin viesti päätyy yhdelle kuluttajalle, joten varaston kopiot jakavat työn. Aiheesta jokainen tilaaja saa oman kopionsa samasta viestistä."}
+digraph {
+  rankdir=LR; nodesep=0.2; ranksep=0.6;
+  node [height=0.3];
+  m2 [label="myynti"]; t [label="aihe\ntilaukset.tapahtumat", shape=cylinder, height=0.5];
+  s1 [label="toimitus"]; s2 [label="laskutus"];
+  m2 -> t [label="1, 2, 3"]; t -> s1 [label="1, 2, 3"]; t -> s2 [label="1, 2, 3"];
+  m1 [label="myynti"]; q [label="jono\nvarasto.komennot", shape=cylinder, height=0.5];
+  v1 [label="varasto, kopio 1"]; v2 [label="varasto, kopio 2"];
+  m1 -> q [label="1, 2, 3"]; q -> v1 [label="1, 3"]; q -> v2 [label="2"];
+}
+```
+
 ```{.java tiedosto="esimerkit/viestit/src/main/java/fi/tutoriaalit/palvelut/viestit/Viestinvalitys.java" osa="kuuntelijat"}
 ```
 
@@ -73,6 +86,26 @@ muotoa:
   tiedot, joita vastaanottajat tarvitsevat. Vastaanottaja voi rakentaa
   oman näkymänsä kysymättä mitään, mutta tapahtuman muoto on laajempi
   sopimus.
+
+Kun vastaanottaja rakentaa tapahtumista oman lukunäkymänsä, kirjoitukset
+ja luvut kulkevat eri mallien kautta. Mallin nimi on *CQRS* (*command
+query responsibility segregation*): komennot muuttavat omistajan
+mallia, ja kyselyt luetaan erikseen ylläpidetystä, kyselyyn sopivaksi
+muotoillusta näkymästä. Laskutuksen kopio tilauksista on tällainen
+näkymä. CQRS kannattaa, kun luku- ja kirjoituskuorma tai niiden
+tietomallit eroavat selvästi; muuten se on kaksi mallia ja viive
+yhden hinnalla.
+
+*Tapahtumalähteistys* (*event sourcing*) menee askeleen pidemmälle:
+tapahtumat eivät ole ilmoituksia tilan muutoksesta vaan itse tila.
+Palvelu tallentaa vain tapahtumien jonon ("tilaus tehty", "rivi
+lisätty", "tilaus vahvistettu") ja laskee nykytilan toistamalla ne.
+Hyötyinä ovat täydellinen muutoshistoria ja mahdollisuus rakentaa uusia
+näkymiä jälkikäteen, hintana tapahtumien muodon ikuinen yhteensopivuus
+ja se, että jokainen kysely tarvitsee näkymän. Tapahtumalähteistys on
+yhden palvelun sisäinen tallennuspäätös, ei arkkitehtuurityyli:
+tapahtumia voi julkaista ilman sitä, kuten tämän tutoriaalin esimerkit
+tekevät.
 
 ## Vähintään kerran
 
@@ -118,6 +151,21 @@ välittäjä yrittää rajallisen määrän kertoja ja siirtää viestin sitten
 ```{.java tiedosto="esimerkit/viestit/src/main/java/fi/tutoriaalit/palvelut/viestit/Viestinvalitys.java" osa="dlq"}
 ```
 
+```{.dot otsikko="Myrkkyviestin polku. Käsittelyn epäonnistuessa viesti palaa jonoon. Kolmannen yrityksen jälkeen välittäjä siirtää sen kuolleiden kirjeiden jonoon, ja jonon muut viestit pääsevät etenemään."}
+digraph {
+  rankdir=LR; nodesep=0.35; ranksep=0.7;
+  q [label="jono\nvarasto.komennot", shape=cylinder, height=0.5];
+  k [label="varaston\nkäsittelijä"];
+  d [label="DLQ", shape=cylinder, height=0.5];
+  i [label="valvonta ja\ntutkinta"];
+  q -> k [label="toimitus"];
+  k -> q [label="poikkeus:\ntakaisin jonoon"];
+  q -> d [label="3 yrityksen jälkeen"];
+  d -> i;
+  i -> q [label="korjauksen jälkeen\ntakaisin", style=dashed, constraint=false];
+}
+```
+
 ```{.java tiedosto="esimerkit/viestit/src/test/java/fi/tutoriaalit/palvelut/viestit/ViestitTest.java" osa="myrkky"}
 ```
 
@@ -147,7 +195,7 @@ kirjoitetaan aiheen osioihin, ne säilyvät määräajan riippumatta siitä,
 onko joku lukenut ne, ja jokainen kuluttajaryhmä pitää kirjaa omasta
 kohdastaan (*offset*).
 
-| | Perinteinen välittäjä (Artemis, RabbitMQ) | Loki (Kafka) |
+| Ominaisuus | Perinteinen välittäjä (Artemis, RabbitMQ) | Loki (Kafka) |
 |---|---|---|
 | Luettu viesti | poistetaan | säilyy määräajan |
 | Uusi kuluttaja | saa vain uudet viestit | voi lukea historian alusta |
@@ -158,7 +206,9 @@ kohdastaan (*offset*).
 
 Lokin uudelleentoisto on voimakas työkalu: uuden palvelun näkymän voi
 rakentaa lukemalla kaikki tapahtumat alusta. Kafkan hinta on
-monimutkaisempi operointi ja osiointiin sidottu rinnakkaisuus.
+monimutkaisempi operointi ja osiointiin sidottu rinnakkaisuus. Jonojen
+mitoitus, vastapaine ja kuluttajien viive ovat taidossa *Skaalautuvien
+järjestelmien suunnittelu*.
 
 ## Käytännössä
 
@@ -180,6 +230,8 @@ monimutkaisempi operointi ja osiointiin sidottu rinnakkaisuus.
   kuuluu.
 - Osaat erottaa komennon, tapahtuman ja kyselyn sekä ilmoituksen ja
   tilan siirron.
+- Osaat selittää, mitä CQRS ja tapahtumalähteistys tarkoittavat ja
+  milloin niiden hinta ei kannata.
 - Osaat toteuttaa idempotentin vastaanottajan saapuneiden taululla ja
   selittää, miksi täsmälleen kerran -toimitusta ei ole.
 - Osaat konfiguroida kuolleiden kirjeiden jonon ja kertoa, mitä sen

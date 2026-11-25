@@ -5,7 +5,7 @@ subtitle: Pikaopas · Java 21 · Spring Boot 4.2 · ActiveMQ Artemis · Resilien
 
 # Valinta
 
-| | Monoliitti | Modulaarinen | Mikropalvelut |
+| Kysymys | Monoliitti | Modulaarinen | Mikropalvelut |
 |---|---|---|---|
 | Julkaisu | yksi | yksi | palvelukohtainen |
 | Transaktio | tavallinen | tavallinen | saga |
@@ -69,7 +69,7 @@ Toimitus on **vähintään kerran** → idempotentti vastaanottaja
 (saapuneet-taulu, `viestiId` pääavaimena). Myrkkyviesti → DLQ
 (enintään 3 yritystä). Järjestys vain avaimen sisällä.
 
-| | Artemis, RabbitMQ | Kafka |
+| Ominaisuus | Artemis, RabbitMQ | Kafka |
 |---|---|---|
 | Luettu viesti | poistuu | säilyy |
 | Rinnakkaisuus | kuluttajat | osiot |

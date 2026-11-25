@@ -6,13 +6,23 @@ käyttöönotto. *Jatkuva integraatio* (CI) tarkoittaa, että jokainen
 muutos rakennetaan ja testataan heti; *jatkuva toimitus* (CD), että
 jokainen pääkehityshaaraan yhdistetty muutos on valmis tuotantoon, ja
 *jatkuva käyttöönotto*, että se myös viedään sinne automaattisesti.
+Tämä luku rakentaa käyntilaskurille putken ja rajautuu siihen, mitä
+kontit putkelta vaativat. Itse käytännöt (haarojen ikä, trunk-pohjainen
+kehitys, ominaisuusliput, tietokantamuutokset ja toimituskyvyn mittarit)
+ovat taidossa *Jatkuva integraatio ja toimitus*.
 
 ## Käyntilaskurin putki
 
 Esimerkkien `ci/palvelu.yml` on GitHub Actions -putki. Se on
 tarkistettu GitHub Actionsin skeemaa vasten, mutta sitä ei ajeta
 tämän tutoriaalin testeissä, koska julkaisu ja käyttöönotto vaativat
-rekisterin ja klusterin. Ensimmäinen työ ajaa testit:
+rekisterin ja klusterin. Putkessa on kolme työtä; kaavio on tuotettu
+putkitiedostosta (`ci/putki_verkko.py`), ja testi tarkistaa sen:
+
+```{.dot tiedosto="esimerkit/ci/putki.dot" otsikko="Käyntilaskurin putken työt. Pull requestille ajetaan vain testit; kuva julkaistaan ja otetaan käyttöön vain päähaarasta, ja käyttöönotto kulkee tuotantoympäristön suojausten läpi."}
+```
+
+Ensimmäinen työ ajaa testit:
 
 ```{.yaml tiedosto="esimerkit/ci/palvelu.yml" osa="testit"}
 ```
@@ -59,6 +69,11 @@ ajettavaa kuvaa.
 | sininen–vihreä | uusi ympäristö rinnalle, liikenne vaihdetaan kerralla | nopea paluu | kaksinkertaiset resurssit hetken |
 | kanarialintu | pieni osa liikenteestä uudelle versiolle, mittareiden mukaan lisää | virhe näkyy pienelle joukolle | vaatii mittarit ja liikenteenohjauksen |
 | ominaisuusliput | koodi tuotannossa, ominaisuus päälle erikseen | käyttöönotto ja julkaisu erillään | lippujen ylläpito |
+
+![Uuden version osuus liikenteestä käyttöönoton aikana. Rullaavassa päivityksessä osuus kasvaa pod kerrallaan, sinisessä–vihreässä kaikki vaihtuu kerralla, ja kanarialinnussa osuutta kasvatetaan portaittain mittareiden salliessa. Periaatekuva, ei mittaus.](kuvat/11-strategiat.png){width=85%}
+
+Strategioiden vaikutus virheiden näkyvyyteen on simuloitu taidossa
+*Jatkuva integraatio ja toimitus*.
 
 Rullaava päivitys ja sininen–vihreä vaativat, että kaksi versiota
 toimii yhtä aikaa: tietokannan skeemamuutokset tehdään

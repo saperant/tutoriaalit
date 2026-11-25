@@ -22,8 +22,11 @@ käyttäjä 65532.
 
 ## Staattinen binääri distroless-kuvaan
 
-Go kääntää ohjelman yhdeksi staattiseksi binääriksi, joten
-ajokuvaan ei tarvita edes C-kirjastoa. Palvelu on pieni:
+Käyntilaskuri tarvitsee ajokuvaansa Python-tulkin. Pienimmän
+mahdollisen kuvan näyttämiseen tarvitaan käännetty ohjelma, joten tässä
+osiossa on erillinen pieni Go-palvelu; se ei ole käyntilaskurin osa,
+eikä siihen palata myöhemmissä luvuissa. Go kääntää ohjelman yhdeksi
+staattiseksi binääriksi, joten ajokuvaan ei tarvita edes C-kirjastoa:
 
 ```{.go tiedosto="esimerkit/staattinen/main.go"}
 ```
@@ -33,6 +36,15 @@ osaa tarkistaa itse oman terveytensä. Dockerfile kääntää ohjelman
 ensimmäisessä vaiheessa ja kopioi binäärin distroless-kuvaan:
 
 ```{.dockerfile tiedosto="esimerkit/staattinen/Dockerfile"}
+```
+
+```{.dot otsikko="Monivaiheinen rakennus, jossa vaiheet eivät jaa peruskuvaa. Kääntäjä ja lähdekoodi jäävät rakennusvaiheeseen, ja lopulliseen kuvaan kopioidaan vain valmis binääri."}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=1.2;
+  r [label="vaihe rakennus\ngolang:1.23-alpine\nkääntäjä, lähdekoodi, /palvelu"];
+  l [label="lopullinen kuva\ndistroless/static:nonroot\n/palvelu", penwidth=1.6];
+  r -> l [label="COPY --from=rakennus\n/palvelu /palvelu"];
+}
 ```
 
 - `CGO_ENABLED=0` tuottaa staattisen binäärin, joka ei tarvitse

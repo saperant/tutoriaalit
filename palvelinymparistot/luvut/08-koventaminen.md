@@ -83,6 +83,29 @@ Kone `web2` on päivitetty, mutta se ajaa yhä vanhaa ydintä: korjaus ei
 suojaa ennen uudelleenkäynnistystä. Kone `vanha-ftp` on tuen
 ulkopuolella, eikä siihen tule enää korjauksia lainkaan.
 
+## Varmenteiden elinkaari
+
+TLS-varmenne on kovennuksen osa, joka vanhenee itsestään. Palvelinten
+välinen liikenne (hakemistoyhteydet, valvonta, tietokantayhteydet)
+suojataan usein organisaation oman *sisäisen varmentajan* (CA)
+myöntämillä varmenteilla, ja vanhentunut varmenne on yleinen
+itse aiheutetun katkon syy. Hallinta noudattaa samoja periaatteita kuin
+muukin tässä luvussa:
+
+- **Inventaario.** Jokaisesta varmenteesta tiedetään, missä se on,
+  kuka sen myönsi ja milloin se vanhenee.
+- **Automaattinen uusiminen.** Lyhytikäiset varmenteet (viikkoja, ei
+  vuosia) uusitaan protokollalla (ACME) tai konfiguraationhallinnalla,
+  ei kalenterimuistutuksella. Lyhyt voimassaolo rajaa myös vuotaneen
+  avaimen käyttöajan.
+- **Valvonta.** Hälytys laukeaa, kun voimassaoloa on jäljellä alle
+  sovitun rajan, ja se mittaa palvelun todella tarjoamaa varmennetta
+  eikä levyllä olevaa tiedostoa.
+- **Juuriavain erillään.** Varmentajan juuriavain pidetään irti
+  verkosta, ja päivittäiset varmenteet myöntää välivarmentaja.
+
+Varmenneketjut ja PKI:n rakenne ovat taidossa *Kryptografia*.
+
 ## Auditointi
 
 Linuxin auditd kirjaa ytimen tasolla tapahtumat, joita sovellusloki ei
@@ -111,6 +134,8 @@ voi poistaa jälkiään koneelta (ks. luku *Valvonta ja palvelutasot*).
   odottavat uudelleenkäynnistystä.
 - **Vähemmän on turvallisempaa.** Jokainen poistettu paketti ja
   suljettu portti on asia, jota ei tarvitse päivittää eikä valvoa.
+- **Varmenteet uusiutuvat itse.** Voimassaoloa valvotaan, ja
+  uusiminen on automatisoitu; käsin uusittava varmenne unohtuu.
 - **Jäljet talteen muualle.** Lokit ja auditointi keskitettyyn
   palveluun, jonne kohdekoneelta voi vain kirjoittaa.
 
@@ -124,3 +149,5 @@ voi poistaa jälkiään koneelta (ks. luku *Valvonta ja palvelutasot*).
   ja vaiheittaisen käyttöönoton.
 - Osaat kertoa, mitä auditd kirjaa ja miksi kirjaukset siirretään pois
   koneelta.
+- Osaat kuvata sisäisten varmenteiden elinkaaren: inventaario,
+  automaattinen uusiminen ja vanhenemisen valvonta.

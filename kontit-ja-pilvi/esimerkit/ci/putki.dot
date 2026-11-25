@@ -1,0 +1,10 @@
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.6;
+  alku [label="push\npull_request", shape=plain, style=""];
+  testit [label="testit"];
+  kuva [label="kuva\nvain päähaarasta\nkirjoitusoikeus: packages"];
+  kayttoonotto [label="kayttoonotto\nympäristö: tuotanto"];
+  alku -> testit;
+  testit -> kuva;
+  kuva -> kayttoonotto;
+}

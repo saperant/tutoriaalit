@@ -32,6 +32,8 @@ vikasietoisuuteen ja kuinka paljon kirjoitukset hidastuvat:
 ```{.tuloste tiedosto="esimerkit/03-kapasiteetti.odotettu"}
 ```
 
+![Lohkojen sijoittelu neljälle levylle. Sama tunnus kahdella levyllä on kopio; P ja Q ovat pariteettilohkoja, joiden paikka kiertää raidalta toiselle.](kuvat/03-raid-asettelut.png)
+
 - **RAID 0** raidoittaa datan levyjen yli ilman vikasietoisuutta.
   Yhden levyn vika vie kaiken.
 - **RAID 1** peilaa saman datan kahdelle (tai useammalle) levylle.
@@ -86,6 +88,11 @@ Kaksi asiaa tekee tästä vaarallisen hetken:
 
 ```{.tuloste tiedosto="esimerkit/03-ure.odotettu"}
 ```
+
+Sama lasku levyn koon funktiona näyttää, miksi tilanne on muuttunut
+levyjen kasvaessa:
+
+![Lukuvirheen todennäköisyys RAID 5:n uudelleenrakennuksessa. Laskettu esimerkin funktiolla `ure_todennakoisyys`; luettavaa on kaikkien jäljelle jääneiden levyjen verran.](kuvat/03-ure.png){width=80%}
 
 Valmistajien URE-luvut ovat ylärajoja, ja todelliset levyt ovat yleensä
 parempia, mutta suuruusluokka on selvä: suurilla levyillä RAID 5 ei ole

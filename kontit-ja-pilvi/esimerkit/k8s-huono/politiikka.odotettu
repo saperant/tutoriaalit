@@ -1,4 +1,4 @@
-k8s-huono/deployment.yaml: Deployment/api, säiliö api:
+k8s-huono/deployment.yaml: Deployment/api, kontti api:
   - kuva 'ghcr.io/esimerkki/kaynnit:latest' ilman kiinteää versiota
   - muistiraja puuttuu
   - resurssipyynnöt puuttuvat

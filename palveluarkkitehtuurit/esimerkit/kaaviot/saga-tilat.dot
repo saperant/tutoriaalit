@@ -1,0 +1,15 @@
+digraph {
+  rankdir=TB; nodesep=0.9; ranksep=0.45;
+  alku [shape=point, width=0.12, style=filled, label=""];
+  ALOITETTU [label="ALOITETTU"];
+  VARATTU [label="VARATTU"];
+  PERUUTETAAN [label="PERUUTETAAN"];
+  VAHVISTETTU [label="VAHVISTETTU", peripheries=2];
+  PERUTTU [label="PERUTTU", peripheries=2];
+  alku -> ALOITETTU [label="  tilaus tallennettu\l  → VARAA\l"];
+  ALOITETTU -> VARATTU [label="  VARATTU\l  → VELOITA\l"];
+  ALOITETTU -> PERUTTU [label="  VARAUS_EPAONNISTUI\l"];
+  VARATTU -> VAHVISTETTU [label="  MAKSETTU\l  → TilausVahvistettu\l"];
+  VARATTU -> PERUUTETAAN [label="  MAKSU_HYLATTY\l  → VAPAUTA\l"];
+  PERUUTETAAN -> PERUTTU [label="  VAPAUTETTU\l"];
+}
