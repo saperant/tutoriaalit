@@ -1,0 +1,15 @@
+ok    test_1_esimerkit.py::test_muotoilu
+ok    test_1_esimerkit.py::test_jasennys
+ok    test_1_esimerkit.py::test_jako
+ok    test_1_esimerkit.py::test_prosentti
+FAIL  test_2_ominaisuudet.py::test_jasennys_kumoaa_muotoilun
+      AssertionError: assert 10 == 1
+      Failing test case: test_jasennys_kumoaa_muotoilun(sentit=1)
+FAIL  test_2_ominaisuudet.py::test_jako_sailyttaa_summan
+      assert 0 == 1
+      Failing test case: test_jako_sailyttaa_summan(summa=1, osia=2)
+FAIL  test_2_ominaisuudet.py::test_prosentti_vastaa_hidasta_toteutusta
+      assert 0 == 1
+      Failing test case: test_prosentti_vastaa_hidasta_toteutusta(sentit=1,
+        prosentit=50)
+7 testiä: 4 ok, 3 epäonnistui

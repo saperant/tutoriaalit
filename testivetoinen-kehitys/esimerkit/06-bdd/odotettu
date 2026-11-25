@@ -1,0 +1,6 @@
+ok    test_toimitus.py::test_kevyt_tilaus_lähetetään_pienenä_pakettina
+ok    test_toimitus.py::test_ilmaisen_toimituksen_raja_on_50_euroa[49,99-5,90]
+ok    test_toimitus.py::test_ilmaisen_toimituksen_raja_on_50_euroa[50,00-0,00]
+ok    test_toimitus.py::test_rahtina_kulkeva_tilaus_ei_ole_ilmainen
+ok    test_toimitus.py::test_liian_painavaa_tilausta_ei_voi_lähettää
+5 testiä: 5 ok

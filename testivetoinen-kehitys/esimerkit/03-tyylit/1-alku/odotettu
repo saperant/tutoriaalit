@@ -1,0 +1,5 @@
+ok    test_tila.py::test_osto_vahentaa_saldoa_ja_veloittaa_summan
+ok    test_tila.py::test_epaonnistunut_maksu_palauttaa_tuotteet_varastoon
+ok    test_vuorovaikutus.py::test_osto_varaa_tuotteet_ja_veloittaa_summan
+ok    test_vuorovaikutus.py::test_epaonnistunut_maksu_vapauttaa_varaukset
+4 testiä: 4 ok

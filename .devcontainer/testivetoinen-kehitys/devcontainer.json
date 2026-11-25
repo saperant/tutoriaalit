@@ -1,0 +1,19 @@
+{
+  "name": "Testivetoinen kehitys ja testisuunnittelu: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "PIP_PAKETIT": "pytest pytest-bdd==9.0.1 hypothesis==6.170.17 coverage==7.17.5 ruff mypy"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/testivetoinen-kehitys/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "charliermarsh.ruff"
+      ]
+    }
+  }
+}

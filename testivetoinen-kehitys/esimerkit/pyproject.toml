@@ -1,0 +1,23 @@
+# Esimerkkien tarkistusasetukset (ruff lukee tämän; mypy ajetaan
+# valitsimella --strict, ks. aja.py).
+[project]
+name = "testivetoinen-kehitys-esimerkit"
+version = "1.0.0"
+requires-python = ">=3.12"
+dependencies = [
+    "pytest>=9",
+    "pytest-bdd==9.0.1",
+    "hypothesis==6.170.17",
+    "coverage==7.17.5",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 78
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "UP", "SIM"]
+
+[tool.ruff.lint.per-file-ignores]
+# Perintökoodin esimerkki on tarkoituksella sellaisenaan.
+"10-perinto/lasku_vanha.py" = ["SIM108"]

@@ -1,0 +1,8 @@
+ok    test_1_esimerkit.py::test_muotoilu
+ok    test_1_esimerkit.py::test_jasennys
+ok    test_1_esimerkit.py::test_jako
+ok    test_1_esimerkit.py::test_prosentti
+ok    test_2_ominaisuudet.py::test_jasennys_kumoaa_muotoilun
+ok    test_2_ominaisuudet.py::test_jako_sailyttaa_summan
+ok    test_2_ominaisuudet.py::test_prosentti_vastaa_hidasta_toteutusta
+7 testiä: 7 ok

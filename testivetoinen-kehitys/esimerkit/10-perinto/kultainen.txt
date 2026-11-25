@@ -1,0 +1,222 @@
+== tyyppi1-eikoodia-tyhja
+LASKU Testi Asiakas
+Toimitus  0,00
+YHTEENSÄ  0,00
+== tyyppi1-eikoodia-pieni
+LASKU Testi Asiakas
+kahvi x2  10,98
+Toimitus  5,90
+YHTEENSÄ  16,88
+== tyyppi1-eikoodia-keski
+LASKU Testi Asiakas
+kahvi x5  27,45
+tee x3  5,67
+Toimitus  5,90
+YHTEENSÄ  39,02
+== tyyppi1-eikoodia-paljous
+LASKU Testi Asiakas
+kahvi x10  49,41
+Toimitus  5,90
+YHTEENSÄ  55,31
+== tyyppi1-eikoodia-iso
+LASKU Testi Asiakas
+kahvi x12  59,30
+tee x30  51,03
+Toimitus  0,00
+YHTEENSÄ  110,33
+== tyyppi1-eikoodia-rajalla
+LASKU Testi Asiakas
+lahjakortti x1  100,00
+Toimitus  0,00
+YHTEENSÄ  100,00
+== tyyppi1-KESA-tyhja
+LASKU Testi Asiakas
+Alennus 10 %  -0,00
+Toimitus  0,00
+YHTEENSÄ  0,00
+== tyyppi1-KESA-pieni
+LASKU Testi Asiakas
+kahvi x2  10,98
+Alennus 10 %  -1,09
+Toimitus  5,90
+YHTEENSÄ  15,79
+== tyyppi1-KESA-keski
+LASKU Testi Asiakas
+kahvi x5  27,45
+tee x3  5,67
+Alennus 10 %  -3,31
+Toimitus  5,90
+YHTEENSÄ  35,71
+== tyyppi1-KESA-paljous
+LASKU Testi Asiakas
+kahvi x10  49,41
+Alennus 10 %  -4,94
+Toimitus  5,90
+YHTEENSÄ  50,37
+== tyyppi1-KESA-iso
+LASKU Testi Asiakas
+kahvi x12  59,30
+tee x30  51,03
+Alennus 10 %  -11,03
+Toimitus  0,00
+YHTEENSÄ  99,30
+== tyyppi1-KESA-rajalla
+LASKU Testi Asiakas
+lahjakortti x1  100,00
+Alennus 10 %  -10,00
+Toimitus  0,00
+YHTEENSÄ  90,00
+== tyyppi1-SYKSY-tyhja
+LASKU Testi Asiakas
+Tuntematon koodi SYKSY
+Toimitus  0,00
+YHTEENSÄ  0,00
+== tyyppi1-SYKSY-pieni
+LASKU Testi Asiakas
+kahvi x2  10,98
+Tuntematon koodi SYKSY
+Toimitus  5,90
+YHTEENSÄ  16,88
+== tyyppi1-SYKSY-keski
+LASKU Testi Asiakas
+kahvi x5  27,45
+tee x3  5,67
+Tuntematon koodi SYKSY
+Toimitus  5,90
+YHTEENSÄ  39,02
+== tyyppi1-SYKSY-paljous
+LASKU Testi Asiakas
+kahvi x10  49,41
+Tuntematon koodi SYKSY
+Toimitus  5,90
+YHTEENSÄ  55,31
+== tyyppi1-SYKSY-iso
+LASKU Testi Asiakas
+kahvi x12  59,30
+tee x30  51,03
+Tuntematon koodi SYKSY
+Toimitus  0,00
+YHTEENSÄ  110,33
+== tyyppi1-SYKSY-rajalla
+LASKU Testi Asiakas
+lahjakortti x1  100,00
+Tuntematon koodi SYKSY
+Toimitus  0,00
+YHTEENSÄ  100,00
+== tyyppi2-eikoodia-tyhja
+LASKU Testi Asiakas
+Alennus 5 %  -0,00
+Toimitus  0,00
+YHTEENSÄ  0,00
+== tyyppi2-eikoodia-pieni
+LASKU Testi Asiakas
+kahvi x2  10,98
+Alennus 5 %  -0,54
+Toimitus  5,90
+YHTEENSÄ  16,34
+== tyyppi2-eikoodia-keski
+LASKU Testi Asiakas
+kahvi x5  27,45
+tee x3  5,67
+Alennus 5 %  -1,65
+Toimitus  0,00
+YHTEENSÄ  31,47
+== tyyppi2-eikoodia-paljous
+LASKU Testi Asiakas
+kahvi x10  49,41
+Alennus 5 %  -2,47
+Toimitus  0,00
+YHTEENSÄ  46,94
+== tyyppi2-eikoodia-iso
+LASKU Testi Asiakas
+kahvi x12  59,30
+tee x30  51,03
+Alennus 10 %  -11,03
+Toimitus  0,00
+YHTEENSÄ  99,30
+== tyyppi2-eikoodia-rajalla
+LASKU Testi Asiakas
+lahjakortti x1  100,00
+Alennus 5 %  -5,00
+Toimitus  0,00
+YHTEENSÄ  95,00
+== tyyppi2-KESA-tyhja
+LASKU Testi Asiakas
+Alennus 10 %  -0,00
+Toimitus  0,00
+YHTEENSÄ  0,00
+== tyyppi2-KESA-pieni
+LASKU Testi Asiakas
+kahvi x2  10,98
+Alennus 10 %  -1,09
+Toimitus  5,90
+YHTEENSÄ  15,79
+== tyyppi2-KESA-keski
+LASKU Testi Asiakas
+kahvi x5  27,45
+tee x3  5,67
+Alennus 10 %  -3,31
+Toimitus  5,90
+YHTEENSÄ  35,71
+== tyyppi2-KESA-paljous
+LASKU Testi Asiakas
+kahvi x10  49,41
+Alennus 10 %  -4,94
+Toimitus  0,00
+YHTEENSÄ  44,47
+== tyyppi2-KESA-iso
+LASKU Testi Asiakas
+kahvi x12  59,30
+tee x30  51,03
+Alennus 15 %  -16,54
+Toimitus  0,00
+YHTEENSÄ  93,79
+== tyyppi2-KESA-rajalla
+LASKU Testi Asiakas
+lahjakortti x1  100,00
+Alennus 10 %  -10,00
+Toimitus  0,00
+YHTEENSÄ  90,00
+== tyyppi2-SYKSY-tyhja
+LASKU Testi Asiakas
+Tuntematon koodi SYKSY
+Alennus 5 %  -0,00
+Toimitus  0,00
+YHTEENSÄ  0,00
+== tyyppi2-SYKSY-pieni
+LASKU Testi Asiakas
+kahvi x2  10,98
+Tuntematon koodi SYKSY
+Alennus 5 %  -0,54
+Toimitus  5,90
+YHTEENSÄ  16,34
+== tyyppi2-SYKSY-keski
+LASKU Testi Asiakas
+kahvi x5  27,45
+tee x3  5,67
+Tuntematon koodi SYKSY
+Alennus 5 %  -1,65
+Toimitus  0,00
+YHTEENSÄ  31,47
+== tyyppi2-SYKSY-paljous
+LASKU Testi Asiakas
+kahvi x10  49,41
+Tuntematon koodi SYKSY
+Alennus 5 %  -2,47
+Toimitus  0,00
+YHTEENSÄ  46,94
+== tyyppi2-SYKSY-iso
+LASKU Testi Asiakas
+kahvi x12  59,30
+tee x30  51,03
+Tuntematon koodi SYKSY
+Alennus 10 %  -11,03
+Toimitus  0,00
+YHTEENSÄ  99,30
+== tyyppi2-SYKSY-rajalla
+LASKU Testi Asiakas
+lahjakortti x1  100,00
+Tuntematon koodi SYKSY
+Alennus 5 %  -5,00
+Toimitus  0,00
+YHTEENSÄ  95,00

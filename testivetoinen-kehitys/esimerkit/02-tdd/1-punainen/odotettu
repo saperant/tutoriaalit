@@ -1,0 +1,3 @@
+VIRHE test_kori.py
+      ModuleNotFoundError: No module named 'kori'
+0 testiä: 0 ok, 1 keräysvirhe

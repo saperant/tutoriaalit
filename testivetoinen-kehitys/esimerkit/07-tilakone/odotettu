@@ -1,0 +1,10 @@
+ok    test_tilakone.py::TestKori::runTest
+FAIL  test_tilakone.py::TestViallinenKori::runTest
+      assert 1 == 0
+      Failing test case: <state machine>
+      state = ViallinenKone()
+      state.kori_vastaa_mallia()
+      state.poista(maara=1, tuote='kahvi')
+      state.kori_vastaa_mallia()
+      state.teardown()
+2 testiä: 1 ok, 1 epäonnistui

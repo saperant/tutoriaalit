@@ -1,0 +1,11 @@
+ok    test_ennen.py::test_perjantai_illan_tilaus
+ok    test_jalkeen.py::test_lahtopaiva[ke-ennen-kolmea-samana-paivana]
+ok    test_jalkeen.py::test_lahtopaiva[ke-kolmelta-seuraavana-paivana]
+ok    test_jalkeen.py::test_lahtopaiva[pe-ilta-maanantaina]
+ok    test_jalkeen.py::test_lahtopaiva[la-maanantaina]
+ok    test_jalkeen.py::test_saapumispaiva[ma-ke]
+ok    test_jalkeen.py::test_saapumispaiva[to-ma]
+ok    test_jalkeen.py::test_saapumispaiva[pe-ma]
+ok    test_jalkeen.py::test_seurantakoodi_on_kuusi_sallittua_merkkia
+ok    test_jalkeen.py::test_vahvistuksen_teksti
+10 testiä: 10 ok

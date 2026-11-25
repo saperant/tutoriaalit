@@ -104,7 +104,8 @@ jobs:
             testcontainers==4.15.0 redis==8.2.0 pymongo==4.20.1 \
             cassandra-driver==3.30.1 neo4j==6.4.1 \
             pyopenssl==26.4.0 service-identity==26.1.0 \
-            sphinx==8.2.3 mkdocs==1.6.1 openapi-spec-validator==0.9.0
+            sphinx==8.2.3 mkdocs==1.6.1 openapi-spec-validator==0.9.0 \
+            pytest-bdd==9.0.1 hypothesis==6.170.17 coverage==7.17.5
 
       - uses: actions/setup-node@v4
         with:

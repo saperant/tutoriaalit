@@ -1,0 +1,6 @@
+ok    test_kori.py::test_tyhjan_korin_summa_on_nolla
+ok    test_kori.py::test_summa_on_rivien_hinta_kertaa_maara
+ok    test_kori.py::test_kymmenesta_kappaleesta_saa_alennuksen
+ok    test_kori.py::test_yhdeksan_kappaletta_ei_saa_alennusta
+ok    test_kori.py::test_alennus_pyoristetaan_asiakkaan_eduksi
+5 testiä: 5 ok

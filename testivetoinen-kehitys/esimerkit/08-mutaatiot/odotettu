@@ -1,0 +1,18 @@
+test_heikko.py: rivit 20/20, haarat 12/12
+  mutantteja 19, tapettu 6 (31 %), hengissä:
+    rivi  3: 5000  ->  5001
+    rivi  4: 2000  ->  2001
+    rivi  5: 10000  ->  10001
+    rivi  6: 30000  ->  30001
+    rivi 10: 0  ->  1
+    rivi 10: paino_g <= 0  ->  paino_g < 0
+    rivi 12: paino_g > SUURIN_PAINO  ->  paino_g >= SUURIN_PAINO
+    rivi 14: summa_snt >= ILMAISEN_RAJA  ->  summa_snt > ILMAISEN_RAJA
+    rivi 14: paino_g <= ISO_PAKETTI  ->  paino_g < ISO_PAKETTI
+    rivi 16: paino_g <= PIENI_PAKETTI  ->  paino_g < PIENI_PAKETTI
+    rivi 18: paino_g <= ISO_PAKETTI  ->  paino_g < ISO_PAKETTI
+    rivi 26: hyvitys >= maksu  ->  hyvitys > maksu
+    rivi 28: maksu - hyvitys  ->  maksu + hyvitys
+test_vahva.py: rivit 20/20, haarat 12/12
+  mutantteja 19, tapettu 18 (94 %), hengissä:
+    rivi 26: hyvitys >= maksu  ->  hyvitys > maksu

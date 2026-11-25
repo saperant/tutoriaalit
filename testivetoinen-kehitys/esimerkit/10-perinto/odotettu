@@ -1,0 +1,11 @@
+test_kultainen.py: 106 ok, 3 epäonnistui
+FAIL  test_tuloste_vastaa_tallennettua[tyyppi2-eikoodia-rajalla-luonnos]
+      AssertionError: assert 'LASKU Testi ...ENSÄ  90,00\n' == 'LASKU Testi
+        ...ENSÄ  95,00\n'
+FAIL  test_tuloste_vastaa_tallennettua[tyyppi2-KESA-rajalla-luonnos]
+      AssertionError: assert 'LASKU Testi ...ENSÄ  85,00\n' == 'LASKU Testi
+        ...ENSÄ  90,00\n'
+FAIL  test_tuloste_vastaa_tallennettua[tyyppi2-SYKSY-rajalla-luonnos]
+      AssertionError: assert 'LASKU Testi ...ENSÄ  90,00\n' == 'LASKU Testi
+        ...ENSÄ  95,00\n'
+109 testiä: 106 ok, 3 epäonnistui

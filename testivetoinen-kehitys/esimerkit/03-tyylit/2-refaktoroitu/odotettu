@@ -1,0 +1,7 @@
+ok    test_tila.py::test_osto_vahentaa_saldoa_ja_veloittaa_summan
+ok    test_tila.py::test_epaonnistunut_maksu_palauttaa_tuotteet_varastoon
+FAIL  test_vuorovaikutus.py::test_osto_varaa_tuotteet_ja_veloittaa_summan
+      AssertionError: Calls not found.
+FAIL  test_vuorovaikutus.py::test_epaonnistunut_maksu_vapauttaa_varaukset
+      AssertionError: Expected 'vapauta' to be called once. Called 0 times.
+4 testiä: 2 ok, 2 epäonnistui

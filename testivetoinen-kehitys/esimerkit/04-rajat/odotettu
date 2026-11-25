@@ -1,0 +1,8 @@
+test_1_naiivi.py: 10 ok
+test_2_luokat.py: 16 ok
+test_3_rajat.py: 18 ok, 2 epäonnistui
+FAIL  test_painorajat[viallinen-2000-590]
+      assert 990 == 590
+FAIL  test_ilmaisen_toimituksen_raja[viallinen-5000-0]
+      assert 590 == 0
+46 testiä: 44 ok, 2 epäonnistui

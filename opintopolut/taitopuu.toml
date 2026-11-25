@@ -2189,6 +2189,7 @@ laajuus = 5
 testaus = "pytest, pytest-bdd ja Hypothesis; mutaatioajo pienellä esimerkillä"
 roadmap = []
 amk = "Ohjelmistotestaus"
+tutoriaali = "testivetoinen-kehitys"
 
 [[taito]]
 id = "jatkuva-toimitus"

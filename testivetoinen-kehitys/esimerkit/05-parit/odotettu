@@ -1,0 +1,5 @@
+test_1_jokainen_arvo.py: 6 ok
+test_2_parit.py: 19 ok, 1 epäonnistui
+FAIL  test_parittaiset_yhdistelmat[viallinen-lasku-automaatti-yksityinen-sv]
+      KeyError: ('automaatti', 'sv')
+26 testiä: 25 ok, 1 epäonnistui

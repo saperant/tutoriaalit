@@ -1,0 +1,4 @@
+ok    test_kori.py::test_tyhjan_korin_summa_on_nolla
+FAIL  test_kori.py::test_summa_on_rivien_hinta_kertaa_maara
+      assert 0 == ((2 * 549) + 189)
+2 testiä: 1 ok, 1 epäonnistui

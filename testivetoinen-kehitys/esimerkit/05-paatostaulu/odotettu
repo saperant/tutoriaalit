@@ -1,0 +1,5 @@
+test_1_ehdot_erikseen.py: 10 ok
+test_2_paatostaulu.py: 16 ok, 1 epäonnistui
+FAIL  test_paatostaulu[viallinen-KKK]
+      assert 10 == 15
+27 testiä: 26 ok, 1 epäonnistui

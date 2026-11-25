@@ -1,0 +1,9 @@
+ok    test_1_polut.py::test_tilaus_etenee_toimitukseen[oikea]
+ok    test_1_polut.py::test_tilaus_etenee_toimitukseen[viallinen]
+ok    test_1_polut.py::test_maksetun_tilauksen_voi_perua[oikea]
+ok    test_1_polut.py::test_maksetun_tilauksen_voi_perua[viallinen]
+ok    test_2_siirtymat.py::test_jokainen_tila_ja_tapahtuma[oikea]
+FAIL  test_2_siirtymat.py::test_jokainen_tila_ja_tapahtuma[viallinen]
+      AssertionError: ['LAHETETTY + peru -> PERUTTU', 'PERUTTU + peru ->
+        PERUTTU']
+6 testiä: 5 ok, 1 epäonnistui

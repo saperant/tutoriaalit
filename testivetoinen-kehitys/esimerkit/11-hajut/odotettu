@@ -1,0 +1,5 @@
+ok    test_1_haju.py::test_1
+ok    test_1_haju.py::test_2
+ok    test_2_siisti.py::test_summa_on_rivien_hintojen_summa
+ok    test_2_siisti.py::test_paljousalennus_koskee_vain_omaa_riviaan
+4 testiä: 4 ok
