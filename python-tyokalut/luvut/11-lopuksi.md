@@ -15,11 +15,13 @@
 | Polut | `pathlib`, lajiteltu läpikäynti, suhteessa skriptiin |
 | Tiedosto jota joku lukee | atominen kirjoitus: tilapäistiedosto ja `os.replace` |
 | Ulkoinen ohjelma | lista ilman komentotulkkia, aikaraja, tulkitse paluuarvo ja loki |
+| Pitkä ajo | `Popen`, tuloste rivi kerrallaan, oma prosessiryhmä ja siivous `finally`-lohkossa |
 | Monta ajoa | `ThreadPoolExecutor`, tulokset syötteen järjestyksessä |
 | Numeerinen data | NumPy, ei silmukoita, tietotyyppi tietoisesti |
 | Kuvaaja | `Figure`-olio ja `savefig`, ei `pyplot`ia työkalussa |
 | Jakelu | `pyproject.toml`, src-asettelu, venv ja pipx |
 | Luotettavuus | `mypy --strict`, ruff, pytest, tilannekuvat raporteille |
+| Ohje | modulin dokumentaatiomerkkijono `--help`in kuvauksena, paluuarvot mukana |
 
 ## Mallit
 
@@ -56,13 +58,16 @@
 
 ## Mihin tästä eteenpäin
 
-Taito *EDA-skriptaus* soveltaa näitä välineitä laitteistosuunnittelun
+Taito *EDA-työkaluketjujen automatisointi* soveltaa näitä välineitä
+laitteistosuunnittelun
 työkaluketjuihin: synteesi- ja ajoitusraporttien jäsentämiseen,
 regressioajoihin ja rekisterikuvauksista generoituun koodiin. Taito
 *Python ja C/C++ yhteen* jatkaa suorituskykyyn: kun NumPy ei riitä,
 osa työkalusta kirjoitetaan C++:lla ja kutsutaan Pythonista. Taito
-*Verifiointi* käyttää Pythonia testipenkkien kirjoittamiseen
-(cocotb).
+*Laitteiston verifiointi* käyttää Pythonia testipenkkien
+kirjoittamiseen (cocotb). Taito *Tekninen dokumentaatio* jatkaa
+dokumentaatiomerkkijonoista työkalun käyttöohjeeseen ja
+rajapintaviitteeseen.
 
 ## Lisenssi
 

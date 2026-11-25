@@ -32,7 +32,10 @@ uuden merkkijonon eivätkä muuta alkuperäistä.
 `str.maketrans` ja `translate` korvaavat monta merkkiä kerralla.
 Funktion `kayttajatunnus` dokumentaatiomerkkijono on konkreettinen
 syöte ja tulos. Esimerkki kertoo funktion toiminnan nopeammin kuin
-sanallinen kuvaus.
+sanallinen kuvaus. Kun esimerkki kirjoitetaan tulkin istunnon muotoon
+(rivi `>>> kutsu` ja tulos sen alle), standardikirjaston `doctest`
+osaa ajaa sen ja tarkistaa, että dokumentaatio pitää paikkansa (taito
+*Tekninen dokumentaatio*).
 
 Esimerkki tekee myös oletuksen, joka kannattaa huomata: nimessä on
 vähintään yksi osa. Tyhjällä nimellä `osat[0]` aiheuttaisi virheen.
@@ -97,6 +100,39 @@ Ohjelma kaatuu, jos jokin lämpötila puuttuu tai on virheellinen, tai
 jos syötteessä ei ole yhtään havaintoa (nollalla jakaminen). Seuraava
 luku korjaa tämän.
 
+## JSON
+
+CSV sopii taulukoille. Sisäkkäiset rakenteet (luku *Kokoelmat*)
+tallennetaan yleensä JSON-muodossa (*JavaScript Object Notation*), jota
+käyttävät asetustiedostot ja lähes kaikki verkkorajapinnat.
+Standardikirjaston `json`-moduli muuntaa Pythonin sanakirjat, listat,
+merkkijonot, luvut ja totuusarvot JSON-tekstiksi ja takaisin:
+
+```{.python tiedosto="esimerkit/06-json.py"}
+```
+
+```{.tuloste tiedosto="esimerkit/06-json.odotettu"}
+```
+
+`json.dump` kirjoittaa rakenteen tiedostoon ja `json.load` lukee sen.
+Vastaavat `dumps` ja `loads` käsittelevät merkkijonoa tiedoston sijaan.
+`ensure_ascii=False` säilyttää ääkköset sellaisinaan, ja `indent=2`
+sisentää tulosteen ihmisen luettavaksi. JSON tuntee vain nämä
+perustyypit: `True` tallentuu muodossa `true`, sanakirjan avaimet ovat
+aina merkkijonoja, ja monikko palaa luettaessa listana.
+
+## Kokeile itse
+
+1. **Nimikirjaimet** (`06-1`). Funktio `nimikirjaimet` muuttaa nimen
+   `Aino Maria Virtanen` muotoon `A. M. V.` ylimääräisistä
+   välilyönneistä välittämättä.
+2. **Palindromi** (`06-2`). Funktio `on_palindromi` tunnistaa tekstin,
+   joka on sama alusta ja lopusta luettuna, kun kirjainkokoa,
+   välilyöntejä ja välimerkkejä ei huomioida.
+3. **Tilauksen loppusumma** (`06-3`). Ohjelma lukee syötteestä
+   CSV-muotoisen tilauksen (`tuote;kpl;hinta_snt`) ja tulostaa rivien
+   hinnat ja loppusumman euroina.
+
 ## Käytännössä
 
 - **`with open(...)` ja `encoding="utf-8"` aina.** Molemmat
@@ -122,4 +158,6 @@ luku korjaa tämän.
   merkistökoodauksella `with`-lauseessa.
 - Osaat lukea CSV-tiedoston `csv.DictReader`illa ja laskea siitä
   yhteenvedon.
+- Osaat tallentaa sisäkkäisen rakenteen JSON-tiedostoon ja lukea sen
+  takaisin `json`-modulilla.
 - Osaat kertoa, millä syötteillä oma ohjelmasi kaatuu.

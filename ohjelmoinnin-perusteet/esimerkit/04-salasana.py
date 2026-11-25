@@ -8,7 +8,11 @@ def salasanan_ongelmat(salasana: str, min_pituus: int = 12) -> list[str]:
         ongelmat.append(f"alle {min_pituus} merkkiä")
     if salasana.lower() == salasana or salasana.upper() == salasana:
         ongelmat.append("ei sekä pieniä että isoja kirjaimia")
-    if not any(merkki.isdigit() for merkki in salasana):
+    numeroita = 0
+    for merkki in salasana:
+        if merkki.isdigit():
+            numeroita += 1
+    if numeroita == 0:
         ongelmat.append("ei numeroita")
     return ongelmat
 

@@ -29,6 +29,8 @@ metodeilla, jotka tarkistavat säännön:
 - Alaviivalla alkava nimi `_saldo` on sopimus: attribuutti on luokan
   sisäinen, eikä sitä muuteta luokan ulkopuolelta. `@property` antaa
   lukea saldon nimellä `aino.saldo` muttei sijoittaa siihen.
+  Määrittelyn yläpuolelle kirjoitettu `@nimi` on *dekoraattori*: se
+  muuttaa heti alla määritellyn funktion tai luokan toimintaa.
 - `__str__` määrää, miltä olio näyttää tulostettuna.
 - `KateEiRiita` on oma poikkeusluokka. Se *periytyy* luokasta
   `Exception`, eli se on poikkeus, ja kutsuja voi siepata juuri sen.
@@ -50,6 +52,21 @@ ja vertailun automaattisesti kenttien tyyppivihjeiden perusteella:
 ```{.tuloste tiedosto="esimerkit/08-ostoskori.odotettu"}
 ```
 
+```{.dot otsikko="Esimerkin oliot lopussa: kori viittaa riveihin ja jokainen rivi tuotteeseensa."}
+digraph {
+  rankdir=LR; nodesep=0.25; ranksep=0.5;
+  kori [label="Ostoskori\nrivit"];
+  r1 [label="Rivi\nmaara = 1"];
+  r2 [label="Rivi\nmaara = 6"];
+  t1 [label="Tuote\nnimi = \"Kahvi 500 g\"\nhinta_snt = 699"];
+  t2 [label="Tuote\nnimi = \"Korvapuusti\"\nhinta_snt = 150"];
+  kori -> r1 [label="rivit[0]"];
+  kori -> r2 [label="rivit[1]"];
+  r1 -> t1 [label="tuote"];
+  r2 -> t2 [label="tuote"];
+}
+```
+
 Ostoskori *koostuu* riveistä, ja rivi koostuu tuotteesta ja määrästä.
 Jokainen luokka vastaa omasta osastaan: rivi osaa laskea oman hintansa,
 kori koko summan. *Koostaminen* (olio sisältää toisia olioita) on
@@ -69,6 +86,21 @@ erikoistapaus yläluokasta ja sitä voi käyttää kaikkialla, missä
 yläluokkaakin. Perusteissa sitä tarvitaan lähinnä omissa
 poikkeusluokissa; muuten koostaminen on yleensä parempi valinta.
 Taito *Python* käsittelee periytymisen, rajapinnat ja protokollat.
+
+## Kokeile itse
+
+Tarkistin luo luokasta olioita, kutsuu niiden metodeja ja vertaa
+tulosta. Tehtävänannon nimet (luokka, metodit ja attribuutit) on
+siksi kirjoitettava täsmälleen samoin.
+
+1. **Laskuri** (`08-1`). Luokka `Laskuri`, jolla on metodit `kasvata`
+   ja `nollaa` sekä attribuutti `arvo`.
+2. **Suorakulmio dataluokkana** (`08-2`). Dataluokka `Suorakulmio`,
+   jolla on kentät `leveys` ja `korkeus` ja metodit `pinta_ala` ja
+   `on_nelio`.
+3. **Varasto ja invariantti** (`08-3`). Luokka `Varasto`, jonka määrä
+   pysyy välillä 0–kapasiteetti. Sääntöä rikkova kutsu nostaa oman
+   poikkeuksen `VarastoVirhe` eikä muuta tilaa.
 
 ## Käytännössä
 

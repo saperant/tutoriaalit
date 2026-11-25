@@ -5,6 +5,13 @@ tiimi tai CI, se paketoidaan: asennus tuo komennon polulle,
 riippuvuudet on lueteltu, versio on tiedossa ja asennuksen voi
 toistaa. Pythonissa paketin kuvaus on yksi tiedosto, `pyproject.toml`.
 
+Taito *Python* esittelee projektin rakenteen, virtuaaliympäristöt ja
+`pyproject.toml`-tiedoston kentät. Tämä luku kertaa ne yhden
+esimerkkipaketin avulla ja keskittyy siihen, mikä on komentorivityökalulle
+erityistä: komennon sisääntulo, versio, asennus pipxillä ja paketin
+rakenteen testaus. Luvun jälkeisten lukujen esimerkit ovat silti
+yksittäisiä skriptejä, jotta jokaisen voi ajaa sellaisenaan.
+
 ## Projektin rakenne
 
 Esimerkin paketti `lokikoonti` noudattaa *src-asettelua*:
@@ -20,10 +27,9 @@ Esimerkin paketti `lokikoonti` noudattaa *src-asettelua*:
 └── tests/test_paketti.py
 ```
 
-src-hakemisto estää vahingot: testit eivät voi tuoda pakettia
+src-hakemiston ansiosta testit eivät voi tuoda pakettia
 työhakemistosta ohi asennuksen, joten ne testaavat samaa, mitä käyttäjä
-saa. Ilman src-hakemistoa testit voivat mennä läpi, vaikka asennuksesta
-puuttuisi tiedosto.
+saa.
 
 ## pyproject.toml
 
@@ -71,11 +77,9 @@ pipx install .                   # työkalu omaan ympäristöönsä
 pipx install git+https://git.esimerkki.fi/tyokalut/lokikoonti.git
 ```
 
-- **Virtuaaliympäristö (venv)** eristää projektin riippuvuudet
-  järjestelmän Pythonista. Ubuntu ja Debian estävät `pip install`
-  -komennon järjestelmän Pythoniin (PEP 668), eikä sitä pidä kiertää.
-- **Muokattava asennus (`-e`)** asentaa viittauksen lähdekoodiin.
-  Muutokset näkyvät ilman uudelleenasennusta.
+- **Virtuaaliympäristö (venv) ja muokattava asennus (`-e`)** ovat
+  kehittäjän työtapa: riippuvuudet pysyvät erossa järjestelmän
+  Pythonista, ja lähdekoodin muutokset näkyvät ilman uudelleenasennusta.
 - **pipx** asentaa komentorivityökalun omaan venviinsä ja tuo komennon
   polulle. Se sopii työkaluille, joita käytetään projektista
   riippumatta.

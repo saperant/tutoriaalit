@@ -65,6 +65,24 @@ joten muisti ei kasva raportin koon mukana:
 ```{.python tiedosto="esimerkit/04-ajoitus.py" osa="tilakone"}
 ```
 
+```{.dot otsikko="Jäsentimen tilat ja siirtymät. Rivi luokitellaan säännöllisillä lausekkeilla, ja tila päättää, mitä rivillä tehdään. Katkoviiva on virhe: polku jäi kesken."}
+digraph {
+  rankdir=LR; nodesep=0.45; ranksep=0.85;
+  alku [shape=point, width=0.08];
+  valissa [label="VALISSA\npolkujen välissä"];
+  polussa [label="POLUSSA\npolun sisällä"];
+  valmis [label="valmis", shape=plain, style=""];
+  virhe [label="ValueError", shape=plain, style=""];
+  alku -> valissa;
+  valissa -> polussa [label="Startpoint"];
+  polussa -> valissa [label="slack:\ntuota Polku"];
+  valissa -> valissa [label="muu rivi"];
+  polussa -> polussa [label="muu kenttä:\ntallenna"];
+  valissa -> valmis [label="syöte loppui"];
+  polussa -> virhe [label="Startpoint tai\nsyöte loppui", style=dashed];
+}
+```
+
 Rikkinäinen raportti, kuten kesken loppuva tiedosto tai polku ilman
 slack-riviä, nostaa virheen rivinumeroineen. Hiljaisesti ohitettu
 puolikas polku voisi kätkeä juuri pahimman ajoitusrikkeen.
@@ -142,6 +160,9 @@ virheellisestä arvosta:
 JSON on koneiden välinen muoto. `ensure_ascii=False` säilyttää
 ääkköset luettavina, ja `sort_keys=True` tekee tulosteesta
 deterministisen, kun avainten järjestys ei ole merkityksellinen.
+Tulosvirroille sopii *JSON Lines*: yksi JSON-objekti riviä kohden,
+jolloin tiedostoon voi lisätä rivejä ja sen voi lukea rivi kerrallaan.
+Luvun *Testaus* raporttityökalu lukee tällaista tiedostoa.
 
 ## Käytännössä
 

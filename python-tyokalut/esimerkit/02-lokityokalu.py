@@ -1,3 +1,4 @@
+# @alku ohje
 """lokityokalu: simulaatiolokien yhteenveto ja suodatus.
 
   lokityokalu yhteenveto [TIEDOSTO ...]
@@ -8,6 +9,7 @@ sopii putken osaksi. Tulokset menevät tulosteeseen, diagnostiikka
 virhetulosteeseen. Paluuarvo: 0 kunnossa, 1 lokissa on virheitä
 (--tiukka), 2 virheellinen komentorivi.
 """
+# @loppu ohje
 
 import argparse
 import logging

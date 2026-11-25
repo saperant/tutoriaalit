@@ -122,3 +122,11 @@ Taitopuun jatkotaidot: *Python ja C/C++ yhteen* laajennuksiin ja
 suorituskykyyn, *Rinnakkaisohjelmointi* yleisiin rinnakkaisuuden
 malleihin ja *Käännösjärjestelmät, testaus ja CI* projektin
 automaatioon.
+
+## Lisenssi
+
+Tämä tutoriaali ja sen esimerkkikoodit on lisensoitu Creative Commons
+Nimeä–JaaSamoin 4.0 Kansainvälinen -lisenssillä (CC BY-SA 4.0,
+<https://creativecommons.org/licenses/by-sa/4.0/deed.fi>). Teosta saa
+kopioida, levittää ja muokata, kunhan alkuperäinen lähde mainitaan ja
+muokatut versiot jaetaan samalla lisenssillä.

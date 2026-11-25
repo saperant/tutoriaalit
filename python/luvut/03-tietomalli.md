@@ -21,6 +21,23 @@ oliolle. Tätä kutsutaan joskus *viittauksen välitykseksi arvona* (*call
 by sharing*). Funktio voi muuttaa saamaansa listaa, mutta nimen
 uudelleensitominen funktiossa ei näy kutsujalle.
 
+```{.dot otsikko="Esimerkin tilanne lopussa. `sama` ja `ostokset` ovat saman listan kaksi nimeä. `kopio` on eri lista, mutta sen alkiot ovat samat merkkijono-oliot."}
+digraph {
+  rankdir=LR; nodesep=0.2; ranksep=0.55;
+  node [shape=plain, style=""];
+  kopio; sama; ostokset;
+  node [shape=record, style=filled];
+  l2 [label="<a>0|<b>1|<c>2|<d>3"];
+  l1 [label="<a>0|<b>1|<c>2"];
+  node [shape=box, style="rounded,filled"];
+  kahvi [label="\"kahvi\""]; juusto [label="\"juusto\""];
+  leipa [label="\"leipä\""]; maito [label="\"maito\""];
+  kopio -> l2; sama -> l1; ostokset -> l1;
+  l1:a -> maito; l1:b -> leipa; l1:c -> juusto;
+  l2:a -> maito; l2:b -> leipa; l2:c -> juusto; l2:d -> kahvi;
+}
+```
+
 ## Muuttuvat ja muuttumattomat tyypit
 
 | Muuttumattomat | Muuttuvat |
@@ -82,6 +99,12 @@ jäädyttää ajan moduulin latausajankohtaan.
 ```{.python tiedosto="esimerkit/03-kopiointi.py" osa="kopio"}
 ```
 
+Jaettu sisälista syntyy huomaamatta myös silloin, kun sisäkkäinen
+lista luodaan kertolaskulla:
+
+```{.python tiedosto="esimerkit/03-kopiointi.py" osa="ruudukko"}
+```
+
 ```{.tuloste tiedosto="esimerkit/03-kopiointi.odotettu"}
 ```
 
@@ -90,6 +113,48 @@ mutta ei uutta ulkolistan alkiota. Viipale `lista[:]`, `list(lista)`,
 `dict(d)` ja `d.copy()` ovat kaikki matalia kopioita. Syvä kopio on
 hidas ja harvoin tarpeen: usein parempi ratkaisu on muuttumaton
 rakenne, jota ei tarvitse kopioida.
+
+```{.dot otsikko="Matala kopio jakaa sisälistat alkuperäisen kanssa, syvä kopio ei. Uusi alkio `['Eli']` lisättiin vain listaan `vuorot`."}
+digraph {
+  rankdir=LR; nodesep=0.22; ranksep=0.6;
+  node [shape=plain, style=""];
+  syva; matala; vuorot;
+  node [shape=record, style=filled];
+  us [label="<a>0|<b>1"];
+  um [label="<a>0|<b>1"];
+  uv [label="<a>0|<b>1|<c>2"];
+  sa [label="{\"Ada\"|\"Bob\"}"];
+  sc [label="\"Cia\""];
+  a [label="{\"Ada\"|\"Bob\"|\"Dan\"}"];
+  c [label="\"Cia\""];
+  e [label="\"Eli\""];
+  syva -> us; matala -> um; vuorot -> uv;
+  us:a -> sa; us:b -> sc;
+  um:a -> a; um:b -> c;
+  uv:a -> a; uv:b -> c; uv:c -> e;
+}
+```
+
+Tulosteen kolmannella rivillä yksi sijoitus muutti jokaista riviä:
+`[[0] * 3] * 3` toistaa kolme kertaa viittauksen samaan sisälistaan.
+Koostelauseke suorittaa lausekkeen `[0] * 3` jokaisella kierroksella
+ja luo siksi kolme eri listaa.
+
+```{.dot otsikko="`[[0] * 3] * 3` luo yhden sisälistan ja kolme viittausta siihen; koostelauseke luo kolme sisälistaa."}
+digraph {
+  rankdir=LR; nodesep=0.2; ranksep=0.55;
+  node [shape=plain, style=""];
+  erilliset; jaettu;
+  node [shape=record, style=filled];
+  ue [label="<a>0|<b>1|<c>2"];
+  uj [label="<a>0|<b>1|<c>2"];
+  e3 [label="{0|0|0}"]; e2 [label="{0|0|0}"]; e1 [label="{1|0|0}"];
+  j [label="{1|0|0}"];
+  erilliset -> ue; jaettu -> uj;
+  ue:a -> e1; ue:b -> e2; ue:c -> e3;
+  uj:a -> j; uj:b -> j; uj:c -> j;
+}
+```
 
 ## Luvut
 
@@ -107,6 +172,33 @@ rakenne, jota ei tarvitse kopioida.
 
 Tyyppimuunnokset ovat eksplisiittisiä: `int("42")`, `float("2.5")`,
 `str(42)`. Virheellinen syöte nostaa `ValueError`-poikkeuksen.
+
+## Päivämäärät ja ajat
+
+`datetime`-olio on joko *aikavyöhykkeellinen* (*aware*, `tzinfo`
+asetettu) tai *naiivi* (ei vyöhykettä). Naiivi aika ei kerro, mistä
+hetkestä on kyse, ja se on tuotantokoodin yleinen virhelähde:
+
+```{.python tiedosto="esimerkit/03-aika.py" osa="aika"}
+```
+
+```{.tuloste tiedosto="esimerkit/03-aika.odotettu"}
+```
+
+- Ajanhetket tallennetaan ja lasketaan UTC-aikana ja muunnetaan
+  paikalliseksi vasta näytettäessä. Nykyhetki on
+  `datetime.now(tz=UTC)`; pelkkä `datetime.now()` palauttaa naiivin
+  paikallisen ajan.
+- Naiivia ja aikavyöhykkeellistä aikaa ei voi verrata eikä vähentää
+  toisistaan: Python nostaa `TypeError`-poikkeuksen sen sijaan, että
+  arvaisi.
+- Esimerkin `timezone` on kiinteä siirtymä. Oikeat aikavyöhykkeet
+  kesäaikasääntöineen antaa `zoneinfo.ZoneInfo("Europe/Helsinki")`,
+  joka lukee käyttöjärjestelmän aikavyöhyketietokantaa (Windowsissa
+  asennetaan paketti `tzdata`).
+- Kestot mitataan kellolla `time.monotonic()` tai tarkemmalla
+  `time.perf_counter()`. Seinäkello voi hypätä taaksepäin, kun
+  järjestelmän aikaa korjataan.
 
 ## Merkkijonot ja muotoilu
 
@@ -183,9 +275,11 @@ kaataisi ohjelman nollalla jakoon; tuotantokoodi tarkistaisi sen.
 - **Hinta:** jokainen kokonaisluku on kasassa oleva olio (28 tavua),
   ja aritmetiikka tarkistaa tyypit ajon aikana. Lukuja on halvempi
   käsitellä joukkona kuin yksitellen: `sum()`, `array`-moduuli tai NumPy.
-- **Sudenkuoppa:** `[[0] * 3] * 3` toistaa viittauksen samaan
-  sisälistaan. Taulukko luodaan koostelausekkeella
-  `[[0] * 3 for _ in range(3)]`.
+- **Sudenkuopat:** `[[0] * 3] * 3` toistaa viittauksen samaan
+  sisälistaan; taulukko luodaan koostelausekkeella
+  `[[0] * 3 for _ in range(3)]`. Naiivi `datetime.now()` tallennettuna
+  tietokantaan tai lokiin on paikallista aikaa ilman tietoa
+  vyöhykkeestä; käytä `datetime.now(tz=UTC)`.
 
 ## Itsearviointi
 
@@ -195,7 +289,10 @@ kaataisi ohjelman nollalla jakoon; tuotantokoodi tarkistaisi sen.
   miksi vain muuttumaton kelpaa sanakirjan avaimeksi.
 - Osaat korjata muuttuvan oletusarvon ansan ja tunnistat sen
   koodikatselmoinnissa.
-- Osaat valita matalan ja syvän kopion välillä.
+- Osaat valita matalan ja syvän kopion välillä ja piirtää, mitkä
+  oliot kopio jakaa alkuperäisen kanssa.
+- Osaat erottaa naiivin ja aikavyöhykkeellisen ajan, käsitellä
+  ajanhetket UTC-aikana ja mitata keston monotonisella kellolla.
 - Osaat muotoilla tulosteen f-merkkijonolla ja käyttää `!r`- ja
   `=`-määreitä virheilmoituksissa.
 - Osaat lukea ja validoida syötteen niin, että virheellinen rivi

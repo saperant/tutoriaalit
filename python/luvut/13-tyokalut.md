@@ -9,6 +9,10 @@ optimointi*; tämä luku näyttää Pythonin välineet.
 
 ## pytest
 
+pytestin perusteet (testifunktio, `assert`, parametrisointi ja
+`pytest.raises`) esitellään taidossa *Ohjelmoinnin perusteet*. Tässä
+ne kerrataan yhdellä esimerkillä ja lisätään kiintopisteet ja doctest.
+
 pytest on Pythonin tosiasiallinen testikehys. Testit ovat tavallisia
 funktioita, joiden nimi alkaa `test_`, ja tarkistukset tavallisia
 `assert`-lauseita. pytest kirjoittaa `assert`-lauseet uudelleen niin,
@@ -49,6 +53,18 @@ virheen kohdalla. Kattavuus mitataan `pytest-cov`-liitännäisellä
 (`--cov=varasto`). Standardikirjaston `unittest` on xUnit-tyylinen
 vaihtoehto, jonka testit pytest osaa myös ajaa; `unittest.mock`
 tarjoaa valeoliot molempiin.
+
+Tulosteen ensimmäinen rivi `13-testit.jasenna_summa` on *doctest*:
+funktion `jasenna_summa` dokumentaatiomerkkijonossa on tulkin istunnon
+muotoinen esimerkki (`>>>`-rivi ja sen tulos), ja valitsin
+`--doctest-modules` ajaa sen testinä. Ilman pytestiä saman tekee
+`python -m doctest tiedosto.py`. Doctest varmistaa, että
+dokumentaation esimerkit pitävät paikkansa. Se sopii puhtaiden
+funktioiden muutamaan havainnolliseen esimerkkiin, mutta ei korvaa
+yksikkötestejä: rajatapaukset ja virhepolut tekisivät
+dokumentaatiosta lukukelvotonta. Rajapintaviitteen tuottaminen
+dokumentaatiomerkkijonoista (Sphinx ja autodoc) on taidossa
+*Tekninen dokumentaatio*.
 
 ## Koodin laatu
 
@@ -152,6 +168,15 @@ tuloste kertoo vain, onko ero suuruusluokan verran:
 ```{.tuloste tiedosto="esimerkit/13-hinnat.odotettu"}
 ```
 
+![Haun `x in kokoelma` kesto, kun alkiota ei löydy (CPython 3.13,
+pienin viidestä mittauksesta, molemmat akselit logaritmisia). Listan
+haku hidastuu samassa suhteessa kuin lista kasvaa; joukon haku ei
+riipu koosta.](kuvat/jasenyys.png){width=70%}
+
+Kuvaajan tuottaa `kuvat/piirra.py` (`make kuvat`). Mitatut ajat
+vaihtelevat koneen ja ajon mukaan, minkä vuoksi testattu esimerkki
+tarkistaa vain suuruusluokan.
+
 Kun algoritmi on kunnossa ja profiloija osoittaa kuuman kohdan,
 CPythonissa auttavat seuraavat keinot, suunnilleen hyödyn mukaan:
 
@@ -195,6 +220,8 @@ CPythonissa auttavat seuraavat keinot, suunnilleen hyödyn mukaan:
 
 - Osaat kirjoittaa pytest-testejä parametrisoinnilla,
   `pytest.raises`-tarkistuksella ja kiintopisteillä.
+- Osaat kirjoittaa dokumentaatiomerkkijonoon doctest-esimerkin, ajaa
+  sen ja perustella, milloin doctest riittää ja milloin ei.
 - Osaat ottaa käyttöön ruffin ja mypyn ja ajaa ne automaattisesti.
 - Osaat debugata ohjelmaa `breakpoint()`-kutsulla ja pdb:n komennoilla.
 - Osaat määritellä lokituksen sovellukseen ja lokittaa moduuleista

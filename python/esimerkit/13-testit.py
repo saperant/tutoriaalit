@@ -14,7 +14,11 @@ import pytest
 
 # @alku koodi
 def jasenna_summa(teksti: str) -> Decimal:
-    """Jäsentää summan muodossa '12,50' tai '12.50 €'."""
+    """Jäsentää summan muodossa '12,50' tai '12.50 €'.
+
+    >>> jasenna_summa("12,50 €")
+    Decimal('12.50')
+    """
     puhdas = teksti.strip().removesuffix("€").strip().replace(",", ".")
     try:
         summa = Decimal(puhdas)
@@ -70,7 +74,7 @@ class Raportti:
 
 if __name__ == "__main__":
     raportti = Raportti()
-    koodi = pytest.main([__file__, "-p", "no:terminal",
+    koodi = pytest.main([__file__, "--doctest-modules", "-p", "no:terminal",
                          "-p", "no:cacheprovider"], plugins=[raportti])
     for nimi, tulos in raportti.tulokset:
         print(f"{tulos:<7} {nimi}")

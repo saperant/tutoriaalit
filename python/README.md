@@ -11,9 +11,11 @@ Valmiit dokumentit: [python.pdf](https://saperant.github.io/tutoriaalit/materiaa
 2. Python kokeneelle – vertailu C++:aan, Javaan ja JavaScriptiin,
    hinnat, sudenkuopat
 3. Tietomalli, tyypit ja muotoilu – viittaukset, muuttuvuus,
-   oletusarvoansa, kopiointi, f-merkkijonot, syötteen jäsennys
+   oletusarvoansa, kopiointi, päivämäärät ja ajat, f-merkkijonot,
+   syötteen jäsennys
 4. Ohjausrakenteet ja funktiot – `match`, parametrien lajit,
-   sulkeumat, dekoraattorit, `functools.cache`
+   dokumentaatiomerkkijonot, sulkeumat, dekoraattorit,
+   `functools.cache`
 5. Kokoelmat ja merkkijonot – hinnat, `Counter`, `defaultdict`,
    `deque`, lajittelu, `re`
 6. Iteraattorit ja generaattorit – protokolla, generaattoriputket,
@@ -28,7 +30,7 @@ Valmiit dokumentit: [python.pdf](https://saperant.github.io/tutoriaalit/materiaa
 11. Modulit, paketit ja projektin rakenne – kerrokset,
     `pyproject.toml`, virtuaaliympäristöt
 12. Rinnakkaisuus – GIL, säikeet, prosessit, `asyncio`
-13. Työkalut – pytest, ruff, mypy, pdb, `logging`, cProfile
+13. Työkalut – pytest, doctest, ruff, mypy, pdb, `logging`, cProfile
 14. Lopuksi – käytännöt, hinnat ja lähteet
 
 ## Rakentaminen
@@ -39,4 +41,7 @@ make pdf      # rakentaa python.pdf:n ja python-pikaopas.pdf:n
 ```
 
 Kehityskontti on hakemistossa `.devcontainer/python`. Riippuvuudet on
-lueteltu repositorion juuren README-tiedostossa.
+lueteltu repositorion juuren README-tiedostossa. Mittauskuvaajat
+(`kuvat/*.png`) tuottaa `make kuvat`; se vaatii Matplotlibin, eikä sitä
+ajeta testeissä.
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks. [Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.

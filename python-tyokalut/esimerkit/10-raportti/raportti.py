@@ -46,6 +46,12 @@ def lue(polku: Path) -> list[AjoTulos]:
 
 
 def yhteenveto(tulokset: Iterable[AjoTulos]) -> Yhteenveto:
+    """Laskee ajojen määrät, kokonaiskeston ja epäonnistuneet.
+
+    >>> yhteenveto([{"testi": "uart", "siemen": 7, "tila": "aikaraja",
+    ...              "kesto_s": 2.0}]).epaonnistuneet
+    ('uart/7 (aikaraja)',)
+    """
     lista = list(tulokset)
     huonot = sorted(f"{t['testi']}/{t['siemen']} ({t['tila']})"
                     for t in lista if t["tila"] != "läpi")

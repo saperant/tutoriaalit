@@ -42,6 +42,23 @@ Virheilmoitus (*traceback*) luetaan **alhaalta ylös**:
 3. Ylemmät rivit kertovat, mistä tuo funktio kutsuttiin, aina
    pääohjelmaan (`<module>`) asti.
 
+```{.dot otsikko="Virheilmoitus on kutsupino (luku *Funktiot*) kaatumishetkellä: virheilmoituksen ylin rivi on pääohjelma ja alin kohta, jossa poikkeus nousi."}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.35;
+  m [label="<module>\nrivi 14"];
+  f [label="lue_luvut\nrivi 10"];
+  x [label="float(\"kaksi\")"];
+  v [label="ValueError", shape=plain, style=""];
+  m -> f [label="kutsuu"];
+  f -> x [label="kutsuu"];
+  x -> v [label="nostaa", style=dashed];
+}
+```
+
+Poikkeus nousee kutsupinoa pitkin kutsujalta toiselle. Jos mikään
+funktio ei käsittele sitä, se päätyy pääohjelmaan asti, ja Python
+lopettaa ohjelman ja tulostaa pinon.
+
 Yleisimmät poikkeukset:
 
 | Poikkeus | Tyypillinen syy |
@@ -109,6 +126,38 @@ oma poikkeustyyppinsä.
 `try`-lauseeseen voi lisätä myös `else`-lohkon, joka suoritetaan, jos
 poikkeusta ei noussut, ja `finally`-lohkon, joka suoritetaan aina.
 
+## Kun ohjelma ei toimi
+
+Virheilmoitus kertoo, missä ohjelma kaatui, mutta syy voi olla
+aiemmassa rivissä, ja looginen virhe ei kaada ohjelmaa lainkaan.
+Virheen etsiminen (*debuggaus*) on järjestelmällistä työtä:
+
+1. **Toista virhe.** Etsi pienin syöte, jolla virhe näkyy. Luvussa
+   *Testaus* siitä tehdään testi, joka estää virheen paluun.
+2. **Lue virheilmoitus** alhaalta ylös.
+3. **Tarkista oletukset.** Tulosta välitulokset (`print(f"{muuttuja=}")`
+   tulostaa nimen ja arvon) tai pysäytä ohjelma `breakpoint()`-kutsulla
+   debuggeriin, jossa muuttujia voi tutkia ja koodia ajaa rivi
+   kerrallaan. Editorien debuggerit tekevät saman graafisesti.
+4. **Puolita.** Jos et tiedä, missä vaiheessa data menee vääräksi,
+   tarkista se puolivälissä ja jatka siitä puoliskosta, jossa virhe on.
+5. **Selitä ongelma ääneen** kollegalle tai vaikka kumiankalle
+   (*rubber duck debugging*). Selittäessä huomaa usein oletuksen, joka
+   ei pidä.
+
+## Kokeile itse
+
+1. **Iän jäsennys** (`07-1`). Funktio `jasenna_ika` palauttaa iän
+   kokonaislukuna ja nostaa `ValueError`in, jos teksti ei ole luku tai
+   ikä ei ole välillä 0–150.
+2. **Kelvollisten rivien summa** (`07-2`). Funktio
+   `summaa_kelvolliset` palauttaa lukurivien summan ja virheellisten
+   rivien numerot. Tyhjät rivit eivät ole virheitä.
+3. **Korjaa kaatuva ohjelma** (`07-3`). Pohjan ohjelma kaatuu
+   kolmella eri syötteellä. Aja se, lue virheilmoitukset ja korjaa
+   ohjelma käsittelemään tyhjät rivit, virheelliset pisteet ja tyhjä
+   syöte.
+
 ## Käytännössä
 
 - **Validoi syöte ohjelman reunalla.** Data tarkistetaan siinä, missä
@@ -140,3 +189,5 @@ poikkeusta ei noussut, ja `finally`-lohkon, joka suoritetaan aina.
 - Osaat nostaa poikkeuksen omassa funktiossa kuvaavalla viestillä.
 - Osaat perustella, milloin poikkeus käsitellään ja milloin ohjelman
   annetaan kaatua.
+- Osaat etsiä virheen järjestelmällisesti: toistaa sen, rajata
+  kohdan ja tarkistaa oletukset tulostamalla tai debuggerilla.

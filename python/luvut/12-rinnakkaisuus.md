@@ -24,6 +24,20 @@ nopeaa. Seuraukset:
   lisäys, tallennus) voi hukata päivityksiä. Jaettu tila suojataan
   lukolla kuten muissakin kielissä.
 
+```{.ajoituskaavio otsikko="Kolme säiettä. Laskennassa vain GIL:n haltija etenee ja muut odottavat lukkoa (viivoitus). I/O-odotuksen ajaksi säie vapauttaa lukon (ohut viiva), joten odotukset kuluvat yhtä aikaa."}
+{"signal": [
+  ["laskenta",
+   {"name": "säie 1", "wave": "=.x...=.x...", "data": ["ajo", "ajo"]},
+   {"name": "säie 2", "wave": "x.=.x...=.x.", "data": ["ajo", "ajo"]},
+   {"name": "säie 3", "wave": "x...=.x...=.", "data": ["ajo", "ajo"]}],
+  {},
+  ["I/O-odotus",
+   {"name": "säie 1", "wave": "=z.......=z.", "data": ["pyyntö", "tulos"]},
+   {"name": "säie 2", "wave": "x=z.......=z", "data": ["pyyntö", "tulos"]},
+   {"name": "säie 3", "wave": "x.=z.....x.=", "data": ["pyyntö", "tulos"]}]
+]}
+```
+
 Python 3.13 toi kokeellisen *GIL-vapaan* version (`python3.13t`, PEP 703),
 ja 3.14:ssä se on virallisesti tuettu mutta ei vielä oletus. Siinä
 säikeet suorittavat Python-koodia aidosti rinnakkain, mutta
@@ -84,6 +98,17 @@ määrän mukaan:
 - Prosessin käynnistys maksaa kymmeniä millisekunteja, joten joukko
   luodaan kerran ja sitä käytetään uudelleen.
 
+![Esimerkin laskenta kahdeksaan palaan jaettuna 1–4 säikeellä ja 1–4
+prosessilla neliytimisessä koneessa (CPython 3.13, pienin seitsemästä
+mittauksesta). Säikeiden lisääminen ei lyhennä kestoa. Prosesseilla
+kesto seuraa ihannetta kolmeen prosessiin asti; neljäs ei enää auta,
+koska palat ovat eri työmääräisiä ja koneella on muutakin
+kuormaa.](kuvat/rinnakkaisuus.png){width=70%}
+
+Kuvaajan tuottaa `kuvat/piirra.py` samalla funktiolla `alkulukuja`.
+Tarkat ajat riippuvat koneesta, joten ne eivät kuulu esimerkin
+testattuun tulosteeseen.
+
 Kun laskenta on numeerista, NumPy tai muu C-kirjasto on usein parempi
 ratkaisu kuin prosessit: vektoroitu operaatio on yksiprosessisenakin
 moninkertaisesti nopeampi kuin Python-silmukka.
@@ -117,6 +142,13 @@ odotetaan lohkon lopussa, ja jos yksi epäonnistuu, muut peruutetaan ja
 virheet nostetaan `ExceptionGroup`-ryhmänä (luku 10). Se on oletus, kun
 kaikkien tehtävien on onnistuttava; `gather` palautuksineen, kun
 osittainen tulos kelpaa.
+
+Samaan perheeseen kuuluvat `async with` (kontekstinhallitsija, jonka
+avaus ja sulkeminen voivat odottaa, kuten tietokantayhteys) ja
+`async for` (iterointi, jossa seuraavan alkion haku voi odottaa, kuten
+verkosta saapuvat viestit). Asynkroninen generaattori on `async def`
+-funktio, jossa on `yield`. Niiden käyttö kuuluu taitoon
+*Verkko-ohjelmointi*.
 
 Asynkroninen koodi vaatii asynkroniset kirjastot (`httpx`, `asyncpg`,
 `aiofiles`). Tavallinen estävä kutsu kuten `time.sleep` tai

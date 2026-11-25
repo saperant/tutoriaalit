@@ -1,6 +1,6 @@
 """Tulostaa ostoskuitin. Ongelma on pilkottu pieniin funktioihin."""
 
-ALV_PROSENTTI = 13.5   # elintarvikkeiden arvonlisävero 2026
+ALV_PROSENTTI = 13.5   # esimerkkiarvo: tarkista voimassa oleva verokanta
 
 
 def rivin_hinta(maara: int, a_hinta_snt: int) -> int:

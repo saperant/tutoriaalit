@@ -19,13 +19,14 @@ ja pikaopas
    CSV → C-otsake, TOML, INI, JSON
 5. Binäärimuodot – `struct`, tavujärjestys, bittikentät, oma
    tiedostomuoto tarkistussummineen
-6. Tiedostot ja hakemistot – `pathlib`, atominen kirjoitus
-7. Aliprosessit – komento listana, aikarajat, rinnakkaiset ajot
+6. Tiedostot ja hakemistot – `pathlib`, atominen kirjoitus, `shutil`
+7. Aliprosessit – komento listana, aikarajat, pitkän ajon seuranta,
+   rinnakkaiset ajot
 8. NumPy mittausdatalle – tietotyypit, broadcast, maskit, analyysi,
    rakenteiset tietotyypit
 9. Kuvaajat tiedostoon – matplotlibin olio-rajapinta
-10. Tyyppivihjeet ja testaus – `TypedDict`, pytest, fixturet,
-    tilannekuvat
+10. Testaus – kellon ja ympäristön eristäminen, parametrisointi,
+    doctest, tilannekuvat
 11. Lopuksi – nyrkkisäännöt ja lähteet
 
 ## Rakentaminen
@@ -33,10 +34,11 @@ ja pikaopas
 ```text
 make testaa     # rakenne, esimerkit (ruff, mypy --strict, ajo), pytest
 make pdf        # tutoriaali ja pikaopas PDF:ksi
-make kuvat      # luvun 9 kuva (commitoidaan)
+make kuvat      # lukujen 8 ja 9 kuvat (commitoidaan)
 ```
 
 Esimerkit tarvitsevat Python 3.12:n, NumPyn ja matplotlibin; testit
 pytestin. Kehityskontti: `.devcontainer/python-tyokalut`.
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks. [Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 Lisenssi: CC BY-SA 4.0.

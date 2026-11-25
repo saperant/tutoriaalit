@@ -21,6 +21,26 @@ leveämpään tyyppiin ennen laskentaa:
 Taito *Miten tietokone laskee* käsittelee kahden komplementin ja
 liukulukujen tarkkuuden syvemmin.
 
+## Binääritietueet suoraan taulukoksi
+
+Luvun 5 binäärimuodot luetaan suurina määrinä NumPyn *rakenteisella
+tietotyypillä*: kentät nimetään ja tyypitetään tavujärjestyksineen,
+ja `frombuffer` tulkitsee tavut taulukoksi kopioimatta:
+
+```{.python tiedosto="esimerkit/08-tietueet.py" osa="dtype"}
+```
+
+```{.python tiedosto="esimerkit/08-tietueet.py" osa="lue"}
+```
+
+```{.tuloste tiedosto="esimerkit/08-tietueet.odotettu"}
+```
+
+`frombuffer`in tulos on vain luku -näkymä alkuperäisiin tavuihin.
+Muokattava kopio tehdään `copy()`lla. Suurilla tiedostoilla
+`np.memmap` kuvaa tiedoston muistiin, eikä sitä tarvitse lukea
+kokonaan.
+
 ## Vektorointi ja broadcast
 
 AD-muuntimen raakalukemat muunnetaan jännitteiksi kanavakohtaisella
@@ -81,25 +101,13 @@ rinnakkaiset testit.
 ```{.tuloste tiedosto="esimerkit/08-analyysi.odotettu"}
 ```
 
-## Binääritietueet suoraan taulukoksi
+![Esimerkin signaali, liukuva keskiarvo ja tunnistetut häiriöpiikit
+sekä spektri, jonka huippu on 50 Hz:n kohdalla. Yhden jakson pituinen
+liukuva keskiarvo poistaa 50 Hz:n komponentin lähes kokonaan; piikit
+näkyvät siinä pieninä askelina.](kuvat/analyysi.png){width=92%}
 
-Luvun 5 binäärimuodot luetaan suurina määrinä NumPyn *rakenteisella
-tietotyypillä*: kentät nimetään ja tyypitetään tavujärjestyksineen,
-ja `frombuffer` tulkitsee tavut taulukoksi kopioimatta:
-
-```{.python tiedosto="esimerkit/08-tietueet.py" osa="dtype"}
-```
-
-```{.python tiedosto="esimerkit/08-tietueet.py" osa="lue"}
-```
-
-```{.tuloste tiedosto="esimerkit/08-tietueet.odotettu"}
-```
-
-`frombuffer`in tulos on vain luku -näkymä alkuperäisiin tavuihin.
-Muokattava kopio tehdään `copy()`lla. Suurilla tiedostoilla
-`np.memmap` kuvaa tiedoston muistiin, eikä sitä tarvitse lukea
-kokonaan.
+Kuvan tuottaa `kuvat/piirra.py` samoilla funktioilla ja samalla
+siemenellä. Kuvaajien piirtäminen on seuraavan luvun aihe.
 
 ## Käytännössä
 

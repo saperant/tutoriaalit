@@ -38,6 +38,23 @@ mitkä nimet ovat julkisia.
 
 Esimerkkiohjelma on jaettu neljään moduuliin. Riippuvuudet kulkevat
 yhteen suuntaan: `main` → `palvelu` → `malli`, ja `muisti` → `malli`.
+
+```{.dot otsikko="Moduulien tuonnit (yhtenäiset nuolet). `muisti` toteuttaa moduulin `palvelu` määrittelemän protokollan tuomatta sitä, joten kumpikaan ei riipu toisesta."}
+digraph {
+  rankdir=LR; nodesep=0.7; ranksep=0.6;
+  main [label="main.py\nkokoaa osat"];
+  palvelu [label="palvelu.py\nVarastopalvelu\nprotokolla Tuotevarasto"];
+  muisti [label="muisti.py\nMuistivarasto"];
+  malli [label="malli.py\nTuote, VarastoVirhe"];
+  main -> palvelu [label="tuo"];
+  main -> muisti [label="tuo"];
+  palvelu -> malli [label="tuo"];
+  muisti -> malli [label="tuo"];
+  muisti -> palvelu [style=dashed, label="  toteuttaa\n  protokollan"];
+  { rank=same; palvelu; muisti; }
+}
+```
+
 Toimialan tyypit eivät riipu mistään:
 
 ```{.python tiedosto="esimerkit/11-varasto/malli.py"}

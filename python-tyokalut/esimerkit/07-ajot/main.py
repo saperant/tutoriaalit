@@ -21,7 +21,7 @@ class Tulos:
 
 
 # @alku aja
-def aja(testi: str, siemen: int, aikaraja_s: float = 2.0) -> Tulos:
+def aja(testi: str, siemen: int, aikaraja_s: float = 6.0) -> Tulos:
     komento = [sys.executable, str(SIMULAATTORI), testi,
                "--siemen", str(siemen)]
     try:

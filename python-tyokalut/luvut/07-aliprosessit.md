@@ -25,6 +25,11 @@ komentotulkkia tarvitaan (putket, uudelleenohjaukset), jokainen arvo
 lainataan `shlex.quote`lla. `shlex.join` muotoilee komennon lokiin
 niin, että sen voi kopioida ja ajaa sellaisenaan.
 
+Ennen ensimmäistä ajoa kannattaa tarkistaa, että ulkoinen työkalu on
+asennettu: `shutil.which("vsim")` palauttaa ohjelman polun tai `None`.
+Selvä viesti "simulaattoria vsim ei löydy polulta" auttaa käyttäjää
+enemmän kuin kesken ajon nouseva `FileNotFoundError`.
+
 ## Yksi ajo: paluuarvo, tulosteet ja aikaraja
 
 Esimerkissä ulkoisena työkaluna on pieni simulaattorin korvike, joka
@@ -55,6 +60,36 @@ paluuarvolla. Se sopii, kun epäonnistuminen on aina virhe:
 
 ```{.python tiedosto="esimerkit/07-ajot/main.py" osa="check"}
 ```
+
+## Pitkä ajo: tuloste virtana ja siivous
+
+`run` palauttaa tulosteen vasta, kun ohjelma on päättynyt. Tuntien
+simulaatiossa loki halutaan nähdä ajon aikana, ja ajo kannattaa
+lopettaa heti, kun lokissa on kohtalokas virhe. `Popen` käynnistää
+ohjelman odottamatta, ja sen tulostetta luetaan rivi kerrallaan kuin
+tiedostoa:
+
+```{.python tiedosto="esimerkit/07-virta.py" osa="virta"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-virta.odotettu"}
+```
+
+- **`stderr=subprocess.STDOUT`** yhdistää virhetulosteen samaan
+  putkeen. Yksi putki, jota luetaan jatkuvasti, ei voi täyttyä ja
+  lukita ohjelmia toisiinsa.
+- **`start_new_session=True`** antaa lapselle oman prosessiryhmän, ja
+  `os.killpg` lopettaa koko ryhmän. Simulaattorit käynnistävät usein
+  omia lapsiprosessejaan (käännös, lisenssin haku), jotka jäisivät
+  muuten pyörimään ja varaamaan lisenssiä. Kutsut ovat POSIX-kohtaisia.
+- **`finally`** suoritetaan myös, kun käyttäjä keskeyttää työkalun
+  (Ctrl+C) tai lukusilmukassa nousee poikkeus. Lapsi ei jää orvoksi.
+- **Paluuarvo on negatiivinen,** kun prosessi päättyi signaaliin:
+  −15 on `SIGTERM`. Sitkeälle prosessille lähetetään aikarajan jälkeen
+  `SIGKILL`.
+- Lapsen on tyhjennettävä puskurinsa (`flush`), jotta rivit tulevat
+  heti. Python-lapselle sen tekee valitsin `-u` tai ympäristömuuttuja
+  `PYTHONUNBUFFERED=1`.
 
 ## Monta ajoa rinnakkain
 
@@ -94,9 +129,13 @@ Python-koodia rinnakkain.
   sama tulkki ja sama virtuaaliympäristö kuin kutsujalla.
 - **Tallenna komento lokiin `shlex.join`illa.** Epäonnistuneen ajon
   voi toistaa käsin kopioimalla.
-- **Sudenkuoppa:** `Popen` ilman `communicate`a ja täyttyvä putki.
-  Kun lapsi kirjoittaa enemmän kuin putken puskuri vetää, molemmat
-  odottavat toisiaan ikuisesti. `run` ja `communicate` hoitavat tämän.
+- **Tarkista työkalu `shutil.which`illa** ennen pitkää ajoa ja kerro
+  puuttuvasta ohjelmasta nimeltä.
+- **Sudenkuoppa:** `Popen` ja täyttyvä putki. Kun lapsi kirjoittaa
+  putkeen, jota kukaan ei lue, se pysähtyy puskurin täytyttyä, ja
+  molemmat odottavat toisiaan ikuisesti. `run` ja `communicate`
+  hoitavat lukemisen; omassa silmukassa luetaan yhtä yhdistettyä
+  putkea loppuun asti.
 - **Sudenkuoppa:** ympäristömuuttujat. Lapsi perii ympäristön.
   Lisenssipalvelin, lokaali ja polut annetaan tarvittaessa
   `env=`-parametrilla kopioimalla `os.environ` ja muuttamalla
@@ -110,3 +149,5 @@ Python-koodia rinnakkain.
   lopputuloksen.
 - Osaat ajaa ulkoisia ohjelmia rinnakkain säiepoolilla ja tuottaa
   deterministisen raportin.
+- Osaat seurata pitkän ajon tulostetta rivi kerrallaan ja lopettaa
+  ajon lapsiprosesseineen hallitusti.

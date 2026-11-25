@@ -57,6 +57,29 @@ viittaa arvoon. Sama nimi voidaan myöhemmin sijoittaa viittaamaan
 toiseen arvoon: `saldo = saldo + 10` laskee ensin oikean puolen ja
 siirtää sitten nimen uuteen arvoon. Lyhenne samalle on `saldo += 10`.
 
+```{.dot otsikko="Sijoitus `saldo = saldo + 10` ei muuta arvoa 100, vaan siirtää nimen `saldo` uuteen arvoon 110."}
+digraph {
+  nodesep=0.3; ranksep=0.3;
+  subgraph cluster_ennen {
+    label="saldo = 100"; style=rounded; color="#B8C4C8"; margin=12;
+    n1 [label="saldo", shape=plain, style=""];
+    a1 [label="100"];
+    n1 -> a1;
+  }
+  subgraph cluster_jalkeen {
+    label="saldo = saldo + 10"; style=rounded; color="#B8C4C8"; margin=12;
+    n2 [label="saldo", shape=plain, style=""];
+    a2 [label="100", style="rounded,dashed"];
+    b2 [label="110"];
+    n2 -> a2 [style=invis];
+    n2 -> b2;
+  }
+}
+```
+
+Kuvan ajattelutapa (nimi viittaa arvoon) selittää luvussa *Kokoelmat*
+ilmiön, jossa kaksi nimeä viittaa samaan listaan.
+
 Nimeämiskäytännöt (PEP 8, Pythonin tyyliopas):
 
 - Muuttujat ja funktiot pienillä kirjaimilla, sanat alaviivalla
@@ -134,14 +157,30 @@ se haittaa, koska sentin virhe kirjanpidossa on virhe. Siksi rahasummat
 käsitellään kokonaislukuina sentteinä, kuten tämän tutoriaalin
 esimerkeissä, tai standardikirjaston `Decimal`-tyypillä.
 
+## Kokeile itse
+
+Tehtävien pohjat ja tarkistus on kuvattu johdannon osiossa *Tehtävät*:
+`python3 tarkista.py --aloita 02-1` kopioi pohjan ja
+`python3 tarkista.py 02-1` tarkistaa ratkaisun.
+
+1. **Munakennot** (`02-1`). Ohjelma lukee munien määrän ja tulostaa,
+   montako 12 munan kennoa tulee täyteen ja montako munaa jää yli.
+2. **Matka-aika** (`02-2`). Ohjelma lukee matkan kilometreinä
+   (desimaalipilkku sallittu) ja keskinopeuden ja tulostaa matka-ajan
+   muodossa `2 h 09 min`.
+3. **Lasku tasan** (`02-3`). Ohjelma lukee loppusumman sentteinä ja
+   maksajien määrän ja tulostaa yhden osuuden euroina sekä sen, montako
+   senttiä jää jakamatta. Liukulukuja ei tarvita.
+
 ## Käytännössä
 
 - **Nimet kertovat merkityksen.** Koodia luetaan paljon useammin kuin
   kirjoitetaan. Hyvä nimi tekee kommentin tarpeettomaksi:
   `tunnit = kesto // SEKUNTIA_TUNNISSA` ei tarvitse selitystä.
-- **Ei taikanumeroita.** Kaavassa esiintyvä `3600` tai `0.14` saa
+- **Ei taikanumeroita.** Kaavassa esiintyvä `3600` tai `13.5` saa
   nimen (`SEKUNTIA_TUNNISSA`, `ALV_PROSENTTI`). Nimetty vakio kertoo,
-  mitä luku tarkoittaa, ja sen voi muuttaa yhdestä paikasta.
+  mitä luku tarkoittaa, ja sen voi muuttaa yhdestä paikasta, kun
+  esimerkiksi verokanta muuttuu.
 - **Syöte on aina tekstiä, ja se tarkistetaan.** Muunna syöte heti
   luettaessa oikeaan tyyppiin ja käsittele mahdolliset muodot (pilkku,
   välilyönnit).

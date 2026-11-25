@@ -20,6 +20,13 @@ joka alkaa nollasta: `arvosanat[0]` on ensimmäinen ja `arvosanat[-1]`
 viimeinen. *Viipale* `arvosanat[:3]` on uusi lista kolmesta
 ensimmäisestä alkiosta.
 
+```{.dot otsikko="Lista `[3, 5, 0, 4, 2]`: jokaisella alkiolla on indeksi alusta (0, 1, 2, ...) ja lopusta (-1, -2, ...). Viipale `[1:4]` sisältää indeksit 1, 2 ja 3; loppuindeksi ei kuulu mukaan."}
+digraph {
+  node [shape=record, style=filled];
+  lista [label="{indeksi|alkio|lopusta}|{0|3|-5}|{1|5|-4}|{2|0|-3}|{3|4|-2}|{4|2|-1}"];
+}
+```
+
 ```{.python tiedosto="esimerkit/05-arvosanat.py"}
 ```
 
@@ -58,6 +65,21 @@ Syöte ja tuloste:
 ```{.tuloste tiedosto="esimerkit/05-sanat.odotettu"}
 ```
 
+```{.dot otsikko="Sanakirja `lukumaarat` syötteen lukemisen jälkeen (neljä yleisintä avainta). Arvo haetaan avaimella: `lukumaarat[\"koira\"]` on 3."}
+digraph {
+  ranksep=0.3;
+  nimi [label="lukumaarat", shape=plain, style=""];
+  sk [shape=record, style=filled,
+      label="{avain|\"koira\"|\"pihalla\"|\"ja\"|\"lapsi\"}|{arvo|3|2|2|2}"];
+  nimi -> sk;
+}
+```
+
+Ohjelma lukee tekstin *vakiosyötteestä* `sys.stdin`, jota voi käydä
+läpi rivi kerrallaan `for`-silmukalla kuten tiedostoa. Lause
+`import sys` ottaa käyttöön standardikirjaston modulin `sys`;
+moduleihin palataan luvussa *Modulit ja standardikirjasto*.
+
 - `lukumaarat.get(sana, 0)` palauttaa arvon tai oletuksen 0, jos avainta
   ei ole. Pelkkä `lukumaarat[sana]` aiheuttaisi puuttuvalla avaimella
   virheen `KeyError`.
@@ -66,8 +88,6 @@ Syöte ja tuloste:
   mitä alkiosta verrataan; `lambda pari: pari[1]` on lyhyt nimetön
   funktio, joka palauttaa parin toisen osan.
 - `for sana, maara in ...` *purkaa* parin kahteen nimeen.
-- `sys.stdin` on ohjelman syöte, jota voi lukea rivi kerrallaan kuin
-  tiedostoa. Moduli `sys` otetaan käyttöön lauseella `import sys`.
 
 Tuloste paljastaa yksinkertaisen ratkaisun rajat: *koira* ja *koiralle*
 ovat eri sanoja. Kielen taivutus vaatii erillisen kirjaston; tärkeintä
@@ -87,6 +107,52 @@ tarkistamiseen ja joukko-operaatioihin:
 Joukolla ei ole järjestystä, joten tulostettaessa se järjestetään
 `sorted`-funktiolla. Muuten tulostusjärjestys voisi vaihdella.
 
+## Monikko
+
+Monikko on kiinteä ryhmä arvoja, jota ei voi muuttaa luomisen jälkeen.
+Se sopii arvoille, jotka kuuluvat yhteen ja joiden merkitys riippuu
+paikasta, kuten koordinaattipari. Sanakirjan `items()` palautti
+avain–arvo-parit juuri monikoina.
+
+```{.python tiedosto="esimerkit/05-monikko.py"}
+```
+
+```{.tuloste tiedosto="esimerkit/05-monikko.odotettu"}
+```
+
+- Monikko kirjoitetaan kaarisulkeisiin, ja sen alkiot *puretaan*
+  nimiin sijoituksella `leveys, pituus = sijainti`.
+- Funktio palauttaa useita arvoja monikkona: `return min(luvut),
+  max(luvut)`. Paluuarvon tyyppi on `tuple[float, float]`.
+- Koska monikko ei voi muuttua, se kelpaa sanakirjan avaimeksi ja
+  joukon alkioksi. Lista ei kelpaa.
+
+Kun kenttiä on enemmän kuin kaksi tai kolme, nimetyt kentät ovat
+selvempiä kuin paikat: silloin käytetään luvun *Luokat ja oliot*
+dataluokkaa.
+
+## Sisäkkäiset rakenteet
+
+Kokoelman alkiot voivat olla kokoelmia. Oikea data on usein tällaista:
+jokaisella opiskelijalla on lista arvosanoja, ja taulukon jokainen rivi
+on monikko.
+
+```{.python tiedosto="esimerkit/05-sisakkaiset.py"}
+```
+
+```{.tuloste tiedosto="esimerkit/05-sisakkaiset.odotettu"}
+```
+
+Sisäkkäiseen rakenteeseen viitataan taso kerrallaan vasemmalta
+oikealle: `arvosanat["Aino"]` on lista ja `arvosanat["Aino"][0]` sen
+ensimmäinen alkio. Tyyppivihje `dict[str, list[int]]` kertoo rakenteen
+samassa järjestyksessä: avaimet ovat merkkijonoja ja arvot
+kokonaislukulistoja. `setdefault(avain, [])` palauttaa avaimen arvon ja
+lisää ensin tyhjän listan, jos avainta ei ole.
+
+Kahta tai kolmea tasoa syvempi rakenne on vaikea lukea. Silloin
+sisemmille tasoille annetaan nimi funktiolla tai luokalla.
+
 ## Viittaukset ja muuttuvuus
 
 Muuttuja viittaa arvoon; se ei sisällä kopiota. Kun lista sijoitetaan
@@ -98,10 +164,38 @@ toiseen nimeen, molemmat nimet viittaavat samaan listaan:
 ```{.tuloste tiedosto="esimerkit/05-alias.odotettu"}
 ```
 
+```{.dot otsikko="Esimerkin tilanne lopussa. Sijoitus `toinen_nimi = ostokset` antoi samalle listalle toisen nimen; `copy()` loi uuden listan."}
+digraph {
+  rankdir=LR; nodesep=0.25; ranksep=0.6;
+  node [shape=plain, style=""];
+  kopio; toinen_nimi; ostokset;
+  l2 [shape=record, style=filled,
+      label="{\"maito\"|\"leipä\"|\"juusto\"|\"omena\"}"];
+  l1 [shape=record, style=filled,
+      label="{\"maito\"|\"leipä\"|\"juusto\"}"];
+  kopio -> l2;
+  toinen_nimi -> l1;
+  ostokset -> l1;
+}
+```
+
 Tämä koskee kaikkia *muutettavia* arvoja: listoja, sanakirjoja,
 joukkoja ja olioita. Myös funktiolle annettu lista on sama lista, joten
 funktio voi muuttaa kutsujan dataa. Luvut, merkkijonot ja monikot ovat
 *muuttumattomia*, joten niiden kohdalla ilmiötä ei voi havaita.
+
+## Kokeile itse
+
+1. **Parilliset luvut** (`05-1`). Funktio `parilliset` palauttaa
+   listan parilliset luvut listakoosteella.
+2. **Yleisin sana** (`05-2`). Funktio `yleisin` laskee esiintymät
+   sanakirjaan ja palauttaa yleisimmän sanan; tasatilanteessa
+   aakkosjärjestyksessä ensimmäisen.
+3. **Yhteiset alkiot** (`05-3`). Funktio `yhteiset` palauttaa
+   kummassakin listassa esiintyvät merkkijonot järjestettynä. Käytä
+   joukkoja.
+4. **Lisäys muuttamatta alkuperäistä** (`05-4`). Pohjan funktio
+   muuttaa kutsujan listaa. Korjaa se palauttamaan uusi lista.
 
 ## Käytännössä
 
@@ -130,3 +224,7 @@ funktio voi muuttaa kutsujan dataa. Luvut, merkkijonot ja monikot ovat
   mukaan.
 - Osaat suodattaa ja muuntaa listan listakoosteella.
 - Osaat selittää, miksi `kopio = lista` ei kopioi listaa.
+- Osaat palauttaa funktiosta useita arvoja monikkona ja purkaa
+  monikon nimiin.
+- Osaat rakentaa sisäkkäisen rakenteen, kuten sanakirjan listoja, ja
+  viitata sen alkioihin.

@@ -1,16 +1,20 @@
-# Tyyppivihjeet ja testaus
+# Testaus
 
 Työkalun tuloksiin nojataan päätöksissä: onko regressio puhdas,
 täyttyykö ajoitus, onko rekisterikartta oikein. Siksi työkalu
 testataan kuten muukin ohjelmisto. Tyyppivihjeet ja `mypy --strict`
-löytävät virheet ennen ajoa, ja pytest varmistaa toiminnan.
+ovat olleet käytössä jokaisessa esimerkissä ja löytävät virheet ennen
+ajoa; pytest varmistaa toiminnan. pytestin perusteet (fixturet,
+`tmp_path`, `monkeypatch`, parametrisointi) ja ulkoisen datan tyypit
+(`TypedDict`, `Literal`, `cast`) esitellään taidossa *Python*. Tämä
+luku soveltaa niitä työkaluun ja lisää kaksi työkaluille tyypillistä
+tekniikkaa: kellon ja ympäristön eristämisen sekä tilannekuvatestin.
 
-## Tyypit rajapinnoissa
+## Testattava työkalu
 
 Regressioajon tulokset ovat JSON Lines -tiedostossa: yksi
 JSON-objekti riviä kohden. `TypedDict` kuvaa objektin rakenteen ja
-`Literal` sallitut arvot, joten mypy huomaa kirjoitusvirheen
-avaimessa tai tilassa:
+`Literal` sallitut arvot:
 
 ```{.python tiedosto="esimerkit/10-raportti/raportti.py" osa="tyypit"}
 ```
@@ -22,17 +26,15 @@ korvata ne:
 ```{.python tiedosto="esimerkit/10-raportti/raportti.py" osa="logiikka"}
 ```
 
-`cast(AjoTulos, data)` kertoo mypylle, että tarkistettu sanakirja on
-oikeaa tyyppiä. `cast` ei tarkista mitään ajon aikana, joten se tulee
-vasta varsinaisen tarkistuksen jälkeen.
+`cast` ei tarkista mitään ajon aikana, joten se tulee vasta
+varsinaisen tarkistuksen jälkeen.
 
-## pytest: fixturet ja monkeypatch
+## Kellon ja ympäristön eristäminen
 
-*Fixture* on funktio, joka valmistelee testin tarvitseman asian.
-pytest antaa sen testille parametrin nimen perusteella. `tmp_path` on
-pytestin oma fixture, joka antaa tyhjän tilapäishakemiston jokaiselle
-testille. `monkeypatch` korvaa attribuutteja ja ympäristömuuttujia ja
-palauttaa ne testin jälkeen:
+Raportin otsikossa on kellonaika ja ympäristömuuttujasta luettu nimi,
+joten tuloste muuttuisi ajosta toiseen. Fixture `tmp_path` antaa
+testille oman tilapäishakemiston, ja `monkeypatch` korvaa attribuutteja
+ja ympäristömuuttujia testin ajaksi:
 
 ```{.python tiedosto="esimerkit/10-raportti/test_raportti.py" osa="fixture"}
 ```
@@ -50,6 +52,16 @@ hylätään oikealla viestillä:
 
 ```{.python tiedosto="esimerkit/10-raportti/test_raportti.py" osa="parametrit"}
 ```
+
+Puhtaan funktion käyttöesimerkin voi kirjoittaa myös funktion
+dokumentaatiomerkkijonoon. Esimerkin funktiossa `yhteenveto` on
+tulkin istunnon muotoinen *doctest*, jonka `pytest --doctest-modules`
+ajaa muiden testien mukana. Näin dokumentaation esimerkki ei voi
+vanheta huomaamatta. Doctest sopii jäsennys- ja muunnosfunktioiden
+(kuten luvun 2 taajuuden jäsennys) muutamaan havainnolliseen
+tapaukseen; rajatapaukset kuuluvat parametrisoituihin testeihin.
+Dokumentaation rakentaminen ja sen esimerkkien testaus laajemmin on
+taidossa *Tekninen dokumentaatio*.
 
 ## Tilannekuvatesti
 
@@ -69,9 +81,9 @@ erosta:
 Testit ajetaan hakemistossa:
 
 ```text
-$ python3 -m pytest -q
-......                                                           [100%]
-6 passed in 0.02s
+$ python3 -m pytest -q --doctest-modules
+.......                                                          [100%]
+7 passed in 0.02s
 $ PAIVITA_ODOTETUT=1 python3 -m pytest -q   # tarkoituksellinen muutos
 $ git diff odotetut/
 ```
@@ -105,10 +117,10 @@ Sama moduuli tuottaa raportin pääohjelmasta:
 
 ## Itsearviointi
 
-- Osaat kuvata JSON-rakenteen `TypedDict`illä ja sallitut arvot
-  `Literal`illa.
-- Osaat kirjoittaa fixtureja ja käyttää `tmp_path`- ja
-  `monkeypatch`-fixtureja kellon ja ympäristön kiinnittämiseen.
+- Osaat rakentaa työkalun niin, että kellonaika ja ympäristö ovat
+  korvattavissa, ja kiinnittää ne testissä `monkeypatch`-fixturella.
+- Osaat kirjoittaa funktion dokumentaatiomerkkijonoon doctest-esimerkin
+  ja ajaa sen pytestillä.
 - Osaat parametrisoida testin ja testata virheellisen syötteen
   hylkäämisen.
 - Osaat kirjoittaa tilannekuvatestin ja päivittää tilannekuvan

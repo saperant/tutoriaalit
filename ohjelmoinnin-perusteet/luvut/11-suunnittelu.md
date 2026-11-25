@@ -51,6 +51,22 @@ moduleiksi:
 | `raportti.py` | koosteiden laskenta ja rahan muotoilu |
 | `main.py` | syötteen luku, virheiden keruu ja tulostus |
 
+```{.dot otsikko="Budjettiohjelman tietovirta. Teksti muuttuu tyypitetyksi dataksi heti alussa, ja laskenta käsittelee vain `Tapahtuma`-olioita. Virheilmoitukset kulkevat laskennan ohi."}
+digraph {
+  rankdir=LR; nodesep=0.35; ranksep=0.3;
+  syote [label="tiliotteen\nrivit", shape=plain, style=""];
+  tuloste [label="raportti", shape=plain, style=""];
+  jasennys [label="tapahtuma.py\njäsennys"];
+  laskenta [label="raportti.py\nkoosteet"];
+  tulostus [label="main.py\ntulostus"];
+  syote -> jasennys;
+  jasennys -> laskenta [label="Tapahtuma-\noliot"];
+  laskenta -> tulostus [label="summat"];
+  tulostus -> tuloste;
+  jasennys -> tulostus [label="virheilmoitukset", style=dashed];
+}
+```
+
 ## 3. Suunnittele data ensin
 
 Kun data on mallinnettu hyvin, koodi seuraa siitä. Tapahtuma on
@@ -98,23 +114,23 @@ Testit kirjoitettiin vaihe kerrallaan toteutuksen rinnalla: ensin
 summan jäsennys, sitten rivin jäsennys, koosteet ja lopuksi
 virheellisten rivien käsittely.
 
-## Kun ohjelma ei toimi
+Kun osa ei toimi odotetusti, virhe etsitään luvun *Virheet ja
+poikkeukset* tavalla: pienin syöte, jolla virhe näkyy, kirjoitetaan
+ensin testiksi ja korjataan sitten. Koska osat ovat pieniä ja erillään,
+virheen paikka rajautuu yhteen funktioon.
 
-Virheen etsiminen (*debuggaus*) on järjestelmällistä työtä:
+## Kokeile itse
 
-1. **Toista virhe.** Etsi pienin syöte, jolla virhe näkyy, ja tee
-   siitä testi.
-2. **Lue virheilmoitus** alhaalta ylös (luku *Virheet ja
-   poikkeukset*).
-3. **Tarkista oletukset.** Tulosta välitulokset (`print(f"{muuttuja=}")`
-   tulostaa nimen ja arvon) tai pysäytä ohjelma `breakpoint()`-kutsulla
-   debuggeriin, jossa muuttujia voi tutkia ja koodia ajaa rivi
-   kerrallaan. Editorien debuggerit tekevät saman graafisesti.
-4. **Puolita.** Jos et tiedä, missä vaiheessa data menee vääräksi,
-   tarkista se puolivälissä ja jatka siitä puoliskosta, jossa virhe on.
-5. **Selitä ongelma ääneen** kollegalle tai vaikka kumiankalle
-   (*rubber duck debugging*). Selittäessä huomaa usein oletuksen, joka
-   ei pidä.
+Näissä tehtävissä pohja on lähes tyhjä: suunnittelu on osa tehtävää.
+Kirjoita ensin esimerkkisyöte ja haluttu tuloste, pilko ohjelma
+funktioiksi ja testaa ne erikseen ennen kuin ajat tarkistimen.
+
+1. **Sarjataulukko** (`11-1`). Ohjelma lukee ottelukohtaiset pisteet
+   (`joukkue;pisteet`) ja tulostaa joukkueet pistesumman mukaan
+   järjestettyinä.
+2. **Tuntiraportti** (`11-2`). Ohjelma lukee työtuntikirjauksia
+   (`päivä;tekijä;tunnit`), ohittaa kommentit, tulostaa tunnit
+   tekijöittäin ja luettelee virheelliset rivit numeroineen.
 
 ## Käytännössä
 
@@ -142,5 +158,5 @@ Virheen etsiminen (*debuggaus*) on järjestelmällistä työtä:
   perustella vastuunjaon.
 - Osaat mallintaa syötteen dataluokaksi ja jäsentää sen ohjelman
   reunalla.
-- Osaat etsiä virheen järjestelmällisesti: toistaa, rajata ja
-  tarkistaa oletukset.
+- Osaat erottaa syötteen luvun, laskennan ja tulostuksen toisistaan
+  niin, että laskennan voi testata ilman tiedostoja.

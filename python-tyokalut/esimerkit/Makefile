@@ -16,7 +16,7 @@ PYTEST := python3 -m pytest -q -p no:cacheprovider
 kaikki: $(TESTIT) paketti
 
 $(TESTIT):
-	cd $@ && $(PYTEST)
+	cd $@ && $(PYTEST) --doctest-modules
 
 # Luvun 3 paketti testataan kehityshakemistosta asentamatta sitä.
 paketti:

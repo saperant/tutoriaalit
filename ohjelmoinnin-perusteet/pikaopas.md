@@ -113,8 +113,7 @@ uuden.
 | `from rahat import euroina` | oma moduli `rahat.py` |
 | `if __name__ == "__main__":` | ajo vain ohjelmana |
 
-Standardikirjasto: `math statistics random datetime pathlib csv json
-sys collections re`.
+Standardikirjasto: `math statistics datetime pathlib csv json sys`.
 
 # Testit
 
@@ -124,5 +123,4 @@ sys collections re`.
 | `@pytest.mark.parametrize("x", [...])` | sama testi monella syötteellä |
 | `with pytest.raises(ValueError):` | odotettu poikkeus |
 
-Testaa: tunnettu tulos, rajatapaukset, virheelliset syötteet ja
-jokainen löydetty virhe.
+Testaa tunnettu tulos, rajatapaukset ja virheelliset syötteet.

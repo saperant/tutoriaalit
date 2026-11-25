@@ -77,6 +77,21 @@ usage: lokityokalu virheet [-h] [--taso {WARNING,ERROR,FATAL}]
 Ohjeen tarkka muotoilu vaihtelee Python-versioittain ja päätteen
 leveyden mukaan, joten sitä ei kannata verrata testeissä.
 
+`--help` on työkalun käyttäjädokumentaatio, ja usein ainoa, jonka
+käyttäjä lukee. Sen kuvaus tulee modulin dokumentaatiomerkkijonosta
+(`description=__doc__`), joten sama teksti näkyy ohjeessa, komennolla
+`pydoc` ja lähdekoodia lukevalle, eikä kopioita ole pidettävä ajan
+tasalla. `RawDescriptionHelpFormatter` säilyttää merkkijonon
+rivityksen. Dokumentaatiomerkkijonoon kirjoitetaan se, mitä valitsimien
+luettelo ei kerro: mitä työkalu tekee, mistä syöte tulee ja mitä
+paluuarvot tarkoittavat. Esimerkin merkkijono on tiedoston alussa:
+
+```{.python tiedosto="esimerkit/02-lokityokalu.py" osa="ohje"}
+```
+
+Taito *Tekninen dokumentaatio* näyttää, miten samoista
+dokumentaatiomerkkijonoista tuotetaan työkalun viitesivut.
+
 ## Argumenttien tarkistus
 
 `type`-parametri voi olla mikä tahansa funktio, joka muuntaa
@@ -110,9 +125,9 @@ aja-sim: error: argument --kello: virheellinen taajuus '100XHz', esim. 100MHz
 - **Konfiguraation järjestys:** oletusarvo < asetustiedosto <
   ympäristömuuttuja < komentorivi. Komentorivi voittaa aina, koska se
   on käyttäjän tuorein tahto.
-- **Logging-kirjasto oikein.** Kirjastomoduuli luo oman lokittajansa
-  (`logging.getLogger(__name__)`) eikä koskaan kutsu `basicConfig`ia.
-  Vain `main` päättää, mihin ja millä tasolla lokitetaan.
+- **Lokitus kuten taidossa *Python*:** moduuli luo oman lokittajansa,
+  ja vain `main` kutsuu `basicConfig`ia. Työkalussa lokin kohde on
+  aina virhetuloste.
 - **Sudenkuoppa:** `print` virhetulosteen sijaan tulosteeseen. Kun
   käyttäjä ohjaa tuloksen tiedostoon, virheilmoitus päätyy tiedostoon
   ja näyttää datalta.
@@ -126,3 +141,5 @@ aja-sim: error: argument --kello: virheellinen taajuus '100XHz', esim. 100MHz
 - Osaat erottaa tulokset ja diagnostiikan tulosteen ja
   virhetulosteen välillä ja asettaa lokituksen tason valitsimella.
 - Osaat suunnitella paluuarvot ja käsitellä suljetun putken.
+- Osaat kirjoittaa modulin dokumentaatiomerkkijonon, josta työkalun
+  `--help` saa kuvauksensa ja paluuarvojen selityksen.

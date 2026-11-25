@@ -98,6 +98,33 @@ Täyttä TDD:tä ei tarvitse noudattaa aina, mutta testit ensin
 -ajattelu kannattaa: jos funktiolle ei osaa kirjoittaa testiä, sen
 tehtävä ei ole vielä selvä.
 
+## Kokeile itse
+
+Lukujen tehtävien tarkistin `tarkista.py` on tämän luvun sovellus: se
+ajaa ratkaisun tunnetuilla syötteillä ja vertaa tulosta odotettuun.
+Vertailu ei ole pelkkä `==`, koska testin pitää hyväksyä kaikki oikeat
+vastaukset ja vain ne:
+
+```{.python tiedosto="esimerkit/tarkista.py" osa="sama"}
+```
+
+Liukulukuja verrataan pienellä toleranssilla (luku *Arvot, tyypit ja
+muuttujat*), ja tyypin on täsmättävä: `True == 1` on Pythonissa tosi,
+mutta totuusarvoa odottava testi ei saa hyväksyä lukua 1.
+`isinstance(arvo, tyyppi)` kertoo, onko arvo annettua tyyppiä.
+
+Tämän luvun tehtävissä kirjoitetaan testejä, ei toteutusta. Tarkistin
+ajaa testisi ensin oikeaa toteutusta vasten, jolloin kaikkien testien
+pitää mennä läpi. Sitten se vaihtaa tilalle virheellisiä toteutuksia
+yksi kerrallaan: hyvä testijoukko jää kiinni jokaiseen. Jos jokin
+virhe pääsee läpi, tarkistin kertoo, mitä testeistä puuttuu.
+
+1. **Testit karkausvuodelle** (`10-1`). Kirjoita funktiolle
+   `on_karkausvuosi` testit, jotka kattavat säännön jokaisen haaran.
+2. **Testit kellonajan jäsennykselle** (`10-2`). Kirjoita funktiolle
+   `minuutteina` testit: tunnettu tulos, rajatapaukset ja virheelliset
+   syötteet (`pytest.raises`).
+
 ## Käytännössä
 
 - **Testaa funktioita, älä tulosteita.** Laskevat funktiot, jotka
@@ -124,3 +151,5 @@ tehtävä ei ole vielä selvä.
 - Osaat valita testitapaukset järjestelmällisesti: tunnetut
   tulokset, rajatapaukset ja virheelliset syötteet.
 - Osaat kuvata testit ensin -työtavan ja sen hyödyt.
+- Osaat arvioida testijoukon kattavuutta kysymällä, mikä virheellinen
+  toteutus pääsisi testeistä läpi.

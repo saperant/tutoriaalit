@@ -25,6 +25,8 @@ Tavoite on oikea ohjelmointitaito, ei syntaksin luettelo. Siksi:
   luvun jälkeen pitäisi osata.
 - Yleiset virheet näytetään testattuina esimerkkeinä: koodi, jonka
   tarkistustyökalu hylkää, tai ohjelma, joka kaatuu.
+- Sisältölukujen lopussa on *Kokeile itse* -tehtäviä, joiden ratkaisun
+  voi tarkistaa automaattisesti (ks. *Tehtävät*).
 
 Tutoriaali ei käy läpi Pythonin kaikkia piirteitä. Kun perusteet ovat
 hallussa, taitopuussa seuraavat taito *Python* (idiomaattinen ja
@@ -110,13 +112,31 @@ työkalulla, joita tämäkin tutoriaali käyttää:
   niiden tyypin mukaisesti, esimerkiksi ettei tekstiä yritetä laskea
   yhteen luvun kanssa.
 
+Kun koodissa ei ole huomautettavaa, työkalut kertovat sen lyhyesti:
+
 ```text
 $ ruff check kuitti.py
+All checks passed!
 $ mypy kuitti.py
+Success: no issues found in 1 source file
 $ python3 kuitti.py
 ```
 
 Testauskehys **pytest** esitellään luvussa *Testaus*.
+
+Kehityskontissa työkalut ovat valmiina. Omalle koneelle ne asennetaan
+projektin omaan *virtuaaliympäristöön*, jotta ne eivät sekoitu muiden
+projektien paketteihin:
+
+```text
+$ python3 -m venv .venv
+$ source .venv/bin/activate
+(.venv) $ pip install ruff mypy pytest
+```
+
+Windowsissa aktivointikomento on `.venv\Scripts\activate`.
+Virtuaaliympäristöihin ja `pip`-työkaluun palataan luvussa *Modulit ja
+standardikirjasto*.
 
 ## Esimerkkien testaus
 
@@ -132,10 +152,44 @@ näyttää ajonaikaisen virheen, ja sen testi varmistaa, että ohjelma
 todella kaatuu odotetulla tavalla. Hakemistoesimerkkien pytest-testit
 ajetaan hakemiston `esimerkit` Makefilellä (`make`).
 
+## Tehtävät
+
+Lukujen 2–11 lopussa on *Kokeile itse* -tehtäviä helpoimmasta
+vaativimpaan. Jokaisella tehtävällä on tunnus (luku ja järjestysnumero,
+esimerkiksi `03-1`), pohjatiedosto, jonka alussa on tarkka tehtävänanto,
+ja testitapaukset. Tehtävät tehdään hakemistossa `esimerkit`:
+
+```text
+$ python3 tarkista.py --aloita 03-1
+Pohja kopioitu: .../esimerkit/tehtavat/omat/03-1.py
+$ python3 tarkista.py 03-1
+03-1 Lämpötilan luokitus: tapaus 1/5 ei mene läpi.
+  syöte:    -5
+  odotettu: pakkasta
+  saatu:    ?
+```
+
+Valitsin `--aloita` kopioi pohjan hakemistoon `tehtavat/omat`, jossa
+sitä muokataan. Tarkistin ajaa ratkaisun testitapauksilla ja näyttää
+ensimmäisen, joka ei mene läpi: syötteen tai funktiokutsun, odotetun
+tuloksen ja saadun tuloksen. Kun ratkaisu on valmis, tuloste on
+`03-1 Lämpötilan luokitus: 5/5 tapausta oikein.` Ilman argumentteja
+tarkistin kertoo käyttönsä:
+
+```{.tuloste tiedosto="esimerkit/tarkista.odotettu"}
+```
+
+Malliratkaisut ovat hakemistossa `tehtavat/ratkaisut`. Niihin kannattaa
+katsoa vasta, kun oma ratkaisu menee läpi: tehtävän hyöty on omassa
+ajattelussa, ja malliratkaisu on vain yksi oikeista tavoista.
+Tutoriaalin testit ajavat malliratkaisut samoilla testitapauksilla ja
+varmistavat, ettei muokkaamaton pohja kelpaa ratkaisuksi.
+
 ## Miten tätä tutoriaalia kannattaa lukea
 
 Ohjelmointia oppii vain ohjelmoimalla. Kirjoita esimerkit itse
 mieluummin kuin kopioit ne, aja ne ja muuta niitä: mitä tapahtuu, jos
-syöte on tyhjä, negatiivinen tai tekstiä? Virheilmoitukset ovat
-tietoa, eivät epäonnistumisia. Luvut on tarkoitettu luettaviksi
+syöte on tyhjä, negatiivinen tai tekstiä? Tee luvun tehtävät ennen
+seuraavaan lukuun siirtymistä. Virheilmoitukset ovat tietoa, eivät
+epäonnistumisia. Luvut on tarkoitettu luettaviksi
 järjestyksessä, koska jokainen rakentuu edellisten varaan.

@@ -1,5 +1,6 @@
-"""Parametrilajit ja argumenttien purku."""
+"""Parametrilajit, argumenttien purku ja dokumentaatiomerkkijono."""
 
+import math
 from functools import partial
 
 
@@ -36,3 +37,25 @@ print(kirjaa("pyyntö käsitelty", **konteksti))
 varmuuskopio = partial(siirto, ylikirjoita=False, yritykset=5)
 print(varmuuskopio("tietokanta.db", "tietokanta.bak"))
 # @loppu partial
+
+
+# @alku docstring
+def betonimaara(leveys_m: float, pituus_m: float, paksuus_cm: float) -> float:
+    """Palauttaa laatan valuun tilattavan betonin määrän kuutiometreinä.
+
+    Paksuus annetaan senttimetreinä kuten rakennepiirustuksissa. Tulos
+    pyöristetään ylöspäin 0,1 m³:n tarkkuuteen, koska betoni tilataan
+    sen kokoisissa erissä.
+
+    Raises:
+        ValueError: jos jokin mitta ei ole positiivinen.
+    """
+    if min(leveys_m, pituus_m, paksuus_cm) <= 0:
+        raise ValueError("mittojen on oltava positiivisia")
+    tilavuus = leveys_m * pituus_m * paksuus_cm / 100
+    return math.ceil(round(tilavuus * 10, 6)) / 10
+
+
+print(betonimaara(4.0, 6.5, 12))
+print((betonimaara.__doc__ or "").splitlines()[0])
+# @loppu docstring

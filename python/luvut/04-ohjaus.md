@@ -93,8 +93,25 @@ kutsuttavan:
 ```{.python tiedosto="esimerkit/04-funktiot.py" osa="partial"}
 ```
 
+*Dokumentaatiomerkkijono* (*docstring*) on funktion rajapinnan osa
+samalla tavalla kuin parametrit. Sen ensimmäinen rivi tiivistää, mitä
+funktio tekee, ei miten. Loput kertovat sen, mitä tyyppivihjeet eivät
+kerro: yksiköt, poikkeukset, sivuvaikutukset ja perustelut:
+
+```{.python tiedosto="esimerkit/04-funktiot.py" osa="docstring"}
+```
+
 ```{.tuloste tiedosto="esimerkit/04-funktiot.odotettu"}
 ```
+
+Merkkijono tallentuu attribuuttiin `__doc__`, josta `help(funktio)`,
+editorit ja dokumentaatiogeneraattorit sen lukevat. Tyyppejä ei
+toisteta tekstissä, kun ne ovat jo annotaatioissa. Muodon määrittelee
+PEP 257 (ensimmäinen rivi lause, sitten tyhjä rivi); osioiden
+otsikoinnissa (`Raises:`, `Returns:`) yleisimmät käytännöt ovat Googlen
+ja NumPyn tyylit, joista projekti valitsee yhden. Moduulit ja luokat
+dokumentoidaan samoin. Taito *Tekninen dokumentaatio* näyttää, miten
+merkkijonoista tuotetaan rajapintaviite.
 
 ## Näkyvyys ja sulkeumat
 
@@ -123,6 +140,18 @@ Merkintä `@koriste` funktion yläpuolella tarkoittaa samaa kuin
 joka ei kuulu sen omaan logiikkaan: uudelleenyritys, ajanotto,
 oikeustarkistus, välimuisti.
 
+Yksinkertaisimmillaan dekoraattori on kahden funktion rakenne: ulompi
+ottaa alkuperäisen funktion ja palauttaa sisemmän, joka korvaa sen:
+
+```{.python tiedosto="esimerkit/04-dekoraattori.py" osa="runko"}
+```
+
+`functools.wraps` kopioi alkuperäisen funktion nimen ja
+dokumentaatiomerkkijonon kääreeseen. Ilman sitä `help(tervehdi)` ja
+pinojäljet näyttäisivät funktion `kaare`. Tämä `ilmoita` sopii vain
+funktioille, jotka ottavat yhden merkkijonon; yleiskäyttöinen
+dekoraattori tarvitsee tyyppiparametrit.
+
 Seuraava dekoraattori yrittää kutsua uudelleen tilapäisen virheen
 jälkeen. Parametrinen dekoraattori on kolmen funktion sisäkkäinen
 rakenne: ulompi ottaa asetukset, keskimmäinen funktion ja sisin
@@ -134,9 +163,6 @@ korvaa kutsun:
 ```{.python tiedosto="esimerkit/04-dekoraattori.py" osa="kaytto"}
 ```
 
-- `functools.wraps` kopioi alkuperäisen funktion nimen ja
-  dokumentaation kääreeseen. Ilman sitä pinojäljissä ja dokumentaatiossa
-  näkyisi `kaare`.
 - Tyyppiparametrit `[**P, R]` (Python 3.12) kertovat mypylle, että
   kääre ottaa samat parametrit (`P`) ja palauttaa saman tyypin (`R`)
   kuin alkuperäinen. Tyyppiparametreja käsitellään luvussa 9.
@@ -188,6 +214,8 @@ metodiin sovellettuna välimuisti pitää `self`-olion elossa.
   vartijoineen ja `*_`-hahmoineen.
 - Osaat suunnitella funktion parametrit `/`- ja `*`-erottimilla ja
   purkaa argumentit `*`- ja `**`-operaattoreilla.
+- Osaat kirjoittaa dokumentaatiomerkkijonon, joka kertoo sen, mitä
+  funktion nimi ja tyyppivihjeet eivät kerro.
 - Osaat selittää sulkeuman myöhäisen sidonnan ja korjata sen.
 - Osaat kirjoittaa tyypitetyn, parametrisen dekoraattorin
   `functools.wraps`-kutsun kanssa ja käyttää `functools.cache`-

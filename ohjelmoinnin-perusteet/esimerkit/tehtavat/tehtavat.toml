@@ -1,0 +1,296 @@
+# Kokeile itse -tehtävien testitapaukset. Tarkistin: ../tarkista.py.
+#
+# Tapauksen lajit:
+#   syote + tuloste   ohjelma ajetaan syötteellä ja tulostetta verrataan
+#                     (rivit luetteloina)
+#   kutsu + tulos     lauseke arvioidaan ratkaisun nimillä ja arvoa
+#                     verrataan Python-literaaliin; alustus ajetaan ensin
+#   kutsu + virhe     lausekkeen pitää nostaa annettu poikkeus
+# Tehtävän kentät moduli ja virheelliset: ratkaisu on testitiedosto,
+# joka ajetaan oikeaa ja virheellisiä toteutuksia vasten (tuki/).
+
+["02-1"]
+otsikko = "Munakennot"
+tapaus = [
+  { syote = ["51"], tuloste = ["Kennoja: 4, yli: 3"] },
+  { syote = ["12"], tuloste = ["Kennoja: 1, yli: 0"] },
+  { syote = ["7"], tuloste = ["Kennoja: 0, yli: 7"] },
+  { syote = ["0"], tuloste = ["Kennoja: 0, yli: 0"] },
+]
+
+["02-2"]
+otsikko = "Matka-aika"
+tapaus = [
+  { syote = ["172,5", "80"], tuloste = ["Matka-aika: 2 h 09 min"] },
+  { syote = ["10", "60"], tuloste = ["Matka-aika: 0 h 10 min"] },
+  { syote = ["300", "100"], tuloste = ["Matka-aika: 3 h 00 min"] },
+  { syote = ["45.5", "90"], tuloste = ["Matka-aika: 0 h 30 min"] },
+]
+
+["02-3"]
+otsikko = "Lasku tasan"
+tapaus = [
+  { syote = ["8650", "3"], tuloste = ["Osuus: 28,83 €, jakamatta: 1 snt"] },
+  { syote = ["1000", "4"], tuloste = ["Osuus: 2,50 €, jakamatta: 0 snt"] },
+  { syote = ["5", "2"], tuloste = ["Osuus: 0,02 €, jakamatta: 1 snt"] },
+  { syote = ["10005", "5"], tuloste = ["Osuus: 20,01 €, jakamatta: 0 snt"] },
+]
+
+["03-1"]
+otsikko = "Lämpötilan luokitus"
+tapaus = [
+  { syote = ["-5"], tuloste = ["pakkasta"] },
+  { syote = ["0"], tuloste = ["nollassa"] },
+  { syote = ["1"], tuloste = ["lämmintä"] },
+  { syote = ["24"], tuloste = ["lämmintä"] },
+  { syote = ["25"], tuloste = ["hellettä"] },
+]
+
+["03-2"]
+otsikko = "Summa lopetusmerkkiin asti"
+tapaus = [
+  { syote = ["5", "4", "3", "0"], tuloste = ["Lukuja: 3, summa: 12"] },
+  { syote = ["0"], tuloste = ["Lukuja: 0, summa: 0"] },
+  { syote = ["-2", "2", "0"], tuloste = ["Lukuja: 2, summa: 0"] },
+  { syote = ["7", "0", "9"], tuloste = ["Lukuja: 1, summa: 7"] },
+]
+
+["03-3"]
+otsikko = "Collatzin jono"
+tapaus = [
+  { syote = ["6"], tuloste = ["Askelia: 8"] },
+  { syote = ["1"], tuloste = ["Askelia: 0"] },
+  { syote = ["16"], tuloste = ["Askelia: 4"] },
+  { syote = ["27"], tuloste = ["Askelia: 111"] },
+]
+
+["03-4"]
+otsikko = "Alkuluvut"
+tapaus = [
+  { syote = ["20"], tuloste = ["2 3 5 7 11 13 17 19"] },
+  { syote = ["2"], tuloste = ["2"] },
+  { syote = ["3"], tuloste = ["2 3"] },
+  { syote = ["30"], tuloste = ["2 3 5 7 11 13 17 19 23 29"] },
+]
+
+["04-1"]
+otsikko = "Celsiuksesta fahrenheitiksi"
+tapaus = [
+  { kutsu = "celsius_fahrenheitiksi(100)", tulos = "212.0" },
+  { kutsu = "celsius_fahrenheitiksi(0)", tulos = "32.0" },
+  { kutsu = "celsius_fahrenheitiksi(-40)", tulos = "-40.0" },
+  { kutsu = "celsius_fahrenheitiksi(36.6)", tulos = "97.88" },
+]
+
+["04-2"]
+otsikko = "Karkausvuosi"
+tapaus = [
+  { kutsu = "on_karkausvuosi(2024)", tulos = "True" },
+  { kutsu = "on_karkausvuosi(2023)", tulos = "False" },
+  { kutsu = "on_karkausvuosi(1900)", tulos = "False" },
+  { kutsu = "on_karkausvuosi(2000)", tulos = "True" },
+  { kutsu = "on_karkausvuosi(2100)", tulos = "False" },
+]
+
+["04-3"]
+otsikko = "Postimaksu"
+tapaus = [
+  { kutsu = "postimaksu(50)", tulos = "250" },
+  { kutsu = "postimaksu(51)", tulos = "500" },
+  { kutsu = "postimaksu(250)", tulos = "500" },
+  { kutsu = "postimaksu(1000)", tulos = "750" },
+  { kutsu = "postimaksu(1001)", tulos = "1200" },
+  { kutsu = "postimaksu(20, pikana=True)", tulos = "550" },
+  { kutsu = "postimaksu(2000, True)", tulos = "1500" },
+]
+
+["04-4"]
+otsikko = "Numeroiden summa rekursiolla"
+rekursiivinen = "numeroiden_summa"
+tapaus = [
+  { kutsu = "numeroiden_summa(472)", tulos = "13" },
+  { kutsu = "numeroiden_summa(0)", tulos = "0" },
+  { kutsu = "numeroiden_summa(7)", tulos = "7" },
+  { kutsu = "numeroiden_summa(9999)", tulos = "36" },
+]
+
+["05-1"]
+otsikko = "Parilliset luvut"
+tapaus = [
+  { kutsu = "parilliset([1, 2, 3, 4])", tulos = "[2, 4]" },
+  { kutsu = "parilliset([])", tulos = "[]" },
+  { kutsu = "parilliset([1, 3])", tulos = "[]" },
+  { kutsu = "parilliset([0, -2, 5, 8])", tulos = "[0, -2, 8]" },
+]
+
+["05-2"]
+otsikko = "Yleisin sana"
+tapaus = [
+  { kutsu = 'yleisin(["kuu", "aurinko", "kuu"])', tulos = '"kuu"' },
+  { kutsu = 'yleisin(["kissa"])', tulos = '"kissa"' },
+  { kutsu = 'yleisin(["b", "a"])', tulos = '"a"' },
+  { kutsu = 'yleisin(["x", "y", "y", "x", "z"])', tulos = '"x"' },
+]
+
+["05-3"]
+otsikko = "Yhteiset alkiot"
+tapaus = [
+  { kutsu = 'yhteiset(["b", "a", "c", "a"], ["a", "b", "d"])', tulos = '["a", "b"]' },
+  { kutsu = 'yhteiset(["a"], ["b"])', tulos = "[]" },
+  { kutsu = 'yhteiset([], ["a"])', tulos = "[]" },
+  { kutsu = 'yhteiset(["ö", "a", "ö"], ["ö", "ö", "a"])', tulos = '["a", "ö"]' },
+]
+
+["05-4"]
+otsikko = "Lisäys muuttamatta alkuperäistä"
+tapaus = [
+  { alustus = "luvut = [1, 2]; uudet = lisatty(luvut, 3)", kutsu = "(luvut, uudet)", tulos = "([1, 2], [1, 2, 3])" },
+  { kutsu = "lisatty([], 1)", tulos = "[1]" },
+]
+
+["06-1"]
+otsikko = "Nimikirjaimet"
+tapaus = [
+  { kutsu = 'nimikirjaimet("Aino Maria Virtanen")', tulos = '"A. M. V."' },
+  { kutsu = 'nimikirjaimet("  väinö   linna ")', tulos = '"V. L."' },
+  { kutsu = 'nimikirjaimet("Li")', tulos = '"L."' },
+  { kutsu = 'nimikirjaimet("åke örn")', tulos = '"Å. Ö."' },
+]
+
+["06-2"]
+otsikko = "Palindromi"
+tapaus = [
+  { kutsu = 'on_palindromi("Saippuakauppias")', tulos = "True" },
+  { kutsu = 'on_palindromi("kissa")', tulos = "False" },
+  { kutsu = 'on_palindromi("Iso rikas sika sökösakissa kirosi.")', tulos = "True" },
+  { kutsu = 'on_palindromi("")', tulos = "True" },
+  { kutsu = 'on_palindromi("ab, a?")', tulos = "True" },
+  { kutsu = 'on_palindromi("abca")', tulos = "False" },
+]
+
+["06-3"]
+otsikko = "Tilauksen loppusumma"
+tapaus = [
+  { syote = ["tuote;kpl;hinta_snt", "Kahvi;2;699", "Korvapuusti;4;150"], tuloste = ["Kahvi: 13,98 €", "Korvapuusti: 6,00 €", "Yhteensä: 19,98 €"] },
+  { syote = ["tuote;kpl;hinta_snt"], tuloste = ["Yhteensä: 0,00 €"] },
+  { syote = ["hinta_snt;tuote;kpl", "5;Karkki;3"], tuloste = ["Karkki: 0,15 €", "Yhteensä: 0,15 €"] },
+]
+
+["07-1"]
+otsikko = "Iän jäsennys"
+tapaus = [
+  { kutsu = 'jasenna_ika(" 42 ")', tulos = "42" },
+  { kutsu = 'jasenna_ika("0")', tulos = "0" },
+  { kutsu = 'jasenna_ika("150")', tulos = "150" },
+  { kutsu = 'jasenna_ika("abc")', virhe = "ValueError" },
+  { kutsu = 'jasenna_ika("-1")', virhe = "ValueError" },
+  { kutsu = 'jasenna_ika("151")', virhe = "ValueError" },
+  { kutsu = 'jasenna_ika("")', virhe = "ValueError" },
+]
+
+["07-2"]
+otsikko = "Kelvollisten rivien summa"
+tapaus = [
+  { kutsu = 'summaa_kelvolliset(["1", "x", "3"])', tulos = "(4, [2])" },
+  { kutsu = "summaa_kelvolliset([])", tulos = "(0, [])" },
+  { kutsu = 'summaa_kelvolliset(["", "5", "2.5", " 4 ", "  "])', tulos = "(9, [3])" },
+  { kutsu = 'summaa_kelvolliset(["-3", "a", "b"])', tulos = "(-3, [2, 3])" },
+]
+
+["07-3"]
+otsikko = "Korjaa kaatuva ohjelma"
+tapaus = [
+  { syote = ["Aino 9", "Ville 6"], tuloste = ["Keskiarvo: 7.5", "Paras: Aino (9)"] },
+  { syote = ["Aino 9", "", "Ville 6", ""], tuloste = ["Keskiarvo: 7.5", "Paras: Aino (9)"] },
+  { syote = ["Aino 4", "Ville x", "Li 8"], tuloste = ["Rivi 2: virheelliset pisteet 'x'", "Keskiarvo: 6.0", "Paras: Li (8)"] },
+  { syote = [""], tuloste = ["Ei tuloksia."] },
+  { syote = ["Aino yhdeksän"], tuloste = ["Rivi 1: virheelliset pisteet 'yhdeksän'", "Ei tuloksia."] },
+]
+
+["08-1"]
+otsikko = "Laskuri"
+tapaus = [
+  { kutsu = "Laskuri().arvo", tulos = "0" },
+  { alustus = "a = Laskuri(); a.kasvata(); a.kasvata()", kutsu = "a.arvo", tulos = "2" },
+  { alustus = "a = Laskuri(); a.kasvata(); a.nollaa()", kutsu = "a.arvo", tulos = "0" },
+  { alustus = "a = Laskuri(); b = Laskuri(); a.kasvata()", kutsu = "(a.arvo, b.arvo)", tulos = "(1, 0)" },
+]
+
+["08-2"]
+otsikko = "Suorakulmio dataluokkana"
+tapaus = [
+  { kutsu = "Suorakulmio(2.0, 3.0).pinta_ala()", tulos = "6.0" },
+  { kutsu = "Suorakulmio(2.0, 3.0).on_nelio()", tulos = "False" },
+  { kutsu = "Suorakulmio(korkeus=1.5, leveys=1.5).on_nelio()", tulos = "True" },
+  { kutsu = "Suorakulmio(2.0, 3.0) == Suorakulmio(2.0, 3.0)", tulos = "True" },
+  { kutsu = "str(Suorakulmio(2.0, 3.0))", tulos = '"Suorakulmio(leveys=2.0, korkeus=3.0)"' },
+]
+
+["08-3"]
+otsikko = "Varasto ja invariantti"
+tapaus = [
+  { kutsu = "Varasto(10).maara", tulos = "0" },
+  { alustus = "v = Varasto(10); v.lisaa(4); v.ota(1)", kutsu = "v.maara", tulos = "3" },
+  { alustus = "v = Varasto(10); v.lisaa(10)", kutsu = "v.maara", tulos = "10" },
+  { alustus = "v = Varasto(10); v.lisaa(4)", kutsu = "v.lisaa(7)", virhe = "VarastoVirhe" },
+  { alustus = "v = Varasto(10); v.lisaa(4)", kutsu = "v.ota(5)", virhe = "VarastoVirhe" },
+  { kutsu = "Varasto(10).lisaa(0)", virhe = "ValueError" },
+  { kutsu = "Varasto(10).ota(-1)", virhe = "ValueError" },
+  { alustus = "v = Varasto(5); v.lisaa(5)\ntry:\n    v.lisaa(1)\nexcept VarastoVirhe:\n    pass", kutsu = "v.maara", tulos = "5" },
+  { alustus = "v = Varasto(5)", kutsu = "setattr(v, 'maara', 99)", virhe = "AttributeError" },
+]
+
+["09-1"]
+otsikko = "Viikonpäivä"
+tapaus = [
+  { kutsu = 'viikonpaiva("2026-11-25")', tulos = '"keskiviikko"' },
+  { kutsu = 'viikonpaiva("2024-02-29")', tulos = '"torstai"' },
+  { kutsu = 'viikonpaiva("2026-03-02")', tulos = '"maanantai"' },
+  { kutsu = 'viikonpaiva("2027-01-03")', tulos = '"sunnuntai"' },
+  { kutsu = 'viikonpaiva("2026-02-30")', virhe = "ValueError" },
+]
+
+["09-2"]
+otsikko = "Tilastot standardikirjastolla"
+tapaus = [
+  { kutsu = "tunnusluvut([1.0, 2.0, 6.0])", tulos = "(3.0, 2.0)" },
+  { kutsu = "tunnusluvut([4.0])", tulos = "(4.0, 4.0)" },
+  { kutsu = "tunnusluvut([1.0, 2.0, 3.0, 10.0])", tulos = "(4.0, 2.5)" },
+  { kutsu = "tunnusluvut([])", virhe = "ValueError" },
+]
+
+["09-3"]
+otsikko = "Modulista ohjelmaksi"
+hiljainen_tuonti = true
+tapaus = [
+  { kutsu = "pinta_ala(3.0, 4.0)", tulos = "12.0" },
+  { kutsu = "main is not None", tulos = "True" },
+  { syote = ["3", "4"], tuloste = ["Pinta-ala: 12.0"] },
+  { syote = ["2.5", "2"], tuloste = ["Pinta-ala: 5.0"] },
+]
+
+["10-1"]
+otsikko = "Testit karkausvuodelle"
+moduli = "karkausvuosi"
+virheelliset = "10-1"
+
+["10-2"]
+otsikko = "Testit kellonajan jäsennykselle"
+moduli = "kellonaika"
+virheelliset = "10-2"
+
+["11-1"]
+otsikko = "Sarjataulukko"
+tapaus = [
+  { syote = ["Ilves;3", "HIFK;1", "Ilves;1", "Kärpät;3", "HIFK;3"], tuloste = ["1. HIFK 4", "2. Ilves 4", "3. Kärpät 3"] },
+  { syote = ["Tappara;0"], tuloste = ["1. Tappara 0"] },
+  { syote = ["B;1", "", "A;2", "C;1", "B;1"], tuloste = ["1. A 2", "2. B 2", "3. C 1"] },
+]
+
+["11-2"]
+otsikko = "Tuntiraportti"
+tapaus = [
+  { syote = ["# viikko 48", "2026-11-23;Aino;7,5", "2026-11-23;Ville;6", "2026-11-24;Aino;kahdeksan", "2026-11-24;Ville", "2026-11-25;Aino;5"], tuloste = ["Aino        12,5 h", "Ville        6,0 h", "Yhteensä    18,5 h", "Rivi 4: virheellinen tuntimäärä 'kahdeksan'", "Rivi 5: odotettiin 3 kenttää, saatiin 2"] },
+  { syote = ["2026-11-23;Ville;1,5", "", "2026-11-23;Aino;0", "2026-11-24;Aino;2.5", "2026-11-24;Ville;-3"], tuloste = ["Aino         2,5 h", "Ville        1,5 h", "Yhteensä     4,0 h", "Rivi 3: virheellinen tuntimäärä '0'", "Rivi 5: virheellinen tuntimäärä '-3'"] },
+  { syote = ["# ei kirjauksia"], tuloste = ["Yhteensä     0,0 h"] },
+]

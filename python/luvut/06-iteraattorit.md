@@ -68,6 +68,23 @@ virhepyynnöt:
 ```{.tuloste tiedosto="esimerkit/06-loki.odotettu"}
 ```
 
+```{.dot otsikko="Laiska putki: pyynnöt (`next()`) kulkevat kuluttajalta lähteelle ja alkiot yksi kerrallaan takaisin."}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.3;
+  syote [label="sys.stdin", shape=plain, style=""];
+  j [label="jasenna"]; v [label="virheelliset"]; h [label="hitaat"];
+  f [label="for", shape=plain, style=""];
+  syote -> j [label="rivi"];
+  j -> v [label="Pyynto"];
+  v -> h [label="Pyynto"];
+  h -> f [label="Pyynto"];
+  f -> h [label="next()", style=dashed, constraint=false];
+  h -> v [label="next()", style=dashed, constraint=false];
+  v -> j [label="next()", style=dashed, constraint=false];
+  j -> syote [label="next()", style=dashed, constraint=false];
+}
+```
+
 Putki on laiska: `jasenna` lukee seuraavan rivin vasta, kun `virheelliset`
 pyytää seuraavaa pyyntöä, ja niin edelleen. Muistissa on kerrallaan vain
 yksi rivi, joten sama koodi käsittelee kilotavun ja sata gigatavua.

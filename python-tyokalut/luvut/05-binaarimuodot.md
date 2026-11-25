@@ -25,6 +25,16 @@ väliin tulee täytettä. `<`, `>` ja `!` ovat tiiviitä:
 ```{.python tiedosto="esimerkit/05-struct.py" osa="kohdistus"}
 ```
 
+```{.dot otsikko="Muodon `BI` (yksi tavu ja 32-bittinen luku) tavut. `@` lisää kolme täytetavua, jotta luku alkaa neljällä jaollisesta siirtymästä; tiivis muoto ei lisää."}
+digraph {
+  nodesep=0.25;
+  node [shape=record, style=filled];
+  a [label="{@BI}|{0|B}|{1|täyte}|{2|täyte}|{3|täyte}|{4|I}|{5|I}|{6|I}|{7|I}"];
+  b [label="{\<BI}|{0|B}|{1|I}|{2|I}|{3|I}|{4|I}"];
+  a -> b [style=invis];
+}
+```
+
 Tiedostoissa ja protokollissa käytetään aina tiivistä muotoa ja
 kiinteää tavujärjestystä. `@` riippuu alustasta, joten se sopii vain,
 kun luetaan saman koneen C-ohjelman muistista kirjoittamaa rakennetta.
@@ -47,11 +57,27 @@ suuri arvo valuisi naapurikenttään:
 ```{.tuloste tiedosto="esimerkit/05-struct.odotettu"}
 ```
 
+```{.dot otsikko="Tilarekisterin `STATUS` kentät ja esimerkin arvo `0x0A15` purettuna."}
+digraph {
+  node [shape=record, style=filled];
+  r [label="{bitit|kenttä|0x0A15}|{15–8|JONO|0000 1010 = 10}|{7–5|ei käytössä|000}|{4–2|TILA|101 = 5}|{1|VIRHE|0}|{0|VALMIS|1}"];
+}
+```
+
 ## Oma tiedostomuoto
 
 Mittausdatalle määritellään yksinkertainen muoto: otsake, lomitetut
 16-bittiset näytteet ja lopussa CRC-32-tarkistussumma. Muodon kuvaus
-kirjoitetaan modulin alkuun, koska se on rajapinta muihin työkaluihin:
+kirjoitetaan modulin alkuun, koska se on rajapinta muihin työkaluihin.
+Julkaistavan muodon kuvaus kuuluu myös työkalun dokumentaatioon (taito
+*Tekninen dokumentaatio*).
+
+```{.dot otsikko="MDAT-tiedoston rakenne. Otsake on 16 tavua, ja kaikki luvut ovat pieni-endian-muodossa."}
+digraph {
+  node [shape=record, style=filled];
+  t [label="{siirtymä|tyyppi|sisältö}|{0|4 s|taikasana}|{4|u16|versio}|{6|u16|kanavia}|{8|u32|taajuus}|{12|u32|näytteitä}|{16|i16 × kanavia × näytteitä|näytteet lomitettuina}|{loppu − 4|u32|CRC-32}"];
+}
+```
 
 ```{.python tiedosto="esimerkit/05-mittausdata/muoto.py" osa="muoto"}
 ```

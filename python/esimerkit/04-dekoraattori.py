@@ -4,6 +4,25 @@ import functools
 from collections.abc import Callable
 
 
+# @alku runko
+def ilmoita(funktio: Callable[[str], str]) -> Callable[[str], str]:
+    """Dekoraattori: tulostaa jokaisen kutsun ennen sen suoritusta."""
+    @functools.wraps(funktio)
+    def kaare(nimi: str) -> str:
+        print(f"  kutsu: {funktio.__name__}({nimi!r})")
+        return funktio(nimi)
+    return kaare
+
+
+@ilmoita                    # sama kuin tervehdi = ilmoita(tervehdi)
+def tervehdi(nimi: str) -> str:
+    return f"Hei, {nimi}!"
+
+
+print(tervehdi("Ada"))
+# @loppu runko
+
+
 # @alku yrita
 class TilapainenVirhe(Exception):
     """Virhe, jonka jälkeen kannattaa yrittää uudelleen."""

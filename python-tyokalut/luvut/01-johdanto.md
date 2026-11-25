@@ -11,8 +11,10 @@ Tämä tutoriaali opettaa kirjoittamaan tällaiset työkalut Pythonilla
 niin, että ne ovat luotettavia, testattuja ja muiden käytettävissä.
 Kielen idiomit ovat esitietona taidossa *Python*, ja komentorivin käyttö
 taidossa *Komentorivi ja Linux*. Tästä jatketaan taitoon
-*EDA-skriptaus*, jossa samoilla välineillä hallitaan
-laitteistosuunnittelun työkaluketjuja.
+*EDA-työkaluketjujen automatisointi*, jossa samoilla välineillä
+hallitaan laitteistosuunnittelun työkaluketjuja, ja taitoon *Tekninen
+dokumentaatio*, jossa työkalun ohjeet ja rajapintaviite tuotetaan
+lähdekoodista.
 
 ## Mitä hyvä työkalu tekee
 
@@ -79,7 +81,8 @@ pip install numpy matplotlib ruff mypy pytest
 ## Tutoriaalin rakenne
 
 Luku 2 rakentaa komentorivikäyttöliittymän ja luku 3 paketoi työkalun
-asennettavaksi. Luvut 4–6 käsittelevät syötteitä: tekstimuodot,
+asennettavaksi. Paketointi tulee heti alussa, koska projektin rakenne
+on helpointa valita ennen kuin koodia on paljon. Luvut 4–6 käsittelevät syötteitä: tekstimuodot,
 binäärimuodot ja tiedostojärjestelmän. Luku 7 ohjaa ulkoisia
 työkaluja, luvut 8–9 käsittelevät numeerista dataa ja kuvaajia, ja
 luku 10 testaa kaiken. Jokainen luku päättyy osioihin *Käytännössä* ja

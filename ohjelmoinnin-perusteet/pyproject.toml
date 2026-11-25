@@ -11,6 +11,9 @@ target-version = "py312"
 [tool.ruff.lint]
 # Pyflakes ja pycodestyle (oletus) sekä bugbear, pyupgrade ja simplify.
 select = ["E", "F", "B", "UP", "SIM"]
+# SIM108 ehdottaisi ehtolauseketta (a if ehto else b), jota perusteissa
+# ei käytetä: if–else on aloittelijalle selvempi.
+ignore = ["SIM108"]
 
 [tool.mypy]
 # Aloittelijan asetukset: mypy tarkistaa funktiot, joissa on

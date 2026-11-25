@@ -99,7 +99,7 @@ koko merkkijonon. CPython optimoi tapauksen usein paikalliselle
 muuttujalle, mutta optimointiin ei voi luottaa (PyPy ei tee sitä, eikä
 se toimi attribuutille). `join` on aina lineaarinen.
 
-## Säännölliset lausekkeet ja Counter
+## Säännölliset lausekkeet
 
 `re`-moduuli toteuttaa säännölliset lausekkeet. Lauseke käännetään
 kerran `re.compile`-kutsulla ja tallennetaan moduulitason vakioksi.

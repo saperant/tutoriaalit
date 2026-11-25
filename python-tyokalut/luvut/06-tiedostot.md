@@ -42,10 +42,12 @@ seuraava vaihe, raporttipalvelin, rinnakkainen ajo), lukija voi osua
 puolikkaaseen tiedostoon. Kaatuva kirjoittaja voi lisäksi jättää
 jälkeensä rikkinäisen tiedoston, joka korvaa vanhan ehjän.
 
-Ratkaisu on kirjoittaa ensin tilapäistiedostoon samassa hakemistossa
-ja vaihtaa se kohteen tilalle `os.replace`lla. POSIX-järjestelmissä
-nimen vaihto saman tiedostojärjestelmän sisällä on atominen: lukija
-näkee joko vanhan tai uuden tiedoston.
+Ratkaisu on taidosta *Python* tuttu: kirjoitetaan ensin
+tilapäistiedostoon ja vaihdetaan se kohteen tilalle `os.replace`lla.
+Nimen vaihto saman tiedostojärjestelmän sisällä on atominen, joten
+lukija näkee joko vanhan tai uuden tiedoston. Työkalussa toteutus
+viimeistellään kolmella asialla: tilapäistiedosto luodaan kohteen
+viereen, data pakotetaan levylle ja keskeytys siivoaa jälkensä.
 
 ```{.python tiedosto="esimerkit/06-atominen.py" osa="atominen"}
 ```
@@ -76,6 +78,19 @@ oikea paikka välituotteille ja testien aineistolle. Kiinteä nimi
 `/tmp/tyo` törmää toisen käyttäjän tai rinnakkaisen ajon kanssa, ja
 ennustettava nimi jaetussa hakemistossa on tietoturvariski.
 
+## Kopiointi, siirto ja arkistointi
+
+Tiedostojen sisältöön koskemattomat operaatiot ovat modulissa `shutil`:
+
+| Funktio | Tehtävä |
+|---------|---------|
+| `shutil.copy2(lahde, kohde)` | kopioi tiedoston ja sen aikaleimat |
+| `shutil.copytree(lahde, kohde)` | kopioi hakemistopuun |
+| `shutil.move(lahde, kohde)` | siirtää, myös tiedostojärjestelmästä toiseen |
+| `shutil.make_archive(nimi, "gztar", juuri)` | pakkaa hakemiston arkistoksi |
+| `shutil.disk_usage(polku)` | levytila ennen suurta ajoa |
+| `shutil.rmtree(polku)` | poistaa puun; ks. sudenkuoppa alla |
+
 ## Käytännössä
 
 - **`pathlib` aina, merkkijonopolut vain reunalla.** Ulkoiselle
@@ -101,3 +116,4 @@ ennustettava nimi jaetussa hakemistossa on tietoturvariski.
 - Osaat kirjoittaa tiedoston atomisesti ja perustella, miksi
   tilapäistiedosto on kohteen vieressä.
 - Osaat käyttää tilapäishakemistoja välituotteille ja testeille.
+- Osaat kopioida, siirtää ja arkistoida tiedostoja `shutil`-modulilla.

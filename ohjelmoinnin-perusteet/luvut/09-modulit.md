@@ -43,6 +43,26 @@ Pääohjelma `main.py` olettaa, että jokaisella rivillä on kolme kenttää.
 Väärämuotoinen rivi kaataa ohjelman; luvun *Ohjelman suunnittelu*
 budjettiohjelma käsittelee tämän.
 
+## Komentoriviargumentit
+
+Ohjelma saa lähtötietoja syötteen lisäksi komentoriviltä. Modulin `sys`
+lista `sys.argv` sisältää komentorivin sanat: ensimmäisenä ohjelman
+nimi ja sen jälkeen argumentit merkkijonoina.
+
+```{.python tiedosto="esimerkit/09-toista.py"}
+```
+
+Komennolla `python3 09-toista.py Hei 3` tuloste on:
+
+```{.tuloste tiedosto="esimerkit/09-toista.odotettu"}
+```
+
+Argumentit ovat syötettä siinä missä muukin: ne tarkistetaan ennen
+käyttöä, ja virheellisillä argumenteilla ohjelma tulostaa käyttöohjeen
+ja palauttaa nollasta poikkeavan paluuarvon. Kun valitsimia on useita,
+standardikirjaston `argparse` jäsentää ne ja tuottaa ohjeen (taito
+*Python työkaluohjelmointiin*).
+
 ## Standardikirjasto
 
 Pythonin mukana tulee laaja *standardikirjasto*, jonka modulit ovat
@@ -94,6 +114,17 @@ Projektin riippuvuudet ja työkalujen asetukset kirjataan tiedostoon
 hakemiston juuressa. Taito *Python työkaluohjelmointiin* käsittelee
 riippuvuuksien hallinnan ja paketoinnin.
 
+## Kokeile itse
+
+1. **Viikonpäivä** (`09-1`). Funktio `viikonpaiva` palauttaa
+   ISO-muotoisen päivämäärän (`2026-11-25`) viikonpäivän nimen
+   `datetime`-modulin avulla.
+2. **Tilastot standardikirjastolla** (`09-2`). Funktio `tunnusluvut`
+   palauttaa listan keskiarvon ja mediaanin modulilla `statistics`.
+3. **Modulista ohjelmaksi** (`09-3`). Pohja toimii ohjelmana, mutta
+   sitä ei voi tuoda modulina. Siirrä pääohjelma funktioon `main` ja
+   ehdon `if __name__ == "__main__":` taakse.
+
 ## Käytännössä
 
 - **Yksi moduli, yksi aihe.** `rahat.py` käsittelee rahasummia,
@@ -121,3 +152,5 @@ riippuvuuksien hallinnan ja paketoinnin.
 - Osaat etsiä tehtävään sopivan standardikirjaston modulin ja laskea
   päivämäärillä `datetime`-modulilla.
 - Osaat luoda virtuaaliympäristön ja asentaa siihen kirjaston.
+- Osaat lukea komentoriviargumentit listasta `sys.argv` ja tarkistaa
+  ne.
