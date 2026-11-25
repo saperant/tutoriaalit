@@ -24,6 +24,21 @@ Linuxin ajurimallissa on kolme osapuolta:
 - **Ajuri** (`struct device_driver`) osaa käyttää tietynlaisia
   laitteita.
 
+```{.dot otsikko="Platform-laitteen ja ajurin sidonta. Väylä vertaa laitteen `compatible`-luetteloa ajurin taulukkoon ja kutsuu osuman jälkeen `probe`-funktiota."}
+digraph {
+  rankdir=TB; node [shape=box];
+  solmu [label="laitepuun solmu: compatible, reg, interrupts"];
+  laite [label="platform-laite 9010000.herateajastin"];
+  vayla [label="platform-väylä: vertailu"];
+  ajuri [label="ajuri herate: of_match_table"];
+  probe [label="probe(laite)"];
+  solmu -> laite [label="ydin luo käynnistyksessä"];
+  laite -> vayla;
+  ajuri -> vayla [label="moduulin lataus"];
+  vayla -> probe [label="osuma"];
+}
+```
+
 Kun laite tai ajuri rekisteröidään, väylä vertaa sitä toisen puolen
 kaikkiin rekisteröityihin ja kutsuu ajurin `probe`-funktiota jokaiselle
 sopivalle laitteelle. Järjestys on vapaa: ajuri voi tulla ennen laitetta
@@ -67,7 +82,7 @@ Ajuri kertoo, mitkä laitteet se tuntee, taulukolla:
   Siitä `depmod` tekee tiedoston `modules.alias`, jonka avulla `udev`
   lataa oikean moduulin laitteen *modaliasin* perusteella.
 - **`dev_groups`** luo laitteelle sysfs-attribuutit, kun ajuri sidotaan
-  (luku 9).
+  (luku 5).
 - **`module_platform_driver`** tekee moduulin alku- ja loppufunktion,
   jotka vain rekisteröivät ja poistavat ajurin.
 
@@ -116,7 +131,11 @@ lisäksi:
 Rekisterirakenteita (`struct pl031_rekisterit { u32 dr; ... }`) ei
 ytimessä käytetä, koska kääntäjä voi lisätä niihin täytettä ja ne
 houkuttelevat käyttämään rekisterejä ilman `readl`- ja
-`writel`-funktioita. Siirtymät määritellään vakioina.
+`writel`-funktioita. Siirtymät määritellään vakioina. Bare-metal-
+koodissa rakennetyyli on yleinen ja perusteltu (taito *Mikrokontrollerit
+ja bare-metal-ohjelmointi* tarkistaa asettelun käännösaikana); ero
+johtuu siitä, että ytimen ajurin on toimittava monella arkkitehtuurilla
+ja tavujärjestyksellä.
 
 Tunnisterekisterien tarkistus varmistaa, että laitepuu kuvaa oikeaa
 laitetta. PL031:n tunniste on `0x00141031`: osanumero `0x031`,

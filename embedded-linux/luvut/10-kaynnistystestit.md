@@ -50,13 +50,13 @@ Ajuri lukee vaihetiedoston ja ajaa sen QEMU:a vastaan. Vaiheet ovat
 konsoliin) ja `loppu` (odotettu paluuarvo). Seuraava testi tarkistaa
 luvun 7 init-järjestelmän:
 
-```{.text tiedosto="esimerkit/08-kaynnistystesti/palvelut.vaiheet"}
+```{.text tiedosto="esimerkit/10-kaynnistystesti/palvelut.vaiheet"}
 ```
 
 Ajurin ydin on luokka, joka lukee prosessin tulostetta estämättä ja
 etsii lauseketta edellisen osuman jälkeen:
 
-```{.python tiedosto="esimerkit/08-kaynnistystesti/kaynnistystesti.py" osa="konsoli"}
+```{.python tiedosto="esimerkit/10-kaynnistystesti/kaynnistystesti.py" osa="konsoli"}
 ```
 
 Kolme yksityiskohtaa tekee siitä luotettavan:
@@ -69,16 +69,16 @@ Kolme yksityiskohtaa tekee siitä luotettavan:
 - **Ytimen paniikki tunnistetaan joka kierroksella.** Testi päättyy heti
   ja kertoo syyn, eikä odota aikarajaa.
 
-```{.python tiedosto="esimerkit/08-kaynnistystesti/kaynnistystesti.py" osa="aja"}
+```{.python tiedosto="esimerkit/10-kaynnistystesti/kaynnistystesti.py" osa="aja"}
 ```
 
 Testin oma tuloste ei sisällä konsolin raakatekstiä, joten se on
 toistettava, vaikka ajoitukset ja osoitteet vaihtelevat:
 
-```{.make tiedosto="esimerkit/Makefile" osa="08"}
+```{.make tiedosto="esimerkit/Makefile" osa="testit"}
 ```
 
-```{.tuloste tiedosto="esimerkit/testit/08-palvelut.odotettu"}
+```{.tuloste tiedosto="esimerkit/testit/10-palvelut.odotettu"}
 ```
 
 ## Kun käynnistys epäonnistuu
@@ -86,12 +86,12 @@ toistettava, vaikka ajoitukset ja osoitteet vaihtelevat:
 Testin arvo mitataan sillä, miten se kertoo viasta. Seuraava
 initramfs on rikki: siitä puuttuu `/init`.
 
-```{.text tiedosto="esimerkit/08-kaynnistystesti/rikki.lista"}
+```{.text tiedosto="esimerkit/10-kaynnistystesti/rikki.lista"}
 ```
 
 Sama vaihetiedosto ajettuna tätä järjestelmää vastaan:
 
-```{.tuloste tiedosto="esimerkit/testit/08-paniikki.odotettu"}
+```{.tuloste tiedosto="esimerkit/testit/10-paniikki.odotettu"}
 ```
 
 Virheilmoitus on aluksi yllättävä: miksi ydin yrittää kiinnittää
@@ -122,7 +122,8 @@ Hyvä käynnistystestien putki:
 
 Viimeinen kohta on tärkeä: kultaisen tulosteen ero tai ajurin
 virheilmoitus kertoo, *mikä* meni pieleen, mutta *miksi* löytyy
-yleensä ytimen lokista rivejä aiemmin.
+yleensä ytimen lokista rivejä aiemmin. Kun loki ei riitä, syytä
+etsitään seuraavan luvun keinoin.
 
 Rakennustyökaluissa on omat testikehyksensä. Buildrootin `support/testing`
 käynnistää kuvia QEMU:ssa Pythonin `unittest`-testeillä, ja Yocton

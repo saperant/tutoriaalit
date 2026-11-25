@@ -1,1 +1,1 @@
-obj-m := jono.o
+obj-m := jono.o kartta.o

@@ -15,32 +15,14 @@ sysfs-tiedostoa, tiedostoa ei voi enää poistaa eikä sen muotoa muuttaa.
 
 ## Attribuutit
 
-sysfs-attribuutin sääntö on *yksi arvo tiedostoa kohden*, tekstinä ja
-rivinvaihdolla päättyen. Ajuri antaa lukufunktion (`show`) ja
-tarvittaessa kirjoitusfunktion (`store`):
-
-```{.c tiedosto="esimerkit/03-platform/herate.c" osa="sysfs"}
-```
-
-- **`DEVICE_ATTR_RO(nimi)` ja `DEVICE_ATTR_RW(nimi)`** luovat
-  attribuutin, jonka funktioiden nimet ovat `nimi_show` ja
-  `nimi_store` ja oikeudet `0444` tai `0644`.
-- **`sysfs_emit`** kirjoittaa sivun kokoiseen puskuriin ja tarkistaa
-  rajat. Vanha tapa `sprintf` ei tarkista.
-- **`store`** saa käyttäjän tekstin, joka on jo kopioitu ytimen
-  muistiin. Se jäsennetään `kstrto*`-funktiolla, joka hylkää
-  roskan ja hyväksyy lopun rivinvaihdon. Paluuarvo on käytetty pituus
-  tai negatiivinen virhe.
-- **`ATTRIBUTE_GROUPS`** kokoaa attribuutit ryhmäksi, joka annetaan
-  ajurin `dev_groups`-kentässä (luku 4). Ajurimalli luo tiedostot, kun
-  ajuri sidotaan laitteeseen, ja poistaa ne irrotuksessa.
-
-Ryhmä `dev_groups`-kentässä on parempi kuin `device_create_file`-kutsu
-`probe`-funktiossa. Tiedostot syntyvät ennen sidonnasta kertovaa
-*uevent*-tapahtumaa (`bind`), joten `udev`-sääntö näkee ne heti, eikä
-ajurin tarvitse poistaa niitä itse. Luvun 5 testi kirjoitti
-attribuuttiin `jakso` ja luki attribuutin `heratyksia` hakemistosta
+Tekstimuotoiset attribuutit tehtiin jo luvussa 5: `show`- ja
+`store`-funktiot, makrot `DEVICE_ATTR_RO` ja `DEVICE_ATTR_RW` ja ryhmä
+ajurin `dev_groups`-kentässä. Sääntö *yksi arvo tiedostoa kohden* pitää
+tiedostot sellaisina, että kuori ja mikä tahansa ohjelma voi lukea
+niitä jäsentämättä. Luvun 5 testi kirjoitti attribuuttiin `jakso` ja
+luki attribuutin `heratyksia` hakemistosta
 `/sys/devices/platform/9010000.herateajastin/`.
+
 ## Binääriattribuutit
 
 Laitteen muisti tai laiteohjelmisto ei ole tekstiä.
@@ -101,8 +83,8 @@ attribuutilta.
   debugfsiin, alijärjestelmälle tai laitetiedostolle.
 - **Käytä `sysfs_emit`- ja `kstrto*`-funktioita.** Ne tarkistavat
   puskurin koon ja syötteen muodon.
-- **Anna attribuutit `dev_groups`-kentässä.** Tiedostot syntyvät ennen
-  uevent-tapahtumaa ja poistuvat itsestään.
+- **Anna attribuutit `dev_groups`-kentässä (luku 5).** Tiedostot
+  syntyvät ennen uevent-tapahtumaa ja poistuvat itsestään.
 - **Älä tarkista debugfs-funktioiden paluuarvoja.** Debug-tuen puuttuminen
   ei saa estää ajurin toimintaa.
 - **Älä tee debugfs-tiedostosta sovelluksen rajapintaa.** Jos sovellus
@@ -111,8 +93,6 @@ attribuutilta.
 
 ## Itsearviointi
 
-- Osaat tehdä laitteelle luettavia ja kirjoitettavia sysfs-attribuutteja
-  ja antaa ne ajurin `dev_groups`-kentässä.
 - Osaat tehdä binääriattribuutin laitteen muistin lukemiseen ja
   kirjoittamiseen.
 - Osaat luoda debugfs-hakemiston laskureineen ja `seq_file`-

@@ -1,0 +1,42 @@
+digraph {
+  rankdir=LR; node [shape=box];
+  juuri [label="/\nlinux,dummy-virt"];
+  n_psci [label="psci\narm,psci-1.0"];
+  juuri -> n_psci;
+  n_memory [label="memory@40000000"];
+  juuri -> n_memory;
+  n_platform_bus [label="platform-bus@c000000\nqemu,platform"];
+  juuri -> n_platform_bus;
+  n_fw_cfg [label="fw-cfg@9020000\nqemu,fw-cfg-mmio"];
+  juuri -> n_fw_cfg;
+  n_virtio_mmio [label="virtio_mmio@… (32 kpl)\nvirtio,mmio"];
+  juuri -> n_virtio_mmio;
+  n_gpio_keys [label="gpio-keys\ngpio-keys"];
+  juuri -> n_gpio_keys;
+  n_pl061 [label="pl061@9030000\narm,pl061"];
+  juuri -> n_pl061;
+  n_pcie [label="pcie@10000000\npci-host-ecam-generic"];
+  juuri -> n_pcie;
+  n_pl031 [label="pl031@9010000\narm,pl031"];
+  juuri -> n_pl031;
+  n_pl011 [label="pl011@9000000\narm,pl011"];
+  juuri -> n_pl011;
+  n_pmu [label="pmu\narm,armv8-pmuv3"];
+  juuri -> n_pmu;
+  n_intc [label="intc@8000000\narm,cortex-a15-gic"];
+  juuri -> n_intc;
+  n_flash [label="flash@0\ncfi-flash"];
+  juuri -> n_flash;
+  n_cpus [label="cpus"];
+  juuri -> n_cpus;
+  n_timer [label="timer\narm,armv8-timer"];
+  juuri -> n_timer;
+  n_apb_pclk [label="apb-pclk\nfixed-clock"];
+  juuri -> n_apb_pclk;
+  n_chosen [label="chosen"];
+  juuri -> n_chosen;
+  n_pl011 -> n_intc [style=dashed,
+    constraint=false, label="interrupt-parent = <0x8002>"];
+  n_pl011 -> n_apb_pclk [style=dashed,
+    constraint=false, label="clocks = <0x8000>"];
+}

@@ -17,6 +17,26 @@ vaihe alustaa vähän lisää laitteistoa ja lataa seuraavan.
 | Linux | DRAM, EL1 | ydin ja ajurit |
 | init | käyttäjätila | palvelut |
 
+```{.dot otsikko="ARM64-laitteen käynnistysketju. Jokainen vaihe lataa ja käynnistää seuraavan; TF-A jää muistiin palvelemaan ydintä."}
+digraph {
+  rankdir=TB; node [shape=box];
+  rom [label="ROM-käynnistin (piirin ROM)"];
+  spl [label="SPL (piirin SRAM)"];
+  tfa [label="TF-A, BL31 (DRAM, EL3)"];
+  uboot [label="U-Boot (DRAM, EL2 tai EL1)"];
+  linux [label="Linux (DRAM, EL1)"];
+  init [label="init (käyttäjätila, EL0)"];
+  rom -> spl [label="lataa SPL:n käynnistyslähteestä"];
+  spl -> tfa [label="alustaa DRAMin, lataa TF-A:n ja U-Bootin"];
+  tfa -> uboot [label="siirtyy alemmalle poikkeustasolle"];
+  uboot -> linux [label="lataa ytimen, laitepuun ja initramfsin"];
+  linux -> init [label="käynnistää ensimmäisen prosessin"];
+  linux -> tfa [style=dashed, constraint=false, label="PSCI-kutsut"];
+}
+```
+
+*EL* on ARM64:n poikkeustaso (exception level): EL3 on turvamonitorin,
+EL2 hypervisorin, EL1 ytimen ja EL0 käyttäjätilan taso.
 *SPL* (Secondary Program Loader) on U-Bootista käännetty karsittu versio,
 joka mahtuu piirin sisäiseen SRAMiin. *TF-A* (Trusted Firmware-A) on
 ARM:n viitetoteutus laiteohjelmistolle, joka jää ajoon ytimen alle:
@@ -36,10 +56,10 @@ Käynnistin ei tiedä ytimestä muuta kuin sen, mitä ydinkuvan alussa
 oleva 64 tavun otsake kertoo. Sen muoto on määritelty ytimen
 dokumentissa `Documentation/arch/arm64/booting.rst`:
 
-```{.python tiedosto="esimerkit/04-ydin/otsake.py" osa="otsake"}
+```{.python tiedosto="esimerkit/05-uboot/otsake.py" osa="otsake"}
 ```
 
-```{.tuloste tiedosto="esimerkit/testit/04-otsake.odotettu"}
+```{.tuloste tiedosto="esimerkit/testit/05-otsake.odotettu"}
 ```
 
 Taikaluku `ARMd` kertoo käynnistimelle, että kyseessä on ARM64-ydin.
@@ -49,9 +69,13 @@ käynnistyy myös UEFI-ohjelmana. `text_offset` ja `image_size` kertovat,
 mihin kohtaan muistia ydin on ladattava ja paljonko tilaa se tarvitsee
 purkautuessaan, sillä muuttujat (`.bss`) eivät ole tiedostossa.
 
-Käynnistimen on lisäksi välitettävä ytimelle laitepuun osoite
+Käynnistimen on lisäksi välitettävä ytimelle *laitepuun* osoite
 rekisterissä `x0`, ja välimuistit ja muistinhallintayksikkö on oltava
-pois päältä. Tämä sopimus on *käynnistysprotokolla*; U-Bootin komento
+pois päältä. Laitepuu on tietorakenne, joka kuvaa laitteiston: muistin,
+prosessorit ja oheislaitteet osoitteineen. Ydin lukee siitä, mitä
+laitteita koneessa on. Tässä luvussa riittää tietää, että se on
+tiedosto, joka ladataan muistiin ytimen viereen; sen sisältö on
+seuraavan luvun aihe. Tämä sopimus on *käynnistysprotokolla*; U-Bootin komento
 `booti` toteuttaa sen.
 
 ## U-Boot
@@ -87,13 +111,14 @@ tätä vaihtaessaan käynnistettävää osiota (luku 8).
 
 Kun automaattinen käynnistys keskeytetään, U-Boot antaa kehotteen
 `=>`. Seuraava vaihetiedosto ohjaa U-Bootia samoilla komennoilla, jotka
-ihminen kirjoittaisi sarjakonsoliin; sen ajaa luvun 10
+ihminen kirjoittaisi sarjakonsoliin. Rivi `odota` odottaa konsolilta
+tekstiä ja `laheta` kirjoittaa sinne; tiedoston ajaa luvun 10
 käynnistystestien ajuri:
 
-```{.text tiedosto="esimerkit/06-uboot/kasin.vaiheet"}
+```{.text tiedosto="esimerkit/05-uboot/kasin.vaiheet"}
 ```
 
-```{.tuloste tiedosto="esimerkit/testit/06-kasin.odotettu"}
+```{.tuloste tiedosto="esimerkit/testit/05-kasin.odotettu"}
 ```
 
 Komento `virtio scan` etsii virtio-laitteet, `load` lukee tiedoston
@@ -110,7 +135,7 @@ U-Boot tarvitsee levyn, jolla on osiotaulu ja tiedostojärjestelmä.
 Levykuva tehdään ilman pääkäyttäjän oikeuksia kahdessa vaiheessa.
 Ensin pieni Python-ohjelma kirjoittaa MBR-osiotaulun:
 
-```{.python tiedosto="esimerkit/06-uboot/levykuva.py" osa="osio"}
+```{.python tiedosto="esimerkit/05-uboot/levykuva.py" osa="osio"}
 ```
 
 Sitten `mke2fs` tekee osioon ext4-tiedostojärjestelmän ja kopioi siihen
@@ -132,7 +157,7 @@ Uusissa U-Booteissa `bootcmd` käynnistää *standardikäynnistyksen*
 käynnistystapoja. Yleisin on `extlinux.conf`, sama muoto, jota
 PC-maailman Syslinux käyttää:
 
-```{.text tiedosto="esimerkit/06-uboot/extlinux.conf"}
+```{.text tiedosto="esimerkit/05-uboot/extlinux.conf"}
 ```
 
 Tiedosto sijoitetaan osion hakemistoon `/extlinux/`, ja sen viereen ydin
@@ -140,7 +165,7 @@ ja initramfs. Kun laitepuu halutaan ladata levyltä, lisätään rivi
 `fdt /polku/laite.dtb`. U-Bootin tulosteesta suodatetaan käynnistystapa
 ja ladatut tiedostot:
 
-```{.tuloste tiedosto="esimerkit/testit/06-extlinux.odotettu"}
+```{.tuloste tiedosto="esimerkit/testit/05-extlinux.odotettu"}
 ```
 
 Etu on, että käynnistysvalikko on tavallinen tekstitiedosto
@@ -153,7 +178,7 @@ Kun käynnistys tarvitsee logiikkaa, kuten päivitysosion valinnan tai
 laitteistoversion tunnistuksen, käytetään U-Bootin skriptiä. Se on
 U-Bootin komentoja tekstitiedostossa:
 
-```{.text tiedosto="esimerkit/06-uboot/boot.cmd"}
+```{.text tiedosto="esimerkit/05-uboot/boot.cmd"}
 ```
 
 U-Boot ei lue tekstitiedostoa sellaisenaan, vaan skripti käännetään
@@ -166,7 +191,7 @@ U-Boot ei lue tekstitiedostoa sellaisenaan, vaan skripti käännetään
 `SOURCE_DATE_EPOCH` kiinnittää. Standardikäynnistys löytää tiedoston
 `/boot.scr` ja ajaa sen:
 
-```{.tuloste tiedosto="esimerkit/testit/06-skripti.odotettu"}
+```{.tuloste tiedosto="esimerkit/testit/05-skripti.odotettu"}
 ```
 
 ## FIT-kuvat ja verkkokäynnistys

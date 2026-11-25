@@ -1,0 +1,12 @@
+# @alku vaiheet
+# lataa kartta.ko
+  loki: kartta: loading out-of-tree module taints kernel.
+# aja /bin/karttatesti
+mmap: ok
+read: 63 tavua, alussa "kirjoitettu ilman jarjestelmakutsua"
+toinen kuvaus: "kirjoitettu ilman jarjestelmakutsua", eri osoite
+kaksi sivua: Invalid argument
+toinen sivu: Invalid argument
+# poista kartta
+# @loppu vaiheet
+paluuarvo 0

@@ -56,6 +56,24 @@ tiedostossa `uevent` juuri niin kuin `udev` ne saa.
 `file_operations` on taulu funktio-osoittimia. Ydin kutsuu niitä
 laitetiedoston järjestelmäkutsuista:
 
+```{.dot otsikko="Lukukutsun polku käyttäjän ohjelmasta ajuriin. Katkoviivan alapuoli on ydintä."}
+digraph {
+  rankdir=TB; node [shape=box];
+  ohjelma [label="ohjelma: read(fd, puskuri, 64)"];
+  subgraph cluster_ydin { label="ydin"; labeljust=l; style=dashed;
+    kutsu [label="järjestelmäkutsu: fd → struct file"];
+    vfs [label="VFS: tiedoston f_op-taulu"];
+    ajuri [label="ajuri: jono_lue()"];
+    jono [label="odotusjono ja kfifo"];
+  }
+  ohjelma -> kutsu [label="siirtymä ydintilaan"];
+  kutsu -> vfs;
+  vfs -> ajuri [label="f_op->read"];
+  ajuri -> jono [label="nukkuu, jos tyhjä"];
+  ajuri -> ohjelma [label="copy_to_user,\npaluuarvo: tavujen määrä", constraint=false];
+}
+```
+
 ```{.c tiedosto="esimerkit/02-merkkilaite/jono.c" osa="fops"}
 ```
 
@@ -95,7 +113,10 @@ ytimen muistiin. Kopiointi tehdään aina funktioilla `copy_to_user` ja
 Funktiossa on estävän luvun tavallinen malli:
 
 - **Ehto tarkistetaan lukon kanssa.** Jos jonossa on dataa, luetaan
-  heti.
+  heti. Lukko tarvitaan, koska kaksi prosessia voi lukea ja kirjoittaa
+  samaa jonoa yhtä aikaa eri CPU:illa. Tässä riittää mutex, koska
+  kaikki käyttäjät ovat prosesseja; lukon valinta, kun mukana on
+  keskeytys, käsitellään luvussa 5.
 - **Ei-estävä tila (`O_NONBLOCK`) palauttaa `EAGAIN`.** Ohjelma, joka
   käyttää `poll`- tai `epoll`-kutsua, avaa laitteen näin.
 - **Nukutaan lukon ulkopuolella.** `wait_event_interruptible` nukkuu,
@@ -147,7 +168,7 @@ sama 32- ja 64-bittisellä ohjelmalla:
 Tuntematon komento palauttaa `-ENOTTY`, kuten POSIX määrää.
 Uutta rajapintaa suunnitellessa `ioctl` kannattaa varata toiminnoille.
 Yksittäiset asetukset ja tilatiedot sopivat usein paremmin
-sysfs-attribuuteiksi (luku 9), joita voi lukea ja kirjoittaa ilman
+sysfs-attribuuteiksi (luku 5), joita voi lukea ja kirjoittaa ilman
 omaa ohjelmaa.
 
 ## Testi käyttäjätilassa
@@ -182,6 +203,50 @@ käyttää sitä. Oma luokka ja pääluku kannattavat, kun laitteita on
 useita samanlaisia, kuten tämän luvun jonoja, tai kun laitteet
 halutaan omaan hakemistoonsa `/sys/class`-hakemistossa.
 
+## mmap: puskuri käyttäjän osoiteavaruuteen
+
+`read` ja `write` kopioivat jokaisen tavun ytimen ja käyttäjän muistin
+välillä ja maksavat järjestelmäkutsun. Kun dataa on paljon tai sitä
+luetaan jatkuvasti, kuten kameran kuvapuskurissa, äänilaitteen
+rengaspuskurissa tai jaetussa tilalohkossa, ajuri voi *kuvata* oman
+muistinsa suoraan prosessin osoiteavaruuteen. Sen jälkeen ohjelma lukee
+ja kirjoittaa muistia tavallisilla osoittimilla ilman
+järjestelmäkutsuja.
+
+Esimerkkiajuri `kartta` on misc-laite, jolla on yksi sivu muistia:
+
+```{.c tiedosto="esimerkit/02-merkkilaite/kartta.c" osa="fops"}
+```
+
+```{.c tiedosto="esimerkit/02-merkkilaite/kartta.c" osa="mmap"}
+```
+
+Ydin on jo varannut prosessin osoiteavaruudesta alueen
+(`vm_area_struct`), ja ajurin tehtävä on kertoa, mitkä sivut sen
+taakse tulevat. `vm_pgoff` on `mmap`-kutsun siirtymä sivuina. Ajurin on
+tarkistettava siirtymä ja koko itse, tai ohjelma voi pyytää kuvauksen
+puskurin ohi. `vm_insert_page` sopii ytimen tavallisille sivuille.
+Laitteen rekisterialue kuvataan funktiolla `io_remap_pfn_range` ja
+DMA-puskuri funktiolla `dma_mmap_coherent` (luku 6).
+
+```{.c tiedosto="esimerkit/02-merkkilaite/karttatesti.c" osa="kuvaus"}
+```
+
+```{.tuloste tiedosto="esimerkit/testit/02-kartta.odotettu" osa="vaiheet"}
+```
+
+Ohjelman kirjoitus näkyy heti sekä `read`-kutsulle että toiselle
+kuvaukselle, koska kaikki kolme käyttävät samaa fyysistä sivua. Liian
+suuri kuvaus ja siirtymä puskurin ohi hylätään virheellä `EINVAL`.
+
+Kuvauksen hinta on, että ajuri ei näe käyttöä: lukuja ja kirjoituksia
+ei voi tarkistaa, lukita eikä odottaa. Ohjelman ja ajurin on sovittava
+puskurin rakenteesta ja synkronoinnista erikseen, tavallisesti niin,
+että data kulkee kuvauksen kautta ja herätykset `poll`-kutsulla.
+Kuvattu muisti ei myöskään saa kadota ohjelman alta: sivu vapautetaan
+vasta, kun viimeinen kuvaus on purettu, ja avoin tiedosto estää
+moduulin poiston.
+
 ## Käytännössä
 
 - **Kopioi käyttäjän muistiin ja sieltä vain `copy_*_user`-funktioilla,
@@ -194,6 +259,8 @@ halutaan omaan hakemistoonsa `/sys/class`-hakemistossa.
   käyttävä ohjelma ei voi käyttää laitetta, joka osaa vain estää.
 - **Palauta signaalista `-ERESTARTSYS`.** Prosessin pitää voida keskeyttää
   odottava luku.
+- **Tarkista `mmap`-kutsun siirtymä ja koko.** Kuvaus puskurin ohi
+  antaa ohjelmalle ytimen muistia.
 - **Pidä `ioctl`-rakenteet kiinteän kokoisina ja otsake yhteisenä.**
   Käyttäjätilan rajapinta on ikuinen: kenttää ei voi poistaa, kun
   ohjelmat käyttävät sitä.
@@ -209,3 +276,6 @@ halutaan omaan hakemistoonsa `/sys/class`-hakemistossa.
   komentonumerot `_IOR`- ja `_IO`-makroilla.
 - Osaat selittää, miksi käyttäjän puskuria ei saa käyttää suoraan ja
   mitä `copy_to_user` tarkistaa.
+- Osaat toteuttaa `mmap`-operaation, joka kuvaa ajurin sivun
+  käyttäjän osoiteavaruuteen, ja kertoa, mitä ajurin on siinä
+  tarkistettava.

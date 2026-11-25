@@ -1,0 +1,12 @@
+/bin/staattinen    toimii
+/bin/dynaaminen    execv: No such file or directory (ENOENT)
+/bin/isanta        execv: Exec format error (ENOEXEC)
+/bin/skripti       execv: No such file or directory (ENOENT)
+/bin/oikeudeton    execv: Permission denied (EACCES)
+/run/kopio         execv: Permission denied (EACCES)
+/bin/puuttuu       execv: No such file or directory (ENOENT)
+/dev/ttyAMA0       open: ok
+/dev/ttyAMA1       open: No such file or directory
+/dev/anturi0       open: No such device or address
+reboot: Power down
+paluuarvo 0

@@ -49,7 +49,7 @@ Toistettavuus: `KBUILD_BUILD_TIMESTAMP`, `KBUILD_BUILD_USER`,
 
 # Initramfs ja init
 
-```{.text tiedosto="esimerkit/02-init/initramfs.lista"}
+```{.text tiedosto="esimerkit/04-init/initramfs.lista"}
 ```
 
 `gen_init_cpio -t AIKA lista | gzip -n -9 > initramfs.cpio.gz`.
@@ -70,7 +70,7 @@ signaaleihin ilman käsittelijää. Kiinnitä `/proc`, `/sys`, `/dev`
 | `dhcp`, `tftp ${kernel_addr_r} Image` | verkkokäynnistys |
 | `fdt addr`, `fdt print /chosen` | laitepuun tarkastelu |
 
-```{.text tiedosto="esimerkit/06-uboot/extlinux.conf"}
+```{.text tiedosto="esimerkit/05-uboot/extlinux.conf"}
 ```
 
 Skripti: `mkimage -A arm64 -T script -C none -d boot.cmd boot.scr`.
@@ -86,7 +86,7 @@ Linuxista: `fw_printenv`, `fw_setenv`.
 | `fdtget -t s x.dtb / model` | ominaisuuden luku |
 | `dtc -I fs /sys/firmware/devicetree/base` | ytimen näkemä puu |
 
-```{.c tiedosto="esimerkit/05-laitepuu/anturi.dtsi" osa="anturi"}
+```{.c tiedosto="esimerkit/06-laitepuu/anturi.dtsi" osa="anturi"}
 ```
 
 `reg`: solujen määrä vanhemman `#address-cells`/`#size-cells`. GIC:
@@ -130,3 +130,12 @@ Linuxista: `fw_printenv`, `fw_setenv`.
 | `Attempted to kill init` | init päättyi tai kaatui |
 | laite ilman ajuria | `compatible` ei täsmää, `status = "disabled"` |
 | ominaisuus puuttuu ytimestä | Kconfig hylkäsi asetuksen (`depends on`) |
+| `No such file`, vaikka ohjelma on olemassa | tulkki puuttuu: `readelf -l`, `-d` |
+| `Exec format error` | väärä arkkitehtuuri: `readelf -h` |
+
+| Kysymys | Keino |
+|---------|-------|
+| mitä ohjelma pyytää ytimeltä? | `strace -f -o loki ohjelma`, `qemu-aarch64 -strace` |
+| missä se kaatui? | `exception-trace`, `addr2line -f -e ohjelma PC` |
+| millä tilalla? | `core_pattern`, `ulimit -c`, `gdb-multiarch ohjelma core` |
+| miten se etenee? | `gdbserver :2345 ohjelma`, `target remote laite:2345` |

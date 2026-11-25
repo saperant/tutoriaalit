@@ -65,8 +65,9 @@ tyhjästä: kaikki, mikä voidaan jättää pois, on pois.
 Konfiguraatiota ei kannata muokata valikolla ja tallentaa valtavana
 `.config`-tiedostona, koska sen muutoksia on vaikea katselmoida. Parempi
 tapa on *fragmentti*: lyhyt tiedosto, joka luettelee vain poikkeamat
-lähtökohdasta. Tämän tutoriaalin ydin on `tinyconfig` ja yksi
-fragmentti. Sen osat:
+lähtökohdasta. Tämän tutoriaalin ydin on `tinyconfig` ja kaksi
+fragmenttia: perusfragmentti ja luvun 11 vianetsinnän lisäykset.
+Perusfragmentin osat:
 
 ```{.ini tiedosto="esimerkit/ymparisto/perus.config" osa="konsoli"}
 ```
@@ -105,16 +106,16 @@ jokaista fragmentin riviä valmiiseen `.config`-tiedostoon:
 ```{.bash tiedosto="esimerkit/ymparisto/tarkista-config.sh" osa="silmukka"}
 ```
 
-Esimerkki `04-ydin/rikki.config` pyytää `tmpfs`:ää mutta unohtaa sen
+Esimerkki `03-ydin/rikki.config` pyytää `tmpfs`:ää mutta unohtaa sen
 riippuvuuden:
 
-```{.ini tiedosto="esimerkit/04-ydin/rikki.config"}
+```{.ini tiedosto="esimerkit/03-ydin/rikki.config"}
 ```
 
 `tinyconfig` poistaa `SHMEM`-symbolin (jaettu muisti korvataan
 yksinkertaisemmalla `ramfs`:llä), joten `TMPFS` ei täyty:
 
-```{.tuloste tiedosto="esimerkit/testit/04-rikki.odotettu"}
+```{.tuloste tiedosto="esimerkit/testit/03-rikki.odotettu"}
 ```
 
 Tarkistus on ytimen käännöksen ensimmäinen testi. Tämän tutoriaalin
@@ -139,9 +140,8 @@ kääntämiseen. Käännöksessä syntyy myös `vmlinux`, ytimen ELF-tiedosto
 symboleineen. Sitä ei käynnistetä, mutta sitä tarvitaan debuggaukseen
 (`gdb vmlinux`) ja kaatumisilmoitusten tulkintaan.
 
-Tämän tutoriaalin ytimen kuva on noin 3,7 Mt, ja sen kääntäminen kesti
-kirjoittajan kuormitetulla 4-ytimisellä koneella noin kymmenen minuuttia.
-Jakelun yleiskäyttöinen ARM64-ydin on moninkertainen, ja sen moduulit
+Tämän tutoriaalin ytimen kuva on noin 3,7 Mt, ja sen kääntäminen
+kestää nelinytimisellä koneella 5–10 minuuttia. Jakelun yleiskäyttöinen ARM64-ydin on moninkertainen, ja sen moduulit
 vievät satoja megatavuja lisää. Ero syntyy siitä, mitä jätetään pois:
 tinyconfig poistaa muun muassa verkon, symbolitaulun (`KALLSYMS`),
 `BUG()`-tarkistukset ja monta järjestelmäkutsua, kuten `eventfd`,
@@ -171,7 +171,7 @@ asetukset saa ulos ilman laitettakin:
 ```{.make tiedosto="esimerkit/Makefile" osa="ikconfig"}
 ```
 
-```{.tuloste tiedosto="esimerkit/testit/04-ikconfig.odotettu"}
+```{.tuloste tiedosto="esimerkit/testit/03-ikconfig.odotettu"}
 ```
 
 ## Moduulit
@@ -194,10 +194,10 @@ Ytimen ulkopuolinen moduuli käännetään ytimen käännöshakemistoa
 vasten. Moduulin hakemistossa on `Kbuild`-tiedosto, joka kertoo
 ytimen käännösjärjestelmälle, mistä tiedostoista moduuli koostuu:
 
-```{.make tiedosto="esimerkit/04-ydin/moduuli/Kbuild"}
+```{.make tiedosto="esimerkit/03-ydin/moduuli/Kbuild"}
 ```
 
-```{.c tiedosto="esimerkit/04-ydin/moduuli/hei.c"}
+```{.c tiedosto="esimerkit/03-ydin/moduuli/hei.c"}
 ```
 
 ```{.make tiedosto="esimerkit/Makefile" osa="moduuli"}
@@ -215,17 +215,19 @@ laite löytyy. Ilman niitä moduulin voi ladata suoraan järjestelmäkutsulla
 `finit_module`. Esimerkin init tekee juuri niin ja lukee sitten
 moduulin rivit ytimen lokista laitteesta `/dev/kmsg`:
 
-```{.c tiedosto="esimerkit/04-ydin/lataaja.c" osa="lataus"}
+```{.c tiedosto="esimerkit/03-ydin/lataaja.c" osa="lataus"}
 ```
 
-```{.tuloste tiedosto="esimerkit/testit/04-moduuli.odotettu"}
+```{.tuloste tiedosto="esimerkit/testit/03-moduuli.odotettu"}
 ```
 
 Ensimmäinen rivi kertoo, että ydin on nyt *tahrattu* (tainted): siihen
 on ladattu koodia, joka ei ole peräisin ytimen omasta lähdepuusta.
 Tahramerkintä näkyy kaatumisilmoituksissa, ja ytimen kehittäjät
-pyytävät yleensä toistamaan vian ilman tahraavia moduuleja. Lisää
-moduuleista ja ajureista taidossa *Linux-laiteajurit*.
+pyytävät yleensä toistamaan vian ilman tahraavia moduuleja. Moduulin
+parametrit, symbolien vienti, riippuvuudet ja lisenssit käsitellään
+taidossa *Linux-laiteajurit*; tässä riittää, että moduuli käännetään
+ja ladataan.
 
 ## Käytännössä
 

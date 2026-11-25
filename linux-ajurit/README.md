@@ -14,20 +14,20 @@ ja pikaopas
 2. Ytimen moduulit – Kbuild, parametrit, symbolien vienti,
    riippuvuudet, viittauslaskenta, lisenssi ja tahrat
 3. Merkkilaiteajurit – laitenumerot, `cdev`, `file_operations`, estävä
-   luku, `poll`, `ioctl`, misc-laitteet
+   luku, `poll`, `ioctl`, misc-laitteet, `mmap`
 4. Platform-ajurit ja laitepuu – ajurimalli, `compatible`, rekisterit,
    `probe`, `devm`, sitominen ja irrotus
 5. Keskeytykset ja lukitus – keskeytyksen polku, ylä- ja alapuolisko,
-   työjonot, lukot konteksteittain
+   työjonot, lukot konteksteittain, sysfs-attribuutit, viiveet ja
+   ajastimet
 6. DMA ytimessä – DMA-maski, koherentti muisti, virtauskuvaus,
    välimuistin koherenssi, dmaengine
 7. I2C-ajurit – alijärjestelmä, SMBus, regmap, hwmon, `i2c-stub`
 8. SPI-ajurit – siirrot ja viestit, ohjaimen ja laitteen ajuri, spidev
-9. sysfs ja debugfs – attribuutit, binääriattribuutit, debugfs,
-   rajapinnan valinta
+9. sysfs ja debugfs – binääriattribuutit, debugfs, rajapinnan valinta
 10. Ytimen vianetsintä – lokitasot, dynaaminen debug, ftrace,
     kaatumisilmoitus, lockdep ja muut tarkistimet
-11. Lopuksi – nyrkkisäännöt, oikeaan laitteeseen, lähteet
+11. Lopuksi – nyrkkisäännöt, oikeaan laitteeseen, jatkotaidot, lähteet
 
 ## Esimerkit
 
@@ -61,3 +61,6 @@ ShellCheck. Ensimmäinen ajo purkaa ytimen lähteet ja kääntää ytimen,
 mikä kestää useita minuutteja ja vie noin 2 Gt levyä; sen jälkeen
 kaikki testit kestävät alle minuutin. Kehityskontissa
 (`.devcontainer/linux-ajurit`) paketit ovat valmiina.
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.

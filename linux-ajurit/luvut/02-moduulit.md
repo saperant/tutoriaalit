@@ -182,6 +182,17 @@ johdannainen. Suljettu ajuri on myös käytännössä ongelma: sitä ei voi
 korjata ytimen muutosten mukana, eikä kukaan muu voi selvittää sen
 aiheuttamia kaatumisia.
 
+## Kun moduuli kaatuu
+
+Moduulin virhe on ytimen virhe. NULL-osoittimen käyttö alkufunktiossa
+tuottaa ytimen lokiin kaatumisilmoituksen (*oops*), `insmod` päättyy
+signaaliin, ja moduuli voi jäädä puoliksi ladatuksi niin, ettei sitä saa
+poistettua. Testijärjestelmä käynnistetään silloin uudelleen, mikä on
+QEMU:ssa sekuntien asia ja hyvä syy kehittää ajuria emulaattorissa.
+Ilmoituksen lukeminen ja osoitteen muuntaminen lähdekoodin riviksi
+käsitellään luvussa 10; siihen kannattaa palata heti, kun oma moduuli
+kaatuu ensimmäisen kerran.
+
 ## Moduuli vai ytimeen
 
 Sama koodi voidaan kääntää moduuliksi (`obj-m`) tai ytimeen (`obj-y`).

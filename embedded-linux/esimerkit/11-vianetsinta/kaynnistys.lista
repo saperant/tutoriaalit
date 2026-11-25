@@ -1,0 +1,13 @@
+# Käynnistyskokeet: sama ohjelma eri tavoin rikki. Initramfsissä ei ole
+# dynaamista linkittäjää, kuorta eikä laitteen anturi0 ajuria.
+dir  /dev                 0755 0 0
+nod  /dev/console         0600 0 0 c 5 1
+dir  /proc                0555 0 0
+dir  /run                 0755 0 0
+dir  /bin                 0755 0 0
+file /bin/staattinen      ${STAATTINEN} 0755 0 0
+file /bin/dynaaminen      ${DYNAAMINEN} 0755 0 0
+file /bin/isanta          ${ISANTA}     0755 0 0
+file /bin/skripti         ${SKRIPTI}    0755 0 0
+file /bin/oikeudeton      ${STAATTINEN} 0644 0 0
+file /init                ${KOKEILE}    0755 0 0

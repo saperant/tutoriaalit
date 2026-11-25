@@ -48,13 +48,13 @@ etuliitettä omiin ohjelmiinsa:
 Seuraava ohjelma kertoo, millaiselle alustalle se on käännetty. Siinä ei
 ole yhtään arkkitehtuurikohtaista riviä:
 
-```{.c tiedosto="esimerkit/01-ristiin/tietoja.c" osa="erot"}
+```{.c tiedosto="esimerkit/02-ristiin/tietoja.c" osa="erot"}
 ```
 
 Esimerkkien Makefile kääntää sen kolmesti: isännälle, ARM64:lle
 staattisesti ja ARM64:lle dynaamisesti linkitettynä.
 
-```{.make tiedosto="esimerkit/Makefile" osa="01"}
+```{.make tiedosto="esimerkit/Makefile" osa="kaannokset"}
 ```
 
 ARM64-ohjelmaa ei voi ajaa x86-64-koneella suoraan, mutta QEMU:n
@@ -63,7 +63,7 @@ kääntämällä sen käskyt lennossa ja välittämällä järjestelmäkutsut
 isännän ytimelle. Koko järjestelmää ei tarvita, joten tämä on nopein
 tapa testata ristiinkäännettyä koodia CI:ssä.
 
-```{.tuloste tiedosto="esimerkit/testit/01-ristiin.odotettu"}
+```{.tuloste tiedosto="esimerkit/testit/02-ristiin.odotettu"}
 ```
 
 Tuloste näyttää kolme asiaa.

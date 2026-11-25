@@ -41,14 +41,34 @@ Tutoriaali käsittelee
 - **Buildrootia ja Yoctoa**: miten edellä käsin tehdyt vaiheet
   automatisoidaan tuotannossa
 - **käynnistystestejä**: järjestelmän automaattinen käynnistys,
-  tulosteen seuraaminen ja vikojen tunnistaminen CI:ssä.
+  tulosteen seuraaminen ja vikojen tunnistaminen CI:ssä
+- **vianetsintää kohteessa**: käynnistymättömän ohjelman virhekoodit,
+  järjestelmäkutsujen jäljitys, ydinvedos ja etädebuggaus.
+
+## Esitiedot ja rajaus
 
 Esitietoina oletetaan taidot *Käyttöjärjestelmät* (prosessit,
-järjestelmäkutsut, tiedostojärjestelmät ja laitteet) ja *Käännösjärjestelmät,
-testaus ja CI* (Make ja CI-putket). Taidosta *Objektitiedostot,
-linkitys ja ABI* on hyötyä ristiinkääntämisen luvussa ja taidosta
-*Virtualisointi* QEMU:n käytössä. Tämän tutoriaalin ympäristöä käytetään
-seuraavassa taidossa *Linux-laiteajurit*.
+järjestelmäkutsut, signaalit, tiedostojärjestelmät ja laitteet) ja
+*Käännösjärjestelmät, testaus ja CI* (Make, gdb ja CI-putket). Taidosta
+*Objektitiedostot, linkitys ja ABI* on hyötyä ristiinkääntämisen ja
+vianetsinnän luvuissa ja taidosta *Virtualisointi* QEMU:n käytössä.
+
+Tutoriaali rakentaa järjestelmän käsin ytimestä ja omista C-ohjelmista,
+jotta jokainen osa näkyy. Kohteessa ei siksi ole kuorta eikä BusyBoxia,
+vaan jokainen koe on oma init-ohjelmansa. Buildroot ja Yocto, joilla
+tuotantojärjestelmät rakennetaan, esitellään asetustiedostoina, mutta
+niitä ei ajeta (luku 9). Ytimen ajurit ja ytimen oma vianetsintä
+kuuluvat taitoon *Linux-laiteajurit*, joka käyttää tämän tutoriaalin
+ympäristöä, ja laitteen suojaaminen taitoon *Sulautettujen
+järjestelmien tietoturva*.
+
+Reaaliaikaisuudesta käsitellään vain rajanveto. Tavallinen Linux ei
+takaa vasteaikoja. Ytimen `PREEMPT_RT`-asetus, joka on ollut
+pääkehityshaarassa versiosta 6.12, tekee lähes koko ytimestä
+keskeytettävän ja riittää moneen pehmeän ja kiinteän reaaliajan
+tehtävään. Lyhimmät ja todistettavat vasteajat vaativat edelleen
+erillisen mikrokontrollerin ja RTOS:n (taito
+*Reaaliaikakäyttöjärjestelmät*).
 
 ## Laboratorio: QEMU:n virt-kone
 
@@ -80,14 +100,12 @@ eivät tarvitse ja jonka käynnistys-ROM puuttuu kevyistä QEMU-asennuksista.
 Kaikki tarvittava tulee Ubuntun paketeista: ytimen lähdekoodi
 (`linux-source-6.8.0`), ristikääntäjä (`gcc-aarch64-linux-gnu`), QEMU,
 U-Boot (`u-boot-qemu`, `u-boot-tools`) ja laitepuutyökalut
-(`device-tree-compiler`). Tavallisesti ytimen lähteet haetaan
-osoitteesta kernel.org, Buildroot osoitteesta buildroot.org ja BusyBox
-osoitteesta busybox.net, mutta tämän tutoriaalin ympäristöstä niihin ei
-ole yhteyttä. Siksi Buildroot ja Yocto esitellään luvussa 9 tekstinä ja
-tarkistettuina asetustiedostoina, ja ajettavat esimerkit rakentavat
-järjestelmän suoraan ytimestä ja omista ohjelmista. Tämä on myös hyvä
-tapa oppia: kun on kerran koonnut järjestelmän käsin, tietää, mitä
-rakennustyökalut tekevät.
+(`device-tree-compiler`). Jakelun paketeista rakentaminen pitää
+esimerkit toistettavina ilman verkkoa. Omassa projektissa ytimen
+lähteet haetaan tavallisesti osoitteesta kernel.org tai piirin
+valmistajalta ja koko järjestelmä rakennetaan Buildrootilla tai
+Yoctolla (luku 9). Kun järjestelmän on kerran koonnut käsin, tietää,
+mitä rakennustyökalut tekevät.
 
 ## Ympäristö: ytimen rakennus kerran
 
@@ -117,15 +135,17 @@ vain valittuja rivejä, koska siinä on aikaleimoja ja osoitteita.
 | Hakemisto | Sisältö | Luku |
 |-----------|---------|-----:|
 | `ymparisto/` | ytimen rakennus, QEMU-skripti, konfiguraation tarkistus | 1, 3 |
-| `01-ristiin/` | sama ohjelma isännälle ja ARM64:lle | 2 |
-| `02-init/` | pienin init ja initramfs | 4 |
-| `03-palvelut/` | init-järjestelmä palveluineen | 7 |
-| `04-ydin/` | väärä fragmentti, Image-otsake, moduuli | 3, 5 |
-| `05-laitepuu/` | laitepuun purku, muokkaus ja tutkiminen | 6 |
-| `06-uboot/` | levykuva, extlinux, käynnistysskripti, käsikäynnistys | 5 |
-| `07-juuri/` | vain luku -juuri ja overlayfs | 8 |
-| `08-kaynnistystesti/` | käynnistystestien ajuri | 10 |
+| `testit/` | testien odotetut tulosteet | kaikki |
+| `02-ristiin/` | sama ohjelma isännälle ja ARM64:lle | 2 |
+| `03-ydin/` | väärä fragmentti, moduuli ja sen lataaja | 3 |
+| `04-init/` | pienin init ja initramfs | 4 |
+| `05-uboot/` | Image-otsake, levykuva, extlinux, käynnistysskripti, käsikäynnistys | 5 |
+| `06-laitepuu/` | laitepuun purku, muokkaus ja tutkiminen | 6 |
+| `07-palvelut/` | init-järjestelmä palveluineen | 7 |
+| `08-juuri/` | vain luku -juuri ja overlayfs | 8 |
 | `09-buildroot/` | Buildroot- ja Yocto-asetukset (ei ajeta) | 9 |
+| `10-kaynnistystesti/` | käynnistystestien ajuri | 10 |
+| `11-vianetsinta/` | käynnistyskokeet, jäljitys, ydinvedos, gdb-istunto | 11 |
 
 Kaikki ajetaan komennolla `make testaa` paketin juuressa. Ensimmäinen
 ajo purkaa ytimen lähteet ja kääntää ytimen; seuraavat ajot käyttävät
@@ -137,7 +157,8 @@ Luvut 2–4 rakentavat toimivan järjestelmän alusta: työkaluketju, ydin
 ja init. Luvut 5 ja 6 käsittelevät sitä, miten laite käynnistää ytimen
 ja miten ydin saa tietää laitteistosta. Luvut 7 ja 8 tekevät
 järjestelmästä tuotantokelpoisen: palvelut, sammutus ja juuren
-suojaaminen. Luku 9 näyttää, miten sama tehdään rakennustyökaluilla, ja
-luku 10, miten se testataan automaattisesti. Kokenut lukija voi lukea
+suojaaminen. Luku 9 näyttää, miten sama tehdään rakennustyökaluilla,
+luku 10, miten se testataan automaattisesti, ja luku 11, miten vian syy
+löydetään, kun ohjelma ei kohteessa toimi. Kokenut lukija voi lukea
 lukujen itsearvioinnit ja pikaoppaan ja palata lukuihin, joiden
 väitteistä ei ole varma.

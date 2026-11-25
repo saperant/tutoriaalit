@@ -1,0 +1,10 @@
+# Vianetsinnän järjestelmä: tutkija initinä ja riisuttu anturipalvelu.
+dir  /dev                 0755 0 0
+nod  /dev/console         0600 0 0 c 5 1
+dir  /proc                0555 0 0
+dir  /data                0755 0 0
+dir  /bin                 0755 0 0
+dir  /etc                 0755 0 0
+file /etc/rikki.conf      ${RIKKI_CONF} 0644 0 0
+file /bin/anturi          ${ANTURI}     0755 0 0
+file /init                ${TUTKI}      0755 0 0

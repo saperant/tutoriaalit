@@ -1,0 +1,17 @@
+0x.. in _start ()
+Breakpoint 1 at 0x..: file anturi.c, line 17.
+Breakpoint 1, jasenna (rivi=0x.. "vali_ms=500") at anturi.c:17
+17  {
+Breakpoint 1, jasenna (rivi=0x.. "kerroin 3") at anturi.c:17
+17  {
+Program received signal SIGSEGV, Segmentation fault.
+jasenna (rivi=0x.. "kerroin 3") at anturi.c:19
+19      *erotin = '\0';              // vika: NULL, jos = puuttuu
+$1 = 0x0
+#0  jasenna (rivi=0x.. "kerroin 3") at anturi.c:19
+#1  0x.. in lue_asetukset (polku=<optimized out>) at anturi.c:49
+#2  0x.. in main (argc=<optimized out>, argv=<optimized out>) at anturi.c:62
+#1  0x.. in lue_asetukset (polku=<optimized out>) at anturi.c:49
+49          if (jasenna(rivi) != 0) {
+$2 = 3
+$3 = 0x.. "kerroin 3"

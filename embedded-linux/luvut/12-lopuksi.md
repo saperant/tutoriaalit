@@ -20,6 +20,9 @@
   alussa ja lähes mahdoton lisätä kentällä oleviin laitteisiin.
 - **Käynnistys testataan automaattisesti.** Emulaattorissa jokaisesta
   muutoksesta ja oikeilla laitteilla säännöllisesti.
+- **Symbolit talteen, työkalut pois tuotannosta.** Jokaisen julkaisun
+  riisumattomat ohjelmat ja sysroot arkistoidaan; kentältä tullut
+  osoite tai ydinvedos tulkitaan niitä vasten.
 - **Pienennä vasta, kun mittaat.** Poista ytimestä ja juuresta se, mitä
   et tarvitse, mutta säilytä debuggauksen ja vianselvityksen välineet,
   kunnes tiedät, mitä ne maksavat.
@@ -45,6 +48,21 @@ vaiheessa on piirikohtaisia yksityiskohtia:
 5. **Rakennustyökalu kortin valmiista konfiguraatiosta.** Buildrootin
    `configs/` ja Yocton BSP-kerrokset sisältävät useimmille suosituille
    korteille toimivan lähtökohdan.
+
+## Jatkotaidot
+
+- *Linux-laiteajurit* jatkaa samassa ympäristössä ytimen puolelle:
+  moduulit, merkkilaitteet, platform-ajurit ja laitepuun sidonnat,
+  keskeytykset, DMA sekä I2C- ja SPI-ajurit. Luvun 6 anturisolmu saa
+  siellä ajurinsa.
+- *Sulautettujen järjestelmien tietoturva* käsittelee turvallisen
+  käynnistyksen, allekirjoitetut päivitykset ja laitteen koventamisen.
+- *Reaaliaikakäyttöjärjestelmät* kattaa tehtävät, joihin Linuxin
+  vasteajat eivät riitä.
+- *Kontit ja pilvi-infrastruktuuri* käyttää samoja ytimen rakenteita
+  (overlayfs, nimiavaruudet) sovellusten paketointiin.
+- *Jatkuva integraatio ja toimitus* laajentaa luvun 10 putken
+  julkaisuihin ja päivitysten jakeluun.
 
 ## Lähteet
 
@@ -80,6 +98,11 @@ vaiheessa on piirikohtaisia yksityiskohtia:
   lähdekoodissa.
 - Päivitysjärjestelmät: SWUpdate <https://sbabic.github.io/swupdate/>,
   RAUC <https://rauc.io/> ja Mender <https://docs.mender.io/>.
+- Vianetsintä: *Debugging with GDB*, luvut *Remote Debugging* ja
+  *Using the gdbserver Program*
+  <https://sourceware.org/gdb/current/onlinedocs/gdb.html/>, strace
+  <https://strace.io/>, `core(5)` ja `proc(5)` Linuxin ohjesivuissa
+  sekä QEMU:n *User Mode Emulation* (valitsimet `-g` ja `-strace`).
 - Testaus: LAVA <https://www.lavasoftware.org/>, labgrid
   <https://labgrid.readthedocs.io/> ja KernelCI <https://kernelci.org/>.
 - Chris Simmonds ja Frank Vasquez: *Mastering Embedded Linux

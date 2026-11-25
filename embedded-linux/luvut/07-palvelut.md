@@ -30,7 +30,7 @@ Pienen init-järjestelmän `minit` asetukset ovat yksinkertainen
 tekstitiedosto. Rivi kertoo palvelun nimen, sallittujen
 uudelleenkäynnistysten määrän ja komennon:
 
-```{.text tiedosto="esimerkit/03-palvelut/palvelut.conf"}
+```{.text tiedosto="esimerkit/07-palvelut/palvelut.conf"}
 ```
 
 Kolme palvelua kattavat tavalliset tapaukset. `loki` on luotettava
@@ -43,10 +43,10 @@ pysäytettävä väkisin. Kaikki kolme ovat saman esimerkkiohjelman
 
 Jokaisesta palvelusta pidetään kirjaa:
 
-```{.c tiedosto="esimerkit/03-palvelut/minit.c" osa="palvelu"}
+```{.c tiedosto="esimerkit/07-palvelut/minit.c" osa="palvelu"}
 ```
 
-```{.c tiedosto="esimerkit/03-palvelut/minit.c" osa="asetukset"}
+```{.c tiedosto="esimerkit/07-palvelut/minit.c" osa="asetukset"}
 ```
 
 ## Valmiusilmoitus
@@ -57,7 +57,7 @@ Palvelu ilmoittaa valmiudesta luomalla tiedoston
 rivin tiedostokuvaajaan. Mekanismi on eri, mutta idea sama: vain palvelu
 itse tietää, milloin se on valmis.
 
-```{.c tiedosto="esimerkit/03-palvelut/palvelu.c" osa="valmis"}
+```{.c tiedosto="esimerkit/07-palvelut/palvelu.c" osa="valmis"}
 ```
 
 Palvelun on lisäksi varauduttava siihen, että pysäytyspyyntö tulee
@@ -67,7 +67,7 @@ signaali voisi tulla näiden kahden välissä, ja palvelu jäisi odottamaan
 ikuisesti. Siksi `SIGTERM` estetään ennen ilmoitusta, ja
 `sigsuspend` vapauttaa sen vasta, kun palvelu jo odottaa:
 
-```{.c tiedosto="esimerkit/03-palvelut/palvelu.c" osa="odota"}
+```{.c tiedosto="esimerkit/07-palvelut/palvelu.c" osa="odota"}
 ```
 
 Tämä on taidossa *Käyttöjärjestelmät* käsitelty signaalien
@@ -81,7 +81,25 @@ Init käynnistää palvelut yksi kerrallaan ja odottaa kunkin valmiutta.
 Jos palvelu päättyy ennen valmiutta ja uudelleenkäynnistyksiä on
 jäljellä, se käynnistetään uudelleen kasvavalla viiveellä:
 
-```{.c tiedosto="esimerkit/03-palvelut/minit.c" osa="odota"}
+```{.c tiedosto="esimerkit/07-palvelut/minit.c" osa="odota"}
+```
+
+```{.dot otsikko="Palvelun elinkaari minitissä. Tilojen nimet ovat samat kuin tulosteen tilasarakkeessa; sammutuksen polku on seuraavassa osiossa."}
+digraph {
+  rankdir=LR; node [shape=box];
+  alku [shape=point];
+  kaynnistetty [label="käynnistetty\n(fork ja execv)"];
+  kaynnissa [label="kaynnissa"];
+  epaonnistui [label="epaonnistui"];
+  eivalmis [label="ei valmis"];
+  pysaytetty [label="pysäytetty"];
+  alku -> kaynnistetty;
+  kaynnistetty -> kaynnissa [label="valmiusilmoitus"];
+  kaynnistetty -> kaynnistetty [label="päättyi, yrityksiä jäljellä:\nkasvava viive"];
+  kaynnistetty -> epaonnistui [label="päättyi,\nyritykset käytetty"];
+  kaynnistetty -> eivalmis [label="5 s ilman\nilmoitusta"];
+  kaynnissa -> pysaytetty [label="SIGTERM;\n1 s jälkeen SIGKILL"];
+}
 ```
 
 Kasvava viive (*exponential backoff*) on tärkeä. Ilman sitä palvelu,
@@ -93,7 +111,7 @@ siirtyä vikatilaan tai ilmoittaa viasta.
 
 Kaatuva anturipalvelu laskee yrityksensä tiedostoon `/run`issa:
 
-```{.c tiedosto="esimerkit/03-palvelut/palvelu.c" osa="kaatuva"}
+```{.c tiedosto="esimerkit/07-palvelut/palvelu.c" osa="kaatuva"}
 ```
 
 Lukuun 4 verrattuna init tarvitsee kaksi uutta järjestelmäkutsua:
@@ -109,15 +127,15 @@ palvelu voi vielä käyttää niitä palveluja, joista se riippuu.
 Pysäytyspyyntö on `SIGTERM`. Jos palvelu ei pääty aikarajassa, se
 tapetaan `SIGKILL`illä, jota ei voi estää eikä käsitellä:
 
-```{.c tiedosto="esimerkit/03-palvelut/minit.c" osa="pysayta"}
+```{.c tiedosto="esimerkit/07-palvelut/minit.c" osa="pysayta"}
 ```
 
-```{.c tiedosto="esimerkit/03-palvelut/minit.c" osa="main"}
+```{.c tiedosto="esimerkit/07-palvelut/minit.c" osa="main"}
 ```
 
 Koko käynnistys ja sammutus:
 
-```{.tuloste tiedosto="esimerkit/testit/03-palvelut.odotettu"}
+```{.tuloste tiedosto="esimerkit/testit/07-palvelut.odotettu"}
 ```
 
 Tuloste on joka ajossa sama, vaikka palvelut ovat erillisiä
@@ -135,7 +153,7 @@ BusyBox on yksi ohjelma, joka toteuttaa satoja tavallisia komentoja,
 kuten `sh`, `ls`, `mount` ja `init`, ja on pienten Linux-järjestelmien
 yleisin käyttäjätila. Sen init lukee tiedoston `/etc/inittab`:
 
-```{.text tiedosto="esimerkit/03-palvelut/vertailu/inittab"}
+```{.text tiedosto="esimerkit/07-palvelut/vertailu/inittab"}
 ```
 
 `sysinit`-rivit ajetaan kerran käynnistyksessä ja odotetaan,
@@ -154,7 +172,7 @@ systemd on työasemien ja palvelinten oletus, ja sitä käytetään myös
 suurissa sulautetuissa järjestelmissä, kuten autojen
 viihdejärjestelmissä. Sama anturipalvelu systemd-yksikkönä:
 
-```{.ini tiedosto="esimerkit/03-palvelut/vertailu/lampo.service"}
+```{.ini tiedosto="esimerkit/07-palvelut/vertailu/lampo.service"}
 ```
 
 Jokaisella minitin ominaisuudella on vastine: `After` ja `Requires`

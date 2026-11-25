@@ -47,6 +47,20 @@ osaan:
 ```{.c tiedosto="esimerkit/03-platform/herate.c" osa="tila"}
 ```
 
+```{.ajoituskaavio otsikko="Keskeytyksen käsittelyn vaiheet aika-akselilla (periaatekuva). Taso 1 tarkoittaa, että linja on aktiivinen tai koodi suorituksessa."}
+{"signal": [
+  {"name": "laitteen keskeytyslinja", "wave": "01.0......."},
+  {"name": "yläpuolisko: kuittaus",   "wave": "0.10......."},
+  {"name": "keskeytyssäie",           "wave": "0...1.0...."},
+  {"name": "odottava prosessi",       "wave": "0.....1..0."}
+]}
+```
+
+Linja laskee, kun yläpuolisko kuittaa laitteen. Keskeytyssäie pääsee
+ajoon vasta, kun vuorontaja valitsee sen, ja herättää lopuksi
+prosessin, joka odotti laitetta. Yläpuoliskossa ei saa nukkua, kahdessa
+muussa saa.
+
 Rekisteröinti tapahtuu `probe`-funktiossa funktiolla
 `devm_request_threaded_irq` (luku 4). Yläpuoliskon paluuarvo kertoo
 ytimelle, mitä tehdään:
@@ -145,8 +159,43 @@ yhdellä kutsulla. Testiohjelma asettaa herätyksen ja odottaa sitä
 ```{.c tiedosto="esimerkit/03-platform/heratetesti.c" osa="odota"}
 ```
 
-Jaksollisessa tilassa yläpuolisko siirtää vertailuarvoa eteenpäin
-jokaisessa keskeytyksessä. Jakso asetetaan sysfs-attribuutilla (luku 9):
+## Asetukset ja tila: sysfs-attribuutit
+
+Laitetiedosto välittää herätykset. Asetuksille ja tilatiedoille
+luontevampi paikka on sysfs: ajurimalli tekee jokaisesta laitteesta
+hakemiston, ja ajuri voi lisätä siihen *attribuutteja*, jotka näkyvät
+tiedostoina. Sääntö on *yksi arvo tiedostoa kohden*, tekstinä ja
+rivinvaihtoon päättyen. Ajuri antaa lukufunktion (`show`) ja
+tarvittaessa kirjoitusfunktion (`store`):
+
+```{.c tiedosto="esimerkit/03-platform/herate.c" osa="sysfs"}
+```
+
+- **`DEVICE_ATTR_RO(nimi)` ja `DEVICE_ATTR_RW(nimi)`** luovat
+  attribuutin, jonka funktioiden nimet ovat `nimi_show` ja
+  `nimi_store` ja oikeudet `0444` tai `0644`.
+- **`sysfs_emit`** kirjoittaa sivun kokoiseen puskuriin ja tarkistaa
+  rajat. Vanha tapa `sprintf` ei tarkista.
+- **`store`** saa käyttäjän tekstin, joka on jo kopioitu ytimen
+  muistiin. Se jäsennetään `kstrto*`-funktiolla, joka hylkää
+  roskan ja hyväksyy lopun rivinvaihdon. Paluuarvo on käytetty pituus
+  tai negatiivinen virhe.
+- **`ATTRIBUTE_GROUPS`** kokoaa attribuutit ryhmäksi, joka annetaan
+  ajurin `dev_groups`-kentässä (luku 4). Ajurimalli luo tiedostot, kun
+  ajuri sidotaan laitteeseen, ja poistaa ne irrotuksessa.
+
+Ryhmä `dev_groups`-kentässä on parempi kuin `device_create_file`-kutsu
+`probe`-funktiossa. Tiedostot syntyvät ennen sidonnasta kertovaa
+*uevent*-tapahtumaa (`bind`), joten `udev`-sääntö näkee ne heti, eikä
+ajurin tarvitse poistaa niitä itse. sysfs on käyttäjätilan rajapinta,
+joten julkaistua attribuuttia ei voi enää poistaa eikä sen muotoa
+muuttaa; binääriattribuutit, debugfs ja rajapinnan valinta käsitellään
+luvussa 9.
+
+Attribuutti `jakso` tekee herätyksestä jaksollisen: yläpuolisko siirtää
+silloin vertailuarvoa eteenpäin jokaisessa keskeytyksessä. Sen
+`store`-funktio muuttaa keskeytyksen kanssa jaettua tilaa ja ottaa
+siksi saman spinlockin kuin herätyksen asetus.
 
 ```{.text tiedosto="esimerkit/03-platform/herate.vaiheet" osa="jakso"}
 ```
@@ -156,6 +205,33 @@ jokaisessa keskeytyksessä. Jakso asetetaan sysfs-attribuutilla (luku 9):
 
 Laskurin ja vertailuarvon arvot riippuvat ajasta, joten testi korvaa ne
 pisteillä.
+
+## Viiveet, ajastimet ja muistinvaraus
+
+Sama jako nukkuvaan ja atomiseen kontekstiin ratkaisee, miten ajuri
+odottaa ja varaa muistia. Tämän luvun ajuri tarvitsi vain viivästetyn
+työn, mutta vaihtoehdot on hyvä tuntea:
+
+| Tarve | Saa nukkua | Atomisessa kontekstissa |
+|-------|------------|-------------------------|
+| lyhyt viive (mikrosekunteja) | `usleep_range`, `fsleep` | `udelay` (polttaa CPU-aikaa) |
+| pitkä viive (millisekunteja) | `msleep` | ei viivettä: ajasta työ tai ajastin |
+| myöhemmin ajettava funktio | viivästetty työ (`delayed_work`) | `timer_list` (tarkkuus yksi tikki), `hrtimer` (tarkka) |
+| ehdon odotus | `wait_event_timeout`, `readl_poll_timeout` | `readl_poll_timeout_atomic` |
+| muistin varaus | `kmalloc(…, GFP_KERNEL)` | `kmalloc(…, GFP_ATOMIC)`, voi epäonnistua herkemmin |
+
+Ajastimen funktio (`timer_list`, `hrtimer`) ajetaan
+keskeytyskontekstissa, joten sitä koskevat yläpuoliskon säännöt. Jos
+työ tarvitsee mutexia tai väylää, ajastin vain ajastaa työn työjonoon.
+Jokainen ajastin ja työ on peruttava `remove`-funktiossa
+(`timer_shutdown_sync`, `hrtimer_cancel`, `cancel_delayed_work_sync`).
+
+`kmalloc` antaa fyysisesti yhtenäistä muistia ja sopii pienille
+rakenteille; `devm_kzalloc` on sen hallittu, nollaava muoto, jota
+`probe` tavallisesti käyttää. Suuret puskurit, joiden ei tarvitse olla
+yhtenäisiä, varataan funktiolla `vmalloc` tai `kvmalloc`, joka valitsee
+näistä sopivan. Laitteelle annettava muisti varataan DMA-rajapinnalla
+(luku 6).
 
 ## Käytännössä
 
@@ -182,3 +258,7 @@ pisteillä.
   irrotuksessa.
 - Osaat valita mutexin, spinlockin ja `spin_lock_irqsave`-funktion
   välillä sen mukaan, missä kontekstissa tilaa käytetään.
+- Osaat tehdä laitteelle luettavia ja kirjoitettavia sysfs-attribuutteja
+  ja antaa ne ajurin `dev_groups`-kentässä.
+- Osaat valita viiveen, ajastimen ja muistinvarauksen sen mukaan, saako
+  kontekstissa nukkua.

@@ -68,7 +68,7 @@ pysyvältä juurelta parametrin `init=` ohjelman:
 
 Init näyttää ensin, ettei juureen voi kirjoittaa:
 
-```{.c tiedosto="esimerkit/07-juuri/init.c" osa="vainluku"}
+```{.c tiedosto="esimerkit/08-juuri/init.c" osa="vainluku"}
 ```
 
 ## Overlayfs
@@ -84,17 +84,29 @@ erityisellä *whiteout*-tiedostolla. Työhakemisto (workdir) on
 overlayfs:n oma apuhakemisto, ja sen on oltava samassa
 tiedostojärjestelmässä kuin ylemmän kerroksen.
 
-```{.c tiedosto="esimerkit/07-juuri/init.c" osa="overlay"}
+```{.dot otsikko="Overlayfs: yhdistetty näkymä lukee ylemmästä kerroksesta, jos tiedosto on siellä, muuten alemmasta. Kirjoitus kopioi tiedoston ensin ylempään kerrokseen."}
+digraph {
+  rankdir=TB; node [shape=box];
+  nakyma [label="/etc (yhdistetty näkymä)\nlaite.conf"];
+  yla [label="ylempi kerros: /run/etc/yla (tmpfs, kirjoitettava)\nlaite.conf: nimi=kentalla-muutettu"];
+  ala [label="alempi kerros: juuren /etc (ext4, vain luku)\nlaite.conf: nimi=tehdasasetus"];
+  nakyma -> yla [label="luku ja kirjoitus"];
+  nakyma -> ala [style=dashed, label="luku, jos tiedostoa\nei ole ylempänä"];
+  ala -> yla [label="copy-up ensimmäisessä\nkirjoituksessa"];
+}
+```
+
+```{.c tiedosto="esimerkit/08-juuri/init.c" osa="overlay"}
 ```
 
 Init avasi `/etc`-hakemiston ennen kiinnitystä. Hakemistokahva osoittaa
 yhä alkuperäiseen hakemistoon, joten sen kautta näkee alemman kerroksen
 myös kiinnityksen jälkeen:
 
-```{.c tiedosto="esimerkit/07-juuri/init.c" osa="kerrokset"}
+```{.c tiedosto="esimerkit/08-juuri/init.c" osa="kerrokset"}
 ```
 
-```{.tuloste tiedosto="esimerkit/testit/07-juuri.odotettu"}
+```{.tuloste tiedosto="esimerkit/testit/08-juuri.odotettu"}
 ```
 
 Esimerkissä ylempi kerros on `tmpfs`:ssä, joten muutokset katoavat
@@ -102,7 +114,7 @@ sammutuksessa ja laite palaa joka käynnistyksessä tehdasasetuksiin.
 Kun muutosten on säilyttävä, ylempi kerros sijoitetaan pysyvälle
 dataosiolle. Tehdasasetuksiin palautus on silloin ylemmän kerroksen
 tyhjennys. Sama periaate on konttien kerroksellisten kuvien perusta
-(taito *Säiliöt ja pilvi-infrastruktuuri*).
+(taito *Kontit ja pilvi-infrastruktuuri*).
 
 ## Kirjoitus ja virrankatkos
 
@@ -132,7 +144,27 @@ käynnistyksessä. Siksi käynnistin laskee käynnistyskertoja: U-Bootin
 `bootcount`-laskuri kasvaa jokaisessa käynnistyksessä, ja kun se
 ylittää muuttujan `bootlimit`, U-Boot ajaa `altbootcmd`-komennon, joka
 käynnistää vanhan osion. Uusi järjestelmä nollaa laskurin vasta, kun se
-on todennut toimivansa (*commit*). Valmiita toteutuksia ovat SWUpdate,
+on todennut toimivansa (*commit*).
+
+```{.dot otsikko="A/B-päivityksen tilat. Viallinen päivitys päättyy takaisin vanhaan osioon ilman käyttäjän toimia."}
+digraph {
+  rankdir=TB; node [shape=box];
+  a [label="käynnissä A:lta"];
+  kirj [label="päivitys kirjoitetaan B:hen\nja tarkistetaan"];
+  koe [label="B merkitty kokeiltavaksi,\nlaskuri = 0"];
+  b [label="käynnistys B:ltä,\nlaskuri kasvaa"];
+  ok [label="käynnissä B:ltä, vahvistettu"];
+  a -> kirj [label="uusi versio"];
+  kirj -> koe [label="tarkistus ok"];
+  kirj -> a [label="katkos tai virhe:\nmikään ei muutu"];
+  koe -> b [label="uudelleenkäynnistys"];
+  b -> ok [label="palvelut valmiit: commit"];
+  b -> b [label="kaatui, laskuri ≤ raja"];
+  b -> a [label="laskuri > raja:\naltbootcmd"];
+}
+```
+
+Valmiita toteutuksia ovat SWUpdate,
 RAUC ja Mender, jotka hoitavat myös päivityspaketin allekirjoituksen
 tarkistuksen. OSTree ja vastaavat tekevät saman tiedostotasolla
 kokonaisten osioiden sijaan.

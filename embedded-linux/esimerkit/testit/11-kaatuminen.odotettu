@@ -1,0 +1,11 @@
+tutki: anturi kuoli signaaliin 11 (Segmentation fault), ydinvedos kirjoitettu
+loki: anturi[..]: unhandled exception:
+      DABT (lower EL), ESR ..,
+      level 2 translation fault in anturi[..]
+loki: pc : ..
+tutki: /data/core.anturi on
+reboot: Power down
+paluuarvo 0
+== addr2line
+jasenna
+anturi.c:19

@@ -1,0 +1,7 @@
+# mmap: ajurin sivu kuvataan käyttäjän osoiteavaruuteen.
+suodata kartta:
+# @alku vaiheet
+lataa kartta.ko
+aja /bin/karttatesti
+poista kartta
+# @loppu vaiheet

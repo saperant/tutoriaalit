@@ -9,11 +9,12 @@ ja tarkistaa niiden tiivisteet, rakentaa työkaluketjun, ytimen,
 käynnistimen ja paketit, kokoaa juuritiedostojärjestelmän ja tuottaa
 valmiit levykuvat. Kaksi yleisintä ovat Buildroot ja Yocto Project.
 
-Tämän tutoriaalin ympäristöstä ei ole yhteyttä Buildrootin ja Yocton
-lähteisiin, joten luvun asetustiedostoja ei ole ajettu. Ne on
-kirjoitettu Buildroot 2025.02 LTS:n ja Yocto 5.0 Scarthgapin muotoon,
-ja niiden viittaukset tarkistetaan (luvun lopussa). Käytä niitä mallina
-ja tarkista yksityiskohdat käyttämäsi version käsikirjasta.
+Kumpikin hakee rakennuksen aikana lähteet kymmenistä osoitteista ja
+kääntää tunnin tai pari, joten luvun asetustiedostoja ei ajeta tämän
+tutoriaalin testeissä. Ne on kirjoitettu Buildroot 2025.02 LTS:n ja
+Yocto 5.0 Scarthgapin muotoon, ja testi tarkistaa vain niiden
+keskinäiset viittaukset (luvun lopussa). Käytä niitä mallina ja
+tarkista yksityiskohdat käyttämäsi version käsikirjasta.
 
 ## Buildroot
 
@@ -169,8 +170,8 @@ ominaisuudet ovat nyt vaatimus eivätkä lisä.
 
 ## Viittausten tarkistus
 
-Koska esimerkkejä ei ajeta, tarkistetaan edes se, minkä voi tarkistaa
-ilman rakennustyökalua: reseptin lisenssitiiviste lasketaan
+Koska asetustiedostoja ei ajeta, testi tarkistaa sen, minkä voi
+tarkistaa ilman rakennustyökalua: reseptin lisenssitiiviste lasketaan
 lähdetiedostosta, lähdetiedostot ovat olemassa, ja ulkopuun nimi on
 kaikkialla sama.
 

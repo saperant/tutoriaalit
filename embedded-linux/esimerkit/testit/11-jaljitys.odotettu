@@ -1,0 +1,6 @@
+anturi: alustus epaonnistui
+paluuarvo 1
+openat(AT_FDCWD,"/etc/anturi.conf",O_RDONLY)
+    = -1 errno=2 (No such file or directory)
+write(2,0x..,28) = 28
+exit_group(1)

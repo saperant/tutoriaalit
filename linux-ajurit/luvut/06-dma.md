@@ -90,7 +90,18 @@ Tiedoston sisältö luetaan tavalliseen `kmalloc`-puskuriin
 
 Virtauskuvaus on yksisuuntainen ja lyhytaikainen: `dma_map_single`
 luovuttaa puskurin laitteelle, ja vasta `dma_unmap_single` palauttaa
-sen CPU:lle. Suunta (`DMA_TO_DEVICE`, `DMA_FROM_DEVICE`,
+sen CPU:lle.
+
+```{.ajoituskaavio otsikko="Puskurin omistus virtauskuvauksessa (periaatekuva). Ajuri ei koske puskuriin sinä aikana, kun se kuuluu laitteelle."}
+{"signal": [
+  {"name": "ajurin kutsu", "wave": "=..=....=...",
+   "data": ["kmalloc", "dma_map_single", "dma_unmap_single"]},
+  {"name": "puskurin omistaja", "wave": "=..=....=...",
+   "data": ["CPU", "laite", "CPU"]},
+  {"name": "laitteen siirto", "wave": "0....1.0...."}
+]}
+```
+ Suunta (`DMA_TO_DEVICE`, `DMA_FROM_DEVICE`,
 `DMA_BIDIRECTIONAL`) kertoo ytimelle, mitä välimuistille on tehtävä:
 
 | Suunta | Kuvattaessa | Purettaessa |

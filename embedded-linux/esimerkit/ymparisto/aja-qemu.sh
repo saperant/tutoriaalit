@@ -8,6 +8,7 @@
 #   -a "rivi"     ytimen komentorivi
 #   -d dtb        oma laitepuu QEMU:n generoiman sijaan
 #   -l levy.img   virtio-levy (/dev/vda), vain luku
+#   -w levy.img   virtio-levy (/dev/vda), kirjoitettava
 #   -b u-boot.bin käynnistin (firmware) ytimen sijaan
 #   -t sekunnit   aikaraja (oletus 60)
 #
@@ -28,6 +29,9 @@ while [ $# -gt 0 ]; do
         -d) valinnat="$valinnat -dtb $2" ;;
         -b) valinnat="$valinnat -bios $2" ;;
         -l) levy="if=none,format=raw,readonly=on,id=levy,file=$2"
+            valinnat="$valinnat -drive $levy"
+            valinnat="$valinnat -device virtio-blk-device,drive=levy" ;;
+        -w) levy="if=none,format=raw,id=levy,file=$2"
             valinnat="$valinnat -drive $levy"
             valinnat="$valinnat -device virtio-blk-device,drive=levy" ;;
         -a) komentorivi=$2 ;;

@@ -13,6 +13,18 @@ tässä se on ytimen sisällä, jotta piirin ajuri voidaan testata oikeaa
 SPI-alijärjestelmää vasten. Luku näyttää samalla, miten ohjaimen ajuri
 kirjoitetaan.
 
+```{.dot otsikko="Luvun SPI-pino. Molemmat ajurit kirjoitetaan tässä luvussa; simuloitu muistipiiri on ohjaimen ajurin sisällä."}
+digraph {
+  rankdir=TB; node [shape=box];
+  kayttaja [label="käyttäjätila: sysfs-tiedosto sisalto"];
+  ajuri [label="laitteen ajuri muisti (spi_driver)"];
+  ydin [label="SPI-alijärjestelmä: spi_sync, viestijono, CS"];
+  ohjain [label="ohjaimen ajuri vspi (spi_controller)"];
+  piiri [label="simuloitu 256 tavun muistipiiri", style="rounded,dashed"];
+  kayttaja -> ajuri -> ydin -> ohjain -> piiri;
+}
+```
+
 ## Siirrot ja viestit
 
 SPI-siirto on aina kaksisuuntainen: jokaista lähetettyä tavua kohden

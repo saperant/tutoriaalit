@@ -25,7 +25,7 @@ KOMENTO  := console=ttyAMA0 loglevel=0 panic=-1 \
             printk.console_no_auto_verbose=1
 TULOS     = { $(1); echo "paluuarvo $$?"; } 2>&1 | tr -d '\r'
 
-TESTIT := 01-modinfo 01-suljettu 01-parametrit 02-jono 03-herate \
+TESTIT := 01-modinfo 01-suljettu 01-parametrit 02-jono 02-kartta 03-herate \
           03-vahti 04-dma 05-i2c 06-spi 07-dyndbg 07-ftrace 07-oops \
           07-lukot
 TULOKSET := $(TESTIT:%=$(B)/%.tulos) $(B)/tyylit.ok
@@ -55,6 +55,7 @@ $(B)/bin/ajo: kayttaja/ajo.c
 $(B)/bin/heksa: kayttaja/heksa.c
 $(B)/bin/kirjoita: kayttaja/kirjoita.c
 $(B)/bin/jonotesti: 02-merkkilaite/jonotesti.c 02-merkkilaite/jono.h
+$(B)/bin/karttatesti: 02-merkkilaite/karttatesti.c
 $(B)/bin/heratetesti: 03-platform/heratetesti.c
 $(B)/bin/i2c-aseta: 05-i2c/i2c-aseta.c
 # @loppu ohjelmat
@@ -139,10 +140,13 @@ $(eval $(call TESTI,01-parametrit,01-moduulit/parametrit.vaiheet,\
     $(M01)/tilasto.ko $(M01)/mittaus.ko,,))
 
 # --- 02: merkkilaite ----------------------------------------------------
-$(B)/02-merkkilaite/jono.ko: $(B)/02-merkkilaite/valmis
+$(B)/02-merkkilaite/jono.ko $(B)/02-merkkilaite/kartta.ko: \
+    $(B)/02-merkkilaite/valmis
 	test -f $@
 $(eval $(call TESTI,02-jono,02-merkkilaite/jono.vaiheet,\
     $(B)/02-merkkilaite/jono.ko,jonotesti,))
+$(eval $(call TESTI,02-kartta,02-merkkilaite/kartta.vaiheet,\
+    $(B)/02-merkkilaite/kartta.ko,karttatesti,))
 
 # --- 03: platform-ajuri, laitepuu ja keskeytykset ----------------------
 # @alku dtb

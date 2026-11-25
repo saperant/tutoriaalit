@@ -36,6 +36,8 @@ Tutoriaali käsittelee
 - **ytimen vianetsintää**: lokitasot, dynaaminen debug, ftrace,
   kaatumisilmoitukset ja lukkotarkistimet.
 
+## Esitiedot ja rajaus
+
 Esitietoina oletetaan taidot *Sulautettu Linux* (ytimen konfigurointi,
 ristiinkääntäminen, laitepuun perusteet ja initramfs) ja
 *Oheislaiteväylät* (UART, SPI, I2C ja DMA bare-metal-ohjelmasta käsin).
@@ -43,6 +45,15 @@ Tämä tutoriaali tekee samat asiat Linux-ytimen sisällä ja vertaa niitä
 bare-metal-ajureihin. *Käyttöjärjestelmät*-taidosta oletetaan ydin- ja
 käyttäjätilan ero, järjestelmäkutsut ja synkronoinnin perusteet, ja
 C-kieltä on osattava hyvin.
+
+Tutoriaali rajautuu ajureihin, jotka voi ajaa ja testata QEMU:n
+virt-koneessa: merkkilaitteet, platform-laitteet sekä I2C- ja
+SPI-piirit. Oikean järjestelmäpiirin ajuri tarvitsee lisäksi kellot,
+jännitesäätimet, nastojen asetukset ja virranhallinnan. Ne nimetään
+viimeisessä luvussa, mutta niitä ei käsitellä, koska virt-koneessa ei
+ole niille laitteita. Lohko-, verkko- ja USB-ajurit jäävät samoin pois.
+Käyttäjätilan ohjelmien vianetsintä kohteessa kuuluu taitoon
+*Sulautettu Linux*; tässä etsitään vikoja ytimen puolelta.
 
 ## Ydintilan ohjelmointi
 
@@ -72,6 +83,19 @@ kirjoitettu versiolle 6.8, ja sen rajapinnat on tarkistettu sitä
 vasten. Käyttäjätilan rajapinnat, kuten järjestelmäkutsut ja
 `sysfs`-tiedostot, ovat sen sijaan vakaita: kerran julkaistua ei
 muuteta.
+
+Kaksi esimerkeissä käytettyä rajapintaa on muuttunut version 6.8
+jälkeen, ja uudempaa ydintä vasten koodi on muutettava vastaavasti:
+
+| Tässä (6.8) | Uudemmissa ytimissä |
+|-------------|---------------------|
+| platform-ajurin `.remove_new`, joka palauttaa `void` | kentän nimi on taas `.remove`, ja se palauttaa `void` (versiosta 6.11) |
+| `.llseek = no_llseek` | `no_llseek` on poistettu (6.12); kenttä jätetään pois |
+
+Käännösvirhe, jossa kenttää tai funktiota ei löydy, tarkoittaa
+ulkopuolisessa ajurissa lähes aina tällaista muutosta. Muutoksen
+perustelu ja uusi käyttötapa löytyvät ytimen versiohistoriasta
+(`git log -S nimi`).
 
 ## Laboratorio
 
@@ -144,11 +168,26 @@ kokoaa jokaiselle testille initramfs-luettelon ja käynnistää sen:
 ```{.make tiedosto="esimerkit/Makefile" osa="testi"}
 ```
 
-Kokonainen ajo kääntää ytimen ensimmäisellä kerralla (noin 10 minuuttia
-kuormitetulla nelinytimisellä koneella ja noin 2 Gt levyä) ja sen
-jälkeen moduulit, ohjelmat ja kolmetoista testijärjestelmää alle
-minuutissa. Testin voi myös käynnistää päätteeseen komennolla `make aja
-T=02-jono`, jolloin ytimen konsoli on päällä ja käynnistysloki näkyy.
+Kokonainen ajo kääntää ytimen ensimmäisellä kerralla (nelinytimisellä
+koneella 10–15 minuuttia ja noin 2 Gt levyä) ja sen jälkeen moduulit,
+ohjelmat ja testijärjestelmät alle minuutissa. Testin voi myös
+käynnistää päätteeseen komennolla `make aja T=02-jono`, jolloin ytimen
+konsoli on päällä ja käynnistysloki näkyy.
+
+Esimerkkihakemistot ja luvut, joissa niitä käytetään:
+
+| Hakemisto | Sisältö | Luku |
+|-----------|---------|-----:|
+| `ymparisto/` | ytimen rakennus ja fragmentit, QEMU-skripti | 1 |
+| `kayttaja/` | vaiheajuri ja testien apuohjelmat | 1 |
+| `01-moduulit/` | kaksi moduulia, parametrit, suljettu lisenssi | 2 |
+| `02-merkkilaite/` | viestijono ja `mmap`-esimerkki testiohjelmineen | 3 |
+| `03-platform/` | herätysajastimen ajuri ja laitepuun lisäykset | 4, 5, 9 |
+| `04-dma/` | fw_cfg-laitteen DMA-ajuri | 6 |
+| `05-i2c/` | lämpöanturin ajuri (regmap, hwmon) | 7 |
+| `06-spi/` | ohjelmallinen SPI-ohjain ja muistipiirin ajuri | 8, 9 |
+| `07-vianetsinta/` | tahallaan virheellinen harjoitusmoduuli | 10 |
+| `testit/` | testien odotetut tulosteet | kaikki |
 
 ## Koodityyli
 

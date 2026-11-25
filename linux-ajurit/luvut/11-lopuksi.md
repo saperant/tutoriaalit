@@ -49,6 +49,19 @@ sama, mutta laitteisto ei ole yhtä armollinen:
    alijärjestelmän ylläpitäjälle (`scripts/get_maintainer.pl`).
    Ensimmäinen kierros tuo aina palautetta.
 
+## Jatkotaidot
+
+- *Sulautettujen järjestelmien tietoturva* käsittelee ytimen ja
+  ajurien hyökkäyspintaa: käyttäjätilan rajapintojen tarkistukset,
+  laiteohjelmiston allekirjoitukset ja turvallisen käynnistyksen.
+- *Rinnakkaisohjelmointi* syventää lukituksen, atomiset operaatiot ja
+  muistimallin, joiden varaan ytimen lukot rakentuvat.
+- *Virtualisointi* näyttää laitteen toisen puolen: miten hypervisor
+  emuloi rekisterit ja keskeytykset, joita ajuri käyttää, ja miten
+  virtio-laitteet toimivat.
+- *Suorituskyvyn analyysi ja optimointi* jatkaa jäljityksestä ja
+  `perf`-työkalusta mittaamiseen.
+
 ## Lähteet
 
 - Linux-ytimen dokumentaatio: <https://docs.kernel.org/>, erityisesti

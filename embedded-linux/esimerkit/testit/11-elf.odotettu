@@ -1,0 +1,9 @@
+hei-staattinen:
+  arkkitehtuuri: AArch64
+hei-dynaaminen:
+  arkkitehtuuri: AArch64
+  tulkki: /lib/ld-linux-aarch64.so.1
+  tarvitsee: libc.so.6
+hei-isanta:
+  arkkitehtuuri: Advanced Micro Devices X86-64
+paluuarvo 0

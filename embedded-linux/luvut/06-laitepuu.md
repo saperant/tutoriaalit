@@ -22,6 +22,19 @@ oheislaitteet, moduulin `.dtsi` muistin ja virranhallinnan, ja levyn
 `.dts` kertoo, mitkä oheislaitteet on käytössä ja mitä niihin on
 kytketty.
 
+```{.dot otsikko="Laitepuun lähteen kerrokset. Nimet ovat esimerkkejä; ylempi tiedosto sisällyttää alemman ja muuttaa sen solmuja."}
+digraph {
+  rankdir=LR; node [shape=box];
+  piiri [label="piiri.dtsi\nkaikki piirin oheislaitteet,\nstatus = \"disabled\""];
+  moduuli [label="moduuli.dtsi\nmuisti, virranhallinta,\neMMC"];
+  levy [label="levy.dts\nkäytössä olevat laitteet,\nniihin kytketyt piirit"];
+  dtb [label="levy.dtb"];
+  levy -> moduuli [label="#include"];
+  moduuli -> piiri [label="#include"];
+  levy -> dtb [label="dtc"];
+}
+```
+
 QEMU:n virt-koneen laitepuuta ei ole ytimen lähteissä, koska QEMU
 tuottaa sen käynnistyksessä sen mukaan, mitä laitteita koneeseen on
 lisätty. Sen saa tiedostoon koneen valitsimella `dumpdtb`, ja `dtc`
@@ -38,11 +51,20 @@ käynnistysskripti on esimerkeissä yksi ja sama (luku 1).
 
 Laitepuu on puu, jonka *solmuilla* on *ominaisuuksia*. Solmun nimi on
 muotoa `nimi@yksikköosoite`, jossa yksikköosoite on laitteen
-ensimmäinen osoite. Puretusta virt-koneen laitepuusta sarjaportin solmu
+ensimmäinen osoite. Virt-koneen laitepuun ylin taso näyttää tältä:
+
+```{.dot tiedosto="esimerkit/06-laitepuu/puu.dot" otsikko="QEMU:n virt-koneen laitepuun ylin taso: solmun nimi ja ensimmäinen `compatible`-tunniste. Katkoviivat ovat sarjaportin viittaukset toisiin solmuihin."}
+```
+
+Kaavion piirtää skripti `06-laitepuu/puu.py` käännetystä laitepuusta,
+ja testi varmistaa, että se vastaa QEMU:n tuottamaa puuta. Suurin osa
+solmuista on laitteita kiinteissä osoitteissa. `cpus`, `memory` ja
+`chosen` ovat erikoissolmuja, ja `apb-pclk` on kello, johon laitteet
+viittaavat. Puretusta virt-koneen laitepuusta sarjaportin solmu
 näyttää tältä (QEMU kirjoittaa ominaisuudet käänteisessä
 järjestyksessä):
 
-```{.c tiedosto="esimerkit/05-laitepuu/pl011.dts"}
+```{.c tiedosto="esimerkit/06-laitepuu/pl011.dts"}
 ```
 
 Ominaisuuden arvo on tavujono, ja sen tyyppi riippuu ominaisuudesta:
@@ -58,10 +80,10 @@ Ominaisuuden arvo on tavujono, ja sen tyyppi riippuu ominaisuudesta:
 Tiedostosta ominaisuuksia luetaan komennolla `fdtget`. Seuraava
 skripti kokoaa tärkeimmät:
 
-```{.bash tiedosto="esimerkit/05-laitepuu/kysely.sh" osa="kyselyt"}
+```{.bash tiedosto="esimerkit/06-laitepuu/kysely.sh" osa="kyselyt"}
 ```
 
-```{.tuloste tiedosto="esimerkit/testit/05-laitepuu.odotettu"}
+```{.tuloste tiedosto="esimerkit/testit/06-laitepuu.odotettu"}
 ```
 
 ## Osoitteet: reg ja #address-cells
@@ -129,14 +151,14 @@ omaan tiedostoonsa ja liitetään puretun laitepuun perään. `dtc`
 yhdistää saman polun solmut, joten myöhempi `chosen`-solmu täydentää
 alkuperäistä:
 
-```{.c tiedosto="esimerkit/05-laitepuu/anturi.dtsi" osa="anturi"}
+```{.c tiedosto="esimerkit/06-laitepuu/anturi.dtsi" osa="anturi"}
 ```
 
 Valmistajan etuliite `tutoriaalit,` erottaa omat tunnisteet ja
 ominaisuudet ytimen yleisistä. Omien ominaisuuksien nimissä etuliite
 on pakollinen, jotta ne eivät törmää tuleviin yleisiin ominaisuuksiin.
 
-```{.c tiedosto="esimerkit/05-laitepuu/anturi.dtsi" osa="chosen"}
+```{.c tiedosto="esimerkit/06-laitepuu/anturi.dtsi" osa="chosen"}
 ```
 
 `chosen`-solmu ei kuvaa laitteistoa vaan käynnistimen ja ytimen välisiä
@@ -154,16 +176,16 @@ Init-ohjelmana on tutkija, joka lukee ytimen näkemän laitepuun
 hakemistosta `/sys/firmware/devicetree/base`. Siellä solmu on hakemisto
 ja ominaisuus tiedosto, jonka sisältö on ominaisuuden raakatavut:
 
-```{.c tiedosto="esimerkit/05-laitepuu/tutkija.c" osa="merkkijonot"}
+```{.c tiedosto="esimerkit/06-laitepuu/tutkija.c" osa="merkkijonot"}
 ```
 
 Lopuksi tutkija katsoo, onko laite sidottu ajuriin. Sidottu laite on
 hakemisto väylän alla, ja sen `driver`-linkki osoittaa ajuriin:
 
-```{.c tiedosto="esimerkit/05-laitepuu/tutkija.c" osa="sidonta"}
+```{.c tiedosto="esimerkit/06-laitepuu/tutkija.c" osa="sidonta"}
 ```
 
-```{.tuloste tiedosto="esimerkit/testit/05-anturi.odotettu"}
+```{.tuloste tiedosto="esimerkit/testit/06-anturi.odotettu"}
 ```
 
 Ydin loi solmusta *platform-laitteen* nimeltä `9100000.anturi`

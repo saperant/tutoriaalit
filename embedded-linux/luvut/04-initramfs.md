@@ -42,7 +42,7 @@ suodatettu pois:
 ```{.make tiedosto="esimerkit/Makefile" osa="loki"}
 ```
 
-```{.tuloste tiedosto="esimerkit/testit/02-loki.odotettu"}
+```{.tuloste tiedosto="esimerkit/testit/04-loki.odotettu"}
 ```
 
 Rivit kertovat käynnistyksen vaiheet. Ensimmäisenä on ytimen versio,
@@ -76,7 +76,7 @@ aina puhdas, koska se luetaan joka käynnistyksessä uudelleen.
 Arkisto tehdään ytimen omalla työkalulla `gen_init_cpio`, joka lukee
 tekstimuotoisen luettelon:
 
-```{.text tiedosto="esimerkit/02-init/initramfs.lista"}
+```{.text tiedosto="esimerkit/04-init/initramfs.lista"}
 ```
 
 Työkalun etu tavalliseen `cpio`-komentoon verrattuna on, että se voi
@@ -109,19 +109,19 @@ Pienin hyödyllinen init kiinnittää ytimen virtuaaliset
 tiedostojärjestelmät, kertoo, mihin järjestelmään se heräsi, ja
 sammuttaa koneen. Kiinnitys on yhden funktion asia:
 
-```{.c tiedosto="esimerkit/02-init/init.c" osa="kiinnita"}
+```{.c tiedosto="esimerkit/04-init/init.c" osa="kiinnita"}
 ```
 
-```{.c tiedosto="esimerkit/02-init/init.c" osa="main"}
+```{.c tiedosto="esimerkit/04-init/init.c" osa="main"}
 ```
 
 Ohjelma käännetään staattisesti, joten initramfsiin ei tarvita
 C-kirjastoa eikä dynaamista linkittäjää. Käynnistys:
 
-```{.make tiedosto="esimerkit/Makefile" osa="02"}
+```{.make tiedosto="esimerkit/Makefile" osa="ajo"}
 ```
 
-```{.tuloste tiedosto="esimerkit/testit/02-init.odotettu"}
+```{.tuloste tiedosto="esimerkit/testit/04-init.odotettu"}
 ```
 
 Neljä tiedostojärjestelmää ovat jokaisen Linux-järjestelmän perusta:
