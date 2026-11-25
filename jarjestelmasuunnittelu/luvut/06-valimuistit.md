@@ -122,6 +122,10 @@ hudin ja kysyvät kannalta yhtä aikaa (*cache stampede*, *thundering
 herd*). Jos haku on raskas, kanta ylikuormittuu juuri silloin, kun
 välimuisti ei suojaa sitä. Sama vuokra estää ryntäyksen: vain vuokran
 saanut hakee, ja muut odottavat hetken ja lukevat sitten muistista.
+Vuokran saanut lukee muistin vielä kerran ennen kantahakua: edellinen
+haltija on voinut tallentaa arvon ja vapauttaa vuokran juuri hudin
+toteamisen ja vuokran oton välissä, ja ilman tarkistusta kantaan
+lähtisi toinen haku.
 
 ```{.python tiedosto="esimerkit/luku06/ryntays.py" osa="ryntays"}
 ```

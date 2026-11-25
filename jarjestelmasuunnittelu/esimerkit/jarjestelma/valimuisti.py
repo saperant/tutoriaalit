@@ -60,6 +60,13 @@ end
 return 0
 """
 
+VAPAUTA_LUA = """
+if redis.call('GET', KEYS[1]) == ARGV[1] then
+  return redis.call('DEL', KEYS[1])
+end
+return 0
+"""
+
 
 def aloita(r: Redis, avain: str, vuokra_ms: int = 2000) -> str | None:
     """Palauttaa vuokratunnuksen, jos kukaan muu ei ole jo hakemassa."""
@@ -87,6 +94,12 @@ def hae_vuokralla(r: Redis, kanta: Tietokanta, avain: str,
             return teksti(arvo)
         tunnus = aloita(r, avain)
         if tunnus is not None:
+            # Edellinen haltija on voinut tallentaa arvon ja vapauttaa
+            # vuokran äskeisen GETin jälkeen: tarkistetaan vielä kerran.
+            arvo = r.komento("GET", avain)
+            if arvo is not None:
+                r.komento("EVAL", VAPAUTA_LUA, 1, f"vuokra:{avain}", tunnus)
+                return teksti(arvo)
             tuore = kanta.hae(avain)
             tallenna(r, avain, tunnus, tuore)
             return tuore
