@@ -91,6 +91,14 @@ proseduurit `time`-komennolla ja tarkistaa luvun 5 hinnat.
 | Tcllib | `cmdline`, `json`, `csv`, `logger`, `struct`-tietorakenteet |
 | tclsh `-encoding` | Skriptitiedoston merkistö, jos se ei ole järjestelmän oletus |
 
+Dokumentaatiolle Tcl:ssä ei ole yhtä vakiintunutta työkalua. Käytäntö
+on kirjoittaa proseduurin eteen kommentti, joka kertoo tarkoituksen,
+argumentit ja oletukset, heitettävät virhekoodit ja sivuvaikutukset
+(mitä kutsujan muuttujia `upvar` muuttaa). Tällaisista kommenteista
+tuottaa viitedokumentaation esimerkiksi Ruff!, ja Tcllibin `doctools`
+on erillinen merkintäkieli käsikirjasivuille. Yleiset periaatteet ovat
+taidossa *Tekninen dokumentaatio*.
+
 Staattinen tarkistus kannattaa ajaa CI:ssä samoin kuin muidenkin
 kielten koodille. Kun työkalun komentoja ei voi ajaa CI:ssä,
 logiikan testit ja tarkistin ovat ainoa automaattinen varmistus.

@@ -1,0 +1,9 @@
+kahvi 6.50 € 650 false
+kahvi 650 juoma [ 'kuvaus' ]
+8080 localhost
+2026 23 2 1
+{ koko: 'M', vari: 'sininen', lahjapaketti: false }
+[ 'kahvi', 'tee', 'leipä' ]
+kahvi 650
+tee 425
+{ kahvi: 6.5, tee: 4.25, 'leipä': 3.1 }

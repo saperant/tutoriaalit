@@ -1,3 +1,6 @@
 maksettu (viite RF18 1234)
 lähetetty, seuranta JJFI6400
 tapahtuma peruutus ei sovi tilaan lahetetty
+luonnos + maksu -> maksettu
+luonnos + peruutus -> peruttu
+maksettu + lahetys -> lahetetty

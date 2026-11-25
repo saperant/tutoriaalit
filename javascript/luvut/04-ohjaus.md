@@ -1,5 +1,11 @@
 # Ohjausrakenteet ja funktiot {.runko-ohjaus}
 
+Ohjausrakenteet ovat JavaScriptissa tuttuja C-sukuisista kielistä, ja
+niistä käydään läpi vain erot. Luvun paino on funktioissa: ne ovat
+arvoja, ne muistavat ympäristönsä (sulkeuma), ja niiden `this`
+määräytyy kutsuhetkellä. Näihin kolmeen asiaan perustuvat lähes
+kaikki myöhempien lukujen mallit.
+
 ## Ohjausrakenteet
 
 `if`, `while`, `do`–`while` ja C-tyylinen `for` toimivat kuten C:ssä
@@ -104,7 +110,11 @@ tuloksensa piilotetussa `Map`-rakenteessa.
 
 ## this
 
-`this` määräytyy kutsutavan mukaan:
+Metodissa `this` viittaa olioon, jonka kautta metodia kutsuttiin.
+Esimerkit käyttävät luokkia, jotka luku 7 käy läpi; tässä riittää
+tietää, että `new Luokka()` luo olion ja että luokan sisällä
+määritellyt funktiot ovat sen metodeja. `this` määräytyy kutsutavan
+mukaan:
 
 | Kutsu | `this` |
 |-------|--------|

@@ -13,10 +13,12 @@ if {[lindex $argv 0] eq "lapsi"} {
 
 # @alku kaynnistys
 set kesken 0
+set ajoaika 0                        ;# ajojen yhteenlaskettu kesto, ms
 proc kaynnista {nimi kesto} {
-    global kesken
+    global kesken alkoi
     set komento [list [info nameofexecutable] [info script] \
                      lapsi $nimi $kesto]
+    set alkoi($nimi) [clock milliseconds]
     set kanava [open |[list {*}$komento 2>@1] r]
     fconfigure $kanava -blocking 0 -buffering line
     fileevent $kanava readable [list lue $kanava $nimi]
@@ -26,7 +28,7 @@ proc kaynnista {nimi kesto} {
 
 # @alku lukeminen
 proc lue {kanava nimi} {
-    global kesken tulokset
+    global kesken tulokset alkoi ajoaika
     if {[gets $kanava rivi] >= 0} {
         dict lappend tulokset $nimi $rivi
         return
@@ -38,6 +40,7 @@ proc lue {kanava nimi} {
         set koodi [dict get $valinnat -errorcode]
         dict lappend tulokset $nimi "VIRHE: paluuarvo [lindex $koodi 2]"
     }
+    incr ajoaika [expr {[clock milliseconds] - $alkoi($nimi)}]
     incr kesken -1
 }
 # @loppu lukeminen
@@ -55,5 +58,7 @@ set kesto [expr {[clock milliseconds] - $alku}]
 foreach nimi [lsort [dict keys $tulokset]] {
     puts [join [dict get $tulokset $nimi] "; "]
 }
-puts "rinnakkain: [expr {$kesto < 800 ? "kyllä" : "ei"}]"
+# Rinnakkain ajettuna kokonaisaika on pisimmän ajon mittainen, ei
+# ajojen summa.
+puts "rinnakkain: [expr {$kesto < $ajoaika ? "kyllä" : "ei"}]"
 # @loppu paaohjelma

@@ -26,6 +26,52 @@ Työkalun komennot palauttavat usein *kokoelmia* tai *oliokahvoja*
 työkalun omilla komennoilla (`get_property`, `foreach_in_collection`
 tai vastaava), ja ne muunnetaan nimiksi vasta tulostusta varten.
 
+## Tulkin upottaminen
+
+Upottava C-ohjelma tekee kolme asiaa: se luo tulkin
+(`Tcl_CreateInterp`), rekisteröi omat komentonsa
+(`Tcl_CreateObjCommand` liittää komennon nimen C-funktioon, joka saa
+argumentit `Tcl_Obj`-arvoina) ja ajaa käyttäjän skriptin
+(`Tcl_EvalFile`). Skriptin kannalta työkalun `create_clock` on
+samanlainen komento kuin `set` tai `puts`, koska kielen omatkin
+komennot on rekisteröity samalla tavalla.
+
+Saman rakenteen voi rakentaa ilman C:tä: Tcl-tulkki voi luoda
+*lapsitulkkeja* (`interp create`) ja antaa niille komentoja
+(`interp alias`). Esimerkissä isäntäohjelma on "työkalu", jonka
+komennot ovat tavallisia proseduureja:
+
+```{.tcl tiedosto="esimerkit/11-upotus.tcl" osa="komennot"}
+```
+
+Käyttäjän skripti ajetaan *turvallisessa* lapsitulkissa
+(`interp create -safe`). Siitä on poistettu komennot, joilla pääsee
+käsiksi tiedostoihin, prosesseihin ja verkkoon (`open`, `exec`,
+`source`, `socket`, `file`, `cd`, `exit`), ja se näkee isännästä vain
+ne komennot, jotka sille annetaan aliaksina:
+
+```{.tcl tiedosto="esimerkit/11-upotus.tcl" osa="ajo"}
+```
+
+```{.tcl tiedosto="esimerkit/11-upotus.tcl" osa="kaytto"}
+```
+
+```{.tuloste tiedosto="esimerkit/11-upotus.odotettu"}
+```
+
+Ensimmäinen skripti käyttää kieltä vapaasti (muuttujat, `expr`) ja
+kutsuu työkalun komentoa. Virheellinen rajoite hylätään isännän
+tarkistuksessa, kielletyt komennot eivät ole lapsessa olemassa, ja
+päättymätön silmukka katkeaa komentorajaan. Yksikään epäonnistunut
+skripti ei muuttanut isännän tilaa.
+
+Malli sopii asetus- ja rajoitetiedostoihin, jotka halutaan kirjoittaa
+Tcl:llä mutta joita ei haluta ajaa täysin oikeuksin: tiedosto on
+ohjelma, mutta se voi tehdä vain sen, minkä isäntä sallii. Oikeat
+EDA-työkalut ajavat skriptit yleensä täysin oikeuksin, joten
+tuntemattomasta lähteestä saatu `.tcl`- tai `.sdc`-tiedosto on
+luettava ennen ajoa kuten mikä tahansa ohjelma.
+
 ## Raportin jäsentäminen
 
 Raportti on tekstiä, jonka muoto voi muuttua työkaluversioiden välillä.
@@ -34,6 +80,20 @@ lausekkeilla, kokoaa tietueet sanakirjoiksi, tarkistaa, että pakolliset
 kentät löytyivät, ja vertaa omaa laskelmaansa raportin
 yhteenvetoon. Jos raportin muoto muuttuu, jäsennin kaatuu selvästi
 eikä tuota vääriä lukuja hiljaa.
+
+```{.dot otsikko="Jäsentimen tilat ja rivityypit. Jokainen tunnistettu rivi täydentää keskeneräistä tietuetta; tarkistukset tehdään lopuksi."}
+digraph {
+  rankdir=TB; ranksep=0.3; node [shape=box, style=rounded];
+  alku [label="ei polkua"];
+  polku [label="polku kesken"];
+  yht [label="yhteenveto luettu"];
+  loppu [label="tarkistus: pakolliset kentät ja yhteenveto"];
+  alku -> polku [label=" Path N"];
+  polku -> polku [label=" Startpoint, Endpoint, Slack: kenttä talteen\l Path N: edellinen polku listaan\l"];
+  polku -> yht [label=" Summary"];
+  yht -> loppu [label=" syöte loppui"];
+}
+```
 
 ```{.tcl tiedosto="esimerkit/11-raportti.tcl" osa="jasennin"}
 ```
@@ -136,6 +196,9 @@ Oikeassa työkalussa skripti ajetaan eräajona, esimerkiksi
 
 ## Itsearviointi
 
+- Osaat selittää, miten sovellus upottaa Tcl-tulkin ja rekisteröi omat
+  komentonsa, ja ajaa epäluotettavan skriptin turvallisessa
+  lapsitulkissa.
 - Osaat kirjoittaa raportin jäsentimen, joka tunnistaa rivityypit,
   kokoaa tietueet ja havaitsee muodon muutoksen.
 - Osaat jäsentää nimetyt argumentit määrityksen perusteella ja

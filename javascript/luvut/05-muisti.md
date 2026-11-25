@@ -13,6 +13,21 @@ viitteen olioon. Kopion tekotapa ratkaisee, mitä jaetaan:
 ```{.javascript tiedosto="esimerkit/05-viitteet.js" osa="kopiot"}
 ```
 
+```{.dot otsikko="Esimerkin kolme kopiota. Sijoitus ja matala kopio jakavat sisäolion, joten muutos näkyy niissä; structuredClone kopioi koko rakenteen."}
+digraph {
+  rankdir=LR; node [shape=box];
+  tilaus [shape=plaintext]; viite [shape=plaintext];
+  matala [shape=plaintext]; syva [shape=plaintext];
+  o1 [label="olio\nasiakas, rivit, luotu"];
+  o2 [label="olio\nasiakas, rivit, luotu"];
+  o3 [label="olio\nasiakas, rivit, luotu"];
+  r1 [label="rivit\nkahvi, määrä 5"];
+  r3 [label="rivit\nkahvi, määrä 2"];
+  tilaus -> o1; viite -> o1; matala -> o2; syva -> o3;
+  o1 -> r1; o2 -> r1 [label="jaettu"]; o3 -> r3 [label="oma kopio"];
+}
+```
+
 | Tapa | Mitä kopioituu |
 |------|----------------|
 | `b = a` | ei mitään: sama olio |
@@ -100,7 +115,18 @@ kieltä:
 ```{.tuloste tiedosto="esimerkit/05-muodot.odotettu"}
 ```
 
-Muoto riippuu kenttien järjestyksestä, ja jälkikäteen lisätty kenttä
+```{.dot otsikko="Muotojen siirtymät: jokainen uusi kenttä vie seuraavaan muotoon, ja eri järjestys johtaa eri haaraan."}
+digraph {
+  rankdir=LR; node [shape=box, style=rounded];
+  tyhja [label="( )"]; x [label="(x)"]; xy [label="(x, y)"];
+  xyz [label="(x, y, z)"]; y [label="(y)"]; yx [label="(y, x)"];
+  tyhja -> x [label="+x"]; x -> xy [label="+y"]; xy -> xyz [label="+z"];
+  tyhja -> y [label="+y"]; y -> yx [label="+x"];
+}
+```
+
+Kuvassa oliot `a` ja `b` päätyvät muotoon (x, y), olio `c` muotoon
+(y, x) ja olio `d` muotoon (x, y, z). Muoto riippuu kenttien järjestyksestä, ja jälkikäteen lisätty kenttä
 luo uuden muodon. `delete` siirtää olion hitaaseen sanakirjatilaan.
 Kentän arvon voi asettaa `undefined`-arvoksi, jolloin muoto säilyy.
 

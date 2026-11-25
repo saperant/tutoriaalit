@@ -33,6 +33,17 @@ Olennaista on kohta 10: kun
 `$tiedosto` sisältää välilyönnin, se on silti yksi argumentti. Tcl:ssä
 ei ole Bashin sananjakamisongelmaa.
 
+```{.dot otsikko="Komentorivin käsittely. Tulkki jakaa rivin sanoiksi ja tekee korvaukset kerran; komento saa valmiit sanat."}
+digraph {
+  rankdir=TB; ranksep=0.3; node [shape=box];
+  rivi [label="set polku \"$hak/[file tail $nimi]\"", shape=plaintext];
+  sanat [label="1. jako sanoiksi\nlainausmerkit ja aaltosulkeet ryhmittelevät"];
+  korv [label="2. korvaukset kerran, vasemmalta oikealle\n$muuttuja, [komento], kenoviiva"];
+  kutsu [label="3. komento set saa kaksi argumenttia:\npolku ja valmis merkkijono"];
+  rivi -> sanat -> korv -> kutsu;
+}
+```
+
 ```{.tcl tiedosto="esimerkit/03-korvaukset.tcl" osa="korvaukset"}
 ```
 
@@ -108,6 +119,26 @@ tulkitaan siis koodiksi:
 ```
 
 ```{.tuloste tiedosto="esimerkit/03-injektio.virhe"}
+```
+
+```{.dot otsikko="Kaksinkertainen korvaus. Ilman aaltosulkeita arvo käy korvauksen läpi kahdesti, ja toisella kerralla se tulkitaan koodina."}
+digraph {
+  rankdir=LR; ranksep=0.35; node [shape=box];
+  subgraph cluster_a {
+    label="expr $arvo * 2"; labeljust=l; style=dashed;
+    a1 [label="tulkki korvaa\n$arvo"];
+    a2 [label="expr saa tekstin\n[error ...] * 2"];
+    a3 [label="expr korvaa\nuudelleen:\nkomento ajetaan"];
+    a1 -> a2 -> a3;
+  }
+  subgraph cluster_b {
+    label="expr {$arvo * 2}"; labeljust=l; style=dashed;
+    b1 [label="tulkki ei\nkorvaa mitään"];
+    b2 [label="expr saa tekstin\n$arvo * 2"];
+    b3 [label="expr lukee\nmuuttujan arvon:\nei ole luku, virhe"];
+    b1 -> b2 -> b3;
+  }
+}
 ```
 
 Hakasulkeissa oleva komento suoritettiin. `error` olisi voinut olla

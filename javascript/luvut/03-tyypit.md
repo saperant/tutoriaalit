@@ -134,18 +134,67 @@ noudattavat kielen ja alueen käytäntöjä:
 tuhaterottimena, pilkku desimaalierottimena). `toFixed` pyöristää
 binääriesityksen mukaan, joten `1.005` pyöristyy alaspäin. Siksi
 rahasummat lasketaan kokonaislukuina sentteinä ja muunnetaan euroiksi
-vasta tulostettaessa. `Date`-olio on aikaleima millisekunteina; aikavyöhyke
-annetaan muotoilijalle eikä jätetä koneen asetusten varaan.
+vasta tulostettaessa.
 
 `console.log` tulostaa useat argumentit välilyönnein erotettuina ja
 oliot luettavassa muodossa. `console.error` kirjoittaa virhevirtaan.
 Rakenteinen loki tehdään kirjastolla (luku 11).
 
+## Aika ja päivämäärät
+
+`Date` on aikaleima: millisekuntien määrä vuoden 1970 alusta
+UTC-aikaa. Olio ei tiedä aikavyöhykettä eikä esitysmuotoa, vaan ne
+annetaan vasta muotoiltaessa.
+
+```{.javascript tiedosto="esimerkit/03-aika.js" osa="aikaleima"}
+```
+
+```{.tuloste tiedosto="esimerkit/03-aika.odotettu" rivit="1-2"}
+```
+
+`Date` on kielen vanhimpia osia, ja sen rajapinnassa on kolme ansaa:
+jäsennyksen tulkinta riippuu merkkijonon muodosta, olio on muuttuva, ja
+virheellinen syöte tuottaa hiljaa arvon *Invalid Date*.
+
+```{.javascript tiedosto="esimerkit/03-aika.js" osa="ansat"}
+```
+
+```{.tuloste tiedosto="esimerkit/03-aika.odotettu" rivit="3-5"}
+```
+
+Näyttämistä varten aikaleima muotoillaan `Intl.DateTimeFormat`-oliolla,
+jolle annetaan kieli ja aikavyöhyke. Sama hetki näkyy eri vyöhykkeillä
+eri kellonaikana:
+
+```{.javascript tiedosto="esimerkit/03-aika.js" osa="muotoilu"}
+```
+
+```{.tuloste tiedosto="esimerkit/03-aika.odotettu" rivit="6-8"}
+```
+
+Tiedostoihin, tietokantoihin ja rajapintoihin aika kirjoitetaan
+ISO 8601 -muodossa UTC:nä (`toISOString`). Kalenterilaskenta, kuten
+"kuukauden päästä" tai toistuva kokous kesäajan vaihtuessa, ei onnistu
+luotettavasti aikaleimalla. Sitä varten on suunniteltu
+`Temporal`-rajapinta, jossa päivämäärä, kellonaika ja vyöhyke ovat omia
+muuttumattomia tyyppejään. Uusimmat selaimet toteuttavat sen, mutta
+testatuissa Node-versioissa sitä ei ole, joten Nodessa käytetään
+toistaiseksi kirjastoa (date-fns, Luxon).
+
 ## Syötteen lukeminen
 
 Node lukee syötettä virtana. Rivit luetaan `readline`-modulilla
 asynkronisena iteraattorina, jolloin koko syötettä ei tarvitse pitää
-muistissa:
+muistissa.
+
+Syöte saapuu vähitellen, joten esimerkissä on kaksi asynkronista
+rakennetta, jotka luku 10 selittää tarkasti. `await` odottaa tulosta,
+joka valmistuu myöhemmin (lupaus), pysäyttämättä muuta ohjelmaa.
+`for await` on silmukka, joka odottaa jokaista alkiota samalla tavalla,
+tässä seuraavaa riviä. ES-modulissa `await` kelpaa ylimmällä tasolla,
+ja funktiossa sitä saa käyttää, kun funktio on merkitty sanalla
+`async`. Lukuun 10 asti riittää tietää, että `await`-kohdassa ohjelma
+odottaa ja jatkaa sitten seuraavalta riviltä.
 
 ```{.javascript tiedosto="esimerkit/03-syote.js"}
 ```
@@ -172,7 +221,8 @@ skriptin polut), ja Node 18.3:sta alkaen niitä voi jäsentää funktiolla
   kentät hylätään siellä. Sisemmän koodin ei tarvitse epäillä arvoja.
 - **Rahat sentteinä, päivämäärät UTC-aikaleimoina.** Muotoilu tapahtuu
   vasta tulostettaessa `Intl`-olioilla, jotka luodaan kerran ja joita
-  käytetään uudelleen (niiden luonti on kallista).
+  käytetään uudelleen (niiden luonti on kallista). Aika tallennetaan
+  ja siirretään ISO 8601 -merkkijonona, jossa on `Z` tai siirtymä.
 - **`??` ja `?.` valinnaisille arvoille.** Pitkä `?.`-ketju kertoo
   kuitenkin, että tietomalli on liian löyhä: tarkista rakenne kerran
   rajapinnassa.
@@ -193,3 +243,5 @@ skriptin polut), ja Node 18.3:sta alkaen niitä voi jäsentää funktiolla
   implisiittiset muunnokset.
 - Osaat muotoilla luvut, rahasummat ja päivämäärät `Intl`-olioilla ja
   lukea syötteen riveittäin.
+- Osaat luoda aikaleiman yksiselitteisesti, kertoa `Date`-olion kolme
+  ansaa ja näyttää saman hetken eri aikavyöhykkeillä.

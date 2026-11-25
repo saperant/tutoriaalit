@@ -1,6 +1,6 @@
 ---
 title: JavaScript
-subtitle: Pikaopas kokeneelle kehittäjälle · ES2024, Node.js 22–24
+subtitle: Pikaopas kokeneelle kehittäjälle · ES2025, Node.js 22–24
 ---
 
 # Työkalut

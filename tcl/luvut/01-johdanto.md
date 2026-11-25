@@ -23,11 +23,12 @@ tuottaa suurimman osan Tcl-virheistä, ja EDA-skriptauksen malleissa.
   käyttöliittymien tekoon. Tk elää yhä esimerkiksi Pythonin
   `tkinter`-moduulissa.
 - **1990-luku** EDA-yritykset ottivat Tcl:n komentokielekseen. Nykyään
-  sitä käyttävät esimerkiksi AMD Vivado, Intel Quartus, Siemens Questa ja
+  sitä käyttävät esimerkiksi AMD Vivado, Altera Quartus (aiemmin
+  Intel), Siemens Questa ja
   ModelSim, Synopsysin ja Cadencen työkalut sekä avoimet OpenROAD,
   OpenSTA ja Yosys (`yosys -c skripti.tcl`).
 - **2012** Tcl 8.6: olio-ohjelmointi (TclOO), korutiinit,
-  `try`/`throw` ja `lmap` (8.6.0, 2012). Tämä tutoriaali käyttää
+  `try`/`throw` ja `lmap`. Tämä tutoriaali käyttää
   versiota 8.6, jota EDA-työkalut yleisimmin upottavat.
 - **2024** Tcl 9.0: 64-bittiset koot, tiukempi merkistökäsittely ja
   joitain yhteensopimattomia muutoksia. Ne mainitaan luvussa 13.
@@ -62,6 +63,25 @@ työkaluohjelmointiin* ja *EDA-työkaluketjujen automatisointi*).
   (komentoriviargumentit, JSON, CSV, lokitus, testauksen apuvälineet).
 - Esimerkit ajetaan komennolla `tclsh8.6 tiedosto.tcl`. Hakemiston
   `esimerkit` kehityskontti sisältää tulkin.
+
+## Esitiedot ja rajaus
+
+Esitiedoksi riittää taito *Ohjelmoinnin perusteet (Python)*:
+muuttujat, ehdot, silmukat, funktiot ja listat oletetaan tutuiksi.
+EDA-työkaluja ei tarvitse tuntea eikä asentaa: luvun 11 esimerkit
+käyttävät simuloitua työkalua, ja kaikki ajetaan tavallisella
+`tclsh`-tulkilla. Kehityskontin käyttö neuvotaan taidossa
+*Kehitysympäristöt ja Dev Containers*.
+
+Paketin ulkopuolelle jäävät
+
+- Tk-käyttöliittymät, joita EDA-skriptauksessa ei tarvita
+- oikeiden työkalujen komennot, jotka vaihtelevat valmistajittain ja
+  opitaan työkalun omasta oppaasta
+- työkaluketjun ohjaus työkalun ulkopuolelta (Make, CI, Python):
+  *EDA-työkaluketjujen automatisointi*
+- rajoitteiden ja raporttien sisältö: *FPGA-toteutus* ja
+  *ASIC-toteutus*.
 
 ## Ensimmäinen ohjelma
 

@@ -31,6 +31,44 @@ Geneerisyys poistetaan ajossa kuten muutkin tyypit: funktion sisällä ei
 voi kysyä, mikä `T` on. Jos käyttäytyminen riippuu tyypistä, tarvitaan
 ajonaikainen arvo, kuten jäsennin tai erotin.
 
+## Varianssi ja tyyppijärjestelmän aukot
+
+Varianssi kertoo, milloin geneerinen tyyppi kelpaa toisen tilalle:
+kelpaako `Koira[]` paikkaan, jossa odotetaan `Elain[]`-taulukkoa?
+TypeScript vastaa kyllä, koska JavaScript-koodi tekee niin jatkuvasti.
+Päätös on käytännöllinen mutta ei turvallinen, ja se on luvun 2
+mainitsema tyyppijärjestelmän tarkoituksellinen aukko:
+
+```{.typescript tiedosto="esimerkit/07-varianssi.ts"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-varianssi.odotettu"}
+```
+
+Kääntäjä hyväksyy ohjelman, ja virhe tulee vasta ajossa. Aukko syntyy
+kirjoittamisesta: lukemiseen `Koira[]` kelpaa aina eläintaulukoksi.
+Siksi `readonly`-parametri sulkee aukon ilman, että kutsujan tarvitsee
+kopioida mitään.
+
+Funktioparametreissa tilanne on päinvastainen: käsittelijä, joka
+hyväksyy minkä tahansa eläimen, kelpaa koirien käsittelijäksi, mutta
+ei toisin päin. Asetus `strictFunctionTypes` tarkistaa tämän, mutta
+vain jäsenille, jotka on esitelty funktio-ominaisuuksina
+(`kasittele: (e: Elain) => void`). Metodisyntaksilla esitellyt jäsenet
+jäävät tarkistuksen ulkopuolelle, kuten edellä näkyi. Sama käsittelijä
+funktio-ominaisuuteen sijoitettuna ei käänny:
+
+```{.typescript tiedosto="esimerkit/07-funktiotyyppi.ei-kaanny.ts"}
+```
+
+```
+07-funktiotyyppi.ei-kaanny.ts(14,5): error TS2322: Type '(k: Koira) =>
+  void' is not assignable to type '(e: Elain) => void'.
+```
+
+```{.tuloste tiedosto="esimerkit/07-funktiotyyppi.odotettu"}
+```
+
 ## Apuvälinetyypit
 
 Standardikirjaston apuvälinetyypit johtavat uusia tyyppejä yhdestä
@@ -95,12 +133,19 @@ paljon toistoa, ei sovelluskoodissa.
 - **Kopioi, älä muuta.** `{ ...t, ...m }` tuottaa uuden olion, ja
   `Readonly<T>` parametrissa dokumentoi, ettei funktio muuta
   argumenttiaan.
+- **`readonly` parametreihin, funktio-ominaisuudet rajapintoihin.**
+  `readonly T[]` sulkee taulukon kovarianssin aukon, ja takaisinkutsu
+  esitellään muodossa `nimi: (x: T) => void`, jolloin
+  `strictFunctionTypes` tarkistaa sen.
 - **Tyyppitaso kohtuudella.** Kuvattu tai ehdollinen tyyppi kannattaa,
   kun se poistaa toistoa monesta paikasta. Jos tyyppiä ei ymmärrä
   vilkaisulla, se kannattaa kirjoittaa auki.
 
 ## Itsearviointi
 
+- Osaat selittää, miksi `Koira[]` kelpaa `Elain[]`-taulukoksi, mikä
+  siinä voi mennä vikaan ja miten `readonly` ja funktio-ominaisuudet
+  sulkevat aukon.
 - Osaat kirjoittaa geneerisen funktion rajoitteineen niin, että
   paluutyyppi säilyttää argumentin tarkan tyypin.
 - Osaat käyttää `keyof`ia, indeksoituja tyyppejä ja `typeof`ia tyyppien

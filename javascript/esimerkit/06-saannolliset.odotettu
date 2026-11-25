@@ -1,0 +1,7 @@
+kahvi 650 13
+tee 425 27
+toimitus 490 39
+Tilaus 1042: kahvi 6.50 €, tee 4.25 €, toimitus 4.90 €
+true [ 'a', 'b', '' ]
+true 2 false
+true true

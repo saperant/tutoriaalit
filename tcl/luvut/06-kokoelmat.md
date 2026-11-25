@@ -92,6 +92,54 @@ Syöte ja tuloste:
 kirjoittaa sen takaisin lohkon jälkeen. Puuttuva avain luodaan, ja
 `dict incr` aloittaa laskurin nollasta.
 
+## Taulukot
+
+Assosiatiivinen taulukko on Tcl:n vanhin avain–arvo-rakenne, ja
+vanhat skriptit sekä työkalujen omat esimerkit ovat täynnä sitä.
+Taulukko ei ole arvo vaan joukko muuttujia yhteisellä nimellä: alkioon
+viitataan muodossa `nimi(avain)`.
+
+```{.tcl tiedosto="esimerkit/06-taulukot.tcl" osa="perus"}
+```
+
+```{.tuloste tiedosto="esimerkit/06-taulukot.odotettu" rivit="1-7"}
+```
+
+| Tehtävä | Komento |
+|---------|---------|
+| Luonti listasta | `array set t {k1 v1 k2 v2}` |
+| Luku ja kirjoitus | `$t(k)`, `set t(k) v` |
+| Olemassaolo | `info exists t(k)`, `array exists t` |
+| Avaimet ja koko | `array names t ?malli?`, `array size t` |
+| Läpikäynti | `foreach {k v} [array get t] {…}` |
+| Poisto | `unset t(k)`, `array unset t ?malli?` |
+| Tulostus vianetsintään | `parray t` |
+
+Koska taulukko ei ole arvo, sitä ei voi välittää argumenttina eikä
+palauttaa. Proseduurille annetaan taulukon nimi, kuten luvun 4
+viittausparametreissa:
+
+```{.tcl tiedosto="esimerkit/06-taulukot.tcl" osa="valitys"}
+```
+
+```{.tuloste tiedosto="esimerkit/06-taulukot.odotettu" rivit="8-8"}
+```
+
+`array get` ja `array set` muuntavat taulukon ja sanakirjan välillä,
+joten vanhan taulukkorajapinnan voi kääriä sanakirjoja käyttävään
+koodiin:
+
+```{.tcl tiedosto="esimerkit/06-taulukot.tcl" osa="muunnos"}
+```
+
+```{.tuloste tiedosto="esimerkit/06-taulukot.odotettu" rivit="9-10"}
+```
+
+Taulukon avaimet eivät säily lisäysjärjestyksessä, eikä taulukkoa voi
+sisäkkäistää. Uudessa koodissa sanakirja on siksi oletus; taulukkoa
+tarvitaan, kun rajapinta vaatii sen tai kun yksittäistä alkiota
+seurataan `trace`-komennolla (luku 12).
+
 ## Merkkijonot
 
 `string`-komento kokoaa merkkijono-operaatiot. Indeksit ovat merkkejä,
@@ -138,6 +186,9 @@ ja `\` eivät korvaudu. `regexp` asettaa osumat muuttujiin, `-all
   nopeampi ja selkeämpi kuin `lsort -command`.
 - **Säännöllinen lauseke aina aaltosulkeisiin.** Ankkuroi se (`^…$`),
   kun validoit koko syötteen.
+- **Taulukko välitetään nimellä, sanakirja arvona.** Jos proseduurin
+  parametri on taulukon nimi, sano se parametrin nimessä
+  (`taulukkonimi`), jotta kutsuja ei kirjoita `$`-merkkiä.
 - **`dict exists` ennen `dict get`-kutsua,** jos avain voi puuttua.
   Tcl 8.6:ssa ei ole `dict getdef`-komentoa (tuli versiossa 8.7/9.0).
 
@@ -148,4 +199,6 @@ ja `\` eivät korvaudu. `regexp` asettaa osumat muuttujiin, `-all
 - Osaat rakentaa sisäkkäisen sanakirjan syötteestä ja käydä sen läpi.
 - Osaat jäsentää työkalun tulosteen säännöllisillä lausekkeilla ja
   `string`-komennoilla.
+- Osaat lukea ja kirjoittaa taulukkoa käyttävää koodia, välittää
+  taulukon proseduurille ja muuntaa sen sanakirjaksi.
 - Osaat perustella, milloin käytät listaa, sanakirjaa tai taulukkoa.

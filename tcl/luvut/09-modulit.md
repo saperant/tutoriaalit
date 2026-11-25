@@ -47,6 +47,12 @@ Vaihtoehto `pkgIndex.tcl`-tiedostolle on *Tcl-moduli*: tiedosto
 `::tcl::tm::path add`. Yksinkertaisimmillaan kirjasto ladataan
 `source`-komennolla, kuten luvun 11 esimerkissä.
 
+Tcllib ladataan samalla komennolla (`package require json`), jos se
+on asennettu. EDA-työkalun omassa tulkissa sitä ei yleensä ole, eikä
+tämän paketin esimerkeissä siksi käytetä sitä: työkalun sisällä
+ajettava skripti nojaa vain kielen omiin komentoihin ja omiin
+paketteihinsa.
+
 ## Tiedostot
 
 `open polku tila` avaa kanavan (`r`, `w`, `a`), `gets` ja `read` lukevat,

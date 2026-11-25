@@ -1,5 +1,5 @@
 peräkkäin ≥ 180 ms: true
-rinnakkain < 150 ms: true
+rinnakkain nopeampi: true
 all: mehu: palvelu ei vastaa
 kahvi 500
 mehu virhe

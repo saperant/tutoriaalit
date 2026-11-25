@@ -9,7 +9,8 @@
 | Viittausparametri | `upvar 1 $nimi muuttuja` | 4 |
 | Oma ohjausrakenne | `uplevel 1 $runko` ja paluukoodien välitys | 4 |
 | K-yhdistelmä | `[lreplace $l[set l {}] …]` muokkaa paikallaan | 5 |
-| Koristele, lajittele, riisu | `lmap` avaimeksi, `lsort -index 0` | 11 |
+| Koristele, lajittele, riisu | `lmap` avaimeksi, `lsort -index 0` | 6, 11 |
+| Taulukko nimellä | `upvar 1 $nimi t`, muunnos `array get` | 6 |
 | Johdettu tieto | summat lasketaan tarvittaessa, ei tallenneta | 6 |
 | Resurssin vapautus | `try {…} finally {close $f}` | 8 |
 | Virheluokka | `throw {LUOKKA ALALUOKKA tieto} viesti`, `trap` | 8 |
@@ -18,6 +19,7 @@
 | Rinnakkaiset ajot | putki `open`-komennolla, `fileevent`, `vwait` | 10 |
 | Generaattori | `coroutine`, `yield` | 10 |
 | Tilakonejäsennin | `switch -regexp -matchvar`, yhteenvedon tarkistus | 11 |
+| Turvallinen lapsitulkki | `interp create -safe`, `interp alias` | 11 |
 | Ohut työkalukerros | logiikka testattavina proseduureina | 11, 12 |
 
 ## Nyrkkisäännöt
@@ -54,6 +56,17 @@ Merkittävimmät muutokset:
   insert`.
 - Merkkijonojen ja listojen enimmäiskoko kasvoi 64-bittiseksi.
 
+## Jatkotaidot
+
+- *EDA-työkaluketjujen automatisointi*: Tcl-skriptit osana kulkua,
+  jota ohjataan Pythonilla, Makella ja CI:llä.
+- *RTL-suunnittelu SystemVerilogilla*, *FPGA-toteutus* ja
+  *ASIC-toteutus*: työkalut, joita Tcl:llä ohjataan, ja rajoitteet,
+  joita sillä kirjoitetaan.
+- *Python työkaluohjelmointiin*: raporttien ja tulosten käsittely
+  työkalun ulkopuolella.
+- *Tekninen dokumentaatio*: skriptikirjaston ja kulun dokumentointi.
+
 ## Lähteet ja jatkolukeminen
 
 - **Tcl:n dokumentaatio** (<https://www.tcl-lang.org/man/tcl8.6/>):
@@ -72,7 +85,7 @@ Merkittävimmät muutokset:
   Tcl and Tk* (4. painos) kattaa kielen laajasti.
 - **EDA-työkalujen Tcl-oppaat:** valmistajien omat käyttöoppaat
   (esim. AMD:n *Vivado Design Suite Tcl Command Reference* ja
-  *Using Tcl Scripting* -opas, Intelin *Quartus Prime Scripting*) ja
+  *Using Tcl Scripting* -opas, Alteran *Quartus Prime Scripting*) ja
   avoimen OpenROAD-projektin dokumentaatio
   (<https://openroad.readthedocs.io/>).
 
@@ -83,18 +96,3 @@ Merkittävimmät muutokset:
 - **tclint** (<https://github.com/nmoroze/tclint>): tarkistin ja
   muotoilija.
 - **tkcon** (<https://tkcon.sourceforge.net/>): interaktiivinen konsoli.
-
-### Mihin tästä eteenpäin
-
-Taitopuussa Tcl on esitietona taidolle *EDA-työkaluketjujen
-automatisointi*, jossa Tcl-skriptejä yhdistetään Pythoniin, Makeen ja
-CI:hin. *RTL-suunnittelu* ja *FPGA-toteutus* käyttävät Tcl:ää
-työkalujen ohjaamiseen ja rajoitteisiin.
-
-## Lisenssi
-
-Tämä tutoriaali ja sen esimerkkikoodit on lisensoitu Creative Commons
-Nimeä–JaaSamoin 4.0 Kansainvälinen -lisenssillä (CC BY-SA 4.0,
-<https://creativecommons.org/licenses/by-sa/4.0/deed.fi>). Teosta saa
-kopioida, levittää ja muokata, kunhan alkuperäinen lähde mainitaan ja
-muokatut versiot jaetaan samalla lisenssillä.

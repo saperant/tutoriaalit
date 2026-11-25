@@ -87,6 +87,12 @@ TypeScriptin piirteet, jotka tuottavat ajonaikaista koodia: `enum`,
    toimivat rakenteellisen tyypityksen kanssa, eikä niissä ole numeeristen
    `enum`-arvojen sudenkuoppia.
 
+Myöskään dekoraattorit (`@Component`, `@Injectable`) eivät ole
+poistettavaa syntaksia: ne ovat funktioita, jotka ajetaan luokkaa
+määriteltäessä. Niitä kohtaa Angularissa ja NestJS:ssä, joiden
+rakennustyökalut kääntävät ne; kielen perusteisiin ne eivät kuulu, eikä
+niitä käsitellä tässä paketissa.
+
 ```{.typescript tiedosto="esimerkit/02-enum.ei-kaanny.ts"}
 ```
 

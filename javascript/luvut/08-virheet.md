@@ -32,10 +32,44 @@ eteenpäin. Kaikki nielevä `catch` piilottaa ohjelmointivirheet.
 ```
 
 `finally` ajetaan aina, myös kun `try` palaa `return`-lauseella tai
-virhe jatkaa eteenpäin. Se on JavaScriptin tapa vapauttaa resurssit
-(tiedostokahvat, lukot, ajastimet). Tuleva `using`-määrittely
-(*explicit resource management*) tekee saman automaattisesti, kuten
-Pythonin `with`.
+virhe jatkaa eteenpäin.
+
+## Resurssien vapauttaminen
+
+Tiedostokahva, tietokantayhteys, lukko tai ajastin on vapautettava
+myös silloin, kun työ päättyy virheeseen. Perinteinen keino on
+`try`–`finally`. Uudempi on sopia vapautuksesta olion kanssa: resurssi
+toteuttaa metodin `[Symbol.dispose]()`, joka sulkee sen.
+
+```{.javascript tiedosto="esimerkit/08-resurssit/yhteys.js"}
+```
+
+```{.javascript tiedosto="esimerkit/08-resurssit/finally.js"}
+```
+
+Määrittely `using` (*explicit resource management*) tekee saman
+ilman `try`-lohkoa: kun lohko päättyy paluuseen tai virheeseen,
+muuttujan `[Symbol.dispose]()` kutsutaan automaattisesti, ja useat
+resurssit vapautetaan käänteisessä järjestyksessä. Se vastaa Pythonin
+`with`-lausetta ja Javan try-with-resources-lohkoa.
+
+```{.javascript tiedosto="esimerkit/08-resurssit/using.js"}
+```
+
+`using` kuuluu standardiin versiosta ES2026 alkaen, ja se toimii Node
+24:ssä mutta ei Node 22:ssa. Asynkroniselle sulkemiselle on
+vastaavasti `await using` ja `[Symbol.asyncDispose]()`. Esimerkin
+pääohjelma lataa `using`-version ja vaihtaa vanhassa Nodessa
+`finally`-versioon, joten tuloste on molemmissa sama:
+
+```{.javascript tiedosto="esimerkit/08-resurssit/main.js"}
+```
+
+```{.tuloste tiedosto="esimerkit/08-resurssit.odotettu"}
+```
+
+Yhteys suljetaan ennen kuin paluuarvo tulostetaan ja myös silloin, kun
+kysely heittää virheen.
 
 ## catch-muuttujan tyyppi
 
@@ -94,6 +128,9 @@ noudattavat samaa mallia.
 - **Heitä vain `Error`-olioita.** `throw "virhe"` ei sisällä pinojälkeä.
 - **Omat virheluokat sovelluksen rajoille** ja syyketju `{ cause }`,
   kun virhe käännetään toiselle tasolle.
+- **Resurssi vapautetaan samassa funktiossa, joka sen avasi**:
+  `using` tai `try`–`finally`. Kirjaston resurssiolio saa metodin
+  `[Symbol.dispose]()`, jolloin käyttäjä voi valita kumman tahansa.
 - **Käsittele vain tunnetut virheet.** `catch`, joka ei tunnista virhettä,
   heittää sen eteenpäin. Kirjaa virhe kerran, ylimmällä tasolla.
 - **Ei irrallisia lupauksia.** ESLint-sääntö `no-floating-promises`
@@ -114,6 +151,9 @@ noudattavat samaa mallia.
   `cause`.
 - Osaat kaventaa `catch`-muuttujan tyypin ja käsitellä vain tunnetut
   virheet.
+- Osaat vapauttaa resurssin `try`–`finally`-lohkolla ja
+  `using`-määrittelyllä ja toteuttaa vapautusprotokollan omalle
+  luokalle.
 - Osaat kertoa, mikä on käsittelemätön hylkäys ja miten se estetään.
 - Osaat valita poikkeuksen ja paluuarvon välillä ja perustella valinnan
   hinnalla ja käytettävyydellä.

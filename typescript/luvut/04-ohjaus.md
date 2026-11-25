@@ -49,6 +49,10 @@ päätellään itse (`hinnat: number[]`).
 
 ## Kattavuustarkistus
 
+Esimerkin `Muoto` on eroteltu unioni: jokaisella vaihtoehdolla on
+`laji`-kenttä, jonka arvo kertoo vaihtoehdon. Malli on tuttu taidosta
+*JavaScript*, ja luku 6 käsittelee sen suunnittelun välineenä.
+
 Kun `switch` käsittelee unionin kaikki vaihtoehdot, `default`-haarassa
 muuttujan tyyppi on `never`. Antamalla sen funktiolle, joka hyväksyy vain
 `never`in, käsittelemätön uusi vaihtoehto muuttuu käännösvirheeksi:

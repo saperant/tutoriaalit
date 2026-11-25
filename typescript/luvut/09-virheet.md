@@ -7,6 +7,11 @@ virheitä arvoina ja ulkoisen datan muuttamista luotettaviksi tyypeiksi.
 
 ## Poikkeukset
 
+Poikkeusten ajonaikainen toiminta (virheluokat, `cause`, `finally`) on
+opetettu taidossa *JavaScript*. TypeScript lisää siihen kaksi asiaa:
+`catch`-muuttujan tyypin ja sen, ettei heitettävä virhe näy funktion
+tyypissä.
+
 ```{.typescript tiedosto="esimerkit/09-catch.ts"}
 ```
 
@@ -66,6 +71,19 @@ arvon tai virheet. Validointi (palauttaa `true` tai `false`) hukkaa
 tiedon, jonka tarkistus tuotti; jäsennys säilyttää sen tyypissä. Reunan
 jälkeen koodi luottaa tyyppeihin eikä tarkista samoja asioita
 uudelleen.
+
+```{.dot otsikko="Ulkoinen data kulkee jäsentimen läpi. Vain jäsennetty arvo pääsee ytimeen; virheet palautetaan lähettäjälle."}
+digraph {
+  rankdir=LR; node [shape=box];
+  ulko [label="verkko, tiedosto,\nlomake", shape=plaintext];
+  jasennin [label="jäsennin\n(skeema)"];
+  ydin [label="sovelluksen ydin\ntyyppi Tilaus"];
+  virhe [label="virheet polkuineen", shape=plaintext];
+  ulko -> jasennin [label="unknown"];
+  jasennin -> ydin [label="ok: arvo"];
+  jasennin -> virhe [label="ei ok: virheet"];
+}
+```
 
 Esimerkissä on pieni jäsenninkirjasto. Jäsentimet yhdistellään
 skeemaksi, ja sovelluksen tyyppi *johdetaan skeemasta*, joten tyyppi ja

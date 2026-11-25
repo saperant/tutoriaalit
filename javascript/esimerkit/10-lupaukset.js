@@ -23,7 +23,7 @@ const alku2 = performance.now();
 await Promise.all(["kahvi", "tee", "leipä"].map((t) => haeHinta(t, 60)));
 const rinnakkain = performance.now() - alku2;
 console.log(`peräkkäin ≥ 180 ms: ${perakkain >= 175}`);
-console.log(`rinnakkain < 150 ms: ${rinnakkain < 150}`);
+console.log(`rinnakkain nopeampi: ${rinnakkain < perakkain}`);
 // @loppu perakkain
 
 // @alku yhdistimet

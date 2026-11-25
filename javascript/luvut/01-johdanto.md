@@ -13,8 +13,10 @@ nuolifunktiot, luokat, modulit, lupaukset, iteraattorit ja `Map`.
 Siitä lähtien standardista on julkaistu uusi versio vuosittain. TC39-
 komitea hyväksyy ehdotuksen standardiin, kun se on edennyt neljännelle
 vaiheelle ja vähintään kaksi selainmoottoria on toteuttanut sen. Tämä
-tutoriaali opettaa nykyistä JavaScriptia (ES2024) eikä käy läpi vanhoja
-tapoja kuin silloin, kun ne vielä aiheuttavat virheitä.
+tutoriaali opettaa nykyistä JavaScriptia (ES2025) eikä käy läpi vanhoja
+tapoja kuin silloin, kun ne vielä aiheuttavat virheitä. Uudemmista
+piirteistä käytetään niitä, jotka toimivat molemmissa testatuissa
+Node-versioissa; kun piirre vaatii uudemman, se sanotaan.
 
 ## Mihin JavaScript sopii ja mihin ei
 
@@ -50,8 +52,7 @@ verkon ja `npm`-ekosysteemin. Moni rajapinta on nykyään yhteinen
 Tämän tutoriaalin esimerkit ajetaan Node.js:llä. Ne on testattu
 versioilla 22 ja 24, joista jälkimmäinen on kehityskontin versio.
 Noden parilliset pääversiot ovat pitkäaikaisesti tuettuja (LTS), ja
-tuotannossa käytetään niitä. Selaimen DOM ja tapahtumankäsittely
-käsitellään taidoissa *HTML ja CSS* ja *Web-sovellukset*.
+tuotannossa käytetään niitä.
 
 ## Työkalut
 
@@ -101,12 +102,33 @@ Jo tässä näkyy moni nykyisen JavaScriptin piirre:
 - Lajittelu tehdään ensin määrän ja sitten aakkosjärjestyksen mukaan:
   `n - m || a.localeCompare(b, "fi")`.
 
+## Esitiedot ja rajaus
+
+Esitiedoksi riittää taito *Ohjelmoinnin perusteet (Python)*: muuttujat,
+ehdot, silmukat, funktiot ja listat oletetaan tutuiksi, ja
+JavaScriptin omat tavat opetetaan alusta. Esimerkit ovat hakemistossa
+`esimerkit/`, ja jokainen ajetaan komennolla `node tiedosto.js`
+(hakemistoesimerkit `node hakemisto/main.js`). Kehityskontin käyttö
+neuvotaan taidossa *Kehitysympäristöt ja Dev Containers*.
+
+Tämä paketti opettaa kielen ja Node.js:n perusrajapinnat. Sen
+ulkopuolelle jäävät
+
+- selaimen DOM, tapahtumat ja sivun rakenne: taidot *HTML ja CSS* ja
+  *Web-sovellukset*
+- sovelluskehykset (React, Vue, Angular, Svelte): *Web-sovelluskehykset
+  ja niiden periaatteet*
+- tyypit osana kieltä: *TypeScript*
+- HTTP-palvelimet ja tietokannat: *Taustapalvelut*
+- rinnakkaisuuden yleiset käsitteet: *Rinnakkaisohjelmointi*.
+
 ## Lukuohje
 
 Luku 2 on tarkoitettu toisen kielen osaavalle: se kokoaa JavaScriptin
-ajattelutavan, vastaavuudet, hinnat ja sudenkuopat. Luvut 3–8 käyvät
-kielen läpi, luku 9 modulit ja paketit, luku 10 asynkronisuuden ja
-säikeet ja luku 11 työkalut. Jokainen luku päättyy osioon
+ajattelutavan, vastaavuudet, hinnat ja sudenkuopat, ja siinä on myös
+esimerkeissä käytettyjen JSDoc-tyyppimerkintöjen taulukko. Luvut 3–8
+käyvät kielen läpi, luku 9 modulit ja paketit, luku 10 asynkronisuuden
+ja säikeet ja luku 11 työkalut. Jokainen luku päättyy osioon
 *Käytännössä*, joka kokoaa ammattilaisten käytännöt ja hinnat, ja
 *itsearviointiin*. Jos hallitset itsearvioinnin kaikki kohdat, voit
 ohittaa luvun.

@@ -3,7 +3,10 @@
 Eroteltu unioni (*discriminated union*) on TypeScriptin tärkein
 suunnittelun väline. Se vastaa Rustin `enum`ia ja Kotlinin
 `sealed`-luokkia: arvo on täsmälleen yksi vaihtoehdoista, ja jokaisella
-vaihtoehdolla on omat kenttänsä.
+vaihtoehdolla on omat kenttänsä. Malli esiteltiin taidossa
+*JavaScript* JSDoc-tyypeillä ja luvussa 4 kattavuustarkistuksen
+yhteydessä; tässä luvussa sillä suunnitellaan tilakone ja korvataan
+`enum`.
 
 ## Mahdottomat tilat pois
 
@@ -19,7 +22,28 @@ literaalikenttä (`tila`) on *erotin*, jonka tarkistus kaventaa tyypin:
 ```{.typescript tiedosto="esimerkit/06-tilakone.ts"}
 ```
 
-```{.tuloste tiedosto="esimerkit/06-tilakone.odotettu"}
+Ohjelma ajaa ensin kolme tapahtumaa peräkkäin; viimeinen on kielletty:
+
+```{.tuloste tiedosto="esimerkit/06-tilakone.odotettu" rivit="1-3"}
+```
+
+Lopuksi se kokeilee jokaista tilaa jokaisella tapahtumalla ja tulostaa
+sallitut siirtymät. Ne ovat tilakoneen kaaret:
+
+```{.tuloste tiedosto="esimerkit/06-tilakone.odotettu" rivit="4-6"}
+```
+
+```{.dot otsikko="Tilauksen tilakone esimerkin tulosteen mukaan. Solmussa ovat tilan omat kentät, kaaressa tapahtuma. Kaikki muut yhdistelmät ovat virheitä."}
+digraph {
+  rankdir=LR; node [shape=box, style=rounded];
+  luonnos [label="luonnos\nrivit"];
+  maksettu [label="maksettu\nrivit, maksuviite"];
+  lahetetty [label="lahetetty\nrivit, seurantakoodi"];
+  peruttu [label="peruttu\nsyy"];
+  luonnos -> maksettu [label="maksu"];
+  maksettu -> lahetetty [label="lahetys"];
+  luonnos -> peruttu [label="peruutus"];
+}
 ```
 
 - `siirry` on tilakoneen siirtymäfunktio: vanha tila ja tapahtuma

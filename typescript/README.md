@@ -19,19 +19,20 @@ pikaopas [typescript-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materi
    `#`-kentät, tehdasmetodi
 6. Unionit ja tilakoneet – erotellut unionit, `enum`in korvaajat
 7. Geneerisyys ja tyyppien muuntaminen – rajoitteet, `keyof`,
-   apuvälinetyypit, kuvatut ja ehdolliset tyypit
+   varianssi, apuvälinetyypit, kuvatut ja ehdolliset tyypit
 8. Kokoelmat ja datasta johdetut tyypit – `Map`, `Set`, monikot,
    `satisfies`, `as const`, `Object.keys`
 9. Virheet ja ulkoisen datan jäsentäminen – `catch`, `Tulos`-tyyppi,
    jäsennys reunalla, tyyppi skeemasta, brändätyt tyypit
 10. Modulit, esittelytiedostot ja projektit – `import type`, `.d.ts`,
-    `@types`, projektiviittaukset
+    TSDoc-kommentit, tyypin täydennys, `@types`, projektiviittaukset,
+    siirtyminen JavaScriptistä
 11. Työkalut ja testaus – node:test, tyyppitestit, typescript-eslint
 12. Lopuksi – nyrkkisäännöt, mallit, lähteet
 
 ## Esimerkit
 
-Hakemistossa `esimerkit/` on 36 testattua esimerkkiä. Tiedostot ovat
+Hakemistossa `esimerkit/` on 39 testattua esimerkkiä. Tiedostot ovat
 ES-moduleita (`package.json`), ja `tsconfig.json` sisältää samat
 asetukset, joilla testaaja tarkistaa ne.
 
@@ -51,3 +52,6 @@ virheen. Kehityskontti: `.devcontainer/typescript/`.
 make testaa    # rakenne, tsc ja ajo kaikille esimerkeille, testit
 make pdf       # typescript.pdf ja typescript-pikaopas.pdf
 ```
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.

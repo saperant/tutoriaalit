@@ -1,5 +1,11 @@
 # Työkalut ja testaus {.runko-tyokalut}
 
+TypeScript-projektin työkalut jakautuvat kahteen ryhmään: ne, jotka
+ymmärtävät tyypit (kääntäjä, tyyppitietoinen lintteri, editori), ja
+ne, jotka vain poistavat ne (Node, paketoijat). Tässä luvussa kootaan
+ketju, testataan sekä koodi että tyypit ja valitaan lint-säännöt,
+jotka paikkaavat kääntäjän aukot.
+
 ## Työkaluketju
 
 | Vaihe | Työkalu | Komento |
@@ -11,6 +17,7 @@
 | Muotoilu | Prettier tai Biome | `prettier --check .` |
 | Selainpaketti | Vite, esbuild | `vite build` |
 | Kirjaston julkaisu | tsc | `tsc -p tsconfig.build.json` |
+| Dokumentaatio | TypeDoc | `typedoc` (luku 10) |
 | Debuggaus | Node + VS Code | `node --inspect main.ts` |
 
 Tyypit tarkistaa aina `tsc`. Rakennustyökalut (Vite, esbuild) ja Node

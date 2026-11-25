@@ -1,5 +1,23 @@
 # Lopuksi {.runko-kaytannot .runko-lahteet}
 
+## Mallit
+
+| Malli | Ongelma | Luku |
+|-------|---------|------|
+| Eroteltu unioni ja kattavuustarkistus | Tilat, viestit, virhelajit | 4, 6 |
+| Tilakoneen siirtymäfunktio | Sallitut tilasiirtymät yhdessä paikassa | 6 |
+| `as const` -olio tai -taulukko | `enum`in korvaaja | 6 |
+| Geneerinen rajoite (`T extends …`) | Tarkka tyyppi säilyy | 7 |
+| Johdetut tyypit (`Omit`, `Partial`) | Uusi, muutos ja esikatselu yhdestä mallista | 7 |
+| `satisfies` | Muodon tarkistus ilman levennystä | 8 |
+| `Tulos<T, E>` | Odotetut virheet näkyviksi | 9 |
+| Jäsennys reunalla, tyyppi skeemasta | Ulkoinen data | 9 |
+| Brändätty tyyppi | Samanmuotoiset arvot eivät sekoitu | 9 |
+| Tehdasmetodi ja `#`-kentät | Luokan invariantti | 5 |
+| `readonly`-parametri | Taulukon kovarianssin aukko | 7 |
+| Tyypin täydennys (`declare global`) | Ympäristön ja kehyksen omat kentät | 10 |
+| Tyyppitesti | Kirjaston tyyppien regressiot | 11 |
+
 ## Nyrkkisäännöt
 
 1. **Tiukka tila ja `noUncheckedIndexedAccess`** jokaisessa
@@ -24,30 +42,18 @@
 10. **Tyyppitaso kohtuudella.** Monimutkainen tyyppi kannattaa vain, jos
     se poistaa paljon toistoa.
 
-## Mallit
+## Jatkotaidot
 
-| Malli | Ongelma | Luku |
-|-------|---------|------|
-| Eroteltu unioni ja kattavuustarkistus | Tilat, viestit, virhelajit | 4, 6 |
-| Tilakoneen siirtymäfunktio | Sallitut tilasiirtymät yhdessä paikassa | 6 |
-| `as const` -olio tai -taulukko | `enum`in korvaaja | 6 |
-| Geneerinen rajoite (`T extends …`) | Tarkka tyyppi säilyy | 7 |
-| Johdetut tyypit (`Omit`, `Partial`) | Uusi, muutos ja esikatselu yhdestä mallista | 7 |
-| `satisfies` | Muodon tarkistus ilman levennystä | 8 |
-| `Tulos<T, E>` | Odotetut virheet näkyviksi | 9 |
-| Jäsennys reunalla, tyyppi skeemasta | Ulkoinen data | 9 |
-| Brändätty tyyppi | Samanmuotoiset arvot eivät sekoitu | 9 |
-| Tehdasmetodi ja `#`-kentät | Luokan invariantti | 5 |
-| Tyyppitesti | Kirjaston tyyppien regressiot | 11 |
-
-## Jatko taitopuussa
-
-- **Web-sovellukset** jatkaa suoraan tästä: TypeScript selaimessa,
-  käyttöliittymäkehykset ja HTTP-rajapintojen kutsuminen.
-- **Taustapalvelut** käsittelee palvelinpuolen suunnittelua; sen mallit
+- *Web-sovellukset* jatkaa suoraan tästä: TypeScript selaimessa,
+  komponentit ja HTTP-rajapintojen kutsuminen.
+- *Web-sovelluskehykset ja niiden periaatteet* vertaa Reactia, Vuea,
+  Angularia ja Svelteä saman sovelluksen avulla.
+- *Taustapalvelut* käsittelee palvelinpuolen suunnittelua; sen mallit
   (jäsennys reunalla, virheet arvoina) siirtyvät Node-palveluihin.
-- **Kääntäjätekniikka** syventää tyyppijärjestelmiä ja tyyppipäättelyä.
-- **Rust** ja **Kotlin** tarjoavat samat mallit (summatyypit,
+- *Tekninen dokumentaatio* käsittelee rajapintadokumentaation
+  tuottamista kommenteista ja dokumentaation testausta.
+- *Kääntäjätekniikka* syventää tyyppijärjestelmiä ja tyyppipäättelyä.
+- *Rust* ja *Kotlin* tarjoavat samat mallit (summatyypit,
   null-turvallisuus) kielen ytimessä ja ajonaikaisin takuin.
 
 ## Lähteet ja lisälukemista

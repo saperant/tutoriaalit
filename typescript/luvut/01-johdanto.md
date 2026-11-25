@@ -7,11 +7,28 @@ Kääntäjä tarkistaa ohjelman ennen ajoa: väärän tyyppinen argumentti,
 puuttuva kenttä tai käsittelemätön tapaus löytyy editorissa eikä
 tuotannossa.
 
-Tämä tutoriaali on tarkoitettu JavaScriptiä osaavalle (taito
-*JavaScript*). Kielen ajonaikaiset asiat, kuten sulkeumat, prototyypit,
-tapahtumasilmukka ja lupaukset, opetetaan JavaScript-paketissa.
-Tässä keskitytään siihen, mitä TypeScript lisää: tyyppijärjestelmään
-suunnittelun välineenä.
+Tässä tutoriaalissa keskitytään siihen, mitä TypeScript lisää
+JavaScriptiin: tyyppijärjestelmään suunnittelun välineenä.
+
+## Esitiedot ja rajaus
+
+Esitieto on taito *JavaScript*. Kielen ajonaikaiset asiat, kuten
+sulkeumat, prototyypit, tapahtumasilmukka ja lupaukset, opetetaan
+siinä, eikä niitä kerrata. JavaScript-paketti kirjoittaa tyypit
+JSDoc-kommentteihin ja tarkistaa ne samalla kääntäjällä, joten
+erotellut unionit, `unknown` ja kattavuustarkistus ovat sieltä tuttuja;
+tässä ne kirjoitetaan TypeScriptin omalla syntaksilla ja niitä
+syvennetään.
+
+Esimerkit ovat hakemistossa `esimerkit/`, ja jokainen ajetaan
+komennolla `node tiedosto.ts`. Kehityskontin käyttö neuvotaan taidossa
+*Kehitysympäristöt ja Dev Containers*. Paketin ulkopuolelle jäävät
+
+- selainsovellukset ja niiden kehykset: taidot *Web-sovellukset* ja
+  *Web-sovelluskehykset ja niiden periaatteet*
+- palvelinpuolen rajapinnat ja tietokannat: *Taustapalvelut*
+- tyyppijärjestelmien teoria ja tyyppipäättelyn toteutus:
+  *Kääntäjätekniikka*.
 
 ## Historia ja käyttö
 
@@ -45,6 +62,19 @@ TypeScript-koodilla on kaksi elämää:
    jäävän JavaScriptin. Node.js tekee tämän suoraan (*type stripping*);
    selainsovelluksissa poiston tekee rakennustyökalu, kuten esbuild tai
    Vite.
+
+```{.dot otsikko="Lähdekoodin kolme reittiä. Tarkistus ei tuota mitään, ajo ei tarkista mitään, ja kirjaston julkaisu tuottaa JavaScriptin ja esittelytiedostot."}
+digraph {
+  rankdir=LR; node [shape=box];
+  ts [label="lähde .ts"];
+  tsc [label="tsc --noEmit"]; virheet [label="tyyppivirheet", shape=plaintext];
+  poisto [label="tyyppien poisto\n(Node, esbuild, Vite)"]; ajo [label="JavaScript\najetaan"];
+  dts [label="tsc --declaration"]; julkaisu [label=".js + .d.ts\nnpm-pakettiin"];
+  ts -> tsc -> virheet;
+  ts -> poisto -> ajo;
+  ts -> dts -> julkaisu;
+}
+```
 
 Vaiheet ovat toisistaan riippumattomat: ohjelma ajetaan, vaikka siinä
 olisi tyyppivirheitä. Siksi `tsc --noEmit` kuuluu jokaiseen

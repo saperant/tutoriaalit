@@ -17,6 +17,7 @@
 | Eroteltu unioni ja kattava `switch` | variantit datana, unohtunut tapaus on virhe | 7 |
 | Tulos-olio `{ ok, arvo }` | odotettu epäonnistuminen ilman poikkeusta | 7, 8 |
 | Virhehierarkia ja `cause` | virhelajin käsittely, ketju säilyy | 8 |
+| Vapautusprotokolla (`Symbol.dispose`, `using`) | resurssi vapautuu myös virheessä | 8 |
 | Rinnakkaisuuden rajoitin | *n* työtä kerrallaan | 10 |
 | `AbortSignal` | peruutus ja aikaraja | 10 |
 | Async-iteraattoriputki | datan virtaus vähällä muistilla | 10 |
@@ -71,8 +72,12 @@ luvun 4 putki, mutta asynkroninen. Se käsitellään taidossa
 - *HTML ja CSS* ja *Web-sovellukset*: DOM, selaimen tapahtumat,
   sovelluskehykset.
 - *Taustapalvelut*: HTTP-palvelimet, tietokannat ja autentikointi Nodella.
-- *Funktionaalinen ohjelmointi*: korkeamman asteen funktioiden,
-  sulkeumien ja muuttumattomuuden juuret.
+- *Web-sovelluskehykset ja niiden periaatteet*: mitä React, Vue,
+  Angular ja Svelte ratkaisevat ja miten.
+- *Funktionaalinen ohjelmointi (Racket)*: korkeamman asteen
+  funktioiden, sulkeumien ja muuttumattomuuden juuret.
+- *Tekninen dokumentaatio*: lukijat, dokumenttityypit ja
+  rajapintadokumentaation tuottaminen JSDoc-kommenteista.
 
 ## Lähteet ja dokumentaatio
 
@@ -110,10 +115,6 @@ luvun 4 putki, mutta asynkroninen. Se käsitellään taidossa
 | laatu | ESLint, typescript-eslint, Prettier, Biome |
 | paketointi | Vite, esbuild, Rollup |
 | loki | pino |
-| päivämäärät | `Intl`, Temporal (tuleva standardi), date-fns |
+| päivämäärät | `Intl`, date-fns, Luxon; Temporal, kun Node tukee sitä |
+| dokumentaatio | TypeDoc, `jsdoc` |
 | rinnakkaisuus | p-limit, Piscina |
-
-## Lisenssi
-
-Tämä tutoriaali on lisensoitu CC BY-SA 4.0 -lisenssillä. Esimerkkikoodia
-saa käyttää vapaasti omissa ohjelmissa.

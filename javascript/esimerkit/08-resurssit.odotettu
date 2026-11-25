@@ -1,0 +1,6 @@
+avattu varasto
+suljettu varasto
+varasto: SELECT saldo
+avattu varasto
+suljettu varasto
+virhe: kysely hylättiin

@@ -1,0 +1,10 @@
+2.5 ns, 3 kelloa
+clk_core clk_io
+0
+1.25
+jakso(clk_core) = 2.5
+jakso(clk_dbg)  = 20.0
+jakso(clk_io)   = 10.0
+pll 1
+{clk_core 2.5} {clk_dbg 20.0} {clk_io 10.0}
+clk_a clk_b

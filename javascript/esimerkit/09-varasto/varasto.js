@@ -7,9 +7,16 @@
 export const TILAUSRAJA = 5;
 
 /**
- * Luo uuden varaston. Tehdasfunktio palauttaa rajapinnan, jonka takana
- * tietorakenne on piilossa.
- * @param {Iterable<[string, number]>} [alku]
+ * Luo uuden varaston.
+ *
+ * Tehdasfunktio palauttaa rajapinnan, jonka takana tietorakenne on
+ * piilossa. Saldot ovat kokonaislukuja eivätkä voi olla negatiivisia.
+ *
+ * @param {Iterable<[string, number]>} [alku] alkusaldot pareina
+ * @example
+ * const varasto = luoVarasto([["kahvi", 3]]);
+ * varasto.kirjaa("kahvi", -1);
+ * varasto.saldo("kahvi");   // 2
  */
 export function luoVarasto(alku = []) {
   /** @type {Map<string, number>} */
@@ -17,8 +24,11 @@ export function luoVarasto(alku = []) {
 
   return {
     /**
+     * Kirjaa saapumisen tai oton.
      * @param {string} tuote
      * @param {number} muutos  positiivinen = saapuminen
+     * @throws {RangeError} jos muutos ei ole nollasta poikkeava
+     *   kokonaisluku tai saldo jäisi negatiiviseksi
      */
     kirjaa(tuote, muutos) {
       if (!Number.isInteger(muutos) || muutos === 0) {
@@ -29,14 +39,20 @@ export function luoVarasto(alku = []) {
       saldot.set(tuote, uusi);
     },
 
-    /** @returns {Saldo[]} */
+    /**
+     * Tuotteet, joiden saldo on alle rajan {@link TILAUSRAJA}.
+     * @returns {Saldo[]}
+     */
     tilattavat() {
       return [...saldot]
         .filter(([, maara]) => maara < TILAUSRAJA)
         .map(([tuote, maara]) => ({ tuote, maara }));
     },
 
-    /** @param {string} tuote */
+    /**
+     * Tuotteen saldo; tuntemattoman tuotteen saldo on 0.
+     * @param {string} tuote
+     */
     saldo(tuote) {
       return saldot.get(tuote) ?? 0;
     },

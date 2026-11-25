@@ -1,5 +1,12 @@
 # Tyypit, tiukka tila ja syöte {.runko-tyypit}
 
+Tyyppi on joukko arvoja, ja kääntäjän tehtävä on tarkistaa, että
+jokainen arvo kuuluu siihen joukkoon, jota sen käyttöpaikka odottaa.
+Tässä luvussa käydään läpi perustyypit ja niiden päättely,
+tyyppihierarkian ääripäät `unknown` ja `never`, tiukan tilan asetukset
+sekä syötteen lukeminen, jossa tyypittämätön data ensi kertaa kohtaa
+tyypit.
+
 ## Perustyypit ja päättely
 
 TypeScriptin perustyypit vastaavat JavaScriptin arvoja: `number`,
@@ -35,6 +42,27 @@ Päättely toimii näin:
 | `any` | Tarkistukset pois päältä | Siirtymävaiheessa, ei uudessa koodissa |
 | `never` | Ei yhtään arvoa | Kattavuustarkistus, mahdottomat haarat |
 | `void` | Funktio ei palauta käyttökelpoista arvoa | Paluutyyppinä |
+
+```{.dot otsikko="Tyypit joukkoina. Nuoli osoittaa suppeammasta tyypistä laajempaan: arvon voi sijoittaa nuolen suuntaan ilman tarkistusta, vastasuuntaan vain kaventamalla."}
+digraph {
+  rankdir=BT; ranksep=0.3; node [shape=box, style=rounded];
+  never [label="never\n(tyhjä joukko)"];
+  eur [label="\"EUR\""]; sek [label="\"SEK\""];
+  unioni [label="\"EUR\" | \"SEK\""];
+  string [label="string"]; number [label="number"];
+  sn [label="string | number"];
+  unknown [label="unknown\n(kaikki arvot)"];
+  never -> eur; never -> sek; never -> number;
+  eur -> unioni; sek -> unioni; unioni -> string;
+  string -> sn; number -> sn; sn -> unknown;
+}
+```
+
+Literaalityyppi on yhden arvon joukko, unioni joukkojen yhdiste,
+`unknown` kaikkien arvojen joukko ja `never` tyhjä joukko. `any` ei
+ole kuvassa, koska se ei ole joukko vaan kytkin: se kelpaa kaikkialle
+ja kaikki kelpaa siihen. Kavennus (luku 4) ja geneeristen tyyppien
+rajoitteet `T extends U` (luku 7) ovat liikkumista tässä hierarkiassa.
 
 `unknown` on turvallinen vastine `any`lle. Kumpaankin voi sijoittaa
 minkä tahansa arvon, mutta `unknown`-arvolla ei voi tehdä mitään ennen

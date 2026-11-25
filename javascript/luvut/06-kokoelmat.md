@@ -1,5 +1,11 @@
 # Kokoelmat, iteraattorit ja merkkijonot {.runko-kokoelmat}
 
+Lähes jokainen ohjelma kokoaa, suodattaa ja järjestää dataa. Tässä
+luvussa käydään läpi JavaScriptin kokoelmat (taulukko, `Map`, `Set`),
+niitä yhdistävä iteraattoriprotokolla sekä merkkijonot ja JSON, joiden
+kautta data tulee ohjelmaan ja lähtee siitä. Kokoelmien yleiset
+ominaisuudet ja aikavaativuudet ovat taidossa *Tietorakenteet*.
+
 ## Taulukot
 
 `Array` on dynaaminen taulukko, jonka metodit jakautuvat kahteen
@@ -85,8 +91,10 @@ olioavain löytyy vain samalla oliolla:
 ```{.tuloste tiedosto="esimerkit/06-map-set.odotettu"}
 ```
 
-Node 22:sta alkaen `Set`-oliolla on myös joukko-operaatiot (`union`,
-`intersection`, `difference`, `isSubsetOf`; ES2025).
+`Set`-oliolla on myös valmiit joukko-operaatiot (`union`,
+`intersection`, `difference`, `isSubsetOf`; ES2025, Node 22:sta
+alkaen), jotka korvaavat esimerkin `filter`-rivit, kun tyyppitarkistimen
+kirjasto on ES2025 (ks. seuraava osio).
 
 ## Iteraattorit ja generaattorit
 
@@ -99,22 +107,45 @@ helpoin tapa toteuttaa protokolla:
 ```{.javascript tiedosto="esimerkit/06-iteraattorit.js" osa="protokolla"}
 ```
 
+```{.tuloste tiedosto="esimerkit/06-iteraattorit.odotettu" rivit="1-3"}
+```
+
 Generaattori on laiska: se laskee seuraavan arvon vasta, kun sitä
 pyydetään. Siksi äärettömästä jonosta voi suodattaa ja ottaa alun:
 
 ```{.javascript tiedosto="esimerkit/06-iteraattorit.js" osa="laiska"}
 ```
 
+```{.tuloste tiedosto="esimerkit/06-iteraattorit.odotettu" rivit="4-4"}
+```
+
+Omat generaattorit `suodata` ja `ota` näyttävät mekanismin. Arjessa
+niitä ei tarvitse kirjoittaa itse: ES2025 antaa iteraattoreille samat
+apumetodit kuin taulukoille (`map`, `filter`, `take`, `drop`,
+`flatMap`, `some`, `every`, `reduce`, `toArray`), ja ne ovat
+molemmissa testatuissa Node-versioissa.
+
+```{.javascript tiedosto="esimerkit/06-iteraattorit.js" osa="apumetodit"}
+```
+
+```{.tuloste tiedosto="esimerkit/06-iteraattorit.odotettu" rivit="5-6"}
+```
+
+Ero taulukon metodeihin on laiskuus: `taulukko.filter(...).map(...)`
+luo välitaulukon jokaisessa vaiheessa, iteraattoriketju käsittelee
+alkion kerrallaan eikä laske enempää kuin `take` pyytää.
+Tyyppitarkistimen kirjastotyypit tulevat asetuksesta `target` (tässä
+ES2024), joten esimerkkitiedoston alussa on rivi
+`/// <reference lib="es2025" />`, joka ottaa uudemmat tyypit käyttöön
+tälle tiedostolle.
+
+Protokollan voi ajaa myös käsin `next`-kutsuilla:
+
 ```{.javascript tiedosto="esimerkit/06-iteraattorit.js" osa="kasin"}
 ```
 
-```{.tuloste tiedosto="esimerkit/06-iteraattorit.odotettu"}
+```{.tuloste tiedosto="esimerkit/06-iteraattorit.odotettu" rivit="7-9"}
 ```
-
-ES2025 tuo iteraattoreille samat apumetodit kuin taulukoille
-(`Iterator.prototype.map`, `filter`, `take`). Ne ovat Node 22:ssa, mutta
-tässä kirjassa käytetään omia generaattoreita, koska ne toimivat kaikissa
-ympäristöissä ja näyttävät mekanismin.
 
 ## Merkkijonot
 
@@ -142,6 +173,51 @@ Tavallisimmat käsittelyt ja säännöllinen lauseke nimetyin ryhmin:
 
 ```{.tuloste tiedosto="esimerkit/06-merkkijonot.odotettu"}
 ```
+
+## Säännölliset lausekkeet
+
+Säännöllinen lauseke kirjoitetaan literaalina `/malli/liput`. Mallien
+kieli on lähes sama kuin muissa kielissä; JavaScriptille ominaista ovat
+liput ja se, mitkä merkkijonon metodit lauseketta käyttävät.
+
+| Lippu | Vaikutus |
+|-------|----------|
+| `g` | kaikki osumat, ei vain ensimmäistä |
+| `i` | kirjainkoolla ei ole väliä |
+| `m` | `^` ja `$` täsmäävät jokaisen rivin alkuun ja loppuun |
+| `s` | piste täsmää myös rivinvaihtoon |
+| `u` | Unicode: `\p{L}` (kirjain), koodipisteet kokonaisina |
+| `y` | haku vain kohdasta `lastIndex` |
+
+`match` ilman `g`-lippua palauttaa ensimmäisen osuman ryhmineen,
+`matchAll` kaikki osumat iteraattorina:
+
+```{.javascript tiedosto="esimerkit/06-saannolliset.js" osa="haku"}
+```
+
+```{.tuloste tiedosto="esimerkit/06-saannolliset.odotettu" rivit="1-3"}
+```
+
+```{.javascript tiedosto="esimerkit/06-saannolliset.js" osa="korvaus"}
+```
+
+```{.tuloste tiedosto="esimerkit/06-saannolliset.odotettu" rivit="4-5"}
+```
+
+`g`-lipullinen lauseke on tilallinen olio, mikä yllättää, kun sama
+lauseke on tallennettu vakioon ja sitä käytetään `test`-metodilla:
+
+```{.javascript tiedosto="esimerkit/06-saannolliset.js" osa="ansa"}
+```
+
+```{.tuloste tiedosto="esimerkit/06-saannolliset.odotettu" rivit="6-7"}
+```
+
+Käyttäjän antama teksti ei kelpaa malliksi sellaisenaan, koska siinä
+voi olla erikoismerkkejä. Node 24:stä alkaen ne suojaa
+`RegExp.escape(teksti)` (ES2025); vanhemmissa versioissa käytetään
+`includes`- ja `replaceAll`-metodeja, jotka eivät tulkitse hakutekstiä
+malliksi.
 
 ## JSON
 
@@ -181,6 +257,9 @@ Valibot, Ajv), joka tuottaa sekä tarkistuksen että tyypin.
 - **Generaattori laiskaan tai äärettömään dataan ja omiin
   tietorakenteisiin.** Se toteuttaa iteraattoriprotokollan, jolloin
   rakenne toimii `for...of`-silmukassa ja levityksessä.
+- **Säännöllinen lauseke vakioon ilman `g`-lippua**, kun sitä käytetään
+  `test`-metodilla; `g` kuuluu `matchAll`- ja `replace`-kutsuihin.
+  Nimetyt ryhmät tekevät pitkästä mallista luettavan.
 - **Validoi JSON rajapinnassa**, älä luota `JSON.parse`-tulokseen.
 - **Ketjuta harkiten.** `filter().map().reduce()` luo välitaulukot.
   Datalle, jossa on miljoonia alkioita, yksi silmukka on nopeampi.
@@ -196,7 +275,11 @@ Valibot, Ajv), joka tuottaa sekä tarkistuksen että tyypin.
 - Osaat lajitella luvut ja suomenkielisen tekstin oikein.
 - Osaat valita olion, `Map`-, `Set`- ja `WeakMap`-kokoelman välillä ja
   perustella valinnan.
-- Osaat toteuttaa iteraattoriprotokollan generaattorilla ja käyttää
-  laiskaa generaattoriputkea.
+- Osaat toteuttaa iteraattoriprotokollan generaattorilla ja koota
+  laiskan putken sekä omilla generaattoreilla että iteraattorien
+  apumetodeilla.
+- Osaat hakea ja korvata säännöllisellä lausekkeella (`matchAll`,
+  nimetyt ryhmät, korvausfunktio) ja selittää `g`-lipun
+  `lastIndex`-ansan.
 - Osaat käsitellä Unicode-merkkijonoja (koodiyksikkö, koodipiste,
   grafeemi, normalisointi) ja validoida jäsennetyn JSONin.

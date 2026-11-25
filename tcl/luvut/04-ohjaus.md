@@ -62,6 +62,26 @@ paikallisen nimen kutsujan muuttujaan. Tcl:n omat komennot `incr`,
 ```{.tcl tiedosto="esimerkit/04-ohjaus.tcl" osa="upvar"}
 ```
 
+```{.dot otsikko="Kutsukehykset esimerkin ensimmäisen kutsun aikana. upvar 1 sitoo proseduurin paikallisen nimen yhtä tasoa ylempänä olevaan muuttujaan."}
+digraph {
+  rankdir=LR; node [shape=box];
+  subgraph cluster_0 {
+    label="taso 0: päätaso"; labeljust=l; style=dashed;
+    kirjastot [label="kirjastot = work"];
+  }
+  subgraph cluster_1 {
+    label="taso 1: lisaa_jos_puuttuu"; labeljust=l; style=dashed;
+    nimi [label="listamuuttuja = kirjastot"];
+    arvo [label="arvo = ieee"];
+    lista [label="lista"];
+  }
+  lista -> kirjastot [label="upvar 1"];
+}
+```
+
+Seuraavan osion `uplevel 1` käyttää samaa pinoa toisin päin: se
+suorittaa annetun koodin ylemmän tason kehyksessä.
+
 ## Omat ohjausrakenteet: `uplevel`
 
 `uplevel 1 $runko` suorittaa koodin kutsujan kontekstissa, jolloin

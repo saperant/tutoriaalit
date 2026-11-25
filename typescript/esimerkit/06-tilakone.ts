@@ -54,3 +54,22 @@ for (const e of tapahtumat) {
     console.log(virhe instanceof Error ? virhe.message : virhe);
   }
 }
+
+// Kaikki sallitut siirtymät: jokainen tila kokeillaan jokaisella
+// tapahtumalla, ja kielletyt yhdistelmät jäävät pois.
+const rivit = ["omena"];
+const tilat: Tilaus[] = [
+  { tila: "luonnos", rivit },
+  { tila: "maksettu", rivit, maksuviite: "RF18 1234" },
+  { tila: "lahetetty", rivit, seurantakoodi: "JJFI6400" },
+  { tila: "peruttu", syy: "asiakas perui" },
+];
+for (const alku of tilat) {
+  for (const e of tapahtumat) {
+    try {
+      console.log(`${alku.tila} + ${e.tyyppi} -> ${siirry(alku, e).tila}`);
+    } catch {
+      // kielletty siirtymä
+    }
+  }
+}

@@ -51,8 +51,25 @@ paluuarvon virheenä (`CHILDSTATUS`):
 ```
 
 Ajot kestävät yhteensä 850 ms, mutta rinnakkain noin 300 ms.
-Tulokset lajitellaan ennen tulostusta, koska valmistumisjärjestys ei
-ole sama kuin käynnistysjärjestys.
+Esimerkki mittaa jokaisen ajon keston ja vertaa kokonaisaikaa niiden
+summaan. Tulokset lajitellaan ennen tulostusta, koska
+valmistumisjärjestys ei ole sama kuin käynnistysjärjestys.
+
+```{.ajoituskaavio otsikko="Esimerkin neljä ajoa peräkkäin (850 ms) ja rinnakkain (300 ms). Yksi jakso on 50 ms; kuva on piirretty esimerkin kestoista, ei mitatusta ajosta."}
+{"signal": [
+  ["peräkkäin",
+   {"name": "alu", "wave": "01.....0..........."},
+   {"name": "fifo", "wave": "0......1.0........."},
+   {"name": "dsp", "wave": "0........1...0....."},
+   {"name": "regs", "wave": "0............1....0"}],
+  {},
+  ["rinnakkain",
+   {"name": "alu", "wave": "01.....0..........."},
+   {"name": "fifo", "wave": "01.0..............."},
+   {"name": "dsp", "wave": "01...0............."},
+   {"name": "regs", "wave": "01....0............"}]
+]}
+```
 
 ## Korutiinit
 

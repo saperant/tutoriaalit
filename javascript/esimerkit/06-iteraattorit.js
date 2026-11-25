@@ -1,3 +1,7 @@
+// Tyyppitarkistimelle: iteraattorien apumetodit kuuluvat ES2025-
+// kirjastoon. tsconfig.json-tiedostossa saman tekee asetus "lib".
+/// <reference lib="es2025" />
+
 // @alku protokolla
 /** Puoliavoin väli [alku, loppu) askeleella. */
 class Vali {
@@ -58,6 +62,14 @@ const onAlkuluku = (n) => {
 };
 console.log([...ota(suodata(luonnolliset(), onAlkuluku), 8)].join(" "));
 // @loppu laiska
+
+// @alku apumetodit
+// Sama putki iteraattorien omilla apumetodeilla (ES2025). Nekin ovat
+// laiskoja: toArray pyytää arvoja vasta lopussa.
+const alkuluvut = luonnolliset().filter(onAlkuluku).take(8);
+console.log(alkuluvut.toArray().join(" "));
+console.log(luonnolliset().map((n) => n * n).drop(2).take(3).toArray());
+// @loppu apumetodit
 
 // @alku kasin
 const iter = new Vali(0, 2)[Symbol.iterator]();

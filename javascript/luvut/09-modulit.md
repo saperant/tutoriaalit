@@ -1,5 +1,11 @@
 # Modulit ja paketit {.runko-modulit}
 
+Tähän asti jokainen esimerkki on ollut yksi tiedosto. Suurempi ohjelma
+jaetaan moduleihin, joista kukin piilottaa toteutuksensa ja näyttää
+muille pienen rajapinnan. Tässä luvussa käydään läpi kielen oma
+modulijärjestelmä, Noden vanhempi CommonJS sekä npm-paketit, joilla
+toisten kirjoittama koodi otetaan käyttöön.
+
 ## ES-modulit
 
 ES-moduli (ESM) on tiedosto, jolla on oma näkyvyysalue. Se näyttää
@@ -20,6 +26,18 @@ tietorakenteensa tehdasfunktion taakse:
 ```
 
 ```{.tuloste tiedosto="esimerkit/09-varasto.odotettu"}
+```
+
+```{.dot otsikko="Esimerkin tuonnit. Yhtenäinen nuoli on ajonaikainen tuonti, katkoviiva pelkkä tyyppituonti, joka ei lataa modulia."}
+digraph {
+  rankdir=LR; node [shape=box];
+  main [label="main.js"]; varasto [label="varasto.js"];
+  muotoilu [label="muotoilu.js"]; testi [label="varasto.test.js"];
+  main -> varasto [label="luoVarasto,\nTILAUSRAJA"];
+  main -> muotoilu [label="oletusvienti"];
+  muotoilu -> varasto [style=dashed, label="@import Saldo"];
+  testi -> varasto;
+}
 ```
 
 - Nimetyt viennit (`export function`, `export const`) ovat oletus:

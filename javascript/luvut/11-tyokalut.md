@@ -6,31 +6,49 @@ testit, jotka ajetaan editorissa ja CI:ssä.
 
 ## Tyyppitarkistus
 
-`tsconfig.json` ottaa JSDoc-tyyppien tarkistuksen käyttöön koko
-projektissa:
+Tyyppitarkistus on otettu käyttöön luvussa 2: `tsconfig.json` asettaa
+`checkJs`- ja `strict`-asetukset, ja tyypit kirjoitetaan
+JSDoc-kommentteihin (merkintöjen taulukko on samassa luvussa).
+`npm run tarkista` ajaa tarkistuksen koko projektille, ja editori
+näyttää samat virheet kirjoitettaessa. Asetus `target` valitsee myös
+standardikirjaston tyypit: uudemman version rajapinnat saa käyttöön
+asetuksella `lib` tai tiedostokohtaisesti, kuten luvun 6
+iteraattoriesimerkissä.
 
-```{.json tiedosto="esimerkit/tsconfig.json"}
-```
+## JSDoc dokumentaationa
 
-`checkJs` tarkistaa `.js`-tiedostot, `strict` ottaa käyttöön tiukat
-tarkistukset (`null` ja `undefined` erikseen, ei implisiittistä `any`-
-tyyppiä, `unknown` catch-muuttujissa), ja `noEmit` jättää tiedostot
-ennalleen. `npm run tarkista` ajaa tarkistuksen, ja editori näyttää
-samat virheet kirjoitettaessa. Yksittäisen tiedoston voi ottaa mukaan
-kommentilla `// @ts-check` ilman asetustiedostoa.
-
-JSDoc-tyyppien tärkeimmät merkinnät:
+JSDoc-kommentti on ensisijaisesti dokumentaatiota, ja tyypit ovat sen
+yksi osa. Kommentin ensimmäinen virke on yhteenveto, jonka editori
+näyttää vihjeessä kutsupaikalla. Sen jälkeen kerrotaan se, mitä
+tyypistä ei näe: yksiköt, sallitut arvot, sivuvaikutukset ja virheet.
 
 | Merkintä | Tarkoitus |
 |----------|-----------|
-| `@param {string} nimi`, `@returns {number}` | funktion tyyppi |
-| `@param {number} [raja]` | valinnainen parametri |
-| `@type {Map<string, number>}` | muuttujan tai kentän tyyppi |
-| `@typedef {{ x: number }} Piste` | uusi tyyppinimi |
-| `@template T` | geneerinen tyyppiparametri |
-| `@import { Tyyppi } from "./m.js"` | tyypin tuonti |
-| `/** @type {T} */ (lauseke)` | tyyppimuunnos (cast) |
-| `// @ts-expect-error: syy` | tarkoituksellinen virhe kuitataan |
+| ensimmäinen virke | yhteenveto editorin vihjeeseen ja luetteloihin |
+| `@param {T} nimi kuvaus` | parametrin merkitys, ei vain tyyppi |
+| `@throws {RangeError} milloin` | virheet, jotka kutsujan kannattaa tuntea |
+| `@example` | lyhyt käyttöesimerkki |
+| `@deprecated käytä funktiota x` | editori yliviivaa vanhentuneen kutsun |
+| `{@link Nimi}`, `@see` | viittaus toiseen nimeen tai lähteeseen |
+
+Luvun 9 varastomoduli on dokumentoitu näin. Tehdasfunktio saa
+yhteenvedon, tarkennuksen ja esimerkin:
+
+```{.javascript tiedosto="esimerkit/09-varasto/varasto.js" alkaen="Saldo, jonka" asti="export function luoVarasto"}
+```
+
+Samassa tiedostossa metodi `kirjaa` kertoo `@throws`-merkinnällä,
+milloin se heittää `RangeError`-virheen, ja `tilattavat` viittaa
+vakioon merkinnällä `{@link TILAUSRAJA}`.
+
+Tyyppitarkistin pitää tyypit ajan tasalla, mutta ei kuvauksia eikä
+`@example`-lohkoja: ne vanhenevat, jos niitä ei lueta katselmoinnissa.
+Siksi kommenttiin kirjoitetaan sopimus (mitä funktio lupaa), ei
+toteutuksen kertausta. Samoista kommenteista tuotetaan
+HTML-dokumentaatio TypeDocilla, joka lukee myös tarkistetun
+JavaScriptin, tai vanhemmalla `jsdoc`-työkalulla. Lukijat,
+dokumenttityypit ja dokumentaation testaus käsitellään taidossa
+*Tekninen dokumentaatio*.
 
 ## Lintteri ja muotoilija
 
@@ -63,7 +81,8 @@ injektio), jolloin testi voi korvata sen:
   (`mock.callCount()`, `mock.calls`).
 - **`mock.timers`** korvaa `Date`- ja ajastinfunktiot, joten aikaan
   sidottu logiikka testataan ilman odottamista. Node 22 merkitsee sen
-  vielä kokeelliseksi ja tulostaa siitä varoituksen.
+  vielä kokeelliseksi ja tulostaa siitä varoituksen; Node 24:ssä
+  varoitusta ei enää tule.
 - **`assert.rejects`** testaa asynkronisen virheen; `assert.throws`
   synkronisen. Toinen argumentti on virheluokka tai säännöllinen
   lauseke.
@@ -117,6 +136,9 @@ ja winston. Virhe kirjataan kerran, ylimmällä tasolla, syyketjuineen.
 
 ## Käytännössä
 
+- **Dokumentoi julkinen rajapinta, älä toteutusta.** Viety funktio saa
+  yhteenvedon ja tiedon virheistä; yksityinen apufunktio selittää
+  itsensä nimellään ja tyypeillään.
 - **Tyyppitarkistus, lintteri, muotoilija ja testit CI:ssä**, ja samat
   työkalut editorissa, jotta virheet näkyvät heti.
 - **Testaa julkista rajapintaa**, ei toteutusta. Ulkoiset palvelut
@@ -136,6 +158,8 @@ ja winston. Virhe kirjataan kerran, ylimmällä tasolla, syyketjuineen.
 
 - Osaat ottaa käyttöön JSDoc-tyyppien tarkistuksen ja kirjoittaa
   tavallisimmat tyyppimerkinnät.
+- Osaat dokumentoida funktion rajapinnan JSDoc-kommentilla:
+  yhteenveto, parametrien merkitys, virheet ja esimerkki.
 - Osaat kirjoittaa testejä `node:test`-kehyksellä: taulukkotestit,
   asynkroniset virheet, mock-funktiot ja ajan korvaamisen.
 - Osaat suunnitella modulin testattavaksi riippuvuuden injektiolla.

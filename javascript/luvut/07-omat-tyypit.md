@@ -6,7 +6,57 @@ syntaksi. Tyyppitarkistimelle kuvataan rakenteita JSDocin
 `@typedef`-määrittelyillä, jotka ovat rakenteellisia: olio kelpaa, jos
 sillä on oikeat kentät, riippumatta siitä, miten se on luotu.
 
+## Oliot ja purkaminen
+
+Tavallinen olio on JavaScriptin yleisin tietorakenne: tietue, jonka
+kentät kirjoitetaan literaaliin. Aiemmissa luvuissa olioita on jo luotu
+ja purettu; tässä säännöt ovat koottuina.
+
+```{.javascript tiedosto="esimerkit/07-oliot.js" osa="literaali"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-oliot.odotettu" rivit="1-1"}
+```
+
+Kenttään viitataan pisteellä (`tuote.hinta`) tai hakasulkeilla, kun
+nimi on muuttujassa tai ei kelpaa tunnisteeksi (`tuote["hinta"]`).
+Purkaminen (*destructuring*) on sijoitus, jonka vasen puoli on olion
+tai taulukon muotoinen:
+
+```{.javascript tiedosto="esimerkit/07-oliot.js" osa="purkaminen"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-oliot.odotettu" rivit="2-4"}
+```
+
+Sama syntaksi toimii funktion parametreissa (luvun 4 optio-olio) ja
+`for...of`-silmukan muuttujassa. Levitys (*spread*) on purkamisen
+vastapari: se kopioi olion kentät tai taulukon alkiot uuteen
+literaaliin.
+
+```{.javascript tiedosto="esimerkit/07-oliot.js" osa="levitys"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-oliot.odotettu" rivit="5-5"}
+```
+
+Olion kentät käydään läpi funktioilla `Object.keys`, `Object.values`
+ja `Object.entries`, ja `Object.fromEntries` kokoaa pareista olion:
+
+```{.javascript tiedosto="esimerkit/07-oliot.js" osa="lapikaynti"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-oliot.odotettu" rivit="6-9"}
+```
+
+Kentät luetellaan lisäysjärjestyksessä, paitsi kokonaislukua
+muistuttavat avaimet, jotka tulevat ensin numerojärjestyksessä. Kun
+avaimet tulevat datasta, oikea rakenne on `Map` (luku 6).
+
 ## Luokat
+
+Luokkaa tarvitaan, kun datalla on sääntö, jonka on pädettävä aina
+(invariantti), ja metodit valvovat sitä:
 
 ```{.javascript tiedosto="esimerkit/07-luokat.js"}
 ```
@@ -53,7 +103,22 @@ etenee ketjua pitkin, kunnes ominaisuus löytyy tai ketju päättyy
 ```{.tuloste tiedosto="esimerkit/07-prototyypit.odotettu"}
 ```
 
-Metodit ovat prototyypissä ja jaettuja, kentät jokaisessa oliossa.
+```{.dot otsikko="Esimerkin prototyyppiketju. Kentät ovat oliossa itsessään, metodit haetaan ketjua pitkin."}
+digraph {
+  rankdir=TB; ranksep=0.25; node [shape=box];
+  y [label="y: nimi, r"];
+  yp [label="Ympyra.prototype: pinta()"];
+  mp [label="Muoto.prototype: pinta(), kuvaus()"];
+  op [label="Object.prototype: toString(), …"];
+  n [label="null", shape=plaintext];
+  y -> yp -> mp -> op -> n;
+}
+```
+
+Kutsu `y.kuvaus()` ei löydä metodia oliosta eikä prototyypistä
+`Ympyra.prototype`, vaan vasta seuraavasta lenkistä. Metodin sisällä
+`this.pinta()` aloittaa haun taas oliosta `y`, joten kutsutuksi tulee
+ympyrän oma `pinta`. Metodit ovat prototyypissä ja jaettuja, kentät jokaisessa oliossa.
 `super(...)` on kutsuttava ennen kuin aliluokan konstruktori käyttää
 `this`-arvoa. `Object.create` palauttaa tyyppitarkistimelle tyypin
 `any`, joten suorat prototyypit ovat nykykoodissa harvinaisia.
@@ -133,6 +198,8 @@ paluutyyppi `Map<T[K], T[]>` johdetaan niistä:
 
 ## Itsearviointi
 
+- Osaat luoda olion literaalilla, purkaa olion ja taulukon
+  oletusarvoineen ja käydä olion kentät läpi.
 - Osaat kirjoittaa luokan, jolla on yksityiset kentät, getterit,
   staattinen tehdasmetodi ja invariantti.
 - Osaat selittää prototyyppiketjun ja sen, miten `class` ja `extends`

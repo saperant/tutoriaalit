@@ -46,6 +46,35 @@ rivi on merkitty kommentilla `@virhe`. Testit varmistavat, että
 tiedosto ei läpäise tyyppitarkistusta sellaisenaan mutta läpäisee, kun
 merkityt rivit poistetaan.
 
+Tarkistus otetaan käyttöön koko projektissa tiedostolla
+`tsconfig.json`:
+
+```{.json tiedosto="esimerkit/tsconfig.json"}
+```
+
+`checkJs` tarkistaa `.js`-tiedostot, `strict` ottaa käyttöön tiukat
+tarkistukset (`null` ja `undefined` erikseen, ei implisiittistä `any`-
+tyyppiä, `unknown` catch-muuttujissa), ja `noEmit` jättää tiedostot
+ennalleen. Yksittäisen tiedoston voi ottaa mukaan kommentilla
+`// @ts-check` ilman asetustiedostoa.
+
+Tyyppi kirjoitetaan `/** … */`-kommenttiin määrittelyn yläpuolelle.
+Esimerkeissä käytetyt merkinnät:
+
+| Merkintä | Tarkoitus |
+|----------|-----------|
+| `@param {string} nimi`, `@returns {number}` | funktion tyyppi |
+| `@param {number} [raja]` | valinnainen parametri |
+| `@type {Map<string, number>}` | muuttujan tai kentän tyyppi |
+| `@typedef {{ x: number }} Piste` | uusi tyyppinimi |
+| `@template T` | geneerinen tyyppiparametri |
+| `@import { Tyyppi } from "./m.js"` | tyypin tuonti |
+| `/** @type {T} */ (lauseke)` | tyyppimuunnos (cast) |
+| `// @ts-expect-error: syy` | tarkoituksellinen virhe kuitataan |
+
+Paluutyyppi jätetään usein pois, koska tarkistin päättelee sen. Samat
+kommentit toimivat myös dokumentaationa (luku 11).
+
 ## Vastaavuudet
 
 | Asia | Python | Java | JavaScript |
@@ -59,7 +88,7 @@ merkityt rivit poistetaan.
 | Lambda | `lambda x: x` | `x -> x` | `(x) => x` |
 | Puuttuva arvo | `None` | `null` | `undefined`, `null` |
 | Poikkeus | `raise` | `throw` | `throw` (mikä tahansa arvo) |
-| Siivous | `with` | try-with-resources | `try`–`finally` |
+| Siivous | `with` | try-with-resources | `try`–`finally`, `using` |
 | Asynkronisuus | `asyncio` | `CompletableFuture` | `Promise`, `async`/`await` |
 | Rinnakkaisuus | `multiprocessing` | säikeet | Worker-säikeet |
 | Generaattori | `yield` | – | `function*`, `yield` |

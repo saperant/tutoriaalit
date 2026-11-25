@@ -15,15 +15,16 @@ pikaopas [tcl-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/t
    ohjausrakenteet `uplevel`-komennolla
 5. Arvot, esitykset ja muisti – viitelaskenta, shimmering,
    copy-on-write, mitatut hinnat
-6. Listat, sanakirjat ja merkkijonot – netlistan ja raporttien käsittely
+6. Listat, sanakirjat ja merkkijonot – netlistan ja raporttien
+   käsittely, assosiatiiviset taulukot
 7. Oliot: TclOO – luokat, periytyminen, mixinit
 8. Virheenkäsittely – `throw`, `try`/`trap`, virhekoodit, pino
 9. Nimiavaruudet, paketit ja tiedostot – `namespace ensemble`,
    `package`, atominen kirjoitus, `exec`
 10. Tapahtumasilmukka ja korutiinit – rinnakkaiset ajot,
     generaattorit
-11. EDA-skriptauksen mallit – raportin jäsennin, parametrisoitu kulku,
-    argumentit
+11. EDA-skriptauksen mallit – tulkin upottaminen ja turvallinen
+    lapsitulkki, raportin jäsennin, parametrisoitu kulku, argumentit
 12. Työkalut ja testaus – tcltest, `trace`, `time`, tarkistimet
 13. Lopuksi – mallit, nyrkkisäännöt, Tcl 9.0, lähteet
 
@@ -37,5 +38,8 @@ proseduureilla, joten kaikki koodi ajetaan ja testataan pelkällä
 make testaa   # esimerkkien ajo tclsh8.6:lla ja tulosteiden vertailu
 make pdf      # rakentaa tcl.pdf:n ja tcl-pikaopas.pdf:n
 ```
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 Riippuvuudet on lueteltu repositorion juuren README-tiedostossa.

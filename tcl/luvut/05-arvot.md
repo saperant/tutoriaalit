@@ -47,6 +47,27 @@ muokkaa kuitenkin paikallaan, jos arvoon on vain yksi viite (arvo on
 ```{.tuloste tiedosto="esimerkit/05-esitykset.odotettu"}
 ```
 
+```{.dot otsikko="Kopiointi kirjoitettaessa. Jaettu arvo (kaksi viitettä) kopioidaan ennen muokkausta; K-yhdistelmän jälkeen viitteitä on yksi, ja listaa muokataan paikallaan."}
+digraph {
+  rankdir=LR; ranksep=0.4; node [shape=box];
+  subgraph cluster_a {
+    label="lreplace $data 0 0 1"; labeljust=l; style=dashed;
+    m1 [label="muuttuja data", shape=plaintext];
+    g1 [label="argumentti", shape=plaintext];
+    o1 [label="lista\nviitteitä 2"];
+    k1 [label="kopio\nmuokattu"];
+    m1 -> o1; g1 -> o1; o1 -> k1 [label="kopioi 100 000\nalkiota"];
+  }
+  subgraph cluster_b {
+    label="lreplace $data[set data {}] 0 0 2"; labeljust=l; style=dashed;
+    m2 [label="muuttuja data\n(tyhjennetty)", shape=plaintext];
+    g2 [label="argumentti", shape=plaintext];
+    o2 [label="lista\nviitteitä 1\nmuokataan paikallaan"];
+    g2 -> o2; m2 -> o2 [style=invis];
+  }
+}
+```
+
 Lausekkeessa `set data [lreplace $data 0 0 1]` arvoon viittaavat sekä
 muuttuja että `lreplace`-komennon argumentti, joten koko 100 000 alkion
 lista kopioidaan yhden alkion vaihtamiseksi. *K-yhdistelmä*
