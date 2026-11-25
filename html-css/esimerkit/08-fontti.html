@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:saavutettavuus" content="ei">
+    <title>Web-fontti – Tyyliopas</title>
+    <style>
+      /* @alku fontti */
+      @font-face {
+        font-family: "Opas Sans";
+        src: local("DejaVu Sans"),         /* koneelle asennettu kopio */
+             url("fontit/opas-sans.woff2") format("woff2");
+        font-display: swap;                /* teksti näkyy heti */
+      }
+      body { font-family: "Opas Sans", system-ui, sans-serif; }
+      /* @loppu fontti */
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Web-fontti</h1>
+      <p data-nimi="kappale" data-tyyli="font-family">Teksti näkyy
+        varafontilla, kunnes oma fontti on ladattu.</p>
+    </main>
+    <script>
+      // Vain raporttia varten: mitkä @font-face-fontit ovat käytössä.
+      document.fonts.ready.then((fontit) => {
+        for (const f of fontit) console.log(`${f.family}: ${f.status}`);
+      });
+    </script>
+  </body>
+</html>

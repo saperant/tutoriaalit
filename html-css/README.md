@@ -9,20 +9,28 @@ Valmiit dokumentit: [html-css.pdf](https://saperant.github.io/tutoriaalit/materi
 
 1. Johdanto – historia ja standardit, työkalut, esimerkkien testaus
 2. Dokumentin rakenne ja semantiikka – maamerkit, otsikot, linkit
-3. Kuvat, grafiikka ja taulukot – `alt`, `srcset`, SVG, taulukko-otsikot
+3. Kuvat, grafiikka ja taulukot – `alt`, `srcset`, SVG,
+   taulukko-otsikot, `<details>`, video ja upotukset
 4. Lomakkeet – nimiöt, kenttätyypit, selaimen tarkistus, virheet
 5. Saavutettavuus – WCAG 2.2, rooli–nimi–tila, fokus, kontrasti
-6. Kaskadi, periytyminen ja spesifisyys – `:where()`, `@layer`
+6. Kaskadi, periytyminen ja spesifisyys – valitsimet, `:where()`,
+   `@layer`
 7. Laatikkomalli ja normaali virtaus – `box-sizing`, loogiset
-   ominaisuudet, yksiköt
-8. Flexbox – palkki, `flex`-lyhenne, ylivuodon sudenkuoppa
-9. Grid – `auto-fit`, nimetyt alueet, `subgrid`
-10. Responsiivisuus – mobile first, `clamp()`, konttikyselyt,
+   ominaisuudet, yksiköt, taustat, reunat ja varjot
+8. Teksti ja typografia – fonttipino, `rem` ja `em`, rivikorkeus,
+   rivin pituus, web-fontit
+9. Flexbox – akselit, palkki, `flex`-lyhenne, ylivuodon sudenkuoppa
+10. Grid – `auto-fit`, nimetyt alueet, `subgrid`
+11. Asemointi ja pinoaminen – `position`, `sticky`, `z-index` ja
+    pinoutumiskonteksti, `<dialog>`
+12. Responsiivisuus – mobile first, `clamp()`, konttikyselyt,
     käyttäjän asetukset
-11. Mukautetut ominaisuudet ja teemat – suunnittelutokenit, tumma teema
-12. Moderni CSS ja ylläpidettävyys – `:has()`, sisäkkäisyys,
+13. Mukautetut ominaisuudet ja teemat – suunnittelutokenit, tumma teema
+14. Siirtymät ja animaatiot – `transition`, `@keyframes`,
+    ajoitusfunktiot, vähennetty liike
+15. Moderni CSS ja ylläpidettävyys – `:has()`, sisäkkäisyys,
     nimeämiskäytännöt, suorituskyky
-13. Lopuksi – nyrkkisäännöt, lähteet
+16. Lopuksi – nyrkkisäännöt, lähteet
 
 ## Esimerkit ja testaus
 
@@ -36,10 +44,12 @@ verrataan `.odotettu`-tiedostoon.
 ```text
 make testaa   # html-validate ja Chromium-raportit
 make pdf      # rakentaa html-css.pdf:n ja html-css-pikaopas.pdf:n
-make kuvat    # päivittää kuvakaappaukset hakemistoon kuvat/
-              # (Playwright ja ImageMagick)
+make kuvat    # päivittää kuvakaappaukset ja kaaviot hakemistoon
+              # kuvat/ (Playwright, ImageMagick ja Matplotlib)
 ```
 
 Yksittäisen sivun voi avata suoraan selaimessa tai tarkistaa käsin:
-`node ../yhteiset/selain.cjs esimerkit/09-asettelu/index.html`.
+`node ../yhteiset/selain.cjs esimerkit/10-asettelu/index.html`.
 Kehityskontti: `.devcontainer/html-css`.
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks. [Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.

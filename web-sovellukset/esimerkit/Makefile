@@ -3,12 +3,13 @@
 #
 #   make           asentaa riippuvuudet ja ajaa kaikki tarkistukset
 #   make siivoa    poistaa käännöstuotteet (riippuvuudet jäävät)
+#   make kuvat     ottaa tutoriaalin kuvakaappaukset (../kuvat)
 #
 # Kehitys:  node palvelin/api.ts  ja toisessa päätteessä  npm run dev
 
 DEMOT := src/03-tila/signaali-demo
 
-.PHONY: kaikki tyypit testit kaannos e2e demot siivoa
+.PHONY: kaikki tyypit testit kaannos e2e demot kuvat siivoa
 
 kaikki: tyypit testit e2e demot
 
@@ -32,6 +33,10 @@ demot: node_modules/.package-lock.json
 	@for d in $(DEMOT); do \
 	    node $$d.ts | diff -u $$d.odotettu - || exit 1; \
 	done
+
+# Kuvitus ei kuulu testeihin: kuvat ovat versionhallinnassa.
+kuvat: kaannos
+	npx playwright test -c playwright.kuvat.config.ts --reporter=dot
 
 siivoa:
 	rm -rf dist test-results playwright-report

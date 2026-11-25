@@ -16,6 +16,9 @@ Uutiskirjeen tilauslomake:
 ```{.tuloste tiedosto="esimerkit/04-tilaus.odotettu"}
 ```
 
+![Lomake selaimen oletustyyleillä. Kenttäryhmä (`<fieldset>`) saa
+kehyksen ja nimen ilman CSS:ää.](kuvat/04-tilaus-1024.png){width=100%}
+
 - **Jokaisella kentällä on `<label>`.** Nimiö kytketään kenttään
   `for`–`id`-parilla tai kääreenä (`<label><input> Teksti</label>`).
   Nimiö antaa kentälle nimen saavutettavuuspuussa, ja nimiön
@@ -102,6 +105,9 @@ hallinnon GOV.UK-suunnittelujärjestelmästä):
 
 ```{.tuloste tiedosto="esimerkit/04-virheet.odotettu"}
 ```
+
+![Virheyhteenveto on saanut fokuksen (kehys), ja kentän vieressä on
+ohje virheen korjaamiseen.](kuvat/04-virheet-1024.png){width=100%}
 
 1. **Otsikko alkaa sanalla "Virhe:"**, jolloin virhe huomataan jo
    välilehden nimestä ja ruudunlukijan lukemasta otsikosta.

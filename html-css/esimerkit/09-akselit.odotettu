@@ -1,0 +1,8 @@
+[leveys 720 px]
+flex-start, A: x=20 y=88 l=36 k=26
+center, A: x=111 y=149 l=36 k=26
+flex-end, A: x=201 y=209 l=36 k=26
+space-between, B: x=152 y=270 l=36 k=26
+stretch, A: x=368 y=88 l=36 k=64
+center, A (poikki): x=368 y=206 l=36 k=26
+baseline, A: x=368 y=294 l=36 k=26

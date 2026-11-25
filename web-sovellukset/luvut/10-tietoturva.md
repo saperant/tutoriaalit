@@ -77,6 +77,8 @@ on, että CORS suojaa palvelinta. Se suojaa käyttäjää: pyyntö lähtee
 silti, ja palvelimen on tarkistettava oikeudet itse. CORS-virheen
 "korjaaminen" asettamalla `Access-Control-Allow-Origin: *`
 evästeiden kanssa (`credentials`) ei edes toimi, eikä sitä pidä yrittää.
+Otsakkeet asetetaan palvelimella; sen puolen käsittelee taito
+*Taustapalvelut*.
 
 Yksinkertaisin ratkaisu on välttää CORS kokonaan: sovellus ja rajapinta
 samasta alkuperästä, kehityksessä Viten välityspalvelimella (luku 1) ja

@@ -93,6 +93,9 @@ valintaruudun, nuolinäppäimet liikkuvat ryhmän sisällä.
 ```{.tuloste tiedosto="esimerkit/05-fokus.odotettu"}
 ```
 
+![Fokuskehys painikkeen ympärillä. Ohituslinkki on näkymän
+ulkopuolella.](kuvat/05-fokus-1024.png){width=30%}
+
 - **Fokus näkyy aina.** `:focus-visible` on voimassa, kun selain
   arvioi korostuksen tarpeelliseksi (näppäimistö, `autofocus`), mutta
   ei hiiren napsautuksessa. `outline: none` ilman korvaavaa tyyliä on
@@ -122,6 +125,9 @@ väreistä:
 ```{.tuloste tiedosto="esimerkit/05-kontrasti.odotettu"}
 ```
 
+![Esimerkin väriparit. Harmaa lisätieto ja valkoinen teksti keltaisella
+eivät täytä vaatimusta.](kuvat/05-kontrasti-1024.png){width=100%}
+
 Vaaleanharmaa lisätietoteksti ja valkoinen teksti keltaisella ovat
 yleisiä virheitä. Kehittäjätyökalujen värivalitsin näyttää suhteen
 suoraan. Väri ei koskaan ole ainoa tiedon välittäjä: linkit erottuvat
@@ -143,9 +149,9 @@ tekstistä alleviivauksella ja virheet tekstillä.
   sivuilla ilman sitä.
 - **Zoomaus ja tekstin suurennus.** Sivun on toimittava 200 %:n
   zoomauksella ja 320 pikselin levyisenä. Mitat `rem`-yksiköissä ja
-  joustavat asettelut (luvut 7–10) hoitavat tämän.
+  joustavat asettelut (luvut 7–12) hoitavat tämän.
 - **Liike ja ajastus.** Animaatiot kunnioittavat käyttäjän asetusta
-  `prefers-reduced-motion` (luku 10), ja automaattisesti vaihtuvat
+  `prefers-reduced-motion` (luvut 12 ja 14), ja automaattisesti vaihtuvat
   karusellit voi pysäyttää.
 - **Saavutettavuusseloste.** Julkisen sektorin sivustolla on seloste,
   joka kertoo tunnetut puutteet ja palautekanavan.

@@ -1,0 +1,27 @@
+[leveys 480 px]
+1. kappale: font-size=20px
+2. kappale: font-size=16px
+HTML: border-inline-start-width=4px; background-color=rgb(230, 237, 247)
+Lomakkeet: border-inline-start-width=0px; background-color=rgba(0, 0, 0, 0)
+CSS: border-inline-start-width=4px; background-color=rgba(0, 0, 0, 0)
+JavaScript: border-inline-start-width=4px; background-color=rgb(230, 237, 247)
+[saavutettavuuspuu]
+- main:
+  - heading "Kurssit" [level=1]
+  - paragraph: Syksyn kurssit on julkaistu.
+  - paragraph:
+    - text: "Lisätietoja:"
+    - link "MDN ↗":
+      - /url: https://developer.mozilla.org/
+    - text: ja
+    - link "yhteystiedot":
+      - /url: "#yhteys"
+    - text: .
+  - list:
+    - listitem:
+      - text: HTML
+      - list:
+        - listitem: Lomakkeet
+    - listitem: CSS
+    - listitem: JavaScript
+  - paragraph: opas@example.com

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:leveydet" content="560">
+    <title>Dialogi – Tyyliopas</title>
+    <style>
+      body { margin: 0; font: 16px/1.5 "DejaVu Sans", sans-serif; }
+      main { padding: 16px; min-block-size: 260px; }
+      h1 { margin: 0; font-size: 1.25rem; }
+      h2 { margin: 0 0 8px; font-size: 1.125rem; }
+      p { margin: 0 0 12px; }
+      button { font: inherit; padding: 4px 12px; }
+      dialog { margin-block-start: 72px; }  /* kuvaa varten ylemmäs */
+      /* @alku tyyli */
+      .ylapalkki {
+        position: sticky;
+        inset-block-start: 0;
+        z-index: 9999;                   /* "varmasti päällimmäinen" */
+        padding: 12px 16px;
+        background: #1d4f91;
+        color: #fff;
+      }
+      dialog {
+        inline-size: min(22rem, 100% - 2rem);
+        border: 1px solid #9aa3b2;
+        border-radius: 8px;
+      }
+      dialog::backdrop { background: rgb(0 0 0 / 50%); }
+      /* @loppu tyyli */
+    </style>
+  </head>
+  <body>
+    <!-- @alku rakenne -->
+    <header class="ylapalkki" data-nimi="yläpalkki">
+      <h1>Ilmoittautumiset</h1>
+    </header>
+    <main>
+      <p>Aalto, Ahonen, Anttila</p>
+      <button type="button" id="avaa">Poista Aalto</button>
+    </main>
+    <dialog id="vahvistus" aria-labelledby="vahvistus-otsikko"
+            data-mitta="dialogi" data-nimi="dialogi">
+      <h2 id="vahvistus-otsikko">Poistetaanko ilmoittautuminen?</h2>
+      <p>Aallon ilmoittautuminen poistetaan pysyvästi.</p>
+      <form method="dialog">
+        <button type="submit" value="peru">Peru</button>
+        <button type="submit" value="poista">Poista</button>
+      </form>
+    </dialog>
+    <!-- @loppu rakenne -->
+    <!-- @alku skripti -->
+    <script>
+      const dialogi = document.querySelector("#vahvistus");
+      document.querySelector("#avaa")
+        .addEventListener("click", () => dialogi.showModal());
+    </script>
+    <!-- @loppu skripti -->
+    <script>
+      // Vain testiä varten: avataan dialogi ja katsotaan, mikä
+      // elementti on yläpalkin kohdalla päällimmäisenä.
+      document.querySelector("#avaa").click();
+      const e = document.elementFromPoint(280, 20);
+      console.log("yläpalkin kohdalla: " +
+                  (e.dataset.nimi ?? e.tagName.toLowerCase()));
+      console.log("fokus: " + document.activeElement.textContent);
+    </script>
+  </body>
+</html>

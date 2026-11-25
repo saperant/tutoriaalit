@@ -10,14 +10,17 @@ ensimmäistä ja kokoaa ylläpidettävän CSS:n ja suorituskyvyn käytännöt.
 `:has()` valitsee elementin sen sisällön perusteella. Se on ensimmäinen
 tapa tyylitellä vanhempaa lapsen tilan mukaan:
 
-```{.css tiedosto="esimerkit/12-has.html" osa="has"}
+```{.css tiedosto="esimerkit/15-has.html" osa="has"}
 ```
 
-```{.html tiedosto="esimerkit/12-has.html" osa="rakenne"}
+```{.html tiedosto="esimerkit/15-has.html" osa="rakenne"}
 ```
 
-```{.tuloste tiedosto="esimerkit/12-has.odotettu"}
+```{.tuloste tiedosto="esimerkit/15-has.odotettu"}
 ```
+
+![Kuvallinen kortti on kaksisarakkeinen, ja valittu vaihtoehto on
+lihavoitu.](kuvat/15-has-1024.png){width=100%}
 
 Kuvallinen kortti on kaksisarakkeinen (teksti alkaa kohdasta `x=112`),
 kuvaton yksisarakkeinen. Valitun vaihtoehdon nimiö on lihavoitu ilman
@@ -36,13 +39,13 @@ kannattaa rajata komponenttiin.
 
 CSS tukee sisäkkäisiä sääntöjä ilman esikääntäjää:
 
-```{.css tiedosto="esimerkit/12-sisakkain.html" osa="sisakkain"}
+```{.css tiedosto="esimerkit/15-sisakkain.html" osa="sisakkain"}
 ```
 
-```{.html tiedosto="esimerkit/12-sisakkain.html" osa="rakenne"}
+```{.html tiedosto="esimerkit/15-sisakkain.html" osa="rakenne"}
 ```
 
-```{.tuloste tiedosto="esimerkit/12-sisakkain.odotettu"}
+```{.tuloste tiedosto="esimerkit/15-sisakkain.odotettu"}
 ```
 
 `&` viittaa ympäröivään valitsimeen; `& h2` on `.ilmoitus h2` ja
@@ -69,7 +72,7 @@ tason syvyyttä vältetään, kuten Sassissa.
 - **Kerrokset** (luku 6) järjestävät nollauksen, perustyylit,
   komponentit ja apuluokat niin, että järjestys ei riipu tiedostojen
   latausjärjestyksestä.
-- **Tokenit** (luku 11) pitävät arvot yhdessä paikassa. Taikaluku
+- **Tokenit** (luku 13) pitävät arvot yhdessä paikassa. Taikaluku
   `margin: 13px` on CSS:n vastine kovakoodatulle vakiolle.
 - **Progressiivinen parantaminen `@supports`-säännöllä.** Uusi
   ominaisuus kirjoitetaan toimivan perusratkaisun päälle:

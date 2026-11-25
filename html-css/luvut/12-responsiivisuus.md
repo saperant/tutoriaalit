@@ -2,14 +2,14 @@
 
 Responsiivinen sivu toimii 320 pikselin puhelimesta laajakuvanäyttöön
 saman HTML:n ja CSS:n avulla. Nykyinen lähestymistapa yhdistää kolme
-keinoa: luontaisesti joustavat asettelut (luvut 8 ja 9), sujuvat arvot
+keinoa: luontaisesti joustavat asettelut (luvut 9 ja 10), sujuvat arvot
 (`clamp()`) ja kyselyt, jotka reagoivat näkymään, konttiin tai
 käyttäjän asetuksiin.
 
 ## Mobile first
 
 Perustyylit kirjoitetaan kapealle näkymälle, ja leveämmille lisätään
-sääntöjä `min-width`-kyselyillä, kuten luvun 9 sivupohjassa
+sääntöjä `min-width`-kyselyillä, kuten luvun 10 sivupohjassa
 (`@media (min-width: 48rem) { ... }`). Perusteet:
 
 - Kapea asettelu on yksinkertaisempi (yksi sarake), joten se on hyvä
@@ -28,11 +28,17 @@ Tavallisesti kaksi tai kolme rajapistettä riittää.
 `clamp(minimi, ihanne, maksimi)` muuttaa arvoa näkymän koon mukaan
 rajojen sisällä:
 
-```{.css tiedosto="esimerkit/10-fluidi.html" osa="fluidi"}
+```{.css tiedosto="esimerkit/12-fluidi.html" osa="fluidi"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-fluidi.odotettu"}
+```{.tuloste tiedosto="esimerkit/12-fluidi.odotettu"}
 ```
+
+![Otsikko 360 pikselin näkymässä.](kuvat/12-fluidi-360.png){width=23%}&nbsp;&nbsp;&nbsp;&nbsp;
+![Otsikko 1024 pikselin näkymässä.](kuvat/12-fluidi-1024.png){width=32%}&nbsp;&nbsp;&nbsp;&nbsp;
+![Otsikko 1600 pikselin näkymässä.](kuvat/12-fluidi-1600.png){width=37%}
+
+Kuvissa otsikko on 360, 1024 ja 1600 pikselin levyisessä näkymässä.
 
 Otsikko on 360 pikselin näkymässä 25 px (24 + 0,025 × 360 = 25),
 1024 pikselissä 41,6 px ja leveämmässä enintään 48 px. Ihannearvossa
@@ -49,14 +55,17 @@ missä se on: sama kortti voi olla leveässä pääpalstassa ja kapeassa
 sivupalkissa. Konttikysely (*container query*) reagoi lähimmän
 kontin kokoon:
 
-```{.css tiedosto="esimerkit/10-kontti/kortti.css" osa="kysely"}
+```{.css tiedosto="esimerkit/12-kontti/kortti.css" osa="kysely"}
 ```
 
-```{.html tiedosto="esimerkit/10-kontti/index.html" osa="rakenne"}
+```{.html tiedosto="esimerkit/12-kontti/index.html" osa="rakenne"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-kontti.odotettu"}
+```{.tuloste tiedosto="esimerkit/12-kontti.odotettu"}
 ```
+
+![Sama korttikomponentti leveässä pääpalstassa ja kapeassa
+sivupalkissa.](kuvat/12-kontti-1024.png){width=100%}
 
 Sama kortti on pääpalstassa (yli 400 px) vaakasuuntainen, ja kuva on
 160 pikselin sarakkeessa, mutta sivupalkissa (250 px) pystysuuntainen,
@@ -72,21 +81,22 @@ Mediakyselyt kertovat myös käyttäjän järjestelmäasetuksista:
 | Kysely | Asetus |
 |--------|--------|
 | `prefers-reduced-motion: reduce` | vähennä animaatioita (huimaus, migreeni) |
-| `prefers-color-scheme: dark` | tumma teema (luku 11) |
+| `prefers-color-scheme: dark` | tumma teema (luku 13) |
 | `prefers-contrast: more` | suurempi kontrasti |
 | `forced-colors: active` | Windowsin pakotetut värit |
 | `hover: hover`, `pointer: coarse` | hiiri vai kosketus |
 
-```{.css tiedosto="esimerkit/10-liike.html" osa="liike"}
+```{.css tiedosto="esimerkit/12-liike.html" osa="liike"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-liike.odotettu"}
+```{.tuloste tiedosto="esimerkit/12-liike.odotettu"}
 ```
 
 Testausselain on asetettu vähentämään liikettä, joten siirtymä on
 poistettu. Pelkkä ulkoasun hienous ei ole syy ohittaa asetusta;
 merkitystä kantavat siirtymät korvataan vähentyneessä tilassa
-lyhyellä häivytyksellä.
+lyhyellä häivytyksellä. Siirtymiin ja animaatioihin palataan
+luvussa 14.
 
 ## Käytännössä
 

@@ -6,6 +6,9 @@
     <title>Has-valitsin – Verkkokauppa</title>
     <style>
       body { margin: 0; font: 16px/1.5 "DejaVu Sans", sans-serif; }
+      /* Kuvitusta varten: kortin rajat ja kuvan paikka näkyviin. */
+      .kortti { outline: 1px solid #9aa3b2; outline-offset: -1px; }
+      .kortti img { background: #c7d9f2; }
       /* @alku has */
       /* Kortti, jossa on kuva, asetellaan kahteen sarakkeeseen. */
       .kortti:has(> img) {
@@ -25,7 +28,7 @@
       <h1>Toimitustapa</h1>
       <!-- @alku rakenne -->
       <article class="kortti" data-mitta="kuvallinen">
-        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
+        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAACADs="
              width="96" height="96" alt="">
         <p data-mitta="kuvallisen teksti">Nouto myymälästä</p>
       </article>

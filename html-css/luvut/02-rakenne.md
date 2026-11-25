@@ -24,6 +24,12 @@ Sitten semanttisilla elementeillä:
 ```{.tuloste tiedosto="esimerkit/02-semanttinen.odotettu"}
 ```
 
+![Div-sivu selaimessa ilman omia tyylejä: pelkkää
+tekstiä.](kuvat/02-div-sivu-1024.png){width=30%}
+
+![Semanttinen sivu ilman omia tyylejä: otsikko ja luettelo saavat
+selaimen oletusulkoasun.](kuvat/02-semanttinen-1024.png){width=62%}
+
 Sopivalla CSS:llä sivut näyttävät samalta, ja molemmat ovat
 validaattorin mielestä kelvollisia. Saavutettavuuspuu paljastaa eron.
 Div-sivulla otsikko, ingressi ja alatunniste ovat yhtä tekstimassaa:

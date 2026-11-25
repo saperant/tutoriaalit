@@ -27,6 +27,13 @@ Hookeilla on kaksi sääntöä: niitä kutsutaan vain komponentin tai toisen
 hookin ylätasolla, eikä koskaan ehtolauseessa tai silmukassa. React
 tunnistaa hookit kutsujärjestyksestä.
 
+Kutsujärjestyksen sääntö ja käsin kirjoitettu riippuvuuslista ovat
+Reactin toteutuksen piirteitä: signaaleihin perustuvat kehykset
+keräävät riippuvuudet itse, kuten luvun 3 `efekti`. Yleistä on sen
+sijaan se, mitä efektillä tehdään. Jokaisessa kehyksessä
+sivuvaikutus sidotaan komponentin elinkaareen, ajetaan uudelleen
+riippuvuuksien muuttuessa ja siivotaan, kun komponentti poistuu.
+
 ## Vanhentunut sulkeuma
 
 Efektin funktio on sulkeuma, joka näkee sen renderöinnin arvot, jossa se

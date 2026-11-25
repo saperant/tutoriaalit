@@ -48,6 +48,7 @@ toiminnon seuraus käsittelijässä, tilan nollaus `key`-propsilla.
 | verkko, aikaraja | `TypeError`, `TimeoutError` | kyllä |
 | palvelin | 5xx | kyllä, viiveellä |
 | pyyntö | 4xx | ei; näytä viesti |
+| renderöinti | poikkeus komponentissa | virheraja + varanäkymä |
 
 # Testaus
 

@@ -3,7 +3,7 @@
 Flexbox asettelee lapsensa yhteen suuntaan, riville tai sarakkeeseen,
 ja jakaa vapaan tilan niiden kesken. Se sopii komponenttien sisäiseen
 asetteluun: palkit, painikeryhmät, kortin sisältö ja kuvan ja tekstin
-rinnastus. Kaksiulotteiset asettelut kuuluvat gridille (luku 9).
+rinnastus. Kaksiulotteiset asettelut kuuluvat gridille (luku 10).
 
 ## Akselit
 
@@ -19,22 +19,35 @@ sitä vastaan.
 | `gap` | molemmat | välit kohteiden väliin, ei reunoille |
 | `align-self` | poikki | yksittäisen kohteen kohdistus |
 
+![Tavallisimmat arvot rivisuuntaisessa kontissa. Katkoviiva on
+kontti. Kaavio on HTML-sivu
+(`esimerkit/09-akselit.html`).](kuvat/09-akselit-720.png){width=95%}
+
+Kaavion rivit eroavat toisistaan vain yhdellä esittelyllä:
+
+```{.css tiedosto="esimerkit/09-akselit.html" osa="arvot"}
+```
+
+Kun `flex-direction` on `column`, akselit vaihtavat paikkaa:
+`justify-content` vaikuttaa pystysuunnassa ja `align-items`
+vaakasuunnassa.
+
 ## Yläpalkki
 
 Logo, valikko ja kirjautumislinkki, joka työntyy oikeaan reunaan:
 
-```{.css tiedosto="esimerkit/08-ylapalkki.html" osa="palkki"}
+```{.css tiedosto="esimerkit/09-ylapalkki.html" osa="palkki"}
 ```
 
-```{.html tiedosto="esimerkit/08-ylapalkki.html" osa="rakenne"}
+```{.html tiedosto="esimerkit/09-ylapalkki.html" osa="rakenne"}
 ```
 
-```{.tuloste tiedosto="esimerkit/08-ylapalkki.odotettu"}
+```{.tuloste tiedosto="esimerkit/09-ylapalkki.odotettu"}
 ```
 
-![Yläpalkki 1024 pikselin levyisenä.](kuvat/08-ylapalkki-1024.png){width=100%}
+![Yläpalkki 1024 pikselin levyisenä.](kuvat/09-ylapalkki-1024.png){width=100%}
 
-![Sama palkki 360 pikselin levyisenä rivittyy.](kuvat/08-ylapalkki-360.png){width=40%}
+![Sama palkki 360 pikselin levyisenä rivittyy.](kuvat/09-ylapalkki-360.png){width=40%}
 
 - `margin-inline-start: auto` syö kaiken vapaan tilan kohteen
   edestä ja työntää sen loppuun. Se on yksinkertaisin tapa erottaa
@@ -53,14 +66,17 @@ Kohteen koko lasketaan kolmesta arvosta: `flex-grow` (osuus vapaasta
 tilasta), `flex-shrink` (osuus puutteesta) ja `flex-basis`
 (lähtökoko). Lyhenne `flex` asettaa kaikki kolme:
 
-```{.css tiedosto="esimerkit/08-joustavuus.html" osa="jousto"}
+```{.css tiedosto="esimerkit/09-joustavuus.html" osa="jousto"}
 ```
 
-```{.html tiedosto="esimerkit/08-joustavuus.html" osa="rakenne"}
+```{.html tiedosto="esimerkit/09-joustavuus.html" osa="rakenne"}
 ```
 
-```{.tuloste tiedosto="esimerkit/08-joustavuus.odotettu"}
+```{.tuloste tiedosto="esimerkit/09-joustavuus.odotettu"}
 ```
+
+![Ylärivillä `flex: 1`, `flex: 2` ja `flex: none`, alarivillä kaksi
+`flex: auto` -kohdetta.](kuvat/09-joustavuus-1024.png){width=80%}
 
 - `flex: 1` tarkoittaa `1 1 0%`: lähtökoko on nolla, joten koko tila
   (600 − 120 = 480) jaetaan kertoimien suhteessa: A saa 160 ja B 320.
@@ -75,14 +91,17 @@ Flex-kohteen minimileveys on oletuksena sen sisällön minimi
 (`min-inline-size: auto`). Pitkä katkeamaton sana tai URL ei siksi
 anna kohteen kutistua, vaan se työntää kontin yli:
 
-```{.css tiedosto="esimerkit/08-ylivuoto.html" osa="ylivuoto"}
+```{.css tiedosto="esimerkit/09-ylivuoto.html" osa="ylivuoto"}
 ```
 
-```{.html tiedosto="esimerkit/08-ylivuoto.html" osa="rakenne"}
+```{.html tiedosto="esimerkit/09-ylivuoto.html" osa="rakenne"}
 ```
 
-```{.tuloste tiedosto="esimerkit/08-ylivuoto.odotettu"}
+```{.tuloste tiedosto="esimerkit/09-ylivuoto.odotettu"}
 ```
+
+![Katkoviiva on 400 pikselin kontti. Ylhäällä teksti ylivuotaa,
+alhaalla korjattu versio.](kuvat/09-ylivuoto-1024.png){width=75%}
 
 Kontti on 400 pikseliä, mutta ensimmäinen tekstilaatikko on 518
 pikseliä leveä ja ylivuotaa. `min-inline-size: 0` sallii kutistumisen,

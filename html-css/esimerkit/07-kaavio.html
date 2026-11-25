@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:leveydet" content="760">
+    <meta name="testi:saavutettavuus" content="ei">
+    <title>Laatikkomallin kaavio – Tyyliopas</title>
+    <!-- Tämä sivu on luvun 7 kaavio: laatikon osat on piirretty
+         laatikkomallilla itsellään, ja mitat lukee selain. -->
+    <style>
+      body { margin: 0; padding: 16px; display: flex; gap: 40px;
+             font: 14px/1.4 "DejaVu Sans", sans-serif; color: #1a1f29; }
+      h1, h2 { margin: 0 0 8px; font-size: 14px; }
+      .osat { position: relative; display: flow-root;
+              background: #fbe3c0;
+              outline: 1px dashed #b07a2a; inline-size: 330px; }
+      .osat .laatikko { position: relative; margin: 30px;
+        border: 26px solid #44506a; padding: 30px;
+        background: linear-gradient(#c7d9f2, #c7d9f2) content-box,
+                    #cfe3c4; }
+      .osat .sisalto { block-size: 64px; display: grid;
+                       place-items: center; text-align: center; }
+      .nimi { position: absolute; inset-inline-start: 8px; }
+      .nimi.m { inset-block-start: 6px; }
+      .nimi.b { inset-block-start: -23px; color: #fff; }
+      .nimi.p { inset-block-start: 5px; }
+      /* @alku malli */
+      .malli {
+        inline-size: 200px;
+        padding: 20px;
+        border: 5px solid #44506a;
+        /* Kaksi taustaa: ylempi rajattu sisältölaatikkoon. */
+        background: linear-gradient(#c7d9f2, #c7d9f2) content-box,
+                    #cfe3c4;
+      }
+      /* @loppu malli */
+      .content-box { box-sizing: content-box; }
+      .border-box { box-sizing: border-box; }
+      .jana { box-sizing: border-box; margin-block: 4px 0;
+              border: 1px solid #1a1f29; border-block-start: 0;
+              block-size: 6px; }
+      .luku { margin: 2px 0 14px; text-align: center; }
+      code { font: inherit; font-weight: bold; }
+    </style>
+  </head>
+  <body>
+    <section>
+      <h1>Laatikon osat</h1>
+      <div class="osat" data-mitta="marginaalin ulkoreuna">
+        <span class="nimi m">margin (marginaali)</span>
+        <div class="laatikko" data-mitta="reunuksen ulkoreuna">
+          <span class="nimi b">border (reunus)</span>
+          <span class="nimi p">padding (täyte)</span>
+          <div class="sisalto" data-mitta="sisältö">sisältö<br>
+            (content)</div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h2><code>inline-size: 200px</code>, täyte 20, reunus 5</h2>
+      <div class="malli content-box" data-mitta="content-box">
+        content-box</div>
+      <div class="jana"></div>
+      <p class="luku"></p>
+      <div class="malli border-box" data-mitta="border-box">
+        border-box</div>
+      <div class="jana"></div>
+      <p class="luku"></p>
+    </section>
+    <script>
+      // Mittajanat ja luvut selaimen laskemista leveyksistä.
+      for (const malli of document.querySelectorAll(".malli")) {
+        const jana = malli.nextElementSibling;
+        const leveys = malli.offsetWidth;
+        const sisalto = leveys - 50;       // täyte 2 × 20, reunus 2 × 5
+        jana.style.inlineSize = `${leveys}px`;
+        jana.nextElementSibling.style.inlineSize = `${leveys}px`;
+        jana.nextElementSibling.textContent =
+          `koko ${leveys} px, sisältö ${sisalto} px`;
+      }
+    </script>
+  </body>
+</html>

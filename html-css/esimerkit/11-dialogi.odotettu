@@ -1,0 +1,16 @@
+[leveys 560 px]
+dialogi: x=87 y=72 l=386 k=165
+[saavutettavuuspuu]
+- banner:
+  - heading "Ilmoittautumiset" [level=1]
+- main:
+  - paragraph: Aalto, Ahonen, Anttila
+  - button "Poista Aalto"
+- dialog "Poistetaanko ilmoittautuminen?":
+  - heading "Poistetaanko ilmoittautuminen?" [level=2]
+  - paragraph: Aallon ilmoittautuminen poistetaan pysyvästi.
+  - button "Peru"
+  - button "Poista"
+[konsoli]
+yläpalkin kohdalla: dialogi
+fokus: Peru

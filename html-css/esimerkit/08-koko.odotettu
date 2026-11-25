@@ -1,0 +1,9 @@
+[leveys 1024 px]
+em, taso 1: font-size=20px
+em, taso 2: font-size=25px
+rem, taso 1: font-size=20px
+rem, taso 2: font-size=20px
+otsikko, kerroin 1.5: x=0 y=128 l=1024 k=48
+otsikko, kerroin 1.5: line-height=48px
+otsikko, pituus 24px: x=0 y=176 l=1024 k=24
+otsikko, pituus 24px: line-height=24px

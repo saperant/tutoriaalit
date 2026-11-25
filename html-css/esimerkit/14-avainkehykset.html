@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:leveydet" content="480">
+    <title>Avainkehykset – Tyyliopas</title>
+    <style>
+      body { margin: 0; padding: 24px;
+             font: 16px/1.5 "DejaVu Sans", sans-serif; }
+      h1 { margin: 0 0 16px; font-size: 1.25rem; }
+      p { margin: 0; }
+      /* @alku avainkehykset */
+      @keyframes pyori {
+        to { transform: rotate(1turn); }
+      }
+      @keyframes sykki {
+        50% { opacity: 0.4; }
+      }
+      .latain {
+        display: inline-block;
+        inline-size: 1em;
+        block-size: 1em;
+        border: 3px solid #c4d3e8;
+        border-block-start-color: #1d4f91;
+        border-radius: 50%;
+        vertical-align: -0.2em;
+        animation: pyori 800ms linear infinite;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .latain { animation: sykki 2s ease-in-out infinite; }
+      }
+      /* @loppu avainkehykset */
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Varaukset</h1>
+      <!-- @alku rakenne -->
+      <p role="status">
+        <span class="latain" aria-hidden="true" data-nimi="latain"
+              data-tyyli="animation-name animation-duration"></span>
+        Ladataan varauksia…
+      </p>
+      <!-- @loppu rakenne -->
+    </main>
+  </body>
+</html>

@@ -1,16 +1,85 @@
 # Kaskadi, periytyminen ja spesifisyys
 
 CSS-sääntö koostuu valitsimesta ja esittelyistä:
-`.ilmoitus p { color: navy; }`. Kun usea sääntö asettaa saman
-ominaisuuden samalle elementille, *kaskadi* päättää voittajan. Useimmat
-"CSS ei toimi" -tilanteet ovat kaskadin väärinymmärryksiä.
+`.ilmoitus p { color: navy; }`. Valitsin poimii elementit, ja
+esittelyt antavat niiden ominaisuuksille arvot. Kun usea sääntö
+asettaa saman ominaisuuden samalle elementille, *kaskadi* päättää
+voittajan. Useimmat "CSS ei toimi" -tilanteet ovat kaskadin
+väärinymmärryksiä.
 
 Tyylit liitetään sivuun ulkoisella tyylitiedostolla
 (`<link rel="stylesheet">`), joka on oletus: selain tallentaa sen
 välimuistiin ja sama tiedosto palvelee kaikkia sivuja. `<style>`-
-elementti sopii sivukohtaisiin ja kriittisiin tyyleihin (luku 12).
+elementti sopii sivukohtaisiin ja kriittisiin tyyleihin (luku 15).
 `style`-attribuuttia vältetään, koska se ohittaa lähes kaiken muun ja
 estää tiukan sisällön turvallisuuskäytännön (CSP).
+
+## Valitsimet
+
+Valitsin kertoo, mihin elementteihin sääntö osuu. Perusosia on neljä:
+elementin tyyppi (`p`), luokka (`.kortti`), tunniste (`#haku`) ja
+attribuutti (`[type="email"]`). Peräkkäin kirjoitettuina ne
+tarkentavat toisiaan: `input.pakollinen[type="email"]` vaatii kaikki
+kolme. Pilkku erottaa vaihtoehdot: `h1, h2` osuu kumpaankin.
+
+**Kombinaattori** kahden valitsimen välissä kuvaa elementtien
+suhteen dokumentin puussa:
+
+| Kombinaattori | Esimerkki | Osuu |
+|--------------------------|-----------|-----------------------------------------|
+| välilyönti (jälkeläinen) | `nav a` | linkit missä tahansa `nav`-elementin sisällä |
+| `>` (lapsi) | `ul > li` | vain luettelon suorat lapset |
+| `+` (seuraava sisarus) | `h2 + p` | kappale heti otsikon jälkeen |
+| `~` (myöhemmät sisarukset) | `h2 ~ p` | kaikki otsikkoa seuraavat sisaruskappaleet |
+
+**Pseudoluokka** (yksi kaksoispiste) valitsee elementin tilan tai
+aseman perusteella, ja **pseudoelementti** (kaksi kaksoispistettä)
+valitsee elementin osan tai luo sellaisen:
+
+| Valitsin | Osuu |
+|--------------------------------------|----------------------------------------|
+| `:hover`, `:focus-visible`, `:active` | osoitin päällä, näppäimistöfokus, painettuna |
+| `:checked`, `:disabled`, `:user-invalid` | lomake-elementin tila (luku 4) |
+| `:first-child`, `:last-child`, `:nth-child(odd)` | asema sisarusten joukossa |
+| `:not(.piilotettu)` | elementit, joihin argumentti ei osu |
+| `:is(h1, h2, h3)` | mikä tahansa argumenteista; lyhentää luetteloita |
+| `::before`, `::after` | luotu sisältö elementin alkuun tai loppuun |
+| `::placeholder`, `::marker`, `::selection` | kentän vihjeteksti, luettelomerkki, valittu teksti |
+
+```{.css tiedosto="esimerkit/06-valitsimet.html" osa="valitsimet"}
+```
+
+```{.html tiedosto="esimerkit/06-valitsimet.html" osa="rakenne"}
+```
+
+```{.tuloste tiedosto="esimerkit/06-valitsimet.odotettu"}
+```
+
+![Valitsimien tulos: ensimmäinen kappale on suurempi, joka toinen
+kurssi on korostettu ja ulkoinen linkki on saanut
+nuolen.](kuvat/06-valitsimet-480.png){width=55%}
+
+- `h1 + p` osuu vain ensimmäiseen kappaleeseen (20 px), koska toinen
+  ei ole heti otsikon jälkeen.
+- `.kurssit > li` antaa reunaviivan kolmelle kurssille mutta ei
+  sisäkkäiselle kohdalle "Lomakkeet" (`0px`). Jälkeläisvalitsin
+  `.kurssit li` olisi osunut siihenkin.
+- `:nth-child(odd)` värittää ensimmäisen ja kolmannen kohdan.
+  Argumentti voi olla myös kaava: `3n` on joka kolmas ja `n + 2`
+  kaikki toisesta alkaen.
+- `a[href^="https://"]` osuu linkkeihin, joiden osoite *alkaa*
+  merkkijonolla `https://`. Vastaavasti `$=` vertaa loppua ja `*=`
+  mitä tahansa kohtaa.
+- `::after` lisää nuolen linkin perään. Saavutettavuuspuussa linkin
+  nimi on "MDN ↗": luotu sisältö luetaan ääneen. `content`-arvoon ei
+  siksi laiteta tietoa, jonka pitää olla HTML:ssä, eikä koristetta,
+  jonka lukeminen häiritsee.
+
+Selain lukee valitsimen oikealta vasemmalle: `nav a` tutkii ensin
+jokaisen linkin ja sitten sen esivanhemmat. Käytännössä tällä ei
+ole merkitystä suorituskyvylle, mutta se selittää, miksi valitsimen
+viimeinen osa on se, johon tyylit tulevat. Vanhemman valitseminen
+lapsen perusteella onnistuu `:has()`-valitsimella (luku 15).
 
 ## Kaskadin järjestys
 
@@ -20,10 +89,13 @@ ero ratkaisee:
 1. **Alkuperä ja tärkeys**: selaimen oletustyylit < sivun tyylit <
    sivun `!important` < selaimen `!important`. (Käyttäjän omat tyylit
    ovat välissä.)
-2. **Konteksti**: Shadow DOM -komponentin sisäiset tyylit.
+2. **Konteksti**: verkkokomponentin kapseloidut tyylit (Shadow DOM,
+   komponentin oma, muusta sivusta eristetty dokumenttipuu) häviävät
+   sivun tyyleille.
 3. **Tyyliattribuutti** `style="..."` voittaa tyylitiedostot.
 4. **Kerros** (`@layer`): myöhemmin esitelty kerros voittaa, ja
    kerroksiin kuulumattomat tyylit voittavat kaikki kerrokset.
+   Kerrokset esitellään tämän luvun lopussa.
 5. **Spesifisyys**: tarkempi valitsin voittaa.
 6. **Järjestys**: viimeisenä esitelty voittaa.
 
@@ -50,6 +122,8 @@ Yksikään määrä luokkia ei voita yhtä tunnistetta: (0,99,0) < (1,0,0).
 
 ```{.tuloste tiedosto="esimerkit/06-spesifisyys.odotettu"}
 ```
+
+![Kappaleet a–d selaimessa.](kuvat/06-spesifisyys-1024.png){width=28%}
 
 - **a**: `.ilmoitus p` (0,1,1) voittaa pelkän `p`-säännön (0,0,1).
 - **b**: `p.tarkea` ja `.ilmoitus p` ovat yhtä tarkkoja; myöhempi voittaa.

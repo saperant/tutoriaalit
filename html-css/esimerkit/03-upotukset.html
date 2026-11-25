@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:leveydet" content="560">
+    <title>Upotukset – Tyyliopas</title>
+    <style>
+      body { margin: 0; padding: 16px;
+             font: 16px/1.5 "DejaVu Sans", sans-serif; }
+      h1 { margin: 0 0 8px; font-size: 1.25rem; }
+      h2 { margin: 16px 0 8px; font-size: 1rem; }
+      p { margin: 0 0 8px; }
+      /* @alku tyyli */
+      video, iframe {
+        display: block;
+        max-inline-size: 100%;           /* kutistuu kapeassa näkymässä */
+        border: 1px solid #9aa3b2;
+      }
+      video { aspect-ratio: 16 / 9; inline-size: 320px;
+              background: #1a1f29; }
+      /* @loppu tyyli */
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Kurssin esittely</h1>
+      <!-- @alku details -->
+      <details>
+        <summary>Mitä kurssilla tarvitaan?</summary>
+        <p>Oma kannettava tietokone ja selain.</p>
+      </details>
+      <details open>
+        <summary>Paljonko kurssi maksaa?</summary>
+        <p>Kurssi on maksuton.</p>
+      </details>
+      <!-- @loppu details -->
+      <h2>Video</h2>
+      <!-- @alku video -->
+      <video controls preload="none" width="320" height="180"
+             aria-label="Kurssin esittelyvideo" data-mitta="video">
+        <source src="media/esittely.webm" type="video/webm">
+        <track kind="captions" src="media/esittely.fi.vtt"
+               srclang="fi" label="Suomi">
+        <a href="media/esittely.webm">Lataa esittelyvideo</a>
+      </video>
+      <!-- @loppu video -->
+      <h2>Upotettu sivu</h2>
+      <!-- @alku iframe -->
+      <iframe src="03-taulukko.html" title="Sähkönkulutus neljänneksittäin"
+              width="480" height="150" loading="lazy"
+              data-mitta="iframe"></iframe>
+      <!-- @loppu iframe -->
+    </main>
+  </body>
+</html>

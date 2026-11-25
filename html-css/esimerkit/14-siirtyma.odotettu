@@ -1,0 +1,4 @@
+[leveys 480 px]
+lepotila: background-color=rgb(255, 255, 255); transform=none
+aktiivinen: background-color=rgb(29, 79, 145); transform=none
+siirtymä: transition-property=background-color, color

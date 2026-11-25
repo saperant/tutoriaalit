@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:leveydet" content="720">
+    <meta name="testi:saavutettavuus" content="ei">
+    <title>Flexboxin akselit – Tyyliopas</title>
+    <!-- Tämä sivu on luvun 9 kaavio: jokainen rivi on flex-kontti,
+         jolle on annettu otsikossa näkyvä arvo. -->
+    <style>
+      body { margin: 0; padding: 16px; display: flex; gap: 40px;
+             font: 14px/1.4 "DejaVu Sans", sans-serif; color: #1a1f29; }
+      h1, h2 { margin: 0 0 4px; font-size: 14px; }
+      p { margin: 0 0 8px; }
+      h3 { margin: 0 0 2px; font: 13px "DejaVu Sans Mono", monospace; }
+      .kontti { display: flex; gap: 6px; inline-size: 300px;
+                margin-block-end: 10px; padding: 4px;
+                background: #f3f5f8; outline: 1px dashed #5b6b70; }
+      .kontti > div { padding: 2px 12px; background: #c7d9f2;
+                      border: 1px solid #1d4f91; }
+      .korkea { block-size: 64px; }
+      .iso { font-size: 22px; }
+      /* @alku arvot */
+      .j-alku { justify-content: flex-start; }
+      .j-keski { justify-content: center; }
+      .j-loppu { justify-content: flex-end; }
+      .j-valit { justify-content: space-between; }
+      .a-venytys { align-items: stretch; }
+      .a-keski { align-items: center; }
+      .a-perus { align-items: baseline; }
+      /* @loppu arvot */
+      .nuoli { color: #b04848; font-weight: bold; }
+    </style>
+  </head>
+  <body>
+    <h1 hidden>Flexboxin akselit</h1>
+    <section>
+      <h2>Pääakseli: <code>justify-content</code></h2>
+      <p class="nuoli">pääakseli →</p>
+      <h3>flex-start (oletus)</h3>
+      <div class="kontti j-alku">
+        <div data-mitta="flex-start, A">A</div><div>B</div><div>C</div>
+      </div>
+      <h3>center</h3>
+      <div class="kontti j-keski">
+        <div data-mitta="center, A">A</div><div>B</div><div>C</div>
+      </div>
+      <h3>flex-end</h3>
+      <div class="kontti j-loppu">
+        <div data-mitta="flex-end, A">A</div><div>B</div><div>C</div>
+      </div>
+      <h3>space-between</h3>
+      <div class="kontti j-valit">
+        <div>A</div><div data-mitta="space-between, B">B</div>
+        <div>C</div>
+      </div>
+    </section>
+    <section>
+      <h2>Poikkiakseli: <code>align-items</code></h2>
+      <p class="nuoli">poikkiakseli ↓</p>
+      <h3>stretch (oletus)</h3>
+      <div class="kontti korkea a-venytys">
+        <div data-mitta="stretch, A">A</div><div>B</div>
+        <div class="iso">C</div>
+      </div>
+      <h3>center</h3>
+      <div class="kontti korkea a-keski">
+        <div data-mitta="center, A (poikki)">A</div><div>B</div>
+        <div class="iso">C</div>
+      </div>
+      <h3>baseline</h3>
+      <div class="kontti korkea a-perus">
+        <div data-mitta="baseline, A">A</div><div>B</div>
+        <div class="iso">C</div>
+      </div>
+    </section>
+  </body>
+</html>

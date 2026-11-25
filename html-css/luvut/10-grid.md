@@ -7,14 +7,23 @@ flexbox, kun sisältö määrää koon; grid, kun asettelu määrää.
 
 ## Sarakkeet ja fr-yksikkö
 
-```{.css tiedosto="esimerkit/09-kortit.html" osa="ruudukko"}
+```{.css tiedosto="esimerkit/10-kortit.html" osa="ruudukko"}
 ```
 
-```{.html tiedosto="esimerkit/09-kortit.html" osa="rakenne"}
+```{.html tiedosto="esimerkit/10-kortit.html" osa="rakenne"}
 ```
 
-```{.tuloste tiedosto="esimerkit/09-kortit.odotettu"}
+```{.tuloste tiedosto="esimerkit/10-kortit.odotettu"}
 ```
+
+![Kortit 1024 pikselin näkymässä.](kuvat/10-kortit-1024.png){width=100%}
+
+![Kortit 700 pikselin näkymässä.](kuvat/10-kortit-700.png){width=60%}&nbsp;&nbsp;&nbsp;&nbsp;
+![Kortit 360 pikselin näkymässä.](kuvat/10-kortit-360.png){width=30%}
+
+Kuvissa sama ruudukko on 1024, 700 ja 360 pikselin levyisessä
+näkymässä: sarakkeita on kolme, kaksi ja yksi ilman yhtään
+mediakyselyä.
 
 - `fr` on osuus vapaasta tilasta, kun kiinteät sarakkeet ja `gap` on
   vähennetty.
@@ -31,19 +40,19 @@ flexbox, kun sisältö määrää koon; grid, kun asettelu määrää.
 
 Sivun runko on luontevinta kuvata nimetyillä alueilla. Kapea
 asettelu on oletus, ja leveä lisätään mediakyselyllä (*mobile first*,
-luku 10):
+luku 12):
 
-```{.css tiedosto="esimerkit/09-asettelu/tyyli.css" osa="alueet"}
+```{.css tiedosto="esimerkit/10-asettelu/tyyli.css" osa="alueet"}
 ```
 
-```{.html tiedosto="esimerkit/09-asettelu/index.html" osa="rakenne"}
+```{.html tiedosto="esimerkit/10-asettelu/index.html" osa="rakenne"}
 ```
 
-```{.tuloste tiedosto="esimerkit/09-asettelu.odotettu"}
+```{.tuloste tiedosto="esimerkit/10-asettelu.odotettu"}
 ```
 
-![Sivupohja 1024 pikselin levyisenä.](kuvat/09-asettelu-1024.png){width=70%}
-![Sama sivupohja 360 pikselin levyisenä.](kuvat/09-asettelu-360.png){width=25%}
+![Sivupohja 1024 pikselin levyisenä.](kuvat/10-asettelu-1024.png){width=70%}
+![Sama sivupohja 360 pikselin levyisenä.](kuvat/10-asettelu-360.png){width=25%}
 
 Kuvakaappaukset: vasemmalla 1024 pikselin ja oikealla 360 pikselin
 näkymä.
@@ -54,7 +63,7 @@ näkymä.
   ja venyttävät pääsisällön, jolloin alaosa pysyy näkymän pohjalla
   lyhyelläkin sivulla (`min-block-size: 100vh`).
 - `minmax(0, 1fr)` pääpalstan sarakkeena estää pitkän sisällön
-  levittämästä saraketta (luvun 8 sudenkuoppa gridissä).
+  levittämästä saraketta (luvun 9 sudenkuoppa gridissä).
 - HTML:n järjestys pysyy loogisena (otsikko, sisältö, sivupalkki,
   alaosa). Grid muuttaa vain sijoittelua, joten näppäimistön ja
   ruudunlukijan järjestys säilyy.
@@ -66,14 +75,17 @@ pitkä kuvaus työntää yhden kortin painikkeen alemmas kuin muiden.
 `subgrid` antaa kortin käyttää isäntäruudukon rivejä, jolloin samat
 osat asettuvat samalle riville kaikissa korteissa:
 
-```{.css tiedosto="esimerkit/09-alikehys.html" osa="alikehys"}
+```{.css tiedosto="esimerkit/10-alikehys.html" osa="alikehys"}
 ```
 
-```{.html tiedosto="esimerkit/09-alikehys.html" osa="rakenne"}
+```{.html tiedosto="esimerkit/10-alikehys.html" osa="rakenne"}
 ```
 
-```{.tuloste tiedosto="esimerkit/09-alikehys.odotettu"}
+```{.tuloste tiedosto="esimerkit/10-alikehys.odotettu"}
 ```
+
+![Ylhäällä alikehys: otsikot, kuvaukset ja linkit ovat samoilla
+riveillä. Alhaalla sama ilman alikehystä.](kuvat/10-alikehys-1024.png){width=75%}
 
 Alikehyksellä kaikkien korttien linkit ovat samalla korkeudella
 (`y=231`). Ilman sitä (kortit `ilman`, sama HTML ilman alikehystä)
@@ -102,7 +114,7 @@ linkit ovat eri korkeuksilla sen mukaan, kuinka pitkä kuvaus on.
   `auto-fit` on yleensä parempi.
 - **Gap kaikkialle.** Sama `gap` gridissä ja flexboxissa antaa
   yhtenäisen rytmin, kun arvo tulee suunnittelujärjestelmän tilatokenista
-  (luku 11).
+  (luku 13).
 - **Kehittäjätyökalujen grid-peittokuva** näyttää rivit, sarakkeet ja
   alueiden nimet suoraan sivun päällä. Se on nopein tapa ymmärtää,
   miksi kohde on väärässä paikassa.

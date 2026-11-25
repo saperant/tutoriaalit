@@ -60,6 +60,19 @@ signaaleja eri kerroilla:
 ```{.tuloste tiedosto="esimerkit/src/03-tila/signaali-demo.odotettu"}
 ```
 
+```{.dot otsikko="Esimerkin riippuvuudet. Efekti lukee signaalia osallistujia sekä suoraan että johdetun arvon kautta, joten muutos tavoittaa sen kahta reittiä."}
+digraph {
+  rankdir=LR; nodesep=0.4;
+  p [label="paikkoja\n(signaali)", shape=ellipse];
+  o [label="osallistujia\n(signaali)", shape=ellipse, style=bold];
+  m [label="mahtuu\n(johdettu)"];
+  e [label="efekti:\ntulostaa rivin"];
+  o -> m [label="1."]; m -> e [label="2. ajo"];
+  o -> e [label="3. ajo"];
+  p -> m; p -> e;
+}
+```
+
 Tuloste paljastaa yksinkertaisen toteutuksen heikkouden: rivi `5/4`
 tulostuu kahdesti. Muutos `osallistujia`-signaaliin ajaa ensin johdetun
 arvon, joka ajaa efektin, ja sitten efektin suoraan. Tätä kutsutaan

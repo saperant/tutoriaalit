@@ -3,7 +3,7 @@ import type { Tila } from "../tilat.ts";
 import { TilaLista } from "./TilaLista.tsx";
 
 // @alku haku
-/** Säiliökomponentti: omistaa hakutilan ja johtaa siitä näkymän. */
+/** Konttikomponentti: omistaa hakutilan ja johtaa siitä näkymän. */
 export function TilaHaku({ tilat, onVaraa }: {
   tilat: readonly Tila[];
   onVaraa: (id: string) => void;

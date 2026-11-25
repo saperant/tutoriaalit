@@ -8,13 +8,13 @@ valitsimissa, ja JavaScript voi lukea ja asettaa niitä.
 
 ## Arvot, varavarat ja periytyminen
 
-```{.css tiedosto="esimerkit/11-muuttujat.html" osa="muuttujat"}
+```{.css tiedosto="esimerkit/13-muuttujat.html" osa="muuttujat"}
 ```
 
-```{.html tiedosto="esimerkit/11-muuttujat.html" osa="rakenne"}
+```{.html tiedosto="esimerkit/13-muuttujat.html" osa="rakenne"}
 ```
 
-```{.tuloste tiedosto="esimerkit/11-muuttujat.odotettu"}
+```{.tuloste tiedosto="esimerkit/13-muuttujat.odotettu"}
 ```
 
 - **Komponentin sisäinen muuttuja.** `--merkin-vari` määritellään
@@ -37,24 +37,24 @@ Suunnittelujärjestelmän päätökset, kuten värit, välit, fonttikoot ja
 pyöristykset, tallennetaan *suunnittelutokeneiksi* (*design tokens*).
 Tavallinen jako on kaksitasoinen:
 
-```{.css tiedosto="esimerkit/11-teemat/tokenit.css" osa="primitiivit"}
+```{.css tiedosto="esimerkit/13-teemat/tokenit.css" osa="primitiivit"}
 ```
 
-```{.css tiedosto="esimerkit/11-teemat/tokenit.css" osa="semanttiset"}
+```{.css tiedosto="esimerkit/13-teemat/tokenit.css" osa="semanttiset"}
 ```
 
 Komponentit käyttävät vain semanttisia tokeneita:
 
-```{.css tiedosto="esimerkit/11-teemat/komponentit.css" osa="komponentit"}
+```{.css tiedosto="esimerkit/13-teemat/komponentit.css" osa="komponentit"}
 ```
 
-```{.html tiedosto="esimerkit/11-teemat/index.html" osa="rakenne"}
+```{.html tiedosto="esimerkit/13-teemat/index.html" osa="rakenne"}
 ```
 
-```{.tuloste tiedosto="esimerkit/11-teemat.odotettu"}
+```{.tuloste tiedosto="esimerkit/13-teemat.odotettu"}
 ```
 
-![Sama komponentti vaaleassa ja tummassa teemassa.](kuvat/11-teemat-1024.png){width=80%}
+![Sama komponentti vaaleassa ja tummassa teemassa.](kuvat/13-teemat-1024.png){width=80%}
 
 - **Primitiivit** nimeävät paletin (`--sininen-700`), eivätkä kerro
   käyttötarkoitusta. Niitä ei käytetä komponenteissa suoraan.

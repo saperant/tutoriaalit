@@ -16,6 +16,16 @@ varausjärjestelmään. Luvut etenevät periaatteista kehykseen. Ensin
 selaimen omilla rajapinnoilla nähdään, mitä ongelmia kehykset
 ratkaisevat, sitten samat asiat tehdään Reactilla.
 
+![Valmis sovellus: kokoustilojen haku. Tilan varauslomake on
+luvussa 5.](kuvat/01-tilat.png){width=70%}
+
+Tämä on React-opas. Muiden kehysten (Vue, Angular, Svelte) ratkaisut
+samoihin ongelmiin ja kehysten yhteiset periaatteet ovat taidossa
+*Web-sovelluskehykset ja niiden periaatteet*, jossa sama sovellus
+tehdään neljällä kehyksellä. Tämä tutoriaali on sen esitieto: tässä
+opitut käsitteet (tila, komponentti, yksisuuntainen datavirta, efekti)
+ovat ne, joita siellä verrataan.
+
 ## Sovellusarkkitehtuurit
 
 Selainsovelluksen HTML voi syntyä kolmessa paikassa, ja valinta on
@@ -51,11 +61,17 @@ linkkejä ja lomakkeet lomakkeita, vaikka JavaScript hoitaa ne.
 | Testing Library | 16 | komponenttien testaus käyttäjän näkökulmasta |
 | Playwright | 1.63 | päästä päähän -testit oikeassa selaimessa |
 
+Versiot ovat ne, joihin esimerkit on kiinnitetty. Tarkat versiot ovat
+tiedostossa `package.json` (alempana), ja se on niiden ainoa lähde:
+kun riippuvuuksia päivitetään, taulukko voi jäädä jälkeen, mutta
+testattu koodi ei.
+
 Valinnat on tehty niin, että riippuvuuksia on vähän ja jokainen
 ratkaisee selvän ongelman. **Vite** kääntää TypeScriptin ja JSX:n
 itse, eikä React tarvitse erillistä liitännäistä. **React** valittiin,
 koska se on alan yleisin käyttöliittymäkirjasto ja sen malli
-(komponentit, yksisuuntainen datavirta, tila) siirtyy muihin kehyksiin.
+(komponentit, yksisuuntainen datavirta, tila) siirtyy muihin kehyksiin
+(vertailu: taito *Web-sovelluskehykset ja niiden periaatteet*).
 Reititin, tilanhallinta ja datan haku toteutetaan tässä itse
 muutamalla kymmenellä rivillä, jotta periaate näkyy; tuotannossa
 käytetään vakiintuneita kirjastoja, jotka mainitaan kunkin luvun
@@ -81,8 +97,9 @@ esimerkit/
   turvaotsakkeet.ts     CSP ja muut tietoturvaotsakkeet
   palvelin/api.ts       pieni REST-palvelin kehitykseen ja testeihin
   src/02-dom/ ...       lukujen esimerkit ja niiden testit (*.test.ts)
-  src/sovellus/         valmis sovellus
+  src/sovellus/         valmis sovellus ja sen tyylit (tyyli.css)
   e2e/                  Playwright-testit (*.spec.ts)
+  kuvitus/              tämän tutoriaalin kuvakaappaukset (make kuvat)
 ```
 
 Riippuvuudet kiinnitetään tarkkoihin versioihin, ja

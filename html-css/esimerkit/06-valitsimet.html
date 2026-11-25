@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:leveydet" content="480">
+    <title>Valitsimet – Tyyliopas</title>
+    <style>
+      body { margin: 0; padding: 16px;
+             font: 16px/1.5 "DejaVu Sans", sans-serif; }
+      h1 { margin: 0; font-size: 1.5rem; }
+      p { margin: 8px 0; }
+      ul { margin: 0; padding: 0; list-style: none; }
+      li { padding: 4px 12px; }
+      /* @alku valitsimet */
+      main a { color: #1d4f91; }           /* jälkeläinen */
+      .kurssit > li {                      /* lapsi */
+        border-inline-start: 4px solid #1d4f91;
+      }
+      h1 + p { font-size: 1.25rem; }       /* seuraava sisarus */
+      .kurssit > li:nth-child(odd) {       /* pseudoluokka: joka toinen */
+        background-color: #e6edf7;
+      }
+      a[href^="https://"]::after {         /* attribuutti, pseudoelementti */
+        content: " ↗";
+      }
+      /* @loppu valitsimet */
+    </style>
+  </head>
+  <body>
+    <main>
+      <!-- @alku rakenne -->
+      <h1>Kurssit</h1>
+      <p data-nimi="1. kappale" data-tyyli="font-size">Syksyn
+        kurssit on julkaistu.</p>
+      <p data-nimi="2. kappale" data-tyyli="font-size">Lisätietoja:
+        <a href="https://developer.mozilla.org/">MDN</a> ja
+        <a href="#yhteys">yhteystiedot</a>.</p>
+      <ul class="kurssit">
+        <li data-nimi="HTML"
+            data-tyyli="border-inline-start-width background-color">HTML
+          <ul>
+            <li data-nimi="Lomakkeet"
+                data-tyyli="border-inline-start-width background-color"
+                >Lomakkeet</li>
+          </ul>
+        </li>
+        <li data-nimi="CSS"
+            data-tyyli="border-inline-start-width background-color"
+            >CSS</li>
+        <li data-nimi="JavaScript"
+            data-tyyli="border-inline-start-width background-color"
+            >JavaScript</li>
+      </ul>
+      <!-- @loppu rakenne -->
+      <p id="yhteys">opas@example.com</p>
+    </main>
+  </body>
+</html>

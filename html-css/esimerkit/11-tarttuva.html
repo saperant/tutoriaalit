@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:leveydet" content="400">
+    <meta name="testi:saavutettavuus" content="ei">
+    <title>Tarttuva otsikko – Tyyliopas</title>
+    <style>
+      body { margin: 0; padding: 16px;
+             font: 16px/1.5 "DejaVu Sans", sans-serif; }
+      h1 { margin: 0 0 8px; font-size: 1.25rem; }
+      h2 { margin: 0; font-size: 1rem; }
+      ul { margin: 0; padding: 0; list-style: none; }
+      li { padding: 4px 12px; }
+      /* @alku tarttuva */
+      .luettelo {
+        block-size: 160px;
+        overflow: auto;                  /* vierityskontti */
+        border: 1px solid #9aa3b2;
+      }
+      .luettelo h2 {
+        position: sticky;
+        inset-block-start: 0;            /* tarttuu kontin yläreunaan */
+        padding: 4px 12px;
+        background: #e6edf7;
+      }
+      /* @loppu tarttuva */
+    </style>
+  </head>
+  <body>
+    <h1 id="osallistujat">Osallistujat</h1>
+    <!-- @alku rakenne -->
+    <section class="luettelo" tabindex="0"
+             aria-labelledby="osallistujat" data-mitta="kontti">
+      <div>
+        <h2 data-mitta="otsikko A">A</h2>
+        <ul>
+          <li data-mitta="Aalto">Aalto</li>
+          <li>Ahonen</li>
+          <li>Anttila</li>
+          <li>Aro</li>
+          <li data-mitta="Autio">Autio</li>
+        </ul>
+      </div>
+      <div>
+        <h2 data-mitta="otsikko H">H</h2>
+        <ul>
+          <li>Hakala</li>
+          <li>Heikkinen</li>
+          <li>Hiltunen</li>
+          <li>Huttunen</li>
+        </ul>
+      </div>
+    </section>
+    <!-- @loppu rakenne -->
+    <script>
+      // Vain testiä varten: vieritetään luetteloa 100 pikseliä.
+      document.querySelector(".luettelo").scrollTop = 100;
+    </script>
+  </body>
+</html>

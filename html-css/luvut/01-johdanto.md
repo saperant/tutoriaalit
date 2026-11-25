@@ -96,6 +96,11 @@ ruudunlukija ja muut avustavat teknologiat sivusta saavat. Data-
 attribuutit ovat vain testausta varten; tuotantokoodissa niitä ei
 tarvita.
 
+Osasta esimerkkejä on mukana kuvakaappaus, joka on otettu samalla
+selaimella (`make kuvat`). Testausselain käyttää DejaVu Sans -fonttia,
+jotta mitat ovat samat kaikilla koneilla, joten kuvien teksti näyttää
+hieman erilaiselta kuin omassa selaimessasi.
+
 ## Ensimmäinen sivu
 
 Tehtävä: kirjaston aukioloajat. Pienin kunnollinen HTML-dokumentti:
@@ -105,6 +110,9 @@ Tehtävä: kirjaston aukioloajat. Pienin kunnollinen HTML-dokumentti:
 
 ```{.tuloste tiedosto="esimerkit/01-aukiolo.odotettu"}
 ```
+
+![Sivu selaimessa. Ulkoasu tulee kokonaan selaimen
+oletustyyleistä.](kuvat/01-aukiolo-1024.png){width=55%}
 
 - `<!doctype html>` valitsee standarditilan. Ilman sitä selain
   käyttää vanhojen sivujen *quirks*-tilaa, jossa laatikkomalli toimii

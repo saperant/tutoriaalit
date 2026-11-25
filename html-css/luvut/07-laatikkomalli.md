@@ -7,6 +7,14 @@ virtaukseen*: lohkotason elementit (`<p>`, `<div>`, `<h1>`) allekkain
 koko leveydeltä ja tekstitason elementit (`<a>`, `<strong>`) rivin
 sisään tekstin tavoin.
 
+![Laatikon osat ja `box-sizing`-arvojen ero. Kaavio on itse
+HTML-sivu (`esimerkit/07-kaavio.html`), ja mitat ovat selaimen
+laskemia.](kuvat/07-kaavio-760.png){width=90%}
+
+Taustaväri ja -kuva ulottuvat reunuksen ulkoreunaan asti; marginaali
+on aina läpinäkyvä. Kehittäjätyökalujen *Elements*-näkymä piirtää
+valitusta elementistä saman kaavion todellisin mitoin.
+
 ## box-sizing
 
 ```{.css tiedosto="esimerkit/07-laatikko.html" osa="laatikot"}
@@ -34,7 +42,7 @@ joten väli on 24 eikä 40 pikseliä. Sama tapahtuu vanhemman ja
 ensimmäisen lapsen marginaalille, mikä selittää "ylimääräisen" välin
 otsikon yläpuolella. Flex- ja grid-asettelussa marginaalit eivät
 yhdisty. Siksi välit kannattaa tehdä asettelun `gap`-ominaisuudella
-(luvut 8 ja 9) tai yhdensuuntaisilla marginaaleilla, esimerkiksi vain
+(luvut 9 ja 10) tai yhdensuuntaisilla marginaaleilla, esimerkiksi vain
 `margin-block-end`.
 
 ## Loogiset ominaisuudet
@@ -78,12 +86,53 @@ tyylien uudelleenkirjoitusta.
 | `%` | sisältävään laatikkoon | leveydet |
 | `ch` | merkin "0" leveyteen | tekstipalstan leveys (`65ch`) |
 | `vw`, `vh`, `dvh` | näkymän kokoon | koko näkymän osiot |
-| `fr` | grid-ruudukon vapaaseen tilaan | sarakkeet (luku 9) |
+| `fr` | grid-ruudukon vapaaseen tilaan | sarakkeet (luku 10) |
 
 Fonttikoot ja rajapisteet `rem`-yksiköissä noudattavat käyttäjän
 selaimeen asettamaa fonttikokoa; pikseleinä ne ohittaisivat sen.
 `dvh` ottaa huomioon mobiiliselaimen piiloutuvan osoitepalkin, jonka
 kanssa `100vh` on liian korkea.
+
+## Taustat, reunat ja varjot
+
+Laatikon pinta tehdään kolmella ominaisuudella:
+
+```{.css tiedosto="esimerkit/07-pinnat.html" osa="pinnat"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-pinnat.odotettu"}
+```
+
+![Sama kortti reunuksella, varjolla ja
+väriliu'ulla.](kuvat/07-pinnat-640.png){width=80%}
+
+- **`background`** on väri, kuva (`url(...)`) tai liukuväri
+  (`linear-gradient()`). Taustakuvan asettelua ohjaavat
+  `background-size: cover` (täyttää laatikon ja rajaa yli menevän
+  osan), `background-position` ja `background-repeat`. Taustakuva on
+  koriste: sisältöön kuuluva kuva on `<img>`-elementti, jolla on
+  `alt`-teksti (luku 3).
+- **`border-radius`** pyöristää kulmat. Arvo `50%` tekee neliöstä
+  ympyrän ja suuri pituus (`999px`) pillerin muotoisen painikkeen.
+- **`box-shadow`** saa arvot *siirtymä x, siirtymä y, sumennus, väri*.
+  Varjo piirretään laatikon ulkopuolelle eikä vaikuta asetteluun:
+  raportissa kaikki kolme korttia ovat samankokoisia. Sama pätee
+  `outline`-ominaisuuteen, jolla fokuskehys tehdään (luku 5).
+- Värit annetaan heksalukuna (`#1d4f91`) tai funktiolla.
+  `rgb(0 0 0 / 20%)` on musta, jonka peittävyys on 20 prosenttia.
+  Väriavaruuksiin ja teemoihin palataan luvussa 13.
+
+Taustoja voi olla useita päällekkäin, ja kunkin voi rajata sisältö-,
+täyte- tai reunuslaatikkoon. Luvun alun kaavion laatikot on väritetty
+näin: sininen tausta on rajattu sisältöön, ja sen alta näkyvä vihreä
+täyttää myös täytteen.
+
+```{.css tiedosto="esimerkit/07-kaavio.html" osa="malli"}
+```
+
+Kortin erottaminen taustasta pelkällä varjolla ei riitä kaikille:
+pakotettujen värien tilassa (luku 12) varjot ja taustavärit
+poistetaan, joten rajaava reunus kannattaa säilyttää.
 
 ## display ja ylivuoto
 
@@ -91,7 +140,7 @@ kanssa `100vh` on liian korkea.
   on rivin sisällä mutta ottaa mitat, `none` poistaa elementin
   asettelusta ja saavutettavuuspuusta.
 - `display: flex` ja `grid` tekevät elementistä asettelukontin
-  lapsilleen (luvut 8 ja 9).
+  lapsilleen (luvut 9 ja 10).
 - `overflow: auto` lisää vierityspalkin vain tarvittaessa; `hidden`
   leikkaa sisällön, mikä voi piilottaa fokuksen ja tekstiä
   suurennettaessa.
@@ -115,9 +164,12 @@ kanssa `100vh` on liian korkea.
 
 ## Itsearviointi
 
-- Osaat laskea laatikon koon `content-box`- ja `border-box`-malleissa.
+- Osaat nimetä laatikon osat ja laskea laatikon koon `content-box`-
+  ja `border-box`-malleissa.
 - Osaat selittää marginaalien yhdistymisen ja välttää sen yllätykset.
 - Osaat käyttää loogisia ominaisuuksia ja kertoa, miksi ne ovat
   fyysisiä parempi oletus.
 - Osaat valita yksikön käyttötarkoituksen mukaan niin, että sivu
   noudattaa käyttäjän fonttikokoa.
+- Osaat tehdä kortin pinnan taustalla, pyöristyksellä ja varjolla
+  niin, että se erottuu myös ilman varjoa.

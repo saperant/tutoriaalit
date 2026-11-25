@@ -1,0 +1,13 @@
+[leveys 560 px]
+video: x=16 y=174 l=322 k=182
+iframe: x=16 y=404 l=482 k=152
+[saavutettavuuspuu]
+- main:
+  - heading "Kurssin esittely" [level=1]
+  - group: Mitä kurssilla tarvitaan?
+  - group:
+    - text: Paljonko kurssi maksaa?
+    - paragraph: Kurssi on maksuton.
+  - heading "Video" [level=2]
+  - heading "Upotettu sivu" [level=2]
+  - iframe

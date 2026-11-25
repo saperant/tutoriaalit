@@ -88,6 +88,22 @@ Periytyy: `color`, `font`, `line-height`, `text-*`. Ei periydy:
 - `rem` fonteille, väleille ja rajapisteille; `px` reunoille; `ch`
   palstalle; `dvh` koko näkymälle; `fr` gridiin.
 
+# Teksti, asemointi ja liike
+
+- `font: 1rem/1.5 system-ui, sans-serif`; koot `rem` (`em` kertautuu),
+  rivikorkeus paljaana lukuna, palsta `max-inline-size: 65ch`.
+- Web-fontti: WOFF2, `font-display: swap`, oma palvelin.
+
+| Tarve | Ratkaisu |
+|----------------------|------------------------------------------|
+| merkki vanhemman kulmaan | vanhempi `relative`, lapsi `absolute` + `inset-*` |
+| tarttuva otsikko | `position: sticky; inset-block-start: 0` |
+| `z-index` ei toimi | etsi pinoutumiskonteksti; `isolation: isolate` |
+| modaali, valikko | `<dialog>` + `showModal()`, `popover` |
+| tilan vaihto | `transition: opacity 150ms ease-out` lepotilaan |
+| toistuva liike | `@keyframes` + `animation`; animoi `transform`, `opacity` |
+| vähennetty liike | `prefers-reduced-motion: reduce`: liike pois |
+
 # Teemat ja kyselyt
 
 - Primitiivit (`--sininen-700`) → semanttiset (`--pinta`, `--teksti`,
@@ -109,13 +125,11 @@ Periytyy: `color`, `font`, `line-height`, `text-*`. Ei periydy:
 - `100vh` mobiilissa liian korkea → `100dvh`.
 - `type="number"` postinumerolle → `inputmode="numeric"`.
 - Kiinteä `height` tekstille; `px`-fontit ohittavat käyttäjän koon.
+- `line-height: 24px` periytyy pituutena; `transition: all`.
 
 # Työkalut
 
-| Tarkoitus | Työkalu |
-|-----------|---------|
-| HTML | `html-validate sivu.html`, validator.w3.org/nu |
-| saavutettavuus | axe, Lighthouse, NVDA/VoiceOver, näppäimistö |
-| CSS | Stylelint, Prettier |
-| tuki | MDN Baseline, caniuse.com |
-| tutkiminen | kehittäjätyökalut: Computed, Accessibility, grid/flex-peitot |
+HTML: `html-validate sivu.html`, validator.w3.org/nu. Saavutettavuus:
+axe, Lighthouse, NVDA/VoiceOver, näppäimistö. CSS: Stylelint, Prettier.
+Tuki: MDN Baseline, caniuse.com. Kehittäjätyökalut: Computed,
+Accessibility, grid- ja flex-peitot.

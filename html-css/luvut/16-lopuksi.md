@@ -22,22 +22,32 @@ CSS:
 9. Matala, tasainen spesifisyys: yksi luokka per valitsin, ei
    tunnisteita, kerrokset järjestämään.
 10. Loogiset ominaisuudet ja `rem`-yksiköt oletuksena.
-11. Grid runkoon, flexbox komponentteihin, `gap` väleihin.
-12. Luontaiset asettelut ensin (`auto-fit`, `flex-wrap`, `clamp()`),
+11. Rivikorkeus paljaana lukuna, tekstipalsta enintään noin 65 merkkiä,
+    fonttikoot `rem`-yksiköissä.
+12. Grid runkoon, flexbox komponentteihin, `gap` väleihin.
+13. Asemointi vain osille, joiden kuuluu olla muun sisällön päällä.
+    Kun `z-index` ei toimi, etsi pinoutumiskonteksti; dialogit
+    `<dialog>`-elementillä.
+14. Luontaiset asettelut ensin (`auto-fit`, `flex-wrap`, `clamp()`),
     mediakyselyt mobile first, konttikyselyt komponentteihin.
-13. Arvot tokeneista; semanttiset tokenit teemoille.
-14. Näkyvä fokus, kontrasti vähintään 4,5:1, käyttäjän asetukset
+15. Arvot tokeneista; semanttiset tokenit teemoille.
+16. Liike lyhyenä ja `transform`- ja `opacity`-ominaisuuksilla;
+    vähennetyn liikkeen muunnelma kirjoitetaan samalla kertaa.
+17. Näkyvä fokus, kontrasti vähintään 4,5:1, käyttäjän asetukset
     (`prefers-reduced-motion`, `prefers-color-scheme`) kunnioitettuina.
 
 Testaus:
 
-15. Saavutettavuuspuu, näppäimistö, 200 %:n zoomaus ja 320 pikselin
+18. Saavutettavuuspuu, näppäimistö, 200 %:n zoomaus ja 320 pikselin
     leveys jokaiselle uudelle näkymälle.
 
 ## Mihin tästä
 
 - *Web-sovellukset*: DOM, tapahtumat, lomakkeiden käsittely
   JavaScriptillä, saavutettavat dynaamiset komponentit ja suorituskyky.
+- *Web-sovelluskehykset ja niiden periaatteet*: sama sovellus
+  Reactilla, Vuella, Angularilla ja Sveltellä sekä kehysten yhteiset
+  periaatteet.
 - *JavaScript*: kieli itse.
 - *Tietoturvan perusteet*: XSS, sisällön turvallisuuskäytäntö (CSP) ja
   lomakkeiden suojaus.

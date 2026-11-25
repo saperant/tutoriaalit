@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:leveydet" content="480">
+    <meta name="testi:saavutettavuus" content="ei">
+    <title>Siirtymä – Tyyliopas</title>
+    <style>
+      body { margin: 0; padding: 24px;
+             font: 16px/1.5 "DejaVu Sans", sans-serif; }
+      h1 { margin: 0 0 16px; font-size: 1.25rem; }
+      main { display: flex; gap: 16px; }
+      /* @alku siirtyma */
+      .painike {
+        padding: 8px 16px;
+        border: 2px solid #1d4f91;
+        border-radius: 6px;
+        background: #fff;
+        color: #1d4f91;
+        font: inherit;
+        transition: background-color 150ms ease-out,
+                    color 150ms ease-out,
+                    transform 150ms ease-out;
+      }
+      .painike:hover,
+      .painike:focus-visible,
+      .painike.aktiivinen {
+        background: #1d4f91;
+        color: #fff;
+        transform: translateY(-2px);     /* nousee hieman */
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .painike { transition-property: background-color, color; }
+        .painike:hover,
+        .painike:focus-visible,
+        .painike.aktiivinen { transform: none; }
+      }
+      /* @loppu siirtyma */
+    </style>
+  </head>
+  <body>
+    <h1>Siirtymä kahden tilan välillä</h1>
+    <main>
+      <!-- @alku rakenne -->
+      <button type="button" class="painike" data-nimi="lepotila"
+              data-tyyli="background-color transform">Tallenna</button>
+      <button type="button" class="painike aktiivinen"
+              data-nimi="aktiivinen"
+              data-tyyli="background-color transform">Tallenna</button>
+      <button type="button" class="painike" data-nimi="siirtymä"
+              data-tyyli="transition-property">Tallenna</button>
+      <!-- @loppu rakenne -->
+    </main>
+  </body>
+</html>

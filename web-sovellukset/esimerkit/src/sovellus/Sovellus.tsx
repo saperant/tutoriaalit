@@ -3,6 +3,7 @@ import { VarausLomake } from "../05-lomakkeet/VarausLomake.tsx";
 import { TilaHaku } from "../04-react/TilaHaku.tsx";
 import type { Asiakas } from "../07-verkko/asiakas.ts";
 import { type Haku, useHaku } from "../07-verkko/useHaku.ts";
+import { Virheraja } from "../07-verkko/Virheraja.tsx";
 import {
   Linkki, siirry, sovita, useSijainti,
 } from "../08-reititys/reititin.tsx";
@@ -38,7 +39,9 @@ export function Sovellus({ api, tanaan }: { api: Asiakas; tanaan: string }) {
           <Linkki to="/raportti">Raportti</Linkki>
         </nav>
       </header>
-      <main>{sisalto}</main>
+      <main>
+        <Virheraja key={pathname}>{sisalto}</Virheraja>
+      </main>
     </>
   );
 }

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:saavutettavuus" content="ei">
+    <title>Koko ja rivikorkeus – Tyyliopas</title>
+    <style>
+      body { margin: 0; font: 16px/1.5 "DejaVu Sans", sans-serif; }
+      ul { margin: 0; }
+      /* @alku koko */
+      .em  { font-size: 1.25em; }   /* suhteessa vanhemman kokoon */
+      .rem { font-size: 1.25rem; }  /* suhteessa juuren kokoon */
+      /* @loppu koko */
+      /* @alku rivi */
+      .kerroin { line-height: 1.5; }   /* periytyy kertoimena */
+      .pituus  { line-height: 24px; }  /* periytyy pituutena */
+      .otsikko { font-size: 2rem; margin: 0; }
+      /* @loppu rivi */
+    </style>
+  </head>
+  <body>
+    <!-- @alku rakenne -->
+    <ul class="em" data-nimi="em, taso 1" data-tyyli="font-size">
+      <li>Taso 1
+        <ul class="em" data-nimi="em, taso 2" data-tyyli="font-size">
+          <li>Taso 2</li>
+        </ul>
+      </li>
+    </ul>
+    <ul class="rem" data-nimi="rem, taso 1" data-tyyli="font-size">
+      <li>Taso 1
+        <ul class="rem" data-nimi="rem, taso 2" data-tyyli="font-size">
+          <li>Taso 2</li>
+        </ul>
+      </li>
+    </ul>
+    <!-- @loppu rakenne -->
+    <!-- @alku otsikot -->
+    <div class="kerroin">
+      <p class="otsikko" data-mitta="otsikko, kerroin 1.5"
+         data-tyyli="line-height">Otsikko</p>
+    </div>
+    <div class="pituus">
+      <p class="otsikko" data-mitta="otsikko, pituus 24px"
+         data-tyyli="line-height">Otsikko</p>
+    </div>
+    <!-- @loppu otsikot -->
+  </body>
+</html>

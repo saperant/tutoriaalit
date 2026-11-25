@@ -72,6 +72,10 @@ Tämä kilpatilanne on yleisin datanhaun virhe. Ratkaisu on perua
 vanhentunut pyyntö `AbortController`-oliolla efektin siivouksessa ja
 hylätä sen tulos:
 
+![Kilpatilanne aikajanalla. Ilman peruutusta hitaan Aalto-pyynnön
+vastaus korvaa näkymän, vaikka käyttäjä valitsi jo
+Kiven.](kuvat/07-kilpatilanne.png){width=100%}
+
 ```{.typescript tiedosto="esimerkit/src/07-verkko/useHaku.ts" osa="haku"}
 ```
 
@@ -98,6 +102,45 @@ katoaa listasta ilman odotusta:
 Optimistinen päivitys sopii toimintoihin, jotka ovat peruttavissa ja
 harvoin epäonnistuvia: tykkäys, merkintä luetuksi, järjestyksen muutos.
 Se ei sovi maksuun tai varaukseen, jossa kilpailija voi ehtiä ensin.
+
+## Kun komponentti kaatuu
+
+Hook `useHaku` hoitaa odotetut virheet: verkko katkeaa tai palvelin
+vastaa virheellä, ja näkymä näyttää virhetilan ja tarjoaa uutta
+yritystä:
+
+![Odotettu virhe: palvelin vastasi tilalla 503. Näkymä kertoo, mitä
+tapahtui, ja tarjoaa uuden yrityksen.](kuvat/07-virhe.png){width=70%}
+
+Odottamaton virhe on ohjelmointivirhe renderöinnissä, esimerkiksi
+`undefined`-arvon kentän lukeminen. Silloin React poistaa koko
+komponenttipuun, ja käyttäjälle jää tyhjä sivu. **Virheraja** (*error
+boundary*) rajaa vahingon: se on komponentti, joka ottaa kiinni
+lastensa renderöinnissä heitetyt poikkeukset ja näyttää niiden
+tilalla varanäkymän.
+
+```{.typescript tiedosto="esimerkit/src/07-verkko/Virheraja.tsx" osa="virheraja"}
+```
+
+```{.typescript tiedosto="esimerkit/src/07-verkko/Virheraja.test.tsx" osa="testi"}
+```
+
+Testissä otsikko säilyy ja vain rajan sisäpuoli korvautuu.
+`componentDidCatch` saa virheen ja komponenttipinon, ja se on oikea
+paikka lähettää virhe seurantapalveluun: kehittäjä ei muuten saa
+tietää käyttäjän selaimessa tapahtuneesta kaatumisesta.
+
+- Raja ottaa kiinni vain renderöinnin ja efektien virheet. Tapahtuman
+  käsittelijän ja lupauksen virheet käsitellään itse (`try`/`catch`,
+  `useHaku`), koska ne eivät tapahdu renderöinnin aikana.
+- Rajoja on muutama, ei yhtä eikä sataa: sovelluksen juuressa ja
+  itsenäisten osien (reitti, sivupalkki, upotettu kaavio) ympärillä.
+  Valmiissa sovelluksessa (luku 8) raja on reitin näkymän ympärillä, ja
+  `key`-propsi nollaa sen, kun reitti vaihtuu.
+- Varanäkymä kertoo, että jotain meni vikaan, ja antaa keinon jatkaa.
+  Teknistä virheilmoitusta ei näytetä käyttäjälle.
+- Kirjasto `react-error-boundary` tarjoaa saman valmiina
+  funktiokomponenttien kanssa käytettävänä.
 
 ## Välimuisti
 
@@ -147,4 +190,6 @@ ja välttävät näin vesiputoukset (luku 11).
   milloin se sopii.
 - Osaat testata asiakkaan sekä oikeaa paikallista palvelinta vastaan
   että valefetchillä.
+- Osaat rajata renderöintivirheen virherajalla ja kertoa, mitä
+  virheitä se ei ota kiinni.
 - Osaat kuvata stale-while-revalidate-välimuistin periaatteen.

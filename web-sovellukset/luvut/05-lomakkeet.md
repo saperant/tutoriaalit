@@ -5,7 +5,9 @@ validointi, lähetys palvelimelle, odotustila, virhe ja onnistuminen.
 Kun tällaista tilaa hoidetaan erillisillä `useState`-muuttujilla, syntyy
 mahdottomia yhdistelmiä, kuten "lähetetään" ja "valmis" yhtä aikaa.
 Ratkaisu on mallintaa tila tilakoneena ja keskittää siirtymät
-**reduceriin**.
+**reduceriin**. Luvussa 2 lomake luettiin `FormData`-oliosta
+lähetyshetkellä; tässä kenttien arvot ovat Reactin tilassa, jotta
+näkymä voi reagoida niihin joka näppäilyllä.
 
 ## Validointi
 
@@ -25,6 +27,15 @@ verrata suoraan. Kellonaika ja aikavyöhyke ovat oma kysymyksensä:
 tuotannossa ajat tallennetaan palvelimelle UTC-aikaleimoina, ja
 käyttöliittymä näyttää ne käyttäjän aikavyöhykkeessä (`Intl.DateTimeFormat`).
 
+Selaimen `Intl`-rajapinta hoitaa muunkin kielestä riippuvan
+muotoilun, joten sitä ei kirjoiteta itse:
+`Intl.DateTimeFormat("fi-FI")` muotoilee päivämäärän (1.12.2026),
+`Intl.NumberFormat` luvut ja valuutat (1 234,50 €),
+`Intl.PluralRules` valitsee monikkomuodon ja `Intl.Collator`
+aakkostaa ääkköset oikein. Tallennus- ja siirtomuoto pysyy kielestä
+riippumattomana (ISO 8601, piste desimaalierottimena), ja muotoilu
+tehdään vasta näkymässä.
+
 ## Tila erotelluksi unioniksi
 
 Lomakkeen tila on eroteltu unioni (taito *TypeScript*), jossa jokaisella
@@ -32,6 +43,23 @@ vaiheella on juuri ne tiedot, jotka siinä ovat olemassa. Varaus-id on
 vain valmiissa tilassa, virheilmoitus vain virhetilassa:
 
 ```{.typescript tiedosto="esimerkit/src/05-lomakkeet/varausReducer.ts" osa="tila"}
+```
+
+```{.dot otsikko="Lomakkeen tilakone. Nuolet ovat reducerin sallimat siirtymät; muut toiminnot eivät muuta tilaa."}
+digraph {
+  rankdir=LR; nodesep=0.5; ranksep=0.6;
+  node [shape=ellipse];
+  alku [shape=point, width=0.12];
+  m [label="muokkaus"]; l [label="lahetys"];
+  v [label="valmis", peripheries=2]; e [label="virhe"];
+  alku -> m;
+  m -> m [label="muuta;\nlaheta, kun\nvirheitä"];
+  m -> l [label="laheta,\nkun kelpaa"];
+  l -> v [label="onnistui"];
+  l -> e [label="epaonnistui"];
+  e -> m [label="muuta"];
+  e -> l [label="laheta"];
+}
 ```
 
 Reducer on puhdas funktio `(tila, toiminto) → uusi tila`. Se päättää,
@@ -57,6 +85,14 @@ ovat kontrolloituja: arvo tulee tilasta ja jokainen muutos on toiminto.
 ```{.typescript tiedosto="esimerkit/src/05-lomakkeet/VarausLomake.tsx" osa="lomake"}
 ```
 
+![Vaihe "muokkaus" virheellisen lähetyksen jälkeen.](kuvat/05-virheet.png){width=45%}&nbsp;&nbsp;&nbsp;&nbsp;
+![Vaihe "lahetys".](kuvat/05-lahetys.png){width=45%}
+
+Kuvissa lomake on kahdessa vaiheessa. Vasemmalla on vaihe "muokkaus"
+virheellisen lähetyksen jälkeen: virheet ovat kenttien alla, ja fokus
+on ensimmäisessä virheellisessä kentässä. Oikealla on vaihe "lahetys":
+painike on pois käytöstä, ja sen teksti kertoo tilan.
+
 Neljä ratkaisua ansaitsee huomion.
 
 1. **Lähetys tapahtumankäsittelijässä.** Pyyntö on käyttäjän toiminnon
@@ -72,7 +108,8 @@ Neljä ratkaisua ansaitsee huomion.
    `aria-invalid`-attribuutin, ja virheteksti liitetään siihen
    `aria-describedby`-attribuutilla, joten ruudunlukija lukee sen
    kentän nimen jälkeen. Fokus siirretään ensimmäiseen virheelliseen
-   kenttään.
+   kenttään. Malli on sama kuin taidon *HTML ja CSS* lomakkeissa;
+   erona on, että virheet lasketaan selaimessa eikä sivua ladata.
 4. **Arvot säilyvät virheessä.** Epäonnistuneen lähetyksen jälkeen
    käyttäjä ei kirjoita mitään uudelleen. Virheilmoitus on
    `role="alert"`-alueessa ja onnistuminen `role="status"`-alueessa.

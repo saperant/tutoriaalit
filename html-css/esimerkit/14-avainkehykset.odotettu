@@ -1,0 +1,6 @@
+[leveys 480 px]
+latain: animation-name=sykki; animation-duration=2s
+[saavutettavuuspuu]
+- main:
+  - heading "Varaukset" [level=1]
+  - status: Ladataan varauksia…

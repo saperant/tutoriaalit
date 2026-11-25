@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:leveydet" content="640">
+    <meta name="testi:saavutettavuus" content="ei">
+    <title>Taustat, reunat ja varjot – Tyyliopas</title>
+    <style>
+      body { margin: 0; font: 16px/1.5 "DejaVu Sans", sans-serif; }
+      h1 { margin: 0; padding: 12px 24px; font-size: 1.25rem; }
+      h2 { margin: 0; font-size: 1rem; }
+      p { margin: 0; }
+      main { display: flex; gap: 24px; padding: 24px;
+             background: #f3f5f8; }
+      /* @alku pinnat */
+      .kortti {
+        inline-size: 150px;
+        padding: 16px;
+        background: #fff;
+        border: 1px solid #c4c9d2;
+        border-radius: 8px;              /* pyöristetyt kulmat */
+      }
+      .varjo {
+        box-shadow: 0 4px 12px rgb(0 0 0 / 20%);
+      }
+      .korostus {
+        background: linear-gradient(135deg, #1d4f91, #3f7fca);
+        border-color: transparent;
+        color: #fff;
+      }
+      /* @loppu pinnat */
+    </style>
+  </head>
+  <body>
+    <h1>Kortin pinta</h1>
+    <main>
+      <!-- @alku rakenne -->
+      <article class="kortti" data-mitta="reuna">
+        <h2>Reuna</h2>
+        <p>Tausta, reunus ja pyöristys.</p>
+      </article>
+      <article class="kortti varjo" data-mitta="varjo">
+        <h2>Varjo</h2>
+        <p>Varjo ei muuta laatikon kokoa.</p>
+      </article>
+      <article class="kortti korostus" data-mitta="liukuväri">
+        <h2>Liukuväri</h2>
+        <p>Taustana on väriliuku.</p>
+      </article>
+      <!-- @loppu rakenne -->
+    </main>
+  </body>
+</html>

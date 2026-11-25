@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:leveydet" content="720">
+    <meta name="testi:saavutettavuus" content="ei">
+    <title>Pinoutumiskonteksti – Tyyliopas</title>
+    <style>
+      body { margin: 0; padding: 16px;
+             font: 16px/1.5 "DejaVu Sans", sans-serif; }
+      h1 { margin: 0 0 8px; font-size: 1.25rem; }
+      h2 { margin: 0 0 8px; font-size: 1rem; }
+      main { display: flex; gap: 32px; }
+      .alue { position: relative; inline-size: 320px;
+              block-size: 170px; }
+      .kortti, .ilmoitus, .valikko { box-sizing: border-box;
+        padding: 8px 12px; border-radius: 6px; }
+      .kortti { inline-size: 200px; block-size: 110px;
+                background: #e6edf7; border: 1px solid #1d4f91; }
+      .valikko { inline-size: 150px; block-size: 90px;
+                 background: #fff; border: 2px solid #1d4f91;
+                 box-shadow: 0 4px 12px rgb(0 0 0 / 25%); }
+      .ilmoitus { inline-size: 190px; block-size: 70px;
+                  background: #ffe9a8; border: 1px solid #8a6100; }
+      /* @alku pinot */
+      .kortti   { position: relative; z-index: 1; }
+      .valikko  { position: absolute; z-index: 9999;
+                  inset-block-start: 40px; inset-inline-start: 40px; }
+      .ilmoitus { position: absolute; z-index: 2;
+                  inset-block-start: 70px; inset-inline-start: 120px; }
+
+      .korjattu .kortti { z-index: auto; }  /* ei omaa kontekstia */
+      /* @loppu pinot */
+    </style>
+  </head>
+  <body>
+    <h1>Kumpi on päällä?</h1>
+    <main>
+      <!-- @alku rakenne -->
+      <section>
+        <h2>Ansa</h2>
+        <div class="alue" data-nimi="ansa">
+          <div class="kortti" data-nimi="kortti">Kortti (1)
+            <div class="valikko" data-nimi="valikko">Valikko (9999)</div>
+          </div>
+          <div class="ilmoitus" data-nimi="ilmoitus">Ilmoitus (2)</div>
+        </div>
+      </section>
+      <section class="korjattu">
+        <h2>Korjattu</h2>
+        <div class="alue" data-nimi="korjattu">
+          <div class="kortti" data-nimi="kortti">Kortti (auto)
+            <div class="valikko" data-nimi="valikko">Valikko (9999)</div>
+          </div>
+          <div class="ilmoitus" data-nimi="ilmoitus">Ilmoitus (2)</div>
+        </div>
+      </section>
+      <!-- @loppu rakenne -->
+    </main>
+    <script>
+      // Vain raporttia varten: mikä elementti on päällimmäisenä
+      // kohdassa, jossa valikko ja ilmoitus ovat päällekkäin?
+      for (const alue of document.querySelectorAll(".alue")) {
+        const r = alue.getBoundingClientRect();
+        const e = document.elementFromPoint(r.x + 150, r.y + 100);
+        console.log(`${alue.dataset.nimi}: päällimmäisenä ` +
+                    e.dataset.nimi);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:saavutettavuus" content="ei">
+    <title>Artikkelin typografia – Tyyliopas</title>
+    <style>
+      body { margin: 0; font: 16px "DejaVu Sans", sans-serif; }
+      h1 { margin: 0; padding: 12px 24px; font-size: 1rem;
+           background: #eef1f5; }
+      section { padding: 16px 24px; }
+      section + section { border-block-start: 1px solid #c4c9d2; }
+      /* @alku typografia */
+      .ladottu {
+        max-inline-size: 65ch;             /* rivin pituus */
+        font: 1rem/1.6 "DejaVu Sans", system-ui, sans-serif;
+        color: #1a1f29;
+      }
+      .ladottu h2 {
+        font-size: 2rem;
+        line-height: 1.2;                  /* otsikossa tiiviimpi */
+        text-wrap: balance;                /* tasapituiset rivit */
+        margin-block: 0 0.5em;
+      }
+      .ladottu p { margin-block: 0 1em; }
+      .ladottu .ingressi { font-size: 1.25rem; line-height: 1.4; }
+      .ladottu td:last-child {
+        text-align: end;
+        font-variant-numeric: tabular-nums;  /* tasalevyiset numerot */
+      }
+      /* @loppu typografia */
+      table { border-collapse: collapse; }
+      td, th { padding: 2px 16px 2px 0; text-align: start; }
+    </style>
+  </head>
+  <body>
+    <h1>Sama teksti oletustyyleillä ja ladottuna</h1>
+    <section data-mitta="oletustyylit">
+      <h2>Hyvä rivi on lyhyempi kuin luulisi, ja sen ympärillä on
+        ilmaa</h2>
+      <p class="ingressi">Leipäteksti luetaan rivi kerrallaan. Silmä
+        löytää seuraavan rivin alun sitä varmemmin, mitä lyhyempi matka
+        sinne on.</p>
+      <p>Painetussa kirjassa rivillä on noin 60–70 merkkiä. Leveällä
+        näytöllä selain latoo oletuksena koko ikkunan levyisen rivin,
+        jolloin merkkejä on helposti yli sata ja lukija eksyy rivin
+        vaihtuessa. Rivin pituus rajataan siksi tekstipalstan
+        leveydellä, ja rivikorkeus valitaan sen mukaan: pidempi rivi
+        tarvitsee enemmän riviväliä.</p>
+      <table>
+        <tbody>
+          <tr><th scope="row">Otsikko</th><td>32 px</td></tr>
+          <tr><th scope="row">Ingressi</th><td>20 px</td></tr>
+          <tr><th scope="row">Leipäteksti</th><td>16 px</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <!-- @alku rakenne -->
+    <section class="ladottu" data-mitta="ladottu">
+      <h2 data-nimi="otsikko" data-tyyli="font-size line-height">Hyvä
+        rivi on lyhyempi kuin luulisi, ja sen ympärillä on ilmaa</h2>
+      <p class="ingressi" data-nimi="ingressi"
+         data-tyyli="font-size line-height">Leipäteksti luetaan rivi
+        kerrallaan. Silmä löytää seuraavan rivin alun sitä varmemmin,
+        mitä lyhyempi matka sinne on.</p>
+      <p data-nimi="leipäteksti" data-tyyli="font-size line-height">
+        Painetussa kirjassa rivillä on noin 60–70 merkkiä. Leveällä
+        näytöllä selain latoo oletuksena koko ikkunan levyisen rivin,
+        jolloin merkkejä on helposti yli sata ja lukija eksyy rivin
+        vaihtuessa. Rivin pituus rajataan siksi tekstipalstan
+        leveydellä, ja rivikorkeus valitaan sen mukaan: pidempi rivi
+        tarvitsee enemmän riviväliä.</p>
+      <table>
+        <tbody>
+          <tr><th scope="row">Otsikko</th><td>32 px</td></tr>
+          <tr><th scope="row">Ingressi</th><td>20 px</td></tr>
+          <tr><th scope="row">Leipäteksti</th><td>16 px</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <!-- @loppu rakenne -->
+  </body>
+</html>

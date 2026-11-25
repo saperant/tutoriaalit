@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="testi:leveydet" content="640">
+    <meta name="testi:saavutettavuus" content="ei">
+    <title>Absoluuttinen asemointi – Tyyliopas</title>
+    <style>
+      body { margin: 0; padding: 24px;
+             font: 16px/1.5 "DejaVu Sans", sans-serif; }
+      h1 { margin: 0 0 16px; font-size: 1.25rem; }
+      main { display: flex; gap: 32px; }
+      h2 { margin: 0; font-size: 1rem; }
+      p { margin: 0; }
+      /* @alku merkki */
+      .kortti {
+        inline-size: 200px;
+        padding: 16px;
+        border: 1px solid #9aa3b2;
+        border-radius: 8px;
+      }
+      .ankkuri { position: relative; }   /* merkin sisältävä lohko */
+      .merkki {
+        position: absolute;
+        inset-block-start: 8px;          /* etäisyys yläreunasta */
+        inset-inline-end: 8px;           /* etäisyys rivin lopusta */
+        padding: 2px 10px;
+        border-radius: 999px;
+        background: #1d4f91;
+        color: #fff;
+        font-size: 0.875rem;
+      }
+      /* @loppu merkki */
+    </style>
+  </head>
+  <body>
+    <h1>Kurssit</h1>
+    <main>
+    <!-- @alku rakenne -->
+    <article class="kortti ankkuri" data-mitta="kortti A">
+      <h2>Kurssi A</h2>
+      <p>Vanhemmalla on <code>position: relative</code>.</p>
+      <span class="merkki" data-mitta="merkki A">Uusi</span>
+    </article>
+    <article class="kortti" data-mitta="kortti B">
+      <h2>Kurssi B</h2>
+      <p>Vanhempaa ei ole asemoitu.</p>
+      <span class="merkki" data-mitta="merkki B">Uusi</span>
+    </article>
+    <!-- @loppu rakenne -->
+    </main>
+  </body>
+</html>

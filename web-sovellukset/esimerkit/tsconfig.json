@@ -15,5 +15,5 @@
     "skipLibCheck": true,
     "types": ["node", "vite/client"]
   },
-  "include": ["src", "e2e", "palvelin", "*.ts"]
+  "include": ["src", "e2e", "kuvitus", "palvelin", "*.ts"]
 }

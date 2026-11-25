@@ -1,5 +1,12 @@
 # Kuvat, grafiikka ja taulukot
 
+Edellisessä luvussa sivu jäsennettiin tekstielementeillä. Tässä
+luvussa sisältöön lisätään se, mikä ei ole juoksevaa tekstiä: kuvat,
+vektorigrafiikka, taulukot, video ja muilta sivuilta upotettu
+sisältö. Kaikille on yhteistä, että sisällön on välityttävä myös
+silloin, kun sitä ei näe tai se ei lataudu. Siksi luku alkaa
+vaihtoehtoisesta tekstistä.
+
 ## Vaihtoehtoinen teksti
 
 Jokaisella `<img>`-elementillä on `alt`-attribuutti. Se korvaa kuvan,
@@ -100,6 +107,9 @@ otsikot on merkitty:
 ```{.tuloste tiedosto="esimerkit/03-taulukko.odotettu"}
 ```
 
+![Taulukko selaimessa: luvut on tasattu oikealle ja otsikkosolut
+lihavoitu.](kuvat/03-taulukko-1024.png){width=35%}
+
 - `<caption>` on taulukon nimi; se näkyy saavutettavuuspuussa taulukon
   nimenä.
 - `<th scope="col">` on sarakeotsikko, `<th scope="row">`
@@ -111,6 +121,68 @@ otsikot on merkitty:
 - Kapealla näytöllä leveä taulukko vieritetään vaakasuunnassa omassa
   kehyksessään (`overflow-x: auto`). Taulukkoa ei pilkota
   `<div>`-elementeiksi, koska rakenne katoaisi.
+
+## Avattava sisältö, video ja upotukset
+
+Kolme elementtiä tuo sivulle toiminnallisuutta, joka muuten
+vaatisi JavaScriptiä.
+
+`<details>` on avattava osio, jonka otsikko on `<summary>`. Se sopii
+usein kysyttyihin kysymyksiin ja lisätietoihin:
+
+```{.html tiedosto="esimerkit/03-upotukset.html" osa="details"}
+```
+
+Selain hoitaa avaamisen, näppäimistökäytön ja tilan ilmoittamisen
+ruudunlukijalle. Suljetun osion sisältö löytyy silti sivun sisäisellä
+haulla. Attribuutti `open` avaa osion valmiiksi, ja sama
+`name`-attribuutti usealla `<details>`-elementillä tekee niistä
+ryhmän, josta vain yksi on kerrallaan auki.
+
+`<video>` ja `<audio>` toistavat mediaa selaimen omilla säätimillä:
+
+```{.html tiedosto="esimerkit/03-upotukset.html" osa="video"}
+```
+
+- `controls` näyttää säätimet. Ilman sitä käyttäjä ei voi pysäyttää
+  toistoa.
+- `<track kind="captions">` liittää tekstityksen (WebVTT-tiedosto).
+  Tekstitys on videon vaihtoehtoinen teksti: WCAG edellyttää sitä
+  tallenteilta, ja moni katsoo videot ilman ääntä.
+- `preload="none"` jättää videon lataamatta, kunnes käyttäjä
+  käynnistää sen. Esimerkin testi nojaa tähän: videotiedostoa ei ole,
+  eikä selain yritä hakea sitä.
+- Elementin sisältö (latauslinkki) näytetään vain, jos selain ei tue
+  elementtiä.
+- Itsestään käynnistyvä ääni on saavutettavuusvirhe. `autoplay`
+  toimii selaimissa yleensä vain mykistettynä (`muted`).
+
+`<iframe>` upottaa toisen sivun: kartan, videopalvelun soittimen tai
+maksulomakkeen.
+
+```{.html tiedosto="esimerkit/03-upotukset.html" osa="iframe"}
+```
+
+```{.tuloste tiedosto="esimerkit/03-upotukset.odotettu"}
+```
+
+![Avattavat osiot (ensimmäinen suljettu, toinen auki), video
+säätimineen ja upotettu sivu.](kuvat/03-upotukset-560.png){width=55%}
+
+- `title` on kehyksen nimi ruudunlukijalle ja pakollinen samasta
+  syystä kuin kuvan `alt`.
+- `loading="lazy"` lataa kehyksen vasta, kun se on tulossa näkyviin.
+  Sama attribuutti toimii kuvissa.
+- Upotettu sivu on toisen osapuolen koodia. `sandbox`-attribuutti
+  rajaa, mitä se saa tehdä (esimerkiksi `sandbox="allow-scripts"`), ja
+  kolmannen osapuolen upotus voi seurata kävijää, mikä on otettava
+  huomioon evästesuostumuksessa.
+
+Raportissa videon leveys on 322 pikseliä: 320 pikselin sisältö ja
+yhden pikselin reunus kummallakin puolella (laatikkomalli, luku 7).
+
+Modaalinen ikkuna tehdään `<dialog>`-elementillä. Se esitellään
+luvussa 11, koska siihen liittyy sivun kerrosten pinoutuminen.
 
 ## Käytännössä
 
@@ -139,3 +211,5 @@ otsikot on merkitty:
 - Osaat tehdä saavutettavan SVG-kaavion.
 - Osaat merkitä datataulukon otsikot niin, että ruudunlukija yhdistää
   solun otsikoihinsa.
+- Osaat tehdä avattavan osion `<details>`-elementillä ja upottaa
+  videon ja toisen sivun niin, että niillä on tekstitys ja nimi.

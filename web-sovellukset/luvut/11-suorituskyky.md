@@ -1,4 +1,4 @@
-# Suorituskyky ja saavutettavuus
+# Suorituskyky
 
 Hidas sovellus on käyttäjälle rikki samalla tavalla kuin virheellinen.
 Selainsovelluksen suorituskyky ratkeaa kolmessa paikassa: kuinka paljon
@@ -45,6 +45,9 @@ riippumattomia:
 ```{.typescript tiedosto="esimerkit/src/11-suorituskyky/vesiputous.ts" osa="vesiputous"}
 ```
 
+![Testin kolme 100 millisekunnin pyyntöä peräkkäin ja
+rinnakkain.](kuvat/11-vesiputous.png){width=100%}
+
 Testi mittaa näennäisaikaa: kolme 100 millisekunnin pyyntöä kestää
 peräkkäin 300 ja rinnakkain 100 millisekuntia. Sama ilmiö syntyy
 komponenttipuussa, kun lapsi aloittaa hakunsa vasta, kun vanhemman haku
@@ -78,27 +81,6 @@ Pitkät listat (tuhansia rivejä) piirretään *virtualisoituna*: DOM:iin
 luodaan vain näkyvät rivit (TanStack Virtual). Raskas laskenta, joka
 ei liity näkymään, siirretään Web Workeriin.
 
-## Saavutettavuus sovelluksessa
-
-Taito *HTML ja CSS* käsittelee staattisen sivun saavutettavuuden. Sovellus
-lisää siihen muuttuvan sisällön, ja sen ongelmat ovat omanlaisiaan:
-
-- **Reitin vaihtuminen** ilmoitetaan siirtämällä fokus pääotsikkoon ja
-  päivittämällä dokumentin nimi (luku 8).
-- **Dynaaminen sisältö** ilmoitetaan elävillä alueilla.
-  `aria-live="polite"` lukee muutoksen, kun ruudunlukija vapautuu
-  (osumien määrä luvussa 4), `role="alert"` heti (virheet).
-  Alueen on oltava DOM:ssa ennen kuin sen sisältö muuttuu.
-- **Fokuksen hallinta.** Kun elementti, jossa fokus oli, poistuu
-  (poistettu rivi, suljettu dialogi), fokus siirretään järkevään
-  paikkaan. Modaali dialogi käyttää `<dialog>`-elementtiä ja
-  `showModal`-metodia, jotka hoitavat fokuksen ja Escape-näppäimen.
-- **Lataus- ja odotustilat** kerrotaan tekstinä (`role="status"`), ei
-  pelkällä pyörivällä kuvakkeella.
-- **Omat komponentit** (valikko, välilehdet, yhdistelmäruutu) noudattavat
-  ARIA Authoring Practices -mallien näppäimistökäyttöä, tai käytetään
-  valmista saavutettavaa kirjastoa (React Aria, Radix).
-
 ## Käytännössä
 
 - **Mittaa ensin, oikealla laitteella.** Optimointi ilman mittausta
@@ -113,8 +95,6 @@ lisää siihen muuttuvan sisällön, ja sen ongelmat ovat omanlaisiaan:
   `memo` ja `useCallback` vasta, kun Profiler näyttää ongelman.
 - **CLS:n välttäminen:** kuville leveys ja korkeus, latausnäkymät
   oikean kokoisina, ei sisältöä olemassa olevan yläpuolelle.
-- **Saavutettavuus on osa jokaista muutosta,** ei erillinen vaihe:
-  roolihaut testeissä, fokus reiteissä ja elävät alueet muutoksille.
 
 ## Itsearviointi
 
@@ -124,5 +104,5 @@ lisää siihen muuttuvan sisällön, ja sen ongelmat ovat omanlaisiaan:
   verkon vesiputouksen.
 - Osaat selittää, milloin `memo` auttaa ja miksi uusi funktio-propsi
   rikkoo sen.
-- Osaat hoitaa SPA:n fokuksen, elävät alueet ja odotustilat
-  saavutettavasti.
+- Osaat nopeuttaa pitkää listaa virtualisoinnilla ja siirtää raskaan
+  laskennan pois pääsäikeestä.

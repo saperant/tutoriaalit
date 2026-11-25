@@ -1,0 +1,102 @@
+/* Valmiin sovelluksen tyylit. Asettelun ja saavutettavuuden perusteet
+ * ovat taidossa HTML ja CSS; tässä on vain sovelluksen tarvitsema osa.
+ * Tiedosto linkitetään index.html:stä, joten tiukka CSP
+ * (style-src 'self') sallii sen. */
+
+:root {
+  --pinta: #fff;
+  --tausta: #f3f5f8;
+  --teksti: #1a1f29;
+  --himmea: #5b6472;
+  --korostus: #1d4f91;
+  --virhe: #b3261e;
+  --reuna: #c4c9d2;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--tausta);
+  color: var(--teksti);
+  font: 1rem/1.5 system-ui, sans-serif;
+}
+button, input { font: inherit; }
+:focus-visible { outline: 3px solid var(--korostus); outline-offset: 2px; }
+
+header { background: var(--korostus); }
+header nav {
+  display: flex;
+  gap: 1.5rem;
+  max-inline-size: 44rem;
+  margin-inline: auto;
+  padding: 0.75rem 1rem;
+}
+header a { color: #fff; font-weight: 600; }
+header a:focus-visible { outline-color: #fff; }
+
+main { max-inline-size: 44rem; margin-inline: auto; padding: 1rem; }
+h1 { margin-block: 0.5rem 1rem; font-size: 1.75rem; line-height: 1.2; }
+/* Otsikko saa fokuksen reitin vaihtuessa (Sivu.tsx): hillitty kehys. */
+h1:focus-visible { outline: 2px solid var(--reuna); outline-offset: 4px; }
+h3 { margin: 0; font-size: 1.125rem; }
+p { margin-block: 0 0.5rem; }
+
+/* Haku: kentät rinnakkain, kun tilaa on. */
+section > label { display: inline-block; margin: 0 1.5rem 0.75rem 0; }
+input {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--himmea);
+  border-radius: 4px;
+  background: var(--pinta);
+}
+input[type="number"] { inline-size: 5rem; }
+[aria-live] { color: var(--himmea); }
+
+/* Tilakortit luontaisena ruudukkona. */
+main ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+article {
+  block-size: 100%;
+  padding: 1rem;
+  border: 1px solid var(--reuna);
+  border-radius: 8px;
+  background: var(--pinta);
+}
+button {
+  padding: 0.375rem 1rem;
+  border: 1px solid var(--korostus);
+  border-radius: 6px;
+  background: var(--korostus);
+  color: #fff;
+}
+button:disabled { border-color: var(--reuna); background: var(--reuna);
+                  color: var(--teksti); }
+
+/* Lomake: nimiö kentän yläpuolella, virhe kentän alla. */
+form {
+  max-inline-size: 22rem;
+  padding: 1rem;
+  border: 1px solid var(--reuna);
+  border-radius: 8px;
+  background: var(--pinta);
+}
+form label { display: block; font-weight: 600; }
+form input { inline-size: 100%; }
+[aria-invalid="true"] { border: 2px solid var(--virhe); }
+[aria-invalid="true"] + span { display: block; color: var(--virhe); }
+[role="alert"] {
+  padding: 0.5rem 0.75rem;
+  border-inline-start: 4px solid var(--virhe);
+  background: #fdecea;
+}
+[role="status"] { font-weight: 600; }
+
+table { border-collapse: collapse; background: var(--pinta); }
+caption { padding-block-end: 0.5rem; text-align: start; font-weight: 600; }
+th, td { padding: 0.25rem 1rem; border: 1px solid var(--reuna);
+         text-align: start; }

@@ -30,6 +30,28 @@ Tapahtuma kulkee kohde-elementistä ylöspäin dokumentin juureen
 esivanhemmassa riittää kaikille napeille. Tämä on **tapahtumien
 delegointi**:
 
+```{.dot otsikko="Napin klikkaus kuplii puuta ylöspäin. Ainoa kuuntelija on luettelon juuressa, ja closest tunnistaa napin, josta tapahtuma lähti."}
+digraph {
+  rankdir=BT; nodesep=0.35; ranksep=0.4;
+  juuri [label="juuri\nkuuntelija: click", style="filled,bold",
+         fillcolor="#E6EDF7"];
+  ul [label="<ul>"];
+  li1 [label="<li>"]; li2 [label="<li>"];
+  s1 [label="<span>\nAalto (8 hlöä)"];
+  b1 [label="<button\ndata-tila=\"aalto\">"];
+  s2 [label="<span>\nKivi (4 hlöä)"];
+  b2 [label="<button\ndata-tila=\"kivi\">", style=bold];
+  hiiri [label="klikkaus", shape=ellipse];
+  hiiri -> b2;
+  b2 -> li2 [label="kuplii"]; li2 -> ul [label="kuplii"];
+  ul -> juuri [label="kuplii"];
+  b1 -> li1 [style=dashed, arrowhead=none];
+  s1 -> li1 [style=dashed, arrowhead=none];
+  s2 -> li2 [style=dashed, arrowhead=none];
+  li1 -> ul [style=dashed, arrowhead=none];
+}
+```
+
 ```{.typescript tiedosto="esimerkit/src/02-dom/luettelo.ts" osa="delegointi"}
 ```
 

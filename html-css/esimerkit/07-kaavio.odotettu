@@ -1,0 +1,6 @@
+[leveys 760 px]
+marginaalin ulkoreuna: x=16 y=44 l=330 k=236
+reunuksen ulkoreuna: x=46 y=74 l=270 k=176
+sisältö: x=102 y=130 l=158 k=64
+content-box: x=386 y=44 l=250 k=70
+border-box: x=386 y=159 l=200 k=70

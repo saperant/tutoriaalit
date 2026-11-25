@@ -5,7 +5,7 @@
 1. **Näkymä on tilan funktio.** Tila yhdessä paikassa, johdetut arvot
    lasketaan, päivitykset ovat muuttumattomia.
 2. **Data alas, tapahtumat ylös.** Esityskomponentit saavat kaiken
-   propseina; säiliöt omistavat tilan ja sivuvaikutukset.
+   propseina; kontit omistavat tilan ja sivuvaikutukset.
 3. **Tilakone erotelluksi unioniksi.** Mahdottomat tilat eivät käänny,
    ja siirtymät ovat testattavassa reducerissa.
 4. **Efekti on synkronointia.** Käyttäjän toiminnot
@@ -13,7 +13,8 @@
    tila `useSyncExternalStore`-hookilla. Jokaisella efektillä on
    siivous.
 5. **Rajapinnan reunalla jäsennetään.** Yksi tyypitetty asiakas,
-   aikaraja ja peruutus jokaiselle pyynnölle, virheet luokiteltuina.
+   aikaraja ja peruutus jokaiselle pyynnölle, virheet luokiteltuina,
+   virheraja odottamattomille.
 6. **URL on tilaa.** Jaettava ja palattava näkymä kuuluu osoitteeseen;
    linkit ovat `<a href>`-elementtejä.
 7. **Fokus ja otsikko joka reitillä, elävät alueet muutoksille.**
@@ -33,13 +34,14 @@
 | näkymä tilan funktiona | DOM ja data eri tahtiin | 3 |
 | signaali ja johdettu arvo | hienojakoinen päivitys | 3 |
 | yksisuuntainen datavirta, tilan nostaminen | jaettu tila | 4 |
-| säiliö- ja esityskomponentti | testattavuus, uudelleenkäyttö | 4 |
+| kontti- ja esityskomponentti | testattavuus, uudelleenkäyttö | 4 |
 | reducer ja eroteltu unioni | mahdottomat tilat | 5 |
 | oma hook | uudelleenkäytettävä käyttäytyminen | 6 |
 | debounce | pyyntö joka näppäilystä | 6 |
 | tyypitetty asiakas, jäsennys reunalla | luottamus `any`-dataan | 7 |
 | peruutettava haku | kilpatilanne | 7 |
 | optimistinen päivitys | odotus nopeassa toiminnossa | 7 |
+| virheraja | yksi renderöintivirhe tyhjentää sivun | 7 |
 | stale-while-revalidate | vanha data tai turhat haut | 7 |
 | URL tilana | menetetty haku, jakamaton näkymä | 8 |
 | riippuvuuksien injektointi propsina | testattavuus | 8 |
@@ -57,7 +59,11 @@
 - **Kontit ja pilvi.** Sovelluksen julkaisu, CDN ja palvelinasetukset
   (SPA fallback, otsakkeet): taito *Kontit ja pilvi*.
 - **Muut kehykset.** Vue, Svelte ja Angular perustuvat samoihin
-  käsitteisiin; signaalien malli on tuttu luvusta 3.
+  käsitteisiin; signaalien malli on tuttu luvusta 3. Taito
+  *Web-sovelluskehykset ja niiden periaatteet* tekee saman sovelluksen
+  Reactilla, Vuella, Angularilla ja Sveltellä ja vertaa niiden
+  renderöintimalleja, mallipohjia ja tilanhallintaa. Sieltä löytyvät
+  myös kehyksen valinnan perusteet.
 
 ## Lähteet ja jatkolukeminen
 

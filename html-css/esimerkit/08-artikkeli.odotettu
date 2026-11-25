@@ -1,0 +1,6 @@
+[leveys 1024 px]
+oletustyylit: x=0 y=43 l=1024 k=277
+ladottu: x=0 y=320 l=710 k=409
+otsikko: font-size=32px; line-height=38.4px
+ingressi: font-size=20px; line-height=28px
+leipäteksti: font-size=16px; line-height=25.6px
