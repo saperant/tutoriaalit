@@ -1,0 +1,12 @@
+kuorma   lineaarisäädin               zener-säädin
+         lähtö    häviö  hyötys.      lähtö    häviö  hyötys.
+  0 mA    5.00 V     1 mW    0 %       5.28 V   538 mW    0 %
+ 10 mA    5.00 V    71 mW   41 %       5.25 V   488 mW   10 %
+ 20 mA    5.00 V   141 mW   42 %       5.21 V   439 mW   19 %
+ 30 mA    5.00 V   211 mW   42 %       5.18 V   391 mW   28 %
+ 40 mA    5.00 V   281 mW   42 %       5.12 V   346 mW   37 %
+ 50 mA    5.00 V   351 mW   42 %       4.50 V   375 mW   37 %
+ 60 mA    5.00 V   421 mW   42 %       3.00 V   540 mW   25 %
+  häviö 20 mA  simuloitu     141 mW   laskettu     141 mW   ok
+lineaarisäätimen lähtö, kun syöttö laskee:
+  4.50 V -> 4.20 V  5.00 V -> 4.70 V  5.50 V -> 5.00 V  6.00 V -> 5.00 V

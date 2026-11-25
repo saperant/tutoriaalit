@@ -1,0 +1,5 @@
+  I_C          simuloitu     562 uA   laskettu     562 uA   ok
+  A_d          simuloitu        101   laskettu        101   ok
+  A_cm         simuloitu      0.493   laskettu      0.494   ok
+häntänä vastus: A_d 100.5, A_cm 0.4933, CMRR 46 dB
+häntänä virtalähde: A_d 100.5, A_cm 0.0006, CMRR 104 dB

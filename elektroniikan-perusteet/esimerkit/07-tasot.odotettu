@@ -1,0 +1,12 @@
+  U_IL         simuloitu     778 mV   laskettu     788 mV   ok
+  U_IH         simuloitu     1.02 V   laskettu     1.01 V   ok
+  U_OH = 1.69 V, U_OL = 0.11 V
+  kohinamarginaalit: alhaalla 666 mV, ylhäällä 666 mV
+3,3 V CMOS -> 3,3 V CMOS:
+  marginaali ylhäällä +0.40 V, alhaalla +0.40 V: kelpaa
+3,3 V CMOS -> 5 V CMOS (74HC):
+  marginaali ylhäällä -0.75 V, alhaalla +0.95 V: EI KELPAA
+3,3 V CMOS -> 5 V, TTL-tasot (74HCT):
+  marginaali ylhäällä +0.40 V, alhaalla +0.40 V: kelpaa
+5 V CMOS (74HC) -> 3,3 V CMOS:
+  marginaali ylhäällä +2.40 V, alhaalla +0.70 V: kelpaa

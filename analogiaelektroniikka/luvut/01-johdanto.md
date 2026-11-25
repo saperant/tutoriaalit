@@ -9,12 +9,13 @@ vahvistimia, suodattimia, muuntimia ja huolellista piirisuunnittelua,
 joka pitää kohinan ja häiriöt kurissa. Tämä tutoriaali käsittelee nämä
 rakennuspalikat insinöörin näkökulmasta:
 
-- transistorivahvistimet: toimintapiste, piensignaalimalli ja
-  toimintapisteen herkkyys
+- transistorivahvistimet: toimintapiste, piensignaalimalli,
+  toimintapisteen herkkyys ja differentiaalipari
 - operaatiovahvistinkytkennät ja todellisen vahvistimen rajat
 - aktiiviset suodattimet: mitoitus, siirtofunktio ja komponenttien
   toleranssit
-- takaisinkytkentä ja stabiilisuus: vaihevara ja kapasitiivinen kuorma
+- takaisinkytkentä ja stabiilisuus: vaihevara, kapasitiivinen kuorma
+  sekä vertailija ja hystereesi
 - AD- ja DA-muuntimet: kvantisointi, SAR- ja sigma-delta-periaate,
   R-2R-tikapuu sekä näytteenotto ja pito
 - kohina ja signaalin eheys: terminen kohina, kohinabudjetti ja
@@ -115,15 +116,36 @@ operaatiovahvistimen makromallin. Mallien parametrit ovat tyypillisiä
 arvoja eivätkä minkään valmistajan takuuarvoja; oikeassa suunnittelussa
 käytetään valmistajan julkaisemia malleja ja datalehden raja-arvoja.
 
-## Kenelle ja mitä tarvitaan
+## Esitiedot ja rajaus
 
-Tutoriaali olettaa taidon *Elektroniikan perusteet ja SPICE* hallinnan:
-Kirchhoffin lait, impedanssin, Bode-kuvaajan, diodit, transistorin
-kytkimenä ja SPICEn perusanalyysit (`op`, `dc`, `ac`, `tran`, `meas`).
-Siirtofunktioiden ja stabiilisuuden osalta se nojaa taitoon
-*Differentiaaliyhtälöt ja Laplace-muunnos*. AD-muunnoksen yhteydessä
-viitataan taitoihin *Signaalit ja järjestelmät* ja *Digitaalinen
-signaalinkäsittely*.
+Esitietoja on kaksi. Taidosta *Elektroniikan perusteet ja SPICE*
+tarvitaan Kirchhoffin lait, impedanssi, Bode-kuvaaja, diodit,
+transistori kytkimenä ja SPICEn perusanalyysit (`op`, `dc`, `ac`,
+`tran`, `meas`). Taidosta *Differentiaaliyhtälöt ja Laplace-muunnos*
+tarvitaan siirtofunktiot, navat ja askelvasteet, joilla suodattimet ja
+stabiilisuus kuvataan. Laitteita ei tarvita: jokainen piiri
+simuloidaan, ja tulokset näytetään lukuina, aaltomuotoina ja
+taajuusvasteina.
+
+Tutoriaali rajautuu signaaliketjun analogiaosaan. Muualla käsitellään:
+
+- näytteistys, laskostuminen ja digitaaliset suodattimet: taidot
+  *Signaalit ja järjestelmät* ja *Digitaalinen signaalinkäsittely*
+- kvantisointi lukujen esityksen kannalta: taito *Lukujen esitys ja
+  kiinteän pilkun aritmetiikka*
+- lineaarisäädin käyttäjän näkökulmasta (pudotusjännite, häviö):
+  taito *Elektroniikan perusteet ja SPICE*
+- väylien protokollat, joiden sähköistä puolta luku 7 sivuaa: taito
+  *Oheislaiteväylät*.
+
+Jännitteensäätimien ja hakkuriteholähteiden suunnittelu,
+radiotaajuuspiirit ja piirilevysuunnittelu jäävät tämän taitopuun
+ulkopuolelle; luvun 8 lähteet ohjaavat niihin.
+
+Piirit esitetään piirikaavioina ja netlisteinä rinnakkain. Kaavion
+harmaat solmunimet ovat samat kuin netlistissä. Ohjelmien tulosteissa
+ja netlisteissä yksiköt kirjoitetaan SPICEn tapaan ASCII-merkein:
+`u` on mikro (µ) ja `ohm` ohmi (Ω).
 
 Kehityskontissa (`.devcontainer/analogiaelektroniikka`) ovat valmiina
 ngspice, NumPy, SciPy, SymPy, Matplotlib ja schemdraw. Esimerkit ajetaan
@@ -132,10 +154,14 @@ esimerkkihakemistossa (`python3 01-vahvistin.py`), ja paketin juuressa
 
 ## Tutoriaalin rakenne
 
-Luku 2 käsittelee bipolaaritransistorin vahvistimena: toimintapisteen,
+Luku 2 käsittelee transistorin vahvistimena: toimintapisteen,
 piensignaalimallin ja sen, miksi emitterivastus tekee piiristä
-toistettavan. Luku 3 siirtyy operaatiovahvistimiin ja niiden todellisiin
-rajoihin. Luku 4 rakentaa niistä aktiivisia suodattimia, ja luku 5
-selvittää, milloin takaisinkytketty piiri alkaa värähdellä. Luku 6
-käsittelee AD- ja DA-muuntimet, ja luku 7 kohinan ja signaalin eheyden.
-Luku 8 kokoaa nyrkkisäännöt ja lähteet.
+toistettavan. Luku päättyy differentiaalipariin, josta
+operaatiovahvistimen tuloaste rakentuu. Luku 3 siirtyy
+operaatiovahvistimiin ja niiden todellisiin rajoihin. Luku 4 rakentaa
+niistä aktiivisia suodattimia. Luku 5 selvittää, milloin
+takaisinkytketty piiri alkaa värähdellä, ja näyttää lopuksi
+positiivisen takaisinkytkennän hyötykäytön, vertailijan hystereesin.
+Luku 6 käsittelee DA- ja AD-muuntimet tässä järjestyksessä, koska
+AD-muuntimen sisällä on DA-muunnin. Luku 7 käsittelee kohinan ja
+signaalin eheyden, ja luku 8 kokoaa nyrkkisäännöt ja lähteet.

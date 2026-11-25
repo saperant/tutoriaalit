@@ -1,8 +1,8 @@
 # Operaatiovahvistimet
 
 Operaatiovahvistin on integroitu erovahvistin, jossa on kymmeniä
-transistoreja: erovahvistin tuloasteena, suuren vahvistuksen välivaihe
-ja seuraajatyyppinen lähtöaste. Sen avoimen silmukan vahvistus on hyvin
+transistoreja: luvun 2 differentiaalipari tuloasteena, suuren
+vahvistuksen välivaihe ja seuraajatyyppinen lähtöaste. Sen avoimen silmukan vahvistus on hyvin
 suuri mutta huonosti määritelty ja taajuudesta riippuva. Juuri siksi
 sitä ei koskaan käytetä ilman takaisinkytkentää: ulkoiset vastukset
 määräävät vahvistuksen, ja vahvistimen suuri sisäinen vahvistus
@@ -72,8 +72,13 @@ maksaa kymmenesosan kaistasta.
 ```{.tuloste tiedosto="esimerkit/03-kaistanleveys.odotettu"}
 ```
 
+![Simuloitu suljetun silmukan vahvistus kolmella vahvistuksella ja
+vahvistimen avoimen silmukan vahvistus (katkoviiva). Takaisinkytkentä
+leikkaa avoimen silmukan käyrästä tasaisen osan: mitä pienempi
+vahvistus, sitä leveämpi kaista.](kuvat/kaista-bode.png){width=80%}
+
 Ensimmäinen vertailu ilman kuormitustermiä erosi 5 %. Syy oli
-lähtöresistanssi: 50 ohmin lähtö ja 1 kohmin takaisinkytkentäverkko
+lähtöresistanssi: 50 Ω:n lähtö ja 1 kΩ:n takaisinkytkentäverkko
 muodostavat jännitteenjakajan, joka pienentää silmukkavahvistusta
 samassa suhteessa. Kun termi otetaan mukaan, malli ja simulointi
 täsmäävät. Sama ilmiö on todellisissa piireissä: pieni
@@ -86,6 +91,9 @@ kondensaattorilla, saadaan integraattori. Virtuaalimaan ansiosta tulovirta
 on $u_i/R$, ja se latautuu kondensaattoriin, joten lähtö muuttuu
 nopeudella $-u_i/(RC)$. Kanttiaallosta tulee kolmioaalto.
 
+![Integraattori. Kondensaattorin C1 rinnalla on suuri vastus Rf, joka
+rajoittaa tasavahvistuksen.](kuvat/integraattori.png){width=56%}
+
 ```{.spice tiedosto="esimerkit/03-integraattori.cir"}
 ```
 
@@ -95,9 +103,13 @@ nopeudella $-u_i/(RC)$. Kanttiaallosta tulee kolmioaalto.
 ```{.tuloste tiedosto="esimerkit/03-integraattori.odotettu"}
 ```
 
+![Simuloinnin kolme viimeistä jaksoa: ±1 V:n kanttiaalto tulossa ja
+kolmioaalto lähdössä. Lähtö laskee, kun tulo on positiivinen, koska
+kytkentä on invertoiva.](kuvat/integraattori-aallot.png){width=78%}
+
 Puhdas integraattori integroi myös tulon pienen tasakomponentin ja
 vahvistimen offsetin, ja lähtö ajautuu syöttöjännitteeseen. Rinnakkainen
-1 Mohmin vastus rajoittaa tasavahvistuksen sataan, ja piiri integroi
+1 MΩ:n vastus rajoittaa tasavahvistuksen sataan, ja piiri integroi
 vain taajuuksilla, jotka ovat selvästi yli $1/(2\pi R_f C) = 16$ Hz.
 Simulointi ajetaan 60 ms, jotta tämän aikavakion alkuvaihe on ohi.
 Integraattoreita käytetään aktiivisissa suodattimissa, PID-säätimissä ja
@@ -118,6 +130,11 @@ yhden vastuksen $R_g$ avulla ($G = 1 + 2R/R_g$), ja erovahvistin
 poistaa yhteisen tason. Erovahvistimen CMRR riippuu sen neljän vastuksen
 sovituksesta: jos yksi poikkeaa suhteellisesti $\varepsilon$,
 yhteismuotoinen vahvistus on $\varepsilon/(2 + \varepsilon)$.
+
+![Instrumentointivahvistin. X1 ja X2 puskuroivat anturin navat ja
+vahvistavat niiden eron vastuksen Rg avulla; X3 vastuksineen R3–R6 on
+erovahvistin, joka muuttaa eron maahan viitatuksi
+jännitteeksi.](kuvat/instrumentointi.png){width=92%}
 
 ```{.spice tiedosto="esimerkit/03-instrumentointi.cir"}
 ```
@@ -148,6 +165,9 @@ reunoille jää hieman tilaa. Ei-invertoiva summaaja tekee molemmat:
 tulo ja referenssijännite summautuvat yhtä suurten vastusten kautta
 plus-tuloon, ja vahvistus $1 + R_4/R_3$ skaalaa summan.
 
+![Tasonsiirto ei-invertoivalla summaajalla. Plus-tulon jännite on tulon
+ja referenssin keskiarvo.](kuvat/tasonsiirto.png){width=70%}
+
 ```{.python tiedosto="esimerkit/03-tasonsiirto.py" osa="mitoitus"}
 ```
 
@@ -176,8 +196,8 @@ Ihanteellinen malli unohtaa neljä asiaa, jotka ratkaisevat käytännössä:
   $SR$, tyypillisesti 0,5 ... 20 V/µs. Suurella amplitudilla tämä rajoittaa
   kaistaa enemmän kuin $GBW$: siniaalto pysyy siistinä vain, kun
   $2\pi f \hat{U} < SR$.
-- *Offsetjännite.* Tuloasteen transistorit eivät ole täsmälleen samanlaisia,
-  ja vahvistin käyttäytyy kuin tulojen väliin olisi kytketty pieni
+- *Offsetjännite.* Tuloasteen differentiaaliparin transistorit eivät
+  ole täsmälleen samanlaisia (luku 2), ja vahvistin käyttäytyy kuin tulojen väliin olisi kytketty pieni
   jännitelähde, tyypillisesti 0,1 ... 5 mV. Se vahvistuu ei-invertoivalla
   vahvistuksella $1 + R_2/R_1$ riippumatta siitä, onko kytkentä
   invertoiva.
@@ -193,6 +213,13 @@ Ihanteellinen malli unohtaa neljä asiaa, jotka ratkaisevat käytännössä:
 
 ```{.tuloste tiedosto="esimerkit/03-rajat.odotettu"}
 ```
+
+![Vasemmalla 0,6 V:n siniaalto vahvistuksella −10, kun syöttö on ±5 V:
+ihanteellinen lähtö olisi ±6 V, mutta huiput leikkautuvat. Käyrät on
+laskettu saman kytkennän simuloidusta siirtokäyrästä. Oikealla
+esimerkin 8 V:n askel: lähtö nousee suorana ramppina nousunopeuden
+määräämää tahtia, kun pelkkä kaistanleveys ennustaisi lähes
+välittömän nousun.](kuvat/opamp-rajat.png){width=92%}
 
 Perinteinen vahvistin ±5 V:n syötöllä antaa −3,5 V, vaikka piiri
 pyytää −6 V:ia: lähtö leikkautuu, ja signaalin huiput litistyvät.
@@ -211,8 +238,8 @@ joskus syy siihen, että toimiva piiri ei toimi.
   järjestelmissä tarvitaan rail-to-rail-lähtö ja usein myös -tulo.
 - Älä käytä operaatiovahvistinta vertailijana. Se on suunniteltu
   lineaariseen käyttöön, ja kyllästyksestä toipuminen on hidasta.
-  Vertailijapiireissä on nopea, logiikkatasoinen lähtö.
-- Pidä takaisinkytkentävastukset kohtuullisina, 1 ... 100 kohm. Pienet
+  Vertailijapiireissä on nopea, logiikkatasoinen lähtö (luku 5).
+- Pidä takaisinkytkentävastukset kohtuullisina, 1 ... 100 kΩ. Pienet
   kuormittavat lähtöä, suuret lisäävät kohinaa ja biasvirtojen
   aiheuttamaa offsetia.
 - Kytke jokaisen vahvistimen syöttönastoihin 100 nF:n

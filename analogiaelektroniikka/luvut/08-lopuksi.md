@@ -18,39 +18,46 @@ oletusten tuntemista.
 | vahvistus ja kaista | $GBW$ on vakio: kaista = $GBW$ / vahvistus |
 | nousunopeus | siniaalto siisti, kun $2\pi f \hat U < SR$ |
 | offset | vahvistuu ei-invertoivalla vahvistuksella $1 + R_2/R_1$ |
+| differentiaalipari | $A_d = g_m R_c/2$, $A_{cm} \approx R_c/(2R_{ee})$; virtalähde häntänä |
 | CMRR | erovahvistimen vastusten epäsovitus $\varepsilon$: $A_{cm} \approx \varepsilon/2$ |
 | suodattimen vahvistin | $GBW > 100\,f_0 Q$ |
 | Butterworth / Bessel | $Q$ = 0,707 / 0,577; ylitys 4,3 % / 0,4 % |
 | vaihevara | vähintään 45 ... 60 astetta; tarkista pienellä signaalilla |
-| kapasitiivinen kuorma | eristysvastus 20 ... 100 ohm |
+| kapasitiivinen kuorma | eristysvastus 20 ... 100 Ω |
+| vertailija | hystereesi suurempi kuin tulon kohina huipusta huippuun |
+| PWM-DA-muunnin | rippeli $U D (1-D) T/\tau$, asettuminen $\tau \ln 2^{N+1}$ |
 | kvantisointi | SNR = 6,02 N + 1,76 dB |
 | näytteenotto | asettuminen $RC \ln 2^{N+1}$, 12 bittiä: 9 RC |
 | sigma-delta | 1. kertaluku: +9 dB ylinäytteistyksen kaksinkertaistusta kohden |
-| terminen kohina | 1 kohm: 4 nV/√Hz; RC: $\sqrt{kT/C}$ |
+| terminen kohina | 1 kΩ: 4 nV/√Hz; RC: $\sqrt{kT/C}$ |
 | siirtolinja | kun viive yli 1/6 nousuajasta; piirilevyllä 15 cm/ns |
 | ohitus | 100 nF jokaiseen käyttöjännitenastaan |
 
-## Mihin tästä
+## Jatkotaidot
 
-Analogiaelektroniikka on laaja ala, ja tämä tutoriaali on sen ydin.
-Jatkosuuntia:
+Tästä edetään taitopuussa seuraaviin taitoihin:
 
-- *Tehoelektroniikka*: hakkuriteholähteet, moottoriohjaimet ja niiden
-  säätösilmukat. Luvun 5 stabiilisuusanalyysi on niissä keskeinen.
-- *Radiotaajuuspiirit*: impedanssisovitus, Smithin kartta ja
-  s-parametrit. Luvun 7 siirtolinjat ovat lähtökohta, ja taito
-  *Ohjelmistoradio* käsittelee radiovastaanottimen signaalinkäsittelyn.
-- *Piirilevysuunnittelu*: KiCad, maatasot, impedanssikontrolloidut
-  johtimet ja EMC.
-- *Integroidut analogiapiirit*: CMOS-operaatiovahvistimet ja muuntimet
-  piirin sisällä; taito *ASIC-toteutus* esittelee digitaalisen puolen.
+- *Digitaalinen signaalinkäsittely* jatkaa siitä, mihin AD-muunnin
+  jättää: suodatus, desimointi ja spektri luvuilla.
+- *Lukujen esitys ja kiinteän pilkun aritmetiikka* käsittelee
+  kvantisoinnin ja sananpituuden laskennan puolella.
+- *Mikrokontrollerit ja bare-metal-ohjelmointi* ja *Oheislaiteväylät*
+  käyttävät AD- ja DA-muuntimia, vertailijoita ja väyliä, joiden
+  sähköinen puoli käsiteltiin tässä.
+- *Ohjelmistoradio* käsittelee radiovastaanottimen signaalinkäsittelyn;
+  luvun 7 siirtolinjat ovat sen analogisen etupään lähtökohta.
+- *ASIC-toteutus* esittelee integroidun piirin digitaalisen puolen.
+- *Numeeriset menetelmät* selittää, miten SPICE ratkaisee piirin
+  yhtälöt.
 
-Läheisiä taitoja tässä taitopuussa: *Digitaalinen signaalinkäsittely*
-jatkaa siitä, mihin AD-muunnin jättää; *Mikrokontrollerit ja
-bare-metal-ohjelmointi* ja *Oheislaiteväylät* käyttävät AD- ja
-DA-muuntimia ja väyliä, joiden sähköinen puoli käsiteltiin tässä;
-*Numeeriset menetelmät* selittää, miten SPICE ratkaisee piirin
-yhtälöt.
+Analogiaelektroniikka on laaja ala, ja osa sen jatkosuunnista on tämän
+taitopuun ulkopuolella. Tehoelektroniikassa (jännitteensäätimet,
+hakkuriteholähteet, moottoriohjaimet) luvun 5 stabiilisuusanalyysi on
+keskeinen työkalu. Radiotaajuuspiireissä tarvitaan impedanssisovitusta,
+Smithin karttaa ja s-parametreja. Piirilevysuunnittelussa (esimerkiksi
+KiCad) maatasot, impedanssikontrolloidut johtimet ja EMC ratkaisevat,
+toimiiko tässä simuloitu piiri myös levyllä. Lähdeluettelon teokset
+kattavat nämä.
 
 Elektroniikkaa oppii parhaiten rakentamalla. Koekytkentälevy,
 operaatiovahvistin (esimerkiksi rail-to-rail-tyyppi 5 V:n syötöllä),

@@ -23,24 +23,31 @@ ja pikaopas
 5. Vaihtovirta, impedanssi ja taajuusvaste – tehollisarvo,
    kompleksinen impedanssi, RC-alipäästö, resonanssi
 6. Diodit – Shockleyn yhtälö ja parametrien sovitus, LEDin etuvastus,
-   tasasuuntaaja, zener, suojadiodit
-7. Transistorit kytkiminä – BJT ja MOSFET, vapaakäyntidiodi,
-   CMOS-invertteri
+   tasasuuntaaja, zener, lineaarisäädin, suojadiodit
+7. Transistorit kytkiminä – BJT ja MOSFET, häviöteho ja lämpö,
+   yläpuolen kytkin, vapaakäyntidiodi, PWM, CMOS-invertteri,
+   logiikkatasot ja kohinamarginaalit
 8. SPICE syvemmin – netlist, analyysit, aliohjelmat ja silmukat,
    Monte Carlo, konvergenssi ja mallien rajat
-9. Lopuksi – nyrkkisäännöt ja lähteet
+9. Lopuksi – nyrkkisäännöt, jatkotaidot ja lähteet
+
+Esitiedot: *Matematiikan perusteet ohjelmallisesti*. Laitteita ei
+tarvita: jokainen piiri simuloidaan, ja jokaisella piirillä on
+piirikaavio, jonka solmunimet ovat samat kuin netlistissä.
 
 ## Rakentaminen
 
 ```text
 make testaa   # rakenne, ruff, mypy --strict ja esimerkit (vaatii ngspicen)
 make pdf      # elektroniikan-perusteet.pdf ja pikaopas
-make kuvat    # piirtää kuvat/-hakemiston kuvat uudelleen (schemdraw)
+make kuvat    # piirtää kuvat/-hakemiston kuvat uudelleen (schemdraw, Matplotlib)
 ```
 
 Esimerkit ajetaan esimerkkihakemistossa, esimerkiksi
 `python3 04-rc.py`. Kehityskontissa (`.devcontainer/elektroniikan-perusteet`)
 ngspice ja Python-kirjastot ovat valmiina.
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks. [Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 ## Lisenssi
 

@@ -17,7 +17,7 @@ kulkee johtimen poikkileikkauksen läpi sekunnissa. Virta kulkee aina
 suljetussa silmukassa. Se, mikä lähtee lähteen plusnavasta, palaa
 miinusnapaan.
 
-**Resistanssi** $R$ (ohmi) on komponentin vastus virralle. Ohmin laki
+**Resistanssi** $R$ (ohmi, Ω) on komponentin vastus virralle. Ohmin laki
 kertoo, että resistiivisessä komponentissa jännite ja virta ovat
 suoraan verrannollisia:
 
@@ -35,13 +35,14 @@ $$
 
 Vastuksessa teho muuttuu lämmöksi. Tämä on syy useimpiin
 komponenttien vikoihin: vastus, transistori tai jännitesäädin kestää
-vain rajallisen lämpötilan.
+vain rajallisen lämpötilan. Luvussa 7 lasketaan häviötehosta
+komponentin lämpötila.
 
 | Suure | Tunnus | Yksikkö | Tyypillinen alue elektroniikassa |
 |-------|--------|---------|----------------------------------|
 | jännite | $U$ | V | 0,1...24 V (logiikka 1,8...5 V) |
-| virta | $I$ | A | 1 uA...2 A |
-| resistanssi | $R$ | ohm | 1 ohm...10 Mohm |
+| virta | $I$ | A | 1 µA...2 A |
+| resistanssi | $R$ | Ω | 1 Ω...10 MΩ |
 | teho | $P$ | W | 1 mW...10 W |
 
 ## Esimerkki: etuvastuksen teho
@@ -85,6 +86,11 @@ E24:ssä 24 ja niin edelleen. Peräkkäisten arvojen suhde on
 E12-sarjassa noin $10^{1/12} = 1{,}21$, joten 10 %:n toleranssin
 vastukset peittävät koko asteikon ilman aukkoja.
 
+![E12-sarjan arvot logaritmisella asteikolla. Varjostus on ±10 %:n
+toleranssikaista: vierekkäiset kaistat koskettavat toisiaan, joten
+jokainen resistanssi osuu jonkin nimellisarvon
+kaistalle.](kuvat/esarja.png){width=88%}
+
 Lähin standardiarvo valitaan logaritmisesti, koska suhteellinen ero
 on se, millä on merkitystä:
 
@@ -94,7 +100,7 @@ on se, millä on merkitystä:
 ## Toleranssit ja huonoin tapaus
 
 Vastuksen todellinen arvo poikkeaa nimellisestä enintään toleranssin
-verran: 5 %:n 10 kohm:n vastus on jotain 9,5 kohm:n ja 10,5 kohm:n
+verran: 5 %:n 10 kΩ:n vastus on jotain 9,5 kΩ:n ja 10,5 kΩ:n
 väliltä. Piirin tulos vaihtelee samalla tavalla, ja suunnittelijan on
 tiedettävä, kuinka paljon. Yksinkertaisin menetelmä on *huonoimman
 tapauksen analyysi*: kokeillaan kaikki ääripäiden yhdistelmät.
@@ -114,9 +120,9 @@ kertoo tuloksen todennäköisen jakauman.
 ## Mittaaminen kuormittaa piiriä
 
 Yleismittari mittaa jännitettä ottamalla piiristä hieman virtaa.
-Tavallisen digitaalisen mittarin sisäresistanssi on noin 10 Mohm, mikä
+Tavallisen digitaalisen mittarin sisäresistanssi on noin 10 MΩ, mikä
 on merkityksetön useimmissa piireissä mutta ei suuri-impedanssisissa.
-Kun 1 Mohm:n vastusten jakajaa mitataan, mittari on rinnan alemman
+Kun 1 MΩ:n vastusten jakajaa mitataan, mittari on rinnan alemman
 vastuksen kanssa ja muuttaa sitä, mitä se mittaa:
 
 ```{.spice tiedosto="esimerkit/02-mittari.cir"}

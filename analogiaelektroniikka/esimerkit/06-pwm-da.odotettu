@@ -1,0 +1,8 @@
+C = 100 nF, tau = 1 ms:
+  keskiarvo    simuloitu     825 mV   laskettu     825 mV   ok
+  rippeli      simuloitu    31.0 mV   laskettu    30.9 mV   ok
+  rippeli 2.40 LSB, asettuminen 6 ms
+C = 1000 nF, tau = 10 ms:
+  keskiarvo    simuloitu     824 mV   laskettu     825 mV   ok
+  rippeli      simuloitu    3.16 mV   laskettu    3.09 mV   ok
+  rippeli 0.24 LSB, asettuminen 62 ms

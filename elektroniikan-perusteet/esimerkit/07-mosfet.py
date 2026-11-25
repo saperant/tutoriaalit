@@ -5,15 +5,15 @@ import numpy as np
 from spice import lopeta, simuloi, vertaa
 
 # @alku malli
-K, U_T, LAMBDA = 10.0, 1.6, 0.01     # mallin KP (W = L) ja VTO
+K, U_TH, LAMBDA = 10.0, 1.6, 0.01    # mallin KP (W = L) ja VTO
 
 
 def i_d(u_gs: float, u_ds: float) -> float:
     """Tason 1 MOSFET-malli (Shichman-Hodges)."""
-    u_ov = u_gs - U_T                  # ylijännite kynnyksen yli
+    u_ov = u_gs - U_TH                 # ylijännite kynnyksen yli
     if u_ov <= 0:
         return 0.0
-    if u_ds < u_ov:                    # lineaarinen alue: vastus
+    if u_ds < u_ov:                    # vastusalue
         return K * (u_ov * u_ds - u_ds**2 / 2) * (1 + LAMBDA * u_ds)
     return K / 2 * u_ov**2 * (1 + LAMBDA * u_ds)   # kyllästysalue
 

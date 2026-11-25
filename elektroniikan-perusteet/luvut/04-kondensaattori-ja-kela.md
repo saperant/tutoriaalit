@@ -34,12 +34,12 @@ Kondensaattorityyppi valitaan käyttötarkoituksen mukaan:
 |Tyyppi|Tyypilliset arvot|Ominaisuudet|Käyttö|
 |--------------------|----------------|----------------------------|------------------------|
 | keraaminen (C0G) | 1 pF...10 nF | vakaa, tarkka, ei napaisuutta | ajoitus, suodattimet, värähtelijät |
-| keraaminen (X7R) | 1 nF...10 uF | kapasitanssi pienenee jännitteen kasvaessa | ohituskondensaattorit |
-| elektrolyytti | 1 uF...10 mF | napainen, suuri arvo, rajallinen ikä | teholähteiden suodatus |
-| kalvo | 1 nF...10 uF | vakaa, kestää suuria jännitteitä | audio, verkkosuodattimet |
+| keraaminen (X7R) | 1 nF...10 µF | kapasitanssi pienenee jännitteen kasvaessa | ohituskondensaattorit |
+| elektrolyytti | 1 µF...10 mF | napainen, suuri arvo, rajallinen ikä | teholähteiden suodatus |
+| kalvo | 1 nF...10 µF | vakaa, kestää suuria jännitteitä | audio, verkkosuodattimet |
 
 X7R-tyyppisen keraamisen kondensaattorin kapasitanssi voi pudota
-nimellisjännitteellä alle puoleen: 10 uF:n osa 5 V:n jännitteellä on
+nimellisjännitteellä alle puoleen: 10 µF:n osa 5 V:n jännitteellä on
 käytännössä muutama mikrofaradi. Alumiinielektrolyyttikondensaattori on
 napainen, ja väärin päin kytkettynä se voi rikkoutua rajusti.
 
@@ -48,8 +48,15 @@ napainen, ja väärin päin kytkettynä se voi rikkoutua rajusti.
 Kun jännitelähde $U$ kytketään vastuksen $R$ kautta tyhjään
 kondensaattoriin, alussa koko jännite on vastuksen yli ja virta on
 $U/R$. Kondensaattorin jännitteen kasvaessa vastuksen yli jää vähemmän,
-ja lataus hidastuu. Ratkaisu on eksponenttifunktio, jonka aikavakio on
-$\tau = RC$:
+ja lataus hidastuu.
+
+![Luvun kaksi peruspiiriä: RC-piiri (vasemmalla) ja RL-piiri. Harmaat
+solmunimet `sisaan`, `c` ja `l` ovat samat kuin
+netlisteissä.](kuvat/rc-rl-piirit.png){width=72%}
+
+Ratkaisu on eksponenttifunktio, jonka aikavakio on $\tau = RC$ (taito
+*Differentiaaliyhtälöt ja Laplace-muunnos* johtaa sen piirin
+differentiaaliyhtälöstä):
 
 $$
 u_C(t) = U \left(1 - e^{-t/\tau}\right).
@@ -63,7 +70,7 @@ $u_C(t) = U_0 e^{-t/\tau}$.
 ```
 
 SPICEn transienttianalyysi (`tran`) laskee piirin ajan funktiona.
-`tran 5u 6m` tarkoittaa tulostusväliä 5 us ja kestoa 6 ms; `uic`
+`tran 5u 6m` tarkoittaa tulostusväliä 5 µs ja kestoa 6 ms; `uic`
 (*use initial conditions*) käyttää kondensaattorin alkujännitettä
 `IC=0` toimintapisteen laskemisen sijaan. Lähde on pulssi
 `PULSE(alku loppu viive nousu lasku leveys jakso)`.
@@ -93,9 +100,9 @@ $$
 
 Kela on kondensaattorin pari: sen *virta* ei voi muuttua
 hyppäyksellisesti. Tasavirralla kela on oikosulku (vain käämilangan
-resistanssi jää). RL-piirissä virta kasvaa samalla
-eksponenttifunktiolla kuin RC-piirin jännite, ja aikavakio on
-$\tau = L/R$:
+resistanssi jää). RL-piirissä (edellisen kuvan oikea puoli) virta
+kasvaa samalla eksponenttifunktiolla kuin RC-piirin jännite, ja
+aikavakio on $\tau = L/R$:
 
 ```{.spice tiedosto="esimerkit/04-rl.cir"}
 ```
@@ -117,8 +124,15 @@ Jokaisessa johtimessa ja tulossa on kapasitanssia, ja jokaisessa
 lähdössä on resistanssia. Siksi digitaalinen signaali on todellisuudessa
 RC-latautumista, ja sen nousuaika rajoittaa nopeutta. Selvin esimerkki
 on I2C-väylä: avokollektorilähdöt vain vetävät linjaa alas, ja
-vetovastus $R_p$ lataa väylän kapasitanssin $C_b$ takaisin ylös. Väylän
-spesifikaatio mittaa nousuajan 30 %:sta 70 %:iin
+vetovastus $R_p$ lataa väylän kapasitanssin $C_b$ takaisin ylös.
+
+![I2C-väylän datalinja. Jokaisen laitteen lähtö on transistori, joka
+voi vain vetää linjan maahan. Kun se päästää irti, vetovastus Rp lataa
+johtimien ja tulojen yhteisen kapasitanssin Cb. Netlistissä transistoria
+ei ole: simulointi alkaa hetkestä, jolloin linja
+vapautuu.](kuvat/vetovastus.png){width=50%}
+
+Väylän spesifikaatio mittaa nousuajan 30 %:sta 70 %:iin
 käyttöjännitteestä:
 
 ```{.python tiedosto="esimerkit/04-nousuaika.py" osa="kasin"}
@@ -138,10 +152,17 @@ suuri vetovastus saa olla:
 ```{.tuloste tiedosto="esimerkit/04-nousuaika.odotettu"}
 ```
 
-4,7 kohm:n vetovastus toimii siis 100 kbit/s:n väylällä mutta ei
-400 kbit/s:n nopeudella, kun väylän kapasitanssi on 200 pF.
+![Simuloitu nousureuna kahdella vetovastuksella, kun väylän
+kapasitanssi on 200 pF. Pisteet ovat 30 %:n ja 70 %:n tasojen
+ohitushetket. Sallittu nousuaika on 1000 ns nopeudella 100 kbit/s ja
+300 ns nopeudella 400 kbit/s.](kuvat/nousuaika.png){width=80%}
+
+4,7 kΩ:n vetovastus toimii siis 100 kbit/s:n väylällä mutta ei
+400 kbit/s:n nopeudella, kun väylän kapasitanssi on 200 pF; 1,5 kΩ:n
+vastuksella nousuaika on 254 ns ja nopeampikin väylä toimii.
 Pienempi vastus nopeuttaa nousua, mutta lähtötransistorin on silloin
-kyettävä vetämään suurempi virta alas (I2C:ssä enintään 3 mA). Taito
+kyettävä vetämään suurempi virta alas (I2C:ssä enintään 3 mA, mikä
+rajaa vastuksen 3,3 V:n väylällä noin yhteen kilo-ohmiin). Taito
 *Oheislaiteväylät* käsittelee väylän protokollan; tämä on sen
 sähköinen pohja.
 
@@ -155,6 +176,10 @@ Schmitt-liipaisimen tulossa on kaksi kynnystä: lähtö vaihtuu ylös
 vasta ylemmän ja alas vasta alemman kynnyksen kohdalla. Tämä
 *hystereesi* estää hitaasti muuttuvaa tai kohisevaa signaalia
 värähtelemästä kynnyksen ympärillä.
+
+![Painike, RC-suodin ja Schmitt-tulo. Netlistissä painike ja sen
+vetovastus on korvattu jännitelähteellä `Vraaka`, jonka aaltomuoto
+jäljittelee pomppivaa kosketinta.](kuvat/kosketin.png){width=62%}
 
 ```{.spice tiedosto="esimerkit/04-varahtely.cir"}
 ```
@@ -182,6 +207,10 @@ kynnyksen molemmin puolin. Schmitt-tulo korjaa tämän. Suuri aikavakio
 tuottaa hitaasti laskevan reunan, jollaista tavallinen CMOS-tulo ei
 siedä (luku 7). Siksi hyvä ratkaisu on molemmat: kohtuullinen RC ja
 Schmitt-tulo, joka monessa mikrokontrollerissa on valittavissa.
+Ohjelmoitavassa logiikassa sama tehdään digitaalisesti näytteistämällä
+tuloa ja vaatimalla, että se pysyy samana riittävän pitkään; sen
+näyttävät taidot *RTL-suunnittelu SystemVerilogilla* ja
+*FPGA-toteutus*.
 
 ## Käytännössä
 

@@ -1,0 +1,24 @@
+* Vertailija ja hystereesi (invertoiva Schmitt-liipaisin), 3,3 V:n syöttö.
+* Tulo miinus-tuloon; plus-tulon kynnys tulee referenssistä R1:n kautta
+* ja lähdöstä R2:n kautta (positiivinen takaisinkytkentä).
+* Vertailijan malli: lähtö on vcc, kun plus-tulo on miinus-tuloa
+* suurempi, muuten 0. RC-aste antaa lähdölle 100 ns:n viiveen.
+.subckt VERTAILIJA inp inn out vcc
+B1 n1 0 V = v(vcc) / 2 * (1 + tanh(2000 * (v(inp) - v(inn))))
+R1 n1 out 1k
+C1 out 0 100p
+.ends
+.param R2=100k
+Vcc vcc 0 DC 3.3
+Vref ref 0 DC 1.65
+Vin in 0 PULSE(0 3.3 0 10m 10m 1u 20m)
+R1 ref p 10k
+R2 out p {R2}
+X1 p in out vcc VERTAILIJA
+.control
+tran 2u 20m
+meas tran ylempi FIND v(in) WHEN v(out)=1.65 FALL=1
+meas tran alempi FIND v(in) WHEN v(out)=1.65 RISE=1
+wrdata vertailija.dat v(in) v(out)
+.endc
+.end

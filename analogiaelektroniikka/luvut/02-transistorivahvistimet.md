@@ -132,6 +132,9 @@ Siksi ohituskondensaattorin on oltava suuri, tässä 100 µF:
 ```{.tuloste tiedosto="esimerkit/02-ce-vahvistin.odotettu"}
 ```
 
+![Saman vahvistimen simuloitu taajuusvaste. Keskikaistan vahvistus on
+43 dB; pisteviivat ovat −3 dB:n ala- ja ylärajataajuus.](kuvat/ce-bode.png){width=80%}
+
 Vahvistus 147 eli 43 dB on suuri, mutta se riippuu suoraan $g_m$:stä
 ja siten kollektorivirrasta ja lämpötilasta. Lisäksi se on epälineaarinen:
 suurilla signaaleilla $g_m$ muuttuu signaalin mukana, ja lähtö vääristyy.
@@ -140,6 +143,13 @@ Käytännössä osa emitterivastuksesta jätetään ohittamatta
 $-R_c/R_e'$, mutta se ei enää riipu transistorista, ja vääristymä
 pienenee samassa suhteessa. Sama vaihtokauppa, vahvistusta vakaudesta ja
 lineaarisuudesta, on koko operaatiovahvistintekniikan perusta.
+
+![Simuloitu lähtöjännite 10 kHz:n siniaallolla, kukin käyrä skaalattuna
+omaan huippuarvoonsa. Vasemmalla emitterivastus on kokonaan ohitettu:
+1 mV:n tulolla lähtö on puhdas sini, mutta 20 mV:n tulolla sen
+puolijaksot ovat erimuotoiset. Oikealla 180 Ω emitterivastuksesta on
+jätetty ohittamatta: vahvistus putoaa noin kymmenesosaan, ja sama 20 mV
+kulkee läpi vääristymättä.](kuvat/ce-aallot.png){width=92%}
 
 Ylärajataajuuden, tässä 6,5 MHz, määräävät transistorin sisäiset
 kapasitanssit. Kollektori–kantakapasitanssi näkyy tuloon
@@ -155,6 +165,9 @@ Kun lähtö otetaan emitteriltä, saadaan *emitteriseuraaja*
 on impedanssimuunnos: tuloresistanssi on suuri, $(\beta + 1)(r_e + R_e)$
 rinnan jakajan kanssa, ja lähtöresistanssi pieni, $r_e = 1/g_m$ plus
 lähteen resistanssi jaettuna $(\beta + 1)$:llä.
+
+![Emitteriseuraaja. Kollektori on suoraan käyttöjännitteessä, ja lähtö
+otetaan emitteriltä.](kuvat/seuraaja.png){width=66%}
 
 ```{.spice tiedosto="esimerkit/02-seuraaja.cir"}
 ```
@@ -172,8 +185,8 @@ resistanssi. Netlist tekee molemmat ajot `alterparam`-komennolla.
 ```{.tuloste tiedosto="esimerkit/02-seuraaja.odotettu"}
 ```
 
-Noin 18 ohmin lähtöresistanssi tarkoittaa, että seuraaja pystyy
-ohjaamaan pieniä kuormia, joita yhteisemitterivahvistimen 4,7 kohmin
+Noin 18 Ω:n lähtöresistanssi tarkoittaa, että seuraaja pystyy
+ohjaamaan pieniä kuormia, joita yhteisemitterivahvistimen 4,7 kΩ:n
 lähtö ei pystyisi. Siksi vahvistimissa on usein lähtöaste, jossa
 seuraaja tai kaksi vastakkaista seuraajaa (*push-pull*) syöttää
 kuorman. Operaatiovahvistimen lähtöaste on juuri tällainen.
@@ -182,10 +195,13 @@ kuorman. Operaatiovahvistimen lähtöaste on juuri tällainen.
 
 MOSFET toimii vahvistimena *kyllästysalueella* (nimi on harhaanjohtava:
 se vastaa bipolaaritransistorin aktiivista aluetta), jossa nieluvirta
-on likimain $\frac{K}{2}(U_{GS} - U_T)^2$. Transkonduktanssi on
-$g_m = 2 I_D / (U_{GS} - U_T)$, ja samalla virralla se on yleensä
-pienempi kuin bipolaaritransistorilla, koska $U_{GS} - U_T$ on
-tyypillisesti 0,1 ... 0,5 V eikä 26 mV. MOSFETin etuja ovat
+on likimain $\frac{K}{2}(U_{GS} - U_{GS(th)})^2$. Tässä $U_{GS(th)}$
+on kynnysjännite; se on eri suure kuin terminen jännite $U_T$, vaikka
+kirjallisuudessa molempia merkitään usein samalla kirjaimella.
+Transkonduktanssi on $g_m = 2 I_D / (U_{GS} - U_{GS(th)})$, ja samalla
+virralla se on yleensä pienempi kuin bipolaaritransistorilla, koska
+ylijännite $U_{GS} - U_{GS(th)}$ on tyypillisesti 0,1 ... 0,5 V, kun
+bipolaaritransistorin vastaava jännite $U_T$ on 26 mV. MOSFETin etuja ovat
 ääretön tasavirtatuloresistanssi (hila on eristetty) ja se, että
 CMOS-prosessissa transistorit ovat halpoja ja pieniä. Siksi integroitujen
 piirien vahvistimet, myös useimmat operaatiovahvistimet nykyään, ovat
@@ -197,6 +213,10 @@ lähdevastuksen jännite riippuu nieluvirrasta, hila–lähdejännitteelle
 saadaan toisen asteen yhtälö. Mallin `LAMBDA`-parametri (kanavan pituuden
 modulaatio, MOSFETin vastine Early-ilmiölle) kasvattaa virtaa hieman
 nielujännitteen mukana, ja se otetaan mukaan iteroimalla:
+
+![Yhteislähdevahvistin: sama rakenne kuin yhteisemitterivahvistimessa,
+kanta, kollektori ja emitteri vaihtuvat hilaksi, nieluksi ja
+lähteeksi.](kuvat/mosfet-vahvistin.png){width=60%}
 
 ```{.spice tiedosto="esimerkit/02-mosfet.cir"}
 ```
@@ -212,6 +232,53 @@ transistorilla: 0,49 mA:n virralla bipolaaritransistorin $g_m$ olisi
 19 mS, MOSFETin 1,4 mS. Ensimmäinen vertailu ilman `LAMBDA`-termiä erosi
 5 %, mikä on hyvä muistutus siitä, että pienikin malliparametri näkyy,
 kun sitä vertaa tarkkaan simulointiin.
+
+## Differentiaalipari
+
+Tähänastisissa vahvistimissa signaali on jännite maahan nähden.
+Anturin signaali on kuitenkin usein kahden johtimen *erojännite*, ja
+johtimiin kytkeytyvä häiriö on kummassakin sama. Tarvitaan vahvistin,
+joka vahvistaa eroa ja jättää yhteisen osan huomiotta.
+*Differentiaalipari* tekee sen kahdella samanlaisella transistorilla,
+joiden emitterit on kytketty yhteen ja jotka jakavat yhteisen
+*häntävirran*.
+
+![Differentiaalipari. Tulot ovat kannat `b1` ja `b2`, ja lähtö otetaan
+toiselta kollektorilta. Häntävirran asettaa vastus Ree negatiivisesta
+käyttöjännitteestä.](kuvat/eropari.png){width=52%}
+
+Kun tulojen välille tulee *erojännite*, toisen transistorin virta
+kasvaa ja toisen pienenee saman verran. Emitterisolmu pysyy paikallaan,
+joten kumpikin puoli on yhteisemitterivahvistin, joka saa puolet
+erojännitteestä: toisen kollektorin vahvistus on $g_m R_c / 2$. Kun
+molemmat tulot liikkuvat yhdessä (*yhteismuotoinen jännite*),
+emitterisolmu seuraa niitä, ja virta muuttuu vain sen verran kuin
+häntävastus sallii: vahvistus on likimain $R_c / (2 R_{ee})$. Näiden
+suhde on *yhteismuotoisen jännitteen vaimennus* (CMRR, *common-mode
+rejection ratio*).
+
+```{.spice tiedosto="esimerkit/02-eropari.cir"}
+```
+
+```{.python tiedosto="esimerkit/02-eropari.py" osa="kasin"}
+```
+
+```{.tuloste tiedosto="esimerkit/02-eropari.odotettu"}
+```
+
+Vastus häntänä antaa 46 dB:n vaimennuksen. Kun vastus korvataan
+virtalähteellä, yhteismuotoinen jännite ei muuta häntävirtaa lainkaan,
+ja vaimennus nousee 104 dB:iin. Integroidussa piirissä virtalähde
+tehdään *virtapeilillä*: kaksi samanlaista transistoria, joista toinen
+on kytketty diodiksi ja asettaa kanta–emitterijännitteen, jolla toinen
+toistaa saman virran. Myös kollektorivastukset korvataan virtapeilillä,
+jolloin vahvistus kasvaa tuhansiin.
+
+Differentiaalipari on operaatiovahvistimen tuloaste, ja siitä seuraa
+kaksi luvun 3 käsitettä. Paria ei voi valmistaa täysin symmetriseksi,
+joten lähtö on nollassa vasta, kun tulojen välillä on pieni jännite:
+tämä on *offsetjännite*. Kantojen tarvitsema virta on vahvistimen
+*biasvirta*.
 
 ## Käytännössä
 
@@ -229,6 +296,8 @@ kun sitä vertaa tarkkaan simulointiin.
   lähinnä radiotaajuuksilla, pienikohinaisissa tuloasteissa ja
   tehoasteissa. Muuhun operaatiovahvistin on halvempi ja parempi; sen
   sisällä ovat kuitenkin samat rakenteet.
+- Kun signaali on kahden johtimen ero, vahvista ero: differentiaalinen
+  tulo poistaa häiriön, joka on kummassakin johtimessa sama.
 - Lue datalehdestä $h_{FE}$:n vaihteluväli ja mittausvirta. Mallin `BF`
   on huippuarvo, ei tyypillinen arvo kaikilla virroilla.
 
@@ -243,3 +312,5 @@ kun sitä vertaa tarkkaan simulointiin.
 - Osaat arvioida ohituskondensaattorin määräämän alarajataajuuden.
 - Osaat selittää emitteriseuraajan impedanssimuunnoksen ja mitata
   lähtöresistanssin kuormitusmenetelmällä.
+- Osaat laskea differentiaaliparin ero- ja yhteismuotoisen vahvistuksen
+  ja selittää, miksi virtalähde häntänä parantaa CMRR:ää.

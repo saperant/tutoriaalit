@@ -67,7 +67,9 @@ välillä, mutta `.control` on joustavampi.
 parametreja. `.param` antaa nimetyn arvon, jota käytetään
 aaltosulkeissa lausekkeina. `.control`-lohkon `foreach`-silmukka ja
 `alterparam` muuttavat parametria ja ajavat analyysin uudelleen;
-`reset` lukee piirin uudelleen uusilla arvoilla.
+`reset` lukee piirin uudelleen uusilla arvoilla. Luvun 6
+lineaarisäädin oli jo aliohjelma; sen `B`-lähde on *käyttäytymislähde*,
+jonka jännite tai virta annetaan lausekkeena muista solmuista.
 
 ```{.spice tiedosto="esimerkit/08-alipiiri.cir"}
 ```
@@ -108,6 +110,9 @@ lasketaan tilastot. ngspicessä on omat satunnaisfunktiot (`agauss`,
 ```{.tuloste tiedosto="esimerkit/08-montecarlo.odotettu"}
 ```
 
+![500 simuloidun jakajan lähtöjännitteet. Katkoviivat ovat luvun 2
+huonoimman tapauksen rajat ja musta viiva nimellisarvo.](kuvat/montecarlo.png){width=78%}
+
 Tulokset jäävät huonoimman tapauksen rajojen sisään, ja suurin osa on
 lähellä nimellistä. Jakauma riippuu oletuksesta: tässä vastusten
 arvot ovat tasajakautuneita toleranssin sisällä. Valmistajien vastukset
@@ -127,7 +132,7 @@ ratkaisua ei löydy, ngspice ilmoittaa *timestep too small* tai
 
 - **Solmu ilman tasavirtareittiä maahan.** Kelluva muuntajan toisio,
   pelkän kondensaattorin takana oleva solmu tai kytkemätön transistorin
-  hila. Korjaus: suuri vastus (esimerkiksi 10 Mohm) maahan.
+  hila. Korjaus: suuri vastus (esimerkiksi 10 MΩ) maahan.
 - **Ideaaliset komponentit, jotka vaativat äärettömän virran.**
   Ideaalinen jännitelähde suoraan kondensaattoriin tai johtavaan
   diodiin. Korjaus: realistinen sarjaresistanssi, kuten luvun 6

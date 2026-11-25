@@ -20,8 +20,8 @@ niihin perusasioihin, joita näihin kysymyksiin tarvitaan:
   vapaakäyntidiodi ja CMOS-invertteri
 - piirisimulaattori SPICE ja sen avoin toteutus **ngspice**.
 
-Jokainen piiri lasketaan kahdella tavalla: käsin kaavoilla, Pythonin
-avulla, ja simuloimalla ngspicellä. Esimerkkiohjelma vertaa tuloksia
+Jokainen piiri lasketaan kahdella tavalla: käsin kaavoista (laskun
+tekee Python) ja simuloimalla ngspicellä. Esimerkkiohjelma vertaa tuloksia
 ja ilmoittaa, jos ne eroavat. Kahdesta riippumattomasta laskusta
 syntyvä sama tulos on vahva todiste siitä, että sekä ymmärrys että
 simulointi ovat kunnossa. Kun tulokset eroavat, ero kertoo jotain
@@ -35,7 +35,7 @@ otetaan pienempi jännite. Se on elektroniikan yleisin yksittäinen
 rakenne: sillä skaalataan anturin jännite AD-muuntimen alueelle,
 asetetaan vertailujännite ja jaetaan akun jännite mitattavaksi.
 
-![Jännitteenjakaja: 12 V:n lähde ja vastukset 10 kohm ja 4,7 kohm.
+![Jännitteenjakaja: 12 V:n lähde ja vastukset 10 kΩ ja 4,7 kΩ.
 Lähtö otetaan vastusten välistä.](kuvat/jakaja.png){width=38%}
 
 Sama virta kulkee molempien vastusten läpi, joten virta on syöttöjännite
@@ -103,21 +103,43 @@ Arvot muotoillaan kolmella merkitsevällä numerolla ja SI-etuliitteellä
 milliä; megaohmi kirjoitetaan `Meg`. Tämä on yksi tavallisimmista
 SPICE-virheistä.
 
-## Kenelle ja mitä tarvitaan
+## Esitiedot ja rajaus
 
 Tutoriaali on tarkoitettu ohjelmoijalle tai insinööriopiskelijalle,
 joka hallitsee lukion matematiikan: yhtälöt, eksponentti- ja
-logaritmifunktiot sekä trigonometrian. Taito *Matematiikan perusteet
-ohjelmallisesti* kattaa ne ja esittelee työkalut (SymPy, NumPy,
-Matplotlib), joita tässä käytetään. Kompleksiluvut esitellään luvussa 5
-siinä laajuudessa kuin impedanssi vaatii; taito *Kompleksiluvut ja
-Fourier-analyysi* syventää niitä.
+logaritmifunktiot sekä trigonometrian. Esitieto on taito *Matematiikan
+perusteet ohjelmallisesti*, joka kattaa ne ja esittelee työkalut (SymPy,
+NumPy, Matplotlib), joita tässä käytetään. Kompleksiluvut esitellään
+luvussa 5 siinä laajuudessa kuin impedanssi vaatii; taito
+*Kompleksiluvut ja Fourier-analyysi* syventää niitä. Aiempaa
+elektroniikan osaamista ei tarvita, eikä yhtään laitetta: jokainen
+piiri simuloidaan, ja tulos näytetään lukuina ja kuvaajina.
+
+Tutoriaali rajautuu piireihin, joissa transistori on kytkin. Muualla
+käsitellään:
+
+- vahvistimet, suodattimet, AD- ja DA-muuntimet ja kohina: jatkotaito
+  *Analogiaelektroniikka*
+- logiikkaportit, kiikut ja tilakoneet loogisella tasolla: taito
+  *Digitaalitekniikka*
+- väylien protokollat (I2C, SPI, UART, CAN): taito *Oheislaiteväylät*
+- RC- ja RLC-piirien vasteiden johtaminen differentiaaliyhtälöistä:
+  taito *Differentiaaliyhtälöt ja Laplace-muunnos*.
+
+Piirilevyn suunnittelu, verkkojännitteiset laitteet ja tehoelektroniikka
+jäävät tämän taitopuun ulkopuolelle.
 
 Kehityskontissa on valmiina ngspice ja Pythonin kirjastot. Omalle
 koneelle ngspice asennetaan pakettienhallinnalla (`apt install ngspice`,
 `brew install ngspice`) tai Windowsille ngspicen verkkosivuilta.
 Esimerkit ajetaan esimerkkihakemistossa komennolla `python3
 01-jakaja.py`; kaikki tarkistukset ajaa paketin juuressa `make testaa`.
+
+Piirit esitetään kahdella tavalla rinnakkain: piirikaaviona ja
+netlistinä. Kaavion harmaat solmunimet ovat samat kuin netlistissä,
+joten netlistin lukemista oppii vertaamalla niitä. Ohjelmien tulosteissa
+ja netlisteissä yksiköt kirjoitetaan SPICEn tapaan ASCII-merkein:
+`u` on mikro (µ) ja `ohm` ohmi (Ω).
 
 ## Turvallisuudesta
 
@@ -134,9 +156,11 @@ valmiin, turvallisen muuntajan, jonka toisiojännite on 12 V.
 Luku 2 käsittelee perussuureet ja komponenttien arvot, luku 3
 piirianalyysin menetelmät ja luku 4 kondensaattorin ja kelan
 ajassa. Luku 5 siirtyy vaihtovirtaan ja taajuustasoon. Luvut 6 ja 7
-esittelevät puolijohteet: diodit ja transistorit kytkiminä, mukaan
-lukien CMOS-invertteri, joka on kaiken digitaalilogiikan
-rakennuspalikka. Luku 8 kokoaa SPICEn käytön syvemmin:
+esittelevät puolijohteet. Luku 6 käsittelee diodit ja niillä tehdyn
+tasasuuntauksen ja jännitteen säädön. Luku 7 käsittelee transistorit
+kytkiminä: lämpenemisen, induktiivisen kuorman ja CMOS-invertterin,
+joka on kaiken digitaalilogiikan rakennuspalikka, sekä siitä seuraavat
+logiikkatasot. Luku 8 kokoaa SPICEn käytön syvemmin:
 aliohjelmat, parametrit, silmukat, Monte Carlo -analyysi ja
 simuloinnin rajat. Jatkotaito *Analogiaelektroniikka* rakentuu
 tämän päälle: operaatiovahvistimet, aktiiviset suodattimet, AD- ja

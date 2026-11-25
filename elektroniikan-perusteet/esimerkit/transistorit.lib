@@ -6,6 +6,8 @@
 * Logiikkatason N-kanavainen teho-MOSFET (yksinkertainen taso 1 -malli):
 * kynnysjännite 1,6 V, R_DS(on) noin 60 mohm, kun U_GS = 3,3 V.
 .model NLOG NMOS(LEVEL=1 VTO=1.6 KP=10 LAMBDA=0.01 CGSO=1n CGDO=200p)
+* Vastaava P-kanavainen MOSFET yläpuolen kytkimeksi:
+.model PLOG PMOS(LEVEL=1 VTO=-1.6 KP=5 LAMBDA=0.01 CGSO=1n CGDO=200p)
 * CMOS-invertterin transistorit (taso 1, 1,8 V:n prosessin kaltainen):
 .model NCMOS NMOS(LEVEL=1 VTO=0.45 KP=200u LAMBDA=0.05)
 .model PCMOS PMOS(LEVEL=1 VTO=-0.45 KP=80u LAMBDA=0.05)

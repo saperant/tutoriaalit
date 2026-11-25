@@ -16,14 +16,17 @@ kaksinkertainen tarkistus on tutoriaalin tärkein opetus: kaava kertoo,
 | aikavakio | 63 % yhdessä, 99 % viidessä aikavakiossa |
 | nousuaika 30...70 % | $0{,}85\,RC$ |
 | desibelit | −3 dB = puolet tehosta, −20 dB/dekadi yhden RC:n jälkeen |
-| piidiodi | 0,6...0,7 V; +100 mV jokaista virran kymmenkertaistumista kohden |
+| piidiodi | 0,6...0,7 V; +60...120 mV jokaista virran kymmenkertaistumista kohden |
+| lineaarisäädin | häviö $(U_\text{sisään} - U_\text{ulos})\,I$; tulo vähintään lähtö + pudotusjännite |
 | LEDin etuvastus | $(U - U_F) / I$, pyöristys ylöspäin |
 | BJT-kytkin | pakotettu vahvistus 10...20 |
 | MOSFET-kytkin | $R_{DS(on)}$ datalehdestä käytetyllä hilajännitteellä |
+| lämpö | $T_j = T_a + P R_{\theta JA}$, piillä enintään noin 150 °C |
+| logiikkatasot | lähdön $U_{OH}$ yli tulon $U_{IH}$:n ja $U_{OL}$ alle $U_{IL}$:n |
 | induktiivinen kuorma | aina vapaakäyntidiodi |
 | hitaat reunat | Schmitt-tulo |
 
-## Mihin tästä
+## Jatkotaidot
 
 Jatkotaito *Analogiaelektroniikka* rakentaa tämän päälle:
 transistorivahvistimet ja toimintapiste, operaatiovahvistimet,
@@ -35,11 +38,14 @@ kuvataan siirtofunktioilla.
 Muita läheisiä taitoja:
 
 - *Digitaalitekniikka*: logiikkaportit, kiikut ja tilakoneet; luvun 7
-  CMOS-invertteri on niiden sähköinen pohja.
+  CMOS-invertteri ja logiikkatasot ovat niiden sähköinen pohja.
 - *Mikrokontrollerit ja bare-metal-ohjelmointi* sekä *Oheislaiteväylät*:
   GPIO, vetovastukset ja väylien sähköiset tasot luvun 4 ja 7 pohjalta.
-- *ASIC-toteutus* ja *FPGA-toteutus*: CMOS-piirien viive ja teho
-  suuressa mittakaavassa.
+- *RTL-suunnittelu SystemVerilogilla* ja *FPGA-toteutus*: luvun 4
+  kosketinvärähtelyn suodatus ja luvun 7 PWM digitaalisena logiikkana.
+- *ASIC-toteutus*: CMOS-piirien viive ja teho suuressa mittakaavassa.
+- *Differentiaaliyhtälöt ja Laplace-muunnos*: luvun 4 ja 5 RC- ja
+  RLC-vasteet yhtälöistä johdettuina.
 
 Elektroniikkaa oppii parhaiten rakentamalla. Koekytkentälevy, muutama
 vastus, kondensaattori, LED, transistori ja yleismittari riittävät
@@ -65,6 +71,11 @@ eroavat, ero on aina opettavainen.
   Nousuaikojen ja vetovastusten raja-arvot.
 - KiCad-projekti. <https://www.kicad.org/>
 - schemdraw-kirjaston dokumentaatio. <https://schemdraw.readthedocs.io/>
+- Texas Instruments. *HCMOS Design Considerations* (SCLA007) ja
+  74HC- ja 74HCT-sarjojen datalehdet. Logiikkatasot ja
+  kohinamarginaalit.
+- JEDEC JESD8C. *Interface Standard for Nominal 3 V/3.3 V Supply
+  Digital Integrated Circuits*. 3,3 V:n logiikan tasot.
 - Taitopuun muut tutoriaalit: *Matematiikan perusteet ohjelmallisesti*,
   *Kompleksiluvut ja Fourier-analyysi*, *Digitaalitekniikka* ja
   *Oheislaiteväylät*.

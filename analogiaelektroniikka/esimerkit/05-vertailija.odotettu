@@ -1,0 +1,6 @@
+  ylempi kynnys simuloitu     1.80 V   laskettu     1.80 V   ok
+  alempi kynnys simuloitu     1.50 V   laskettu     1.50 V   ok
+  hystereesi 300 mV
+tulo ylittää referenssin 21 kertaa
+ilman hystereesiä (R2 = 1 Gohm): 21 tilanvaihtoa
+hystereesin kanssa (R2 = 100 kohm): 1 tilanvaihto

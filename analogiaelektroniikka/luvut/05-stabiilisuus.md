@@ -7,7 +7,9 @@ palaa vahvistimen tuloon samassa vaiheessa kuin alkuperäinen,
 negatiivinen takaisinkytkentä muuttuu positiiviseksi, ja piiri alkaa
 värähdellä. Tämä luku selvittää, miten stabiilisuus mitataan ja miksi
 tavallinen syy epävakauteen on niinkin arkinen asia kuin kaapelin tai
-kondensaattorin kapasitanssi lähdössä.
+kondensaattorin kapasitanssi lähdössä. Luvun lopussa positiivinen
+takaisinkytkentä otetaan tarkoituksella käyttöön: vertailijassa se
+tuottaa hystereesin.
 
 ## Silmukkavahvistus
 
@@ -50,6 +52,12 @@ vain vaihtosignaalilta. Suuri kela takaisinkytkentäpolussa välittää
 tasajännitteen, joten toimintapiste säilyy oikeana, mutta katkaisee
 vaihtosignaalin. Suuri kondensaattori syöttää testisignaalin
 invertoivaan tuloon. Silloin $T = -u_{ulos}/u_{tulo-}$.
+
+![Luvun kaksi kytkentää. Vasemmalla silmukkavahvistuksen mittaus: kela
+Lkatko sulkee silmukan tasajännitteelle, ja kondensaattori Ckatko tuo
+testisignaalin lähteestä Vt. Oikealla osion *Kompensointi*
+eristysvastus: takaisinkytkentä otetaan vahvistimen lähdöstä `o2`, ja
+kuorma on vastuksen takana.](kuvat/silmukka.png){width=96%}
 
 ```{.spice tiedosto="esimerkit/05-silmukka.cir"}
 ```
@@ -104,7 +112,7 @@ näyttää siistiltä juuri siksi, että vahvistin on kyllästynyt.
 
 Kapasitiivisen kuorman ongelmaan on kolme tavallista ratkaisua:
 
-- *Eristysvastus.* 20 ... 100 ohmin vastus vahvistimen lähdön ja
+- *Eristysvastus.* 20 ... 100 Ω:n vastus vahvistimen lähdön ja
   kuorman välissä, takaisinkytkentä vahvistimen lähdöstä. Vastus tuo
   silmukkaan nollan, joka kumoaa kuorman navan vaikutuksen. Haittana
   vastuksen yli syntyy jännitehäviö kuormavirralla, ja tarkkuus
@@ -118,10 +126,73 @@ Kapasitiivisen kuorman ongelmaan on kolme tavallista ratkaisua:
   laskee ylitystaajuutta, ja kuorman napa jää sen yläpuolelle.
 
 Sama analyysi koskee kaikkia takaisinkytkettyjä järjestelmiä:
-jännitteenvakaajia, vaihelukittuja silmukoita ja ohjelmallisia
-säätimiä. Taidossa *Differentiaaliyhtälöt ja Laplace-muunnos* Routhin
+jännitteensäätimiä, vaihelukittuja silmukoita ja ohjelmallisia
+säätimiä. Lineaarisäädin on vahvistin, joka vertaa lähtöään
+referenssiin ja ohjaa sarjatransistoria, ja sen kuorma on aina
+kondensaattori. Siksi säätimen datalehti määrää lähtökondensaattorin
+arvon ja sarjaresistanssin rajat: ne ovat juuri tämän luvun
+vaihevaraehto valmiiksi laskettuna. Taidossa *Differentiaaliyhtälöt ja Laplace-muunnos* Routhin
 ehto kertoi, onko järjestelmä stabiili; vaihevara kertoo, *kuinka*
 stabiili, ja juuri se ratkaisee, soiko piiri.
+
+## Positiivinen takaisinkytkentä: vertailija ja hystereesi
+
+*Vertailija* (*comparator*) on vahvistin ilman negatiivista
+takaisinkytkentää: sen lähtö on ylhäällä, kun plus-tulo on miinus-tuloa
+suurempi, ja muuten alhaalla. Se muuttaa analogisen jännitteen
+yhdeksi bitiksi, ja luvun 6 AD-muuntimet rakentuvat sen varaan.
+Vertailijapiiri on tehty tähän: sen lähtö on logiikkatasoinen ja toipuu
+ääriasennosta nanosekunneissa, toisin kuin operaatiovahvistimen.
+
+Pelkällä vertailijalla on sama ongelma kuin taidon *Elektroniikan
+perusteet ja SPICE* kosketinvärähtelyssä: kun tulo on lähellä kynnystä,
+pienikin kohina heiluttaa lähtöä edestakaisin. Ratkaisu on
+*hystereesi*, ja se tehdään positiivisella takaisinkytkennällä. Vastus
+R2 tuo osan lähdöstä plus-tuloon, jolloin kynnys siirtyy aina poispäin
+siitä suunnasta, josta tulo sen juuri ylitti.
+
+![Vertailija, jonka kynnys riippuu lähdön tilasta (invertoiva
+Schmitt-liipaisin). Plus-tulon jännite on referenssin ja lähdön
+painotettu keskiarvo.](kuvat/vertailija-kaavio.png){width=52%}
+
+Kynnykset saadaan solmun `p` jännitteenjaosta lähdön kummassakin
+tilassa:
+
+```{.python tiedosto="esimerkit/05-vertailija.py" osa="kynnykset"}
+```
+
+Netlistin vertailija on aliohjelma, jonka lähtö lasketaan tulojen
+erotuksesta jyrkällä tanh-funktiolla. Tuloon syötetään hidas
+kolmioaalto, ja mittaukset poimivat tulojännitteen niillä hetkillä,
+joina lähtö vaihtuu:
+
+```{.spice tiedosto="esimerkit/05-vertailija.cir"}
+```
+
+Toinen koe näyttää, mitä hystereesi tekee kohinalle. Tulo nousee
+hitaasti kynnyksen ohi, ja sen päällä on ±60 mV kohinaa. Sama netlist
+ajetaan kahdesti: takaisinkytkentävastuksella 1 GΩ (käytännössä ei
+hystereesiä) ja 100 kΩ.
+
+```{.python tiedosto="esimerkit/05-vertailija.py" osa="kohina"}
+```
+
+```{.tuloste tiedosto="esimerkit/05-vertailija.odotettu"}
+```
+
+![Vasemmalla simuloitu siirtokäyrä: lähtö vaihtuu alas tulon noustessa
+1,8 V:n yli ja ylös vasta sen laskiessa 1,5 V:n alle. Oikealla kohiseva
+tulo ja vertailijan lähtö (lähdöt on piirretty tulon yläpuolelle
+pienennettyinä). Ilman hystereesiä lähtö vaihtuu 21 kertaa, 0,3 V:n
+hystereesillä kerran.](kuvat/vertailija.png){width=96%}
+
+Hystereesin leveys mitoitetaan kohinan mukaan: sen on oltava suurempi
+kuin tulon kohinan huipusta huippuun -arvo, mutta ei suurempi kuin
+on pakko, koska se siirtää vaihtohetkeä. Negatiivinen takaisinkytkentä
+pitää vahvistimen lineaarisena, positiivinen tekee siitä kaksitilaisen:
+sama silmukkavahvistus, vastakkainen etumerkki. Kun stabiilin
+vahvistimen vaihevara loppuu, se muuttuu vahingossa juuri tällaiseksi
+piiriksi.
 
 ## Käytännössä
 
@@ -137,6 +208,10 @@ stabiili, ja juuri se ratkaisee, soiko piiri.
 - Ohjaa pitkiä kaapeleita ja AD-muuntimen näytteenottokondensaattoria
   eristysvastuksen kautta. ADC-tuloon tarvitaan yleensä RC-suodin
   joka tapauksessa (luku 6).
+- Lisää vertailijaan hystereesi aina, kun tulo muuttuu hitaasti tai
+  siinä on kohinaa. Monessa vertailijapiirissä ja mikrokontrollerin
+  sisäisessä vertailijassa se on valmiina muutaman millivoltin
+  suuruisena.
 - Kun piiri värähtelee oikeasti mutta ei simulaattorissa, etsi
   kuorma- ja hajakapasitanssi, jota netlistissä ei ole.
 
@@ -151,3 +226,5 @@ stabiili, ja juuri se ratkaisee, soiko piiri.
 - Osaat yhdistää vaihevaran askelvasteen ylitykseen ja selittää, miksi
   stabiilisuus tarkistetaan pienellä signaalilla.
 - Osaat valita kompensointikeinon kapasitiivisen kuorman ohjaamiseen.
+- Osaat mitoittaa vertailijan hystereesin vastuksilla ja perustella sen
+  leveyden tulon kohinasta.

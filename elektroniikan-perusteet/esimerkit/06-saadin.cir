@@ -1,0 +1,30 @@
+* Lineaarisäädin mustana laatikkona ja zener-säädin samassa tehtävässä:
+* 12 V:n syötöstä 5 V kuormalle, jonka virtaa pyyhkäistään 0...60 mA.
+.include diodit.lib
+* Säädin: lähtö on UOUT, kun tulo on vähintään UOUT + UDO (pudotusjännite).
+* Kuormavirta kulkee tulosta lähtöön (Fsarja peilaa lähtövirran tuloon),
+* ja lisäksi säädin ottaa oman lepovirtansa IQ.
+.subckt LINSAADIN in out gnd params: UOUT=5 UDO=0.3 IQ=50u
+Bulos sis gnd V = min({UOUT}, max(v(in,gnd) - {UDO}, 0))
+Vmit sis out DC 0
+Fsarja in gnd Vmit 1
+Ilepo in gnd DC {IQ}
+.ends
+* a) lineaarisäädin
+Vlin inl 0 DC 12
+X1 inl lin 0 LINSAADIN
+Ilin lin 0 DC 0
+* b) zener-säädin: sarjavastus 150 ohm ja 5,1 V:n zener
+Vzen inz 0 DC 12
+Rs inz zen 150
+Dz 0 zen DZ51
+Izen zen 0 DC 0
+.control
+dc Ilin 0 60m 10m
+wrdata lin.dat v(lin) i(Vlin)
+dc Izen 0 60m 10m
+wrdata zen.dat v(zen) i(Vzen)
+dc Vlin 4.5 6 0.25
+wrdata pudotus.dat v(lin)
+.endc
+.end

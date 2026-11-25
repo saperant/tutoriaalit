@@ -65,6 +65,11 @@ kompleksiluvut perusteellisemmin.
 RC-alipäästö on jännitteenjakaja, jonka alaosa on kondensaattori.
 Pienillä taajuuksilla kondensaattori on lähes avoin piiri ja koko
 jännite pääsee läpi; suurilla taajuuksilla se oikosulkee lähdön.
+
+![Luvun kolme piiriä vasemmalta oikealle: RC-alipäästö, moottorin
+käämiä kuvaava RL-kuorma ja sarja-RLC-piiri. Solmunimet ovat samat kuin
+netlisteissä.](kuvat/ac-piirit.png){width=100%}
+
 Siirtofunktio on jakosuhde:
 
 $$
@@ -128,6 +133,12 @@ työskentely vaatii sähköalan pätevyyden.
 ```{.tuloste tiedosto="esimerkit/05-loisteho.odotettu"}
 ```
 
+![Saman simulaation aaltomuodot kahden jakson ajalta. Virta on 37°
+jännitettä jäljessä. Hetkellinen teho on negatiivinen (varjostus)
+niinä hetkinä, joina jännite ja virta ovat erimerkkiset: silloin kela
+palauttaa energiaa verkkoon. Katkoviiva on tehon keskiarvo eli
+pätöteho.](kuvat/teho-aallot.png){width=80%}
+
 SPICE laskee hetkellisen tehon $p(t) = u(t)\,i(t)$ ja sen keskiarvon
 (`meas ... AVG`) ajan yli, eikä tiedä mitään osoittimista. Tulos on
 silti sama kuin kompleksiluvuilla laskettu, mikä näyttää, että
@@ -158,6 +169,11 @@ $f_0 / Q$.
 
 ```{.tuloste tiedosto="esimerkit/05-resonanssi.odotettu"}
 ```
+
+![Vastuksen jännite taajuuden funktiona kolmella vastuksen arvolla.
+Resonanssitaajuus pysyy samana, mutta pieni vastus (suuri Q) tekee
+piikistä kapean. Esimerkin piiri on keskimmäinen
+käyrä.](kuvat/resonanssi.png){width=80%}
 
 Resonanssi tunnistetaan simuloinnista vaiheesta: vastuksen jännite on
 samassa vaiheessa lähteen kanssa juuri resonanssissa (`vp(ulos)=0`).

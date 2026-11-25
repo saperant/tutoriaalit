@@ -3,9 +3,11 @@
 Kaikki edelliset luvut olettivat, että piirin ainoat signaalit ovat ne,
 jotka sinne syötetään. Todellisuudessa jokainen vastus tuottaa kohinaa,
 jokainen vahvistin lisää omansa, ja johtimet, maadoitus ja viereiset
-digitaalisignaalit tuovat häiriöitä. Kohina asettaa mittauksen tarkkuudelle
-perustavan rajan, jota ei voi ohittaa vahvistamalla, ja signaalin eheys
-ratkaisee, toimiiko nopea väylä vai ei.
+digitaalisignaalit tuovat häiriöitä. Luvussa on kaksi osaa. Alkuosa
+käsittelee kohinaa, joka syntyy komponenteissa itsessään ja asettaa
+mittauksen tarkkuudelle perustavan rajan, jota ei voi ohittaa
+vahvistamalla. Loppuosa käsittelee häiriöitä, jotka syntyvät
+johtimissa: heijastuksia, maadoitusta ja käyttöjännitteen notkahduksia.
 
 ## Terminen kohina
 
@@ -17,7 +19,7 @@ $$
 e_n = \sqrt{4 k T R}\ \ \mathrm{V}/\sqrt{\mathrm{Hz}},
 $$
 
-missä $k$ on Boltzmannin vakio ja $T$ absoluuttinen lämpötila. 1 kohmin
+missä $k$ on Boltzmannin vakio ja $T$ absoluuttinen lämpötila. 1 kΩ:n
 vastus tuottaa huoneenlämmössä noin 4 nV/√Hz. Kohinan tehollisarvo
 kaistalla $B$ on $e_n\sqrt{B}$, joten kohinaa on sitä enemmän, mitä
 leveämpi kaista on.
@@ -43,7 +45,7 @@ kohinan ja niiden yhteisvaikutuksen haluttuun solmuun:
 ```
 
 Simulointi vahvistaa molemmat: tiheys on $\sqrt{4kTR}$, ja kokonaiskohina
-on sama 1 kohmin ja 100 kohmin vastuksella. Ngspicen oletuslämpötila on
+on sama 1 kΩ:n ja 100 kΩ:n vastuksella. Ngspicen oletuslämpötila on
 27 °C, joten laskussa on käytetty 300,15 K.
 
 ## Kohinabudjetti
@@ -61,9 +63,9 @@ määrää kokonaisuuden:
 ```
 
 Esimerkissä kolme lähdettä ovat samaa suuruusluokkaa. Jos lähteen
-resistanssi olisi 100 ohmia, vahvistimen jännitekohina hallitsisi, ja
+resistanssi olisi 100 Ω, vahvistimen jännitekohina hallitsisi, ja
 kannattaisi valita pienikohinainen bipolaarivahvistin. Jos se olisi
-1 Mohm, virtakohina hallitsisi, ja oikea valinta olisi FET-tuloinen
+1 MΩ, virtakohina hallitsisi, ja oikea valinta olisi FET-tuloinen
 vahvistin, jonka virtakohina on femtoampeereja. Budjetti kertoo, mihin
 kannattaa käyttää rahaa: kohinattomampi vahvistin ei auta, jos anturin oma
 terminen kohina on suurin lähde. Silloin auttaa vain kapeampi kaista,
@@ -76,12 +78,25 @@ tyypillisesti 10 Hz ... 1 kHz. Tasajännitettä tai hitaita signaaleja
 mittaavissa piireissä käytetään *chopper*- tai *auto-zero*-vahvistimia,
 jotka siirtävät signaalin 1/f-alueen yläpuolelle.
 
+![Vasemmalla vahvistimen kohinatiheyden tyypillinen muoto: valkoinen
+taso (tässä 10 nV/√Hz) ja sen alapuolella kulmataajuudesta (100 Hz)
+alkava 1/f-kohina. Käyrä on periaatekuva, ei simulaation tulos.
+Oikealla esimerkin budjetti: kolme lähdettä summautuvat neliöllisesti,
+joten summa on selvästi pienempi kuin osien
+yhteenlaskettu arvo.](kuvat/kohina.png){width=92%}
+
 ## Heijastukset siirtolinjassa
+
+Mittausketjun toisessa päässä on digitaalipiiri, ja sen nopeat reunat
+ovat analoginen ilmiö: jännite ja virta etenevät johtimessa aaltona.
+Sama johdotus, jossa väylän signaali heijastuu ja soi, kytkee häiriön
+viereiseen anturijohtimeen ja AD-muuntimen referenssiin. Siksi luvun
+loppuosa siirtyy komponenttien kohinasta johtimiin.
 
 Kun signaalin nousuaika on lyhyt verrattuna aikaan, jossa se kulkee
 johtimen päästä päähän, johdin ei ole enää pelkkä yhteys vaan
 *siirtolinja*, jolla on ominaisimpedanssi $Z_0$ (piirilevyllä ja
-koaksiaalikaapelissa tyypillisesti 50 ohmia). Jos linjan pää ei ole
+koaksiaalikaapelissa tyypillisesti 50 Ω). Jos linjan pää ei ole
 päätetty ominaisimpedanssilla, osa aallosta heijastuu takaisin
 heijastuskertoimella
 
@@ -95,6 +110,10 @@ ei heijasta lainkaan. Heijastunut aalto heijastuu uudelleen lähteestä,
 jos lähteen resistanssi poikkeaa $Z_0$:sta. Kuorman jännitteen voi
 laskea askel kerrallaan:
 
+![Päättämisen kaksi tapaa. Ylhäällä lähteen resistanssi on sovitettu
+linjaan ja pää on auki; alhaalla linjan päässä on ominaisimpedanssin
+suuruinen vastus.](kuvat/paatokset.png){width=74%}
+
 ```{.python tiedosto="esimerkit/07-heijastus.py" osa="heijastus"}
 ```
 
@@ -107,8 +126,8 @@ ja viiveen:
 ```{.tuloste tiedosto="esimerkit/07-heijastus.odotettu"}
 ```
 
-![Kuorman jännite 50 ohmin linjan päässä. Sovitettu lähde (50 ohm)
-antaa puhtaan askeleen avoimeen päähän; 10 ohmin lähde ja avoin pää
+![Kuorman jännite 50 Ω:n linjan päässä. Sovitettu lähde (50 Ω)
+antaa puhtaan askeleen avoimeen päähän; 10 Ω:n lähde ja avoin pää
 soivat; päätetty linja on puhdas mutta jännite jää jaon mukaiseksi.](kuvat/heijastus.png){width=80%}
 
 Kolme tapausta näyttävät päättämisen kaksi tapaa. *Sarjapäätös*
@@ -118,7 +137,7 @@ Tätä käytetään pisteestä pisteeseen kulkevissa signaaleissa, kuten
 kellolinjoissa ja SPI-väylässä. *Rinnakkaispäätös* (kuorma $Z_0$) ei
 heijasta lainkaan, mutta kuluttaa tehoa ja jakaa jännitteen; sitä
 käytetään esimerkiksi CAN- ja RS-485-väylien päissä ja nopeissa
-differentiaalipareissa. Taidon *Oheislaiteväylät* CAN-väylän 120 ohmin
+differentiaalipareissa. Taidon *Oheislaiteväylät* CAN-väylän 120 Ω:n
 päätevastukset ovat juuri tätä.
 
 Nyrkkisääntö: johdinta on pidettävä siirtolinjana, kun sen viive on
@@ -164,6 +183,11 @@ maatasoa:
 
 ```{.tuloste tiedosto="esimerkit/07-ohitus.odotettu"}
 ```
+
+![Piirin käyttöjännite virtapiikin aikana. Ilman ohitusta jännite
+notkahtaa voltin virran noustessa ja ylittää käyttöjännitteen virran
+katketessa, koska johtimen induktanssi vastustaa virran muutosta
+kumpaankin suuntaan.](kuvat/ohitus.png){width=80%}
 
 Ilman ohitusta käyttöjännite notkahtaa voltin, mikä riittää kaatamaan
 3,3 V:n logiikan. Ohituskondensaattorin kanssa notkahdus on 50 mV, ja

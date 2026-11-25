@@ -15,6 +15,7 @@ subtitle: Pikaopas · kaavat, kytkennät ja ngspice
 | CE-vahvistus | $-g_m (R_c \parallel R_L \parallel r_o)$ |
 | degeneroitu | $\approx -R_c / R_e'$ |
 | seuraajan lähtö | $r_e + R_s/(\beta+1)$, $r_e = 1/g_m$ |
+| differentiaalipari | $A_d = g_m R_c/2$, $A_{cm} \approx R_c/(2R_{ee})$ |
 
 # Operaatiovahvistin
 
@@ -45,6 +46,8 @@ subtitle: Pikaopas · kaavat, kytkennät ja ngspice
 |------|------------------|
 | silmukkavahvistus | $T = A\beta$; vaihevara 45...60° |
 | kuorman napa | $f = 1/(2\pi R_{ulos} C_L)$ |
+| vertailijan kynnys | $(U_{ref} R_2 + U_{ulos} R_1)/(R_1 + R_2)$ |
+| PWM ja RC | rippeli $U D(1-D)T/\tau$ |
 | LSB | $U_{ref} / 2^N$ |
 | SNR | $6{,}02 N + 1{,}76$ dB |
 | ENOB | $(\mathrm{SINAD} - 1{,}76)/6{,}02$ |
@@ -55,7 +58,7 @@ subtitle: Pikaopas · kaavat, kytkennät ja ngspice
 
 | Asia | Kaava |
 |------|-------|
-| terminen kohina | $\sqrt{4kTR}$, 1 kohm: 4 nV/√Hz |
+| terminen kohina | $\sqrt{4kTR}$, 1 kΩ: 4 nV/√Hz |
 | kT/C | $\sqrt{kT/C}$, 1 pF: 64 µV |
 | summautuminen | $\sqrt{\sum e_k^2}$ |
 | heijastuskerroin | $\Gamma = (Z - Z_0)/(Z + Z_0)$ |

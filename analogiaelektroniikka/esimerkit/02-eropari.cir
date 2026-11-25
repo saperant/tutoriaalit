@@ -1,0 +1,40 @@
+* Differentiaalipari: kaksi samanlaista transistoria, joiden emitterit
+* on kytketty yhteen. Tulot b1 ja b2, lähtö otetaan kollektorilta c2.
+* Pari A: häntävirta vastuksen Ree kautta. Pari B: häntävirta
+* virtalähteestä (ihanteellinen virtapeili).
+.include transistorit.lib
+Vcc vcc 0 DC 12
+Vee vee 0 DC -12
+Vcm cm 0 DC 0 AC 0
+Vd1 b1 cm DC 0 AC 0.5
+Vd2 b2 cm DC 0 AC -0.5
+* Pari A
+Rc1 vcc c1 10k
+Rc2 vcc c2 10k
+Q1 c1 b1 e QNPN
+Q2 c2 b2 e QNPN
+Ree e vee 10k
+* Pari B
+Rc3 vcc c3 10k
+Rc4 vcc c4 10k
+Q3 c3 b1 f QNPN
+Q4 c4 b2 f QNPN
+Ihanta f vee DC 1.135m
+.control
+op
+print @q2[ic] v(e)
+* Erotulo: 1 V tulojen välillä, yhteinen taso ei muutu.
+ac lin 1 1k 1k
+let ad_a = vm(c2)
+let ad_b = vm(c4)
+print ad_a ad_b
+* Yhteismuotoinen tulo: molemmat tulot liikkuvat yhdessä.
+alter Vd1 ac = 0
+alter Vd2 ac = 0
+alter Vcm ac = 1
+ac lin 1 1k 1k
+let acm_a = vm(c2)
+let acm_b = vm(c4)
+print acm_a acm_b
+.endc
+.end

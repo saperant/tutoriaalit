@@ -7,7 +7,11 @@ tai esimerkit muuttuvat.
 
 from __future__ import annotations
 
+import contextlib
+import io
 import math
+import re
+import runpy
 import sys
 from pathlib import Path
 
@@ -19,12 +23,17 @@ import numpy as np  # noqa: E402
 import schemdraw  # noqa: E402
 import schemdraw.elements as elm  # noqa: E402
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "esimerkit"))
-from spice import simuloi  # noqa: E402
+ESIMERKIT = Path(__file__).resolve().parent.parent / "esimerkit"
+sys.path.insert(0, str(ESIMERKIT))
+from spice import Tulos, simuloi  # noqa: E402
 
 KOROSTUS = "#3E7F3C"
 TOINEN = "#B07A2A"
 HARMAA = "#5B6B70"
+# Solmun nimi netlistissä: sama nimi kaaviossa ja .cir-tiedostossa.
+SOLMU = {"color": HARMAA, "fontsize": 9}
+# Sama suurissa kaavioissa, jotka ladotaan pienemmässä mittakaavassa.
+ISO_SOLMU = {"color": HARMAA, "fontsize": 12}
 plt.rcParams.update({"font.size": 9, "axes.grid": True, "grid.alpha": 0.3,
                      "figure.dpi": 100, "savefig.dpi": 200,
                      "savefig.bbox": "tight"})
@@ -43,25 +52,25 @@ def ce_vahvistin(kohde: Path) -> None:
         elm.Line().left(1.6).at(q.base)
         kanta = elm.Dot()
         d.push()
-        elm.Resistor().up().label("R1 47 k", loc="bottom")
+        elm.Resistor().up().label("R1 47 kΩ", loc="bottom")
         elm.Vdd().label("12 V")
         d.pop()
-        elm.Resistor().down().label("R2 10 k", loc="bottom")
+        elm.Resistor().down().label("R2 10 kΩ", loc="bottom")
         elm.Ground()
-        elm.Capacitor().left().at(kanta.center).label("Cin 10 u")
+        elm.Capacitor().left().at(kanta.center).label("Cin 10 µF")
         elm.Dot(open=True).label("tulo", loc="left")
         elm.Line().up(0.6).at(q.collector)
         kollektori = elm.Dot()
-        elm.Resistor().up().label("Rc 4,7 k", loc="bottom")
+        elm.Resistor().up().label("Rc 4,7 kΩ", loc="bottom")
         elm.Vdd().label("12 V")
-        elm.Capacitor().right().at(kollektori.center).label("Cout 10 u")
+        elm.Capacitor().right().at(kollektori.center).label("Cout 10 µF")
         elm.Dot(open=True).label("lähtö", loc="right")
         elm.Line().down(0.4).at(q.emitter)
         emitteri = elm.Dot()
-        elm.Resistor().down().label("Re 1 k", loc="bottom")
+        elm.Resistor().down().label("Re 1 kΩ", loc="bottom")
         elm.Ground()
         elm.Line().right(1.6).at(emitteri.center)
-        elm.Capacitor().down().label("Ce 100 u", loc="bottom")
+        elm.Capacitor().down().label("Ce 100 µF", loc="bottom")
         elm.Ground()
         tallenna_kaavio(d, kohde / "ce-vahvistin.png")
 
@@ -73,10 +82,10 @@ def invertoiva(kohde: Path) -> None:
         op = elm.Opamp(leads=True)
         elm.Line().left(1.0).at(op.in1)
         miinus = elm.Dot()
-        elm.Resistor().left().label("R1 10 k")
+        elm.Resistor().left().label("R1 10 kΩ")
         elm.Dot(open=True).label("u_tulo", loc="left")
         elm.Line().up(1.6).at(miinus.center)
-        elm.Resistor().right().tox(op.out).label("R2 100 k")
+        elm.Resistor().right().tox(op.out).label("R2 100 kΩ")
         elm.Line().down().toy(op.out)
         elm.Dot()
         elm.Line().right(0.8).at(op.out)
@@ -152,8 +161,8 @@ def askel_kuorma(kohde: Path) -> None:
     t = data[:, 0] * 1e6
     ax.plot(t, data[:, 1] * 1e3, color=TOINEN, label="suoraan kytketty")
     ax.plot(t, data[:, 3] * 1e3, color=KOROSTUS,
-            label="eristysvastus 47 ohm")
-    ax.set_xlabel("aika (us)")
+            label="eristysvastus 47 Ω")
+    ax.set_xlabel("aika (µs)")
     ax.set_ylabel("lähtö (mV)")
     ax.legend(fontsize=8)
     fig.savefig(kohde / "askel-kuorma.png")
@@ -203,9 +212,9 @@ def heijastus(kohde: Path) -> None:
     data = simuloi("07-heijastus.cir").data["heijastus"]
     fig, ax = plt.subplots(figsize=(5.5, 2.6))
     t = data[:, 0] * 1e9
-    ax.plot(t, data[:, 3], color=TOINEN, label="10 ohm, pää auki")
-    ax.plot(t, data[:, 1], color=KOROSTUS, label="50 ohm, pää auki")
-    ax.plot(t, data[:, 5], color=HARMAA, label="10 ohm, päätetty 50 ohm")
+    ax.plot(t, data[:, 3], color=TOINEN, label="10 Ω, pää auki")
+    ax.plot(t, data[:, 1], color=KOROSTUS, label="50 Ω, pää auki")
+    ax.plot(t, data[:, 5], color=HARMAA, label="10 Ω, päätetty 50 Ω")
     ax.set_xlabel("aika (ns)")
     ax.set_ylabel("kuorman jännite (V)")
     ax.legend(fontsize=8, loc="lower right")
@@ -215,11 +224,7 @@ def heijastus(kohde: Path) -> None:
 
 def montecarlo(kohde: Path) -> None:
     """Monte Carlo -ajon kulma- ja rajataajuuksien jakaumat."""
-    import runpy
-    import contextlib
-    import io
-    polku = Path(__file__).resolve().parent.parent / "esimerkit" / \
-        "04-montecarlo.py"
+    polku = ESIMERKIT / "04-montecarlo.py"
     with contextlib.redirect_stdout(io.StringIO()):
         tulos = runpy.run_path(str(polku))
     fig, ax = plt.subplots(figsize=(5.5, 2.6))
@@ -261,12 +266,696 @@ def vaihevara(kohde: Path) -> None:
     plt.close(fig)
 
 
+def seuraaja(kohde: Path) -> None:
+    """Emitteriseuraaja jakajabiasoinnilla."""
+    with schemdraw.Drawing(show=False) as d:
+        d.config(unit=2.0, fontsize=10)
+        q = elm.BjtNpn(circle=True).label("Q1", loc="right")
+        elm.Line().up(0.8).at(q.collector)
+        elm.Vdd().label("12 V")
+        elm.Line().left(1.4).at(q.base)
+        kanta = elm.Dot().label("b", loc="top", **SOLMU)
+        d.push()
+        elm.Resistor().up().label("R1 22 kΩ", loc="bottom")
+        elm.Vdd().label("12 V")
+        d.pop()
+        elm.Resistor().down().label("R2 27 kΩ", loc="bottom")
+        elm.Ground()
+        elm.Capacitor().left().at(kanta.center).label("Cin 10 µF")
+        elm.Resistor().left().label("Rs 1 kΩ")
+        elm.Dot(open=True).label("s", loc="left")
+        elm.Line().down(0.9).at(q.emitter)
+        em = elm.Dot().label("e", loc="left", **SOLMU)
+        elm.Resistor().down().label("Re 2,2 kΩ", loc="bottom")
+        elm.Ground()
+        elm.Capacitor().right().at(em.center).label("Cout 100 µF")
+        ulos = elm.Dot().label("out", loc="top", **SOLMU)
+        elm.Resistor().down().label("RL", loc="bottom")
+        elm.Ground()
+        elm.Line().right(0.6).at(ulos.center)
+        elm.Dot(open=True)
+        tallenna_kaavio(d, kohde / "seuraaja.png")
+
+
+def mosfet_vahvistin(kohde: Path) -> None:
+    """Yhteislähdevahvistin."""
+    with schemdraw.Drawing(show=False) as d:
+        d.config(unit=2.0, fontsize=10)
+        q = elm.NFet().right().reverse().label("M1", loc="right")
+        elm.Line().up(0.4).at(q.drain)
+        nielu = elm.Dot().label("d", loc="left", **SOLMU)
+        elm.Resistor().up().label("Rd 10 kΩ", loc="bottom")
+        elm.Vdd().label("12 V")
+        elm.Line().right(1.2).at(nielu.center)
+        elm.Dot(open=True).label("lähtö", loc="right")
+        elm.Line().left(1.2).at(q.gate)
+        hila = elm.Dot().label("g", loc="top", **SOLMU)
+        d.push()
+        elm.Resistor().up().label("R1 1 MΩ", loc="bottom")
+        elm.Vdd().label("12 V")
+        d.pop()
+        elm.Resistor().down().label("R2 220 kΩ", loc="bottom")
+        elm.Ground()
+        elm.Capacitor().left().at(hila.center).label("Cin 1 µF")
+        elm.Dot(open=True).label("s", loc="left")
+        elm.Line().down(0.3).at(q.source)
+        lahde = elm.Dot().label("l", loc="left", **SOLMU)
+        elm.Resistor().down().label("Rs 1 kΩ", loc="bottom")
+        elm.Ground()
+        elm.Line().right(2.4).at(lahde.center)
+        elm.Capacitor().down().label("Cs 100 µF", loc="bottom")
+        elm.Ground()
+        tallenna_kaavio(d, kohde / "mosfet-vahvistin.png")
+
+
+def eropari(kohde: Path) -> None:
+    """Differentiaalipari, häntänä vastus."""
+    with schemdraw.Drawing(show=False) as d:
+        d.config(unit=2.0, fontsize=10)
+        q1 = elm.BjtNpn(circle=True).right()
+        q2 = elm.BjtNpn(circle=True).right().reverse().at(
+            (q1.base[0] + 4.6, q1.base[1])).anchor("base")
+        elm.Label().at((q1.base[0] + 0.5, q1.base[1] - 1.0)).label("Q1")
+        elm.Label().at((q2.base[0] - 0.5, q2.base[1] - 1.0)).label("Q2")
+        for q, rc, c, puoli in ((q1, "Rc1 10 kΩ", "c1", "top"),
+                                (q2, "Rc2 10 kΩ", "c2", "bottom")):
+            elm.Line().up(0.3).at(q.collector)
+            elm.Dot().label(c, loc="left" if c == "c1" else "right",
+                            **SOLMU)
+            elm.Resistor().up().label(rc, loc=puoli)
+            elm.Vdd().label("12 V")
+        elm.Line().down(0.5).at(q1.emitter)
+        elm.Line().right().tox(q2.emitter)
+        elm.Line().up().toy(q2.emitter)
+        keski = ((q1.emitter[0] + q2.emitter[0]) / 2, q1.emitter[1] - 0.5)
+        elm.Dot().at(keski).label("e", loc="top", **SOLMU)
+        elm.Resistor().down().at(keski).label("Ree 10 kΩ", loc="bottom")
+        elm.Vss().label("−12 V")
+        elm.Line().left(0.6).at(q1.base)
+        elm.Dot(open=True).label("b1", loc="left")
+        elm.Line().right(0.6).at(q2.base)
+        elm.Dot(open=True).label("b2", loc="right")
+        elm.Line().right(0.8).at((q2.collector[0], q2.collector[1] + 0.3))
+        elm.Dot(open=True).label("lähtö", loc="right")
+        tallenna_kaavio(d, kohde / "eropari.png")
+
+
+def integraattori(kohde: Path) -> None:
+    """Invertoiva integraattori ja tasavahvistusta rajoittava Rf."""
+    with schemdraw.Drawing(show=False) as d:
+        d.config(unit=2.0, fontsize=10)
+        op = elm.Opamp(leads=True)
+        elm.Line().left(0.8).at(op.in1)
+        miinus = elm.Dot().label("inn", loc="bottom", **SOLMU)
+        elm.Resistor().left().label("R1 10 kΩ")
+        elm.Dot(open=True).label("in", loc="left")
+        elm.Line().up(1.4).at(miinus.center)
+        ylä = elm.Dot()
+        elm.Capacitor().right().tox(op.out).label("C1 10 nF")
+        oik = elm.Dot()
+        elm.Line().down().toy(op.out)
+        elm.Dot()
+        elm.Line().up(1.2).at(ylä.center)
+        elm.Resistor().right().tox(op.out).label("Rf 1 MΩ")
+        elm.Line().down().to(oik.center)
+        elm.Line().right(0.8).at(op.out)
+        elm.Dot(open=True).label("out", loc="right")
+        elm.Line().down(0.6).at(op.in2)
+        elm.Ground()
+        tallenna_kaavio(d, kohde / "integraattori.png")
+
+
+def instrumentointi(kohde: Path) -> None:
+    """Kolmen operaatiovahvistimen instrumentointivahvistin."""
+    with schemdraw.Drawing(show=False) as d:
+        d.config(unit=2.0, fontsize=12)
+        x1 = elm.Opamp(leads=True).right().flip().label("X1", loc="center")
+        x2 = elm.Opamp(leads=True).right().at((0, -6.4)).anchor(
+            "in1").label("X2", loc="center")
+        # Anturin navat plus-tuloihin
+        elm.Line().left(0.8).at(x1.in2)
+        elm.Dot(open=True).label("inp", loc="left")
+        elm.Line().left(0.8).at(x2.in2)
+        elm.Dot(open=True).label("inn", loc="left")
+        # Rf1 - Rg - Rf2 lähtöjen välissä
+        o1 = elm.Dot().at(x1.out).label("o1", loc="top", **ISO_SOLMU)
+        o2 = elm.Dot().at(x2.out).label("o2", loc="bottom", **ISO_SOLMU)
+        yla = (o1.center[0], x1.in1[1] - 1.2)
+        ala = (o2.center[0], x2.in1[1] + 1.2)
+        elm.Resistor().endpoints(o1.center, yla).label("Rf1\n10 kΩ",
+                                                       loc="bottom")
+        elm.Resistor().endpoints(yla, ala).label("Rg\n1 kΩ", loc="bottom")
+        elm.Resistor().endpoints(ala, o2.center).label("Rf2\n10 kΩ",
+                                                       loc="bottom")
+        elm.Dot().at(yla).label("a1", loc="right", **ISO_SOLMU)
+        elm.Dot().at(ala).label("a2", loc="right", **ISO_SOLMU)
+        elm.Line().at(x1.in1).toy(yla)
+        elm.Line().tox(yla)
+        elm.Line().at(x2.in1).toy(ala)
+        elm.Line().tox(ala)
+        # Erovahvistin: plus ylhäällä, jolloin johdot eivät risteä
+        keski = (o1.center[1] + o2.center[1]) / 2
+        x3 = elm.Opamp(leads=True).right().flip().at(
+            (o1.center[0] + 6.6, keski)).anchor("in1").label(
+            "X3", loc="center")
+        elm.Line().right(0.6).at(o1.center)
+        elm.Resistor().right().length(3.4).label("R5 10 kΩ")
+        p = elm.Dot().label("p", loc="top", **ISO_SOLMU)
+        elm.Line().right(0.6).at(o2.center)
+        elm.Resistor().right().length(3.4).label("R3 10 kΩ", loc="bottom")
+        m = elm.Dot().label("m", loc="bottom", **ISO_SOLMU)
+        elm.Line().at(p.center).tox(x3.in2[0] - 0.4)
+        elm.Line().toy(x3.in2)
+        elm.Line().tox(x3.in2)
+        elm.Line().at(m.center).tox(x3.in1[0] - 0.4)
+        elm.Dot()
+        elm.Line().toy(x3.in1)
+        elm.Line().tox(x3.in1)
+        elm.Resistor().down().at(p.center).length(1.8).label(
+            "R6\n10 kΩ", loc="top")
+        elm.Ground()
+        elm.Line().right(0.6).at(x3.out)
+        ulos = elm.Dot()
+        elm.Line().right(0.6)
+        elm.Dot(open=True).label("out", loc="right")
+        elm.Line().at(ulos.center).toy(m.center)
+        elm.Resistor().left().tox(x3.in1[0] - 0.4).label(
+            "R4 10 kΩ", loc="bottom")
+        tallenna_kaavio(d, kohde / "instrumentointi.png")
+
+
+def tasonsiirto(kohde: Path) -> None:
+    """Ei-invertoiva summaaja tasonsiirtona."""
+    with schemdraw.Drawing(show=False) as d:
+        d.config(unit=2.0, fontsize=10)
+        op = elm.Opamp(leads=True).flip()
+        elm.Line().left(0.6).at(op.in2)
+        p = elm.Dot().label("p", loc="top", **SOLMU)
+        elm.Resistor().left().label("R1 10 kΩ")
+        elm.Dot(open=True).label("in\n±1 V", loc="left")
+        elm.Line().down(1.2).at(p.center)
+        elm.Resistor().left().label("R2 10 kΩ")
+        elm.Dot(open=True).label("ref\n1,1 V", loc="left")
+        elm.Line().down(1.6).at(op.in1)
+        n = elm.Dot().label("n", loc="left", **SOLMU)
+        elm.Resistor().down().label("R3 10 kΩ", loc="bottom")
+        elm.Ground()
+        elm.Resistor().right().at(n.center).tox(op.out).label("R4 20 kΩ")
+        elm.Line().up().toy(op.out)
+        elm.Dot()
+        elm.Line().right(0.8).at(op.out)
+        elm.Dot(open=True).label("out\n0,15…3,15 V", loc="right")
+        tallenna_kaavio(d, kohde / "tasonsiirto.png")
+
+
+def mfb(kohde: Path) -> None:
+    """Multiple feedback -alipäästö."""
+    with schemdraw.Drawing(show=False) as d:
+        d.config(unit=2.0, fontsize=10)
+        elm.Dot(open=True).label("in", loc="left")
+        elm.Resistor().right().label("R1")
+        a = elm.Dot().label("a", loc="bottom", **SOLMU)
+        d.push()
+        elm.Capacitor().down().label("C1", loc="bottom")
+        elm.Ground()
+        d.pop()
+        elm.Resistor().right().label("R3")
+        m = elm.Dot().label("m", loc="bottom", **SOLMU)
+        elm.Line().right(0.6)
+        op = elm.Opamp(leads=True).anchor("in1")
+        elm.Line().down(0.6).at(op.in2)
+        elm.Ground()
+        elm.Line().up(1.2).at(m.center)
+        elm.Capacitor().right().tox(op.out).label("C2")
+        c2 = elm.Dot()
+        elm.Line().down().toy(op.out)
+        elm.Dot()
+        elm.Line().up(2.6).at(a.center)
+        elm.Resistor().right().tox(op.out).label("R2")
+        elm.Line().down().to(c2.center)
+        elm.Line().right(0.8).at(op.out)
+        elm.Dot(open=True).label("out", loc="right")
+        tallenna_kaavio(d, kohde / "mfb.png")
+
+
+def silmukka(kohde: Path) -> None:
+    """Silmukan katkaisu vaihtosignaalilta ja eristysvastus."""
+    with schemdraw.Drawing(show=False) as d:
+        d.config(unit=2.0, fontsize=14)
+        # a) silmukan katkaisu
+        op = elm.Opamp(leads=True).right().flip()
+        elm.Line().left(0.6).at(op.in2)
+        elm.Ground()
+        elm.Line().down(1.6).at(op.in1)
+        inn = elm.Dot().label("inn", loc="top", ofst=(0.5, 0), **ISO_SOLMU)
+        elm.Inductor2().right().tox(op.out).label("Lkatko", loc="bottom")
+        elm.Line().up().toy(op.out)
+        elm.Dot().label("out", loc="top", **ISO_SOLMU)
+        elm.Line().right(1.4)
+        elm.Capacitor().down().label("CL", loc="bottom")
+        elm.Ground()
+        elm.Capacitor().left().at(inn.center).label("Ckatko", loc="bottom")
+        elm.Dot().label("t", loc="top", **ISO_SOLMU)
+        elm.SourceSin().down().label("Vt", loc="top")
+        maa = elm.Ground()
+        elm.Label().at((1.0, maa.start[1] - 1.4)).label(
+            "a) silmukka katkaistu\nvaihtosignaalilta")
+        # b) eristysvastus
+        op2 = elm.Opamp(leads=True).right().flip().at((7.6, 0))
+        elm.Line().left(0.8).at(op2.in2)
+        elm.Dot(open=True).label("in", loc="left")
+        elm.Line().down(1.2).at(op2.in1)
+        elm.Line().right().tox(op2.out)
+        elm.Line().up().toy(op2.out)
+        elm.Dot().label("o2", loc="top", **ISO_SOLMU)
+        elm.Resistor().right().label("Riso 47 Ω", loc="bottom")
+        elm.Dot().label("kuorma", loc="top", **ISO_SOLMU)
+        elm.Capacitor().down().label("C2\n1 nF", loc="bottom")
+        elm.Ground()
+        elm.Label().at((10.0, maa.start[1] - 1.4)).label(
+            "b) eristysvastus kuorman\nja lähdön välissä")
+        tallenna_kaavio(d, kohde / "silmukka.png")
+
+
+def naytteenotto(kohde: Path) -> None:
+    """Näytteenotto- ja pitopiiri."""
+    with schemdraw.Drawing(show=False) as d:
+        d.config(unit=2.0, fontsize=10)
+        elm.Dot(open=True).label("in", loc="left")
+        elm.Switch().right().label("S1\n100 Ω")
+        elm.Dot().label("c", loc="top", **SOLMU)
+        d.push()
+        elm.Capacitor().down().label("Ch\n1 nF", loc="bottom")
+        elm.Ground()
+        d.pop()
+        elm.Line().right(1.0)
+        op = elm.Opamp(leads=True).flip().anchor("in2")
+        elm.Line().down(1.0).at(op.in1)
+        elm.Line().right().tox(op.out)
+        elm.Line().up().toy(op.out)
+        elm.Dot()
+        elm.Line().right(0.8).at(op.out)
+        elm.Dot(open=True).label("AD-muuntimelle", loc="right")
+        tallenna_kaavio(d, kohde / "naytteenotto.png")
+
+
+def r2r(kohde: Path) -> None:
+    """Nelibittinen R-2R-tikapuu."""
+    with schemdraw.Drawing(show=False) as d:
+        d.config(unit=2.0, fontsize=12)
+        vali = 2.6
+        elm.Resistor().endpoints((-1.4, 0), (-1.4, -2.0)).label(
+            "2R", loc="top")
+        elm.Ground().at((-1.4, -2.0))
+        elm.Line().endpoints((-1.4, 0), (0, 0))
+        for i in range(4):
+            x = vali * i
+            elm.Dot().at((x, 0)).label(f"n{i}", loc="top", **ISO_SOLMU)
+            elm.Resistor().endpoints((x, 0), (x, -2.0)).label(
+                "2R", loc="bottom")
+            elm.Dot(open=True).at((x, -2.0)).label(
+                f"bitti {i}" + (" (LSB)" if i == 0 else
+                                " (MSB)" if i == 3 else ""), loc="bottom")
+            if i < 3:
+                elm.Resistor().endpoints((x, 0), (x + vali, 0)).label("R")
+        elm.Line().endpoints((3 * vali, 0), (3 * vali + 1.2, 0))
+        elm.Dot(open=True).at((3 * vali + 1.2, 0)).label("lähtö",
+                                                         loc="right")
+        tallenna_kaavio(d, kohde / "r2r.png")
+
+
+def paatokset(kohde: Path) -> None:
+    """Siirtolinjan sarja- ja rinnakkaispäätös."""
+    with schemdraw.Drawing(show=False) as d:
+        d.config(unit=2.0, fontsize=12)
+        for y, rs, loppu, nimi in (
+                (0.0, "Rs = 50 Ω", None, "sarjapäätös: lähde sovitettu"),
+                (-4.0, "Rs = 10 Ω", "RL = 50 Ω",
+                 "rinnakkaispäätös: kuorma sovitettu")):
+            v = elm.SourcePulse().up().at((0, y)).label("Vs")
+            elm.Resistor().right().label(rs)
+            linja = elm.Coax(length=4.0).label("Z0 = 50 Ω, viive 5 ns",
+                                               loc="top")
+            elm.Line().at(linja.shieldstart).toy(v.start)
+            elm.Line().right(0.8).at(linja.end)
+            pää = elm.Dot()
+            if loppu:
+                elm.Resistor().down().toy(v.start).label(loppu, loc="bottom")
+                elm.Line().left().to(v.start)
+            else:
+                elm.Line().at(v.start).tox(linja.shieldstart)
+            elm.Line().right(0.6).at(pää.center)
+            elm.Dot(open=True).label("kuorma", loc="right")
+            elm.Ground().at(v.start)
+            elm.Label().at((4.5, y - 1.0)).label(nimi)
+        tallenna_kaavio(d, kohde / "paatokset.png")
+
+
+def vertailija_kaavio(kohde: Path) -> None:
+    """Vertailija, jossa hystereesi tehdään positiivisella takaisinkytkennällä."""
+    with schemdraw.Drawing(show=False) as d:
+        d.config(unit=2.0, fontsize=10)
+        op = elm.Opamp(leads=True)
+        elm.Line().left(1.0).at(op.in1)
+        elm.Dot(open=True).label("in", loc="left")
+        elm.Line().down(1.2).at(op.in2)
+        p = elm.Dot().label("p", loc="left", **SOLMU)
+        elm.Resistor().down().label("R1 10 kΩ", loc="bottom")
+        elm.Dot(open=True).label("ref 1,65 V", loc="bottom")
+        elm.Resistor().right().at(p.center).tox(op.out).label("R2 100 kΩ",
+                                                               loc="bottom")
+        elm.Line().up().toy(op.out)
+        elm.Dot()
+        elm.Line().right(0.8).at(op.out)
+        elm.Dot(open=True).label("out", loc="right")
+        tallenna_kaavio(d, kohde / "vertailija-kaavio.png")
+
+
+def _ajo(piiri: str, lisays: str) -> Tulos:
+    """Ajaa netlistin niin, että .endc:n eteen on lisätty komentoja."""
+    return simuloi(piiri.replace(".endc", lisays + "\n.endc"))
+
+
+def ce_aallot(kohde: Path) -> None:
+    """Yhteisemitterivahvistimen lähtö pienellä ja suurella signaalilla."""
+    perus = (ESIMERKIT / "02-ce-vahvistin.cir").read_text("utf-8")
+    ohjaus = perus[perus.index(".control"):]
+    perus = perus.replace(ohjaus, ".control\ntran 1u 2.2m\n"
+                          "wrdata ce.dat v(out)\n.endc\n.end\n")
+    degen = perus.replace("Re e 0 1k\nCe e 0 100u",
+                          "Re1 e e2 180\nRe2 e2 0 820\nCe e2 0 100u")
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(5.8, 2.5))
+    for ax, piiri, tapaukset in (
+            (a1, perus, (("1m", "1 mV", KOROSTUS), ("20m", "20 mV", TOINEN))),
+            (a2, degen, (("20m", "20 mV", KOROSTUS),))):
+        for amp, nimi, vari in tapaukset:
+            data = simuloi(piiri.replace("Vs s 0 DC 0 AC 1",
+                                         f"Vs s 0 SIN(0 {amp} 10k)")
+                           ).data["ce"]
+            m = data[:, 0] > 2.0e-3
+            u = data[m, 1]
+            ax.plot((data[m, 0] - 2e-3) * 1e6, u / np.abs(u).max(),
+                    color=vari,
+                    label=f"tulo {nimi}, lähtö {np.ptp(u) / 2:.2f} V"
+                    .replace(".", ","))
+        ax.set_xlabel("aika (µs)")
+        ax.set_ylim(-1.15, 1.6)
+        ax.legend(fontsize=7, loc="upper right")
+    a1.set_title("emitterivastus ohitettu", fontsize=9)
+    a2.set_title("180 Ω ohittamatta", fontsize=9)
+    a1.set_ylabel("lähtö (huippuun skaalattu)")
+    fig.tight_layout()
+    fig.savefig(kohde / "ce-aallot.png")
+    plt.close(fig)
+
+
+def ce_bode(kohde: Path) -> None:
+    """Yhteisemitterivahvistimen taajuusvaste ja rajataajuudet."""
+    tulos = _ajo((ESIMERKIT / "02-ce-vahvistin.cir").read_text("utf-8"),
+                 "wrdata cebode.dat vdb(out)")
+    data = tulos.data["cebode"]
+    fig, ax = plt.subplots(figsize=(5.5, 2.5))
+    ax.semilogx(data[:, 0], data[:, 1], color=KOROSTUS)
+    ax.axhline(tulos.arvot["a_kesk"] - 3.01, color=HARMAA, lw=0.6, ls="--")
+    for f, nimi in ((tulos.arvot["f_ala"], "alaraja"),
+                    (tulos.arvot["f_yla"], "yläraja")):
+        ax.axvline(f, color=HARMAA, lw=0.6, ls=":")
+        ax.text(f, 12, f" {nimi}", fontsize=7, color=HARMAA)
+    ax.set_ylim(10, 48)
+    ax.set_xlabel("taajuus (Hz)")
+    ax.set_ylabel("vahvistus (dB)")
+    fig.savefig(kohde / "ce-bode.png")
+    plt.close(fig)
+
+
+def kaista_bode(kohde: Path) -> None:
+    """Suljetun silmukan vahvistus kolmella vahvistuksella ja avoin silmukka."""
+    perus = (ESIMERKIT / "03-kaistanleveys.cir").read_text("utf-8")
+    ohjaus = perus[perus.index(".control"):]
+    fig, ax = plt.subplots(figsize=(5.5, 2.8))
+    f = np.logspace(0, 7, 300)
+    ax.semilogx(f, 20 * np.log10(np.abs(1e5 / (1 + 1j * f / 10))),
+                color=HARMAA, ls="--", label="avoin silmukka")
+    for r2, g, vari in (("0.001", 1, KOROSTUS), ("9k", 10, TOINEN),
+                        ("99k", 100, "#7A5C99")):
+        data = simuloi(perus.replace(".param R2=9k", f".param R2={r2}")
+                       .replace(ohjaus, ".control\nac dec 50 1 10Meg\n"
+                                "wrdata kaista.dat vdb(out)\n.endc\n.end\n")
+                       ).data["kaista"]
+        ax.semilogx(data[:, 0], data[:, 1], color=vari,
+                    label=f"vahvistus {g}")
+    ax.set_ylim(-20, 105)
+    ax.set_xlim(1, 1e7)
+    ax.set_xlabel("taajuus (Hz)")
+    ax.set_ylabel("vahvistus (dB)")
+    ax.legend(fontsize=8)
+    fig.savefig(kohde / "kaista-bode.png")
+    plt.close(fig)
+
+
+def integraattori_aallot(kohde: Path) -> None:
+    """Integraattorin tulo (kanttiaalto) ja lähtö (kolmioaalto)."""
+    data = _ajo((ESIMERKIT / "03-integraattori.cir").read_text("utf-8"),
+                "wrdata integ.dat v(in) v(out)").data["integ"]
+    m = data[:, 0] >= 57e-3
+    t = (data[m, 0] - 57e-3) * 1e3
+    fig, ax = plt.subplots(figsize=(5.5, 2.3))
+    ax.plot(t, data[m, 1], color=HARMAA, label="tulo")
+    ax.plot(t, data[m, 3], color=KOROSTUS, label="lähtö")
+    ax.set_xlabel("aika (ms)")
+    ax.set_ylabel("jännite (V)")
+    ax.legend(fontsize=8, loc="upper right")
+    fig.savefig(kohde / "integraattori-aallot.png")
+    plt.close(fig)
+
+
+def opamp_rajat(kohde: Path) -> None:
+    """Lähdön leikkautuminen ja nousunopeuden rajoittama askel."""
+    perus = (ESIMERKIT / "03-rajat.cir").read_text("utf-8")
+    # Staattinen siirtokäyrä: sama kytkentä kuin esimerkissä, tuloa
+    # pyyhkäistään. Siniaalto kuvataan käyrän läpi (pätee taajuuksilla,
+    # joilla nousunopeus ja toipuminen eivät rajoita).
+    siirto = _ajo(perus, "dc Vin1 -0.8 0.8 0.005\n"
+                  "wrdata siirto.dat v(o1) v(o2)").data["siirto"]
+    askel = _ajo(perus, "wrdata askel.dat v(o3)").data["askel"]
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(5.8, 2.6))
+    t = np.linspace(0, 2, 400)
+    tulo = 0.6 * np.sin(2 * np.pi * t)
+    a1.plot(t, -10 * tulo, color=HARMAA, lw=0.8, ls="--",
+            label="ihanteellinen")
+    a1.plot(t, np.interp(tulo, siirto[:, 0], siirto[:, 3]), color=KOROSTUS,
+            label="rail-to-rail")
+    a1.plot(t, np.interp(tulo, siirto[:, 0], siirto[:, 1]), color=TOINEN,
+            label="perinteinen")
+    for raja in (5, -5):
+        a1.axhline(raja, color="black", lw=0.6)
+    a1.set_xlabel("aika (ms)")
+    a1.set_ylabel("lähtö (V)")
+    a1.set_ylim(-7.5, 10.5)
+    a1.legend(fontsize=7, loc="upper right", ncol=2)
+    a1.set_title("lähdön jännitealue (syöttö ±5 V)", fontsize=9)
+    t = askel[:, 0] * 1e6
+    a2.plot(t, askel[:, 1], color=TOINEN, label="simuloitu")
+    gbw = 8 * (1 - np.exp(-2 * np.pi * 1e6 * (askel[:, 0] - 1e-6)))
+    a2.plot(t, np.where(t > 1, gbw, 0), color=HARMAA, ls="--",
+            label="pelkkä GBW")
+    a2.set_xlabel("aika (µs)")
+    a2.set_title("nousunopeus 0,5 V/µs", fontsize=9)
+    a2.legend(fontsize=7, loc="lower right")
+    fig.tight_layout()
+    fig.savefig(kohde / "opamp-rajat.png")
+    plt.close(fig)
+
+
+def vertailija(kohde: Path) -> None:
+    """Hystereesisilmukka ja kohiseva tulo ilman hystereesiä ja sen kanssa."""
+    with contextlib.redirect_stdout(io.StringIO()):
+        esim = runpy.run_path(str(ESIMERKIT / "05-vertailija.py"))
+    piiri, pwl = esim["piiri"], esim["pwl"]
+    silmukka = simuloi(piiri).data["vertailija"]
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(5.8, 2.7),
+                                 gridspec_kw={"width_ratios": [1, 1.5]})
+    a1.plot(silmukka[:, 1], silmukka[:, 3], color=KOROSTUS)
+    for x, nimi in ((esim["alempi"], "1,5 V"), (esim["ylempi"], "1,8 V")):
+        a1.axvline(x, color=HARMAA, lw=0.6, ls=":")
+        a1.text(x, 3.45, nimi, fontsize=7, ha="center", color=HARMAA)
+    a1.annotate("", (1.8, 1.2), (1.8, 2.4),
+                arrowprops={"arrowstyle": "->", "color": KOROSTUS})
+    a1.annotate("", (1.5, 2.4), (1.5, 1.2),
+                arrowprops={"arrowstyle": "->", "color": KOROSTUS})
+    a1.set_xlim(1.0, 2.3)
+    a1.set_ylim(-0.2, 3.8)
+    a1.set_xlabel("tulo (V)")
+    a1.set_ylabel("lähtö (V)")
+    for k, (r2, nimi, vari) in enumerate((("1G", "ilman hystereesiä", TOINEN),
+                                          ("100k", "hystereesi 0,3 V",
+                                           KOROSTUS))):
+        netlist = (piiri.replace(".param R2=100k", f".param R2={r2}")
+                   .replace("PULSE(0 3.3 0 10m 10m 1u 20m)", f"PWL({pwl})")
+                   .replace("tran 2u 20m", "tran 1u 10m"))
+        netlist = "\n".join(r for r in netlist.splitlines()
+                            if not r.startswith("meas")) + "\n"
+        data = simuloi(netlist).data["vertailija"]
+        if k == 0:
+            a2.plot(data[:, 0] * 1e3, data[:, 1], color=HARMAA, lw=0.6,
+                    label="tulo")
+        a2.plot(data[:, 0] * 1e3, data[:, 3] / 3.3 * 0.25 + 2.35 + 0.4 * k,
+                color=vari, label=f"lähtö, {nimi}")
+    a2.axhline(1.65, color=HARMAA, lw=0.6, ls="--")
+    a2.set_ylim(1.1, 3.6)
+    a2.set_yticks([1.2, 1.5, 1.8, 2.1])
+    a2.set_xlabel("aika (ms)")
+    a2.set_ylabel("tulo (V)")
+    a2.legend(fontsize=7, loc="upper left", ncol=1)
+    fig.tight_layout()
+    fig.savefig(kohde / "vertailija.png")
+    plt.close(fig)
+
+
+def kvantisointi(kohde: Path) -> None:
+    """Kolmibittisen kvantisoijan porrasfunktio ja virhe."""
+    u = np.linspace(0, 1, 2000)
+    lsb = 1 / 8
+    q = np.clip(np.floor(u / lsb + 0.5), 0, 7) * lsb
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=(5.0, 3.2), sharex=True,
+                                 gridspec_kw={"height_ratios": [2, 1]})
+    a1.plot(u, u, color=HARMAA, lw=0.8, ls="--", label="tulo")
+    a1.plot(u, q, color=KOROSTUS, label="kvantisoitu (3 bittiä)")
+    a1.set_ylabel("lähtö / U_ref")
+    a1.legend(fontsize=8)
+    a2.plot(u, (q - u) / lsb, color=TOINEN)
+    a2.set_ylim(-1.2, 0.8)
+    a2.set_ylabel("virhe (LSB)")
+    a2.set_xlabel("tulo / U_ref")
+    fig.savefig(kohde / "kvantisointi.png")
+    plt.close(fig)
+
+
+def sar_haku(kohde: Path) -> None:
+    """SAR-muuntimen binäärihaku esimerkin 06-sar.py tulosteesta."""
+    rivit = (ESIMERKIT / "06-sar.odotettu").read_text("utf-8")
+    kokeet = [(float(u), tulos == "1") for u, tulos in
+              re.findall(r"= ([0-9.]+) V -> ([01])", rivit)]
+    fig, ax = plt.subplots(figsize=(5.5, 2.5))
+    askeleet = np.arange(len(kokeet))
+    arvot = [u for u, _ in kokeet]
+    ax.step(np.append(askeleet, len(kokeet)), arvot + [arvot[-1]],
+            where="post", color=HARMAA, lw=0.8)
+    for k, (u, pidetaan) in enumerate(kokeet):
+        ax.plot(k + 0.5, u, "o" if pidetaan else "x",
+                color=KOROSTUS if pidetaan else TOINEN, ms=6)
+    ax.axhline(1.234, color="black", lw=0.8, ls="--")
+    ax.text(7.95, 1.26, "tulo 1,234 V", fontsize=7, ha="right")
+    ax.plot([], [], "o", color=KOROSTUS, label="bitti jää päälle")
+    ax.plot([], [], "x", color=TOINEN, label="bitti pois")
+    ax.set_xticks(askeleet + 0.5)
+    ax.set_xticklabels([f"bitti {7 - k}" for k in askeleet], fontsize=7)
+    ax.set_ylabel("DA-muuntimen koejännite (V)")
+    ax.legend(fontsize=7, loc="upper right")
+    fig.savefig(kohde / "sar-haku.png")
+    plt.close(fig)
+
+
+def r2r_virheet(kohde: Path) -> None:
+    """R-2R-muuntimen INL ja DNL, kun MSB-vastus poikkeaa 5 %."""
+    with contextlib.redirect_stdout(io.StringIO()):
+        esim = runpy.run_path(str(ESIMERKIT / "06-r2r.py"))
+    u = np.array(esim["simuloi_muunnin"](0.05))
+    lsb = esim["lsb"]
+    koodit = np.arange(16)
+    # INL päätepisteiden kautta kulkevaan suoraan nähden.
+    suora = u[0] + (u[-1] - u[0]) * koodit / 15
+    inl = (u - suora) / ((u[-1] - u[0]) / 15)
+    dnl = np.diff(u) / lsb - 1
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(5.8, 2.4))
+    a1.bar(koodit, inl, color=KOROSTUS)
+    a1.set_xlabel("koodi")
+    a1.set_ylabel("INL (LSB)")
+    a2.bar(koodit[:-1] + 0.5, dnl, color=TOINEN)
+    a2.set_xlabel("koodien väli")
+    a2.set_ylabel("DNL (LSB)")
+    fig.tight_layout()
+    fig.savefig(kohde / "r2r-virheet.png")
+    plt.close(fig)
+
+
+def asettuminen(kohde: Path) -> None:
+    """Pitokondensaattorin asettuminen ja puolen LSB:n rajat."""
+    data = _ajo((ESIMERKIT / "06-naytteenotto.cir").read_text("utf-8"),
+                "wrdata sh.dat v(c)").data["sh"]
+    t = (data[:, 0] - 10e-9) / 100e-9          # aikavakioina
+    m = (t > 0) & (t < 14)
+    fig, ax = plt.subplots(figsize=(5.5, 2.6))
+    ax.semilogy(t[m], np.abs(1 - data[m, 1]), color=KOROSTUS,
+                label="virhe loppuarvosta")
+    for bitit, vari in ((8, HARMAA), (12, TOINEN), (16, "#7A5C99")):
+        raja = 2.0 ** -(bitit + 1)
+        ax.axhline(raja, color=vari, lw=0.8, ls="--")
+        ax.text(0.2, raja * 1.3, f"½ LSB, {bitit} bittiä", fontsize=7,
+                color=vari)
+        ax.axvline(np.log(2 ** (bitit + 1)), color=vari, lw=0.6, ls=":")
+    ax.set_xlim(0, 14)
+    ax.set_ylim(3e-6, 1.5)
+    ax.set_xlabel("aika kytkimen sulkeutumisesta (aikavakiota RC)")
+    ax.set_ylabel("virhe / täysi alue")
+    fig.savefig(kohde / "asettuminen.png")
+    plt.close(fig)
+
+
+def kohina(kohde: Path) -> None:
+    """Kohinatiheys taajuuden funktiona ja kohinabudjetin osuudet."""
+    with contextlib.redirect_stdout(io.StringIO()):
+        esim = runpy.run_path(str(ESIMERKIT / "07-kohinabudjetti.py"))
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(5.8, 2.5))
+    f = np.logspace(0, 5, 200)
+    valkoinen, kulma = 10.0, 100.0
+    a1.loglog(f, valkoinen * np.sqrt(1 + kulma / f), color=KOROSTUS)
+    a1.axhline(valkoinen, color=HARMAA, lw=0.6, ls="--")
+    a1.axvline(kulma, color=HARMAA, lw=0.6, ls=":")
+    a1.text(kulma * 1.2, 60, "1/f-kulma", fontsize=7, color=HARMAA)
+    a1.set_xlabel("taajuus (Hz)")
+    a1.set_ylabel("kohinatiheys (nV/√Hz)")
+    nimet = ["vahvistin\njännite", "vahvistin\nvirta · R_s",
+             "lähteen\nterminen"]
+    osat = np.array(list(esim["osat"].values())) * 1e9
+    a2.bar(nimet + ["yhteensä"], list(osat) + [esim["yhteensa"] * 1e9],
+           color=[KOROSTUS, KOROSTUS, KOROSTUS, TOINEN])
+    a2.tick_params(axis="x", labelsize=7)
+    a2.set_ylabel("nV/√Hz")
+    fig.tight_layout()
+    fig.savefig(kohde / "kohina.png")
+    plt.close(fig)
+
+
+def ohitus_aallot(kohde: Path) -> None:
+    """Käyttöjännitteen notkahdus ilman ohituskondensaattoria ja sen kanssa."""
+    data = _ajo((ESIMERKIT / "07-ohitus.cir").read_text("utf-8"),
+                "wrdata ohitus.dat v(p1) v(p2)").data["ohitus"]
+    fig, ax = plt.subplots(figsize=(5.5, 2.5))
+    t = data[:, 0] * 1e9
+    ax.plot(t, data[:, 1], color=TOINEN, label="ilman ohitusta")
+    ax.plot(t, data[:, 3], color=KOROSTUS, label="100 nF piirin vieressä")
+    ax.axhline(3.3, color=HARMAA, lw=0.6, ls="--")
+    ax.set_xlim(0, 60)
+    ax.set_xlabel("aika (ns)")
+    ax.set_ylabel("piirin käyttöjännite (V)")
+    ax.legend(fontsize=8, loc="lower right")
+    fig.savefig(kohde / "ohitus.png")
+    plt.close(fig)
+
+
 def main() -> None:
     kohde = Path(sys.argv[1] if len(sys.argv) > 1 else "kuvat")
     kohde.mkdir(exist_ok=True)
-    for piirtaja in (ce_vahvistin, invertoiva, sallen_key, bode_suodatin,
-                     montecarlo, askel_suodattimet, vaihevara, askel_kuorma,
-                     sigmadelta, heijastus):
+    for piirtaja in (invertoiva, ce_vahvistin, ce_aallot, ce_bode, seuraaja,
+                     mosfet_vahvistin, eropari, kaista_bode, integraattori,
+                     integraattori_aallot, instrumentointi, tasonsiirto,
+                     opamp_rajat, sallen_key, bode_suodatin, mfb, montecarlo,
+                     askel_suodattimet, silmukka, vaihevara, askel_kuorma,
+                     vertailija_kaavio, vertailija, kvantisointi, r2r,
+                     r2r_virheet, sar_haku, naytteenotto, asettuminen,
+                     sigmadelta, kohina, paatokset, heijastus,
+                     ohitus_aallot):
         piirtaja(kohde)
         print("piirretty:", piirtaja.__name__)
 

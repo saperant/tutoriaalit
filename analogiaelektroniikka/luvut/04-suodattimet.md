@@ -64,8 +64,8 @@ sijoittamalla $s = j2\pi f$ nimittäjäpolynomiin:
 ![Sallen-Key-alipäästön vahvistus: SPICE ja siirtofunktio ovat
 päällekkäin. Vaimennus on 40 dB dekadilla.](kuvat/sallen-key-bode.png){width=78%}
 
-Mitoitettu vastus 11,254 kohm ei ole standardiarvo. Käytännössä
-valitaan lähin E96-arvo (11,3 kohm) ja kondensaattoreiksi 10 nF ja 22 nF
+Mitoitettu vastus 11,254 kΩ ei ole standardiarvo. Käytännössä
+valitaan lähin E96-arvo (11,3 kΩ) ja kondensaattoreiksi 10 nF ja 22 nF
 tai kaksi rinnakkaista 10 nF:n kondensaattoria. Rajataajuus siirtyy
 muutaman prosentin, mikä on yleensä vähemmän kuin kondensaattoreiden
 toleranssi. Vahvistimen $GBW$:n on oltava selvästi suodattimen
@@ -80,6 +80,10 @@ signaalin vaiheen, mutta siihen saa vahvistuksen ja se on vähemmän
 herkkä vahvistimen ominaisuuksille. Sen siirtofunktion johtaminen käsin
 on työläs mutta mekaaninen tehtävä, joka sopii SymPylle: kaksi
 solmuyhtälöä, ihanteellisen vahvistimen säännöt ja ratkaisu.
+
+![MFB-alipäästö. Lähtö kytkeytyy takaisin kahta reittiä: vastuksen R2
+kautta solmuun `a` ja kondensaattorin C2 kautta invertoivaan tuloon
+`m`.](kuvat/mfb.png){width=70%}
 
 ```{.python tiedosto="esimerkit/04-mfb.py" osa="symbolinen"}
 ```
@@ -104,6 +108,23 @@ $C_1 = 4{,}5\,C_2$. Tällainen johtaminen kannattaa tehdä koneella aina,
 kun piiri on monimutkaisempi kuin oppikirjan esimerkki: virheet
 etumerkeissä ja indekseissä ovat käsin laskiessa tavallisia, ja SPICE
 vahvistaa tuloksen.
+
+Samoista rakenteista saadaan muutkin suodatintyypit vaihtamalla
+vastusten ja kondensaattorien paikkoja:
+
+| Tyyppi | Sallen-Key | MFB |
+|--------|------------|-----|
+| alipäästö | R1, R2 sarjassa; C1 takaisinkytkennässä, C2 maahan | R1, R3 sarjassa; C1 maahan, R2 ja C2 takaisinkytkennässä |
+| ylipäästö | vastukset ja kondensaattorit vaihtavat paikkaa | vastukset ja kondensaattorit vaihtavat paikkaa |
+| kaistanpäästö | harvoin; $Q$ herkkä vahvistukselle | C sarjassa ja takaisinkytkennässä, R maahan ja takaisinkytkennässä |
+
+Ylipäästön siirtofunktiossa osoittaja on $K s^2/\omega_0^2$ ja
+kaistanpäästön $K s/(Q\omega_0)$; nimittäjä, $\omega_0$ ja $Q$ ovat
+samaa muotoa kuin alipäästössä. Ylipäästön yläpäätä rajoittaa
+vahvistimen oma kaistanleveys, joten aktiivinen ylipäästö on
+todellisuudessa aina kaistanpäästö. Mitoitus kannattaa tehdä samalla
+tavalla kuin edellä: johda siirtofunktio symbolisesti ja tarkista
+simuloimalla.
 
 ## Toleranssit ja Monte Carlo
 

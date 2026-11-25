@@ -1,0 +1,17 @@
+* PWM ja RC-suodin DA-muuntimena: 3,3 V:n PWM-signaali 20 kHz,
+* pulssisuhde 25 %. Suodatin R = 10 kohm ja C = 100 nF tai 1 uF.
+.param C=100n
+Vpwm pwm 0 PULSE(0 3.3 0 10n 10n 12.49u 50u)
+R1 pwm ulos 10k
+C1 ulos 0 {C} IC=0
+.control
+foreach c 100n 1u
+  alterparam C = $c
+  reset
+  tran 0.5u 80m uic
+  meas tran keski AVG v(ulos) FROM=78m TO=80m
+  meas tran ylin MAX v(ulos) FROM=78m TO=80m
+  meas tran alin MIN v(ulos) FROM=78m TO=80m
+end
+.endc
+.end

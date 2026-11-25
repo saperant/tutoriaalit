@@ -1,0 +1,23 @@
+* Yläpuolen kytkin: kuorma (6 ohm) on kiinni maassa ja kytkin on
+* käyttöjännitteen (12 V) puolella. Ohjaus on 3,3 V tai 0 V.
+.include transistorit.lib
+Vsyotto vcc 0 DC 12
+Vohjaus ohj 0 DC 3.3
+* a) N-kanava yläpuolella: lähde on kuorman päällä ja seuraa hilaa.
+M1 vcc ohj la 0 NLOG
+Rkuormaa la 0 6
+* b) P-kanava yläpuolella: lähde on käyttöjännitteessä. Hilan vetää
+*    alas NPN-transistori ja ylös vastus Rveto.
+M2 lb gp vcc vcc PLOG
+Rkuormab lb 0 6
+Rveto vcc gp 10k
+Rb ohj b 10k
+Q1 gp b 0 QNPN
+.control
+op
+print v(la) v(lb) v(gp)
+alter Vohjaus dc = 0
+op
+print v(la) v(lb) v(gp)
+.endc
+.end

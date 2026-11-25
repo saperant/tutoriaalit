@@ -1,0 +1,5 @@
+ohjaus 3,3 V:
+  N-kanava     simuloitu     1.49 V   laskettu     1.48 V   ok
+  N-kanava: kuorma 1.49 V, transistorin häviö 2.61 W
+  P-kanava: kuorma 11.96 V, transistorin häviö 77.0 mW, hila 58.5 mV
+ohjaus 0 V: P-kanavan hila 12.0 V, kuorma 0.00 V

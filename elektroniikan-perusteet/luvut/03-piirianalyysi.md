@@ -90,7 +90,7 @@ perusteet ohjelmallisesti* luvussa 2):
 Raja-arvo $R_L \to \infty$ antaa kuormittamattoman jakajan kaavan, ja
 kaavan nimittäjästä näkee, että kuorma vaikuttaa vähän vain, kun
 $R_L \gg R_1 R_2 / (R_1 + R_2)$. Tämä lauseke on jakajan
-lähtöresistanssi, joka tulee vastaan seuraavassa osiossa. 10 kohm:n
+lähtöresistanssi, joka tulee vastaan seuraavassa osiossa. 10 kΩ:n
 kuorma pudottaa jakajan 3,84 V:n lähdön 2,91 V:iin.
 
 ## Theveninin ja Nortonin vastineet
@@ -132,6 +132,16 @@ neliösumman menetelmällä ja vertaa tulosta käsin laskettuun:
 Theveninin vastine selittää luvun 2 mittausvirheen: mittari on kuorma
 piirin vastineen napoihin, ja virhe riippuu suhteesta
 $R_\text{th} / R_\text{mittari}$.
+
+Vastineesta näkee myös, mihin kuorma kannattaa mitoittaa, ja vastaus
+riippuu tavoitteesta. *Jännite* siirtyy kuormaan lähes kokonaan, kun
+$R_L \gg R_\text{th}$; näin kytketään signaalit, anturit ja mittarit.
+*Teho* on suurimmillaan, kun $R_L = R_\text{th}$: silloin kuorma saa
+tehon $U_\text{th}^2 / (4 R_\text{th})$, mutta yhtä paljon hukkuu
+lähteen sisäresistanssiin, eli hyötysuhde on vain 50 %. Tehon
+sovitusta käytetään siellä, missä jokainen milliwatti on saatava
+talteen (antennit, radiotaajuuspiirit); teholähteissä ja vahvistimien
+lähdöissä sisäresistanssi tehdään päinvastoin mahdollisimman pieneksi.
 
 ## Superpositio
 

@@ -23,7 +23,10 @@ subtitle: Pikaopas · kaavat, ngspice ja Python
 | Shockley | $I = I_S (e^{U/(n U_T)} - 1)$, $U_T = 25{,}9$ mV |
 | LEDin vastus | $R = (U - U_F) / I$ |
 | tasasuuntaajan rippeli | $\Delta U \approx I / (2 f C)$ (yläraja) |
-| MOSFET, lineaarinen | $R_{DS} \approx 1 / (K (U_{GS} - U_T))$ |
+| MOSFET, vastusalue | $R_{DS} \approx 1 / (K (U_{GS} - U_{GS(th)}))$ |
+| lineaarisäädin | $P = (U_\text{sis} - U_\text{ulos})\,I$, $\eta \le U_\text{ulos}/U_\text{sis}$ |
+| liitoslämpötila | $T_j = T_a + P R_{\theta JA}$ |
+| kohinamarginaalit | $U_{IL} - U_{OL}$ ja $U_{OH} - U_{IH}$ |
 
 # ngspice
 
@@ -55,4 +58,5 @@ subtitle: Pikaopas · kaavat, ngspice ja Python
 | BJT-kytkin | pakotettu vahvistus 10...20 |
 | MOSFET-kytkin | $R_{DS(on)}$ käytetyllä $U_{GS}$:llä |
 | induktiivinen kuorma | vapaakäyntidiodi rinnalle |
+| 3,3 V → 5 V | kelpaa TTL-tasoiselle tulolle (HCT), ei 5 V:n CMOS-tulolle |
 | konvergenssi | DC-reitti maahan, sarjaresistanssi lähteille |
