@@ -4,8 +4,9 @@ Jokainen liukulukuoperaatio pyöristää tuloksensa, ja virhe on
 enintään puoli ulp:tä. Yksittäinen virhe on mitätön, noin $10^{-16}$
 binary64:ssä. Ongelmia syntyy, kun virheitä kertyy miljoonia, kun
 melkein yhtä suuret luvut vähennetään toisistaan tai kun laskujen
-järjestys muuttuu. Tämä luku käy läpi tavalliset tilanteet ja niiden
-korjaukset.
+järjestys muuttuu. Tämä luku käy ensin läpi pyöristyssäännöt ja rahan
+laskemisen, jossa sääntö on osa vaatimuksia, ja sitten tilanteet, joissa
+virhe kasvaa, sekä niiden korjaukset.
 
 ## Pyöristystilat ja -funktiot
 
@@ -14,6 +15,15 @@ lähimpään esitettävään lukuun ja tasapelissä parilliseen (*round half
 to even*). Muut tilat ovat ylös, alas ja kohti nollaa. Niitä
 käytetään esimerkiksi intervalliaritmetiikassa, jossa laskettu väli
 taataan sisältävän oikean tuloksen.
+
+![Pyöristystilat lukusuoralla, kun tulos pyöristetään kokonaisluvuksi.
+Arvot ±0,5 ja ±2,5 ovat tasapelejä: lähimpään pyöristävä tila vie ne
+parilliseen lukuun. Liukulukulaskennassa asteikon paikalla ovat
+esitettävät luvut.](kuvat/pyoristystilat.png){width=88%}
+
+Kolme suunnattua tilaa tekevät virheen aina samaan suuntaan. Vain
+lähimpään pyöristävä tila tekee virheitä kumpaankin suuntaan, ja siksi
+se on oletus.
 
 ```{.c tiedosto="esimerkit/07-pyoristys.c" osa="tilat"}
 ```
@@ -35,12 +45,40 @@ lähimpänä lukua 2,5 sen alapuolella. Väärin toteutettu pyöristys
 `floor(x + 0.5)` antaisi sille tuloksen 3, koska summa pyöristyy
 luvuksi 3,0.
 
+## Raha
+
+Rahasummat ovat tarkkoja desimaalilukuja, joten binääriliukuluku on
+niille väärä tyyppi. Sentteinä tallennettu kokonaisluku tai
+desimaaliaritmetiikka (`Decimal`, SQL:n `numeric`, Javan `BigDecimal`)
+laskee oikein. Pyöristys tehdään kirjanpidon säännön mukaan, ja sääntö
+kirjoitetaan koodiin näkyviin:
+
+```{.python tiedosto="esimerkit/07-raha.py" osa="raha"}
+```
+
+```{.python tiedosto="esimerkit/07-raha.py" osa="alv"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-raha.odotettu"}
+```
+
+Viimeinen rivi näyttää, miksi `round(2.675, 2)` antaa 2,67: liukuluku
+2,675 on todellisuudessa hieman alle 2,675, joten tasapeliä ei ole.
+
 ## Katastrofaalinen kumoutuminen
 
 Kun kaksi lähes yhtä suurta lukua vähennetään toisistaan, yhteiset
 alkunumerot kumoutuvat, ja jäljelle jäävät vain epätarkat loppunumerot.
 Vähennyslasku itsessään on tarkka, mutta se paljastaa aiemmin tehdyt
-pyöristykset.
+pyöristykset. Kun kummassakin luvussa on 16 merkitsevää numeroa ja
+viimeinen niistä (`?`) on jo pyöristetty, erotukseen jää tässä vain
+kaksi luotettavaa numeroa:
+
+```text
+  1,23456789012345?
+- 1,23456789012311?
+= 0,00000000000034?
+```
 
 Tyypillinen esimerkki on varianssin oppikirjakaava
 $\overline{x^2} - \overline{x}^2$. Mikrosekunnin aikaleimat ovat
@@ -90,6 +128,16 @@ nopea kuin tavallinen silmukka. NumPyn `sum` käyttää sitä.
 
 ```{.tuloste tiedosto="esimerkit/07-summaus.odotettu"}
 ```
+
+![Sama summa lukemien määrän funktiona. Naiivin silmukan virhe kasvaa,
+kun summa kasvaa lisäyksiin nähden suureksi. Kahanin ja parittaisen
+summan virhe pysyy yksittäisen pyöristyksen
+tasolla.](kuvat/summaus.png){width=72%}
+
+Naiivin summan virhe ei kasva tasaisesti, koska virheen suunta vaihtuu
+summan eksponentin mukana: välillä 0,1 pyöristyy ylöspäin ja välillä
+alaspäin. Suunta ei kuitenkaan vaihdu satunnaisesti, vaan sama virhe
+toistuu tuhansia kertoja peräkkäin. Luku 9 palaa tähän.
 
 Summaus ei ole liitännäinen: $(a + b) + c$ ja $a + (b + c)$ voivat
 erota. Järjestyksellä on siis väliä. Pienimmät luvut kannattaa laskea
@@ -162,26 +210,6 @@ tunnetaan ja joka on testattu sillä, esimerkiksi grafiikassa tai
 prosessorin käsittelemään subnormaalit lukuina nolla koko
 ohjelmassa, myös kirjastoissa, jotka eivät pyytäneet sitä.
 
-## Raha
-
-Rahasummat ovat tarkkoja desimaalilukuja, joten binääriliukuluku on
-niille väärä tyyppi. Sentteinä tallennettu kokonaisluku tai
-desimaaliaritmetiikka (`Decimal`, SQL:n `numeric`, Javan `BigDecimal`)
-laskee oikein. Pyöristys tehdään kirjanpidon säännön mukaan, ja sääntö
-kirjoitetaan koodiin näkyviin:
-
-```{.python tiedosto="esimerkit/07-raha.py" osa="raha"}
-```
-
-```{.python tiedosto="esimerkit/07-raha.py" osa="alv"}
-```
-
-```{.tuloste tiedosto="esimerkit/07-raha.odotettu"}
-```
-
-Viimeinen rivi näyttää, miksi `round(2.675, 2)` antaa 2,67: liukuluku
-2,675 on todellisuudessa hieman alle 2,675, joten tasapeliä ei ole.
-
 ## Käytännössä
 
 - **Summaa kompensoiden tai parittain.** Pitkät summat (kirjanpidon
@@ -198,6 +226,9 @@ Viimeinen rivi näyttää, miksi `round(2.675, 2)` antaa 2,67: liukuluku
   `-fassociative-math` vain tietyille tiedostoille) ja testaa tulokset.
 - **Toistettavuus on päätös.** Bittitarkka toistettavuus eri koneilla
   vaatii kiinteän laskujärjestyksen ja `-ffp-contract=off`-valitsimen.
+  Lisäksi standardi takaa oikean pyöristyksen vain perusoperaatioille
+  ja neliöjuurelle: `sin`, `exp`, `pow` ja muut kirjastofunktiot voivat
+  erota viimeisessä bitissä kirjastosta ja versiosta toiseen.
   Useimmiten riittää, että tulokset ovat toleranssin sisällä, ja
   testit kirjoitetaan sen mukaan.
 - **Raha desimaalina tai kokonaislukuna, pyöristyssääntö näkyviin.**

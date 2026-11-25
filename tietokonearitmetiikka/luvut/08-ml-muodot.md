@@ -21,6 +21,10 @@ Googlen bfloat16 (*brain floating point*) tekee toisin päin: kahdeksan
 eksponenttibittiä kuten binary32:ssa ja vain seitsemän mantissabittiä.
 Arvoalue on sama kuin `float`-tyypillä, joten skaalausta ei tarvita, ja
 muunnos on yksinkertainen: bfloat16 on binary32:n ylin puolisko.
+
+![Tämän luvun muotojen kentät samassa mittakaavassa. Eksponenttibitit
+määräävät arvoalueen ja mantissabitit tarkkuuden.](kuvat/muodot.png){width=95%}
+
 Muunnos tehdään pyöristäen lähimpään parilliseen, ei katkaisemalla:
 
 ```{.c tiedosto="esimerkit/08-bfloat16.c" osa="bf16"}
@@ -78,6 +82,10 @@ kvantisointia ($z = 0$), koska painot ovat nollan molemmin puolin:
 ```{.python tiedosto="esimerkit/08-kvantisointi.py" osa="symmetrinen"}
 ```
 
+![Symmetrinen kvantisointi läheltä nollaa: sama funktio kuin yllä
+painoille väliltä −0,5…0,5. Jokainen paino siirtyy lähimmälle tasolle,
+joten virhe on enintään puoli porrasta.](kuvat/kvantisointi.png){width=92%}
+
 Aktivaatiot ovat usein epäsymmetrisiä, esimerkiksi ReLU:n jälkeen
 pelkästään positiivisia. *Asymmetrinen* kvantisointi kuvaa koko
 arvoalueen $[\min, \max]$ int8:n 256 arvoon, jotta mitään ei hukata:
@@ -128,7 +136,9 @@ kerryttävät tulot 32-bittisiin rekistereihin yhdellä käskyllä.
   yksittäisen kerroksen suhteellinen virhe ei kerro kaikkea.
 - **Pyöristä parilliseen.** Muunnokset (float32 → bfloat16, float →
   int8) pyöristetään, ei katkaista. Katkaisu vinouttaa tuloksia
-  järjestelmällisesti yhteen suuntaan.
+  järjestelmällisesti yhteen suuntaan. Kun samaan lukuun kertyy paljon
+  portaan kokoa pienempiä muutoksia, kuten koulutuksessa, tämäkään ei
+  riitä: silloin tarvitaan luvun 9 stokastista pyöristystä.
 
 ## Itsearviointi
 

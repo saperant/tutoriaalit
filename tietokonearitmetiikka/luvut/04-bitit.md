@@ -56,11 +56,16 @@ siirroilla, jolloin koneen tavujärjestyksellä ei ole merkitystä:
 ```{.tuloste tiedosto="esimerkit/04-otsake.odotettu"}
 ```
 
+![Esimerkin sanat kenttinä. Bitit numeroidaan oikealta alkaen nollasta,
+joten kentän siirtomäärä on sen alimman bitin numero ja maskissa on
+kentän leveyden verran ykkösiä.](kuvat/bittikentat.png){width=100%}
+
 Näyttöjen RGB565-pikselissä punaiselle ja siniselle on viisi bittiä ja
 vihreälle kuusi, koska silmä erottaa vihreän sävyjä tarkimmin.
 Pakkauksessa alimmat bitit hylätään. Purussa ylimmät bitit toistetaan
 alimpiin, jotta suurin arvo `0x1f` laajenee arvoksi 255 eikä 248:
-valkoinen pysyy valkoisena.
+valkoinen pysyy valkoisena. Kuvan alempi rivi on oranssi pikseli
+(255, 128, 0), jonka vihreä kanava palaa arvona 130.
 
 ```{.c tiedosto="esimerkit/04-rgb565.c" osa="pakkaus"}
 ```

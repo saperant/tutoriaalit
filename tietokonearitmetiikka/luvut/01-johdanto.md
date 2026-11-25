@@ -19,6 +19,8 @@ niillä, ja ennen kaikkea, mitä siitä seuraa ohjelmoijalle:
   kurissa.
 - **Koneoppimisen lukumuodot:** bfloat16, FP8 ja int8-kvantisointi, eli
   miksi neuroverkko voi laskea 8 bitin luvuilla.
+- **Stokastinen pyöristys:** satunnainen pyöristyssuunta, jolla matalan
+  tarkkuuden laskenta pysyy keskimäärin oikeana.
 - **Luvut muistissa:** matriisien ja tensorien järjestys, askeleet ja
   välimuistin vaikutus laskennan nopeuteen.
 
@@ -92,8 +94,10 @@ ne käyttävät NumPyä. Hyödyllisiä apuvälineitä ovat lisäksi:
 
 ## Lukuohje
 
-Luvut 2–5 käsittelevät kokonaislukuja, luvut 6–8 liukulukuja ja muita
-murtolukumuotoja ja luvut 9–10 lukujen järjestämistä muistiin. Jokainen
+Luvut 2–5 käsittelevät kokonaislukuja, luvut 6–9 liukulukuja, muita
+murtolukumuotoja ja pyöristystä ja luvut 10–11 lukujen järjestämistä
+muistiin. Lukusuorat ja bittikaaviot on piirretty samoilla laskuilla
+kuin esimerkit (`make kuvat`). Jokainen
 luku päättyy osioihin *Käytännössä*, jossa on ammattilaisten käytännöt
 perusteluineen, ja *Itsearviointi*. Jos hallitset itsearvioinnin
 väitteet, voit ohittaa luvun. Pikaopas kokoaa tärkeimmät säännöt ja

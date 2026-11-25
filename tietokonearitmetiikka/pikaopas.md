@@ -77,6 +77,7 @@ Kattojako: `a / b + (a % b != 0)`.
 | raha | sentit `int64_t`, `Decimal` |
 | aikaleima | `int64_t` ns/µs |
 | toistettavuus | `-ffp-contract=off`, kiinteä järjestys |
+| pysähtyvä kertymä | leveämpi tyyppi tai stokastinen pyöristys |
 | `-ffast-math` | rikkoo Kahanin ja `isnan`-tarkistuksen |
 
 # Python ja NumPy
@@ -97,6 +98,8 @@ Kattojako: `a / b + (a % b != 0)`.
 - Asymmetrinen (aktivaatiot): $s = (\max - \min)/255$,
   $z = \text{round}(-128 - \min/s)$, $x \approx s(q - z)$.
 - Kertymä leveämpi: int8 → int32, FP8/bf16 → float32.
+- Stokastinen pyöristys, $k$ bittiä pois: `(x + r) >> k`, $r$ tasainen
+  $k$-bittinen satunnaisluku. Harhaton; virhe kasvaa kuten $\sqrt{n}$.
 
 # Muisti
 

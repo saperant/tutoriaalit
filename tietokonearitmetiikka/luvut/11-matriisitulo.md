@@ -13,7 +13,7 @@ Oppikirjan toteutus laskee jokaisen tuloalkion pistetulona: rivi
 $A$:sta ja sarake $B$:stä. Sarake on rivijärjestyksessä hajallaan,
 joten sisin silmukka hyppii $B$:n riviltä toiselle:
 
-```{.c tiedosto="esimerkit/10-matriisitulo.c" osa="ijk"}
+```{.c tiedosto="esimerkit/11-matriisitulo.c" osa="ijk"}
 ```
 
 Kun silmukat vaihdetaan järjestykseen *ikj*, sisin silmukka kulkee
@@ -21,7 +21,7 @@ $B$:n ja $C$:n rivejä peräkkäin. Laskutoimitukset ovat samat, vain
 summausjärjestys muuttuu. Kääntäjä voi lisäksi vektoroida sisimmän
 silmukan SIMD-käskyiksi, koska sen iteraatiot ovat riippumattomia:
 
-```{.c tiedosto="esimerkit/10-matriisitulo.c" osa="ikj"}
+```{.c tiedosto="esimerkit/11-matriisitulo.c" osa="ikj"}
 ```
 
 ## Lohkominen
@@ -32,7 +32,7 @@ jakaa matriisit pieniin osamatriiseihin, jotka mahtuvat välimuistiin, ja
 laskee tulon osamatriisi kerrallaan. Jokainen lohko käytetään moneen
 kertaan ennen kuin seuraava haetaan:
 
-```{.c tiedosto="esimerkit/10-matriisitulo.c" osa="lohkottu"}
+```{.c tiedosto="esimerkit/11-matriisitulo.c" osa="lohkottu"}
 ```
 
 Testeissä ohjelma tarkistaa, että kaikki toteutukset antavat saman
@@ -40,7 +40,7 @@ tuloksen pyöristysvirheen tarkkuudella. Tulokset eivät ole bittitarkasti
 samat, koska summausjärjestys eroaa. `make mittaa` vertaa nopeutta
 512 × 512 -matriiseilla:
 
-```{.tuloste tiedosto="esimerkit/10-matriisitulo-mittaus.odotettu"}
+```{.tuloste tiedosto="esimerkit/11-matriisitulo-mittaus.odotettu"}
 ```
 
 Tyypillisesti ikj ja lohkottu versio ovat 4–10 kertaa nopeampia kuin
@@ -61,20 +61,20 @@ NumPyn `@`-operaattori kutsuu BLAS-kirjaston rutiinia `dgemm`.
 Pythonin silmukoihin verrattuna ero on valtava, koska jokainen
 Python-tason kertolasku on oliokäsittelyä:
 
-```{.python tiedosto="esimerkit/10-blas.py" osa="silmukat"}
+```{.python tiedosto="esimerkit/11-blas.py" osa="silmukat"}
 ```
 
-```{.python tiedosto="esimerkit/10-blas.py" osa="blas"}
+```{.python tiedosto="esimerkit/11-blas.py" osa="blas"}
 ```
 
 Tarkkuuden ja muistin välillä tehdään sama valinta kuin luvussa 8:
 `float32` puolittaa muistin ja tuplaa SIMD-leveyden, mutta tulos on
 tarkka vain noin seitsemällä numerolla:
 
-```{.python tiedosto="esimerkit/10-blas.py" osa="tyyppi"}
+```{.python tiedosto="esimerkit/11-blas.py" osa="tyyppi"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-blas.odotettu"}
+```{.tuloste tiedosto="esimerkit/11-blas.odotettu"}
 ```
 
 ## Mittasuhteet

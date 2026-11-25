@@ -24,6 +24,11 @@ välillä $0 \ldots n-1$, kun $n > 0$:
 ```{.tuloste tiedosto="esimerkit/05-lattiajako.odotettu"}
 ```
 
+![Osamäärä ja jäännös jakajalla 3. Katkaiseva jako on symmetrinen
+nollan suhteen, joten osamäärä 0 kattaa viisi arvoa ja jäännöksen
+etumerkki vaihtuu. Lattiajaossa portaat ja jäännöksen jakso jatkuvat
+samanlaisina nollan yli.](kuvat/jako.png){width=92%}
+
 Ero tulee vastaan, kun negatiivinen arvo kuvataan jaksolliseen
 alueeseen: kellonajat, kulmat, viikonpäivät ja rengaspuskurin indeksit.
 Kello 00.15 miinus 45 minuuttia on −30 minuuttia. C:n `%` antaa −30,

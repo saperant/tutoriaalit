@@ -24,7 +24,19 @@ on yksi enemmän kuin positiivisia.
 ```{.tuloste tiedosto="esimerkit/02-komplementti.odotettu"}
 ```
 
-Kahden komplementin etu on, että yhteen-, vähennys- ja kertolasku ovat
+Tulkinnat hahmottaa helpoimmin ympyrällä. Kun bittikuvioon lisätään
+yksi, siirrytään ympyrällä askel myötäpäivään, ja viimeisen kuvion
+jälkeen tulee taas ensimmäinen. Etumerkitön ja etumerkillinen tulkinta
+ovat sama ympyrä, jonka numerointi katkeaa eri kohdasta:
+
+![Neljän bitin kuviot ympyrällä. Sisäkehällä on etumerkitön arvo ja
+ulkokehällä kahden komplementin arvo; sävytetyn puoliskon ylin bitti on
+1. Katkoviivat ovat kohdat, joissa tulkinta vuotaa
+yli.](kuvat/lukuympyra.png){width=58%}
+
+Negatiivinen luku $-k$ on siis sama kuvio kuin etumerkitön $2^n - k$:
+−1 ja 15 ovat neljässä bitissä molemmat `1111`. Kahden komplementin etu
+on, että yhteen-, vähennys- ja kertolasku ovat
 bittitasolla samat kuin etumerkittömillä luvuilla: summain ei tiedä,
 kumpaa tulkintaa ohjelma käyttää. Vastaluku saadaan kääntämällä bitit ja
 lisäämällä yksi:
@@ -39,6 +51,13 @@ säilyttävät bitit. C23 teki kahden komplementin pakolliseksi mutta jätti
 tämän säännön ennalleen. Muunnoksen kirjoittaminen näkyviin
 (`(uint8_t)x`) kertoo lukijalle, että bittien uudelleentulkinta on
 tarkoituksellista.
+
+Kaventava muunnos, esimerkiksi `int32_t`-arvon sijoitus
+`int16_t`-muuttujaan, pudottaa ylimmät bitit pois: lukuympyrä
+vaihtuu pienempään, ja arvo 40 000 muuttuu arvoksi −25 536. Kääntäjä ei
+varoita tästä oletuksena. Valitsin `-Wconversion` löytää hiljaiset
+kavennukset, ja ulkoa tuleva arvo tarkistetaan rajoja vasten ennen
+sijoitusta.
 
 ## Etumerkki ja vertailut
 

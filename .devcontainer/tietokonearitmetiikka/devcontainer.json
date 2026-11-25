@@ -4,7 +4,7 @@
     "dockerfile": "../Dockerfile",
     "context": "..",
     "args": {
-      "PIP_PAKETIT": "numpy ruff mypy"
+      "PIP_PAKETIT": "numpy matplotlib ruff mypy"
     }
   },
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/tietokonearitmetiikka/esimerkit",

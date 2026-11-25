@@ -1,7 +1,8 @@
 # Ylivuoto ja tarkistettu aritmetiikka
 
 Kiinteän leveyden aritmetiikka on aritmetiikkaa modulo $2^n$. Kun tulos
-ei mahdu tyyppiin, ylimmät bitit putoavat pois. Laitteisto tekee näin
+ei mahdu tyyppiin, ylimmät bitit putoavat pois: luvun 2 lukuympyrällä
+kuljetaan sauman yli. Laitteisto tekee näin
 kaikille kokonaisluvuille, mutta C-kieli kohtelee etumerkillisiä ja
 etumerkittömiä tyyppejä eri tavalla.
 
@@ -85,6 +86,15 @@ otsakkeen pituus. Muistinvarauksen koon ylivuoto on yleinen
 haavoittuvuuksien lähde: liian pieni puskuri varataan, ja kirjoitus
 ylittää sen.
 
+Kolmas vaihtoehto kiertymisen ja virheen rinnalle on *kyllästyvä*
+aritmetiikka: liian suuri tulos korvataan tyypin suurimmalla ja liian
+pieni pienimmällä arvolla. Äänessä ja kuvissa se on oikea valinta,
+koska leikkautunut huippu on pienempi virhe kuin kiertynyt.
+`ckd_add`-makrolla kyllästyminen on yksi ehtolause, ja NumPyssä sama
+tehdään laskemalla leveämmässä tyypissä ja rajaamalla tulos
+(`np.clip`, luvut 8 ja 10). Signaalinkäsittelyn kyllästyvä aritmetiikka
+käsitellään taidossa *Lukujen esitys ja kiinteän pilkun aritmetiikka*.
+
 ## Python ja NumPy
 
 Pythonin `int` ei vuoda yli. Kun kiinteän leveyden käyttäytyminen
@@ -135,3 +145,5 @@ leveämpi tyyppi `dtype`-parametrilla:
   `ckd_mul`-makroilla.
 - Osaat vertailla kiertyviä järjestysnumeroita ja aikaleimoja oikein.
 - Osaat löytää ja korjata hiljaisen ylivuodon NumPy-laskennasta.
+- Osaat valita kiertyvän, tarkistetun ja kyllästyvän aritmetiikan
+  välillä käyttötarkoituksen mukaan.

@@ -34,10 +34,32 @@ static float parittain(const float *x, int n)
 
 static float data[N];
 
-int main(void)
+// Virhe lukemien määrän funktiona; kuvat/piirra.py piirtää tästä kuvan.
+static void kayra(void)
+{
+    float naiivi = 0.0f;
+    int tehty = 0;
+    for (long m = 10; tehty < N; m = m * 5 / 2) {
+        int n = m < N ? (int)m : N;
+        for (; tehty < n; tehty++) {
+            naiivi += data[tehty];
+        }
+        double tarkka = (double)0.1f * n;
+        printf("%d %.3e %.3e %.3e\n", n,
+               fabs(naiivi - tarkka) / tarkka,
+               fabs(kahan(data, n) - tarkka) / tarkka,
+               fabs(parittain(data, n) - tarkka) / tarkka);
+    }
+}
+
+int main(int argc, char **argv)
 {
     for (int i = 0; i < N; i++) {
         data[i] = 0.1f;               // 10 miljoonaa 0.1 kWh:n lukemaa
+    }
+    if (argc > 1 && argv[1][0] == 'k') {   // ./07-summaus kayra
+        kayra();
+        return 0;
     }
     // Tarkka summa: lukema on float-arvo 0.100000001490116...
     double tarkka = (double)0.1f * N;

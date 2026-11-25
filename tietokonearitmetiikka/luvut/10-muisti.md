@@ -15,14 +15,18 @@ alkion $(i, j)$ paikka $n$-sarakkeisessa matriisissa on $i \cdot n + j$.
 Fortran, MATLAB, Julia, R ja monet BLAS-rutiinit käyttävät
 *sarakejärjestystä* (column-major), jossa sarake on peräkkäin.
 
-```{.c tiedosto="esimerkit/09-jarjestys.c" osa="indeksi"}
+![Sama 3 × 4 -matriisi muistissa kummassakin järjestyksessä, kun alkio
+vie kahdeksan tavua. Värit ovat matriisin
+rivit.](kuvat/jarjestys.png){width=100%}
+
+```{.c tiedosto="esimerkit/10-jarjestys.c" osa="indeksi"}
 ```
 
 Sama summa lasketaan kahdella silmukkajärjestyksellä. Riveittäin
 kulkiessa jokainen välimuistirivi käytetään kokonaan. Sarakkeittain
 jokainen alkio on eri välimuistirivillä ja usein eri muistisivulla:
 
-```{.c tiedosto="esimerkit/09-jarjestys.c" osa="lapikaynti"}
+```{.c tiedosto="esimerkit/10-jarjestys.c" osa="lapikaynti"}
 ```
 
 Ohjelma tarkistaa testeissä vain, että summat ovat samat. Mittaus on
@@ -31,7 +35,7 @@ mielekäs vain optimoituna, joten Makefile kääntää sen valitsimella
 läpikäynti on tyypillisesti 5–10 kertaa hitaampi. Raja on kirjoitettu
 väljäksi, jotta tulos ei riipu koneesta:
 
-```{.tuloste tiedosto="esimerkit/09-jarjestys-mittaus.odotettu"}
+```{.tuloste tiedosto="esimerkit/10-jarjestys-mittaus.odotettu"}
 ```
 
 ## Askeleet
@@ -47,7 +51,7 @@ samaan muistiin. Transpoosi vaihtaa askelten järjestyksen, ja viipale
 `[:, 1::2]` kaksinkertaistaa sarakeaskeleen. Kumpikaan ei kopioi
 dataa:
 
-```{.python tiedosto="esimerkit/09-askeleet.py" osa="askeleet"}
+```{.python tiedosto="esimerkit/10-askeleet.py" osa="askeleet"}
 ```
 
 Näkymät ovat tehokkaita mutta yllättäviä. Näkymän kautta tehty
@@ -56,10 +60,10 @@ palauttavat kopion, jos tulosta ei voi esittää askelilla: transpoosin
 `reshape` vaatii, että alkiot luetaan eri järjestyksessä kuin ne ovat
 muistissa:
 
-```{.python tiedosto="esimerkit/09-askeleet.py" osa="kopio"}
+```{.python tiedosto="esimerkit/10-askeleet.py" osa="kopio"}
 ```
 
-```{.tuloste tiedosto="esimerkit/09-askeleet.odotettu"}
+```{.tuloste tiedosto="esimerkit/10-askeleet.odotettu"}
 ```
 
 Monet kirjastot, kuten C-laajennukset ja GPU-siirrot, vaativat yhtenäisen
@@ -78,16 +82,16 @@ NHWC.
 Pikselit ovat yleensä `uint8`-arvoja, joten kirkastus kiertää kuten
 luvussa 3. Laskenta tehdään leveämmässä tyypissä ja rajataan:
 
-```{.python tiedosto="esimerkit/09-kuva.py" osa="kirkastus"}
+```{.python tiedosto="esimerkit/10-kuva.py" osa="kirkastus"}
 ```
 
 Kanavien siirto on transpoosi eli pelkkä näkymä. Harmaasävymuunnos on
 painotettu summa kanavien yli, joten se on matriisitulo:
 
-```{.python tiedosto="esimerkit/09-kuva.py" osa="kanavat"}
+```{.python tiedosto="esimerkit/10-kuva.py" osa="kanavat"}
 ```
 
-```{.tuloste tiedosto="esimerkit/09-kuva.odotettu"}
+```{.tuloste tiedosto="esimerkit/10-kuva.odotettu"}
 ```
 
 Väärä järjestys on hidas tai väärä. Jos CHW-näkymä annetaan

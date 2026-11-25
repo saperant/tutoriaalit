@@ -39,6 +39,13 @@
 - Kalibroi kvantisoinnin skaala edustavalla datalla ja mittaa tulos
   tehtävän tarkkuutena.
 
+**Stokastinen pyöristys**
+
+- Kun samaan lukuun kertyy paljon portaan kokoa pienempiä muutoksia,
+  lähimpään pyöristys pysähtyy. Stokastinen pyöristys on harhaton,
+  mutta lisää kohinaa.
+- Kiinnitä siemen ja tallenna se tulosten mukana.
+
 **Muisti**
 
 - Sisin silmukka kulkee peräkkäisiä osoitteita.
@@ -58,7 +65,8 @@
 | Welfordin algoritmi | varianssin kumoutuminen | 7 |
 | Error-free transformation (TwoSum, FMA) | tulon ja summan virheen talteenotto | 7 |
 | Symmetrinen ja asymmetrinen kvantisointi | liukulukujen esitys int8:na | 8 |
-| Lohkominen (tiling) | datan uudelleenkäyttö välimuistissa | 10 |
+| Stokastinen pyöristys | pysähtyvä kertymä matalalla tarkkuudella | 9 |
+| Lohkominen (tiling) | datan uudelleenkäyttö välimuistissa | 11 |
 
 ## Lähteet ja jatkolukeminen
 
@@ -83,6 +91,9 @@
 - Nicholas J. Higham: *Accuracy and Stability of Numerical Algorithms*,
   2. painos, SIAM 2002. Summauksen, pistetulon ja muiden algoritmien
   virheanalyysi.
+- Randal E. Bryant ja David R. O'Hallaron: *Computer Systems: A
+  Programmer's Perspective*, 3. painos, Pearson 2016. Luku 2 käsittelee
+  kokonaislukujen ja liukulukujen esityksen ohjelmoijan kannalta.
 - Henry S. Warren: *Hacker's Delight*, 2. painos, Addison-Wesley 2012.
   Bittitason algoritmit ja vakiolla jako kertolaskuna.
 - Jean-Michel Muller ym.: *Handbook of Floating-Point Arithmetic*,
@@ -95,6 +106,16 @@
 - Benoit Jacob ym.: *Quantization and Training of Neural Networks for
   Efficient Integer-Arithmetic-Only Inference*, CVPR 2018. int8-
   kvantisoinnin perusartikkeli.
+- Suyog Gupta ym.: *Deep Learning with Limited Numerical Precision*,
+  ICML 2015. Neuroverkon koulutus 16 bitin kiinteällä pilkulla onnistuu
+  stokastisella pyöristyksellä mutta ei lähimpään pyöristämällä.
+- Matteo Croci ym.: *Stochastic rounding: implementation, error
+  analysis and applications*, Royal Society Open Science 2022.
+  Katsausartikkeli stokastisesta pyöristyksestä.
+- Michael P. Connolly, Nicholas J. Higham ja Theo Mary: *Stochastic
+  Rounding and Its Probabilistic Backward Error Analysis*, SIAM Journal
+  on Scientific Computing 2021. Virherajat, jotka kasvavat kuten
+  $\sqrt{n}$.
 
 ### Dokumentaatio ja työkalut
 
@@ -116,7 +137,8 @@ Taitopuussa tästä jatketaan taitoihin *Lukujen esitys ja kiinteän pilkun arit
 jossa samoja kysymyksiä ratkaistaan laitteistossa ja signaalinkäsittelyssä,
 ja *Suorituskyvyn analyysi ja optimointi*, jossa mitataan ja optimoidaan välimuistin ja
 SIMD-käskyjen käyttöä. GPU:iden laskenta ja koneoppimisen muodot
-jatkuvat taidossa *GPU-laskenta*.
+jatkuvat taidossa *GPU-laskenta*. Virheanalyysi, ehtoluku ja
+algoritmien stabiilisuus ovat taidon *Numeeriset menetelmät* aiheita.
 
 ## Lisenssi
 

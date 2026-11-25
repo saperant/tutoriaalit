@@ -28,7 +28,13 @@ Etumerkki on kaikissa muodoissa yksi bitti. Eksponentti tallennetaan siirrettyn�
 vähennetään binary64:ssä 1023, jotta negatiiviset eksponentit eivät tarvitse
 etumerkkiä. Mantissan ensimmäinen bitti on aina 1, joten sitä ei
 tallenneta (*piilobitti*). 52 tallennettua bittiä antaa näin 53 bitin
-tarkkuuden. Luku 1,0 on eksponentti 0 ja mantissa 0:
+tarkkuuden. Pienimmässä muodossa kentät näkee kerralla:
+
+![Luku −2,5 binary16-muodossa. Suuremmissa muodoissa kentät ovat samat
+mutta leveämmät.](kuvat/liukukentat.png){width=80%}
+
+Seuraava ohjelma purkaa samat kentät binary64-luvuista. Luku 1,0 on
+eksponentti 0 ja mantissa 0:
 
 ```{.c tiedosto="esimerkit/06-kentat.c" osa="purku"}
 ```
@@ -39,6 +45,32 @@ tarkkuuden. Luku 1,0 on eksponentti 0 ja mantissa 0:
 Eksponenttikentän ääriarvot on varattu. Nolla tarkoittaa nollaa ja
 *subnormaaleja* lukuja (piilobitti 0), ja kaikki ykköset tarkoittavat
 ääretöntä (mantissa 0) tai NaN:ia (mantissa muu kuin 0).
+
+## Liukuluvut lukusuoralla
+
+Liukuluvut eivät ole lukusuoralla tasavälein. Mantissan bitit jakavat
+jokaisen kahden potenssin välin yhtä moneen osaan, joten lukuja on
+tiheässä nollan lähellä ja harvassa kaukana siitä. Rakenteen näkee
+muodosta, joka on niin pieni, että kaikki arvot voi piirtää. Kuvan
+lelumuodossa on kolme eksponenttibittiä ja kaksi mantissabittiä, ja sen
+arvot on purettu luvun 8 esimerkin luokalla:
+
+![Kuuden bitin liukulukumuodon kaikki positiiviset arvot. Värit
+vaihtuvat eksponentin mukaan.](kuvat/lukusuora.png){width=100%}
+
+Kuvasta näkyy kolme asiaa, jotka pätevät kaikkiin IEEE 754 -muotoihin:
+
+- **Väli on vakio eksponentin sisällä ja kaksinkertaistuu seuraavassa.**
+  Absoluuttinen tarkkuus huononee luvun kasvaessa, mutta suhteellinen
+  tarkkuus pysyy samana: logaritmisella asteikolla arvot ovat tasaisesti.
+- **Subnormaalit täyttävät aukon nollan ympärillä.** Ilman niitä
+  pienimmän normaalin luvun ja nollan väli olisi tyhjä, ja kahden
+  lähekkäisen pienen luvun erotus pyöristyisi nollaksi. Subnormaalien
+  ansiosta $x - y = 0$ vain, kun $x = y$ (*asteittainen alivuoto*).
+  Hinta on tarkkuus: subnormaalissa luvussa on vähemmän merkitseviä
+  bittejä, ja monissa prosessoreissa niillä laskeminen on hidasta.
+- **Suurimman luvun jälkeen ei ole mitään.** Sitä suurempi tulos
+  pyöristyy äärettömäksi.
 
 ## Tarkka arvo
 
@@ -69,9 +101,18 @@ testiaineistoon ja tiedostoihin, jos täsmällisyydellä on väliä.
 
 Kahden peräkkäisen liukuluvun välimatka on *ulp* (unit in the last
 place). Se on luvun suuruuteen nähden vakio, noin $2^{-52}$ kertaa
-luku binary64:ssä. Suurilla luvuilla väli on suuri: yli $2^{53}$:n
-binary64 ei esitä enää kaikkia kokonaislukuja, ja binary32 lopettaa jo
-luvussa $2^{24} = 16\,777\,216$.
+luku binary64:ssä. Ulp luvun 1 kohdalla on *konetarkkuus* (machine
+epsilon): $2^{-52}$ binary64:ssä (`DBL_EPSILON`) ja $2^{-23}$
+binary32:ssa (`FLT_EPSILON`). Yhden laskutoimituksen suhteellinen
+pyöristysvirhe on enintään puolet siitä. Kirjallisuudessa epsiloniksi
+kutsutaan kumpaakin, joten määritelmä kannattaa tarkistaa.
+
+Suurilla luvuilla väli on suuri: yli $2^{53}$:n binary64 ei esitä enää
+kaikkia kokonaislukuja, ja binary32 lopettaa jo luvussa
+$2^{24} = 16\,777\,216$.
+
+![Peräkkäisten lukujen väli kolmessa muodossa. Jokainen porras on yksi
+eksponentin arvo.](kuvat/ulp.png){width=78%}
 
 ```{.c tiedosto="esimerkit/06-ulp.c" osa="ulp"}
 ```
@@ -87,16 +128,44 @@ Tämä on oikean elämän virhe: anturin aikaleima sekunteina
 
 Kello pysähtyy 32 768 sekunnissa eli vähän yli yhdeksässä tunnissa.
 Siinä kohdassa ulp on 0,0039, ja 0,001 on alle puolet siitä, joten
-yhteenlasku pyöristyy takaisin samaan lukuun. Aikaleimat tallennetaan
-kokonaislukuina (`int64_t` mikro- tai nanosekunteina) ja muunnetaan
-liukuluvuksi vasta laskettaessa.
+yhteenlasku pyöristyy takaisin samaan lukuun. Kuvassa tämä on kohta,
+jossa `float`-käyrä ylittää kahden millisekunnin viivan. Aikaleimat
+tallennetaan kokonaislukuina (`int64_t` mikro- tai nanosekunteina) ja
+muunnetaan liukuluvuksi vasta laskettaessa. Luvussa 9 sama kello saadaan
+käymään toisella pyöristystavalla.
+
+## Muunnokset kokonaislukujen kanssa
+
+Muunnos kokonaisluvusta liukuluvuksi pyöristää, jos luvussa on enemmän
+merkitseviä bittejä kuin mantissassa. Muunnos toiseen suuntaan
+katkaisee murto-osan kohti nollaa, ja jos arvo ei mahdu
+kohdetyyppiin tai on NaN, muunnos on C:ssä määrittelemätön. Prosessorit
+myös käyttäytyvät eri tavoin: x86-64 tuottaa pienimmän kokonaisluvun,
+ARM kyllästää.
+
+```{.c tiedosto="esimerkit/06-muunnos.c" osa="tarkkuus"}
+```
+
+Ulkoa tuleva liukuluku tarkistetaan siksi ennen muunnosta. Vertailu
+kirjoitetaan niin, että NaN ei läpäise sitä:
+
+```{.c tiedosto="esimerkit/06-muunnos.c" osa="turvallinen"}
+```
+
+```{.tuloste tiedosto="esimerkit/06-muunnos.odotettu"}
+```
 
 ## Erikoisarvot
 
 Ylivuoto tuottaa äärettömän, ja määrittelemätön tulos, kuten $0/0$ tai
 $\infty - \infty$, tuottaa NaN:in (*not a number*). Liukulukulaskenta ei
 siis kaadu kuten kokonaislukujen ylivuoto. Erikoisarvot leviävät
-tuloksiin ja paljastuvat vasta lopussa.
+tuloksiin ja paljastuvat vasta lopussa. Standardi määrittelee lisäksi
+viisi tilalippua (virheellinen operaatio, nollalla jako, ylivuoto,
+alivuoto ja epätarkka tulos), jotka jäävät päälle, kunnes ohjelma
+nollaa ne. C:ssä ne luetaan funktiolla `fetestexcept`: pitkän laskennan
+jälkeen voi tarkistaa yhdellä kutsulla, syntyikö matkalla NaN tai
+ääretön.
 
 ```{.c tiedosto="esimerkit/06-erikois.c" osa="erikois"}
 ```
@@ -151,6 +220,9 @@ sovelluksen yksiköissä: millimetri, sentti tai mittalaitteen tarkkuus.
 - **Ei `==`-vertailua lasketuille arvoille.** Kirjoita vertailufunktio,
   jossa on sekä suhteellinen että absoluuttinen toleranssi, ja käytä
   sitä myös testeissä (`pytest.approx`, `math.isclose`).
+- **Tarkista ennen kuin muunnat kokonaisluvuksi.** `(int)x` on
+  määrittelemätön, kun `x` on NaN tai liian suuri. Pyöristä ensin
+  (`rint`, `lround`) ja vertaa rajoihin.
 - **NaN-tietoisuus.** Tarkista syötteet (`isfinite`) rajapinnalla, ja
   käytä puuttuville arvoille NaN-tietoisia funktioita (`np.nanmean`).
   Lajittelussa NaN on käsiteltävä erikseen.
@@ -164,7 +236,11 @@ sovelluksen yksiköissä: millimetri, sentti tai mittalaitteen tarkkuus.
   kertoa, mikä luku kentistä seuraa.
 - Osaat selittää, miksi 0,1 ei ole tarkka ja miten tallennetun luvun
   tarkan arvon saa näkyviin.
+- Osaat piirtää pienen liukulukumuodon arvot lukusuoralle ja selittää,
+  mitä subnormaalit tekevät.
 - Osaat laskea ulp:n suuruuden ja arvioida, milloin `float` ei riitä,
   esimerkiksi aikaleimalle.
+- Osaat muuntaa liukuluvun kokonaisluvuksi niin, että NaN ja
+  arvoalueen ylitys käsitellään.
 - Osaat ennustaa vertailujen tulokset NaN:lla ja negatiivisella nollalla.
 - Osaat valita vertailuun suhteellisen ja absoluuttisen toleranssin.

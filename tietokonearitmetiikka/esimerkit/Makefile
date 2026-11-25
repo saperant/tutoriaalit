@@ -4,7 +4,7 @@
 #
 #   make           molemmat alla olevat
 #   make nopea     -ffast-math: 07-nopea.c tavallisena ja nopeana
-#   make mittaa    välimuistikokeet 09 ja 10 optimoituina (-O2)
+#   make mittaa    välimuistikokeet 10 ja 11 optimoituina (-O2)
 #   make siivoa    poistaa käännetyt ohjelmat
 
 CC := $(shell command -v gcc-14 >/dev/null 2>&1 && echo gcc-14 || echo gcc)
@@ -27,9 +27,9 @@ bin/nopea-ffast-math: 07-nopea.c
 	$(CC) -std=c23 -O2 -ffast-math $< -o $@ -lm
 # @loppu nopea
 
-mittaa: bin/09-jarjestys bin/10-matriisitulo
-	./bin/09-jarjestys mittaa | diff -u 09-jarjestys-mittaus.odotettu -
-	./bin/10-matriisitulo mittaa | diff -u 10-matriisitulo-mittaus.odotettu -
+mittaa: bin/10-jarjestys bin/11-matriisitulo
+	./bin/10-jarjestys mittaa | diff -u 10-jarjestys-mittaus.odotettu -
+	./bin/11-matriisitulo mittaa | diff -u 11-matriisitulo-mittaus.odotettu -
 
 bin/%: %.c
 	@mkdir -p bin
