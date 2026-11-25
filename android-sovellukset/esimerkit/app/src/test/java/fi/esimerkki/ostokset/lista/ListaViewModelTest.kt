@@ -7,7 +7,6 @@ import fi.esimerkki.ostokset.testi.MainDispatcherRule
 import fi.esimerkki.ostokset.testi.VaarennosRepository
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
@@ -19,26 +18,26 @@ class ListaViewModelTest {
     private val repo = VaarennosRepository(listOf(maito))
     private val vm = ListaViewModel(repo)
 
+    // Välitiloja voi tulla enemmän tai vähemmän (StateFlow yhdistää
+    // peräkkäiset arvot), joten testit odottavat ehtoja eivätkä laske
+    // tiloja.
     @Test fun lisaysTyhjentaaKentanJaLisaaTuotteen() = runTest {
         vm.tila.test {
-            assertTrue(awaitItem().ladataan)        // alkuarvo
-            assertEquals(listOf(maito), awaitItem().tuotteet)
+            assertEquals(listOf(maito), odota { !it.ladataan }.tuotteet)
 
             vm.nimiMuuttui("leipä")
-            assertTrue(awaitItem().voiLisata)
+            odota { it.voiLisata }
             vm.lisaa()
-            assertEquals("", awaitItem().uusiNimi)
+            val lisatty = odota { it.tuotteet.size == 2 }
+            assertEquals("", lisatty.uusiNimi)
             assertEquals(listOf("maito", "leipä"),
-                         awaitItem().tuotteet.map { it.nimi })
+                         lisatty.tuotteet.map { it.nimi })
         }
     }
 
     @Test fun epaonnistunutSynkronointiNayttaaViestin() = runTest {
         repo.verkkoToimii = false
         vm.tila.test {
-            // Välitiloja voi tulla enemmän tai vähemmän (StateFlow yhdistää
-            // peräkkäiset arvot), joten odotetaan ehtoja eikä laskettuja
-            // tiloja.
             odota { !it.ladataan }
             vm.synkronoi()
             odota { it.synkronoidaan }
