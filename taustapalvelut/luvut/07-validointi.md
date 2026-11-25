@@ -63,8 +63,8 @@ tarkistusta ei tarvitse toistaa, eikä sitä voi unohtaa.
 muotoa. Pidemmälle vietynä tunnisteet, rahamäärät ja sähköpostiosoitteet
 ovat omia arvotyyppejään (`record Sahkoposti(String arvo)`, jonka
 konstruktori tarkistaa muodon), jolloin kääntäjä estää sekoittamasta
-tuotetunnistetta tilaustunnisteeseen. Java-tutoriaalin luku omista
-tyypeistä esittelee tekniikan.
+tuotetunnistetta tilaustunnisteeseen. Tekniikka (omat tyypit ja
+recordit) esitellään taidossa *Java*.
 
 ## Poikkeukset ja virhevastaukset
 

@@ -48,6 +48,8 @@ android {
         unitTests.isIncludeAndroidResources = true
         // CI:n lokiin kaatuneen testin nimi ja virhe kokonaisuudessaan.
         unitTests.all {
+            // Roborazzi tallentaa kuvakaappaukset (luku 10).
+            it.systemProperty("roborazzi.test.record", "true")
             it.testLogging {
                 events("failed")
                 exceptionFormat = TestExceptionFormat.FULL
@@ -102,6 +104,8 @@ dependencies {
     testImplementation(platform(libs.compose.bom))
     testImplementation(libs.compose.ui.test.junit4)
     debugImplementation(libs.compose.ui.test.manifest)
+    testImplementation(libs.roborazzi)
+    testImplementation(libs.roborazzi.compose)
 
     androidTestImplementation(libs.androidx.test.runner)
     androidTestImplementation(libs.androidx.test.junit)

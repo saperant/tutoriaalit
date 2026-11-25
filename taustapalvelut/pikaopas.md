@@ -64,6 +64,7 @@ subtitle: Pikaopas · Java 21 · Spring Boot 4.2 · Spring Data JDBC · Flyway
 | Olio | `@PostAuthorize`, omistaja hakuehtoon |
 | Evästeet | CSRF päälle; tilaton token: pois |
 | CORS | tarkka lista alkuperiä, ei `*` |
+| Lähtevä kutsu | aikarajat, toisto vain idempotentille ja 5xx:lle, varavastaus |
 
 # Havainnointi
 

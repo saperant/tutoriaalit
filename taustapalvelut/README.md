@@ -21,13 +21,14 @@ Esitiedot: taidot *Java*, *SQL ja relaatiotietokannat* ja *Tietoverkot*.
 5. Tietokanta – Flyway, Spring Data JDBC, JdbcClient, N+1,
    transaktiot, yhteysallas
 6. Samanaikaiset pyynnöt ja idempotenssi – ehdollinen päivitys,
-   optimistinen lukitus, idempotenssiavain, outbox
+   optimistinen lukitus, idempotenssiavain, toisen palvelun
+   kutsuminen, outbox
 7. Validointi ja virheiden käsittely
-8. Todennus ja valtuutus – suodatinketju, salasanat, tokenit, olion
-   tason valtuutus, CORS
+8. Todennus ja valtuutus – suodatinketju, salasanat, tokenin
+   tarkistus, olion tason valtuutus, CORS
 9. Havainnointi – korrelaatiotunnus, metriikat, terveystarkistukset
 10. Testaus – yksikkö-, viipale- ja integraatiotestit
-11. Lopuksi – nyrkkisäännöt, mallit, lähteet
+11. Lopuksi – nyrkkisäännöt, mallit, jatkotaidot, lähteet
 
 ## Esimerkit
 
@@ -44,5 +45,6 @@ make pdf                   # PDF:t
 ```
 
 Kehityskontti: `.devcontainer/taustapalvelut/`.
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks. [Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 Lisenssi: CC BY-SA 4.0.

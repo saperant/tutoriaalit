@@ -4,7 +4,7 @@ Puhelimessa on rajallinen suoritin, muisti ja akku, ja näytön on
 päivityttävä 60–120 kertaa sekunnissa. Ruudunpäivitykseen on siis
 8–16 ms. Tämä luku käsittelee Compose-kohtaiset hinnat, pääsäikeen
 suojaamisen, koodin laadun tarkistukset ja julkaisuversion.
-Yleiset periaatteet ovat tutoriaalissa *Suorituskyvyn analyysi ja
+Yleiset periaatteet ovat taidossa *Suorituskyvyn analyysi ja
 optimointi*.
 
 ## Uudelleenkoostaminen ja vakaus

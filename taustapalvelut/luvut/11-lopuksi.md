@@ -39,37 +39,26 @@
 | Outbox | viesti ja tietokantamuutos eri aikaan | 6 |
 | Jäsennä, älä vain tarkista | toistuvat tai unohtuneet tarkistukset | 7 |
 | Korrelaatiotunnus | hajallaan olevat lokirivit | 9 |
-| Aikakatkaisu, katkaisija, uudelleenyritys | hidas tai kaatunut riippuvuus | alla |
+| Aikaraja, uudelleenyritys, varavastaus | hidas tai kaatunut riippuvuus | 6 |
 
-## Toisen palvelun kutsuminen
+## Jatkotaidot
 
-Kun palvelu kutsuu toista palvelua (maksu, toimitus, sähköposti),
-riippuvuuden hitaus muuttuu omaksi hitaudeksi. Kolme suojaa:
-
-- **Aikakatkaisu** jokaiseen kutsuun (yhteys ja vastaus erikseen).
-  Oletuksena monen asiakaskirjaston aikakatkaisu on ääretön.
-- **Uudelleenyritys** vain idempotentille kutsulle, eksponentiaalisella
-  viiveellä, satunnaisuudella ja ylärajalla.
-- **Katkaisija** (*circuit breaker*): kun virheitä on paljon, kutsut
-  lopetetaan hetkeksi kokonaan ja vastataan heti virheellä tai
-  varavastauksella. Kaatunut palvelu saa toipua, eikä oma palvelu jumitu
-  odottamaan. Javassa tähän käytetään Resilience4j-kirjastoa.
-
-Springin `RestClient` on synkroninen HTTP-asiakas, joka sopii
-virtuaalisäikeiden kanssa; HTTP-rajapinnan voi myös kuvata
-Java-rajapintana (`@HttpExchange`), jolloin Spring tuottaa asiakkaan.
-
-## Mihin tästä eteenpäin
-
-- **Kontit ja pilvi-infrastruktuuri**: palvelu konttiin (Spring Bootin `bootBuildImage`
-  tai Dockerfile), Kubernetes-terveystarkistukset, salaisuuksien
-  hallinta ja julkaisuputki.
-- **Järjestelmäsuunnittelu**: usean palvelun arkkitehtuuri,
-  viestijonot, välimuistit, replikointi ja skaalaus. Tämän
-  tutoriaalin idempotenssi, outbox ja katkaisija ovat sen perustaa.
-- **Web-sovellukset**: selainsovellus, joka käyttää tätä rajapintaa
-  (CORS, XSS, CSP).
-- **Kotlin** ja **Go**: samat periaatteet toisella kielellä. Kotlin
+- *Palveluarkkitehtuurit*: usean palvelun rajat, viestinvälitys,
+  katkaisija, saga ja outbox toteutettuina. Tämän tutoriaalin
+  idempotenssi ja lähtevien kutsujen aikarajat ovat sen perustaa.
+- *Skaalautuvien järjestelmien suunnittelu*: välimuistit, jonot,
+  replikointi ja kapasiteetti.
+- *Kontit ja pilvi-infrastruktuuri*: palvelu konttiin (Spring Bootin
+  `spring-boot:build-image` tai Dockerfile), Kubernetesin terveystarkistukset,
+  salaisuuksien hallinta ja julkaisuputki.
+- *Integraatiotestaus ja Testcontainers*: testit tuotannon
+  tietokantaa vasten.
+- *Web-sovellukset*: selainsovellus, joka käyttää tätä rajapintaa.
+- *Palveluarkkitehtuurin tietoturva*: palvelujen väliset
+  identiteetit, mTLS ja tokenit.
+- *Tekninen dokumentaatio*: rajapinnan kuvaus (OpenAPI) ja sen
+  pitäminen ajan tasalla.
+- *Kotlin* ja *Go*: samat periaatteet toisella kielellä. Kotlin
   toimii Spring Bootissa sellaisenaan.
 
 ## Lähteet ja dokumentaatio

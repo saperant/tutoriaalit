@@ -74,9 +74,11 @@ public class TurvaAsetukset {
 
     // @alku cors
     /** Selainsovellukset, jotka saavat kutsua rajapintaa toisesta
-     *  alkuperästä (origin). Lista tulee asetuksista. */
+     *  alkuperästä (origin). Lista tulee asetuksista. Ketjun cors()
+     *  etsii pavun juuri nimellä corsConfigurationSource. */
     @Bean
-    CorsConfigurationSource cors(KauppaAsetukset asetukset) {
+    CorsConfigurationSource corsConfigurationSource(
+            KauppaAsetukset asetukset) {
         var c = new CorsConfiguration();
         c.setAllowedOrigins(asetukset.sallitutAlkuperat());
         c.setAllowedMethods(List.of("GET", "POST", "PUT"));

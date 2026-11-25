@@ -50,6 +50,23 @@ haeta erikseen, eikä niillä ole omaa repositoryä. Viittaus tuotteeseen
 on pelkkä tunniste (`tuoteId`), ei olioviittaus: toinen aggregaatti
 ladataan tarvittaessa omalla repositoryllään.
 
+```{.dot otsikko="Kaksi aggregaattia: rivit kuuluvat tilaukseen, tuotteeseen viitataan tunnisteella"}
+digraph {
+  rankdir=LR; nodesep=0.4; ranksep=0.5;
+  subgraph cluster_tilaus {
+    label="aggregaatti Tilaus"; style="rounded"; color="#5B6B70";
+    tilaus [label="Tilaus\nid, asiakas,\nluotu"];
+    rivi [label="TilausRivi\ntuoteId, määrä,\nhinta"];
+    tilaus -> rivi [label="1..n"];
+  }
+  subgraph cluster_tuote {
+    label="aggregaatti Tuote"; style="rounded"; color="#5B6B70";
+    tuote [label="Tuote\nid, nimi, hinta,\nsaldo, versio"];
+  }
+  rivi -> tuote [style=dashed, label="tuoteId"];
+}
+```
+
 ```{.java tiedosto="esimerkit/kauppa/src/main/java/fi/tutoriaalit/kauppa/tilaus/Tilaus.java" osa="tilaus"}
 ```
 
@@ -137,8 +154,8 @@ Spring toteuttaa `@Transactional`-merkinnän välityspalvelinoliolla
 voivat optimoida (PostgreSQL-ajuri voi ohjata lukijan replikaan), ja se
 dokumentoi aikeen. Eristystaso jätetään yleensä tietokannan oletukseksi
 (PostgreSQL: *Read Committed*) ja samanaikaisuus ratkaistaan
-ehdollisilla päivityksillä tai versioilla (luku 6). SQL-tutoriaalin
-transaktioluku selittää tasojen erot.
+ehdollisilla päivityksillä tai versioilla (luku 6). Tasojen erot
+selitetään taidossa *SQL ja relaatiotietokannat*.
 
 ## Yhteysallas
 

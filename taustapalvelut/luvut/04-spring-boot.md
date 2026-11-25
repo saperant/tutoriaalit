@@ -53,6 +53,27 @@ pyyntökohtaisessa papussa.
 
 ## Kerrokset ja niiden rajat
 
+Pyyntö kulkee palvelussa aina saman reitin. Jokaisella kerroksella on
+yksi vastuu, ja transaktio alkaa ja päättyy palvelukerroksen rajalla:
+
+```{.dot otsikko="Pyynnön kulku kerrosten läpi; transaktioraja on palvelun metodi"}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.3;
+  alku [shape=point, width=0.05];
+  suodattimet [label="suodattimet\nturva,\nkorrelaatio"];
+  ohjain [label="ohjain\nHTTP,\nDTO:t"];
+  subgraph cluster_tx {
+    label="transaktio"; style="rounded,dashed";
+    color="#B4532A"; fontcolor="#B4532A";
+    palvelu [label="palvelu\nsäännöt"];
+    repo [label="repository\nSQL"];
+  }
+  kanta [label="tieto-\nkanta", shape=cylinder];
+  alku -> suodattimet [label="HTTP"];
+  suodattimet -> ohjain -> palvelu -> repo -> kanta;
+}
+```
+
 | Kerros | Vastuu | Ei saa |
 |--------|--------|--------|
 | Ohjain (`@RestController`) | HTTP: polut, otsakkeet, DTO-muunnos, validointi | sisältää liiketoimintasääntöjä |
@@ -78,7 +99,7 @@ Asetukset luetaan monesta lähteestä, ja myöhempi voittaa:
 `application.yaml`, profiilin tiedosto `application-<profiili>.yaml`,
 ympäristömuuttujat ja komentorivi. Ympäristömuuttujan nimi saadaan
 asetuksen nimestä isoilla kirjaimilla ja alaviivoin:
-`kauppa.maksimirivit` → `KAUPPA_MAKSIMIRIVIT`. Näin sama kontti-image
+`kauppa.maksimirivit` → `KAUPPA_MAKSIMIRIVIT`. Näin sama konttikuva
 toimii kaikissa ympäristöissä (*twelve-factor*-periaate), ja salaisuudet
 tulevat ympäristöstä eivätkä koskaan versionhallintaan.
 

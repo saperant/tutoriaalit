@@ -20,7 +20,7 @@ Composable-funktioista seuraa muutama sääntö:
 - **Funktio voi suorittua milloin tahansa ja useita kertoja**, jopa
   jokaisella ruudunpäivityksellä animaation aikana. Siksi se ei saa
   tehdä sivuvaikutuksia (verkko, tietokanta, lokitus) suoraan
-  rungossaan (luku 4).
+  rungossaan (luku 5).
 - **Järjestystä ei taata.** Compose voi ohittaa funktion, jonka
   parametrit eivät muuttuneet, ja koostaa vain muuttuneen osan.
 - **Funktio on nopea.** Raskas laskenta tehdään muualla tai muistetaan
@@ -40,6 +40,8 @@ omistajaan, joka sitä tarvitsee.
 
 ```{.kotlin tiedosto="esimerkit/app/src/main/java/fi/esimerkki/ostokset/ui/MaaraValitsin.kt" osa="tilaton"}
 ```
+
+![Määrävalitsin arvolla 3.](kuvat/maaravalitsin.png){width=22%}
 
 Tilaton komponentti on helppo esikatsella, testata ja käyttää eri
 tilanteissa: sama valitsin voi näyttää ViewModelin, tietokannan tai
@@ -83,12 +85,15 @@ Sovelluksen teema asetetaan kerran ylimmälle tasolle:
 ```{.kotlin tiedosto="esimerkit/app/src/main/java/fi/esimerkki/ostokset/ui/Teema.kt" osa="teema"}
 ```
 
-Komponentit käyttävät rooleja (`MaterialTheme.colorScheme.primary`,
-`MaterialTheme.typography.bodyLarge`) eivätkä kiinteitä värejä, joten
+![Sama ruutu vaaleana ja tummana. Ruudun koodissa ei ole yhtään
+väriä: ero tulee kokonaan teeman värikaaviosta.](kuvat/teemat.png){width=62%}
+
+Komponentit käyttävät teeman rooleja (`colorScheme.primary`,
+`typography.bodyLarge`) eivätkä kiinteitä värejä, joten
 tumma tila, käyttäjän fonttikoko ja Android 12:n dynaamiset värit
 (`dynamicLightColorScheme`) toimivat ilman muutoksia komponentteihin.
 Värit ja mitat ovat *suunnittelutokeneita*, kuten CSS:n mukautetut
-ominaisuudet (tutoriaali *HTML ja CSS*).
+ominaisuudet (taito *HTML ja CSS*).
 
 ## Esikatselu ja testaus
 

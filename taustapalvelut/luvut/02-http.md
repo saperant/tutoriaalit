@@ -10,7 +10,7 @@ ja sen testit kutsuvat sitä `java.net.http.HttpClient`-asiakkaalla.
 
 HTTP/1.1 on tekstiprotokolla TCP-yhteyden päällä. Pyyntö on rivi
 `METODI polku versio`, otsakkeet, tyhjä rivi ja valinnainen runko.
-Testi `RaakaHttpTest` kirjoittaa tämän pyynnön suoraan pistokkeeseen:
+Testi `RaakaHttpTest` kirjoittaa tämän pyynnön suoraan sokettiin:
 
 ```{.text tiedosto="esimerkit/http-perusteet/src/test/resources/pyynto-post.txt"}
 ```
@@ -142,7 +142,42 @@ kahdella tavalla:
 
 Jälkimmäinen ratkaisee *kadonneen päivityksen* (*lost update*): kaksi
 käyttäjää avaa saman lomakkeen, ja jälkimmäisenä tallentava kumoaisi
-huomaamattaan ensimmäisen muutoksen.
+huomaamattaan ensimmäisen muutoksen. Kun muutos on sidottu versioon,
+jälkimmäinen saa virheen ja voi hakea tuoreen version:
+
+```{.dot otsikko="Kadonnut päivitys estetään: Pekan muutos perustuu vanhaan versioon"}
+digraph {
+  nodesep=0.6; ranksep=0.3;
+  node [shape=point, width=0.04, color="#5B6B70"];
+  edge [arrowhead=none, style=dashed, color="#B8C4C8"];
+  t0 [shape=box, width=0.9, label="Anna"];
+  t0 -> t0_0 -> t0_1 -> t0_2 -> t0_3 -> t0_4 -> t0_5 -> t0_6 -> t0_7;
+  t1 [shape=box, width=0.9, label="palvelin"];
+  t1 -> t1_0 -> t1_1 -> t1_2 -> t1_3 -> t1_4 -> t1_5 -> t1_6 -> t1_7;
+  t2 [shape=box, width=0.9, label="Pekka"];
+  t2 -> t2_0 -> t2_1 -> t2_2 -> t2_3 -> t2_4 -> t2_5 -> t2_6 -> t2_7;
+  {rank=same; t0; t1; t2;}
+  {rank=same; t0_0; t1_0; t2_0;}
+  {rank=same; t0_1; t1_1; t2_1;}
+  {rank=same; t0_2; t1_2; t2_2;}
+  {rank=same; t0_3; t1_3; t2_3;}
+  {rank=same; t0_4; t1_4; t2_4;}
+  {rank=same; t0_5; t1_5; t2_5;}
+  {rank=same; t0_6; t1_6; t2_6;}
+  {rank=same; t0_7; t1_7; t2_7;}
+  t0 -> t1 -> t2 [style=invis];
+  t0_0 -> t1_0 [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, label="GET /muistiot/b"];
+  t1_1 -> t0_1 [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, label="ETag \"v1\""];
+  t2_2 -> t1_2 [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, label="GET /muistiot/b"];
+  t1_3 -> t2_3 [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, label="ETag \"v1\""];
+  t0_4 -> t1_4 [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, label="PUT, If-Match \"v1\""];
+  t1_5 -> t0_5 [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, label="200, ETag \"v2\""];
+  t2_6 -> t1_6 [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, label="PUT, If-Match \"v1\""];
+  t1_7 -> t2_7 [style=solid, arrowhead=normal, color="#B4532A", constraint=false, label="412: versio on jo v2", fontcolor="#B4532A"];
+}
+```
+
+Palvelin toteuttaa ehdon näin, ja testi ajaa saman tapahtumasarjan:
 
 ```{.java tiedosto="esimerkit/http-perusteet/src/main/java/fi/tutoriaalit/http/MuistioPalvelin.java" osa="korvaa"}
 ```

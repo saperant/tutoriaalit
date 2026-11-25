@@ -104,6 +104,8 @@ takaisinvedolla; työn on kestettävä toisto.
 | Room, WorkManager | Robolectric, `inMemoryDatabaseBuilder`, `TestListenableWorkerBuilder` |
 | verkko | Ktor `MockEngine` |
 | navigointi | `TestNavHostController` |
+| intent | `shadowOf(activity).nextStartedActivity` |
+| kuvakaappaus | `@GraphicsMode(NATIVE)`, Roborazzi `captureRoboImage` |
 | koko sovellus | `src/androidTest`, emulaattori |
 
 `robolectric.properties`: `application=android.app.Application`,
@@ -118,3 +120,4 @@ takaisinvedolla; työn on kestettävä toisto.
 - Uusi epävakaa olio composablessa → lapsi koostetaan aina.
 - Verkko tai levy pääsäikeessä → nykiminen, ANR.
 - `fallbackToDestructiveMigration` käyttäjän datalle → data katoaa.
+- Vastaanotettu intent ilman tarkistusta → vieras sovellus syöttää dataa.

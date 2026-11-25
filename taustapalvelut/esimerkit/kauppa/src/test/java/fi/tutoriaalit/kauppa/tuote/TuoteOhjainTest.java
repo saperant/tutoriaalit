@@ -117,6 +117,25 @@ class TuoteOhjainTest {
     }
     // @loppu valtuutus
 
+    // @alku cors
+    @Test
+    void esipyyntoSallitaanVainLuetellulleAlkuperalle() {
+        assertThat(mvc.options().uri("/api/v1/tuotteet")
+                .header("Origin", "http://localhost:5173")
+                .header("Access-Control-Request-Method", "POST")
+                .header("Access-Control-Request-Headers", "Idempotency-Key"))
+                .hasStatusOk()
+                .hasHeader("Access-Control-Allow-Origin",
+                        "http://localhost:5173");
+
+        assertThat(mvc.options().uri("/api/v1/tuotteet")
+                .header("Origin", "https://vieras.example")
+                .header("Access-Control-Request-Method", "POST"))
+                .hasStatus(403)
+                .doesNotContainHeader("Access-Control-Allow-Origin");
+    }
+    // @loppu cors
+
     // @alku ehdollinen
     @Test
     @WithMockUser(roles = "YLLAPITAJA")

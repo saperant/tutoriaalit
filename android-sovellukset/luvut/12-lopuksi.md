@@ -10,9 +10,9 @@
 3. **Tilaton komponentti, tilallinen ruutu.** Tila virtaa alas,
    tapahtumat ylös (luvut 3 ja 5).
 4. **Ei sivuvaikutuksia composablen rungossa.** Efekti valitaan sen
-   mukaan, milloin työn pitää alkaa ja loppua (luku 4).
+   mukaan, milloin työn pitää alkaa ja loppua (luku 5).
 5. **Ruudun tila yhtenä muuttumattomana arvona** `StateFlow`ssa;
-   kertaluonteinen tapahtuma on tilaa, joka kuitataan (luvut 4 ja 5).
+   kertaluonteinen tapahtuma on tilaa, joka kuitataan (luku 5).
 6. **Tietokanta on totuuden lähde.** Käyttöliittymä lukee
    tietokantaa, verkko synkronoi sitä (luvut 7 ja 8).
 7. **Kapea virheenkäsittely korutiineissa.** Siepataan odotetut
@@ -31,7 +31,7 @@
 | tilan nostaminen | uudelleenkäytettävä ja testattava komponentti | 3 |
 | yksisuuntainen datavirta (UDF) | tila muuttuu vain yhdessä paikassa | 3, 5 |
 | UI-tila data-luokkana | ristiriidattomat välitilat | 5 |
-| tapahtuma tilana | viesti ei katoa eikä toistu | 4, 5 |
+| tapahtuma tilana | viesti ei katoa eikä toistu | 5 |
 | repository | tietolähteet piilossa käyttöliittymältä | 5, 8 |
 | yksi totuuden lähde | kopiot eivät vanhene | 5, 7 |
 | offline first | sovellus toimii ilman verkkoa | 8 |
@@ -52,18 +52,25 @@
 | Flow taustalla | turhat kyselyt ja akku | `WhileSubscribed`, `collectAsStateWithLifecycle` |
 | laitetesti | minuutteja, epävakaus | pyramidi: JVM-testit ensin |
 
-## Mihin seuraavaksi
+## Jatkotaidot
 
-- **Kotlin Multiplatform ja Compose Multiplatform** jakavat logiikan
-  (ja halutessa käyttöliittymän) iOS:n, työpöydän ja verkon kanssa.
-  Room, DataStore ja Ktor toimivat jo monialustaisesti.
-- **Taustapalvelut**: sovelluksen palvelinpuoli, rajapintojen
-  suunnittelu ja todennus (taito *Taustapalvelut*).
-- **Tietoturva**: Keystore, sertifikaattien kiinnitys, tokenien
-  säilytys ja sovelluksen takaisinmallinnuksen kestävyys (taidot
-  *Tietoturvan perusteet* ja *Takaisinmallinnus*).
-- **Suuret näytöt, kellot ja autot**: adaptiiviset asettelut, Wear OS
-  ja Android Auto käyttävät samaa arkkitehtuuria.
+- *Taustapalvelut*: sovelluksen palvelinpuoli, rajapintojen
+  suunnittelu, todennus ja idempotenssiavain, jota synkronointi
+  tarvitsee.
+- *Tietoturvan perusteet* ja *Web-sovellusten tietoturva*: todennus,
+  tokenien säilytys ja rajapinnan suojaaminen. Sovelluspaketin
+  analysointia käsittelee *Takaisinmallinnus*.
+- *Suorituskyvyn analyysi ja optimointi*: mittaamisen periaatteet
+  luvun 11 työkalujen taustaksi.
+- *Jatkuva integraatio ja toimitus*: käännös, testit ja julkaisu
+  putkessa.
+
+Tämän kokoelman ulkopuolella seuraavia aiheita ovat **Kotlin
+Multiplatform ja Compose Multiplatform**, jotka jakavat logiikan (ja
+halutessa käyttöliittymän) iOS:n, työpöydän ja verkon kanssa (Room,
+DataStore ja Ktor toimivat jo monialustaisesti), sekä **suuret
+näytöt, kellot ja autot**: adaptiiviset asettelut, Wear OS ja Android
+Auto käyttävät samaa arkkitehtuuria.
 
 ## Lähteet
 
@@ -86,6 +93,8 @@ ja ne syventävät aiheita:
   ja **kotlinx.serialization**:
   <https://github.com/Kotlin/kotlinx.serialization> (Apache 2.0).
 - **Robolectric**: <https://robolectric.org/> (MIT).
+- **Roborazzi**: <https://github.com/takahirom/roborazzi>
+  (Apache 2.0).
 - **Turbine**: <https://github.com/cashapp/turbine> (Apache 2.0).
 - **WCAG 2.2** ja Androidin saavutettavuusohjeet:
   <https://www.w3.org/TR/WCAG22/>,

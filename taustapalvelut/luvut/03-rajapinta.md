@@ -5,7 +5,11 @@ sovelluksen vanha versio on käyttäjien puhelimissa, sen käyttämät
 kentät ja polut on pidettävä toiminnassa vuosia. Siksi rajapinta
 suunnitellaan ensin ja sen muutokset tehdään taaksepäin
 yhteensopivasti. Tämä luku käy läpi kaupan rajapinnan rakenteen;
-toteutus seuraa luvuissa 4–9.
+toteutus seuraa luvuissa 4–9. Luvun koodiotteet ovat jo valmiista
+Spring-ohjaimesta, koska sopimus näkyy niissä tarkimmin. Merkinnät
+(`@GetMapping`, `@RequestParam`, `@RestControllerAdvice`) selitetään
+luvussa 4; tässä riittää lukea niistä polku, parametrit ja palautettava
+tyyppi.
 
 ## Resurssit ja polut
 
@@ -77,8 +81,9 @@ siirtyä sivulta toiselle, kun listaan lisätään. Suurissa ja
 päättymättömissä listoissa käytetään *avainsivutusta* (*keyset* tai
 *cursor pagination*): asiakas saa vastauksen mukana kohdistimen,
 esimerkiksi viimeisen rivin `(nimi, id)`, ja seuraava sivu haetaan
-ehdolla `WHERE (nimi, id) > (:nimi, :id)`. SQL-tutoriaalin luku
-indekseistä näyttää, miksi tämä on nopeaa.
+ehdolla `WHERE (nimi, id) > (:nimi, :id)`. Taito *SQL ja
+relaatiotietokannat* näyttää indeksien yhteydessä, miksi tämä on
+nopeaa.
 
 ## Virheet: RFC 9457
 
@@ -155,6 +160,8 @@ asiakaskirjastot ja sopimustestit. Kaksi tapaa:
 
 Kumpikin tapa hyötyy CI-tarkistuksesta, joka vertaa kuvausta edelliseen
 julkaistuun versioon ja hylkää rikkovat muutokset (esim. oasdiff).
+Kuvauksen kirjoittaminen, validointi ja esimerkkien testaaminen
+käydään läpi taidossa *Tekninen dokumentaatio*.
 
 ## Käytännössä
 

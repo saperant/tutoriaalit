@@ -100,7 +100,10 @@ saavat valmistua: Boot lopettaa uusien vastaanoton ja odottaa
 (`server.shutdown: graceful`, oletuksena päällä,
 `spring.lifecycle.timeout-per-shutdown-phase`). Readiness muuttuu
 heti sammutuksen alkaessa, jotta kuormantasaaja lakkaa ohjaamasta
-pyyntöjä.
+pyyntöjä. Miten kontinhallinta käyttää näitä tarkistuksia ja
+sammutussignaalia, kerrotaan taidossa *Kontit ja
+pilvi-infrastruktuuri*; palvelutasotavoitteet ja hälytysten
+mitoitus ovat taidossa *Palvelinympäristöt*.
 
 ## Käytännössä
 

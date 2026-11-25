@@ -14,6 +14,43 @@ valitaan pienin konteksti, joka sen testaa luotettavasti.
 | Integraatio | koko sovellus, oikea HTTP ja kanta | `@SpringBootTest` | 3–5 s | tärkeimmät polut |
 | Päästä päähän | useampi palvelu, oikea ympäristö | Playwright, k6 | minuutteja | vähän |
 
+Viipaletestit käynnistävät kehyksestä vain osan. Kaavio näyttää, mitkä
+kerrokset ovat kussakin testityypissä oikeita ja mitkä korvataan
+valeoliolla:
+
+```{.dot otsikko="Mitä kukin testityyppi käynnistää: oikea kerros (tumma), valeolio (vaalea), ei mukana (–)"}
+digraph {
+  node [shape=plaintext];
+  t [label=<
+  <table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="#E3ECEA"><b>kerros</b></td>
+        <td bgcolor="#E3ECEA"><b>yksikkö</b></td>
+        <td bgcolor="#E3ECEA"><b>@WebMvcTest</b></td>
+        <td bgcolor="#E3ECEA"><b>@DataJdbcTest</b></td>
+        <td bgcolor="#E3ECEA"><b>@SpringBootTest</b></td></tr>
+    <tr><td align="left">Tomcat (HTTP)</td>
+        <td>–</td><td>–</td><td>–</td>
+        <td bgcolor="#5B8A72"><font color="white">oikea</font></td></tr>
+    <tr><td align="left">turvaketju</td>
+        <td>–</td><td bgcolor="#5B8A72"><font color="white">oikea</font></td><td>–</td>
+        <td bgcolor="#5B8A72"><font color="white">oikea</font></td></tr>
+    <tr><td align="left">ohjain, validointi</td>
+        <td>–</td><td bgcolor="#5B8A72"><font color="white">oikea</font></td><td>–</td>
+        <td bgcolor="#5B8A72"><font color="white">oikea</font></td></tr>
+    <tr><td align="left">palvelu</td>
+        <td bgcolor="#5B8A72"><font color="white">oikea</font></td>
+        <td bgcolor="#F3E3D3">vale</td><td>–</td>
+        <td bgcolor="#5B8A72"><font color="white">oikea</font></td></tr>
+    <tr><td align="left">repository, Flyway</td>
+        <td>–</td><td>–</td><td bgcolor="#5B8A72"><font color="white">oikea</font></td>
+        <td bgcolor="#5B8A72"><font color="white">oikea</font></td></tr>
+    <tr><td align="left">tietokanta</td>
+        <td>–</td><td>–</td><td bgcolor="#5B8A72"><font color="white">oikea</font></td>
+        <td bgcolor="#5B8A72"><font color="white">oikea</font></td></tr>
+  </table>>];
+}
+```
+
 Pyramidin muoto tulee hinnasta: yksikkötesti on nopea ja kertoo
 tarkasti, mikä meni rikki, mutta ei näe kerrosten välisiä virheitä.
 Integraatiotesti näkee ne, mutta on hidas ja epäonnistuessaan
@@ -116,7 +153,9 @@ static PostgreSQLContainer<?> kanta =
 
 Tämän tutoriaalin testit eivät käytä Testcontainersia, koska ne ajetaan
 ympäristöissä, joissa Dockeria ei ole. Oikeassa projektissa
-Testcontainers on suositeltu oletus heti alusta.
+Testcontainers on suositeltu oletus heti alusta. Taito
+*Integraatiotestaus ja Testcontainers* tekee tämän testattuna:
+konttien elinkaari, tietojen eristys testien välillä ja ajo CI:ssä.
 
 ## Testien ajo
 

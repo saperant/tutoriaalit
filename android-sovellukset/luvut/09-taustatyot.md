@@ -9,7 +9,7 @@ pitääkö sen valmistua.
 
 | Työ | Väline |
 |-----|--------|
-| ruudun elinaikana, peruuntuu poistuttaessa | `viewModelScope`, `LaunchedEffect` |
+| ruudun elinaikana, peruuntuu poistuttaessa | `viewModelScope`, `LaunchedEffect` (luku 5) |
 | sovelluksen elinaikana, ei ruutuun sidottu | sovelluksenlaajuinen `CoroutineScope` |
 | pitää valmistua, voi odottaa sopivaa hetkeä | **WorkManager** |
 | käyttäjän käynnistämä, näkyvä ja pitkä (navigointi, toisto) | etualan palvelu (*foreground service*) ilmoituksineen |
@@ -63,19 +63,6 @@ Testi kutsuu `doWork`ia suoraan ja tarkistaa paluuarvon. Ehtojen ja
 ajastuksen testaamiseen `work-testing` tarjoaa myös
 `WorkManagerTestInitHelper`in, jolla ehdot voi asettaa täyttyneiksi ja
 viiveet kulumaan.
-
-## Korutiinit ja elinkaari
-
-Taustatyön lisäksi korutiinien näkyvyysalue on valittava oikein
-käyttöliittymässä:
-
-- **`viewModelScope`**: ruudun logiikka. Peruuntuu, kun ruutu
-  poistetaan pinosta (luku 5).
-- **`collectAsStateWithLifecycle`** ja **`repeatOnLifecycle`**:
-  keräävät Flow'ta vain, kun käyttöliittymä on näkyvissä. Taustalla
-  kerätty Flow pitää tietokantakyselyt ja sensorit käynnissä turhaan.
-- **`GlobalScope`** ei kuulu sovelluskoodiin: sen korutiineja ei voi
-  peruuttaa, eikä niiden virheitä käsitellä.
 
 ## Käytännössä
 

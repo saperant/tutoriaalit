@@ -22,9 +22,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import fi.esimerkki.ostokset.R
 import fi.esimerkki.ostokset.malli.Tuote
 import fi.esimerkki.ostokset.ui.TuoteLista
 
@@ -63,10 +66,11 @@ fun ListaSisalto(
     onViestiNaytetty: () -> Unit,
 ) {
     val snackbar = remember { SnackbarHostState() }
+    val viesti = tila.viesti?.let { teksti(it) }
     // Sivuvaikutus: näytä viesti kerran ja kuittaa se.
-    LaunchedEffect(tila.viesti) {
-        val viesti = tila.viesti ?: return@LaunchedEffect
-        snackbar.showSnackbar(teksti(viesti))
+    LaunchedEffect(viesti) {
+        if (viesti == null) return@LaunchedEffect
+        snackbar.showSnackbar(viesti)
         onViestiNaytetty()
     }
     Scaffold(
@@ -113,10 +117,13 @@ fun ListaSisalto(
 // @loppu tilaton
 
 // @alku teksti
-/** Viestin sanamuoto. Oikeassa sovelluksessa stringResource ja
- *  pluralStringResource, jotta teksti voidaan kääntää. */
+/** Viestin sanamuoto resursseista: teksti voidaan kääntää, ja
+ *  monikkomuoto valitaan kielen sääntöjen mukaan. */
+@Composable
 fun teksti(viesti: Viesti): String = when (viesti) {
-    is Viesti.Lahetetty -> "Lähetetty ${viesti.muutoksia} muutosta"
-    Viesti.EiYhteytta -> "Ei yhteyttä – muutokset tallessa"
+    is Viesti.Lahetetty -> pluralStringResource(
+        R.plurals.lahetetty_muutoksia, viesti.muutoksia, viesti.muutoksia,
+    )
+    Viesti.EiYhteytta -> stringResource(R.string.ei_yhteytta)
 }
 // @loppu teksti

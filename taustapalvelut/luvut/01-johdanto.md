@@ -17,12 +17,21 @@ Tutoriaali olettaa taidot *Java* (luokat, recordit, rajapinnat,
 poikkeukset, säikeet), *SQL ja relaatiotietokannat* (skeema,
 liitokset, transaktiot, indeksit) ja *Tietoverkot* (TCP/IP, DNS, TLS).
 Niitä ei toisteta: esimerkiksi transaktioiden eristystasot on selitetty
-SQL-tutoriaalissa, ja tässä katsotaan, miten ne näkyvät sovelluksessa.
+taidossa *SQL ja relaatiotietokannat*, ja tässä katsotaan, miten ne
+näkyvät sovelluksessa.
 
-Kontit, orkestrointi ja pilvipalvelut ovat taidossa *Kontit ja pilvi-infrastruktuuri*,
-ja usean palvelun arkkitehtuuri (viestijonot, välimuistit, skaalaus)
-taidossa *Järjestelmäsuunnittelu*. Tämä tutoriaali päättyy siihen,
-mitä yksi palvelu tarvitsee ollakseen valmis niiden osaksi.
+Tutoriaali päättyy siihen, mitä yksi palvelu tarvitsee ollakseen valmis
+suuremman järjestelmän osaksi. Rajan toisella puolella ovat:
+
+- kontit, orkestrointi ja pilvipalvelut: *Kontit ja
+  pilvi-infrastruktuuri*
+- usean palvelun rajat, viestinvälitys, katkaisija ja saga:
+  *Palveluarkkitehtuurit*
+- välimuistit, jonot, replikointi ja kapasiteetti: *Skaalautuvien
+  järjestelmien suunnittelu*
+- selainsovellus, joka rajapintaa käyttää: *Web-sovellukset*
+- testit oikeaa tietokantaa vasten kontissa: *Integraatiotestaus ja
+  Testcontainers*.
 
 ## Pino ja valinnat
 
@@ -36,7 +45,7 @@ mitä yksi palvelu tarvitsee ollakseen valmis niiden osaksi.
 | Tietokanta | H2 (PostgreSQL-tila) | Ei asennusta; tuotannossa PostgreSQL |
 | Turva | Spring Security | Todennus, valtuutus, CORS |
 | Havainnointi | Actuator, Micrometer | Terveys, metriikat |
-| Testit | JUnit 5, AssertJ, MockMvc | Kehyksen viipale- ja integraatiotestit |
+| Testit | JUnit, AssertJ, MockMvc | Kehyksen viipale- ja integraatiotestit |
 | Käännös | Maven Wrapper | Sama Maven-versio kaikilla |
 
 Valinnoille on vaihtoehtoja. Kotlin toimii samassa pinossa
@@ -54,7 +63,8 @@ oikeellisuusongelmien yleisin lähde. Spring Data JDBC tallentaa
 aggregaatin kerralla eksplisiittisellä `save`-kutsulla ilman
 laiskaa latausta, ja JdbcClient ajaa kirjoitetun SQL:n sellaisenaan.
 Kun nämä ovat hallussa, JPA:n käsitteet on helppo oppia, ja luvussa
-5 kerrotaan, missä kohdin se toimii toisin.
+5 kerrotaan, missä kohdin se toimii toisin. ORM-kirjastojen ja
+kyselynrakentajien vertailu on taidossa *SQL ja relaatiotietokannat*.
 
 **Miksi H2.** Esimerkkien pitää toimia ilman tietokantapalvelinta ja
 Dockeria. H2 on Javalla toteutettu tietokanta, joka käynnistyy samaan
@@ -82,7 +92,8 @@ esimerkit/
     │   ├── tilaus/
     │   ├── raportti/       JdbcClient-kyselyt
     │   ├── virheet/        RFC 9457 -ongelmakuvaukset
-    │   ├── turva/          Spring Security
+    │   ├── turva/          Spring Security, tokenin tarkistus
+    │   ├── toimitus/       toisen palvelun kutsuminen
     │   └── havainnointi/   korrelaatiotunnus
     ├── src/main/resources/
     │   ├── application.yaml
@@ -102,7 +113,9 @@ ne yhteensopiviksi.
 ```{.xml tiedosto="esimerkit/kauppa/pom.xml" osa="riippuvuudet"}
 ```
 
-Esimerkit ajetaan kehityskontissa tai koneella, jossa on JDK 21:
+Esimerkit ajetaan kehityskontissa tai koneella, jossa on JDK 21.
+Kehityskontin avaaminen neuvotaan oppaassa *Kehitysympäristöt ja Dev
+Containers*.
 
 ```text
 make                  # kääntää ja ajaa kaikki testit

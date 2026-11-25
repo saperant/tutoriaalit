@@ -10,8 +10,37 @@ mutta palvelu ei tarkista, kuuluuko pyydetty olio hänelle.
 ## Suodatinketju
 
 Spring Security on joukko servlet-suodattimia, jotka ajetaan ennen
-ohjainta. Ketju määritellään yhtenä papuna, ja säännöt luetaan
-ylhäältä alas; ensimmäinen osuva sääntö ratkaisee.
+ohjainta. Pyyntö voi pysähtyä kolmessa kohdassa: todennuksessa (401),
+polkusäännöissä (403) ja palvelussa, jossa tarkistetaan, kuuluuko
+pyydetty olio käyttäjälle (403):
+
+```{.dot otsikko="Pyynnön kulku turvaketjussa ja kohdat, joissa se voi päättyä"}
+digraph {
+  rankdir=LR; nodesep=0.35; ranksep=0.35;
+  alku [shape=point, width=0.05];
+  todennus [label="todennus"];
+  polku [label="polku-\nsäännöt"];
+  ohjain [label="ohjain,\npalvelu"];
+  olio [label="olion tason\nvaltuutus"];
+  vastaus [label="vastaus", shape=plaintext];
+  node [color="#B4532A", fontcolor="#B4532A"];
+  e401 [label="401\nkuka olet?"];
+  e403a [label="403\nei roolia"];
+  e403b [label="403\nei sinun"];
+  alku -> todennus [label="pyyntö"];
+  todennus -> polku -> ohjain -> olio -> vastaus;
+  edge [color="#B4532A", fontcolor="#B4532A"];
+  todennus -> e401;
+  polku -> e403a;
+  olio -> e403b;
+  {rank=same; todennus; e401;}
+  {rank=same; polku; e403a;}
+  {rank=same; olio; e403b;}
+}
+```
+
+Ketju määritellään yhtenä papuna, ja säännöt luetaan ylhäältä alas;
+ensimmäinen osuva sääntö ratkaisee.
 
 ```{.java tiedosto="esimerkit/kauppa/src/main/java/fi/tutoriaalit/kauppa/turva/TurvaAsetukset.java" osa="ketju"}
 ```
@@ -77,13 +106,43 @@ palvelun julkisella avaimella. Spring Bootissa tämä on starter
 `spring-boot-starter-oauth2-resource-server`, asetus
 `spring.security.oauth2.resourceserver.jwt.issuer-uri` ja ketjussa
 `.oauth2ResourceServer(o -> o.jwt(...))` HTTP Basicin tilalla. Muu
-ketju ja valtuutus pysyvät samoina.
+ketju ja valtuutus pysyvät samoina. Esimerkkipalvelu todentaa HTTP
+Basicilla, jotta sen voi käynnistää ilman tunnistuspalvelua, mutta
+tokenin tarkistus on mukana omana luokkanaan.
 
-JWT:n (*JSON Web Token*) sudenkuopat:
+JWT (*JSON Web Token*) on kolme Base64url-koodattua osaa: otsake
+(algoritmi), väitteet (*claims*) ja allekirjoitus. Väitteistä
+tärkeimmät ovat myöntäjä (`iss`), käyttäjä (`sub`), yleisö (`aud`, eli
+mille palvelulle token on tarkoitettu) ja vanheneminen (`exp`).
+Tarkistin hyväksyy tokenin vain, jos kaikki neljä asiaa täsmäävät:
+
+```{.java tiedosto="esimerkit/kauppa/src/main/java/fi/tutoriaalit/kauppa/turva/Tokenit.java" osa="tarkistin"}
+```
+
+Tuotannossa julkinen avain haetaan tunnistuspalvelun osoitteesta
+(`issuer-uri`), ja Spring Boot rakentaa saman tarkistimen asetuksista.
+Testissä tunnistuspalvelua esittää testi itse: se luo avainparin ja
+allekirjoittaa tokenit. Kelvollisesta tokenista luetaan käyttäjä ja
+roolit:
+
+```{.java tiedosto="esimerkit/kauppa/src/test/java/fi/tutoriaalit/kauppa/turva/TokenTest.java" osa="kelvollinen"}
+```
+
+```{.java tiedosto="esimerkit/kauppa/src/main/java/fi/tutoriaalit/kauppa/turva/Tokenit.java" osa="roolit"}
+```
+
+Olennaisempaa on, mitä tarkistin hylkää. Jokainen testi muuttaa
+kelvollisesta tokenista yhden asian:
+
+```{.java tiedosto="esimerkit/kauppa/src/test/java/fi/tutoriaalit/kauppa/turva/TokenTest.java" osa="hylatyt"}
+```
+
+Testit vastaavat JWT:n tunnettuja sudenkuoppia:
 
 - **Allekirjoitus tarkistetaan aina ja algoritmi kiinnitetään.**
-  `alg: none` ja algoritmin vaihto symmetriseksi ovat tunnettuja
-  hyökkäyksiä huonoja kirjastoja vastaan.
+  Allekirjoittamaton token (`alg: none`) ja algoritmin vaihto
+  symmetriseksi ovat tunnettuja hyökkäyksiä kirjastoja vastaan, jotka
+  uskovat tokenin omaa otsaketta. Tarkistin hyväksyy vain RS256:n.
 - **Vanheneminen** (`exp`) on lyhyt (minuutteja), koska tokenia ei voi
   perua. Pitkäikäinen pääsy hoidetaan päivitystokenilla (*refresh
   token*), jonka tunnistuspalvelu voi perua.
@@ -91,6 +150,11 @@ JWT:n (*JSON Web Token*) sudenkuopat:
   palvelulle myönnetty token ei kelpaa.
 - **Token ei ole salattu**, vain allekirjoitettu. Siihen ei laiteta
   luottamuksellista tietoa.
+
+Allekirjoitusten ja avainten taustat ovat taidossa *Kryptografia*,
+kirjautumisen periaatteet taidossa *Tietoturvan perusteet* ja
+palvelujen väliset tokenit taidossa *Palveluarkkitehtuurin
+tietoturva*.
 
 ## Olion tason valtuutus
 
@@ -122,11 +186,33 @@ Kun selainsovellus `http://localhost:5173` kutsuu rajapintaa
 ```{.java tiedosto="esimerkit/kauppa/src/main/java/fi/tutoriaalit/kauppa/turva/TurvaAsetukset.java" osa="cors"}
 ```
 
+Pavun nimi on osa sopimusta: ketjun `.cors(withDefaults())` etsii
+pavun nimeltä `corsConfigurationSource`. Toisella nimellä asetukset
+jäisivät käyttämättä ilman virheilmoitusta, ja siksi niiden vaikutus
+kannattaa varmistaa testillä.
+
+Ennen varsinaista pyyntöä selain kysyy luvan *esipyynnöllä*
+(*preflight*): `OPTIONS`-pyyntö kertoo alkuperän, aiotun metodin ja
+otsakkeet. Esipyyntö tehdään, kun metodi on muu kuin GET, HEAD tai
+POST, sisältötyyppi muu kuin lomakkeiden tavallinen (kuten JSON) tai
+pyynnössä on omia otsakkeita, kuten `Authorization` tai
+`Idempotency-Key`. Käytännössä siis lähes jokaiselle rajapintakutsulle. Spring vastaa esipyyntöön
+asetusten perusteella ennen todennusta, koska selain ei liitä siihen
+tunnistetietoja:
+
+```{.java tiedosto="esimerkit/kauppa/src/test/java/fi/tutoriaalit/kauppa/tuote/TuoteOhjainTest.java" osa="cors"}
+```
+
 CORS ei ole pääsynvalvontaa: se rajoittaa vain selaimia, ja `curl` ohittaa
 sen. Se estää vierasta sivustoa käyttämästä käyttäjän selainta
 rajapinnan lukemiseen. Sallittu lista on tarkka; `*` yhdessä
-tunnistetietojen kanssa on virhe, jonka Spring torjuu. Selainpuolen
-tietoturva (XSS, CSP) käsitellään taidossa *Web-sovellukset*.
+tunnistetietojen kanssa on virhe, jonka Spring torjuu.
+
+Tämä on CORSin palvelinpuoli. Selaimen näkökulma (miltä CORS-virhe
+näyttää sovelluksessa ja miten CORSin voi välttää kokonaan
+tarjoamalla sovelluksen ja rajapinnan samasta alkuperästä)
+käsitellään taidossa *Web-sovellukset*, ja selainpuolen hyökkäykset
+(XSS, CSRF, CSP) taidossa *Web-sovellusten tietoturva*.
 
 ## Käytännössä
 
@@ -151,5 +237,7 @@ tietoturva (XSS, CSP) käsitellään taidossa *Web-sovellukset*.
 - Osaat erottaa todennuksen ja valtuutuksen sekä 401:n ja 403:n.
 - Osaat määritellä Spring Securityn suodatinketjun ja perustella
   tilattomuuden ja CSRF-valinnan.
-- Osaat tallentaa salasanat oikein ja luetella JWT:n sudenkuopat.
+- Osaat tallentaa salasanat oikein.
+- Osaat kertoa, mitä resurssipalvelin tarkistaa JWT-tokenista, ja
+  testata tarkistuksen itse myönnetyillä tokeneilla.
 - Osaat toteuttaa olion tason valtuutuksen ja CORS-asetukset.

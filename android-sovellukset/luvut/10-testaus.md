@@ -9,7 +9,7 @@ Robolectric toimii ja mitä jää laitteelle.
 | Taso | Mitä | Missä | Nopeus | Esimerkit |
 |------|------|-------|--------|-----------|
 | yksikkö | ViewModel, repository, muunnokset, DataStore | JVM | ms | `ListaViewModelTest`, `AsetuksetTest`, `OstosApiTest` |
-| integraatio JVM:llä | Room, WorkManager, Compose, navigointi | JVM + Robolectric | 0,1–1 s | `TuoteDaoTest`, `SynkronointiTyoTest`, `NavigaatioTest` |
+| integraatio JVM:llä | Room, WorkManager, Compose, navigointi, kuvakaappaukset | JVM + Robolectric | 0,1–1 s | `TuoteDaoTest`, `SynkronointiTyoTest`, `NavigaatioTest`, `KuvakaappausTest` |
 | laite | koko sovellus, laitteisto, järjestelmän dialogit | emulaattori tai laite | sekunteja | `OstoksetLaitteellaTest` |
 
 Suurin osa testeistä on alimmilla tasoilla. Ne ovat nopeita,
@@ -41,10 +41,33 @@ kuin se on mahdollista. Asetukset annetaan tiedostossa
 - **Resurssit.** `unitTests.isIncludeAndroidResources = true`
   (luku 1) antaa testeille manifestin ja resurssit.
 
-Robolectric ei ole laite: grafiikka piirretään yksinkertaistetusti,
-laitteistoa (kamera, Bluetooth) ei ole, ja järjestelmän sovellukset
-puuttuvat. Asettelun mitat ja semantiikka ovat kuitenkin oikeat, joten
-Compose-testit toimivat (luvut 3–4).
+Robolectric ei ole laite: laitteistoa (kamera, Bluetooth) ei ole, ja
+järjestelmän sovellukset puuttuvat. Asettelun mitat ja semantiikka
+ovat kuitenkin oikeat, joten Compose-testit toimivat (luvut 3–5).
+
+## Kuvakaappaustestit
+
+Robolectricin vanha grafiikkatila ei piirrä kuvapisteitä. Merkintä
+`@GraphicsMode(NATIVE)` valitsee tilan, jossa Androidin oma
+grafiikkakirjasto ajetaan JVM:llä, jolloin ruudusta saa oikean kuvan
+ilman laitetta. **Roborazzi** tallentaa kuvan tiedostoon. Tämän tutoriaalin
+kuvat sovelluksesta syntyvät näin:
+
+```{.kotlin tiedosto="esimerkit/app/src/test/java/fi/esimerkki/ostokset/kuvat/KuvakaappausTest.kt" osa="kuvat"}
+```
+
+`@Config(qualifiers = ...)` valitsee näytön koon ja tiheyden samoilla
+kelpuuttimilla kuin resurssit (luku 2), joten saman ruudun voi kuvata
+puhelimena, tablettina, tummana ja suurella fontilla. Koska ruutu on
+tilaton (luku 5), testi antaa sille tilan suoraan.
+
+Kuvakaappaustestissä (*screenshot test*) tallennettua kuvaa verrataan
+uuteen, ja ero kaataa testin. Se löytää muutokset, joita semantiikka
+ei näe: väärän värin, rikkoutuneen asettelun, leikkautuneen tekstin.
+Hinta on hauraus: kuvat riippuvat fontin piirrosta ja kirjastoversioista,
+joten vertailukuvat tuotetaan aina samassa ympäristössä (CI:ssä) ja
+päivitetään tietoisesti. Esimerkissä kuvat vain tallennetaan; niitä
+ei verrata, koska ne ovat kuvitusta eivätkä sopimus.
 
 ## Väärennökset, ei mokkeja
 
@@ -121,7 +144,7 @@ tai yöllä, koska emulaattorin käynnistys kestää minuutteja.
 - **Väärennökset rajapinnoille.** Repositorio, verkko ja kello
   vaihdetaan väärennöksiin; tietokanta testataan oikeana muistissa.
 - **Testi ei saa riippua ajasta tai järjestyksestä.** Testidispatcher
-  ja Composen testikello tekevät ajasta ohjattavaa (luvut 4–5).
+  ja Composen testikello tekevät ajasta ohjattavaa (luku 5).
 - **Hinnat:** Robolectric-testiluokan ensimmäinen ajo lataa
   Android-kirjastot ja kestää sekunteja; seuraavat ovat nopeita. Ryhmittele
   testit niin, että samaa ympäristöä käytetään uudelleen, ja aja
@@ -132,6 +155,8 @@ tai yöllä, koska emulaattorin käynnistys kestää minuutteja.
 - Osaat sijoittaa testin oikealle pyramidin tasolle ja perustella
   valinnan.
 - Osaat määrittää Robolectricin testisovelluksen ja SDK-version.
+- Osaat tuottaa ruudusta kuvakaappauksen JVM-testissä ja kertoa, mitä
+  kuvien vertailu löytää ja mitä se maksaa.
 - Osaat kirjoittaa laitetestin ja kertoa, miten se ajetaan
   emulaattorilla tai hallitulla laitteella.
 - Osaat perustella väärennösten käytön mokkien sijaan.

@@ -7,9 +7,23 @@ Android-sovelluksia nykyisellä tavalla: **Kotlinilla**, käyttöliittymä
 **Jetpack Composella** ja arkkitehtuuri niin, että lähes kaikki
 logiikka voidaan testata ilman laitetta.
 
-Lukijan oletetaan osaavan Kotlinin, myös korutiinit ja Flow'n
-(tutoriaali *Kotlin*). Kieltä ei opeteta tässä uudelleen; kun luvussa
-tarvitaan kielen piirrettä, viitataan Kotlin-tutoriaaliin.
+## Esitiedot ja rajaus
+
+Lukijan oletetaan osaavan taidon *Kotlin*, myös korutiinit ja Flow'n.
+Kieltä ei opeteta tässä uudelleen; kun luvussa tarvitaan kielen
+piirrettä, viitataan siihen taitoon. Android-kehityksestä ei oleteta
+aiempaa kokemusta.
+
+Tutoriaali rajautuu yhteen sovellukseen puhelimella:
+
+- Sovelluksen palvelinpuoli (rajapinnat, todennus, idempotenssi) on
+  taidossa *Taustapalvelut*, ja SQL:n perusteet taidossa *SQL ja
+  relaatiotietokannat*.
+- Vanhaa näkymäjärjestelmää (XML-asettelut, Fragmentit) ei opeteta,
+  ei myöskään Kotlin Multiplatformia, Wear OS:ää tai Android Autoa.
+- Suorituskyvyn mittaamisen yleiset periaatteet ovat taidossa
+  *Suorituskyvyn analyysi ja optimointi*; luku 11 käsittelee vain
+  Androidin omat välineet.
 
 ## Lyhyt historia
 
@@ -66,7 +80,13 @@ esimerkit kääntyvät samoin myöhemminkin.
 ## Projektin rakenne
 
 Esimerkit ovat yksi Gradle-projekti, pieni **ostoslistasovellus**, joka
-kasvaa luku luvulta. Hakemistorakenne:
+kasvaa luku luvulta. Valmis sovellus näyttää tältä:
+
+![Ostoslistan päänäkymä. Tämän tutoriaalin kuvat sovelluksesta ovat
+kuvakaappauksia, jotka testit tuottavat ilman laitetta (luku
+10).](kuvat/lista.png){width=32%}
+
+Hakemistorakenne:
 
 ```text
 esimerkit/
@@ -162,9 +182,11 @@ Esimerkkihakemiston `make` ajaa kolme ensimmäistä. Testit ajetaan
 JVM:llä **Robolectricin** avulla: se tarjoaa Androidin kirjastot
 tietokoneella, joten Activityt, Compose-käyttöliittymä, Room ja
 WorkManager voidaan testata ilman emulaattoria. Kehityskontissa on
-Android SDK valmiina. Laitteella ajettavat testit esitellään luvussa
-10.
+Android SDK valmiina; kontin avaaminen neuvotaan oppaassa
+*Kehitysympäristöt ja Dev Containers*. Laitteella ajettavat testit
+esitellään luvussa 10.
 
-Tekstissä käyttöliittymän merkkijonot on kirjoitettu suoraan koodiin
+Useimmat käyttöliittymän merkkijonot on kirjoitettu suoraan koodiin
 lyhyyden vuoksi. Oikeassa sovelluksessa ne ovat resursseissa
-(`res/values/strings.xml`, luku 2), jotta ne voidaan kääntää.
+(`res/values/strings.xml`), jotta ne voidaan kääntää. Esimerkin
+viestit tehdään näin (luku 2).

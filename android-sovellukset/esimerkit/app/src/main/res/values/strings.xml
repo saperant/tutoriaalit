@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- @alku resurssit -->
 <resources>
     <string name="sovelluksen_nimi">Ostokset</string>
+    <string name="ei_yhteytta">Ei yhteyttä – muutokset tallessa</string>
+    <plurals name="lahetetty_muutoksia">
+        <item quantity="one">Lähetetty %d muutos</item>
+        <item quantity="other">Lähetetty %d muutosta</item>
+    </plurals>
 </resources>
+<!-- @loppu resurssit -->

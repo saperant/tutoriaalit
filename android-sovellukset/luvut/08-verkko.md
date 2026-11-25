@@ -46,6 +46,21 @@ jäsennystä; toinen tarkistaa lähetetyn JSONin tarkasti.
 Repository yhdistää tietokannan ja verkon. Käyttöliittymä lukee aina
 tietokantaa; verkko vain päivittää sitä.
 
+```{.dot otsikko="Offline first: kirjoitus menee tietokantaan, ja synkronointi päivittää sitä taustalla"}
+digraph {
+  rankdir=LR; nodesep=0.5; ranksep=0.8;
+  ui [label="käyttöliittymä"];
+  repo [label="repository"];
+  kanta [label="Room", shape=cylinder];
+  palvelin [label="palvelin", shape=cylinder];
+  ui -> repo [label="1. lisaa()"];
+  repo -> kanta [label="2. tallenna,\nsynkronoimatta"];
+  kanta -> ui [label="3. Flow: uusi lista", color="#5B8A72", fontcolor="#5B8A72"];
+  repo -> palvelin [label="4. synkronoi():\nlähetä muutokset", style=dashed];
+  palvelin -> repo [label="5. palvelimen tila", style=dashed];
+}
+```
+
 ```{.kotlin tiedosto="esimerkit/app/src/main/java/fi/esimerkki/ostokset/data/OstosRepository.kt" osa="toteutus"}
 ```
 
@@ -61,7 +76,7 @@ tietokantaa; verkko vain päivittää sitä.
 `try`–`catch (e: IOException)` on tarkoituksella kapea. Yleinen
 `runCatching` tai `catch (e: Exception)` sieppaisi myös
 korutiinin peruutuksen (`CancellationException`), jolloin peruutettu
-työ jatkuisi ja rakenteellinen rinnakkaisuus (tutoriaali *Kotlin*)
+työ jatkuisi ja rakenteellinen rinnakkaisuus (taito *Kotlin*)
 rikkoutuisi.
 
 Testi käyttää oikeaa muistitietokantaa ja `MockEngine`ä, jonka verkon
@@ -87,7 +102,7 @@ ristiriidalle tarvitaan sääntö:
 
 Valinta on tuotepäätös yhtä paljon kuin tekninen päätös. Kerran
 lähetetyn operaation uudelleenlähetys ei saa tehdä muutosta kahdesti,
-joten pyynnöissä käytetään **idempotenssiavainta** (tutoriaali
+joten pyynnöissä käytetään **idempotenssiavainta** (taito
 *Taustapalvelut*).
 
 ## Käytännössä

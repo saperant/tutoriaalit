@@ -1,10 +1,13 @@
-# Listat, sivuvaikutukset ja saavutettavuus
+# Listat ja saavutettavuus
 
-Lähes jokaisessa sovelluksessa on vieritettävä lista, ja lähes
-jokaisessa ruudussa tehdään jotain, mikä ei ole piirtämistä: näytetään
-ilmoitus, käynnistetään animaatio, rekisteröidään kuuntelija. Tämä luku
-käsittelee molemmat sekä sen, miten käyttöliittymä näkyy
-ruudunlukijalle.
+Lähes jokaisessa sovelluksessa on vieritettävä lista. Tämä luku
+rakentaa ostoslistan rivin ja listan, jotka näkyivät luvun 1 kuvassa,
+ja käy läpi, miten käyttöliittymä näkyy ruudunlukijalle. Lista on
+samalla ensimmäinen komponentti, joka näyttää sovelluksen omaa dataa,
+tyyppiä `Tuote`:
+
+```{.kotlin tiedosto="esimerkit/app/src/main/java/fi/esimerkki/ostokset/malli/Tuote.kt" osa="tuote"}
+```
 
 ## Rivi ja laiska lista
 
@@ -34,40 +37,6 @@ Testissä rivin napautus ja valintaruudun napautus ovat eri tapahtumia:
 
 ```{.kotlin tiedosto="esimerkit/app/src/test/java/fi/esimerkki/ostokset/ui/TuoteListaTest.kt" osa="testi"}
 ```
-
-## Sivuvaikutukset
-
-Composable-funktion runko voi suorittua milloin tahansa, joten
-toiminnot, jotka muuttavat jotain funktion ulkopuolella, tehdään
-**efekteissä**. Efekti on sidottu koostumukseen: se alkaa, kun
-composable tulee näkyviin, ja peruuntuu, kun se poistuu.
-
-| Efekti | Käyttö |
-|--------|--------|
-| `LaunchedEffect(avain)` | korutiini, joka käynnistyy uudelleen avaimen muuttuessa: ilmoitus, animaatio, kertaluonteinen haku |
-| `DisposableEffect(avain)` | rekisteröinti ja purku (`onDispose`): kuuntelija, sensori, elinkaaritarkkailija |
-| `SideEffect` | suoritetaan jokaisen onnistuneen koostamisen jälkeen; tilan välitys koodille, jota Compose ei hallitse |
-| `rememberCoroutineScope()` | korutiini tapahtumankäsittelijästä, esim. vieritys napin painalluksesta |
-| `rememberUpdatedState(arvo)` | pitkäkestoinen efekti näkee uusimman arvon ilman uudelleenkäynnistystä |
-| `derivedStateOf` | tila, joka lasketaan toisesta tilasta ja muuttuu harvemmin (esim. "vieritetty alas") |
-
-Ostoslistan ruutu näyttää ViewModelin viestin ilmoituksena
-(*snackbar*) ja kuittaa sen:
-
-```{.kotlin tiedosto="esimerkit/app/src/main/java/fi/esimerkki/ostokset/lista/ListaRuutu.kt" osa="tilaton"}
-```
-
-`LaunchedEffect(tila.viesti)` käynnistyy aina, kun viesti vaihtuu, ja
-`showSnackbar` odottaa, kunnes ilmoitus suljetaan. Jos ruutu poistuu
-kesken, korutiini peruuntuu, eikä viestiä kuitata. Testi kelaa
-Composen kelloa, jotta ilmoituksen aikakatkaisu kuluu heti:
-
-```{.kotlin tiedosto="esimerkit/app/src/test/java/fi/esimerkki/ostokset/lista/ListaSisaltoTest.kt" osa="testi"}
-```
-
-Ensimmäinen testi näyttää tilan nostamisen arvon: tilaton ruutu
-testataan antamalla sille tila, ilman ViewModelia, tietokantaa tai
-verkkoa.
 
 ## Saavutettavuus semantiikalla
 
@@ -100,13 +69,9 @@ tekevät.
 - **Avain jokaiselle listan riville.** Tietokannan pääavain on luonteva
   valinta. Avaimeton lista toimii, kunnes rivejä lisätään, poistetaan
   tai järjestetään.
-- **Ei sivuvaikutuksia rungossa.** Lokitus, analytiikka, verkkopyyntö
-  tai tilan kirjoittaminen rungossa toistuu jokaisella koostamisella.
-  Valitse efekti sen mukaan, milloin työn pitää alkaa ja loppua.
-- **Kertaluonteinen tapahtuma on tilaa, joka kuitataan.** Viesti tai
-  siirtymä mallinnetaan tilaan (`viesti: Viesti?`), käyttöliittymä
-  käsittelee sen efektissä ja kuittaa. Näin tapahtuma ei katoa
-  konfiguraatiomuutoksessa eikä toistu.
+- **Tilaton rivi, tapahtumat ylös.** Rivi ei tiedä, mitä valinta tai
+  napautus aiheuttaa; lista välittää tapahtumat omistajalleen. Sama
+  rivi kelpaa esikatseluun, testiin ja toiseen listaan.
 - **Testaa saavutettavuusnimillä.** Testi, joka etsii "Vähennä"-nimeä,
   epäonnistuu, jos nimi puuttuu, eli testit valvovat samalla
   saavutettavuutta.
@@ -119,8 +84,8 @@ tekevät.
 
 - Osaat tehdä laiskan listan, jossa riveillä on vakaat avaimet, ja
   selittää, mitä avaimen puuttuminen rikkoo.
-- Osaat valita oikean efektin (`LaunchedEffect`, `DisposableEffect`,
-  `rememberCoroutineScope`) tilanteen mukaan.
-- Osaat mallintaa kertaluonteisen tapahtuman tilana ja kuitata sen.
+- Osaat selittää, miksi laiska lista on nopea ja milloin `contentType`
+  auttaa.
+- Osaat testata listan rivin tapahtumat erikseen.
 - Osaat täydentää oman komponentin semantiikan niin, että
   ruudunlukija ja testit tunnistavat sen.

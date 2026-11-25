@@ -24,10 +24,33 @@ oikeudet:
   asennuksessa automaattisesti; *vaaralliset* oikeudet (sijainti,
   kamera, ilmoitukset) pitää lisäksi pyytää ajon aikana.
 - **Resurssiviittaukset** (`@string/...`, `@drawable/...`) osoittavat
-  `res/`-hakemistoon. Resursseilla on *kelpuuttimia*:
-  `values-en/strings.xml` sisältää englanninkieliset tekstit,
-  `values-night/` tumman teeman arvot. Järjestelmä valitsee sopivan
-  version laitteen asetusten mukaan.
+  `res/`-hakemistoon.
+
+## Resurssit
+
+Tekstit, kuvat ja mitat pidetään erillään koodista hakemistossa
+`res/`. Sovelluksen merkkijonot ovat tiedostossa
+`res/values/strings.xml`:
+
+```{.xml tiedosto="esimerkit/app/src/main/res/values/strings.xml" osa="resurssit"}
+```
+
+Käännöstyökalu tuottaa jokaiselle resurssille tunnisteen, esimerkiksi
+`R.string.ei_yhteytta`, joten kirjoitusvirhe nimessä on käännösvirhe.
+Erillisyydellä on kaksi hyötyä:
+
+- **Kelpuuttimet** (*qualifiers*). Hakemisto `values-en/` sisältää
+  englanninkieliset tekstit, `values-night/` tumman teeman arvot ja
+  `values-sw600dp/` tablettien mitat. Järjestelmä valitsee sopivan
+  version laitteen asetusten mukaan, ja konfiguraatiomuutos (alla)
+  lataa resurssit uudelleen.
+- **Monikot.** `plurals` valitsee muodon luvun ja kielen sääntöjen
+  mukaan. Suomessa ja englannissa muotoja on kaksi (`one`, `other`),
+  mutta esimerkiksi venäjässä ja arabiassa useampia, joten
+  `if (n == 1)` koodissa ei riitä käännettävään sovellukseen.
+
+Composessa resurssi luetaan funktioilla `stringResource` ja
+`pluralStringResource`; luku 5 käyttää niitä viestien sanamuotoon.
 
 ## Application ja Activity
 
@@ -53,11 +76,18 @@ vain taustatyötä varten.
 Activityn elinkaari kulkee tilojen läpi, ja jokaisesta siirtymästä
 tulee takaisinkutsu:
 
-```text
-       onCreate     onStart      onResume
- (ei) ─────────► CREATED ────► STARTED ────► RESUMED
-       onDestroy    onStop       onPause
-      ◄─────────         ◄────         ◄────
+```{.dot otsikko="Activityn elinkaari: tilat ja siirtymien takaisinkutsut"}
+digraph {
+  rankdir=LR; nodesep=0.5; ranksep=0.35;
+  ei [label="ei\nolemassa", style="rounded,dashed"];
+  ei -> CREATED [label="onCreate"];
+  CREATED -> STARTED [label="onStart"];
+  STARTED -> RESUMED [label="onResume"];
+  edge [color="#B4532A", fontcolor="#B4532A"];
+  RESUMED -> STARTED [label="onPause"];
+  STARTED -> CREATED [label="onStop"];
+  CREATED -> ei [label="onDestroy"];
+}
 ```
 
 - **STARTED**: näkyvissä, mutta ei välttämättä etualalla (esim.
@@ -94,7 +124,15 @@ Tilaa uhkaa kaksi eri tapahtumaa:
    palaa, järjestelmä luo prosessin ja Activityn uudelleen ja antaa
    sille tallennetun tilan (`Bundle`). ViewModel ei säily.
 
-Compose tarjoaa molempiin oman muistinsa:
+| Missä tila on | Uudelleenkoostaminen | Konfiguraatiomuutos | Prosessin kuolema |
+|------------------------------|----------------------|---------------------|-------------------|
+| paikallinen muuttuja | katoaa | katoaa | katoaa |
+| `remember` | säilyy | katoaa | katoaa |
+| ViewModel | säilyy | säilyy | katoaa |
+| `rememberSaveable` | säilyy | säilyy | säilyy |
+| tietokanta, DataStore | säilyy | säilyy | säilyy |
+
+Composen omat muistit ovat `remember` ja `rememberSaveable`:
 
 ```{.kotlin tiedosto="esimerkit/app/src/main/java/fi/esimerkki/ostokset/elinkaari/Elinkaari.kt" osa="laskurit"}
 ```
@@ -109,9 +147,73 @@ konfiguraatiomuutoksen että prosessin kuoleman. Bundleen mahtuu vain
 pieni, sarjallistettava tila: valinta, syötekentän teksti, vierityksen
 sijainti. Varsinainen data on tietokannassa (luku 7).
 
-Prosessin kuoleman voi kokeilla laitteella: sovellus taustalle ja
-`adb shell am kill fi.esimerkki.ostokset`. Moni sovellus, joka toimii
-kiertäessä, menettää tässä tilansa.
+Prosessin kuoleman voi kokeilla laitteella: sovellus viedään
+taustalle ja prosessi lopetetaan komennolla `adb shell am kill` ja
+sovelluksen tunnisteella (`fi.esimerkki.ostokset`). Moni sovellus,
+joka toimii kiertäessä, menettää tässä tilansa.
+
+## Intentit ja toiset sovellukset
+
+Komponentit eivät kutsu toisiaan suoraan, vaan lähettävät
+järjestelmälle **intentin**: viestin, joka kuvaa, mitä halutaan tehdä.
+Manifestin `MAIN`/`LAUNCHER`-suodatin on tästä jo esimerkki:
+käynnistin lähettää intentin, ja suodatin kertoo, että `MainActivity`
+ottaa sen vastaan. Intenttejä on kahta lajia:
+
+- **Eksplisiittinen** nimeää kohdeluokan. Sitä käytetään sovelluksen
+  sisällä, esimerkiksi kun ilmoituksen napautus avaa sovelluksen.
+- **Implisiittinen** kertoo vain toiminnon (`ACTION_SEND`,
+  `ACTION_VIEW`) ja datan tyypin. Järjestelmä etsii sovellukset,
+  joiden manifestin suodatin sopii, ja käyttäjä valitsee niistä.
+
+Ostoslistan jakaminen on implisiittinen intent. Sovelluksen ei
+tarvitse tietää, onko vastaanottaja viestisovellus, sähköposti vai
+muistio:
+
+```{.kotlin tiedosto="esimerkit/app/src/main/java/fi/esimerkki/ostokset/elinkaari/Intentit.kt" osa="jako"}
+```
+
+Testissä Robolectric tallentaa käynnistetyn intentin, joten sen
+sisällön voi tarkistaa avaamatta toista sovellusta. Kolmas testi
+näyttää eksplisiittisen intentin:
+
+```{.kotlin tiedosto="esimerkit/app/src/test/java/fi/esimerkki/ostokset/elinkaari/IntentitTest.kt" osa="jako"}
+```
+
+```{.kotlin tiedosto="esimerkit/app/src/test/java/fi/esimerkki/ostokset/elinkaari/IntentitTest.kt" osa="eksplisiittinen"}
+```
+
+Sovellus voi olla myös vastaanottaja. Silloin Activity ilmoittaa
+manifestissa suodattimen ja on `exported="true"`:
+
+```text
+<intent-filter>
+    <action android:name="android.intent.action.SEND" />
+    <category android:name="android.intent.category.DEFAULT" />
+    <data android:mimeType="text/plain" />
+</intent-filter>
+```
+
+Vastaanotettu intent on syötettä sovelluksen ulkopuolelta: sen voi
+lähettää mikä tahansa laitteen sovellus, ja sisältö voi olla mitä
+tahansa. Siksi toiminto ja tyyppi tarkistetaan ja pituudet rajataan
+ennen kuin sisältöä käytetään:
+
+```{.kotlin tiedosto="esimerkit/app/src/main/java/fi/esimerkki/ostokset/elinkaari/Intentit.kt" osa="vastaanotto"}
+```
+
+```{.kotlin tiedosto="esimerkit/app/src/test/java/fi/esimerkki/ostokset/elinkaari/IntentitTest.kt" osa="vastaanotto"}
+```
+
+Esimerkkisovelluksen manifestissa tätä suodatinta ei ole, joten
+sovellus ei näy jakovalikossa; jäsennysfunktio on mukana testattuna.
+
+Kun toiselta sovellukselta odotetaan *tulosta* (valittu kuva, otettu
+valokuva, käyttäjän vastaus lupakysymykseen), käytetään
+**aktiviteettitulosta**: `ActivityResultContract` kuvaa pyynnön ja
+tuloksen tyypit, ja tulos tulee takaisinkutsuna. Valmiita sopimuksia
+ovat esimerkiksi `GetContent`, `TakePicture` ja `RequestPermission`,
+jota seuraava osio käyttää.
 
 ## Ajonaikaiset oikeudet
 
@@ -151,6 +253,9 @@ rajoitetusti ilman oikeutta.
 - **Kevyt käynnistys.** `Application.onCreate` ja ensimmäinen ruutu
   ratkaisevat käynnistysajan. Raskas alustus siirretään laiskaksi tai
   taustalle.
+- **Intentin sisältö on epäluotettavaa syötettä.** Vie (`exported`)
+  vain ne komponentit, joiden on tarkoitus näkyä muille, ja tarkista
+  kaikki, mitä vastaanotettu intent sisältää.
 - **Oikeus käyttötilanteessa ja perusteltuna.** Pyydä vain tarvittava
   (esim. likimääräinen sijainti tarkan sijaan), ja tarjoa toimiva
   vaihtoehto kieltäytyjälle.
@@ -167,5 +272,8 @@ rajoitetusti ilman oikeutta.
   prosessin kuolema tekevät sovelluksen tilalle.
 - Osaat valita `remember`in, `rememberSaveable`n, ViewModelin ja
   pysyvän tallennuksen välillä.
+- Osaat lähettää implisiittisen intentin, erottaa sen
+  eksplisiittisestä ja käsitellä vastaanotetun intentin sisällön
+  epäluotettavana syötteenä.
 - Osaat pyytää ajonaikaisen oikeuden versiotarkistuksineen ja testata
   pyynnön ilman järjestelmän dialogia.

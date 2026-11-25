@@ -20,6 +20,23 @@ vaativat kotlinx.serialization-liitännäisen (luku 1).
 
 ## NavHost
 
+Navigointi on pino: `navigate` lisää ruudun päällimmäiseksi, ja
+takaisin-ele poistaa sen.
+
+![Rivin napautus avaa tuoteruudun listan päälle; Takaisin palaa
+listaan.](kuvat/navigointi.png){width=62%}
+
+```{.dot otsikko="Takaisin-pino esimerkin siirtymissä"}
+digraph {
+  rankdir=LR; nodesep=0.5; ranksep=1.3;
+  node [shape=record];
+  a [label="{ListaReitti}"];
+  b [label="{ListaReitti|TuoteReitti(1, maito)}"];
+  a -> b [label="navigate(TuoteReitti(...))"];
+  b -> a [label="popBackStack()", color="#B4532A", fontcolor="#B4532A"];
+}
+```
+
 ```{.kotlin tiedosto="esimerkit/app/src/main/java/fi/esimerkki/ostokset/navigointi/Navigaatio.kt" osa="navhost"}
 ```
 

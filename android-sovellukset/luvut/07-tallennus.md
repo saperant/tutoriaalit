@@ -10,7 +10,7 @@ Androidissa on kolme tavallista tapaa tallentaa tietoa pysyvästi:
 
 Kaikki tallennus on I/O:ta, joka ei saa tapahtua pääsäikeessä. Room ja
 DataStore tarjoavat siksi suspend-funktiot ja Flow't, ja ne vaihtavat
-säiettä itse. SQL:n perusteet ovat tutoriaalissa *SQL ja
+säiettä itse. SQL:n perusteet ovat taidossa *SQL ja
 relaatiotietokannat*.
 
 ## Room: entiteetti, DAO ja tietokanta
@@ -104,6 +104,16 @@ Robolectricia:
 ```{.kotlin tiedosto="esimerkit/app/src/test/java/fi/esimerkki/ostokset/data/AsetuksetTest.kt" osa="testi"}
 ```
 
+Sovelluksen omat tiedostot ovat muiden sovellusten ulottumattomissa,
+mutta eivät salattuja sovelluksen itsensä tai juurioikeuksin
+varustetun laitteen kannalta. Salaisuudet (kirjautumistoken,
+salausavain) suojataan **Android Keystorella**: avain luodaan
+laitteen suojattuun ympäristöön (TEE tai erillinen turvapiiri), eikä
+sitä voi lukea ulos; sovellus pyytää Keystorea salaamaan ja
+purkamaan. Tallennettava token salataan
+Keystoren avaimella ja kirjoitetaan DataStoreen. Salasanoja ei
+tallenneta laitteelle lainkaan.
+
 ## Käytännössä
 
 - **Tietokanta on totuuden lähde.** Käyttöliittymä lukee Roomin
@@ -115,6 +125,9 @@ Robolectricia:
 - **Skeema versionhallintaan ja migraatiot testattuina.** Puuttuva tai
   virheellinen migraatio kaataa sovelluksen päivityksen jälkeen kaikilla
   käyttäjillä.
+- **Salaisuudet Keystoren avaimella salattuina**, ei selväkielisinä
+  asetuksiin eikä koodiin. APK:n voi purkaa kuka tahansa, joten
+  koodissa oleva avain on julkinen.
 - **DataStore asetuksille, Room datalle.** Lista tai haettava tieto ei
   kuulu DataStoreen, koska DataStore lukee ja kirjoittaa koko tiedoston
   kerralla.
