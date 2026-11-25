@@ -99,6 +99,11 @@ id = "sovellukset"
 nimi = "Sovelluskehitys"
 kuvaus = "Web-, tausta- ja mobiilisovellukset sekä relaatiotietokannat."
 
+[[alue]]
+id = "tyotavat"
+nimi = "Työtavat ja ohjelmistotuotanto"
+kuvaus = "Miten ohjelmistoa tehdään yhdessä: kehityskäytännöt, toimitus, dokumentointi, projektit ja organisaatiot."
+
 # ---------------------------------------------------------------------
 # Perusta
 # ---------------------------------------------------------------------
@@ -286,6 +291,25 @@ testaus = "esimerkkiprojektit rakennetaan ja testataan CI:ssä"
 roadmap = ["c", "cpp", "devops"]
 amk = "Ohjelmistotuotanto"
 tutoriaali = "rakennus-ja-testaus"
+
+[[taito]]
+id = "kehitysymparistot"
+nimi = "Kehitysympäristöt ja Dev Containers"
+alue = "perusta"
+kuvaus = "Toistettava kehitysympäristö: Dev Containers, Codespaces ja näiden tutoriaalien esimerkkien käyttöönotto."
+edellyttaa = ["komentorivi"]
+aiheet = [
+  "miksi ympäristö kuvataan koodina",
+  "Dev Containers: devcontainer.json, kuvat ja ominaisuudet (features)",
+  "VS Code, Codespaces ja komentorivityökalu (devcontainer CLI)",
+  "tutoriaalien esimerkkien avaaminen ja testien ajaminen",
+  "oman projektin kehityskontti",
+  "vaihtoehdot: virtuaaliympäristöt, Nix ja asdf/mise",
+]
+laajuus = 2
+testaus = "devcontainer.json-tiedostojen skeematarkistus, kontin rakennus ja testiajo Dockerilla"
+roadmap = []
+amk = "Ohjelmistokehityksen työkalut"
 
 # ---------------------------------------------------------------------
 # Matematiikka
@@ -2126,6 +2150,120 @@ roadmap = ["backend"]
 amk = "Tietokannat (jatkokurssi)"
 tutoriaali = "nosql"
 
+[[taito]]
+id = "web-sovelluskehykset"
+nimi = "Web-sovelluskehykset ja niiden periaatteet"
+alue = "sovellukset"
+kuvaus = "Yleisimpien JavaScript-sovelluskehysten suunnitteluperiaatteet: sama sovellus Reactilla, Vuella, Angularilla ja Sveltellä."
+edellyttaa = ["web-sovellukset"]
+aiheet = [
+  "mitä sovelluskehys ratkaisee: tila, renderöinti ja komponentit",
+  "renderöintimallit: virtuaalinen DOM, signaalit ja käännösaikainen reaktiivisuus",
+  "mallipohjat vai JSX: esitystavan ja logiikan erottaminen",
+  "React, Vue, Angular ja Svelte: sama sovellus neljällä tavalla",
+  "tilanhallinta, reititys ja palvelinrenderöinti käsitteinä",
+  "kehyksen valinta ja elinkaaren hallinta",
+]
+laajuus = 5
+testaus = "sama Playwright-testisarja jokaista toteutusta vasten"
+roadmap = ["frontend", "react"]
+amk = "Web-ohjelmointi (jatkokurssi)"
+
+[[taito]]
+id = "testivetoinen-kehitys"
+nimi = "Testivetoinen kehitys ja testisuunnittelu"
+alue = "tyotavat"
+kuvaus = "Testit suunnittelun välineenä: TDD, BDD, testisuunnittelutekniikat ja testien laadun mittaaminen."
+edellyttaa = ["python-tyokalut", "versionhallinta"]
+aiheet = [
+  "TDD: punainen, vihreä, refaktorointi",
+  "testisuunnittelu: ekvivalenssiluokat, raja-arvot ja päätöstaulut",
+  "BDD ja suoritettavat määrittelyt (Gherkin)",
+  "ominaisuuspohjainen testaus",
+  "mutaatiotestaus ja kattavuuden rajat",
+  "testattava suunnittelu ja perintökoodin testaaminen",
+]
+laajuus = 5
+testaus = "pytest, pytest-bdd ja Hypothesis; mutaatioajo pienellä esimerkillä"
+roadmap = []
+amk = "Ohjelmistotestaus"
+
+[[taito]]
+id = "jatkuva-toimitus"
+nimi = "Jatkuva integraatio ja toimitus"
+alue = "tyotavat"
+kuvaus = "Muutoksen polku kehittäjän koneelta tuotantoon: trunk-pohjainen kehitys, toimitusputket, julkaisustrategiat ja GitOps."
+edellyttaa = ["testivetoinen-kehitys", "kontit-ja-pilvi"]
+aiheet = [
+  "trunk-pohjainen kehitys ja pienet muutokset",
+  "toimitusputken vaiheet ja nopea palaute",
+  "artefaktit, versiointi ja ympäristöt",
+  "julkaisustrategiat: ominaisuusliput, sinivihreä ja kanarialintu",
+  "GitOps ja infrastruktuuri koodina",
+  "toimituskyvyn mittarit (DORA)",
+]
+laajuus = 5
+testaus = "paikallisesti ajettava putki, työnkulkujen skeematarkistus ja julkaisusimulaatiot"
+roadmap = ["devops"]
+amk = "DevOps-käytännöt"
+
+[[taito]]
+id = "tekninen-dokumentaatio"
+nimi = "Tekninen dokumentaatio"
+alue = "tyotavat"
+kuvaus = "Dokumentaatio osana koodia: lukijan tarpeet, rakenne, generointi lähdekoodista ja arkkitehtuurin kuvaaminen."
+edellyttaa = ["python-tyokalut", "versionhallinta"]
+aiheet = [
+  "lukijat ja dokumenttityypit (Diátaxis)",
+  "docs as code: Markdown, Sphinx ja MkDocs",
+  "rajapintadokumentaatio koodista: Doxygen, docstringit ja OpenAPI",
+  "arkkitehtuurin kuvaus: C4, arc42 ja päätöslokit (ADR)",
+  "kaaviot koodina",
+  "dokumentaation testaus ja ylläpito",
+]
+laajuus = 4
+testaus = "Sphinx- ja Doxygen-rakennukset varoitukset virheinä, doctest ja linkkitarkistus"
+roadmap = []
+amk = "Tekninen viestintä"
+
+[[taito]]
+id = "projektinhallinta"
+nimi = "Ohjelmistoprojektin hallinta"
+alue = "tyotavat"
+kuvaus = "Miten ohjelmistotyö suunnitellaan ja ohjataan: vaatimukset, ketterät menetelmät, arviointi, riskit ja tekninen velka."
+edellyttaa = ["versionhallinta"]
+aiheet = [
+  "vaatimukset, käyttäjätarinat ja hyväksymiskriteerit",
+  "vesiputous, iteratiiviset ja ketterät menetelmät (Scrum, Kanban)",
+  "työn pilkkominen, arviointi ja ennustaminen",
+  "virtaus: WIP-rajat, läpimenoaika ja jonot",
+  "riskit, tekninen velka ja laatu",
+  "sidosryhmät, viestintä ja retrospektiivit",
+]
+laajuus = 5
+testaus = "Python-simulaatiot: Monte Carlo -ennusteet ja virtausmallit, mittarit Git-historiasta"
+roadmap = []
+amk = "Projektityö ja ohjelmistotuotanto"
+
+[[taito]]
+id = "tiimit-ja-organisaatiot"
+nimi = "Tiimit ja organisaatiomallit"
+alue = "tyotavat"
+kuvaus = "Miten organisaation rakenne muovaa ohjelmistoa: Conwayn laki, Team Topologies, omistajuus ja päätöksenteko."
+edellyttaa = ["projektinhallinta"]
+aiheet = [
+  "Conwayn laki ja sosiotekninen järjestelmä",
+  "Team Topologies: tiimityypit ja vuorovaikutustavat",
+  "kognitiivinen kuorma ja tiimin rajapinnat",
+  "omistajuus, alustat ja sisäiset tuotteet",
+  "DevOps, SRE ja vastuunjako",
+  "päätöksenteko, arkkitehtuurityö ja skaalausmallit",
+]
+laajuus = 3
+testaus = "riippuvuus- ja omistajuusanalyysit Git-historiasta Pythonilla"
+roadmap = []
+amk = "Ohjelmistotuotannon johtaminen"
+
 # ---------------------------------------------------------------------
 # Roolit
 # ---------------------------------------------------------------------
@@ -2177,14 +2315,14 @@ id = "algoritmiikka"
 nimi = "Algoritmiikan ja ohjelmistokehityksen perusta"
 kuvaus = "Yleinen ohjelmistokehittäjän tietojenkäsittelytieteen perusta: tietorakenteet, algoritmit ja niiden toteutus."
 tavoitteet = ["edistyneet-algoritmit", "rakennus-ja-testaus"]
-valinnaiset = ["kaantajatekniikka", "rinnakkaisohjelmointi", "cpp-suorituskyky", "funktionaalinen-ohjelmointi"]
+valinnaiset = ["kaantajatekniikka", "rinnakkaisohjelmointi", "cpp-suorituskyky", "funktionaalinen-ohjelmointi", "kehitysymparistot", "testivetoinen-kehitys"]
 
 [[rooli]]
 id = "web-kehittaja"
 nimi = "Web-kehittäjä"
 kuvaus = "Rakentaa saavutettavia ja ylläpidettäviä selainsovelluksia."
 tavoitteet = ["web-sovellukset"]
-valinnaiset = ["sql", "taustapalvelut", "kontit-ja-pilvi", "web-tietoturva"]
+valinnaiset = ["sql", "taustapalvelut", "kontit-ja-pilvi", "web-tietoturva", "web-sovelluskehykset"]
 
 [[rooli]]
 id = "taustajarjestelmakehittaja"
@@ -2234,3 +2372,10 @@ nimi = "Elektroniikkasuunnittelija"
 kuvaus = "Suunnittelee ja simuloi analogisia ja digitaalisia piirejä ja liittää ne mikrokontrollereihin ja ohjelmoitavaan logiikkaan."
 tavoitteet = ["analogiaelektroniikka", "mikrokontrollerit", "fpga-toteutus"]
 valinnaiset = ["oheislaitevaylat", "dsp", "numeeriset-menetelmat", "kuvausstandardit"]
+
+[[rooli]]
+id = "tekninen-vetaja"
+nimi = "Tekninen vetäjä"
+kuvaus = "Johtaa ohjelmistotiimin teknistä työtä: toimitusputki, laatu, dokumentaatio, suunnittelu ja tiimin tapa toimia."
+tavoitteet = ["jatkuva-toimitus", "tiimit-ja-organisaatiot", "tekninen-dokumentaatio"]
+valinnaiset = ["turvallinen-kehitys", "integraatiotestaus", "palveluarkkitehtuurit", "jarjestelmasuunnittelu"]

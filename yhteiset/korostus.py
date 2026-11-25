@@ -17,7 +17,8 @@ from pathlib import Path
 # Samat sävyt kuin sivusto/kartta.css:n alueväreissä (tumma muunnelma,
 # jotta valkoinen teksti erottuu kansilehdellä).
 VARIT = ["2F5F9A", "9A6524", "3E7F3C", "6D4FA0", "B04848", "1F7F77",
-         "8A7615", "546676", "4552B0", "A14B7C", "5B7A14", "A4501C"]
+         "8A7615", "546676", "4552B0", "A14B7C", "5B7A14", "A4501C",
+         "1D6F80"]
 OLETUS = ("0D7A6C", "Tutoriaalit")
 
 

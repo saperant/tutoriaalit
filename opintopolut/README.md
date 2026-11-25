@@ -5,7 +5,7 @@
 
 Tutoriaalit muodostavat taitopuun: jokainen tutoriaali on yksi taito, ja taidot rakentuvat toistensa päälle. Roolit ovat ammattiprofiileja, joiden polku kulkee puun läpi.
 
-Taitoja on 97, yhteensä noin 432 op. Valmis PDF: [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf). Taitopuun lähdetiedosto: [taitopuu.toml](taitopuu.toml).
+Taitoja on 104, yhteensä noin 461 op. Valmis PDF: [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf). Taitopuun lähdetiedosto: [taitopuu.toml](taitopuu.toml).
 
 ## Roolit
 
@@ -26,6 +26,7 @@ Taitoja on 97, yhteensä noin 432 op. Valmis PDF: [opintopolut.pdf](https://sape
 | Peliohjelmoija | Reaaliaikaiset moninpelit | 14 | 66 |
 | Sovellusturvallisuuden asiantuntija | Palveluarkkitehtuurin tietoturva, Tietoturva kehitystyössä, Web-sovellusten tietoturva | 20 | 85 |
 | Elektroniikkasuunnittelija | Analogiaelektroniikka, FPGA-toteutus, Mikrokontrollerit ja bare-metal-ohjelmointi | 17 | 81 |
+| Tekninen vetäjä | Jatkuva integraatio ja toimitus, Tekninen dokumentaatio, Tiimit ja organisaatiomallit | 12 | 52 |
 
 ## Taitopuu
 
@@ -43,6 +44,7 @@ flowchart LR
     bash["✓ Bash-skriptaus"]
     python_tyokalut["✓ Python työkaluohjelmointiin"]
     rakennus_ja_testaus["✓ Käännösjärjestelmät, testaus ja CI"]
+    kehitysymparistot["Kehitysympäristöt ja Dev Containers"]
   end
   subgraph matematiikka["Matematiikka"]
     diskreetti_matematiikka["✓ Diskreetti matematiikka"]
@@ -153,6 +155,14 @@ flowchart LR
     android_sovellukset["✓ Android-sovellukset"]
     integraatiotestaus["✓ Integraatiotestaus ja Testcontainers"]
     nosql["✓ NoSQL-tietokannat"]
+    web_sovelluskehykset["Web-sovelluskehykset ja niiden periaatteet"]
+  end
+  subgraph tyotavat["Työtavat ja ohjelmistotuotanto"]
+    testivetoinen_kehitys["Testivetoinen kehitys ja testisuunnittelu"]
+    jatkuva_toimitus["Jatkuva integraatio ja toimitus"]
+    tekninen_dokumentaatio["Tekninen dokumentaatio"]
+    projektinhallinta["Ohjelmistoprojektin hallinta"]
+    tiimit_ja_organisaatiot["Tiimit ja organisaatiomallit"]
   end
   komentorivi --> versionhallinta
   ohjelmoinnin_perusteet --> c_kieli
@@ -166,6 +176,7 @@ flowchart LR
   c_kieli --> rakennus_ja_testaus
   versionhallinta --> rakennus_ja_testaus
   bash --> rakennus_ja_testaus
+  komentorivi --> kehitysymparistot
   ohjelmoinnin_perusteet --> lineaarialgebra
   lineaarialgebra --> signaalimatematiikka
   diskreetti_matematiikka --> todennakoisyys
@@ -317,6 +328,15 @@ flowchart LR
   python_tyokalut --> integraatiotestaus
   sql --> nosql
   kontit_ja_pilvi --> nosql
+  web_sovellukset --> web_sovelluskehykset
+  python_tyokalut --> testivetoinen_kehitys
+  versionhallinta --> testivetoinen_kehitys
+  testivetoinen_kehitys --> jatkuva_toimitus
+  kontit_ja_pilvi --> jatkuva_toimitus
+  python_tyokalut --> tekninen_dokumentaatio
+  versionhallinta --> tekninen_dokumentaatio
+  versionhallinta --> projektinhallinta
+  projektinhallinta --> tiimit_ja_organisaatiot
 ```
 
 ## Taidot alueittain
@@ -329,6 +349,7 @@ flowchart LR
 | Ohjelmoinnin perusteet (Python) | 5 | – | [valmis](../ohjelmoinnin-perusteet/) |
 | Bash-skriptaus | 3 | Komentorivi ja Linux, Ohjelmoinnin perusteet (Python) | [valmis](../bash/) |
 | C-kieli | 5 | Komentorivi ja Linux, Ohjelmoinnin perusteet (Python) | [valmis](../c-kieli/) |
+| Kehitysympäristöt ja Dev Containers | 2 | Komentorivi ja Linux | suunniteltu |
 | Python | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../python/) |
 | Versionhallinta (Git) | 2 | Komentorivi ja Linux | [valmis](../versionhallinta/) |
 | Käännösjärjestelmät, testaus ja CI | 3 | Bash-skriptaus, C-kieli, Versionhallinta (Git) | [valmis](../rakennus-ja-testaus/) |
@@ -477,3 +498,14 @@ flowchart LR
 | Integraatiotestaus ja Testcontainers | 5 | Python työkaluohjelmointiin, SQL ja relaatiotietokannat, Säiliöt ja pilvi-infrastruktuuri | [valmis](../integraatiotestaus/) |
 | NoSQL-tietokannat | 5 | SQL ja relaatiotietokannat, Säiliöt ja pilvi-infrastruktuuri | [valmis](../nosql/) |
 | Web-sovellukset | 5 | HTML ja CSS, Tietoverkot, TypeScript | [valmis](../web-sovellukset/) |
+| Web-sovelluskehykset ja niiden periaatteet | 5 | Web-sovellukset | suunniteltu |
+
+### Työtavat ja ohjelmistotuotanto
+
+| Taito | op | Edellyttää | Tila |
+|-------|---:|------------|------|
+| Ohjelmistoprojektin hallinta | 5 | Versionhallinta (Git) | suunniteltu |
+| Tekninen dokumentaatio | 4 | Python työkaluohjelmointiin, Versionhallinta (Git) | suunniteltu |
+| Testivetoinen kehitys ja testisuunnittelu | 5 | Python työkaluohjelmointiin, Versionhallinta (Git) | suunniteltu |
+| Tiimit ja organisaatiomallit | 3 | Ohjelmistoprojektin hallinta | suunniteltu |
+| Jatkuva integraatio ja toimitus | 5 | Säiliöt ja pilvi-infrastruktuuri, Testivetoinen kehitys ja testisuunnittelu | suunniteltu |
