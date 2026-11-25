@@ -1,0 +1,9 @@
+// Arkkitehtuuripäätöksen tilat.
+digraph tilat {
+    rankdir=LR;
+    alku [shape=point];
+    alku -> ehdotettu;
+    ehdotettu -> "hyväksytty" [label="päätös"];
+    ehdotettu -> "hylätty" [label="päätös"];
+    "hyväksytty" -> korvattu [label="uusi päätös\nkorvaa"];
+}

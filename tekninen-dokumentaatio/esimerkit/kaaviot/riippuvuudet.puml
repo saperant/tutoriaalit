@@ -1,0 +1,8 @@
+@startuml
+left to right direction
+[__main__] --> [lukema]
+[__main__] --> [tilasto]
+[palvelu] --> [lukema]
+[palvelu] --> [tilasto]
+[tilasto] --> [lukema]
+@enduml

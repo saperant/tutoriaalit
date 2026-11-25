@@ -1,0 +1,13 @@
+@startuml
+participant Asema as A
+participant Vastaanotin as V
+database Tietokanta as K
+A -> V: POST /lukemat
+V -> V: jäsennä ja tarkista
+alt rivi kelpaa
+    V -> K: INSERT
+    V --> A: 201 Created
+else rivi hylätään
+    V --> A: 422 ja virheen syy
+end
+@enduml

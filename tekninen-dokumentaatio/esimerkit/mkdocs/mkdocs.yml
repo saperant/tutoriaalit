@@ -1,0 +1,20 @@
+# MkDocsin asetukset sääaseman käsikirjalle.
+site_name: Sääasema
+theme:
+  name: mkdocs
+nav:
+  - Etusivu: index.md
+  - Opas: opas.md
+  - Ohjeet: ohjeet.md
+# @alku tarkistukset
+# Rikkinäinen linkki tai ankkuri ja valikosta puuttuva sivu ovat
+# varoituksia, ja --strict tekee varoituksista virheitä.
+validation:
+  nav:
+    omitted_files: warn
+    not_found: warn
+  links:
+    not_found: warn
+    anchors: warn
+    unrecognized_links: warn
+# @loppu tarkistukset

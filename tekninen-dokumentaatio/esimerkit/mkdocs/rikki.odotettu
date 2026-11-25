@@ -1,0 +1,4 @@
+WARNING - Doc file 'index.md' contains a link 'asetukset.md', but the
+target is not found among documentation files.
+WARNING - Doc file 'index.md' contains a link 'ohjeet.md#asennus', but the
+doc 'ohjeet.md' does not contain an anchor '#asennus'.

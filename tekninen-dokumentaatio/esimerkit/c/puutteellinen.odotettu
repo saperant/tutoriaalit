@@ -1,0 +1,8 @@
+puutteellinen.h:15: error: Member kalibroi(float lampotila) (function) of
+file puutteellinen.h is not documented.
+puutteellinen.h:10: error: argument 'raaka' of command @param is not found
+in the argument list of muunna(int raaka_arvo, float kerroin)
+puutteellinen.h:10: error: The following parameters of muunna(int
+raaka_arvo, float kerroin) are not documented:
+  parameter 'raaka_arvo'
+  parameter 'kerroin'

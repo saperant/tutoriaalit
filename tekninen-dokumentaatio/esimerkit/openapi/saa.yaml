@@ -1,0 +1,120 @@
+openapi: 3.1.0
+info:
+  title: Sääaseman lukemat
+  version: 1.2.0
+  description: Asemien lukemien tallennus ja yhteenvedot.
+paths:
+  /lukemat:
+    get:
+      operationId: listaaLukemat
+      summary: Luettelee lukemat saapumisjärjestyksessä.
+      parameters:
+        - name: asema
+          in: query
+          description: Palauttaa vain tämän aseman lukemat.
+          schema: {type: string}
+          example: kumpula
+      responses:
+        "200":
+          description: Lukemat. Luettelo on tyhjä, jos lukemia ei ole.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {$ref: "#/components/schemas/Lukema"}
+    # @alku post
+    post:
+      operationId: lisaaLukema
+      summary: Tallentaa yhden lukeman.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: "#/components/schemas/Lukema"}
+            examples:
+              kelvollinen:
+                value:
+                  asema: kumpula
+                  aika: "2026-11-25T12:00:00+02:00"
+                  lampotila_c: -3.5
+                  kosteus: 81.0
+              liian_kuuma:
+                value:
+                  asema: kumpula
+                  aika: "2026-11-25T12:00:00+02:00"
+                  lampotila_c: 99.0
+                  kosteus: null
+      responses:
+        "201":
+          description: Lukema tallennettiin. Runko on tallennettu lukema.
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/Lukema"}
+        "422":
+          description: Lukema hylättiin, eikä mitään tallennettu.
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/Virhe"}
+    # @loppu post
+  /asemat/{asema}/yhteenveto:
+    get:
+      operationId: haeYhteenveto
+      summary: Laskee aseman lukemien tunnusluvut.
+      parameters:
+        - name: asema
+          in: path
+          required: true
+          schema: {type: string}
+          example: kumpula
+      responses:
+        "200":
+          description: Yhteenveto aseman kaikista lukemista.
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/Yhteenveto"}
+        "404":
+          description: Asemalta ei ole yhtään lukemaa.
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/Virhe"}
+components:
+  schemas:
+    # @alku lukema
+    Lukema:
+      type: object
+      required: [asema, aika, lampotila_c, kosteus]
+      additionalProperties: false
+      properties:
+        asema:
+          type: string
+          description: Aseman tunnus.
+        aika:
+          type: string
+          format: date-time
+          description: Mittaushetki aikavyöhykkeineen (ISO 8601).
+        lampotila_c:
+          type: number
+          minimum: -60
+          maximum: 60
+          description: Lämpötila celsiusasteina.
+        kosteus:
+          type: [number, "null"]
+          description: Suhteellinen kosteus prosentteina.
+    # @loppu lukema
+    Yhteenveto:
+      type: object
+      required: [asema, maara, alin_c, ylin_c, keskiarvo_c]
+      additionalProperties: false
+      properties:
+        asema: {type: string}
+        maara: {type: integer, minimum: 1}
+        alin_c: {type: number}
+        ylin_c: {type: number}
+        keskiarvo_c: {type: number}
+    Virhe:
+      type: object
+      required: [virhe]
+      properties:
+        virhe:
+          type: string
+          description: Ihmisen luettava syy.

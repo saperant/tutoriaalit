@@ -1,0 +1,11 @@
+GET /lukemat [esimerkki]: 200
+POST /lukemat [kelvollinen]: 201
+POST /lukemat [liian_kuuma]: 422
+GET /asemat/{asema}/yhteenveto [esimerkki]: 200
+ERO: GET /lukemat [esimerkki]: 200: 'lampotila' is a required property
+ERO: GET /lukemat [esimerkki]: 200: Additional properties are not allowed
+('lampotila_c' was unexpected)
+ERO: POST /lukemat [kelvollinen]: 201: 'lampotila' is a required property
+ERO: POST /lukemat [kelvollinen]: 201: Additional properties are not
+allowed ('lampotila_c' was unexpected)
+kuvaus ja toteutus eroavat

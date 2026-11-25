@@ -141,6 +141,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Analogiaelektroniikka | [`analogiaelektroniikka/`](analogiaelektroniikka/) | [analogiaelektroniikka.pdf](https://saperant.github.io/tutoriaalit/materiaalit/analogiaelektroniikka.pdf) |
 | Kehitysympäristöt ja Dev Containers | [`kehitysymparistot/`](kehitysymparistot/) | [kehitysymparistot.pdf](https://saperant.github.io/tutoriaalit/materiaalit/kehitysymparistot.pdf) |
 | Ohjelmistoprojektin hallinta | [`projektinhallinta/`](projektinhallinta/) | [projektinhallinta.pdf](https://saperant.github.io/tutoriaalit/materiaalit/projektinhallinta.pdf) |
+| Tekninen dokumentaatio | [`tekninen-dokumentaatio/`](tekninen-dokumentaatio/) | [tekninen-dokumentaatio.pdf](https://saperant.github.io/tutoriaalit/materiaalit/tekninen-dokumentaatio.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

@@ -1,0 +1,3 @@
+0001  2026-04-02  hyväksytty  Asemat lähettävät lukemat tekstiriveinä
+0002  2026-04-20  korvattu    Lukemat tallennetaan SQLiteen
+0003  2026-10-08  hyväksytty  Lukemat tallennetaan PostgreSQL:ään

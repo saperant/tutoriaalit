@@ -1,0 +1,5 @@
+GET /lukemat [esimerkki]: 200
+POST /lukemat [kelvollinen]: 201
+POST /lukemat [liian_kuuma]: 422
+GET /asemat/{asema}/yhteenveto [esimerkki]: 200
+kuvaus ja toteutus vastaavat toisiaan

@@ -1,0 +1,21 @@
+# Doxygenin asetukset rengaspuskurikirjastolle. Vain oletuksista
+# poikkeavat asetukset; loput näkee komennolla `doxygen -g`.
+PROJECT_NAME           = "Rengaspuskuri"
+PROJECT_NUMBER         = 1.2.0
+INPUT                  = puskuri.h
+OUTPUT_DIRECTORY       = ../build/doxygen
+OPTIMIZE_OUTPUT_FOR_C  = YES
+GENERATE_LATEX         = NO
+GENERATE_XML           = YES
+TIMESTAMP              = NO
+QUIET                  = YES
+
+# @alku varoitukset
+# Dokumentoimaton nimi tai parametri on virhe, ei huomautus.
+EXTRACT_ALL            = NO
+WARN_IF_UNDOCUMENTED   = YES
+WARN_IF_DOC_ERROR      = YES
+WARN_NO_PARAMDOC       = YES
+WARN_AS_ERROR          = FAIL_ON_WARNINGS
+WARN_FORMAT            = "$file:$line: $text"
+# @loppu varoitukset

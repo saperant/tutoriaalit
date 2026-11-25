@@ -1,0 +1,9 @@
+struct    puskuri
+  variable  arvot
+  variable  alku
+  variable  maara
+group     puskuri
+  function  puskuri_alusta
+  function  puskuri_lisaa
+  function  puskuri_keskiarvo
+  define    PUSKURI_KOKO

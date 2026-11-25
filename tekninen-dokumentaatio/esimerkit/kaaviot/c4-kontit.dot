@@ -1,0 +1,19 @@
+// C4, taso 2: järjestelmän ajettavat osat (kontit).
+digraph kontit {
+    rankdir=LR;
+    asema [label="Sääasema-laite\n[ulkoinen]"];
+    tutkija [label="Tutkija", shape=ellipse];
+    subgraph cluster_saa {
+        label="Sääasemapalvelu";
+        style=dashed;
+        vastaanotin [label="Vastaanotin\n[Python]\n" +
+                           "Jäsentää ja tarkistaa\nlukemarivit"];
+        rajapinta [label="HTTP-rajapinta\n[Python]\n" +
+                         "Lukemat ja yhteenvedot\nJSON-muodossa"];
+        kanta [label="Lukematietokanta\n[PostgreSQL]", shape=cylinder];
+    }
+    asema -> vastaanotin [label="tekstirivit\n(HTTPS)"];
+    vastaanotin -> kanta [label="tallentaa\n(SQL)"];
+    tutkija -> rajapinta [label="JSON\n(HTTPS)"];
+    rajapinta -> kanta [label="lukee\n(SQL)"];
+}

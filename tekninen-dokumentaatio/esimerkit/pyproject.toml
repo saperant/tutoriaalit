@@ -1,0 +1,40 @@
+# Sääasemakirjasto ja dokumentaation tarkistustyökalut.
+[project]
+name = "saa"
+version = "1.2.0"
+description = "Sääaseman lukemien käsittely"
+requires-python = ">=3.12"
+
+[tool.ruff]
+target-version = "py312"
+extend-exclude = ["build"]
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "UP", "SIM", "D"]
+# Docstringit vaaditaan julkisilta nimiltä (D1xx) Googlen tyylillä.
+# Skriptien ja testien funktiot dokumentoi nimi ja moduulin docstring.
+ignore = ["D105", "D107", "D203", "D213", "D415", "D400"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"testit/*" = ["D"]
+"tyokalut/*" = ["D103"]
+"openapi/*" = ["D103"]
+"kaaviot/*" = ["D103"]
+"naytteet/*" = ["D"]
+"sphinx/conf.py" = ["D"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+exclude = ["build/"]
+
+[tool.pytest.ini_options]
+addopts = "-q --doctest-modules -p no:cacheprovider"
+testpaths = ["saa", "testit"]
+
+[[tool.mypy.overrides]]
+module = ["jsonschema", "openapi_spec_validator", "yaml"]
+ignore_missing_imports = true

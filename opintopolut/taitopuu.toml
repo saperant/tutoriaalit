@@ -2226,6 +2226,7 @@ laajuus = 4
 testaus = "Sphinx- ja Doxygen-rakennukset varoitukset virheinä, doctest ja linkkitarkistus"
 roadmap = []
 amk = "Tekninen viestintä"
+tutoriaali = "tekninen-dokumentaatio"
 
 [[taito]]
 id = "projektinhallinta"

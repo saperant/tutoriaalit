@@ -1,0 +1,17 @@
+// C4, taso 1: järjestelmä ympäristössään.
+digraph konteksti {
+    rankdir=LR;
+    ranksep=0.35;
+    nodesep=0.3;
+    asema [label="Sääasema-laite\n[ulkoinen järjestelmä]"];
+    tutkija [label="Tutkija\n[henkilö]", shape=ellipse];
+    saa [label="Sääasemapalvelu\n[järjestelmä]\n" +
+               "Tallentaa lukemat ja\nlaskee yhteenvedot", penwidth=2];
+    halytys [label="Hälytyspalvelu\n[ulkoinen järjestelmä]"];
+    yllapitaja [label="Ylläpitäjä\n[henkilö]", shape=ellipse];
+    { rank=same; halytys; yllapitaja; }
+    asema -> saa [label="lähettää\nlukemat\n(HTTPS)"];
+    tutkija -> saa [label="hakee\nyhteenvedot\n(HTTPS)"];
+    saa -> halytys [label="ilmoittaa\nhäiriöt"];
+    halytys -> yllapitaja [label="hälyttää"];
+}

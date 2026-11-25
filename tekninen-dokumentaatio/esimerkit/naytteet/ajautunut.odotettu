@@ -1,0 +1,4 @@
+naytteet/ajautunut.py:4: muunna: Args-osiossa ['raaka'], funktiossa
+['raaka_arvo', 'kerroin']
+naytteet/ajautunut.py:16: kalibroi: docstring puuttuu
+dokumentoitu oikein 1/3 (33 %)

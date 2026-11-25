@@ -1,0 +1,8 @@
+digraph "saa" {
+  rankdir=LR;
+  "__main__" -> "lukema";
+  "__main__" -> "tilasto";
+  "palvelu" -> "lukema";
+  "palvelu" -> "tilasto";
+  "tilasto" -> "lukema";
+}
