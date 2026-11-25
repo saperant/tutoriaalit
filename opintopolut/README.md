@@ -125,7 +125,7 @@ flowchart LR
     konenako["✓ Konenäkö (OpenCV)"]
     peliohjelmointi["✓ Peliohjelmointi"]
     moninpelit["✓ Reaaliaikaiset moninpelit"]
-    peliohjelmointi_3d["3D-peliohjelmointi"]
+    peliohjelmointi_3d["✓ 3D-peliohjelmointi"]
     pelifysiikka["Pelifysiikka"]
   end
   subgraph tietoturva["Tietoturva ja takaisinmallinnus"]
@@ -466,7 +466,7 @@ flowchart LR
 |-------|---:|------------|------|
 | Peliohjelmointi | 5 | Lineaarialgebra, Moderni C++ | [valmis](../peliohjelmointi/) |
 | Renderöinnin perusteet | 5 | Lineaarialgebra, Moderni C++ | [valmis](../renderoinnin-perusteet/) |
-| 3D-peliohjelmointi | 5 | Peliohjelmointi, Renderöinnin perusteet | suunniteltu |
+| 3D-peliohjelmointi | 5 | Peliohjelmointi, Renderöinnin perusteet | [valmis](../peliohjelmointi-3d/) |
 | Säteenseuranta ja fysikaalinen valaistus | 5 | Algoritmit, Renderöinnin perusteet, Todennäköisyys ja tilastot | [valmis](../sateenseuranta/) |
 | Konenäkö (OpenCV) | 5 | Signaalit ja järjestelmät | [valmis](../konenako/) |
 | Pelifysiikka | 5 | 3D-peliohjelmointi | suunniteltu |

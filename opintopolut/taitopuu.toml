@@ -2135,6 +2135,7 @@ laajuus = 5
 testaus = "C++, ohjelmistorenderöinti ilman näyttöä, deterministiset simulaatiotestit"
 roadmap = ["game-developer"]
 amk = "3D-peliohjelmointi"
+tutoriaali = "peliohjelmointi-3d"
 
 [[taito]]
 id = "pelifysiikka"

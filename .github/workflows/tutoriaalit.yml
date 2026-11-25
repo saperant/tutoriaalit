@@ -76,7 +76,7 @@ jobs:
             tcpdump dnsmasq-base bind9-dnsutils nftables bird2 \
             wireguard-tools wireguard-go busybox socat snmp snmpd \
             softflowd nfdump freeradius freeradius-utils qemu-system-x86 \
-            qemu-utils slapd ldap-utils restic rsync e2fsprogs libsdl2-dev \
+            qemu-utils slapd ldap-utils restic rsync e2fsprogs libsdl2-dev nlohmann-json3-dev \
             libegl-dev libopengl-dev libgl1-mesa-dri libegl-mesa0 \
             mesa-vulkan-drivers libvulkan-dev vulkan-validationlayers glslc \
             gcc-arm-none-eabi libnewlib-arm-none-eabi qemu-system-arm \

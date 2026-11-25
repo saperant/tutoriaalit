@@ -1,0 +1,12 @@
+Sama kaksi kiertoa eri järjestyksessä:
+nyökkäys, sitten kääntö  nokka (0.00, 1.00, 0.00)   selkä (1.00, 0.00, 0.00)
+kääntö, sitten nyökkäys  nokka (-1.00, 0.00, 0.00)  selkä (0.00, 0.00, 1.00)
+
+Nyökkäys 90 astetta (kääntö, kallistus):
+(30, 0)                  nokka (0.00, 1.00, 0.00)   selkä (0.50, 0.00, 0.87)
+(0, -30)                 nokka (0.00, 1.00, 0.00)   selkä (0.50, 0.00, 0.87)
+(50, 20)                 nokka (0.00, 1.00, 0.00)   selkä (0.50, 0.00, 0.87)
+
+Kääntö 350 astetta -> 10 astetta, puoliväli:
+kulmien keskiarvo        nokka (0.00, 0.00, 1.00)   selkä (0.00, 1.00, 0.00)
+kvaternioiden slerp      nokka (0.00, 0.00, -1.00)  selkä (0.00, 1.00, 0.00)

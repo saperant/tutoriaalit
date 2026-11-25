@@ -1,0 +1,11 @@
+4632 kolmiota, 3119 solmua, syvyys 12
+
+säde                        etäisyys laatikkotestit   kolmiotestit
+ylhäältä kumpuun               16.98             37              8
+vaakasuoraan laatikkoon         2.00            119             58
+maaston yli ohi               ei osu              1              0
+
+200 sädettä: 166 osumaa, eroja raakaan hakuun 0
+testejä sädettä kohden: raaka haku 4632, BVH 28
+
+alueen kysely: 52 ehdokasta, 171 laatikkotestiä

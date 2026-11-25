@@ -1,0 +1,231 @@
+{
+ "asset": {
+  "version": "2.0",
+  "generator": "tee_resurssit.py"
+ },
+ "scene": 0,
+ "scenes": [
+  {
+   "name": "taso",
+   "nodes": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+  }
+ ],
+ "nodes": [
+  {
+   "name": "maa",
+   "mesh": 0,
+   "translation": [0, -1, 0],
+   "scale": [40, 1, 40]
+  },
+  {
+   "name": "tasanne",
+   "mesh": 1,
+   "translation": [6, 0, -6],
+   "scale": [6, 1.5, 6]
+  },
+  {
+   "name": "ramppi",
+   "mesh": 3,
+   "translation": [6, 0, -0.5],
+   "rotation": [0, 1, 0, 0],
+   "scale": [3, 1.5, 5]
+  },
+  {
+   "name": "muuri",
+   "mesh": 2,
+   "translation": [-6, 0, -4],
+   "rotation": [0, 0.7071068, 0, 0.7071068],
+   "scale": [8, 2.5, 0.6]
+  },
+  {
+   "name": "torni",
+   "mesh": 1,
+   "translation": [-9, 0, 7],
+   "scale": [2, 5, 2]
+  },
+  {
+   "name": "porras.1",
+   "mesh": 1,
+   "translation": [1.4, 0, -6],
+   "scale": [0.4, 0.3, 3]
+  },
+  {
+   "name": "porras.2",
+   "mesh": 1,
+   "translation": [1.7999999999999998, 0, -6],
+   "scale": [0.4, 0.6, 3]
+  },
+  {
+   "name": "porras.3",
+   "mesh": 1,
+   "translation": [2.2, 0, -6],
+   "scale": [0.4, 0.9, 3]
+  },
+  {
+   "name": "porras.4",
+   "mesh": 1,
+   "translation": [2.6, 0, -6],
+   "scale": [0.4, 1.2, 3]
+  },
+  {
+   "name": "porras.5",
+   "mesh": 1,
+   "translation": [3, 1.2, -6],
+   "scale": [0.4, 0.3, 3]
+  },
+  {
+   "name": "alku",
+   "translation": [0, 0, 6]
+  },
+  {
+   "name": "lyhty.1",
+   "translation": [6, 1.5, -6]
+  },
+  {
+   "name": "lyhty.2",
+   "translation": [-8, 0, -1]
+  },
+  {
+   "name": "lyhty.3",
+   "translation": [-9, 0, 4]
+  },
+  {
+   "name": "lyhty.4",
+   "translation": [12, 0, 4]
+  }
+ ],
+ "meshes": [
+  {
+   "name": "kuutio.ruoho",
+   "primitives": [
+    {
+     "attributes": {
+      "POSITION": 1
+     },
+     "indices": 0,
+     "material": 0
+    }
+   ]
+  },
+  {
+   "name": "kuutio.kivi",
+   "primitives": [
+    {
+     "attributes": {
+      "POSITION": 1
+     },
+     "indices": 0,
+     "material": 1
+    }
+   ]
+  },
+  {
+   "name": "kuutio.tiili",
+   "primitives": [
+    {
+     "attributes": {
+      "POSITION": 1
+     },
+     "indices": 0,
+     "material": 3
+    }
+   ]
+  },
+  {
+   "name": "kiila.puu",
+   "primitives": [
+    {
+     "attributes": {
+      "POSITION": 3
+     },
+     "indices": 2,
+     "material": 2
+    }
+   ]
+  }
+ ],
+ "materials": [
+  {
+   "name": "ruoho",
+   "pbrMetallicRoughness": {
+    "baseColorFactor": [0.47, 0.6, 0.42, 1.0]
+   }
+  },
+  {
+   "name": "kivi",
+   "pbrMetallicRoughness": {
+    "baseColorFactor": [0.6, 0.6, 0.64, 1.0]
+   }
+  },
+  {
+   "name": "puu",
+   "pbrMetallicRoughness": {
+    "baseColorFactor": [0.66, 0.5, 0.33, 1.0]
+   }
+  },
+  {
+   "name": "tiili",
+   "pbrMetallicRoughness": {
+    "baseColorFactor": [0.7, 0.42, 0.32, 1.0]
+   }
+  }
+ ],
+ "accessors": [
+  {
+   "bufferView": 0,
+   "componentType": 5123,
+   "count": 36,
+   "type": "SCALAR"
+  },
+  {
+   "bufferView": 1,
+   "componentType": 5126,
+   "count": 8,
+   "type": "VEC3",
+   "min": [-0.5, 0.0, -0.5],
+   "max": [0.5, 1.0, 0.5]
+  },
+  {
+   "bufferView": 2,
+   "componentType": 5123,
+   "count": 24,
+   "type": "SCALAR"
+  },
+  {
+   "bufferView": 3,
+   "componentType": 5126,
+   "count": 6,
+   "type": "VEC3",
+   "min": [-0.5, 0.0, -0.5],
+   "max": [0.5, 1.0, 0.5]
+  }
+ ],
+ "bufferViews": [
+  {
+   "buffer": 0,
+   "byteOffset": 0,
+   "byteLength": 72
+  },
+  {
+   "buffer": 0,
+   "byteOffset": 72,
+   "byteLength": 96
+  },
+  {
+   "buffer": 0,
+   "byteOffset": 168,
+   "byteLength": 48
+  },
+  {
+   "buffer": 0,
+   "byteOffset": 216,
+   "byteLength": 72
+  }
+ ],
+ "buffers": [
+  {
+   "uri": "taso.bin",
+   "byteLength": 288
+  }
+ ]
+}

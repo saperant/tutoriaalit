@@ -1,0 +1,6 @@
+kääntö testejä yksitellen näkyviä palloja    testejä BVH:lla
+     0               2000             182                442
+    45               2000             209                496
+    90               2000             218                525
+   180               2000             183                493
+   270               2000             188                459

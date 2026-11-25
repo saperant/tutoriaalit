@@ -1,0 +1,41 @@
+hahmo.gltf: 8 solmua, 1 verkkoa (56 verteksiä, 84 kolmiota),
+  1 ihoa, 2 animaatiota
+taso.gltf: 15 solmua, 4 verkkoa (30 verteksiä, 44 kolmiota),
+  0 ihoa, 0 animaatiota
+
+Tason solmut:
+  maa        kuutio.ruoho  paikka (0.0, -1.0, 0.0)
+  tasanne    kuutio.kivi   paikka (6.0, 0.0, -6.0)
+  ramppi     kiila.puu     paikka (6.0, 0.0, -0.5)
+  muuri      kuutio.tiili  paikka (-6.0, 0.0, -4.0)
+  torni      kuutio.kivi   paikka (-9.0, 0.0, 7.0)
+  porras.1   kuutio.kivi   paikka (1.4, 0.0, -6.0)
+  porras.2   kuutio.kivi   paikka (1.8, 0.0, -6.0)
+  porras.3   kuutio.kivi   paikka (2.2, 0.0, -6.0)
+  porras.4   kuutio.kivi   paikka (2.6, 0.0, -6.0)
+  porras.5   kuutio.kivi   paikka (3.0, 1.2, -6.0)
+  alku       (merkki)      paikka (0.0, 0.0, 6.0)
+  lyhty.1    (merkki)      paikka (6.0, 1.5, -6.0)
+  lyhty.2    (merkki)      paikka (-8.0, 0.0, -1.0)
+  lyhty.3    (merkki)      paikka (-9.0, 0.0, 4.0)
+  lyhty.4    (merkki)      paikka (12.0, 0.0, 4.0)
+
+Hahmon nivelet sidontapoosissa:
+  lantio    vanhempi -1  paikka (0.00, 0.90, 0.00)
+  selkä     vanhempi  0  paikka (0.00, 1.00, 0.00)
+  pää       vanhempi  1  paikka (0.00, 1.50, 0.00)
+  olka.v    vanhempi  1  paikka (0.28, 1.40, 0.00)
+  olka.o    vanhempi  1  paikka (-0.28, 1.40, 0.00)
+  lonkka.v  vanhempi  0  paikka (0.12, 0.90, 0.00)
+  lonkka.o  vanhempi  0  paikka (-0.12, 0.90, 0.00)
+sidontamatriisit: suurin ero laskettuun 0.000000
+animaatio lepo    kesto 2.0 s, 2 kanavaa
+animaatio kävely  kesto 0.8 s, 4 kanavaa
+vasen jalkaterä kävelyn aikana:
+  t = 0.0  (0.12, 0.00, 0.00)
+  t = 0.2  (0.12, 0.10, -0.41)
+  t = 0.4  (0.12, 0.00, 0.00)
+  t = 0.6  (0.12, 0.10, 0.41)
+
+rikki.gltf: virhe: accessor 1 lukee puskurin ohi (1176 > 1000 tavua)
+ei-ole.gltf: virhe: tiedosto puuttuu

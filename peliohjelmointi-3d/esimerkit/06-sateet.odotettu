@@ -1,0 +1,13 @@
+Valinta hiirellä:
+  pikseli (272, 172): pallo     etäisyys  7.66  normaali (0.37, 0.42, 0.83)
+  pikseli (210, 150): laatikko  etäisyys  9.75  normaali (0.00, 0.00, 1.00)
+  pikseli (226,  90): torni     etäisyys 15.15  normaali (0.00, 0.00, 1.00)
+  pikseli (360, 250): lattia    etäisyys  7.03  normaali (0.00, 1.00, 0.00)
+  pikseli ( 60,  30): ei mitään
+
+Nopea ammus ja ohut seinä:
+  askel 1: z =  2.55  paikkatesti ei     pyyhkäisy ei
+  askel 2: z =  1.55  paikkatesti ei     pyyhkäisy ei
+  askel 3: z =  0.55  paikkatesti ei     pyyhkäisy ei
+  askel 4: z = -0.45  paikkatesti ei     pyyhkäisy osuu matkalla 0.35 m
+  askel 5: z = -1.45  paikkatesti ei     pyyhkäisy ei

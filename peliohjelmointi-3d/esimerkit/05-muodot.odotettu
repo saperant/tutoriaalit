@@ -1,0 +1,12 @@
+Lähin piste lattiakolmiossa:
+  pisteelle (0.00, 2.00, 2.00)   (0.00, 0.00, 2.00)
+  pisteelle (0.00, 2.00, 7.00)   (0.00, 0.00, 5.00)
+  pisteelle (8.00, 2.00, 7.00)   (5.00, 0.00, 5.00)
+
+Testit:
+pallo - pieni pallo  normaali (-0.97, -0.26, 0.00)  syvyys 0.25
+pallo - laatikko     normaali (1.00, 0.00, 0.00)    syvyys 0.30
+pallo - lattia       normaali (0.00, 1.00, 0.00)    syvyys 0.20
+hahmo - lattia       normaali (0.00, 1.00, 0.00)    syvyys 0.10
+hahmo - pieni pallo  ei osu
+hahmo - palkki       normaali (0.37, -0.91, -0.18)  syvyys 0.48

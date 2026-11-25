@@ -147,6 +147,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Tiimit ja organisaatiomallit | [`tiimit-ja-organisaatiot/`](tiimit-ja-organisaatiot/) | [tiimit-ja-organisaatiot.pdf](https://saperant.github.io/tutoriaalit/materiaalit/tiimit-ja-organisaatiot.pdf) |
 | Jatkuva integraatio ja toimitus | [`jatkuva-toimitus/`](jatkuva-toimitus/) | [jatkuva-toimitus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/jatkuva-toimitus.pdf) |
 | Fysikaalinen mallinnus ja simulointi | [`fysikaalinen-mallinnus/`](fysikaalinen-mallinnus/) | [fysikaalinen-mallinnus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/fysikaalinen-mallinnus.pdf) |
+| 3D-peliohjelmointi | [`peliohjelmointi-3d/`](peliohjelmointi-3d/) | [peliohjelmointi-3d.pdf](https://saperant.github.io/tutoriaalit/materiaalit/peliohjelmointi-3d.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet

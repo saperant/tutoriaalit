@@ -1,0 +1,15 @@
+kameran jälkeenjääneisyys kahden sekunnin jälkeen:
+   30 Hz: eksponentiaalinen 0.75 m, kiinteä osuus 1.50 m
+   60 Hz: eksponentiaalinen 0.79 m, kiinteä osuus 0.75 m
+  120 Hz: eksponentiaalinen 0.81 m, kiinteä osuus 0.37 m
+
+hahmon x   toivottu etäisyys   sallittu etäisyys
+    -4.0                5.00                5.00
+    -3.0                5.00                5.00
+    -2.0                5.00                2.36
+    -1.0                5.00                2.36
+     0.0                5.00                2.36
+     1.0                5.00                2.36
+     2.0                5.00                2.36
+     3.0                5.00                2.36
+     4.0                5.00                5.00

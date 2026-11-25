@@ -1,0 +1,327 @@
+{
+ "asset": {
+  "version": "2.0",
+  "generator": "tee_resurssit.py"
+ },
+ "scene": 0,
+ "scenes": [
+  {
+   "nodes": [0, 1]
+  }
+ ],
+ "nodes": [
+  {
+   "name": "hahmo",
+   "mesh": 0,
+   "skin": 0
+  },
+  {
+   "name": "lantio",
+   "translation": [0.0, 0.9, 0.0],
+   "children": [2, 6, 7]
+  },
+  {
+   "name": "selkä",
+   "translation": [0, 0.1, 0],
+   "children": [3, 4, 5]
+  },
+  {
+   "name": "pää",
+   "translation": [0, 0.5, 0]
+  },
+  {
+   "name": "olka.v",
+   "translation": [0.28, 0.4, 0]
+  },
+  {
+   "name": "olka.o",
+   "translation": [-0.28, 0.4, 0]
+  },
+  {
+   "name": "lonkka.v",
+   "translation": [0.12, 0.0, 0]
+  },
+  {
+   "name": "lonkka.o",
+   "translation": [-0.12, 0.0, 0]
+  }
+ ],
+ "meshes": [
+  {
+   "name": "hahmo",
+   "primitives": [
+    {
+     "attributes": {
+      "POSITION": 1,
+      "JOINTS_0": 2,
+      "WEIGHTS_0": 3
+     },
+     "indices": 0,
+     "material": 0
+    }
+   ]
+  }
+ ],
+ "materials": [
+  {
+   "name": "kangas",
+   "pbrMetallicRoughness": {
+    "baseColorFactor": [0.8, 0.7, 0.35, 1.0]
+   }
+  }
+ ],
+ "skins": [
+  {
+   "joints": [1, 2, 3, 4, 5, 6, 7],
+   "inverseBindMatrices": 4,
+   "skeleton": 1
+  }
+ ],
+ "animations": [
+  {
+   "name": "lepo",
+   "channels": [
+    {
+     "sampler": 0,
+     "target": {
+      "node": 4,
+      "path": "rotation"
+     }
+    },
+    {
+     "sampler": 1,
+     "target": {
+      "node": 5,
+      "path": "rotation"
+     }
+    }
+   ],
+   "samplers": [
+    {
+     "input": 5,
+     "output": 6,
+     "interpolation": "LINEAR"
+    },
+    {
+     "input": 5,
+     "output": 7,
+     "interpolation": "LINEAR"
+    }
+   ]
+  },
+  {
+   "name": "kävely",
+   "channels": [
+    {
+     "sampler": 0,
+     "target": {
+      "node": 6,
+      "path": "rotation"
+     }
+    },
+    {
+     "sampler": 1,
+     "target": {
+      "node": 7,
+      "path": "rotation"
+     }
+    },
+    {
+     "sampler": 2,
+     "target": {
+      "node": 4,
+      "path": "rotation"
+     }
+    },
+    {
+     "sampler": 3,
+     "target": {
+      "node": 5,
+      "path": "rotation"
+     }
+    }
+   ],
+   "samplers": [
+    {
+     "input": 8,
+     "output": 9,
+     "interpolation": "LINEAR"
+    },
+    {
+     "input": 8,
+     "output": 10,
+     "interpolation": "LINEAR"
+    },
+    {
+     "input": 8,
+     "output": 11,
+     "interpolation": "LINEAR"
+    },
+    {
+     "input": 8,
+     "output": 12,
+     "interpolation": "LINEAR"
+    }
+   ]
+  }
+ ],
+ "accessors": [
+  {
+   "bufferView": 0,
+   "componentType": 5123,
+   "count": 252,
+   "type": "SCALAR"
+  },
+  {
+   "bufferView": 1,
+   "componentType": 5126,
+   "count": 56,
+   "type": "VEC3",
+   "min": [-0.3400000035762787, 0.0, -0.11999999731779099],
+   "max": [0.3400000035762787, 1.7999999523162842, 0.14000000059604645]
+  },
+  {
+   "bufferView": 2,
+   "componentType": 5121,
+   "count": 56,
+   "type": "VEC4"
+  },
+  {
+   "bufferView": 3,
+   "componentType": 5126,
+   "count": 56,
+   "type": "VEC4"
+  },
+  {
+   "bufferView": 4,
+   "componentType": 5126,
+   "count": 7,
+   "type": "MAT4"
+  },
+  {
+   "bufferView": 5,
+   "componentType": 5126,
+   "count": 5,
+   "type": "SCALAR",
+   "min": [0.0],
+   "max": [2.0]
+  },
+  {
+   "bufferView": 6,
+   "componentType": 5126,
+   "count": 5,
+   "type": "VEC4"
+  },
+  {
+   "bufferView": 7,
+   "componentType": 5126,
+   "count": 5,
+   "type": "VEC4"
+  },
+  {
+   "bufferView": 8,
+   "componentType": 5126,
+   "count": 5,
+   "type": "SCALAR",
+   "min": [0.0],
+   "max": [0.800000011920929]
+  },
+  {
+   "bufferView": 9,
+   "componentType": 5126,
+   "count": 5,
+   "type": "VEC4"
+  },
+  {
+   "bufferView": 10,
+   "componentType": 5126,
+   "count": 5,
+   "type": "VEC4"
+  },
+  {
+   "bufferView": 11,
+   "componentType": 5126,
+   "count": 5,
+   "type": "VEC4"
+  },
+  {
+   "bufferView": 12,
+   "componentType": 5126,
+   "count": 5,
+   "type": "VEC4"
+  }
+ ],
+ "bufferViews": [
+  {
+   "buffer": 0,
+   "byteOffset": 0,
+   "byteLength": 504
+  },
+  {
+   "buffer": 0,
+   "byteOffset": 504,
+   "byteLength": 672
+  },
+  {
+   "buffer": 0,
+   "byteOffset": 1176,
+   "byteLength": 224
+  },
+  {
+   "buffer": 0,
+   "byteOffset": 1400,
+   "byteLength": 896
+  },
+  {
+   "buffer": 0,
+   "byteOffset": 2296,
+   "byteLength": 448
+  },
+  {
+   "buffer": 0,
+   "byteOffset": 2744,
+   "byteLength": 20
+  },
+  {
+   "buffer": 0,
+   "byteOffset": 2764,
+   "byteLength": 80
+  },
+  {
+   "buffer": 0,
+   "byteOffset": 2844,
+   "byteLength": 80
+  },
+  {
+   "buffer": 0,
+   "byteOffset": 2924,
+   "byteLength": 20
+  },
+  {
+   "buffer": 0,
+   "byteOffset": 2944,
+   "byteLength": 80
+  },
+  {
+   "buffer": 0,
+   "byteOffset": 3024,
+   "byteLength": 80
+  },
+  {
+   "buffer": 0,
+   "byteOffset": 3104,
+   "byteLength": 80
+  },
+  {
+   "buffer": 0,
+   "byteOffset": 3184,
+   "byteLength": 80
+  }
+ ],
+ "buffers": [
+  {
+   "uri": "hahmo.bin",
+   "byteLength": 3264
+  }
+ ]
+}

@@ -1,0 +1,17 @@
+# kesto  eteen  sivulle  kameran kääntö  hyppy
+# Vinosti rampin juurelle ja ramppia ylös ensimmäiselle lyhdylle.
+2.1   1   1    0  0
+1.5   1   0    0  0
+# Tasanteelta portaita alas länteen.
+1.5   0  -1    0  0
+# Taaksepäin muurin pään ohi ja muurin taakse toiselle lyhdylle.
+1.9  -1   0    0  0
+2.0   0  -1    0  0
+0.7   1   0    0  0
+# Kolmas lyhty tornin vierestä.
+1.3  -1   0    0  0
+0.3   0  -1    0  0
+# Kamera kääntyy itään, ja hahmo juoksee kentän poikki hypäten välillä.
+1.0   0   0  -90  0
+2.6   1   0    0  0
+2.7   1   0    0  1
