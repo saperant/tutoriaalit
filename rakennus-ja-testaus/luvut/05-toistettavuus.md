@@ -30,7 +30,7 @@ ja CI:n työhakemistossa, objektitiedostot eroavat. Valitsin
 `-ffile-prefix-map=VANHA=UUSI` korvaa polun alun sekä debug-tiedossa
 että `__FILE__`-makrossa:
 
-```{.bash tiedosto="esimerkit/04-toistettava/aja.sh" osa="polut"}
+```{.bash tiedosto="esimerkit/05-toistettava/aja.sh" osa="polut"}
 ```
 
 Funktio kääntää saman tiedoston kahdessa eri hakemistossa ja vertaa
@@ -45,7 +45,7 @@ Makrot `__DATE__` ja `__TIME__` laajenevat käännöshetkeen. Ne ovat
 suosittu tapa merkitä versio, ja ne tekevät jokaisesta rakennuksesta
 erilaisen:
 
-```{.c tiedosto="esimerkit/04-toistettava/versio.c"}
+```{.c tiedosto="esimerkit/05-toistettava/versio.c"}
 ```
 
 Toistettavien rakennusten yhteisö on sopinut ympäristömuuttujasta
@@ -55,7 +55,7 @@ asetetaan tavallisesti viimeisen commitin aika
 (`git log -1 --format=%ct`), jolloin aika kertoo silti jotain
 hyödyllistä:
 
-```{.bash tiedosto="esimerkit/04-toistettava/aja.sh" osa="aika"}
+```{.bash tiedosto="esimerkit/05-toistettava/aja.sh" osa="aika"}
 ```
 
 Parempi ratkaisu on olla käyttämättä makroja ja kirjoittaa versioksi
@@ -70,10 +70,10 @@ muutosajat, omistajat ja oikeudet. Valitsin `D` (*deterministinen
 tila*) kirjoittaa niiden tilalle nollat. Monissa jakeluissa se on
 oletus, mutta sitä ei kannata olettaa:
 
-```{.bash tiedosto="esimerkit/04-toistettava/aja.sh" osa="arkisto"}
+```{.bash tiedosto="esimerkit/05-toistettava/aja.sh" osa="arkisto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/04-toistettava.odotettu"}
+```{.tuloste tiedosto="esimerkit/05-toistettava.odotettu"}
 ```
 
 Aikaleima on Unix-ajan alku ja omistaja `0/0`, joten arkisto ei

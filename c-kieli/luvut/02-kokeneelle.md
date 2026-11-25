@@ -31,9 +31,9 @@ ajonaikainen ympäristö:
 | Asia | Python / Java | C++ | C |
 |----------------|------------------|----------------------|------------------------------|
 | Merkkijono | `str`, `String` | `std::string` | `char`-taulukko, päättyy `'\0'` |
-| Dynaaminen taulukko | `list`, `ArrayList` | `std::vector` | `malloc` + `realloc` itse (luku 7) |
+| Dynaaminen taulukko | `list`, `ArrayList` | `std::vector` | `malloc` + `realloc` itse (luku 8) |
 | Hajautustaulu | `dict`, `HashMap` | `std::unordered_map` | ei standardikirjastossa |
-| Luokka ja rajapinta | `class`, `interface` | `class`, virtuaalifunktiot | `struct` + funktio-osoitintaulu (luku 8) |
+| Luokka ja rajapinta | `class`, `interface` | `class`, virtuaalifunktiot | `struct` + funktio-osoitintaulu (luku 9) |
 | Kapselointi | `_nimi`, `private` | `private` | läpinäkymätön tyyppi (luku 9) |
 | Virheet | poikkeukset | poikkeukset, `std::expected` | paluuarvo, `errno` (luku 11) |
 | Resurssien vapautus | GC, `with`, `try-with-resources` | RAII | `goto`-siivous, init/destroy-parit |
@@ -47,10 +47,10 @@ Kalliit asiat ovat niitä, joita ohjelmoija kirjoittaa itse:
 
 - **Muistinvaraus.** `malloc` ja `free` voivat ottaa lukon ja etsiä
   vapaata tilaa. Kuumissa silmukoissa varataan kerran ja käytetään
-  uudelleen, tai käytetään areenaa (luku 7).
+  uudelleen, tai käytetään areenaa (luku 8).
 - **Merkkijonojen käsittely.** `strlen` käy merkkijonon läpi joka kutsulla.
   `strlen` silmukan ehdossa tekee lineaarisesta algoritmista
-  neliöllisen. Pituus kannattaa kuljettaa mukana (viipale, luku 6).
+  neliöllisen. Pituus kannattaa kuljettaa mukana (viipale, luku 7).
 - **Rakenteet arvona.** Iso rakenne kopioidaan kokonaan, kun se välitetään
   tai palautetaan arvona. Suuret rakenteet välitetään osoittimina.
 - **Epäsuoruus.** Funktio-osoittimen kautta tehtyä kutsua kääntäjä ei
@@ -68,10 +68,10 @@ Kalliit asiat ovat niitä, joita ohjelmoija kirjoittaa itse:
 2. **Etumerkittömät vertailut.** `-1 < 1u` on epätosi, ja `size_t`-tyyppinen
    silmukkamuuttuja ei koskaan ole negatiivinen (luku 3).
 3. **Merkkijonon päättyminen.** Kopiointifunktiot eivät aina kirjoita
-   päättävää nollamerkkiä (`strncpy`). Käytä `snprintf`iä (luku 6).
+   päättävää nollamerkkiä (`strncpy`). Käytä `snprintf`iä (luku 7).
 4. **Osoittimen elinaika.** Osoitin paikalliseen muuttujaan on roikkuva
    funktion palattua. Osoitin dynaamiseen muistiin on roikkuva `free`n
-   jälkeen, myös kopiot siitä (luku 7).
+   jälkeen, myös kopiot siitä (luku 8).
 5. **Kokonaislukujen ylivuoto** etumerkillisillä tyypeillä on
    määrittelemätöntä. Tarkista ennen laskua (`<stdckdint.h>`, luku 11).
 6. **Esikääntäjä on tekstinkorvausta.** Makron argumentti voi tulla

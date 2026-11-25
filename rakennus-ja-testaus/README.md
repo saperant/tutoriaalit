@@ -18,10 +18,12 @@ pikaopas: [rakennus-ja-testaus-pikaopas.pdf](https://saperant.github.io/tutoriaa
 5. Toistettava rakennus – polut, `SOURCE_DATE_EPOCH` ja arkistot
 6. CMake – kohteet, `PUBLIC`/`PRIVATE`/`INTERFACE`, esiasetukset ja Ninja
 7. Kirjastot ja riippuvuudet – `.a` ja `.so`, soname, `$ORIGIN`,
-   `pkg-config`, vendorointi, Conan ja vcpkg
+   asennus (`PREFIX`, `DESTDIR`), `pkg-config`, vendorointi, Conan ja
+   vcpkg
 8. Yksikkötestaus C:lle – oma testikehys, testikaksoset linkkerillä,
    `--wrap` ja CTest
-9. Sanitoijat – ASan, UBSan ja TSan testeissä ja CI:ssä
+9. Sanitoijat – ASan, UBSan ja TSan testeissä ja CI:ssä, sumutus
+   libFuzzerilla
 10. Kattavuus – gcov, gcovr, haarakattavuus ja kynnykset
 11. Staattinen analyysi – GCC:n varoitukset, clang-tidy, cppcheck ja
     `-Werror`
@@ -33,17 +35,18 @@ pikaopas: [rakennus-ja-testaus-pikaopas.pdf](https://saperant.github.io/tutoriaa
 ## Esimerkit
 
 Hakemistossa `esimerkit/` on yhteinen tilastoprojekti (`lahde/`) ja
-kullekin luvulle hakemisto, jonka `aja.sh` rakentaa, testaa tai
-analysoi projektin. Ajaja `aja-esimerkki.sh` ajaa esimerkin
+kullekin luvulle luvun numerolla alkava hakemisto, jonka `aja.sh`
+rakentaa, testaa tai analysoi projektin. Ajaja `aja-esimerkki.sh` ajaa esimerkin
 tilapäishakemistossa ja vertaa tulosteen tiedostoon
 `<esimerkki>.odotettu`; ShellCheck tarkistaa kaikki komentosarjat.
-Tarvittavat työkalut ovat GCC 14, CMake, Ninja, pkg-config, gcovr,
-clang-tidy 20, cppcheck, gdb ja check-jsonschema. Kehityskontti
+Tarvittavat työkalut ovat GCC 14, Clang 20 (sumutus), CMake, Ninja,
+pkg-config, gcovr, clang-tidy 20, cppcheck, gdb, PyYAML ja
+check-jsonschema. Kehityskontti
 `.devcontainer/rakennus-ja-testaus` sisältää ne kaikki.
 
 ```text
 make -C esimerkit            # kaikki esimerkit
-make -C esimerkit 06-kirjastot
+make -C esimerkit 07-kirjastot
 ```
 
 ## Rakentaminen
@@ -52,5 +55,7 @@ make -C esimerkit 06-kirjastot
 make testaa    # rakenne ja esimerkit
 make pdf       # tutoriaali ja pikaopas
 ```
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks. [Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 Lisenssi: CC BY-SA 4.0.

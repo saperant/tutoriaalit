@@ -1,5 +1,11 @@
 # Syöte, tuloste ja tiedostot {.runko-tyypit}
 
+Ohjelma saa tietonsa komentoriviltä, vakiosyötteestä ja tiedostoista ja
+kirjoittaa tuloksensa virtoihin. C:n standardikirjasto käsittelee näitä
+kaikkia saman `FILE`-rajapinnan kautta. Tässä luvussa luetaan
+argumentteja ja rivejä, kirjoitetaan teksti- ja binääritiedostoja ja
+tarkistetaan jokaisen vaiheen onnistuminen.
+
 ## Komentoriviargumentit
 
 `main`-funktio voi ottaa kaksi parametria: argumenttien määrän `argc` ja
@@ -115,6 +121,32 @@ sidottu alustaan: kenttien koko, täyte ja tavujärjestys voivat olla
 toisella koneella erilaiset. Siirrettävissä tiedostomuodoissa kentät
 kirjoitetaan yksitellen kiinteänkokoisina ja sovitussa
 tavujärjestyksessä.
+
+## Omat muotoilufunktiot
+
+`printf` ottaa vaihtelevan määrän argumentteja. Oman vastaavan funktion
+voi kirjoittaa otsikon `<stdarg.h>` makroilla: parametriluettelon lopun
+`...` hyväksyy loput argumentit, `va_start` alustaa niiden läpikäynnin
+ja `va_end` päättää sen. Tavallisin käyttö on lokifunktio, joka
+välittää argumentit edelleen `printf`-perheen `v`-alkuiselle
+funktiolle:
+
+```{.c tiedosto="esimerkit/10-loki.c" osa="loki"}
+```
+
+```{.c tiedosto="esimerkit/10-loki.c" osa="kaytto"}
+```
+
+```{.tuloste tiedosto="esimerkit/10-loki.odotettu"}
+```
+
+Kääntäjä ei tiedä vaihtuvien argumenttien tyyppejä, joten väärä
+muotoilumääre on määrittelemätöntä käyttäytymistä. GCC:n ja Clangin
+attribuutti `format` palauttaa tarkistuksen: sen ansiosta
+`loki(VIRHE, "%s", 42)` antaa saman varoituksen kuin vastaava
+`printf`-kutsu. Todellinen lokifunktio kirjoittaisi `stderr`-virtaan
+(`vfprintf`); tässä käytetään vakiotulostetta, jotta tuloste näkyy
+esimerkissä.
 
 ## Käytännössä
 

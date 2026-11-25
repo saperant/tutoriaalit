@@ -21,7 +21,7 @@ Staattinen kirjasto on pelkkä arkisto objektitiedostoja. Linkkeri ottaa
 siitä vain ne jäsenet, joita tarvitaan puuttuvien symbolien
 täyttämiseen:
 
-```{.bash tiedosto="esimerkit/06-kirjastot/aja.sh" osa="staattinen"}
+```{.bash tiedosto="esimerkit/07-kirjastot/aja.sh" osa="staattinen"}
 ```
 
 Valitsin `-L.` lisää hakemiston kirjastojen hakupolkuun ja `-ltilasto`
@@ -37,10 +37,25 @@ Jaetun kirjaston koodi on käännettävä sijaintiriippumattomaksi
 Kirjastolle annetaan *soname*, joka kertoo sen rajapinnan
 pääversion, ja *versioskripti*, joka rajaa näkyvät symbolit:
 
-```{.text tiedosto="esimerkit/06-kirjastot/tilasto.map"}
+```{.text tiedosto="esimerkit/07-kirjastot/tilasto.map"}
 ```
 
-```{.bash tiedosto="esimerkit/06-kirjastot/aja.sh" osa="jaettu"}
+```{.bash tiedosto="esimerkit/07-kirjastot/aja.sh" osa="jaettu"}
+```
+
+```{.dot otsikko="Jaetun kirjaston kolme nimeä. Katkoviivat ovat symbolisia linkkejä. Linkkeri seuraa kehityslinkkiä ja tallentaa ohjelmaan sonamen; ajonaikainen linkkeri `ld.so` etsii sonamea ja päätyy varsinaiseen tiedostoon."}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.4;
+  ld [label="linkkeri\n-ltilasto", style="rounded,dashed"];
+  ldso [label="ld.so", style="rounded,dashed"];
+  so [label="libtilasto.so"];
+  so1 [label="libtilasto.so.1\n(soname)"];
+  so120 [label="libtilasto.so.1.2.0", penwidth=1.6];
+  ld -> so;
+  so -> so1 [style=dashed];
+  so1 -> so120 [style=dashed];
+  ldso -> so1;
+}
 ```
 
 Nimeämiskäytäntö on kolmiportainen. Tiedosto `libtilasto.so.1.2.0` on
@@ -69,14 +84,21 @@ linkitys ja ABI*.
 Jaettu kirjasto on löydyttävä myös ajon aikana, ja ajonaikainen
 linkkeri `ld.so` etsii sitä eri paikoista kuin käännösaikainen:
 
-```{.bash tiedosto="esimerkit/06-kirjastot/aja.sh" osa="haku"}
+```{.bash tiedosto="esimerkit/07-kirjastot/aja.sh" osa="haku"}
 ```
 
 Ensimmäinen ohjelma linkittyy, koska `-L.` kertoo linkkerille, mistä
 kirjasto löytyy, mutta käynnistys epäonnistuu: ajonaikainen linkkeri
-etsii vain järjestelmän hakemistoista (`/lib`, `/usr/lib` ja
-`/etc/ld.so.conf`), ympäristömuuttujan `LD_LIBRARY_PATH` hakemistoista
-ja ohjelmaan tallennetusta hakupolusta (`RUNPATH`). Hakupolun erikoisarvo
+ei tunne käännösaikaista hakupolkua. Se etsii sonamea tässä
+järjestyksessä:
+
+1. ympäristömuuttujan `LD_LIBRARY_PATH` hakemistot
+2. ohjelmaan tallennettu hakupolku (`RUNPATH`)
+3. välimuisti `/etc/ld.so.cache`, jonka `ldconfig` kokoaa tiedoston
+   `/etc/ld.so.conf` hakemistoista
+4. järjestelmän oletushakemistot (`/lib`, `/usr/lib`).
+
+Hakupolun erikoisarvo
 `$ORIGIN` tarkoittaa ohjelman omaa hakemistoa, joten ohjelma ja kirjasto
 voidaan siirtää yhdessä minne tahansa. Tämä on hyvä ratkaisu ohjelmalle,
 joka toimitetaan omine kirjastoineen. Järjestelmään asennettavat
@@ -84,23 +106,63 @@ kirjastot kuuluvat järjestelmän hakemistoihin, eikä niille tarvita
 hakupolkua. `LD_LIBRARY_PATH` sopii kokeiluun mutta ei pysyväksi
 ratkaisuksi, koska se koskee kaikkia ympäristössä ajettavia ohjelmia.
 
+## Asennus
+
+Rakennettu kirjasto on vielä rakennushakemistossa. *Asennus* kopioi
+käyttäjän tarvitsemat tiedostot vakiopaikkoihin: kirjastot hakemistoon
+`lib`, otsakkeet hakemistoon `include` ja ohjelmat hakemistoon `bin`.
+Kaksi muuttujaa on vakiintunut kaikissa rakennustyökaluissa:
+
+- `PREFIX` on hakemisto, josta tiedostot löytyvät käytössä. Oletus on
+  `/usr/local`; jakelun paketit käyttävät arvoa `/usr`.
+- `DESTDIR` on väliaikainen juuri, jonka alle tiedostot kopioidaan.
+  Paketoija asentaa hakemistoon, josta paketti kootaan, ilman
+  pääkäyttäjän oikeuksia ja koskematta omaan järjestelmäänsä.
+
+Asennuspolku on siis `$(DESTDIR)$(PREFIX)/lib`, mutta tiedostoihin
+kirjoitetaan vain `PREFIX`. Makessa kohteen nimi on `install`:
+
+```{.makefile tiedosto="esimerkit/07-kirjastot/asennus.mk" osa="asennus"}
+```
+
+```{.bash tiedosto="esimerkit/07-kirjastot/aja.sh" osa="asennus"}
+```
+
+Tulosteessa (luvun lopussa) tiedostot ovat hakemiston `paketti/usr`
+alla, mutta `.pc`-tiedostoon on kirjoitettu `prefix=/usr`: se kuvaa
+lopullista sijaintia. Komento `install` kopioi tiedoston ja asettaa
+sen oikeudet; `install -d` luo hakemistot.
+
+CMakessa samat säännöt kirjoitetaan `install`-komennoilla, ja moduuli
+`GNUInstallDirs` antaa vakiohakemistojen nimet:
+
+```{.cmake tiedosto="esimerkit/06-cmake/CMakeLists.txt" osa="asennus"}
+```
+
+```{.bash tiedosto="esimerkit/06-cmake/aja.sh" osa="asennus"}
+```
+
+Edellisen luvun esimerkin viimeinen tulosteosa näyttää tuloksen:
+ohjelma, otsake ja kirjasto hakemiston `paketti/usr` alla.
+
 ## pkg-config
 
 Kirjaston käyttäjän on tiedettävä otsakkeiden ja kirjaston hakemistot
 ja kirjaston omat riippuvuudet. `pkg-config` lukee nämä tiedot
 kirjaston asentamasta `.pc`-tiedostosta:
 
-```{.text tiedosto="esimerkit/06-kirjastot/tilasto.pc.in"}
+```{.text tiedosto="esimerkit/07-kirjastot/tilasto.pc.in"}
 ```
 
 `Libs.private` luettelee riippuvuudet, joita tarvitaan vain staattisessa
 linkityksessä: jaettu kirjasto kertoo ne itse. Esimerkki asentaa
-kirjaston ja otsakkeen hakemistoon ja kysyy liput `pkg-config`-ohjelmalta:
+kirjaston samalla `install`-kohteella omaan hakemistoonsa ja kysyy liput
+`pkg-config`-ohjelmalta:
 
-```{.bash tiedosto="esimerkit/06-kirjastot/aja.sh" osa="pkgconfig"}
+```{.bash tiedosto="esimerkit/07-kirjastot/aja.sh" osa="pkgconfig"}
 ```
 
-```{.tuloste tiedosto="esimerkit/06-kirjastot.odotettu"}
+```{.tuloste tiedosto="esimerkit/07-kirjastot.odotettu"}
 ```
 
 `PKG_CONFIG_PATH` lisää hakemiston, josta `.pc`-tiedostoja etsitään.

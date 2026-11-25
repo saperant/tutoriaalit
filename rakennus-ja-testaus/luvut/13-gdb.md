@@ -16,7 +16,7 @@ Ohjelma käännetään debug-tiedolla (`-g`) ja ilman optimointia
 (`-O0`), jotta jokainen muuttuja ja rivi on debuggerin nähtävissä.
 Eräajon perusmuoto on:
 
-```{.bash tiedosto="esimerkit/12-gdb/aja.sh" osa="gdb"}
+```{.bash tiedosto="esimerkit/13-gdb/aja.sh" osa="gdb"}
 ```
 
 `-batch` ajaa komennot ja lopettaa, ja ohjelma tapetaan, jos se on
@@ -32,7 +32,7 @@ kirjoitettaisiin kehotteeseen.
 Ohjelma kysyy asetuksen arvoa, ja hakufunktio palauttaa `NULL`, kun
 asetusta ei löydy:
 
-```{.c tiedosto="esimerkit/12-gdb/kaatuu.c"}
+```{.c tiedosto="esimerkit/13-gdb/kaatuu.c"}
 ```
 
 Ilman debuggeria näkyy vain paluuarvo 139, eli 128 + 11, signaali
@@ -40,7 +40,7 @@ Ilman debuggeria näkyy vain paluuarvo 139, eli 128 + 11, signaali
 kutsupinon (`bt`). Sen jälkeen se tulostaa muuttujan ja kutsuu jopa
 ohjelman omaa funktiota (`print hae(nimi)`):
 
-```{.bash tiedosto="esimerkit/12-gdb/aja.sh" osa="kaatuminen"}
+```{.bash tiedosto="esimerkit/13-gdb/aja.sh" osa="kaatuminen"}
 ```
 
 Kaatumiskohta on rivi 23, funktio `arvo`, ja kutsuja on `main` rivillä
@@ -56,17 +56,17 @@ muuttanut koodi on jossain muualla. *Vahtipiste* (*watchpoint*)
 pysäyttää ohjelman, kun lausekkeen arvo muuttuu, ja näyttää vanhan ja
 uuden arvon sekä kohdan, jossa muutos tapahtui:
 
-```{.c tiedosto="esimerkit/12-gdb/vahti.c"}
+```{.c tiedosto="esimerkit/13-gdb/vahti.c"}
 ```
 
 Laskurin pitäisi olla 3, mutta ohjelma tulostaa 55. Vahtipiste
 asetetaan, kun muuttuja on olemassa ja alustettu: ensin keskeytyskohta
 riville 20, sitten `watch t.laskuri` ja `continue`:
 
-```{.bash tiedosto="esimerkit/12-gdb/aja.sh" osa="vahtipiste"}
+```{.bash tiedosto="esimerkit/13-gdb/aja.sh" osa="vahtipiste"}
 ```
 
-```{.tuloste tiedosto="esimerkit/12-gdb.odotettu"}
+```{.tuloste tiedosto="esimerkit/13-gdb.odotettu"}
 ```
 
 Laskuri muuttui funktiossa `nimea`, joka ei käsittele laskuria
@@ -94,7 +94,7 @@ virtuaalikoneessa gdb voi joutua käyttämään ohjelmistovahtipistettä.
 gdb:n lähdekoodirivit sisältävät sarkaimen, joka muutetaan
 välilyönneiksi:
 
-```{.bash tiedosto="esimerkit/12-gdb/aja.sh" osa="siisti"}
+```{.bash tiedosto="esimerkit/13-gdb/aja.sh" osa="siisti"}
 ```
 
 Samoin kannattaa toimia, kun gdb:n tulostetta verrataan odotettuun tai

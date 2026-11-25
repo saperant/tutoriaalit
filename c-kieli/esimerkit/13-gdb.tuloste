@@ -1,0 +1,12 @@
+Breakpoint 1 at file 08-vektori.c, line 17.
+Breakpoint 1, vektori_lisaa (v=0x..., arvo=50) at 08-vektori.c:17
+17          if (v->koko == v->kapasiteetti) {
+#0  vektori_lisaa (v=0x..., arvo=50) at 08-vektori.c:17
+#1  0x... in main () at 08-vektori.c:43
+$1 = 50
+$2 = {10, 20, 30, 40}
+$3 = 4
+0x... in main () at 08-vektori.c:43
+43              if (!vektori_lisaa(&v, i * 10)) {
+Value returned is $4 = true
+$5 = 8

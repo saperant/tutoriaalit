@@ -1,7 +1,7 @@
 # Käännösjärjestelmät, testaus ja CI: esimerkit.
 #
 #   make              tarkistaa skriptit ja ajaa kaikki esimerkit
-#   make 03-make-syvemmin   ajaa yhden esimerkin
+#   make 04-make-syvemmin   ajaa yhden esimerkin
 #   make paivita      kirjoittaa odotetut tulosteet uudelleen (vain kun
 #                     muutos on tarkistettu käsin)
 #
@@ -16,7 +16,7 @@ ESIMERKIT := $(sort $(patsubst %/aja.sh,%,$(wildcard */aja.sh)))
 kaikki: shellcheck $(ESIMERKIT)
 
 shellcheck:
-	@shellcheck -x aja-esimerkki.sh */aja.sh
+	@shellcheck -x aja-esimerkki.sh verkko.sh */aja.sh
 	@echo "OK: ShellCheck"
 
 $(ESIMERKIT):

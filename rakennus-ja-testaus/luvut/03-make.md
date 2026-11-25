@@ -21,7 +21,7 @@ Seuraavat rivit ovat komentoja, ja ne alkavat sarkainmerkillä, eivät
 välilyönneillä. Tämä on Maken tunnetuin sudenkuoppa: välilyönneillä
 sisennetty komento antaa virheen `missing separator`.
 
-```{.makefile tiedosto="esimerkit/02-make/Makefile" osa="saannot"}
+```{.makefile tiedosto="esimerkit/03-make/Makefile" osa="saannot"}
 ```
 
 Komennoissa käytetään *automaattisia muuttujia*: `$@` on kohde, `$<`
@@ -52,7 +52,7 @@ Kaikki kohteet eivät ole tiedostoja. `testaa` ajaa ohjelman ja
 `siivoa` poistaa käännöstuotteet. Ne merkitään erikoiskohteen
 `.PHONY` riippuvuuksiksi:
 
-```{.makefile tiedosto="esimerkit/02-make/Makefile" osa="phony"}
+```{.makefile tiedosto="esimerkit/03-make/Makefile" osa="phony"}
 ```
 
 Ilman merkintää Make tulkitsisi kohteen tiedostoksi. Jos hakemistoon
@@ -67,10 +67,10 @@ Esimerkki rakentaa ohjelman, rakentaa sen heti uudelleen, muuttaa
 lähdetiedoston ja lopuksi otsakkeen. Komento `touch` päivittää
 tiedoston muutosajan muuttamatta sisältöä, mikä riittää Makelle:
 
-```{.bash tiedosto="esimerkit/02-make/aja.sh"}
+```{.bash tiedosto="esimerkit/03-make/aja.sh"}
 ```
 
-```{.tuloste tiedosto="esimerkit/02-make.odotettu"}
+```{.tuloste tiedosto="esimerkit/03-make.odotettu"}
 ```
 
 Kolme ensimmäistä tapausta toimivat kuten pitää. Ensimmäinen rakennus
@@ -86,6 +86,19 @@ lisätty rakenteen kenttä, toinen objektitiedosto käyttäisi vanhaa
 rakennetta ja toinen uutta, ja ohjelma toimisi väärin ilman yhtään
 varoitusta. Tällainen vika katoaa komennolla `make siivoa && make`,
 minkä vuoksi se jää usein selvittämättä.
+
+Vian näkee, kun Makefilen riippuvuudet piirtää verkoksi. Esimerkin
+viimeinen vaihe tekee sen: `make -pn` tulostaa Maken *tietokannan* eli
+kaikki kohteet ja riippuvuudet sellaisina kuin Make ne näkee, ja
+esimerkkien skripti `verkko.sh` poimii niistä tiedostojen väliset
+kaaret Graphvizin DOT-muotoon.
+
+```{.dot tiedosto="esimerkit/03-make/verkko.dot" otsikko="Ensimmäisen Makefilen riippuvuusverkko Maken tietokannasta piirrettynä. Nuoli kulkee riippuvuudesta kohteeseen. Otsaketta `lahde/tilasto.h` ei ole verkossa lainkaan, joten sen muutos ei voi vanhentaa mitään."}
+```
+
+Make käy verkon läpi kohteesta taaksepäin ja tekee uudelleen jokaisen
+solmun, jonka jokin edeltäjä on sitä uudempi. Tiedosto, joka ei ole
+verkossa, ei vaikuta mihinkään.
 
 Otsakeriippuvuuksia voisi kirjoittaa käsin (`main.o: lahde/tilasto.h`),
 mutta ne vanhenevat heti, kun joku lisää `#include`-rivin. Oikea

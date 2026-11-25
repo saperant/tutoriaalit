@@ -21,26 +21,26 @@ virheeseen eikä kerro, mitä arvoja verrattiin. Oma kehys korjaa
 molemmat: tarkistus kirjaa virheen ja jatkaa, ja liukulukuvertailu
 tulostaa saadun ja odotetun arvon.
 
-```{.c tiedosto="esimerkit/07-testit/testi.h"}
+```{.c tiedosto="esimerkit/08-testit/testi.h"}
 ```
 
-Makrot ovat makroja eivätkä funktioita kahdesta syystä. `__FILE__` ja
-`__LINE__` laajenevat tarkistuksen kohdalla, joten virheilmoitus
-kertoo testin rivin. `#ehto` muuttaa lausekkeen merkkijonoksi, joten
-ilmoitus näyttää tarkistetun lausekkeen sellaisenaan. `do { ... }
-while (0)` tekee makrosta yhden lauseen, joka toimii myös `if`-lauseen
-haarana ilman aaltosulkeita. `TARKISTA_LAHELLA` laskee argumenttinsa
-kerran väliaikaisiin muuttujiin, jotta sivuvaikutteinen lauseke ei
-suoritu kahdesti. Ajaja on lyhyt:
+Tarkistukset ovat makroja eivätkä funktioita, koska `__FILE__`,
+`__LINE__` ja lausekkeen merkkijonoksi muuttava `#ehto` toimivat vain
+tarkistuksen kohdalla laajenevassa makrossa: näin virheilmoitus kertoo
+testin rivin ja tarkistetun lausekkeen. `TARKISTA_LAHELLA` laskee
+argumenttinsa kerran väliaikaisiin muuttujiin, jotta sivuvaikutteinen
+lauseke ei suoritu kahdesti. Makrojen tekniikat, kuten
+`do { ... } while (0)`, selittää taito *C-kieli* (esikääntäjä).
+Ajaja on lyhyt:
 
-```{.c tiedosto="esimerkit/07-testit/testi.c"}
+```{.c tiedosto="esimerkit/08-testit/testi.c"}
 ```
 
 Testit ovat tavallisia funktioita, ja ne rekisteröidään taulukkoon
 `main`-funktiossa. Testin nimi kertoo, mitä se varmistaa, joten
 epäonnistunut testi on ymmärrettävä pelkästä nimestä:
 
-```{.c tiedosto="esimerkit/07-testit/testit.c" osa="tilasto"}
+```{.c tiedosto="esimerkit/08-testit/testit.c" osa="tilasto"}
 ```
 
 Odotetut arvot on laskettu käsin, ei testattavalla koodilla. Sarjan
@@ -54,7 +54,7 @@ koodipolkuja.
 
 Raportti sisältää kellonajan:
 
-```{.c tiedosto="esimerkit/07-testit/raportti.c"}
+```{.c tiedosto="esimerkit/08-testit/raportti.c"}
 ```
 
 Kelloa ei voi testata: tulos muuttuu joka sekunti. Ratkaisu on
@@ -64,28 +64,46 @@ tehdään rajapinnalla ja riippuvuuden injektoinnilla. C:ssä on
 yksinkertaisempi keino: linkkeri. Kellonaika on eristetty omaan
 rajapintaansa ja tiedostoonsa:
 
-```{.c tiedosto="esimerkit/07-testit/kello.h"}
+```{.c tiedosto="esimerkit/08-testit/kello.h"}
 ```
 
 Tuotanto-ohjelma linkitetään tiedoston `kello.c` kanssa, joka kutsuu
 `time`-funktiota. Testit linkitetään valekellon kanssa, joka palauttaa
 aina saman hetken:
 
-```{.c tiedosto="esimerkit/07-testit/kello_vale.c"}
+```{.c tiedosto="esimerkit/08-testit/kello_vale.c"}
+```
+
+```{.dot otsikko="Linkityssauma. Molemmat ohjelmat sisältävät saman `raportti.c`:n; vain se, mikä tiedosto toteuttaa `kello.h`:n rajapinnan, vaihtuu."}
+digraph {
+  rankdir=LR; nodesep=0.25; ranksep=0.7;
+  subgraph cluster_t {
+    label="tuotanto: raportti"; style="rounded,dashed";
+    tm [label="raportti_main.c"]; tr [label="raportti.c\ntilasto.c"];
+    tk [label="kello.c\n(kutsuu time())", penwidth=1.6];
+    tm -> tr; tr -> tk [label="kello.h"];
+  }
+  subgraph cluster_e {
+    label="testi: testit"; style="rounded,dashed";
+    em [label="testit.c\ntesti.c"]; er [label="raportti.c\ntilasto.c"];
+    ek [label="kello_vale.c\n(kiinteä hetki)", penwidth=1.6];
+    em -> er; er -> ek [label="kello.h"];
+  }
+}
 ```
 
 Koodia ei muuteta testejä varten, eikä siinä ole ehtolauseita tai
 funktio-osoittimia. Ero on vain siinä, mitkä tiedostot linkitetään.
 Makefile kuvaa molemmat:
 
-```{.makefile tiedosto="esimerkit/07-testit/Makefile" osa="testit"}
+```{.makefile tiedosto="esimerkit/08-testit/Makefile" osa="testit"}
 ```
 
 Testi kirjoittaa raportin muistipuskuriin `fmemopen`-funktiolla ja
 vertaa sitä tarkkaan odotettuun merkkijonoon. Samalla se varmistaa,
 ettei raportti muuttanut syötettä, vaikka mediaani lajittelee:
 
-```{.c tiedosto="esimerkit/07-testit/testit.c" osa="valekello"}
+```{.c tiedosto="esimerkit/08-testit/testit.c" osa="valekello"}
 ```
 
 ## Kääreet: --wrap
@@ -95,7 +113,7 @@ funktioon `__wrap_malloc` ja antaa alkuperäisen funktion nimellä
 `__real_malloc`. Näin testi voi tehdä muistinvarauksesta epäonnistuvan
 ja tarkistaa, että virhepolku toimii:
 
-```{.c tiedosto="esimerkit/07-testit/testit.c" osa="wrap"}
+```{.c tiedosto="esimerkit/08-testit/testit.c" osa="wrap"}
 ```
 
 Virhepolut ovat koodin vähiten testattu osa, koska niitä on vaikea
@@ -111,10 +129,10 @@ tai, viimeisenä keinona, esikäsittelijällä.
 Esimerkki ajaa testit, rakentaa tuotanto-ohjelman ja lopuksi rikkoo
 keskiarvon tarkoituksella:
 
-```{.bash tiedosto="esimerkit/07-testit/aja.sh"}
+```{.bash tiedosto="esimerkit/08-testit/aja.sh"}
 ```
 
-```{.tuloste tiedosto="esimerkit/07-testit.odotettu"}
+```{.tuloste tiedosto="esimerkit/08-testit.odotettu"}
 ```
 
 Epäonnistunut ajo näyttää, miltä hyvän testin pitää epäonnistua. Rivit

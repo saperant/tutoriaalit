@@ -8,7 +8,11 @@ CMake nostaa kuvauksen tasoa: siinä kerrotaan, mitä rakennetaan
 siitä varsinaisen rakennusjärjestelmän, esimerkiksi Makefilet,
 Ninja-tiedostot tai Visual Studion projektin. CMake on C- ja
 C++-projektien yleisin rakennusjärjestelmä, ja useimmat kirjastot,
-IDE:t ja paketinhallinnat osaavat käyttää sitä.
+IDE:t ja paketinhallinnat osaavat käyttää sitä. Samaa ajatusta
+toteuttaa Meson, jota käyttävät muun muassa GNOME, systemd ja Mesa:
+kuvauskieli on suppeampi ja tiukempi, ja taustalla on aina Ninja.
+Tämän luvun käsitteet (kohteet, näkyvyys, erillinen rakennushakemisto)
+pätevät siinäkin.
 
 CMaken käyttö jakautuu kahteen vaiheeseen:
 
@@ -24,7 +28,7 @@ ctest --test-dir build            testit
 `CMakeLists.txt` alkaa vaaditulla CMake-versiolla ja projektin
 kuvauksella:
 
-```{.cmake tiedosto="esimerkit/05-cmake/CMakeLists.txt" osa="projekti"}
+```{.cmake tiedosto="esimerkit/06-cmake/CMakeLists.txt" osa="projekti"}
 ```
 
 `cmake_minimum_required` ei ole muodollisuus: se valitsee, miten CMake
@@ -49,7 +53,21 @@ Vanhat globaalit komennot (`include_directories`, `add_definitions`,
 `link_libraries`) koskevat kaikkea hakemistossa ja sen alla, ja niiden
 vaikutusta on vaikea rajata. Niitä ei käytetä uudessa koodissa.
 
-```{.cmake tiedosto="esimerkit/05-cmake/CMakeLists.txt" osa="kohteet"}
+```{.cmake tiedosto="esimerkit/06-cmake/CMakeLists.txt" osa="kohteet"}
+```
+
+```{.dot otsikko="Esimerkin kohteet. Nuoli osoittaa kohteesta sen riippuvuuteen, ja nuolen teksti on linkityksen näkyvyys. Kirjaston `PUBLIC`-asetus siirtyy sitä käyttäville kohteille, `PRIVATE`-asetus ei."}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.5;
+  node [shape=record, style="filled"];
+  cli [label="tilasto-cli | saa: -Ilahde"];
+  testi [label="testaa_tilasto | saa: -Ilahde"];
+  lib [label="tilasto | PUBLIC: -Ilahde | PRIVATE: -Wall -Wextra -Werror"];
+  m [label="m", shape=box, style="rounded,dashed"];
+  cli -> lib [label="PRIVATE"];
+  testi -> lib [label="PRIVATE"];
+  lib -> m [label="PRIVATE"];
+}
 ```
 
 Jokaisella `target_*`-asetuksella on näkyvyys, joka kertoo, kenelle
@@ -81,7 +99,7 @@ tallentuu kirjastoon itseensä.
 
 `enable_testing()` ja `add_test()` rekisteröivät testit CTestille:
 
-```{.cmake tiedosto="esimerkit/05-cmake/CMakeLists.txt" osa="testit"}
+```{.cmake tiedosto="esimerkit/06-cmake/CMakeLists.txt" osa="testit"}
 ```
 
 Ensimmäinen testi on testiohjelma, joka onnistuu tai epäonnistuu
@@ -92,7 +110,7 @@ rakennusvaiheessa ohjelman todelliseksi poluksi, joka riippuu
 generaattorista ja käännöstyypistä. Testiohjelma on yksinkertainen,
 `assert`-pohjainen:
 
-```{.c tiedosto="esimerkit/05-cmake/testit/testaa_tilasto.c"}
+```{.c tiedosto="esimerkit/06-cmake/testit/testaa_tilasto.c"}
 ```
 
 Rivi `#undef NDEBUG` on tärkeä. Release-käännös määrittelee makron
@@ -108,7 +126,7 @@ käsin on virhealtista, ja jokainen kehittäjä kirjoittaa ne vähän eri
 tavalla. `CMakePresets.json` tallentaa ne versionhallintaan
 nimettyinä *esiasetuksina*:
 
-```{.json tiedosto="esimerkit/05-cmake/CMakePresets.json"}
+```{.json tiedosto="esimerkit/06-cmake/CMakePresets.json"}
 ```
 
 Esiasetuksia on kolmenlaisia: konfigurointi (`configurePresets`),
@@ -128,22 +146,23 @@ suunniteltu suoritettavaksi eikä kirjoitettavaksi, se käynnistyy
 nopeasti ja rinnakkaistaa oletuksena kaikille prosessoreille.
 Esimerkki rakentaa ja testaa molemmat esiasetukset:
 
-```{.bash tiedosto="esimerkit/05-cmake/aja.sh" osa="kehitys"}
+```{.bash tiedosto="esimerkit/06-cmake/aja.sh" osa="kehitys"}
 ```
 
-```{.bash tiedosto="esimerkit/05-cmake/aja.sh" osa="liput"}
+```{.bash tiedosto="esimerkit/06-cmake/aja.sh" osa="liput"}
 ```
 
-```{.bash tiedosto="esimerkit/05-cmake/aja.sh" osa="julkaisu"}
+```{.bash tiedosto="esimerkit/06-cmake/aja.sh" osa="julkaisu"}
 ```
 
-```{.tuloste tiedosto="esimerkit/05-cmake.odotettu"}
+```{.tuloste tiedosto="esimerkit/06-cmake.odotettu"}
 ```
 
 Tiedosto `compile_commands.json` todistaa näkyvyyden toimivan:
 otsakehakemisto `lahde` siirtyi kaikille kirjastoa käyttäville
 kohteille (`PUBLIC`), mutta `-Werror` koskee vain kirjaston omaa
-lähdettä (`PRIVATE`).
+lähdettä (`PRIVATE`). Tulosteen viimeinen osa asentaa
+julkaisuversion; asennussäännöt esitellään seuraavassa luvussa.
 
 ## Riippuvuudet: find_package
 

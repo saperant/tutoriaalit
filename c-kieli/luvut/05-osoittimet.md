@@ -15,6 +15,25 @@ osoittaa:
 ```{.c tiedosto="esimerkit/05-osoittimet.c" osa="perusteet"}
 ```
 
+```{.dot otsikko="Osoitin `p` on oma muuttujansa, jonka arvo on muuttujan `luku` osoite. Osoitteet ovat esimerkkejä; todelliset vaihtelevat ajokerrasta toiseen."}
+digraph {
+  rankdir=LR; nodesep=0.4; ranksep=0.9;
+  node [shape=plain, style=""];
+  p [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left"><i>int *p</i></td></tr>
+    <tr><td port="v" bgcolor="#EEF1F6" width="110">0x7ffc1000</td></tr>
+    <tr><td border="0" align="left"><font point-size="8">osoite 0x7ffc1008</font></td></tr></table>>];
+  x [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left"><i>int luku</i></td></tr>
+    <tr><td port="v" bgcolor="#EEF1F6" width="110">42</td></tr>
+    <tr><td border="0" align="left"><font point-size="8">osoite 0x7ffc1000</font></td></tr></table>>];
+  p:v:e -> x:v:w [label="  *p  "];
+}
+```
+
+Sijoitus `*p = 7` kirjoittaa siis nuolen päässä olevaan laatikkoon,
+kun taas `p = &toinen` kääntäisi nuolen osoittamaan toiseen muuttujaan.
+
 *Tyhjä osoitin* ei osoita mihinkään olioon. C23:ssa se kirjoitetaan
 `nullptr`; vanhemmassa koodissa käytetään makroa `NULL`. Tyhjän
 osoittimen dereferointi on määrittelemätöntä käyttäytymistä, ja
@@ -43,6 +62,34 @@ kirjoitetaan *tulosparametreihin*:
 ```{.tuloste tiedosto="esimerkit/05-osoittimet.odotettu"}
 ```
 
+## Olion elinaika
+
+Osoitin on käyttökelpoinen vain niin kauan kuin olio, johon se
+osoittaa, on olemassa. C-ohjelman oliot sijaitsevat kolmenlaisessa
+muistissa, ja muistialue määrää olion elinajan:
+
+- **Staattinen muisti**: globaalit ja `static`-muuttujat sekä
+  merkkijonoliteraalit. Ne ovat olemassa koko ohjelman ajan.
+- **Pino** (*stack*): funktioiden paikalliset muuttujat ja parametrit.
+  Ne luodaan funktioon tultaessa ja tuhotaan siitä poistuttaessa.
+  Pinon koko on rajallinen, tyypillisesti muutamia megatavuja.
+- **Keko** (*heap*): dynaamisesti varattu muisti. Ohjelma varaa sen
+  ajon aikana ja vapauttaa sen itse (luku 8).
+
+Funktio ei siksi saa palauttaa osoitinta paikalliseen muuttujaansa:
+muuttuja tuhoutuu funktion palatessa, ja osoitin jää osoittamaan
+pinon kohtaan, jonka seuraava funktiokutsu ottaa käyttöön. Kääntäjä
+huomaa yksinkertaisimmat tapaukset:
+
+```{.c tiedosto="esimerkit/05-elinaika.ei-kaanny.c"}
+```
+
+Toiseen suuntaan osoittimen välittäminen on turvallista: kutsujan
+muuttuja on olemassa koko kutsun ajan, joten edellä `vaihda(&a, &b)` ja
+tulosparametrit toimivat. Jos datan on elettävä sen luonutta funktiota
+pidempään, se on joko staattista, kutsujan antamassa muistissa tai
+varattu keosta.
+
 ## Osoitinaritmetiikka
 
 Osoittimeen voi lisätä kokonaisluvun. Lisäys tehdään alkioina, ei
@@ -55,6 +102,19 @@ Taulukon nimi muuntuu useimmissa lausekkeissa osoittimeksi taulukon
 ensimmäiseen alkioon. Taulukon voi siksi käydä läpi osoittimella:
 
 ```{.c tiedosto="esimerkit/05-aritmetiikka.c" osa="aritmetiikka"}
+```
+
+```{.dot otsikko="Osoitinaritmetiikka lasketaan alkioina: `p + 2` on kahden `int`-alkion eli kahdeksan tavun päässä. `t + 5` osoittaa viimeisen alkion ohi; sitä saa verrata mutta ei dereferoida."}
+digraph {
+  rankdir=TB; nodesep=0.15; ranksep=0.35;
+  node [shape=plain, style=""];
+  t [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0"><font point-size="8">t[0]<br/>+0</font></td><td border="0"><font point-size="8">t[1]<br/>+4</font></td><td border="0"><font point-size="8">t[2]<br/>+8</font></td><td border="0"><font point-size="8">t[3]<br/>+12</font></td><td border="0"><font point-size="8">t[4]<br/>+16</font></td><td border="0"><font point-size="8"> <br/>+20 tavua</font></td></tr>
+    <tr><td port="c0" bgcolor="#EEF1F6" width="48">10</td><td port="c1" bgcolor="#EEF1F6" width="48">20</td><td port="c2" bgcolor="#EEF1F6" width="48">30</td><td port="c3" bgcolor="#EEF1F6" width="48">40</td><td port="c4" bgcolor="#EEF1F6" width="48">50</td><td port="c5" width="48" style="dashed"><font point-size="8">ei alkiota</font></td></tr></table>>];
+  p [label="p = t"]; p2 [label="p + 2"]; loppu [label="loppu = t + 5"];
+  t:c0:s -> p [dir=back]; t:c2:s -> p2 [dir=back];
+  t:c5:s -> loppu [dir=back, style=dashed];
+}
 ```
 
 Osoittimen saa siirtää taulukon viimeisen alkion *ohi* yhden alkion
@@ -132,6 +192,10 @@ vain todelliselle taulukolle, ei osoittimelle.
 - **`const`-oikeellisuus alusta asti.** Jokainen osoitinparametri on
   `const`, ellei funktio muuta dataa. `const` leviää: jos sitä ei käytetä
   alusta asti, sen lisääminen myöhemmin vaatii muutoksia koko koodiin.
+- **Osoitin ei saa elää kohdettaan pidempään.** Funktio ei palauta
+  eikä tallenna osoitinta paikalliseen muuttujaansa. Rajapinnan
+  kuvaukseen kirjoitetaan, kuinka kauan funktiolle annetun tai sen
+  palauttaman osoittimen on oltava voimassa.
 - **Tulosparametri ja paluuarvo.** Funktio palauttaa onnistumisen
   (`bool` tai virhekoodi) ja kirjoittaa tuloksen tulosparametriin vain
   onnistuessaan. Kutsuja ei näin koskaan saa puolivalmista tulosta.
@@ -153,5 +217,7 @@ vain todelliselle taulukolle, ei osoittimelle.
 - Osaat lukea `const`-määreiset osoitintyypit ja selittää, mikä niissä on
   vakio.
 - Osaat käydä taulukon läpi osoitinaritmetiikalla rajoja ylittämättä.
+- Osaat kertoa, missä muistialueessa olio sijaitsee ja kuinka kauan
+  siihen osoittava osoitin on käyttökelpoinen.
 - Osaat välittää funktio-osoittimen takaisinkutsuna ja perustella, miksi
   takaisinkutsulle annetaan kontekstiosoitin.

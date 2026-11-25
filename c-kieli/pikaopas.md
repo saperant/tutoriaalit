@@ -26,6 +26,10 @@ subtitle: Pikaopas kokeneelle kehittäjälle · C17/C23 · GCC 14, Clang 20
 ```{.c tiedosto="esimerkit/pikaopas.c" osa="tyypit"}
 ```
 
+- Bitit etumerkittömillä: aseta `x | m`, nollaa `x & ~m`, vaihda `x ^ m`,
+  testaa `(x & m) != 0`, kenttä `(x >> siirto) & maski`.
+- Vertailu sitoo tiukemmin kuin `&`, `^` ja `|`: sulkeet aina.
+
 | Määre | Tyyppi | Määre | Tyyppi |
 |-------|--------|-------|--------|
 | `%d %i` | `int` | `%zu` | `size_t` |

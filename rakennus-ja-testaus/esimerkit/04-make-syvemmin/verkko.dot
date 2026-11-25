@@ -1,0 +1,9 @@
+digraph {
+  rankdir=LR; nodesep=0.25; ranksep=0.6;
+  "build/main.o" -> "build/tilasto";
+  "build/tilasto.o" -> "build/tilasto";
+  "lahde/main.c" -> "build/main.o";
+  "lahde/tilasto.c" -> "build/tilasto.o";
+  "lahde/tilasto.h" -> "build/main.o";
+  "lahde/tilasto.h" -> "build/tilasto.o";
+}

@@ -30,7 +30,7 @@ subtitle: Pikaopas · Make, CMake, kirjastot, testit, sanitoijat, analyysi, CI j
 Komennot sisennetään **sarkaimella**. Muuttujat: `CC`, `CFLAGS`,
 `CPPFLAGS`, `LDFLAGS`, `LDLIBS`.
 
-```{.makefile tiedosto="esimerkit/03-make-syvemmin/Makefile" osa="saannot"}
+```{.makefile tiedosto="esimerkit/04-make-syvemmin/Makefile" osa="saannot"}
 ```
 
 ```text
@@ -53,7 +53,7 @@ gzip -n;  LC_ALL=C TZ=UTC;  diffoscope a b
 
 # CMake
 
-```{.cmake tiedosto="esimerkit/05-cmake/CMakeLists.txt" osa="kohteet"}
+```{.cmake tiedosto="esimerkit/06-cmake/CMakeLists.txt" osa="kohteet"}
 ```
 
 | Näkyvyys | Kohde itse | Käyttäjät |
@@ -87,6 +87,8 @@ readelf -d ohjelma | grep -E 'NEEDED|RUNPATH|SONAME'
 nm -D --defined-only libx.so
 -Wl,-rpath,'$ORIGIN'                           haku ohjelman vierestä
 pkg-config --cflags --libs [--static] x
+make install PREFIX=/usr DESTDIR=/tmp/p        asennus
+DESTDIR=/tmp/p cmake --install build --prefix /usr
 ```
 
 - `libx.so.1.2.0` (tiedosto) ← `libx.so.1` (soname) ← `libx.so`
@@ -98,7 +100,7 @@ pkg-config --cflags --libs [--static] x
 
 # Yksikkötestit
 
-```{.c tiedosto="esimerkit/07-testit/testi.h"}
+```{.c tiedosto="esimerkit/08-testit/testi.h"}
 ```
 
 - Testikaksonen: sama rajapinta, eri `.c` testilinkitykseen.
@@ -119,6 +121,9 @@ pkg-config --cflags --libs [--static] x
 -fno-sanitize-recover=all
 ASAN_OPTIONS=detect_leaks=1:halt_on_error=1
 TSAN_OPTIONS=halt_on_error=1  UBSAN_OPTIONS=print_stacktrace=1
+clang -g -fsanitize=fuzzer,address kohde.c     sumutus
+./a.out -runs=100000 corpus/                   etsintä
+./a.out crash-...                              löydöksen toisto
 ```
 
 # Kattavuus
@@ -135,7 +140,7 @@ gcovr -r . --filter lahde/ --gcov-executable gcov-14
 
 # Staattinen analyysi
 
-```{.yaml tiedosto="esimerkit/10-analyysi/.clang-tidy"}
+```{.yaml tiedosto="esimerkit/11-analyysi/.clang-tidy"}
 ```
 
 ```text

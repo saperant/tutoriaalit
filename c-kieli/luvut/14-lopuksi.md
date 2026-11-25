@@ -14,18 +14,19 @@ GCC 14:ssä ja Clang 20:ssä valitsimella `-std=c23`.
 | tyhjä alustin `{}` | `{0}` | 3 |
 | binääriliteraalit `0b1010` | heksadesimaaliluvut | 3 |
 | numeroerotin `1'000'000` | – | 3 |
+| `<stdbit.h>`-otsikon bittifunktiot | kääntäjäkohtaiset `__builtin`-funktiot | 3 |
 | `static_assert` ilman viestiä | `_Static_assert(ehto, "viesti")` | 11 |
 | attribuutit, kuten `[[fallthrough]]` | kääntäjäkohtaiset laajennokset | 4 |
-| luettelon perustyyppi `enum e : uint8_t` | – | 8 |
+| luettelon perustyyppi `enum e : uint8_t` | – | 6 |
 | `<stdckdint.h>` | omat ylivuototarkistukset | 11 |
-| `strdup` standardikirjastossa | POSIX-laajennos | 7 |
+| `strdup` standardikirjastossa | POSIX-laajennos | 8 |
 | `thread_local` avainsanana | `_Thread_local` | 12 |
 | attribuutti `[[nodiscard]]` | kääntäjäkohtaiset laajennokset | 11 |
 | funktio `f()` tarkoittaa samaa kuin `f(void)` | `()` tarkoitti määrittelemättömiä parametreja | 4 |
 
 Muita C23:n uudistuksia ovat esimerkiksi `#embed`, joka liittää
-binääritiedoston sisällön taulukoksi, `<stdbit.h>`-otsikon
-bittioperaatiot sekä mielivaltaisen levyiset kokonaisluvut `_BitInt(N)`.
+binääritiedoston sisällön taulukoksi, sekä mielivaltaisen levyiset
+kokonaisluvut `_BitInt(N)`.
 
 ## Mallit ja idiomit
 
@@ -35,13 +36,14 @@ ja avoimen lähdekoodin projekteissa.
 
 | Malli | Ongelma, jonka se ratkaisee | Luku |
 |-------|-----------------------------|------|
+| Maski ja siirto | rekisterin tai lippujoukon yksittäiset kentät | 3 |
 | Tulosparametri ja onnistumisen paluuarvo | useita tuloksia ja virheen ilmaisu ilman poikkeuksia | 5 |
-| Osoitin ja pituus, viipale | taulukot ja alijonot ilman kopiointia | 6 |
-| Dynaaminen taulukko geometrisella kasvatuksella | kasvava kokoelma | 7 |
-| Areena | monen olion yhteinen elinaika ilman vuotoja | 7 |
-| Luonti- ja tuhoamisfunktiopari | resurssin elinkaari ilman konstruktoreita | 7, 9 |
-| Merkitty unioni | arvo, joka voi olla yksi monesta tyypistä | 8 |
-| Funktio-osoitintaulu | rajapinnat ja vaihdettavat toteutukset | 8 |
+| Osoitin ja pituus, viipale | taulukot ja alijonot ilman kopiointia | 7 |
+| Dynaaminen taulukko geometrisella kasvatuksella | kasvava kokoelma | 8 |
+| Areena | monen olion yhteinen elinaika ilman vuotoja | 8 |
+| Luonti- ja tuhoamisfunktiopari | resurssin elinkaari ilman konstruktoreita | 8, 9 |
+| Merkitty unioni | arvo, joka voi olla yksi monesta tyypistä | 6 |
+| Funktio-osoitintaulu | rajapinnat ja vaihdettavat toteutukset | 9 |
 | Läpinäkymätön tyyppi | kapselointi ja vakaa binäärirajapinta | 9 |
 | Moduulietuliite | nimiavaruudet | 9 |
 | X-makro | saman luettelon useat näkymät | 9 |

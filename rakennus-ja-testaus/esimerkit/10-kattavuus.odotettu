@@ -1,0 +1,20 @@
+== ensimmäiset testit
+testit läpi
+File                                       Lines    Exec  Cover   Missing
+lahde/tilasto.c                               22      20    90%   17,37
+TOTAL                                         22      20    90%
+== gcov: suorituskerrat riveittäin, ##### = ei suoritettu
+        -:   15:{
+        1:   16:    if (n < 2)
+    #####:   17:        return 0.0;
+        1:   18:    double ka = keskiarvo(x, n);
+--
+        1:   35:    if (n % 2 == 1)
+        1:   36:        return x[n / 2];
+    #####:   37:    return (x[n / 2 - 1] + x[n / 2]) / 2.0;
+        -:   38:}
+== puuttuvat tapaukset lisätty
+testit läpi
+File                                       Lines    Exec  Cover   Missing
+lahde/tilasto.c                               22      22   100%
+TOTAL                                         22      22   100%

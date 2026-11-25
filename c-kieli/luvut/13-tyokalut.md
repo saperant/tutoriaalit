@@ -25,7 +25,8 @@ valitsimella `-Werror`, jotta niitä ei pääse kertymään.
 Tämän tutoriaalin esimerkeillä on oma Makefile, joka kääntää ne kehitys-
 valitsimilla: `make` kääntää kaikki, `make aja-10-rivit` ajaa yhden ja
 `make virhe-03-etumerkki` näyttää tarkoituksella virheellisen esimerkin
-käännösvirheen.
+käännösvirheen. `make tyokalut` ajaa tämän luvun gdb-istunnon ja
+staattisen analyysin ja vertaa tulosteita alla näytettyihin.
 
 ## Debuggaus: gdb
 
@@ -46,6 +47,24 @@ gdb ./ohjelma           käynnistä debuggeri
 (gdb) continue          jatka
 ```
 
+Komennot voi antaa myös komentorivillä valitsimella `-ex`, jolloin
+istunto on toistettava. Seuraava ajo tutkii luvun 8 kasvavaa taulukkoa
+sillä hetkellä, kun viides alkio lisätään ja tila on loppumassa:
+
+```{.bash tiedosto="esimerkit/13-tyokalut.sh" osa="gdb"}
+```
+
+```{.tuloste tiedosto="esimerkit/13-gdb.tuloste"}
+```
+
+Ehdollinen pysähdyskohta pysäyttää ohjelman vasta, kun ehto on tosi.
+`bt` näyttää, mistä funktioon tultiin, ja `print *v->data@v->koko`
+tulostaa osoittimen takaa `koko` alkiota taulukkona. `finish` ajaa
+funktion loppuun ja näyttää paluuarvon; sen jälkeen ollaan
+`main`-funktiossa, jossa kapasiteetti on kaksinkertaistunut.
+Osoitteiden tilalla on tulosteessa `0x...`, koska ne vaihtelevat
+ajokerrasta toiseen.
+
 Kaatuneen ohjelman tilan voi tutkia jälkikäteen ytimen vedoksesta
 (*core dump*): `ulimit -c unlimited` sallii vedokset, ja `gdb ohjelma core`
 avaa ne. Komento `bt` näyttää heti, missä ohjelma kaatui.
@@ -63,7 +82,9 @@ Sanitoijat lisäävät ohjelmaan ajonaikaisia tarkistuksia:
 
 AddressSanitizer ja ThreadSanitizer eivät toimi samassa käännöksessä,
 joten testit ajetaan tarvittaessa useampaan kertaan eri sanitoijilla.
-Luvuissa 7 ja 11 nähtiin, miltä sanitoijien raportit näyttävät.
+Luvuissa 8 ja 11 nähtiin, miltä sanitoijien raportit näyttävät.
+Sanitoijien kytkemistä käännösjärjestelmään ja CI:hin käsittelee taito
+*Käännösjärjestelmät, testaus ja CI*.
 
 ## Staattinen analyysi
 
@@ -76,6 +97,22 @@ virhepolkuja, joita testit eivät käy läpi:
   löydöksistä se osaa korjata automaattisesti.
 - `cppcheck` on kevyt, erillinen analysaattori, jota käytetään usein
   sulautetuissa projekteissa.
+
+Seuraavassa funktiossa on virhe polulla, jota esimerkin oma ajo ei
+käy läpi, koska tiedosto on aina olemassa. Ohjelma kääntyy
+varoituksitta ja toimii oikein myös sanitoijien kanssa:
+
+```{.c tiedosto="esimerkit/13-analyysi.c" osa="lue"}
+```
+
+`gcc -fanalyzer` käy läpi myös virhepolun ja kertoo vaiheittain, miten
+vuotoon päädytään:
+
+```{.bash tiedosto="esimerkit/13-tyokalut.sh" osa="analyysi"}
+```
+
+```{.tuloste tiedosto="esimerkit/13-analyysi.tuloste"}
+```
 
 Analysaattorit tuottavat myös vääriä hälytyksiä. Ne kannattaa ottaa
 käyttöön projektin alussa, jolloin löydökset pysyvät vähäisinä.
@@ -143,7 +180,10 @@ syötteen testattavalle jäsentimelle. Kun ohjelma käännetään valitsimella
 `-fsanitize=fuzzer,address`, sumutin ja AddressSanitizer löytävät
 yhdessä rajojen ylitykset, jotka käsin kirjoitetuilta testeiltä jäävät
 huomaamatta. Jokainen ulkoista syötettä jäsentävä C-funktio kannattaa
-sumuttaa.
+sumuttaa. Testatun sumutusesimerkin löydöksineen näyttää taito
+*Käännösjärjestelmät, testaus ja CI*, ja löydösten merkitystä
+tietoturvalle käsittelee taito *Haavoittuvuuksien analyysi ja
+torjunta*.
 
 ## Käytännössä
 
@@ -154,7 +194,7 @@ sumuttaa.
   rinnakkaisuutta sisältävä koodi ThreadSanitizerin kanssa.
 - **Testattavuus suunnitellaan.** Puhtaat funktiot (syöte sisään, tulos
   ulos) ovat helpoimpia testata. Ulkoiset riippuvuudet, kuten tiedostot
-  ja laitteet, kätketään rajapinnan taakse (luku 8), jolloin testi voi
+  ja laitteet, kätketään rajapinnan taakse (luku 9), jolloin testi voi
   korvata ne.
 - **Reunatapaukset ensin:** tyhjä syöte, yksi alkio, suurin koko,
   virheellinen syöte. Suurin osa C-ohjelmien virheistä on reunoilla.

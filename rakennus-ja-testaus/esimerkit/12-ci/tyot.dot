@@ -1,0 +1,11 @@
+digraph {
+  rankdir=LR; nodesep=0.2; ranksep=0.7;
+  alku [label="push tai\npull request", style="rounded,dashed"];
+  alku -> "rakenna\ngcc-14 / kehitys";
+  alku -> "rakenna\ngcc-14 / julkaisu";
+  alku -> "rakenna\nclang-20 / kehitys";
+  alku -> "analyysi";
+  "rakenna\ngcc-14 / kehitys" -> "kattavuus";
+  "rakenna\ngcc-14 / julkaisu" -> "kattavuus";
+  "rakenna\nclang-20 / kehitys" -> "kattavuus";
+}

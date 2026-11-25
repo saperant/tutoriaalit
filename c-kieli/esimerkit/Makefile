@@ -6,6 +6,8 @@
 #                           luetaan tiedostoista .syote ja .argumentit
 #   make virhe-03-etumerkki näyttää .ei-kaanny-esimerkin käännösvirheen
 #                           (varoitukset virheinä, kuten testeissä)
+#   make tyokalut           ajaa luvun 13 gdb-istunnon ja staattisen
+#                           analyysin ja vertaa tulosteet tallennettuihin
 #   make siivoa             poistaa käännetyt ohjelmat
 #
 # Ohjelmat käännetään AddressSanitizerin ja UndefinedBehaviorSanitizerin
@@ -23,9 +25,9 @@ KORJATUT   := $(patsubst %.ei-kaanny.c,%,$(wildcard *.ei-kaanny.c))
 HAKEMISTOT := $(sort $(patsubst %/,%,$(dir $(wildcard */*.c))))
 OHJELMAT   := $(sort $(TAVALLISET) $(KAATUVAT) $(KORJATUT) $(HAKEMISTOT))
 
-.PHONY: kaikki siivoa $(OHJELMAT)
+.PHONY: kaikki siivoa tyokalut $(OHJELMAT)
 
-kaikki: $(addprefix bin/,$(OHJELMAT))
+kaikki: $(addprefix bin/,$(OHJELMAT)) tyokalut
 
 $(OHJELMAT): %: bin/%
 
@@ -53,6 +55,10 @@ aja-%: bin/%
 
 virhe-%:
 	-$(CC) $(CFLAGS) -Werror -fsyntax-only $*.ei-kaanny.c
+
+tyokalut: | bin
+	@CC="$(CC)" ./13-tyokalut.sh gdb | diff -u 13-gdb.tuloste -
+	@CC="$(CC)" ./13-tyokalut.sh analyysi | diff -u 13-analyysi.tuloste -
 
 siivoa:
 	rm -rf bin

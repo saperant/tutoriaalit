@@ -23,7 +23,7 @@ yllättäen, ja raskas `$(shell ...)` tai `$(wildcard ...)` ajetaan vain
 kerran. Laiskaa sijoitusta tarvitaan, kun arvo viittaa muuttujaan, joka
 määritellään vasta myöhemmin. Uuden Makefilen muuttujat:
 
-```{.makefile tiedosto="esimerkit/03-make-syvemmin/Makefile" osa="muuttujat"}
+```{.makefile tiedosto="esimerkit/04-make-syvemmin/Makefile" osa="muuttujat"}
 ```
 
 `$(wildcard lahde/*.c)` etsii lähdetiedostot, joten uutta tiedostoa ei
@@ -47,7 +47,7 @@ Mallisääntö kuvaa, miten minkä tahansa tietyn muotoisen kohteen saa
 tehtyä. Merkki `%` vastaa samaa merkkijonoa kohteessa ja
 riippuvuudessa:
 
-```{.makefile tiedosto="esimerkit/03-make-syvemmin/Makefile" osa="saannot"}
+```{.makefile tiedosto="esimerkit/04-make-syvemmin/Makefile" osa="saannot"}
 ```
 
 Säännöissä on kolme tärkeää yksityiskohtaa.
@@ -80,13 +80,21 @@ kannattaa näyttää kokonaan, koska lokista halutaan nähdä tarkat liput.
 Esimerkki kokeilee rakennusta, katsoo kääntäjän kirjoittaman
 riippuvuustiedoston ja muuttaa otsaketta:
 
-```{.bash tiedosto="esimerkit/03-make-syvemmin/aja.sh"}
+```{.bash tiedosto="esimerkit/04-make-syvemmin/aja.sh"}
 ```
 
-```{.tuloste tiedosto="esimerkit/03-make-syvemmin.odotettu"}
+```{.tuloste tiedosto="esimerkit/04-make-syvemmin.odotettu"}
 ```
 
-Nyt otsakkeen muutos kääntää molemmat sitä lukevat tiedostot.
+Nyt otsakkeen muutos kääntää molemmat sitä lukevat tiedostot. Sama
+näkyy riippuvuusverkosta, joka on piirretty Maken tietokannasta
+ensimmäisen rakennuksen jälkeen samalla skriptillä kuin edellisessä
+luvussa. Kääntäjän kirjoittamat `.d`-tiedostot ovat tuoneet verkkoon
+otsakkeen ja kaksi uutta kaarta:
+
+```{.dot tiedosto="esimerkit/04-make-syvemmin/verkko.dot" otsikko="Riippuvuusverkko, kun kääntäjän kirjoittamat `.d`-tiedostot on luettu mukaan. Otsakkeesta `lahde/tilasto.h` lähtee kaari kumpaankin objektitiedostoon."}
+```
+
 `make -n V=1` näyttää täydet komennot ajamatta niitä; siitä näkee
 myös lippujen järjestyksen: `CPPFLAGS`, pakolliset liput ja
 käyttäjän `CFLAGS`. Käyttäjän `-O0` tulee viimeisenä ja voittaa

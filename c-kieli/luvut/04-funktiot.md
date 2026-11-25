@@ -1,5 +1,11 @@
 # Ohjausrakenteet ja funktiot {.runko-ohjaus}
 
+Ohjausrakenteet määräävät, missä järjestyksessä lauseet suoritetaan, ja
+funktiot jakavat ohjelman nimettyihin osiin. Tämä luku esittelee
+kummatkin sekä kaksi asiaa, jotka poikkeavat monista muista kielistä:
+funktio on esiteltävä ennen käyttöä, ja argumentit välitetään aina
+arvoina.
+
 ## Ohjausrakenteet
 
 C:n ohjausrakenteet ovat tuttuja monista muista kielistä, sillä ne ovat

@@ -20,21 +20,33 @@ projektista. Clangilla vastaava on `-fprofile-instr-generate
 Esimerkin testit ovat tavallisen näköiset, mutta niistä puuttuu kaksi
 tapausta:
 
-```{.c tiedosto="esimerkit/09-kattavuus/testit.c"}
+```{.c tiedosto="esimerkit/10-kattavuus/testit.c"}
 ```
 
 Komentosarja kääntää kirjaston ja testit kattavuuslaskureilla, ajaa
 testit ja raportoi kirjaston rivikattavuuden. Toisella kerralla
 mukana ovat myös puuttuneet tapaukset:
 
-```{.bash tiedosto="esimerkit/09-kattavuus/aja.sh" osa="kattavuus"}
+```{.bash tiedosto="esimerkit/10-kattavuus/aja.sh" osa="kattavuus"}
 ```
 
-```{.tuloste tiedosto="esimerkit/09-kattavuus.odotettu"}
+Väliin ajetaan `gcov`, joka kirjoittaa lähdekoodin viereen jokaisen
+rivin suorituskerrat:
+
+```{.bash tiedosto="esimerkit/10-kattavuus/aja.sh" osa="gcov"}
 ```
 
-Raportti kertoo puuttuvat rivit numeroina. Rivi 17 on yhden arvon
-sarjan erikoistapaus ja rivi 37 parillisen pituuden mediaani:
+```{.bash tiedosto="esimerkit/10-kattavuus/aja.sh" osa="kattavat"}
+```
+
+```{.tuloste tiedosto="esimerkit/10-kattavuus.odotettu"}
+```
+
+Raportti kertoo puuttuvat rivit numeroina, ja `gcov`-ote näyttää ne
+lähdekoodissa: ensimmäinen sarake on suorituskertojen määrä, `-`
+tarkoittaa riviä, jolla ei ole koodia, ja `#####` riviä, jota ei
+suoritettu kertaakaan. Rivi 17 on yhden arvon sarjan erikoistapaus ja
+rivi 37 parillisen pituuden mediaani:
 
 ```{.c tiedosto="esimerkit/lahde/tilasto.c"}
 ```

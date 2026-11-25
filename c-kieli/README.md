@@ -6,25 +6,29 @@ mukaan. Valmis dokumentti: [c-kieli.pdf](https://saperant.github.io/tutoriaalit/
 ## Sisältö
 
 1. Johdanto – standardit, työkalut, käännösprosessi
-2. Tyypit ja lausekkeet – kokonaisluvut, `<stdint.h>`, muunnokset,
-   liukuluvut, `constexpr`, `bool`
-3. Ohjausrakenteet ja funktiot – prototyypit, arvovälitys, `static`
-4. Osoittimet – osoitinaritmetiikka, `const`, `void *`,
+2. C kokeneelle – erot muihin kieliin, sudenkuopat
+3. Tyypit ja lausekkeet – kokonaisluvut, `<stdint.h>`, muunnokset,
+   bittioperaatiot, operaattorien etusija, liukuluvut, `constexpr`
+4. Ohjausrakenteet ja funktiot – prototyypit, arvovälitys, `static`
+5. Osoittimet – olion elinaika, osoitinaritmetiikka, `const`, `void *`,
    funktio-osoittimet, `qsort`
-5. Taulukot ja merkkijonot – taulukkoparametrit, `<string.h>`,
-   `snprintf`, `strtol`
-6. Dynaaminen muistinhallinta – `malloc`, `realloc`, omistus, kasvava
-   taulukko, tyypilliset virheet
-7. Rakenteet, luettelot ja unionit – nimetyt alustimet, muistiasettelu,
-   merkityt unionit
-8. Esikääntäjä ja ohjelman jakaminen tiedostoihin – makrot, `_Generic`,
-   otsikkotiedostot, epätäydelliset tyypit
-9. Syöte, tuloste ja tiedostot – `argv`, `fgets`, teksti- ja
-   binääritiedostot
-10. Virheenkäsittely – virhekoodit, `goto`-siivous, `assert`,
+6. Rakenteet, luettelot ja unionit – nimetyt alustimet, muistiasettelu,
+   ketjutetut rakenteet, merkityt unionit
+7. Taulukot ja merkkijonot – taulukkoparametrit, `<string.h>`,
+   `snprintf`, `strtol`, viipale
+8. Dynaaminen muistinhallinta – `malloc`, `realloc`, omistus, kasvava
+   taulukko, areena, tyypilliset virheet
+9. Esikääntäjä ja ohjelman jakaminen tiedostoihin – makrot, `_Generic`,
+   X-makrot, otsikkotiedostot ja rajapintakommentit, epätäydelliset
+   tyypit, rajapinnat funktio-osoittimilla
+10. Syöte, tuloste ja tiedostot – `argv`, `fgets`, teksti- ja
+    binääritiedostot, omat muotoilufunktiot (`<stdarg.h>`)
+11. Virheenkäsittely – virhekoodit, `goto`-siivous, `assert`,
     määrittelemätön käyttäytyminen, `<stdckdint.h>`
-11. Säikeet ja atomiset operaatiot – `<threads.h>`, `<stdatomic.h>`
-12. Lopuksi – C23-tiivistelmä, nyrkkisäännöt, lähteet
+12. Säikeet ja atomiset operaatiot – `<threads.h>`, `<stdatomic.h>`
+13. Työkalut ja testaus – varoitukset, gdb, sanitoijat, staattinen
+    analyysi, profilointi, yksikkötestaus
+14. Lopuksi – C23-tiivistelmä, mallit, nyrkkisäännöt, lähteet
 
 ## Rakentaminen
 
@@ -34,3 +38,5 @@ make pdf      # rakentaa c-kieli.pdf:n
 ```
 
 Riippuvuudet on lueteltu repositorion juuren README-tiedostossa.
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks. [Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.

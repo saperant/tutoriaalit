@@ -39,7 +39,18 @@ Jos kaksi säiettä käsittelee samaa muistipaikkaa samanaikaisesti ja
 ainakin toinen kirjoittaa, syntyy *kilpatilanne* (*data race*), joka on
 määrittelemätöntä käyttäytymistä. Jopa `saldo += 1` koostuu lukemisesta,
 lisäyksestä ja kirjoittamisesta, ja kahden säikeen operaatiot voivat
-lomittua niin, että lisäyksiä katoaa.
+lomittua niin, että lisäyksiä katoaa. Seuraavassa kumpikin säie lukee
+arvon 5 ennen kuin toinen ehtii kirjoittaa, ja kahden lisäyksen jälkeen
+saldo on 6 eikä 7:
+
+| Vaihe | Säie A | Säie B | `saldo` |
+|-------|--------|--------|---------|
+| 1 | lukee 5 | | 5 |
+| 2 | | lukee 5 | 5 |
+| 3 | laskee 5 + 1 | | 5 |
+| 4 | | laskee 5 + 1 | 5 |
+| 5 | kirjoittaa 6 | | 6 |
+| 6 | | kirjoittaa 6 | 6 |
 
 Jaettu data suojataan *lukolla* (`mtx_t`). `mtx_lock` odottaa, kunnes
 lukko on vapaa, ja varaa sen; `mtx_unlock` vapauttaa sen. Lukon sisällä
@@ -67,17 +78,6 @@ Lukon kanssa käsitelty muuttuja ei tarvitse `volatile`-määrettä.
 `volatile` on tarkoitettu laitteistorekistereille ja vastaaville, eikä
 se tee operaatioista atomisia tai säieturvallisia.
 
-## Testaaminen
-
-Kilpatilanteet ilmenevät satunnaisesti, joten testi voi mennä läpi
-tuhat kertaa ja epäonnistua tuhannes ensimmäisellä kerralla.
-ThreadSanitizer (`-fsanitize=thread`) havaitsee kilpatilanteet ajon
-aikana, vaikka ne eivät sillä kertaa aiheuttaisi väärää tulosta.
-Tämän luvun esimerkit on kuitenkin testattu vain AddressSanitizerilla
-ja UndefinedBehaviorSanitizerilla: ThreadSanitizer ei tue glibc:n
-`<threads.h>`-toteutusta, vaan ohjelma kaatuu säikeen luonnissa.
-POSIX-säikeitä käyttäville ohjelmille ThreadSanitizer toimii.
-
 ## Tuottaja–kuluttaja-jono
 
 Säikeiden välinen työnjako tehdään usein jonon kautta: yksi säie tuottaa
@@ -101,6 +101,17 @@ jotta ne voivat lopettaa, kun jono on tyhjä.
 
 Kuluttajien keskinäinen työnjako vaihtelee ajokerrasta toiseen, mutta
 kokonaissumma on aina sama.
+
+## Kilpatilanteiden testaaminen
+
+Kilpatilanteet ilmenevät satunnaisesti, joten testi voi mennä läpi
+tuhat kertaa ja epäonnistua tuhannes ensimmäisellä kerralla.
+ThreadSanitizer (`-fsanitize=thread`) havaitsee kilpatilanteet ajon
+aikana, vaikka ne eivät sillä kertaa aiheuttaisi väärää tulosta.
+Tämän luvun esimerkit on kuitenkin testattu vain AddressSanitizerilla
+ja UndefinedBehaviorSanitizerilla: ThreadSanitizer ei tue glibc:n
+`<threads.h>`-toteutusta, vaan ohjelma kaatuu säikeen luonnissa.
+POSIX-säikeitä käyttäville ohjelmille ThreadSanitizer toimii.
 
 ## Käytännössä
 

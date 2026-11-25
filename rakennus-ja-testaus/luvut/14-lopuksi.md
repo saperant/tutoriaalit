@@ -38,9 +38,11 @@
 | esiasetukset | sama konfigurointi kaikkialla | 6 |
 | soname ja versioskripti | jaetun kirjaston rajapinta | 7 |
 | `$ORIGIN`-hakupolku | ohjelman mukana kulkevat kirjastot | 7 |
+| `PREFIX` ja `DESTDIR` | asennus ja paketointi | 7 |
 | testikaksonen linkkerillä | eristetyt, deterministiset testit | 8 |
 | `--wrap` | virhepolkujen testaus | 8 |
 | `-fno-sanitize-recover` | sanitoijan virhe kaataa testin | 9 |
+| sumutuskohde | jäsentimen virheet syötteillä, joita kukaan ei keksinyt | 9 |
 | kattavuuskynnys | kattavuuden laskun esto | 10 |
 | analyysiasetukset tiedostossa | sama analyysi kaikilla | 11 |
 | matriisi | useampi kääntäjä ja käännöstyyppi | 12 |
@@ -49,6 +51,9 @@
 
 ## Mihin tästä eteenpäin
 
+- **Jatkuva integraatio ja toimitus:** putkien yleiset periaatteet,
+  julkaisu ja toimitus tämän tutoriaalin rakennus- ja testiputken
+  jatkoksi.
 - **Sulautettu Linux:** ristiinkäännös, CMaken työkaluketjutiedostot
   (*toolchain file*), Buildroot ja Yocto sekä ohjelmien testaus
   emulaattorissa.

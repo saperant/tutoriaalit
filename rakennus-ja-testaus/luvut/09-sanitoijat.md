@@ -22,11 +22,16 @@ eikä niillä käännettyä ohjelmaa toimiteta tuotantoon: ne kasvattavat
 muistinkäyttöä ja niiden ajonaikainen kirjasto ei ole suunniteltu
 hyökkäyksiä vastaan.
 
+Valgrindin Memcheck löytää osin samat muistivirheet ilman
+uudelleenkäännöstä, koska se ajaa valmista ohjelmaa emuloidulla
+suorittimella. Se on noin 20–50 kertaa hidastava, mutta hyödyllinen,
+kun ohjelmaa tai sen kirjastoja ei voi kääntää sanitoijilla.
+
 ## AddressSanitizer
 
 Tavallinen ohi yhdellä -virhe kirjoittaa yhden alkion liikaa:
 
-```{.c tiedosto="esimerkit/08-sanitoijat/ylivuoto.c"}
+```{.c tiedosto="esimerkit/09-sanitoijat/ylivuoto.c"}
 ```
 
 Ilman sanitoijaa tällainen ohjelma voi toimia, kaatua tai rikkoa
@@ -35,7 +40,7 @@ paljon myöhemmin aivan muualla. ASan ympäröi jokaisen varauksen
 myrkytetyllä alueella (*redzone*) ja tarkistaa jokaisen muistiviittauksen
 ennen sen tekemistä:
 
-```{.bash tiedosto="esimerkit/08-sanitoijat/aja.sh" osa="asan"}
+```{.bash tiedosto="esimerkit/09-sanitoijat/aja.sh" osa="asan"}
 ```
 
 Raportti kertoo virheen lajin (`heap-buffer-overflow`), kirjoituksen
@@ -47,7 +52,7 @@ kohdalla. Esimerkki näyttää raportista vain olennaiset rivit;
 alkuperäisessä on lisäksi osoitteet, prosessinumero, kirjastojen polut
 ja muistikartta. Ne poistava suodatin on tavallinen `sed`-komento:
 
-```{.bash tiedosto="esimerkit/08-sanitoijat/aja.sh" osa="siisti"}
+```{.bash tiedosto="esimerkit/09-sanitoijat/aja.sh" osa="siisti"}
 ```
 
 ASan havaitsee myös muistivuodot ohjelman lopussa (LeakSanitizer).
@@ -61,10 +66,10 @@ käytöstä. Tavallisesti tulos kiertyy, mutta kääntäjä saa olettaa,
 ettei ylivuotoa tapahdu, ja optimoida sen mukaan. Esimerkin laskelma
 ylittää `int`-tyypin rajan:
 
-```{.c tiedosto="esimerkit/08-sanitoijat/summa.c"}
+```{.c tiedosto="esimerkit/09-sanitoijat/summa.c"}
 ```
 
-```{.bash tiedosto="esimerkit/08-sanitoijat/aja.sh" osa="ubsan"}
+```{.bash tiedosto="esimerkit/09-sanitoijat/aja.sh" osa="ubsan"}
 ```
 
 Ilman sanitoijaa ohjelma tulostaa negatiivisen keston eikä mikään
@@ -79,7 +84,7 @@ oikea asetus.
 Kilpatilanne syntyy, kun kaksi säiettä käyttää samaa muistia ilman
 synkronointia ja ainakin toinen kirjoittaa:
 
-```{.c tiedosto="esimerkit/08-sanitoijat/kilpa.c"}
+```{.c tiedosto="esimerkit/09-sanitoijat/kilpa.c"}
 ```
 
 Tulos voi olla oikein tuhat kertaa peräkkäin ja väärin seuraavalla
@@ -89,16 +94,54 @@ raportoi viittausparit, joiden välillä ei ole *happens before*
 -suhdetta. Se ei tarvitse kilpatilanteen todellista toteutumista,
 vaan riittää, että molemmat viittaukset tapahtuvat ajon aikana:
 
-```{.bash tiedosto="esimerkit/08-sanitoijat/aja.sh" osa="tsan"}
+```{.bash tiedosto="esimerkit/09-sanitoijat/aja.sh" osa="tsan"}
 ```
 
-```{.tuloste tiedosto="esimerkit/08-sanitoijat.odotettu"}
+```{.tuloste tiedosto="esimerkit/09-sanitoijat.odotettu"}
 ```
 
 TSanin raportti näyttää kummankin viittauksen kutsupinon ja
 säikeiden luontikohdat. Esimerkki jättää ne pois, koska säikeiden
 järjestys vaihtelee ajosta toiseen. Korjaus on `_Atomic long laskuri`
 tai lukko. Säikeiden synkronointia käsitellään C-kielen tutoriaalissa.
+
+## Sumutus
+
+Sanitoija löytää virheen vain polulta, jonka testi suorittaa.
+*Sumutus* (*fuzzing*) tuottaa polut automaattisesti: sumutin kutsuu
+testattavaa funktiota yhä uusilla syötteillä, mittaa kattavuuden ja
+säilyttää ne syötteet, jotka veivät suorituksen uuteen haaraan.
+Sanitoija toimii oraakkelina, joka kertoo, milloin syöte rikkoi jotain.
+Kohteeksi sopii jokainen funktio, joka jäsentää ohjelman ulkopuolelta
+tulevaa dataa. Seuraavassa jäsentimessä on virhe, jota tavalliset
+testit `"lampo=22"` ja `"=5"` eivät löydä:
+
+```{.c tiedosto="esimerkit/09-sanitoijat/sumutus.c" osa="jasennin"}
+```
+
+Clangin libFuzzerille kirjoitetaan *sumutuskohde*, joka välittää
+syötteen testattavalle funktiolle. Valitsin `-fsanitize=fuzzer` linkittää
+mukaan sumuttimen ja sen `main`-funktion:
+
+```{.c tiedosto="esimerkit/09-sanitoijat/sumutus.c" osa="kohde"}
+```
+
+```{.bash tiedosto="esimerkit/09-sanitoijat/aja.sh" osa="sumutus"}
+```
+
+Edellä näytetyn tulosteen viimeinen osa näyttää tuloksen: sumutin löytää
+muutamassa tuhannessa kokeilussa syötteen, jossa yhtäsuuruusmerkin
+jälkeen on yli seitsemän numeroa, ja ASan pysäyttää ohjelman pinon
+ylivuotoon. Syöte tallentuu tiedostoon `crash-<tiiviste>`. Kun tiedosto
+annetaan ohjelmalle argumenttina, virhe toistuu ilman sumutusta, joten
+löydöksestä saa suoraan regressiotestin. Korjauksen jälkeen tiedosto
+lisätään testisyötteiden joukkoon (*corpus*).
+
+CI:ssä sumutusta ajetaan kahdella tavalla: jokaisessa muutoksessa
+lyhyt ajo tallennetulla syötejoukolla (`-runs=0` ajaa vain ne) ja
+ajastettuna pidempi etsintä. Löydösten vakavuuden arviointia ja
+tyypillisiä muistivirheluokkia käsittelee taito *Haavoittuvuuksien
+analyysi ja torjunta*.
 
 ## Sanitoijat CI:ssä
 
@@ -133,6 +176,9 @@ perusteluineen, ja niitä on oltava mahdollisimman vähän.
 - **Sanitoija löytää vain ajetun koodin virheet.** Kattavat testit
   ovat sanitoijan edellytys. Seuraava luku mittaa, kuinka paljon
   koodista testit ajavat.
+- **Sumuta jokainen jäsennin.** Funktio, joka lukee tiedostoa,
+  verkkoa tai käyttäjän syötettä, saa sumutuskohteen. Löydösten syötteet
+  säilytetään versionhallinnassa regressiotesteinä.
 - **Ei tuotantoon.** Sanitoijalla käännetty ohjelma on testiversio.
   Tuotannossa käytetään kovennusvalitsimia (`-D_FORTIFY_SOURCE=3`,
   `-fstack-protector-strong`), joita käsitellään taidossa *Tietoturva
@@ -146,5 +192,7 @@ perusteluineen, ja niitä on oltava mahdollisimman vähän.
   liittyvän varauksen.
 - Osaat asettaa UBSanin pysäyttämään ohjelman ensimmäiseen virheeseen
   ja perustella, miksi testeissä niin tehdään.
+- Osaat kirjoittaa jäsentimelle sumutuskohteen ja toistaa löydöksen
+  tallennetulla syötteellä.
 - Osaat selittää, miksi TSan löytää kilpatilanteen, vaikka tulos olisi
   oikein, ja miten sanitoijat järjestetään CI:hin.

@@ -69,8 +69,9 @@ projektissa; juuri siellä niiden hyöty näkyy.
 
 ## Esimerkkien ajaminen
 
-Hakemistossa `esimerkit/` on yksi alihakemisto kutakin lukua kohden ja
-yhteinen lähdekoodi hakemistossa `lahde/`. Esimerkki on komentosarja
+Hakemistossa `esimerkit/` on yksi alihakemisto kutakin lukua kohden
+(hakemiston numero on luvun numero) ja yhteinen lähdekoodi hakemistossa
+`lahde/`. Esimerkki on komentosarja
 `aja.sh`, joka rakentaa, testaa tai analysoi projektin ja tulostaa
 tuloksen. Ajaja kopioi esimerkin tilapäishakemistoon, ajaa sen ja
 vertaa tulosteen tiedostoon `<esimerkki>.odotettu`:
@@ -85,13 +86,13 @@ kun työkalu tulostaa osoitteita, prosessinumeroita tai aikoja, ne
 suodatetaan pois. Suodatus näytetään aina, koska se on itsessään
 hyödyllinen taito: CI-lokeja vertaillaan ja haetaan samalla tavalla.
 
-Esimerkit käyttävät GCC 14:ää (`CC=gcc-14`), Clang 20:n clang-tidyä,
-cppcheckiä, CMakea, Ninjaa, gcovria ja gdb:tä. Kehityskontti
+Esimerkit käyttävät GCC 14:ää (`CC=gcc-14`), Clang 20:tä (clang-tidy
+ja sumutus), cppcheckiä, CMakea, Ninjaa, gcovria ja gdb:tä. Kehityskontti
 (`.devcontainer/rakennus-ja-testaus`) sisältää ne kaikki:
 
 ```text
 make -C esimerkit            # kaikki esimerkit ja ShellCheck
-make -C esimerkit 05-cmake   # yksi esimerkki
+make -C esimerkit 06-cmake   # yksi esimerkki
 make -C esimerkit paivita    # odotetut tulosteet uudelleen
 ```
 

@@ -14,6 +14,23 @@ mistä korjaus löytyy.
 | kokoaminen | `as` | `-c` | `.s` → `.o` |
 | linkitys | `ld` | (oletus) | `.o`, `.a`, `.so` → ohjelma |
 
+```{.dot otsikko="Käännöksen vaiheet tilasto-ohjelmalle. Kumpikin lähdetiedosto kulkee kolme ensimmäistä vaihetta erikseen; linkkeri yhdistää objektitiedostot ja kirjastot."}
+digraph {
+  rankdir=LR; nodesep=0.2; ranksep=0.45;
+  mc [label="main.c"]; tc [label="tilasto.c"]; h [label="tilasto.h"];
+  mi [label="käännös-\nyksikkö"]; ti [label="käännös-\nyksikkö"];
+  ms [label="main.s"]; ts [label="tilasto.s"];
+  mo [label="main.o"]; to [label="tilasto.o"];
+  lib [label="libm, libc", style="rounded,dashed"];
+  ohj [label="tilasto", penwidth=1.6];
+  h -> mi [style=dashed]; h -> ti [style=dashed];
+  mc -> mi [label="cpp"]; tc -> ti [label="cpp"];
+  mi -> ms [label="cc1"]; ti -> ts [label="cc1"];
+  ms -> mo [label="as"]; ts -> to [label="as"];
+  mo -> ohj [label="ld"]; to -> ohj; lib -> ohj;
+}
+```
+
 ## Esikäsittely
 
 Esikäsittelijä liittää `#include`-tiedostot, laajentaa makrot ja
@@ -21,14 +38,14 @@ poistaa kommentit. Sen tuloste on *käännösyksikkö*: yksi pitkä
 C-tiedosto, jossa ei enää ole esikäsittelijän direktiivejä. Esimerkin
 pieni funktio käyttää kahta makroa:
 
-```{.c tiedosto="esimerkit/01-vaiheet/pinta.c"}
+```{.c tiedosto="esimerkit/02-vaiheet/pinta.c"}
 ```
 
 Esimerkkien komentosarja ajaa vaiheet yksi kerrallaan. Valitsin `-E`
 pysäyttää esikäsittelyn jälkeen, ja `-P` jättää pois rivinumeromerkinnät,
 joita kääntäjä tarvitsee virheilmoituksiin:
 
-```{.bash tiedosto="esimerkit/01-vaiheet/aja.sh" osa="esikasittely"}
+```{.bash tiedosto="esimerkit/02-vaiheet/aja.sh" osa="esikasittely"}
 ```
 
 Makrojen sulut näkyvät sellaisinaan: `NELIO(sivu)` on muuttunut
@@ -47,7 +64,7 @@ pysäyttää tähän vaiheeseen; esimerkki suodattaa tulosteesta pois
 assemblerin direktiivit (`.cfi_*` ja muut), jotta funktion käskyt
 näkyvät:
 
-```{.bash tiedosto="esimerkit/01-vaiheet/aja.sh" osa="kaannos"}
+```{.bash tiedosto="esimerkit/02-vaiheet/aja.sh" osa="kaannos"}
 ```
 
 Optimoinnin (`-O2`) jälkeen funktiossa on yksi vertailu, ehdollinen
@@ -63,7 +80,7 @@ rakennusjärjestelmät käyttävät: jokainen `.c`-tiedosto käännetään
 erikseen omaksi `.o`-tiedostokseen. Objektitiedoston symbolitaulu
 kertoo, mitä se määrittelee ja mitä se tarvitsee muualta:
 
-```{.bash tiedosto="esimerkit/01-vaiheet/aja.sh" osa="objektit"}
+```{.bash tiedosto="esimerkit/02-vaiheet/aja.sh" osa="objektit"}
 ```
 
 ## Linkitys
@@ -75,12 +92,12 @@ tarvitsee tilastofunktiot, jotka `tilasto.o` määrittelee, ja
 C-kirjastosta, joka linkitetään aina, jälkimmäinen matematiikkakirjastosta
 `libm`, joka on pyydettävä erikseen:
 
-```{.bash tiedosto="esimerkit/01-vaiheet/aja.sh" osa="linkitys"}
+```{.bash tiedosto="esimerkit/02-vaiheet/aja.sh" osa="linkitys"}
 ```
 
 Koko ajo tulostaa vaiheet järjestyksessä:
 
-```{.tuloste tiedosto="esimerkit/01-vaiheet.odotettu"}
+```{.tuloste tiedosto="esimerkit/02-vaiheet.odotettu"}
 ```
 
 Linkkerin virhe `undefined reference` tarkoittaa aina samaa: jokin

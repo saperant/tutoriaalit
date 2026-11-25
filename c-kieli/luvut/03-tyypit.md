@@ -1,5 +1,12 @@
 # Tyypit ja lausekkeet {.runko-tyypit}
 
+C on staattisesti tyypitetty kieli: jokaisella muuttujalla ja
+lausekkeella on tyyppi, joka tunnetaan käännösaikana. Tyyppi määrää,
+montako tavua arvo vie ja miten sen bitit tulkitaan. Tässä luvussa
+käydään läpi perustyypit, niiden väliset muunnokset, bittioperaatiot ja
+operaattorien etusija sekä kohdat, joissa C:n säännöt yllättävät muista
+kielistä tulevan.
+
 ## Perustyypit
 
 C:n perustyypit ovat kokonaislukutyypit (`char`, `short`, `int`,
@@ -94,6 +101,111 @@ Eksplisiittinen muunnos kirjoitetaan muodossa `(tyyppi)lauseke`. Sitä
 kannattaa käyttää säästeliäästi, sillä se vaientaa kääntäjän
 tarkistukset.
 
+## Bittioperaatiot
+
+Bittioperaattorit käsittelevät kokonaisluvun yksittäisiä bittejä.
+Niitä tarvitaan laitteistorekistereissä, tiedostomuodoissa,
+verkkoprotokollissa ja lippujoukoissa. Operaattoreita on kuusi: JA
+(`&`), TAI (`|`), poissulkeva TAI (`^`), bittien kääntö (`~`) sekä
+siirrot vasemmalle (`<<`) ja oikealle (`>>`).
+
+```{.c tiedosto="esimerkit/03-bitit.c" osa="perus"}
+```
+
+Apufunktio `bitit` tulostaa tavun binäärimuodossa. Tulosteesta näkee
+jokaisen operaation vaikutuksen bitti bitiltä:
+
+```{.tuloste tiedosto="esimerkit/03-bitit.odotettu"}
+```
+
+Tyyppimuunnokset `(uint8_t)` ovat tarpeen, koska operandit ylennetään
+ensin `int`-tyypiksi: `~a` on 32-bittinen luku, jonka ylimmät 24 bittiä
+ovat ykkösiä, ja `a << 2` on 808 eikä mahdu tavuun.
+
+*Maski* on luku, jonka ykkösbitit valitsevat käsiteltävät bitit.
+Maskilla tehdään neljä perusoperaatiota: `x | maski` asettaa bitit,
+`x & ~maski` nollaa ne, `x ^ maski` vaihtaa niiden tilan ja
+`(x & maski) != 0` testaa, onko jokin niistä päällä. Monibittinen
+kenttä poimitaan siirtämällä se ensin alimpiin bitteihin ja maskaamalla
+sitten: `(x >> siirto) & maski`. Seuraavassa 16-bittiseen rekisteriin
+on pakattu neljä kenttää:
+
+```{.c tiedosto="esimerkit/03-bitit.c" osa="kentat"}
+```
+
+```{.c tiedosto="esimerkit/03-bitit.c" osa="rekisteri"}
+```
+
+Tulosteen loppuosa näyttää rekisterin arvon kunkin vaiheen jälkeen.
+C23:n otsikko `<stdbit.h>` tarjoaa valmiita bittifunktioita, kuten
+ykkösbitit laskevan `stdc_count_ones` ja etunollat laskevan
+`stdc_leading_zeros`.
+
+Siirroilla on kolme rajoitusta:
+
+- Siirtomäärän on oltava vähintään nolla ja pienempi kuin (ylennetyn)
+  tyypin bittimäärä. `1u << 32` on 32-bittisellä `unsigned`-tyypillä
+  määrittelemätöntä käyttäytymistä.
+- Etumerkillisen luvun siirto vasemmalle on määrittelemätöntä, jos
+  tulos ei mahdu tyyppiin. Siksi `1 << 31` on virhe, mutta `1u << 31`
+  on oikein.
+- Negatiivisen luvun siirto oikealle on toteutuksen määrittelemä:
+  useimmat kääntäjät kopioivat etumerkkibittiä, mutta standardi ei
+  takaa sitä.
+
+Bittioperaatiot tehdään siksi etumerkittömillä tyypeillä. Lukujen
+bittiesitystä, kuten kahden komplementtia ja tavujärjestystä, käsittelee
+tarkemmin taito *Miten tietokone laskee*.
+
+## Operaattorien etusija
+
+Kun lausekkeessa on useita operaattoreita ilman sulkeita, *etusija*
+määrää, mikä lasketaan ensin. Seuraavassa operaattorit ovat
+etusijajärjestyksessä korkeimmasta matalimpaan. Saman rivin
+operaattorit lasketaan vasemmalta oikealle, ellei toisin mainita.
+
+```text
+x++ x-- f() t[i] . ->              jälkiliitteet
+++x --x + - ! ~ * & sizeof (T)     etuliitteet, oikealta vasemmalle
+* / %                              kerto, jako, jakojäännös
++ -                                yhteen- ja vähennyslasku
+<< >>                              siirrot
+< <= > >=                          suuruusvertailut
+== !=                              yhtäsuuruus
+&                                  bittitason JA
+^                                  poissulkeva TAI
+|                                  bittitason TAI
+&&                                 looginen JA
+||                                 looginen TAI
+?:                                 ehtolauseke, oikealta vasemmalle
+= += -= *= <<= &= ...              sijoitukset, oikealta vasemmalle
+,                                  pilkkuoperaattori
+```
+
+Järjestys on enimmäkseen sama kuin matematiikassa, mutta kolme kohtaa
+yllättää:
+
+- **Vertailut sitovat tiukemmin kuin `&`, `^` ja `|`.** `x & maski == 0`
+  tarkoittaa `x & (maski == 0)`. Bittioperaation tulos on aina
+  suljettava sulkeisiin ennen vertailua.
+- **Siirrot sitovat löysemmin kuin yhteenlasku.** `1 << n + 1`
+  tarkoittaa `1 << (n + 1)`.
+- **Jälkiliite sitoo tiukemmin kuin etuliite.** Osoittimien yhteydessä
+  (luku 5) vastaan tuleva `*p++` tarkoittaa `*(p++)`: osoitinta
+  siirretään, ei osoitettua arvoa kasvateta.
+
+Kääntäjä varoittaa ensimmäisestä valitsimella `-Wall`:
+
+```{.c tiedosto="esimerkit/03-etusija.ei-kaanny.c"}
+```
+
+Etusija ei kerro, missä järjestyksessä operandit *lasketaan*:
+lausekkeessa `f() + g()` kumpi tahansa funktio voidaan kutsua ensin.
+Poikkeuksia ovat muun muassa `&&` ja `||`, jotka laskevat vasemman
+operandin ensin ja jättävät oikean laskematta, jos tulos selviää jo
+vasemmasta (*oikosulku*). Laskentajärjestykseen palataan seuraavassa
+luvussa.
+
 ## Liukuluvut
 
 `double` on 64-bittinen IEEE 754 -liukuluku, jossa on noin 15–16
@@ -168,6 +280,10 @@ auki on yleensä selkeämpää.
 - **Alusta jokainen muuttuja ja esittele se lähellä käyttöä.** Alustamaton
   muuttuja on yleinen määrittelemättömän käyttäytymisen lähde, ja `{}`
   tekee alustuksesta vaivatonta.
+- **Sulkeet, kun etusija ei ole itsestään selvä.** Bittioperaatiot,
+  siirrot ja vertailut samassa lausekkeessa suljetaan aina sulkeisiin.
+  Rekisterien kentille annetaan nimetyt maskit ja siirtomäärät, eikä
+  lukuja kirjoiteta auki käyttökohtiin.
 - **Liukuluvut:** `double` oletuksena, vertailu toleranssilla ja raha
   kokonaislukuina pienimmässä yksikössä.
 
@@ -177,6 +293,8 @@ auki on yleensä selkeämpää.
   sen oikealla muunnosmääreellä.
 - Osaat selittää kokonaislukujen ylennyksen ja sen, miksi `-1 < 1u` on
   epätosi.
+- Osaat asettaa, nollata ja testata bittejä maskilla ja poimia
+  monibittisen kentän siirrolla ja maskilla.
 - Osaat vertailla liukulukuja toleranssilla ja perustella, miksi rahaa ei
   esitetä liukulukuina.
 - Osaat määritellä vakion `constexpr`-määrittelyllä ja kertoa, miten se

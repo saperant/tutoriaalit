@@ -23,7 +23,7 @@ etumerkillisen ja etumerkittömän arvon vertailu, `atoi`, joka ei
 ilmoita virheestä, muistivuoto varhaisessa paluussa ja taulukon rajan
 ylitys:
 
-```{.c tiedosto="esimerkit/10-analyysi/asetus.c"}
+```{.c tiedosto="esimerkit/11-analyysi/asetus.c"}
 ```
 
 Mikään näistä ei välttämättä näy testeissä. Vuoto syntyy vain liian
@@ -37,10 +37,10 @@ Esimerkki ajaa kaikki kolme työkalua sekä virheelliselle että korjatulle
 tiedostolle ja näyttää kustakin löydöksestä tiedoston, rivin ja
 tarkistuksen nimen:
 
-```{.bash tiedosto="esimerkit/10-analyysi/aja.sh"}
+```{.bash tiedosto="esimerkit/11-analyysi/aja.sh"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-analyysi.odotettu"}
+```{.tuloste tiedosto="esimerkit/11-analyysi.odotettu"}
 ```
 
 Työkalut löytävät eri asioita, ja jokaisella on löydöksiä, joita muut
@@ -66,7 +66,7 @@ funktiolla ja tarkistaa virheet, tarkistaa pituuden ennen varausta ja
 lukee taulukon viimeisen alkion oikealla indeksillä. Kaikki kolme
 työkalua ovat hiljaa:
 
-```{.c tiedosto="esimerkit/10-analyysi/korjattu.c"}
+```{.c tiedosto="esimerkit/11-analyysi/korjattu.c"}
 ```
 
 ## Asetukset versionhallintaan
@@ -75,7 +75,7 @@ clang-tidyn tarkistukset luetaan projektin juuren tiedostosta
 `.clang-tidy`. Kun asetukset ovat versionhallinnassa, kehittäjän
 editori, komentorivi ja CI käyttävät samoja sääntöjä:
 
-```{.yaml tiedosto="esimerkit/10-analyysi/.clang-tidy"}
+```{.yaml tiedosto="esimerkit/11-analyysi/.clang-tidy"}
 ```
 
 Ryhmät valitaan jokerimerkeillä, ja yksittäiset tarkistukset kytketään
@@ -94,6 +94,12 @@ tiedostot rinnakkain. Yksittäisen löydöksen voi ohittaa kommentilla
 `// NOLINT(tarkistus)` ja cppcheckin kommentilla
 `// cppcheck-suppress tunniste`. Ohitus kertoo lukijalle, että asia on
 tutkittu, joten sen viereen kirjoitetaan syy.
+
+Samaan paikkaan kuuluu muotoilun asetustiedosto `.clang-format`.
+`clang-format -i` muotoilee tiedostot sen mukaan, ja CI:ssä
+`clang-format --dry-run -Werror` epäonnistuu, jos jokin tiedosto
+poikkeaa muotoilusta. Kun muotoilu on työkalun vastuulla, katselmoinnissa
+ei keskustella sisennyksistä, ja muutosten erot pysyvät pieninä.
 
 ## -Werror ja varoitusten hallinta
 

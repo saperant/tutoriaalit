@@ -1,0 +1,7 @@
+digraph {
+  rankdir=LR; nodesep=0.25; ranksep=0.6;
+  "lahde/main.c" -> "main.o";
+  "lahde/tilasto.c" -> "tilasto.o";
+  "main.o" -> "tilasto";
+  "tilasto.o" -> "tilasto";
+}
