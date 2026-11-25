@@ -30,28 +30,35 @@ Muutokset ja suorituskyky:
 
 11. Atominen päivitys (`SET x = x - ?` ehdolla) luku–muokkaus–kirjoitus-
     kierroksen sijaan; UPSERT idempotenttiin lisäykseen.
-12. Lyhyet transaktiot; joukkolisäykset yhdessä transaktiossa.
-13. Indeksit kyselyjen perusteella; tarkista suunnitelma `EXPLAIN`-
+12. `UPDATE`- ja `DELETE`-lauseen ehto ensin `SELECT`-lauseessa; käsin
+    tehtävät muutokset transaktiossa.
+13. Lyhyet transaktiot; joukkolisäykset yhdessä transaktiossa.
+14. Indeksit kyselyjen perusteella; tarkista suunnitelma `EXPLAIN`-
     komennolla ja muista indeksien kirjoitushinta.
-14. Ehto sarakkeeseen sellaisenaan, ei funktion sisään.
-15. Avainsivutus suurille joukoille.
-
-Sovellus:
-
-16. Parametrit aina; tunnisteet sallittujen luettelosta.
-17. Ei kyselyitä silmukassa (N+1).
-18. Skeema migraatioilla versionhallinnassa.
-19. SQL yhteen paikkaan tietovarastoon; ORM tavalliseen CRUDiin, SQL
-    raportteihin ja joukkomuutoksiin.
-20. Testit samalla tietokantajärjestelmällä kuin tuotanto.
+15. Ehto sarakkeeseen sellaisenaan, ei funktion sisään; avainsivutus
+    suurille joukoille.
 
 Järjestelmät ja aikasarjat:
 
-21. Tyypit, järjestys ja aikavyöhyke auki; älä luota järjestelmän
+16. Tyypit, järjestys ja aikavyöhyke auki; älä luota järjestelmän
     oletuksiin (jakolasku, vertailu, NULLien paikka).
-22. Ajanhetket aikavyöhykkeellisinä ja UTC:nä.
-23. Aikasarja ensin relaatiokantaan: aika avaimessa, osiointi aikavälin
+17. Ajanhetket aikavyöhykkeellisinä ja UTC:nä.
+18. Aikasarja ensin relaatiokantaan: aika avaimessa, osiointi aikavälin
     mukaan, BRIN; säilytysaika osioita poistamalla.
+
+Sovellus:
+
+19. Arvot kyselyyn aina parametreina; tunnisteet sallittujen
+    luettelosta.
+20. Yhteys avataan yhdessä paikassa samoilla asetuksilla, ja transaktion
+    rajat päättää sovellus.
+21. Rajoitevirhe muunnetaan sovelluksen virheeksi; tilapäisen virheen
+    (lukitus, sarjallistus) jälkeen ajetaan koko transaktio uudelleen.
+22. Ei kyselyitä silmukassa (N+1).
+23. Skeema migraatioilla versionhallinnassa.
+24. SQL yhteen paikkaan tietovarastoon; ORM tavalliseen CRUDiin, SQL
+    raportteihin ja joukkomuutoksiin.
+25. Testit samalla tietokantajärjestelmällä kuin tuotanto.
 
 ## Lähteet ja jatkolukeminen
 
@@ -74,10 +81,19 @@ Järjestelmät ja aikasarjat:
   mallinnus- ja kyselyvirheet, kuten listat sarakkeissa ja EAV-mallin.
   Martin Kleppmannin *Designing Data-Intensive Applications* selittää
   transaktiot, eristystasot ja replikoinnin perusteellisesti.
+- **CMU:n kurssi Intro to Database Systems**
+  (<https://15445.courses.cs.cmu.edu>) käsittelee tietokannan
+  sisäisen toteutuksen: tallennuksen, indeksit, liitosalgoritmit,
+  optimoijan ja samanaikaisuuden hallinnan. Luennot ja kalvot ovat
+  vapaasti saatavilla.
 - **OWASP SQL Injection Prevention Cheat Sheet**
   (<https://cheatsheetseries.owasp.org>) on injektion torjunnan
   tarkistuslista.
-
+- **PEP 249** (<https://peps.python.org/pep-0249/>) määrittelee
+  Pythonin DB-API:n: yhteydet, kursorit, parametrityylit ja
+  poikkeusluokat. **psycopg**-ajurin dokumentaatio
+  (<https://www.psycopg.org/psycopg3/docs/>) kertoo tyyppimuunnokset
+  ja transaktioiden hallinnan PostgreSQL:n kanssa.
 - **MariaDB Knowledge Base** (<https://mariadb.com/kb/>) ja **MySQL
   Reference Manual** (<https://dev.mysql.com/doc/>) kertovat
   murteiden ja InnoDB:n yksityiskohdat, kuten lukitukset ja
@@ -110,6 +126,13 @@ tietokantaa käytetään HTTP-rajapinnan takana, ja *Skaalautuvien
 järjestelmien suunnittelu*, jossa käsitellään replikointia, osittamista
 ja välimuisteja. Datan analysointiin SQL:ää käytetään myös
 tietovarastoissa ja DuckDB:n kaltaisissa työkaluissa.
+
+Aihetta jatkavat lisäksi *NoSQL-tietokannat* (avain–arvo-,
+dokumentti-, leveäsarake- ja graafikannat sekä LSM-puu B-puun
+vaihtoehtona),
+*Integraatiotestaus ja Testcontainers* (tietokantakoodin testaus
+oikealla palvelimella), *Web-tietoturva* (injektiot laajemmin) ja
+*Edistyneet algoritmit ja tietorakenteet* (B-puun toteutus).
 
 ## Lisenssi
 

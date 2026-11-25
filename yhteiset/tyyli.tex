@@ -162,15 +162,11 @@
 \AtBeginEnvironment{longtable}{\small\sffamily}
 
 % --- Kuvien sijoittelu ------------------------------------------------
-% Kaaviot saavat viedä suurimman osan tekstisivusta, eikä pelkille
-% kuville varattu sivu jää puolityhjäksi.
-\renewcommand{\topfraction}{0.9}
-\renewcommand{\bottomfraction}{0.8}
-\renewcommand{\textfraction}{0.1}
-\renewcommand{\floatpagefraction}{0.75}
-\setcounter{topnumber}{3}
-\setcounter{bottomnumber}{2}
-\setcounter{totalnumber}{4}
+% Teksti viittaa kuviin sanoilla "alla oleva kuva", joten kuva ladotaan
+% täsmälleen siihen kohtaan, jossa se on lähteessä, eikä se saa kellua
+% toiselle sivulle.
+\usepackage{float}
+\floatplacement{figure}{H}
 
 % --- Kansilehti ---------------------------------------------------------
 \usepackage{tikz}

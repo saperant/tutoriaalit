@@ -3,7 +3,26 @@
 Normalisoitu tieto on monessa taulussa, ja liitos (*join*) yhdistää ne
 kyselyssä takaisin. Liitos muodostaa loogisesti kaikki rivien parit ja
 pitää ne, joille liitosehto on tosi. Optimoija toteuttaa sen
-tehokkaammin, yleensä indeksin avulla.
+tehokkaammin, yleensä indeksin avulla. Kuvassa luvun 2 asiakkaat ja
+tilaukset on yhdistetty ehdolla `tilaus.asiakas_id = asiakas.id`:
+
+```{.dot otsikko="Liitos asiakkaiden ja tilausten välillä. Sisäliitos tuottaa rivin jokaisesta yhtenäisestä viivasta (kuusi riviä); ulkoliitos lisää parittoman asiakkaan NULL-arvoin."}
+digraph {
+  rankdir=LR; nodesep=0.12; ranksep=1.6;
+  node [fontsize=9, height=0.3];
+  edge [arrowhead=none];
+  subgraph cluster_a { label="asiakas"; fontsize=10; color="#D9E0E3";
+    a1 [label="1 Aino"]; a2 [label="2 Matti"]; a3 [label="3 Liisa"];
+    a4 [label="4 Juha"]; a5 [label="5 Sari"]; }
+  subgraph cluster_t { label="tilaus (id, asiakas_id)"; fontsize=10; color="#D9E0E3";
+    t1 [label="1, asiakas 1"]; t2 [label="2, asiakas 1"];
+    t3 [label="3, asiakas 2"]; t6 [label="6, asiakas 2"];
+    t4 [label="4, asiakas 3"]; t5 [label="5, asiakas 4"];
+    n [label="NULL", style="rounded,dashed", fillcolor="white"]; }
+  a1 -> t1; a1 -> t2; a2 -> t3; a2 -> t6; a3 -> t4; a4 -> t5;
+  a5 -> n [style=dashed, label="vain LEFT JOIN", fontsize=8];
+}
+```
 
 ## Sisä- ja ulkoliitos
 

@@ -1,5 +1,10 @@
-vaarallinen: ['Aino Virtanen', 'Matti Korhonen', 'Liisa Nieminen']
-parametrisoitu: []
-kaupungeista: ['Matti Korhonen', 'Liisa Nieminen']
-järjestys: ['Aino Virtanen', 'Liisa Nieminen', 'Matti Korhonen']
+parametrilla: ["Mia O'Connor"]
+nimetyillä: ['Aino Virtanen']
+SQL: SELECT nimi FROM asiakas WHERE nimi = 'Mia O'Connor'
+virhe: OperationalError
+SQL: SELECT nimi FROM asiakas WHERE nimi = '' OR '1'='1'
+liimaten: 4 riviä
+parametrilla: 0 riviä
+kaupungeista: ['Liisa Nieminen', 'Matti Korhonen']
+järjestys: ['Aino Virtanen', 'Liisa Nieminen', 'Matti Korhonen', "Mia O'Connor"]
 hylätty: tuntematon järjestys: 'nimi; DROP TABLE asiakas'

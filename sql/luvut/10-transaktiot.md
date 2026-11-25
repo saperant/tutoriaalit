@@ -1,9 +1,41 @@
 # Muutokset ja transaktiot
 
-Tämä luku käsittelee tietojen muuttamisen tuotantokäytössä: lisäyksen,
-joka ei kaadu toistoon, muutokset, jotka palauttavat tuloksensa, ja
-transaktiot, jotka tekevät monesta muutoksesta yhden kokonaisuuden.
-Perussyntaksi (`INSERT`, `UPDATE`, `DELETE`) oletetaan tutuksi.
+Edelliset luvut lukivat dataa ja määrittelivät sille säännöt. Tämä
+luku muuttaa sitä: ensin muutoslauseet `INSERT`, `UPDATE` ja `DELETE`,
+sitten lisäys, joka ei kaadu toistoon, ja muutokset, jotka palauttavat
+tuloksensa, ja lopuksi transaktiot, jotka tekevät monesta muutoksesta
+yhden kokonaisuuden myös silloin, kun kirjoittajia on monta.
+
+## INSERT, UPDATE ja DELETE
+
+`INSERT` lisää rivejä joko luetelluista arvoista tai toisen kyselyn
+tuloksesta:
+
+```{.sql tiedosto="esimerkit/10-muutokset.sql" osa="insert"}
+```
+
+`UPDATE` muuttaa ja `DELETE` poistaa ne rivit, joille `WHERE`-ehto on
+tosi. Ehto on sama kuin kyselyissä, joten osuvat rivit voi tarkistaa
+ensin `SELECT`-lauseella:
+
+```{.sql tiedosto="esimerkit/10-muutokset.sql" osa="update"}
+```
+
+```{.sql tiedosto="esimerkit/10-muutokset.sql" osa="delete"}
+```
+
+```{.tuloste tiedosto="esimerkit/10-muutokset.odotettu"}
+```
+
+`SET`-lausekkeen oikea puoli näkee rivin vanhat arvot, joten
+`hinta_snt = hinta_snt * 90 / 100` laskee uuden hinnan vanhasta.
+`changes()` kertoo SQLitessä muuttuneiden rivien määrän; sovelluksessa
+sama tieto tulee ajurilta (luku 14).
+
+`UPDATE` ja `DELETE` ilman `WHERE`-ehtoa koskevat *jokaista* riviä,
+eikä tietokanta kysy varmistusta. Käsin tehtävät muutokset ajetaan
+siksi transaktiossa (alla), jolloin tuloksen voi tarkistaa ennen
+sitoutusta ja perua.
 
 ## UPSERT ja RETURNING
 
@@ -79,12 +111,64 @@ Tallennuspiste (`SAVEPOINT`) peruu osan transaktiosta:
 Esimerkin alussa luodaan varastotaulu, jossa jokaisen tuotteen saldo on
 10. Ilman `BEGIN`-lausetta jokainen lause on oma transaktionsa
 (*autocommit*). Transaktion virheenkäsittely tehdään sovelluksessa:
-virheen jälkeen kutsutaan `ROLLBACK` (luku 12).
+virheen jälkeen kutsutaan `ROLLBACK` (luku 14).
 
 ## Eristystasot
 
-Samanaikaiset transaktiot voivat häiritä toisiaan. Standardi määrittelee
-neljä eristystasoa sen mukaan, mitkä poikkeamat ne sallivat:
+Samanaikaiset transaktiot voivat häiritä toisiaan. Tavallisin
+esimerkki on *kadonnut päivitys* (*lost update*): kaksi transaktiota
+lukee saman saldon, laskee uuden arvon sovelluksessa ja kirjoittaa sen
+takaisin. Jälkimmäinen kirjoitus peittää ensimmäisen:
+
+```{.dot otsikko="Kadonnut päivitys. Aika kulkee ylhäältä alas. Kumpikin transaktio laskee uuden saldon lukemastaan arvosta 10, joten A:n vähennys häviää."}
+digraph {
+  rankdir=TB; nodesep=0.35; ranksep=0.2; splines=false;
+  node [fontsize=9, width=1.9, height=0.34, fixedsize=true];
+  ha [label="Transaktio A", shape=plain, style="", fontsize=10, fixedsize=false];
+  hb [label="Transaktio B", shape=plain, style="", fontsize=10, fixedsize=false];
+  hk [label="saldo kannassa", shape=plain, style="", fontsize=10, fixedsize=false];
+  a1 [label="SELECT saldo → 10"];
+  b1 [label="SELECT saldo → 10"];
+  a2 [label="UPDATE saldo = 7 (10 − 3)"];
+  a3 [label="COMMIT"];
+  b2 [label="UPDATE saldo = 5 (10 − 5)"];
+  b3 [label="COMMIT"];
+  node [shape=plain, style="", fixedsize=false];
+  k0 [label="10"]; k1 [label="10"]; k2 [label="10"]; k3 [label="7"];
+  k4 [label="7"]; k5 [label="5 (pitäisi olla 2)"];
+  node [style=invis];
+  x1; x2; x3; x4; x5; x6;
+  { rank=same; ha; hb; hk; }
+  { rank=same; a1; x1; k0; }
+  { rank=same; x2; b1; k1; }
+  { rank=same; a2; x3; k2; }
+  { rank=same; a3; x4; k3; }
+  { rank=same; x5; b2; k4; }
+  { rank=same; x6; b3; k5; }
+  edge [style=invis];
+  ha -> a1 -> x2 -> a2 -> a3 -> x5 -> x6;
+  hb -> x1 -> b1 -> x3 -> x4 -> b2 -> b3;
+  hk -> k0 -> k1 -> k2 -> k3 -> k4 -> k5;
+  edge [style=solid, constraint=false];
+  a1 -> a2 -> a3;
+  b1 -> b2 -> b3;
+}
+```
+
+Muita poikkeamia ovat
+
+- *likainen luku* (*dirty read*): transaktio näkee toisen sitomattoman
+  muutoksen, joka ehkä perutaan,
+- *toistumaton luku* (*non-repeatable read*): sama rivi antaa saman
+  transaktion aikana kaksi eri arvoa,
+- *haamurivi* (*phantom*): sama ehto palauttaa toisella kerralla
+  rivejä, joita ensimmäisellä ei ollut,
+- *kirjoitusvinouma* (*write skew*): kaksi transaktiota tarkistaa saman
+  ehdon ("päivystäjiä on vähintään kaksi") ja muuttaa kumpikin eri
+  riviä niin, että ehto rikkoutuu.
+
+Standardi määrittelee neljä eristystasoa sen mukaan, mitkä poikkeamat
+ne sallivat:
 
 | Taso | Estää |
 |------|-------|
@@ -94,10 +178,10 @@ neljä eristystasoa sen mukaan, mitkä poikkeamat ne sallivat:
 | *serializable* | kaikki: tulos on kuin transaktiot olisi ajettu peräkkäin |
 
 **PostgreSQL**:n oletus on *read committed*: jokainen lause näkee
-lauseen alussa sitoutetun tilan. Sovelluksen tekemä
-*luku–muokkaus–kirjoitus* (`SELECT saldo`, lasku sovelluksessa,
-`UPDATE saldo = ?`) kadottaa toisen transaktion samanaikaisen
-muutoksen (*lost update*). Korjauksia ovat atominen päivitys
+lauseen alussa sitoutetun tilan. Kuvan *luku–muokkaus–kirjoitus*
+(`SELECT saldo`, lasku sovelluksessa, `UPDATE saldo = ?`) kadottaa
+sillä toisen transaktion samanaikaisen muutoksen. Kirjoitusvinouman
+estää vasta *serializable*. Kadonneen päivityksen korjauksia ovat atominen päivitys
 (`SET saldo = saldo - 5`), rivilukko `SELECT ... FOR UPDATE` tai taso
 *serializable*, jolloin tietokanta keskeyttää ristiriitaisen
 transaktion ja sovellus yrittää uudelleen.
@@ -143,11 +227,14 @@ aloitetaan siksi `BEGIN IMMEDIATE` -lauseella.
 
 ## Itsearviointi
 
+- Osaat lisätä, muuttaa ja poistaa rivejä ja tarkistaa etukäteen,
+  mihin riveihin muutos osuu.
 - Osaat kirjoittaa UPSERT-lauseen ja palauttaa muutetut rivit
   `RETURNING`-osalla.
 - Osaat tehdä tarkistuksen ja muutoksen samassa lauseessa niin, että
   se on oikein samanaikaisesti.
-- Osaat selittää eristystasot, *lost update* -ongelman ja sen
-  korjaukset PostgreSQL:ssä.
+- Osaat selittää eristystasot, kadonneen päivityksen ja sen
+  korjaukset PostgreSQL:ssä sekä nimetä muut samanaikaisuuden
+  poikkeamat.
 - Osaat kertoa, miten SQLiten lukitus ja WAL-tila toimivat ja miksi
   kirjoittava transaktio aloitetaan `BEGIN IMMEDIATE` -lauseella.

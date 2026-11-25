@@ -55,7 +55,7 @@ Yleinen virhe on valita dokumenttitietokanta siksi, että skeematon
 tallennus tuntuu alussa joustavalta. Skeema on silloin olemassa
 sovelluskoodissa, jossa sen eheyttä ei valvo kukaan. Avain-arvo-,
 dokumentti-, leveäsarake- ja graafitietokannat esitellään taidossa
-*NoSQL-tietokannat*, ja aikasarjoja käsitellään luvussa 14.
+*NoSQL-tietokannat*, ja aikasarjoja käsitellään luvussa 13.
 
 ## Toteutukset ja tämän tutoriaalin valinta
 
@@ -76,11 +76,9 @@ Tutoriaalin esimerkit ajetaan **SQLite 3.45:llä**. Perusteet:
   älypuhelimessa ja selaimessa ja sopii sovelluksen omaksi
   tietokannaksi, testeihin ja tiedostomuodoksi.
 
-Luvut 13–15 ajavat esimerkkejä myös oikeilla PostgreSQL- ja
-MariaDB-palvelimilla: ne vertailevat järjestelmiä, käsittelevät
-aikasarjoja ja sovelluksen tietokantarajapintoja (tietovarasto,
-kyselynrakentaja ja ORM). Erot PostgreSQL:ään kerrotaan siellä, missä
-ne vaikuttavat. Olennaisimmat:
+Luvut 12–15 ajavat esimerkkejä myös oikeilla PostgreSQL- ja
+MariaDB-palvelimilla. Erot PostgreSQL:ään kerrotaan jo aiemmin siellä,
+missä ne vaikuttavat. Olennaisimmat:
 
 | Asia | SQLite 3.45 | PostgreSQL |
 |------|-------------|------------|
@@ -134,6 +132,22 @@ SQLite tarkistaa sarakkeiden tyypit, aikaleimat ovat ISO 8601
 määrätty `ORDER BY` -lauseella. Ilman sitä rivien järjestys ei ole
 taattu.
 
+## Tutoriaalin rakenne
+
+Tutoriaali etenee viidessä osassa, ja kukin osa nojaa edellisiin:
+
+| Luvut | Osa | Kysymys |
+|-------|-----|---------|
+| 2 | tietomalli | miten tieto jaetaan tauluihin |
+| 3–8 | kyselyt | miten tauluista kysytään |
+| 9–11 | eheys, muutokset ja suorituskyky | miten tieto pysyy oikeana ja kyselyt nopeina |
+| 12–13 | järjestelmät ja aikasarjat | miten tietokannat eroavat ja miten ne taipuvat mittausdataan |
+| 14–15 | sovellus | miten tietokantaa käytetään ohjelmakoodista |
+
+Luvut 2–11 ovat tietokannasta riippumatonta SQL:ää, ja ne kannattaa
+lukea järjestyksessä. Luvut 12–13 ja 14–15 voi lukea kummassa
+järjestyksessä tahansa.
+
 ## Tutoriaalin tietomalli
 
 Luvusta 2 alkaen esimerkit käyttävät pientä verkkokauppaa: asiakkaat,
@@ -151,5 +165,7 @@ ajon ensimmäiseen virheeseen. Esimerkit, jotka näyttävät tarkoituksella
 rikotun rajoitteen, testataan varmistamalla, että ajo kaatuu odotettuun
 virheeseen.
 
-Lukujen 10 ja 12 Python-esimerkit tarkistetaan ruffilla ja `mypy --strict`
--tilassa ja ajetaan samalla tavalla.
+Python-esimerkit (luvut 10 ja 13–15) tarkistetaan ruffilla ja
+`mypy --strict` -tilassa ja ajetaan samalla tavalla. Lukujen 12–15
+palvelinesimerkit ajetaan testissä väliaikaisilla PostgreSQL- ja
+MariaDB-palvelimilla.

@@ -1,0 +1,12 @@
+3: Suklaa, 3.49 e
+1: Kahvi 500 g, 8.99 e
+2: Teekannu, 24.90 e
+tuotteita: 3 kallein: 2490
+id 99: None
+hinta_snt: 2490 (int)
+paino_kg: None (NoneType)
+nimi: 'Teekannu' (str)
+lisatty: '2026-10-15' (str)
+viikonpäivä: 4
+uusi id: 4
+muuttui: 2 riviä

@@ -1,0 +1,12 @@
+QUERY PLAN
+|--SCAN a
+|--SEARCH t USING COVERING INDEX tilaus_asiakas (asiakas_id=?)
+|--SEARCH r USING INDEX sqlite_autoindex_tilausrivi_1 (tilaus_id=?)
+`--USE TEMP B-TREE FOR ORDER BY
+┌────────────┬────────────┐
+│    nimi    │ kappaleita │
+├────────────┼────────────┤
+│ Asiakas 7  │ 300        │
+│ Asiakas 27 │ 300        │
+│ Asiakas 47 │ 300        │
+└────────────┴────────────┘

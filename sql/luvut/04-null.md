@@ -53,7 +53,9 @@ summa kirjoitetaan `coalesce(sum(x), 0)`, jos nolla on oikea vastaus.
 
 ## NOT IN -ansa
 
-Yleisin NULL-virhe on `NOT IN` alikyselyn kanssa. Ehto
+Yleisin NULL-virhe on `NOT IN` alikyselyn kanssa. *Alikysely* on
+kysely toisen kyselyn sisällä; tässä se tuottaa listan arvoja, joihin
+verrataan (alikyselyt käsitellään tarkemmin luvuissa 5 ja 7). Ehto
 `x NOT IN (a, b, NULL)` tarkoittaa `x <> a AND x <> b AND x <> NULL`, ja
 viimeinen osa on aina tuntematon. Ehto ei siis ole koskaan tosi:
 

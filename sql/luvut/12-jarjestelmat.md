@@ -29,7 +29,7 @@ oletusvalinta uusiin palvelinsovelluksiin. Sen vahvuudet ovat
   dokumenttitietokannan (taito *NoSQL-tietokannat*).
 - **laajennettavuus**: omat tyypit, funktiot ja indeksityypit.
   Laajennuksia ovat esimerkiksi PostGIS (paikkatieto), TimescaleDB
-  (aikasarjat, luku 14) ja pgvector (vektorihaku).
+  (aikasarjat, luku 13) ja pgvector (vektorihaku).
 - **MVCC** (*multiversion concurrency control*): päivitys kirjoittaa
   rivistä uuden version, ja vanha jää lukijoille, kunnes `VACUUM`
   siivoaa sen. Lukijat ja kirjoittajat eivät estä toisiaan.
@@ -87,22 +87,22 @@ Murre-erot eivät rajoitu syntaksiin: sama SQL voi ajautua kaikissa ja
 antaa eri tuloksen. Seuraava tiedosto ajetaan sellaisenaan kolmessa
 järjestelmässä:
 
-```{.sql tiedosto="esimerkit/13-sama.sql" osa="sama"}
+```{.sql tiedosto="esimerkit/12-sama.sql" osa="sama"}
 ```
 
 SQLite:
 
-```{.tuloste tiedosto="esimerkit/13-sama.odotettu"}
+```{.tuloste tiedosto="esimerkit/12-sama.odotettu"}
 ```
 
 PostgreSQL:
 
-```{.tuloste tiedosto="esimerkit/palvelimet/13-sama.pg.odotettu"}
+```{.tuloste tiedosto="esimerkit/palvelimet/12-sama.pg.odotettu"}
 ```
 
 MariaDB:
 
-```{.tuloste tiedosto="esimerkit/palvelimet/13-sama.maria.odotettu"}
+```{.tuloste tiedosto="esimerkit/palvelimet/12-sama.maria.odotettu"}
 ```
 
 - **Jakolasku**: kokonaislukujen jako katkaistaan SQLitessä ja
@@ -127,15 +127,15 @@ MariaDB:
 Taulu, jolla on automaattinen avain, rivien lisäys ja palautus,
 upsert ja sivutus. SQLite:
 
-```{.sql tiedosto="esimerkit/13-murre.sql" osa="taulu"}
+```{.sql tiedosto="esimerkit/12-murre.sql" osa="taulu"}
 ```
 
 PostgreSQL ja MariaDB:
 
-```{.sql tiedosto="esimerkit/palvelimet/13-murre.pg" osa="taulu"}
+```{.sql tiedosto="esimerkit/palvelimet/12-murre.pg" osa="taulu"}
 ```
 
-```{.sql tiedosto="esimerkit/palvelimet/13-murre.maria" osa="taulu"}
+```{.sql tiedosto="esimerkit/palvelimet/12-murre.maria" osa="taulu"}
 ```
 
 `GENERATED ALWAYS AS IDENTITY` on standardin mukainen automaattinen
@@ -144,7 +144,7 @@ MariaDB:n `AUTO_INCREMENT` ja SQLiten `INTEGER PRIMARY KEY` ovat omia
 ratkaisuja. MariaDB:n `BOOLEAN` on `TINYINT(1)`, joten tuloste näyttää
 ykkösen. Lisäys ja palautus on kaikissa sama:
 
-```{.sql tiedosto="esimerkit/palvelimet/13-murre.pg" osa="lisays"}
+```{.sql tiedosto="esimerkit/palvelimet/12-murre.pg" osa="lisays"}
 ```
 
 Upsertin syntaksi eroaa. PostgreSQL ja SQLite käyttävät muotoa
@@ -152,14 +152,14 @@ Upsertin syntaksi eroaa. PostgreSQL ja SQLite käyttävät muotoa
 `ON DUPLICATE KEY UPDATE`, joka reagoi mihin tahansa yksilölliseen
 avaimeen:
 
-```{.sql tiedosto="esimerkit/palvelimet/13-murre.maria" osa="upsert"}
+```{.sql tiedosto="esimerkit/palvelimet/12-murre.maria" osa="upsert"}
 ```
 
 Sivutukseen kaikki tuntevat `LIMIT`- ja `OFFSET`-muodon; standardin
 `OFFSET ... FETCH FIRST` toimii PostgreSQL:ssä ja MariaDB 10.6:sta
 lähtien, mutta ei SQLitessä:
 
-```{.sql tiedosto="esimerkit/palvelimet/13-murre.pg" osa="sivutus"}
+```{.sql tiedosto="esimerkit/palvelimet/12-murre.pg" osa="sivutus"}
 ```
 
 ### Aikaleimat ja aikavyöhykkeet
@@ -168,10 +168,10 @@ Ajanhetki (tapahtuma, kirjautuminen, maksu) tallennetaan
 aikavyöhykkeellisenä, seinäkelloaika (kokouksen alku paikallista
 aikaa) ilman. Tyyppien nimet ja käytös eroavat:
 
-```{.sql tiedosto="esimerkit/palvelimet/13-murre.pg" osa="aika"}
+```{.sql tiedosto="esimerkit/palvelimet/12-murre.pg" osa="aika"}
 ```
 
-```{.sql tiedosto="esimerkit/palvelimet/13-murre.maria" osa="aika"}
+```{.sql tiedosto="esimerkit/palvelimet/12-murre.maria" osa="aika"}
 ```
 
 PostgreSQL:n `timestamptz` tallentaa hetken UTC:nä ja näyttää sen
@@ -183,20 +183,20 @@ huolehtii sovellus.
 
 ### Eristystasot ja MVCC
 
-```{.sql tiedosto="esimerkit/palvelimet/13-murre.pg" osa="eristys"}
+```{.sql tiedosto="esimerkit/palvelimet/12-murre.pg" osa="eristys"}
 ```
 
-```{.sql tiedosto="esimerkit/palvelimet/13-murre.maria" osa="eristys"}
+```{.sql tiedosto="esimerkit/palvelimet/12-murre.maria" osa="eristys"}
 ```
 
 PostgreSQL:n tuloste:
 
-```{.tuloste tiedosto="esimerkit/palvelimet/13-murre.pg.odotettu"}
+```{.tuloste tiedosto="esimerkit/palvelimet/12-murre.pg.odotettu"}
 ```
 
 MariaDB:n tuloste:
 
-```{.tuloste tiedosto="esimerkit/palvelimet/13-murre.maria.odotettu"}
+```{.tuloste tiedosto="esimerkit/palvelimet/12-murre.maria.odotettu"}
 ```
 
 Oletuseristystasot eroavat: PostgreSQL, Oracle ja SQL Server käyttävät

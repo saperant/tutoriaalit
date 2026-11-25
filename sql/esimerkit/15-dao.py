@@ -99,11 +99,27 @@ def kokeile(nimi: str, varasto: TuoteVarasto) -> None:
     print(f"{nimi}: {halvimmat}")
 
 
+# @alku ero
+def kokeile_virhetta(nimi: str, varasto: TuoteVarasto) -> None:
+    """150 prosentin alennus tekisi hinnasta negatiivisen."""
+    try:
+        tuote = alennus(varasto, "tee", 150)
+    except sqlite3.IntegrityError:
+        print(f"{nimi}: rajoite hylkäsi hinnan")
+    else:
+        print(f"{nimi}: hyväksyi hinnan {tuote.hinta}")
+# @loppu ero
+
+
 def main() -> None:
     yhteys = sqlite3.connect(":memory:", autocommit=False)
     with closing(yhteys), yhteys:   # sulkeminen ja transaktio
-        kokeile("SQLite", SqliteTuoteVarasto(yhteys))
-    kokeile("muisti", MuistiTuoteVarasto())
+        varasto = SqliteTuoteVarasto(yhteys)
+        kokeile("SQLite", varasto)
+        kokeile_virhetta("SQLite", varasto)
+    muisti = MuistiTuoteVarasto()
+    kokeile("muisti", muisti)
+    kokeile_virhetta("muisti", muisti)
 
 
 if __name__ == "__main__":

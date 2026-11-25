@@ -25,7 +25,8 @@ yhteen tauluun:
 ```{.sql tiedosto="esimerkit/02-normalisoimaton.sql" osa="taulu"}
 ```
 
-Rakenne johtaa *anomalioihin*:
+Rakenne johtaa *anomalioihin*. Esimerkki muuttaa yhden rivin
+`UPDATE`-lauseella; muutoslauseet käsitellään luvussa 10:
 
 ```{.sql tiedosto="esimerkit/02-normalisoimaton.sql" osa="anomalia"}
 ```
@@ -62,6 +63,42 @@ normaalimuodot koskevat harvinaisia moniarvoisia riippuvuuksia.
 Tutoriaalin tietomalli on normalisoitu verkkokauppa:
 
 ```{.sql tiedosto="esimerkit/02-skeema.sql" osa="skeema"}
+```
+
+Taulut ja niiden yhteydet kuvana (*ER-kaavio*). Alleviivatut
+sarakkeet muodostavat pääavaimen, ja haarautuva pää on yhteyden
+N-puoli:
+
+```{.dot otsikko="Verkkokaupan taulut. Asiakkaalla on monta tilausta ja tilauksella monta riviä; tilausrivi yhdistää tilauksen ja tuotteen."}
+digraph {
+  rankdir=LR; nodesep=0.4; ranksep=1.1;
+  node [shape=plain, style=""];
+  edge [arrowhead=crow, arrowtail=tee, dir=both];
+  asiakas [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="#F3E5DC"><b>asiakas</b></td></tr>
+    <tr><td align="left" port="id"><u>id</u></td></tr>
+    <tr><td align="left">nimi</td></tr>
+    <tr><td align="left">kaupunki</td></tr></table>>];
+  tilaus [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="#F3E5DC"><b>tilaus</b></td></tr>
+    <tr><td align="left" port="id"><u>id</u></td></tr>
+    <tr><td align="left" port="asiakas_id">asiakas_id</td></tr>
+    <tr><td align="left">paiva</td></tr></table>>];
+  tilausrivi [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="#F3E5DC"><b>tilausrivi</b></td></tr>
+    <tr><td align="left" port="tilaus_id"><u>tilaus_id</u></td></tr>
+    <tr><td align="left" port="tuote_id"><u>tuote_id</u></td></tr>
+    <tr><td align="left">maara</td></tr></table>>];
+  tuote [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="#F3E5DC"><b>tuote</b></td></tr>
+    <tr><td align="left" port="id"><u>id</u></td></tr>
+    <tr><td align="left">nimi</td></tr>
+    <tr><td align="left">kategoria</td></tr>
+    <tr><td align="left">hinta_snt</td></tr></table>>];
+  asiakas:id:e -> tilaus:asiakas_id:w;
+  tilaus:id:e -> tilausrivi:tilaus_id:w;
+  tuote:id:e -> tilausrivi:tuote_id:w;
+}
 ```
 
 Ratkaisut ja niiden perustelut:

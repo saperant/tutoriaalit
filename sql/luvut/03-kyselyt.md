@@ -9,16 +9,29 @@ yhden taulun kyselyt; liitokset ovat luvussa 5 ja koosteet luvussa 6.
 Lauseen osat kirjoitetaan eri järjestyksessä kuin ne loogisesti
 suoritetaan. Looginen järjestys selittää, mihin kukin osa voi viitata:
 
-| Vaihe | Osa | Tehtävä |
-|-------|-----|---------|
-| 1 | `FROM`, `JOIN` | lähdetaulut ja niiden liitos |
-| 2 | `WHERE` | rivien suodatus |
-| 3 | `GROUP BY` | ryhmittely |
-| 4 | `HAVING` | ryhmien suodatus |
-| 5 | `SELECT` | tulossarakkeet ja aliakset, ikkunafunktiot |
-| 6 | `DISTINCT` | toistojen poisto |
-| 7 | `ORDER BY` | järjestys |
-| 8 | `LIMIT`, `OFFSET` | rivien rajaus |
+```{.dot otsikko="SELECT-lauseen looginen suoritusjärjestys. Kukin vaihe saa edellisen vaiheen tuloksen."}
+digraph {
+  rankdir=TB; nodesep=0.25; ranksep=0.45;
+  node [width=1.25, height=0.55, fixedsize=true, fontsize=9];
+  f [label="FROM, JOIN\nlähderivit"];
+  w [label="WHERE\nrivien suodatus"];
+  g [label="GROUP BY\nryhmittely"];
+  h [label="HAVING\nryhmien suodatus"];
+  s [label="SELECT\nsarakkeet, ikkunat"];
+  d [label="DISTINCT\ntoistojen poisto"];
+  o [label="ORDER BY\njärjestys"];
+  l [label="LIMIT, OFFSET\nrivien rajaus"];
+  { rank=same; f -> w -> g -> h; }
+  { rank=same; s -> d -> o -> l; }
+  h -> s [constraint=false];
+  f -> s [style=invis];
+}
+```
+
+Kukin vaihe näkee vain sen, mitä aiemmat vaiheet ovat tuottaneet.
+`GROUP BY`, `HAVING` ja ikkunafunktiot esitellään luvuissa 6 ja 8;
+tässä luvussa käytetään vaiheita `FROM`, `WHERE`, `SELECT`,
+`ORDER BY` ja `LIMIT`.
 
 Siksi `SELECT`-osan alias ei standardin mukaan näy `WHERE`-ehdossa
 mutta näkyy `ORDER BY` -osassa. SQLite sallii aliaksen myös

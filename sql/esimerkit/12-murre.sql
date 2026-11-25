@@ -1,5 +1,5 @@
 -- Sama tehtävä SQLitellä: automaattinen avain, RETURNING, upsert ja
--- sivutus. Vertaa tiedostoihin palvelimet/13-murre.pg ja .maria.
+-- sivutus. Vertaa tiedostoihin palvelimet/12-murre.pg ja .maria.
 .headers on
 .mode box
 -- @alku taulu

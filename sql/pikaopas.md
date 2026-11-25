@@ -47,6 +47,7 @@ Looginen järjestys: `FROM`/`JOIN` → `WHERE` → `GROUP BY` → `HAVING` →
 | myös parittomat | `LEFT JOIN`, ehto oikeaan tauluun `ON`-osaan |
 | ehdollinen kooste | `count(*) FILTER (WHERE ...)` |
 | merkkijonolista | `string_agg(x, ', ' ORDER BY x)` |
+| yhdiste, leikkaus, erotus | `UNION [ALL]`, `INTERSECT`, `EXCEPT` |
 | vaiheittain | `WITH a AS (...), b AS (...) SELECT ...` |
 | hierarkia, sarja | `WITH RECURSIVE` + päättymisehto |
 
@@ -76,6 +77,8 @@ Looginen järjestys: `FROM`/`JOIN` → `WHERE` → `GROUP BY` → `HAVING` →
 ```{.sql tiedosto="esimerkit/pikaopas.sql" osa="muutokset"}
 ```
 
+- `UPDATE` ja `DELETE` ilman `WHERE`-ehtoa koskevat jokaista riviä:
+  sama ehto ensin `SELECT`-lauseessa, käsin tehtävät transaktiossa.
 - Atominen ehdollinen päivitys luku–muokkaus–kirjoitus-kierroksen
   sijaan: oikein kaikilla eristystasoilla.
 - SQLite: yksi kirjoittaja, aina *serializable*; WAL-tila
@@ -108,29 +111,13 @@ eli yksi haku indeksistä eikä taulua lueta lainkaan.
   vaan `paiva >= '2026-03-01' AND paiva < '2026-04-01'`.
 - Osittainen indeksi: `CREATE INDEX ... WHERE tila = 'avoin'`.
 - Jokainen indeksi hidastaa kirjoituksia ja vie tilaa.
+- Liitos: sisäkkäiset silmukat (vähän ulkorivejä + sisemmän indeksi),
+  hajautusliitos (suuret joukot), lomitusliitos (järjestetyt syötteet).
 
 Avainsivutus (vakiohintainen sivu, ei toistoja eikä aukkoja):
 
 ```{.sql tiedosto="esimerkit/pikaopas.sql" osa="sivutus"}
 ```
-
-# Sovelluksesta (Python)
-
-| Tarve | Koodi |
-|-------|-------|
-| Yhteys | `sqlite3.connect(polku, autocommit=False)` (3.12+) |
-| Parametrit | `execute("... WHERE id = ?", (id,))`, `:nimi` + dict |
-| IN-lista | `", ".join("?" * len(arvot))` paikkamerkeiksi |
-| Tunnisteet | sallittujen luettelosta, ei syötteestä |
-| Transaktio | `with yhteys:` sitoo tai peruu (ei sulje) |
-| Joukkolisäys | `executemany(sql, rivit)` |
-| Kyselyjen laskenta | `yhteys.set_trace_callback(lista.append)` |
-| Skeeman versio | `PRAGMA user_version`; Alembic, Flyway |
-
-- **Ei koskaan** f-merkkijonoja tai `+`-yhdistämistä arvoille.
-- N+1: kysely silmukassa → yksi liitos tai ennakkolataus
-  (`selectinload`, `prefetch_related`).
-- Testaa samalla tietokannalla kuin tuotannossa.
 
 # Murre-erot
 
@@ -151,13 +138,39 @@ Avainsivutus (vakiohintainen sivu, ei toistoja eikä aukkoja):
 | Viiteavaimet | `PRAGMA foreign_keys = ON` | aina | aina (InnoDB) |
 | Samanaikaisuus | yksi kirjoittaja | MVCC, rivilukot | MVCC, rivi- ja välilukot |
 
-# Aikasarjat ja rajapinnat
+# Aikasarjat
 
 - Väli: `date_bin('15 min', aika, alku)`; aukot: `generate_series` +
   `LEFT JOIN`; viimeisin: `DISTINCT ON (anturi) ... ORDER BY aika DESC`.
 - Iso aikasarja: osiointi aikavälin mukaan, BRIN-indeksi, säilytysaika
   `DETACH PARTITION` + `DROP`; TimescaleDB automatisoi.
+
+# Sovelluksesta (Python)
+
+| Tarve | Koodi |
+|-------|-------|
+| Yhteys | `sqlite3.connect(polku, autocommit=False)` (3.12+) |
+| Rivit nimillä | `yhteys.row_factory = sqlite3.Row`, `rivi["nimi"]` |
+| Tulokset | `for rivi in kursori`, `fetchone()` (`None`, jos ei riviä) |
+| Parametrit | `execute("... WHERE id = ?", (id,))`, `:nimi` + dict |
+| IN-lista | `", ".join("?" * len(arvot))` paikkamerkeiksi |
+| Tunnisteet | sallittujen luettelosta, ei syötteestä |
+| Transaktio | `with yhteys:` sitoo tai peruu (ei sulje) |
+| Joukkolisäys | `executemany(sql, rivit)` |
+| Rajoitevirhe | `except sqlite3.IntegrityError` → sovelluksen virhe |
+| Tilapäinen virhe | lukitus, sarjallistus: koko transaktio uudelleen |
+| Kyselyjen laskenta | `yhteys.set_trace_callback(lista.append)` |
+| Skeeman versio | `PRAGMA user_version`; Alembic, Flyway |
+
+- **Ei koskaan** f-merkkijonoja tai `+`-yhdistämistä arvoille: arvo
+  kulkee parametrina erillään SQL-tekstistä (muuten SQL-injektio).
+- Tyypit: SQLite palauttaa `int`, `float`, `str`, `bytes`, `None`;
+  psycopg myös `Decimal`, `date`, `datetime`, `bool`.
+- N+1: kysely silmukassa → yksi liitos tai ennakkolataus
+  (`selectinload`, `prefetch_related`).
 - Tasot: ajuri (DB-API, JDBC) → tietovarasto (DAO) →
   kyselynrakentaja (SQLAlchemy Core, jOOQ) → ORM (SQLAlchemy, JPA).
 - ORM: työyksikkö, identiteettikartta, laiska lataus → N+1;
   korjaus `selectinload`. Lokita tuotettu SQL kehityksessä.
+- Testaa samalla tietokannalla kuin tuotannossa; jokainen testi
+  puhtaasta tilasta.

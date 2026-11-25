@@ -1,0 +1,22 @@
+digraph {
+  rankdir=TB; ranksep=0.35; fontsize=9;
+  node [fontsize=9];
+  subgraph cluster_1 {
+    color="#5B6B70"; style=rounded;
+    label="1. SCAN a\n" +
+          "jokaiselle riville:";
+    subgraph cluster_2 {
+      color="#5B6B70"; style=rounded;
+      label="2. SEARCH t USING COVERING INDEX\n" +
+            "tilaus_asiakas (asiakas_id=?)\n" +
+            "jokaiselle riville:";
+      s3 [
+        label="3. SEARCH r USING INDEX\n" +
+              "sqlite_autoindex_tilausrivi_1\n" +
+              "(tilaus_id=?)"];
+    }
+  }
+  m1 [
+    label="USE TEMP B-TREE FOR ORDER BY"];
+  s3 -> m1 [label=" liitetyt rivit"];
+}

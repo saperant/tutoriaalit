@@ -1,0 +1,5 @@
+sqlite3 (paramstyle qmark)
+  hinta_snt: 1290 (int)
+  paiva: 2026-11-20 (str)
+  voimassa: 1 (int)
+  luotu: 2026-11-20T08:30:00+00:00 (str)

@@ -15,16 +15,19 @@ mutta sitä on paljon, ja sen käyttö on toisenlaista:
 - **Säilytysaika** (*retention*) on rajattu, ja vanha data poistetaan
   kokonaisina aikaväleinä.
 
-Luku näyttää ensin, miten aikasarja tallennetaan ja kysellään
-tavallisessa relaatiotietokannassa (PostgreSQL), ja sitten, mitä
-erikoistuneet aikasarjatietokannat tekevät toisin.
+Aikasarja on hyvä koe sille, mihin edellisten lukujen välineet
+riittävät: ikkunafunktiot (luku 8), indeksit (luku 11) ja PostgreSQL:n
+ominaisuudet (luku 12) tulevat kaikki käyttöön. Luku näyttää ensin,
+miten aikasarja tallennetaan ja kysellään tavallisessa
+relaatiotietokannassa (PostgreSQL), ja sitten, mitä erikoistuneet
+aikasarjatietokannat tekevät toisin.
 
 ## Aikasarja relaatiotaulussa
 
 Taulun avain on (anturi, aika), jolloin saman anturin rivit ovat
 indeksissä aikajärjestyksessä:
 
-```{.sql tiedosto="esimerkit/palvelimet/14-aikasarja.pg" osa="taulu"}
+```{.sql tiedosto="esimerkit/palvelimet/13-aikasarja.pg" osa="taulu"}
 ```
 
 Esimerkki lisää kolmen tunnin minuuttidatan kahdelta anturilta;
@@ -33,13 +36,13 @@ funktiolla `date_bin`, joka pyöristää aikaleiman alaspäin annetun
 välin alkuun (`date_trunc` toimii vain kalenteriyksiköillä, kuten
 tunneilla):
 
-```{.sql tiedosto="esimerkit/palvelimet/14-aikasarja.pg" osa="kooste"}
+```{.sql tiedosto="esimerkit/palvelimet/13-aikasarja.pg" osa="kooste"}
 ```
 
 Liukuva keskiarvo on ikkunafunktio, jonka kehys on viisi riviä
 (luku 8):
 
-```{.sql tiedosto="esimerkit/palvelimet/14-aikasarja.pg" osa="liukuva"}
+```{.sql tiedosto="esimerkit/palvelimet/13-aikasarja.pg" osa="liukuva"}
 ```
 
 Koosteesta puuttuvat ne välit, joilla ei ole yhtään mittausta. Ne
@@ -47,7 +50,7 @@ saadaan näkyviin liittämällä mittaukset välien sarjaan, joka tuotetaan
 funktiolla `generate_series` (vrt. SQLiten rekursiivinen sarja,
 luku 7):
 
-```{.sql tiedosto="esimerkit/palvelimet/14-aikasarja.pg" osa="aukot"}
+```{.sql tiedosto="esimerkit/palvelimet/13-aikasarja.pg" osa="aukot"}
 ```
 
 Kunkin anturin viimeisin arvo on yleinen kysely kojelaudoille.
@@ -55,10 +58,10 @@ PostgreSQL:n `DISTINCT ON` valitsee kustakin ryhmästä järjestyksen
 ensimmäisen rivin; muissa järjestelmissä sama tehdään ikkunafunktiolla
 `row_number` (luku 8):
 
-```{.sql tiedosto="esimerkit/palvelimet/14-aikasarja.pg" osa="viimeisin"}
+```{.sql tiedosto="esimerkit/palvelimet/13-aikasarja.pg" osa="viimeisin"}
 ```
 
-```{.tuloste tiedosto="esimerkit/palvelimet/14-aikasarja.pg.odotettu"}
+```{.tuloste tiedosto="esimerkit/palvelimet/13-aikasarja.pg.odotettu"}
 ```
 
 ## Osiointi ja BRIN-indeksi
@@ -68,14 +71,14 @@ löydettävä aikaväli lukematta muuta, ja vanhan datan poiston on oltava
 halpa. Molempiin auttaa **osiointi aikavälin mukaan**: looginen taulu
 koostuu osioista, esimerkiksi yksi kuukautta kohden.
 
-```{.sql tiedosto="esimerkit/palvelimet/14-osiot.pg" osa="osiot"}
+```{.sql tiedosto="esimerkit/palvelimet/13-osiot.pg" osa="osiot"}
 ```
 
 Esimerkki lisää 90 vuorokautta minuuttidataa. Kysely, joka rajaa
 aikaväliä, käy läpi vain ne osiot, joihin väli osuu (*partition
 pruning*):
 
-```{.sql tiedosto="esimerkit/palvelimet/14-osiot.pg" osa="karsinta"}
+```{.sql tiedosto="esimerkit/palvelimet/13-osiot.pg" osa="karsinta"}
 ```
 
 Aikasarjan rivit ovat levyllä valmiiksi aikajärjestyksessä, koska ne
@@ -83,17 +86,17 @@ lisätään järjestyksessä. Silloin tavallista B-puuta paljon pienempi
 **BRIN-indeksi** (*block range index*) riittää: se tallentaa kustakin
 sivualueesta vain pienimmän ja suurimman arvon.
 
-```{.sql tiedosto="esimerkit/palvelimet/14-osiot.pg" osa="brin"}
+```{.sql tiedosto="esimerkit/palvelimet/13-osiot.pg" osa="brin"}
 ```
 
 Säilytysaika toteutetaan irrottamalla ja poistamalla vanhin osio. Se
 on yksi nopea metatietomuutos, kun taas `DELETE` kävisi läpi
 miljoonia rivejä ja jättäisi jälkeensä siivottavaa:
 
-```{.sql tiedosto="esimerkit/palvelimet/14-osiot.pg" osa="sailytys"}
+```{.sql tiedosto="esimerkit/palvelimet/13-osiot.pg" osa="sailytys"}
 ```
 
-```{.tuloste tiedosto="esimerkit/palvelimet/14-osiot.pg.odotettu"}
+```{.tuloste tiedosto="esimerkit/palvelimet/13-osiot.pg.odotettu"}
 ```
 
 Kyselysuunnitelma käy läpi vain marraskuun osion. BRIN-indeksi vie
@@ -140,19 +143,19 @@ Prometheuksessa:
 - **Liukulukuarvoista** tallennetaan XOR edelliseen. Samat arvot
   maksavat yhden bitin ja lähekkäiset vähän.
 
-```{.python tiedosto="esimerkit/14-pakkaus.py" osa="aikaleimat"}
+```{.python tiedosto="esimerkit/13-pakkaus.py" osa="aikaleimat"}
 ```
 
-```{.python tiedosto="esimerkit/14-pakkaus.py" osa="arvot"}
+```{.python tiedosto="esimerkit/13-pakkaus.py" osa="arvot"}
 ```
 
-```{.tuloste tiedosto="esimerkit/14-pakkaus.odotettu"}
+```{.tuloste tiedosto="esimerkit/13-pakkaus.odotettu"}
 ```
 
 Aikaleimat pakkautuvat 64 bitistä alle kahteen. Arvot pakkautuvat
 huonosti, koska desimaaliluku kuten 20,3 ei ole binäärisenä tarkka, ja
-lähekkäisten arvojen bitit eroavat silti paljon (luku *Liukuluvut*
-taidossa *Tietokonearitmetiikka*). Kun sama data tallennetaan
+lähekkäisten arvojen bitit eroavat silti paljon (liukuluvut
+käsitellään taidossa *Miten tietokone laskee*). Kun sama data tallennetaan
 kokonaislukuina kymmenyksinä, delta-of-delta-koodi pakkaa senkin alle
 kuuteen bittiin. Siksi mittauksen tarkkuus kannattaa kertoa
 tietokannalle, esimerkiksi tyypillä `numeric(4,1)` tai skaalattuna
@@ -169,7 +172,7 @@ kokonaislukuna.
   osiointi, jatkuvat koosteet ja pakkaus samalla SQL:llä.
 - **Prometheus metriikoille, ei liiketoimintadatalle.** Se on tehty
   valvontaan; yksittäisen mittauksen katoaminen on siinä hyväksyttyä.
-- **Aikaleimat UTC:nä aikavyöhykkeellisellä tyypillä** (luku 13), ja
+- **Aikaleimat UTC:nä aikavyöhykkeellisellä tyypillä** (luku 12), ja
   aikavälit puoliavoimina `>= alku AND < loppu` (luku 3).
 - **Päätä harvennus ja säilytysaika etukäteen.** Ne määräävät
   tallennustilan paremmin kuin mikään pakkaus.

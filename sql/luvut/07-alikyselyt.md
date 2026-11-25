@@ -1,9 +1,10 @@
 # Alikyselyt, CTE:t ja näkymät
 
 Kyselyn tulos on taulu, joten sitä voi käyttää toisen kyselyn osana.
-Tämä luku käsittelee kolme tapaa koota kyselyitä osista: alikyselyt,
-yhteiset taulukkolausekkeet (*common table expression*, CTE) ja
-näkymät.
+Tämä luku käsittelee neljä tapaa koota kyselyitä osista: alikyselyt,
+joukko-operaatiot, yhteiset taulukkolausekkeet (*common table
+expression*, CTE) ja näkymät. Alikyselyitä on jo käytetty ehdoissa
+`IN` ja `EXISTS` (luvut 4 ja 5); nyt ne käydään läpi järjestyksessä.
 
 ## Alikyselyt
 
@@ -28,8 +29,41 @@ ilman indeksiä sarakkeella `tilaus.asiakas_id` jokainen asiakas käy koko
 tilaustaulun läpi. Sama tulos saadaan liitoksella ja ryhmittelyllä, ja
 optimoija muuttaa usein alikyselyn liitokseksi itse.
 
-Alikyselyitä käytetään myös `FROM`-osassa (*johdettu taulu*) sekä
-ehdoissa `IN` ja `EXISTS` (luvut 4 ja 5).
+Alikysely käy myös `FROM`-osaan taulun paikalle, jolloin sitä
+kutsutaan *johdetuksi tauluksi*.
+
+## Joukko-operaatiot
+
+Kahden kyselyn tulokset voi yhdistää joukkoina, kun niissä on yhtä
+monta saraketta ja tyypit sopivat yhteen. `UNION` on yhdiste,
+`INTERSECT` leikkaus ja `EXCEPT` erotus. Sarakkeiden nimet tulevat
+ensimmäisestä kyselystä, ja `ORDER BY` koskee koko tulosta:
+
+```{.sql tiedosto="esimerkit/07-joukot.sql" osa="union"}
+```
+
+```{.sql tiedosto="esimerkit/07-joukot.sql" osa="intersect"}
+```
+
+```{.sql tiedosto="esimerkit/07-joukot.sql" osa="except"}
+```
+
+Joukko-operaatiot poistavat toistot, koska tulos on joukko. `UNION
+ALL` säilyttää kaikki rivit eikä siksi tarvitse järjestämistä tai
+hajautusta toistojen etsimiseen:
+
+```{.sql tiedosto="esimerkit/07-joukot.sql" osa="all"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-joukot.odotettu"}
+```
+
+Asiakkailla on kolme eri kaupunkia ja yksi NULL. Toisin kuin
+vertailussa (luku 4), joukko-operaatioissa, `DISTINCT`-määreessä ja
+ryhmittelyssä kaksi NULLia ovat *sama* arvo. Leikkauksen ja erotuksen
+voi kirjoittaa myös `EXISTS`- ja `NOT EXISTS` -ehdoilla; joukkomuoto on
+luettavampi, kun verrataan kokonaisia rivejä. Oraclessa `EXCEPT` on
+nimeltään `MINUS`.
 
 ## CTE: kysely vaiheittain
 
@@ -110,6 +144,8 @@ päivitetään komennolla `REFRESH MATERIALIZED VIEW`.
 - **CTE monivaiheiseen kyselyyn.** Nimetyt vaiheet kertovat aikeen,
   ja jokaisen vaiheen voi tarkistaa erikseen. Sisäkkäiset alikyselyt
   luetaan sisältä ulos, mikä on hankalaa jo kolmella tasolla.
+- **`UNION ALL`, kun toistot eivät haittaa tai niitä ei voi olla.**
+  `UNION` järjestää tai hajauttaa koko tuloksen toistojen poistamiseksi.
 - **`EXISTS` olemassaolon testiin**, liitos, kun tarvitaan toisen
   taulun sarakkeita, ja `IN` lyhyelle vakiolistalle tai alikyselylle,
   joka ei voi palauttaa NULLia.
@@ -128,6 +164,9 @@ päivitetään komennolla `REFRESH MATERIALIZED VIEW`.
 
 - Osaat kirjoittaa skalaari- ja korreloidun alikyselyn ja arvioida sen
   hinnan indeksin kanssa ja ilman.
+- Osaat yhdistää kyselyjen tuloksia operaatioilla `UNION`,
+  `INTERSECT` ja `EXCEPT` ja valita `UNION`- ja `UNION ALL` -muodon
+  välillä.
 - Osaat jakaa monimutkaisen raportin nimettyihin CTE-vaiheisiin.
 - Osaat kirjoittaa rekursiivisen kyselyn hierarkialle ja päiväsarjalle
   ja suojata sen silmukoilta.

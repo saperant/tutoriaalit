@@ -30,7 +30,7 @@ ei ole.
 SQLitessä viiteavaimet tarkistetaan vain, jos yhteydellä on asetettu
 `PRAGMA foreign_keys = ON`. Asetus on yhteyskohtainen, eikä sitä
 tallenneta tietokantaan, joten sovellus asettaa sen jokaisen yhteyden
-avauksen yhteydessä (luku 12). Ilman asetusta yllä oleva lisäys
+avauksen yhteydessä (luku 14). Ilman asetusta yllä oleva lisäys
 onnistuisi hiljaa. PostgreSQL tarkistaa viiteavaimet aina.
 
 ## CHECK-rajoitteet

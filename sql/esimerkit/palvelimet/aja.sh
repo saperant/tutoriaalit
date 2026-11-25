@@ -7,12 +7,14 @@
 #
 #   *.pg              ajetaan psql:llä PostgreSQL:ssä
 #   *.maria           ajetaan mariadb-asiakkaalla MariaDB:ssä
-#   ../13-sama.sql    ajetaan sellaisenaan molemmissa
+#   ../12-sama.sql    ajetaan sellaisenaan molemmissa
+#   ../14-tyypit.py   ajetaan psycopg-ajurilla PostgreSQL:ää vasten
+#                     (odotettu tuloste 14-tyypit.pg.odotettu)
 #   ../15-orm.py      ajetaan SQLAlchemyllä molempia vasten; tulosteen on
 #                     oltava sama kuin SQLitellä (../15-orm.odotettu)
 #
-# Odotettu tuloste on tiedostossa <nimi>.odotettu (esim. 14-osiot.pg ->
-# 14-osiot.pg.odotettu). PAIVITA=1 kirjoittaa odotetut tulosteet.
+# Odotettu tuloste on tiedostossa <nimi>.odotettu (esim. 13-osiot.pg ->
+# 13-osiot.pg.odotettu). PAIVITA=1 kirjoittaa odotetut tulosteet.
 set -euo pipefail
 cd "$(dirname "$0")"
 
@@ -100,11 +102,13 @@ vertaa() {   # vertaa NIMI: stdin verrataan tiedostoon NIMI.odotettu
 
 for f in *.pg; do psql_aja "$f" | vertaa "$f"; done
 for f in *.maria; do maria_aja "$f" | vertaa "$f"; done
-psql_aja ../13-sama.sql | vertaa 13-sama.pg
-maria_aja ../13-sama.sql | vertaa 13-sama.maria
+psql_aja ../12-sama.sql | vertaa 12-sama.pg
+maria_aja ../12-sama.sql | vertaa 12-sama.maria
 
 PG_URL="postgresql+psycopg://tutoriaali@/kanta?host=$PG_DATA"
 MARIA_URL="mysql+pymysql://root@localhost/kanta?unix_socket=$MARIA_SOKETTI"
+PG_DSN="host=$PG_DATA user=tutoriaali dbname=kanta" \
+    python3 ../14-tyypit.py | vertaa 14-tyypit.pg
 TIETOKANTA=$PG_URL python3 ../15-orm.py | vertaa ../15-orm
 TIETOKANTA=$MARIA_URL python3 ../15-orm.py | vertaa ../15-orm
 

@@ -1,10 +1,34 @@
 # Indeksit ja suorituskyky
 
-Ilman indeksiä tietokanta löytää ehdon täyttävät rivit vain käymällä
-koko taulun läpi. Indeksi on erillinen, järjestetty tietorakenne
-(yleensä B-puu), joka sisältää indeksoidut sarakkeet ja viittauksen
-riviin. Haku indeksistä maksaa O(log n): sadasta tuhannesta rivistä
-löydetään oikea muutamalla sivun luvulla.
+Tähän asti kyselyiltä on vaadittu vain oikeaa tulosta. Kun rivejä on
+satoja tuhansia, ratkaisee myös se, miten tietokanta tuloksen löytää.
+Ilman indeksiä se löytää ehdon täyttävät rivit vain käymällä koko
+taulun läpi. Indeksi on erillinen, järjestetty tietorakenne (yleensä
+B-puu), joka sisältää indeksoidut sarakkeet ja viittauksen riviin. Haku
+indeksistä maksaa O(log n): sadasta tuhannesta rivistä löydetään oikea
+muutamalla sivun luvulla.
+
+```{.dot otsikko="B-puuindeksi sarakkeelle asiakas_id. Haku etenee juuresta lehteen, ja lehti kertoo, mistä taulun rivit löytyvät. Lehdet on linkitetty, joten väli luetaan seuraamalla linkkejä."}
+digraph {
+  rankdir=TB; nodesep=0.3; ranksep=0.5;
+  node [fontsize=9];
+  juuri [label="juuri: asiakas_id\n< 700  |  700–1399  |  ≥ 1400"];
+  l1 [label="lehti\n…  41  42  42  42  43  …"];
+  l2 [label="lehti\n700  700  701  …"];
+  l3 [label="lehti\n1400  1401  …"];
+  taulu [label="taulun rivit (pääavaimen mukaan)\n…  rivi 17  …  rivi 5311  …  rivi 90210  …", width=4.6];
+  juuri -> l1 [penwidth=1.8, label="  42 < 700"];
+  juuri -> l2; juuri -> l3;
+  { rank=same; l1 -> l2 -> l3 [style=dashed, arrowsize=0.5]; }
+  l1 -> taulu [penwidth=1.8, label="  asiakkaan 42 rivien tunnisteet"];
+}
+```
+
+Puu on matala, koska jokaisessa solmussa on satoja avaimia: kolme
+tasoa riittää miljooniin riveihin. Koska avaimet ovat järjestyksessä,
+sama rakenne palvelee yhtäsuuruutta (`asiakas_id = 42`), välejä
+(`paiva >= ...`) ja järjestämistä (`ORDER BY`). B-puun toteutus on
+taidossa *Edistyneet algoritmit ja tietorakenteet*.
 
 Luvun esimerkit luovat taulun, jossa on 100 000 tilausta 2 000
 asiakkaalle:
@@ -77,6 +101,39 @@ tarvitse lukea lainkaan (*kattava indeksi*). Tässä `SELECT *` maksaa:
 sarakkeet saadaan suoraan indeksistä. Molemmissa järjestys tulee
 indeksistä ilman erillistä järjestämistä. PostgreSQL:ssä kattavuutta
 voi lisätä määreellä `INCLUDE (sarake)`.
+
+## Liitoksen suunnitelma
+
+Usean taulun kyselyssä optimoija valitsee myös *liitosjärjestyksen* ja
+*liitosalgoritmin*. SQLite käyttää aina sisäkkäisiä silmukoita
+(*nested loop*): ulompi taulu käydään läpi, ja jokaiselle sen riville
+haetaan sisemmän taulun osumat indeksistä. Kolmen taulun kysely:
+
+```{.sql tiedosto="esimerkit/11-liitossuunnitelma.sql" osa="kysely"}
+```
+
+Suunnitelman askeleet luetaan ylhäältä alas ulommasta silmukasta
+sisimpään. Sama kuvana, tuotettuna suoraan suunnitelman tulosteesta:
+
+```{.dot tiedosto="kaaviot/11-liitossuunnitelma.dot" otsikko="Kolmen taulun liitos sisäkkäisinä silmukoina: asiakkaat käydään läpi, kunkin tilaukset haetaan indeksistä ja kunkin tilauksen rivit pääavaimen indeksistä. Tulos järjestetään lopuksi."}
+```
+
+Ulommaksi valittiin `asiakas`, koska ehto `kaupunki = ...` rajaa sen
+sataan riviin, ja sisemmille tauluille on indeksit liitossarakkeilla.
+Ilman indeksiä `tilaus (asiakas_id)` sisempi silmukka kävisi jokaisen
+asiakkaan kohdalla koko tilaustaulun läpi. Viimeinen askel, `USE TEMP
+B-TREE FOR ORDER BY`, on erillinen järjestäminen: summan mukaista
+järjestystä ei saa mistään indeksistä.
+
+PostgreSQL ja MariaDB tuntevat sisäkkäisten silmukoiden lisäksi
+*hajautusliitoksen* (*hash join*: pienemmästä taulusta rakennetaan
+hajautustaulu, ja toinen käydään kerran läpi) ja *lomitusliitoksen*
+(*merge join*: kaksi valmiiksi järjestettyä syötettä lomitetaan).
+Sisäkkäiset silmukat ovat parhaat, kun ulompia rivejä on vähän ja
+sisemmällä on indeksi; hajautusliitos, kun liitetään suuria joukkoja
+kokonaan. Optimoija valitsee näiden välillä tilastojen perusteella,
+minkä vuoksi vanhentuneet tilastot (`ANALYZE`) tuottavat huonoja
+suunnitelmia.
 
 ## Osittainen indeksi
 
@@ -152,8 +209,12 @@ mikä sopii äärettömään vieritykseen ja rajapintoihin.
 
 ## Itsearviointi
 
+- Osaat kuvata B-puuindeksin rakenteen ja selittää, miksi se palvelee
+  yhtäsuuruutta, välejä ja järjestystä.
 - Osaat lukea `EXPLAIN QUERY PLAN` -tulosteen ja erottaa toisistaan
   taulun läpikäynnin, indeksihaun ja kattavan indeksin.
+- Osaat lukea liitoksen suunnitelmasta liitosjärjestyksen ja kertoa,
+  milloin sisäkkäiset silmukat ja milloin hajautusliitos on sopiva.
 - Osaat suunnitella yhdistelmäindeksin sarakejärjestyksen
   kyselyjen ehtojen perusteella.
 - Osaat kirjoittaa ehdon niin, että se voi käyttää indeksiä, ja tehdä

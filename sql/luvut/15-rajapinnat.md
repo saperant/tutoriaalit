@@ -1,10 +1,14 @@
 # Tietokanta sovelluksen rajapintana
 
-Luku 12 käytti tietokantaa suoraan ajurin kautta. Isommassa
-sovelluksessa tietokantakoodi kootaan omaan kerrokseensa, ja sen ja
-SQL:n väliin voi tulla kyselynrakentaja tai oliorelaatiomuunnin (ORM).
-Tämä luku esittelee tasot tiiviisti Pythonin ja Javan esimerkein ja
-kertoo, milloin mitäkin kannattaa käyttää.
+Edellinen luku käytti tietokantaa suoraan ajurin kautta, ja SQL-lauseet
+olivat siellä, missä niitä tarvittiin. Kun sovellus kasvaa, kyselyt
+leviävät ympäri koodia: sama taulu luetaan kymmenessä paikassa, eikä
+skeeman muutoksen vaikutuksia enää näe yhdestä tiedostosta. Siksi
+tietokantakoodi kootaan omaan kerrokseensa, ja sen ja SQL:n väliin voi
+tulla kyselynrakentaja tai oliorelaatiomuunnin (ORM). Tämä luku
+esittelee tasot alhaalta ylös Pythonin ja Javan esimerkein, kertoo,
+milloin mitäkin kannattaa käyttää, ja päättyy siihen, miten
+tietokantakoodi testataan.
 
 ```{.dot otsikko="Tietokantarajapinnan tasot. Ylempi taso piilottaa SQL:ää enemmän, mutta jokainen tuottaa lopulta ajurille SQL-lauseen."}
 digraph {
@@ -23,17 +27,18 @@ digraph {
 
 ## Ajuri
 
-Ajuri lähettää SQL-tekstin ja parametrit tietokannalle ja palauttaa
-rivit. Pythonin DB-API (PEP 249) ja Javan JDBC määrittelevät saman
-mallin: yhteys, lause, parametrit, tulosjoukko ja transaktio. Ajureita
-on yksi kullekin tietokannalle (`sqlite3`, `psycopg`, PyMySQL; JDBC:ssä
+Alin taso on luvun 14 ajuri: se lähettää SQL-tekstin ja parametrit
+tietokannalle ja palauttaa rivit. Malli on sama kielestä riippumatta.
+Pythonin DB-API ja Javan JDBC määrittelevät molemmat yhteyden, lauseen,
+parametrit, tulosjoukon ja transaktion. Ajureita on yksi kullekin
+tietokannalle (`sqlite3`, `psycopg`, PyMySQL; JDBC:ssä
 `org.postgresql.Driver` ja MariaDB Connector/J), ja SQL kirjoitetaan
-sen tietokannan murteella. Sama JDBC:llä:
+sen tietokannan murteella (luku 12). Luvun 14 haku JDBC:llä:
 
 ```{.java tiedosto="esimerkit/java/TuoteDao.java" osa="hae"}
 ```
 
-Parametrit sidotaan `?`-paikkoihin samoin kuin Pythonissa (luku 12).
+Parametrit sidotaan `?`-paikkoihin samoin kuin Pythonissa.
 Javan `try`-lohko resursseineen vastaa Pythonin `with`-lausetta ja
 sulkee lauseen ja tulosjoukon. Testi kääntää tämän tiedoston, mutta
 ajoon tarvittaisiin JDBC-ajuri ja tietokanta; ajettavat Java-esimerkit
@@ -65,13 +70,19 @@ testikaksoisella:
 ```{.python tiedosto="esimerkit/15-dao.py" osa="muisti"}
 ```
 
+Testikaksoinen on nopea, mutta se ei tarkista SQL:ää, rajoitteita
+eikä murre-eroja. Ero näkyy, kun palvelua kutsutaan virheellisellä
+arvolla:
+
+```{.python tiedosto="esimerkit/15-dao.py" osa="ero"}
+```
+
 ```{.tuloste tiedosto="esimerkit/15-dao.odotettu"}
 ```
 
-Testikaksoinen on nopea, mutta se ei tarkista SQL:ää, rajoitteita
-eikä murre-eroja: muistitoteutus hyväksyisi negatiivisen hinnan, jonka
-`CHECK` hylkää. Varastototeutus itse testataan siksi aina oikeaa
-tietokantaa vasten.
+Molemmat toteutukset antavat saman tuloksen tavallisessa käytössä,
+mutta vain oikea tietokanta hylkää negatiivisen hinnan. Osio
+*Tietokantakoodin testaus* luvun lopussa palaa tähän.
 
 ## Kyselynrakentaja
 
@@ -132,8 +143,9 @@ ORM:n keskeiset mekanismit ovat
 ```{.python tiedosto="esimerkit/15-orm.py" osa="identiteetti"}
 ```
 
-Laiska lataus on mukava, mutta silmukassa se tuottaa luvun 12
-N+1-kyselyt. Ennakkolataus (`selectinload`) hakee kaikkien asiakkaiden
+Laiska lataus on mukava, mutta silmukassa se tuottaa luvun 14
+N+1-kyselyt huomaamatta: koodissa näkyy vain olion ominaisuuden luku,
+ei kyselyä. Ennakkolataus (`selectinload`) hakee kaikkien asiakkaiden
 tilaukset yhdellä lisäkyselyllä:
 
 ```{.python tiedosto="esimerkit/15-orm.py" osa="n-plus-1"}
@@ -144,7 +156,7 @@ tilaukset yhdellä lisäkyselyllä:
 
 Testi ajaa saman ohjelman SQLiten lisäksi PostgreSQL:ää ja MariaDB:tä
 vasten, ja tulosteen on oltava kaikissa sama. Siirrettävyys on ORM:n
-etu, mutta se pätee vain siihen, mitä ORM itse kirjoittaa: luvun 13
+etu, mutta se pätee vain siihen, mitä ORM itse kirjoittaa: luvun 12
 erot jakolaskussa ja vertailussa koskevat ORM:n kautta tehtyjä
 kyselyitä yhtä lailla.
 
@@ -152,7 +164,7 @@ Javassa ORM-standardi on JPA, jonka yleisin toteutus on Hibernate.
 Spring Data rakentaa sen päälle repository-rajapinnat, joiden
 kyselyt johdetaan metodien nimistä. Skeeman versiointiin ORM:n kanssa
 käytetään migraatiotyökalua: SQLAlchemyn kanssa Alembicia, Javassa
-Flywayta tai Liquibasea (luku 12).
+Flywayta tai Liquibasea (luku 14).
 
 ## Milloin mitäkin
 
@@ -168,6 +180,33 @@ kehityksessä kirjataan lokiin jokainen lause (`echo=True`
 SQLAlchemyssä, `show-sql` Hibernatessa), ja ORM:n rinnalla käytetään
 suoraa SQL:ää siellä, missä se on selkeämpää.
 
+## Tietokantakoodin testaus
+
+Kerrosjako määrää myös, mitä vasten kukin osa testataan:
+
+| Testattava | Mitä vasten | Mitä testi löytää |
+|------------|-------------|-------------------|
+| palvelukerroksen säännöt | testikaksoinen | logiikkavirheet, nopeasti |
+| tietovarasto, kyselyt | oikea tietokanta | SQL-virheet, rajoitteet, murre-erot |
+| migraatiot | tyhjä tietokanta, sama järjestelmä kuin tuotannossa | rikkinäinen tai puuttuva migraatio |
+| kyselyjen määrä | lauselaskuri | N+1 |
+
+Tietovaraston testi tarvitsee tietokannan, jonka tila tunnetaan testin
+alussa. SQLitellä jokainen testi voi avata oman muistitietokannan.
+Palvelintietokannalla skeema luodaan migraatioilla kerran, ja kukin
+testi ajetaan transaktiossa, joka perutaan lopuksi, tai taulut
+tyhjennetään testien välillä. Tämän tutoriaalin palvelinesimerkit
+käynnistävät testiajossa väliaikaiset PostgreSQL- ja MariaDB-palvelimet
+(`esimerkit/palvelimet/aja.sh`); sovellusprojektissa sama tehdään
+kertakäyttöisellä kontilla Testcontainers-kirjastolla (taito
+*Integraatiotestaus ja Testcontainers*; Java-esimerkki taidon
+*Taustapalvelut* testausluvussa).
+
+Testitietokannan on oltava sama järjestelmä kuin tuotannossa. SQLite
+testeissä ja PostgreSQL tuotannossa eroavat tyypeissä, lukituksessa ja
+virheilmoituksissa (luku 12), ja juuri ne virheet, jotka testin piti
+löytää, löytyvät vasta tuotannosta.
+
 ## Käytännössä
 
 - **Tietovarasto rajaa SQL:n yhteen paikkaan**, käytettiin sen sisällä
@@ -179,11 +218,9 @@ suoraa SQL:ää siellä, missä se on selkeämpää.
   havaita N+1 ennen tuotantoa.
 - **Testaa tietovarastot oikeaa tietokantaa vasten.** Testikaksoinen
   sopii palvelukerroksen yksikkötesteihin, mutta SQL, rajoitteet ja
-  murre-erot testataan samalla tietokannalla kuin tuotannossa. Kertakäyttöinen
-  tietokanta testeihin saadaan kontista Testcontainers-kirjastolla
-  (taito *Integraatiotestaus ja Testcontainers*; Java-esimerkki taidon
-  *Taustapalvelut* testausluvussa).
-- **Transaktion raja on palvelukerroksessa** (luku 12): ORM:n istunto
+  murre-erot testataan samalla tietokantajärjestelmällä kuin
+  tuotannossa.
+- **Transaktion raja on palvelukerroksessa** (luku 14): ORM:n istunto
   avataan pyyntöä tai liiketoimintatapahtumaa kohden, ei koko
   sovelluksen ajaksi.
 
@@ -197,3 +234,5 @@ suoraa SQL:ää siellä, missä se on selkeämpää.
   SQL:ää se tuottaa eri tietokannoille.
 - Osaat selittää ORM:n työyksikön, identiteettikartan ja laiskan
   latauksen sekä korjata N+1-ongelman ennakkolatauksella.
+- Osaat valita, mikä osa tietokantakoodista testataan testikaksoisella
+  ja mikä oikeaa tietokantaa vasten.
