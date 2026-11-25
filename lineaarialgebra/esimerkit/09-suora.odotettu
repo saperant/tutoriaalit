@@ -4,3 +4,6 @@ np.linalg.lstsq sama: True
 suurin poikkeama: 7.1 mV
 jäännös kohtisuorassa sarakkeita vastaan: True
 jännite 0.85 V -> 35.0 °C
+P u = A x: True
+P P = P (projektio kahdesti = kerran): True
+P symmetrinen: True

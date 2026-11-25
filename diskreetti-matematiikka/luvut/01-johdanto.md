@@ -15,20 +15,30 @@ kaikkien vaihtoehtojen laskemiseen ja lukuteorian lause ajetaan
 tuhansilla luvuilla. Koodi ei korvaa todistusta, mutta se paljastaa
 väärän väitteen nopeasti ja tekee abstraktista kaavasta kouriintuntuvan.
 
-## Kenelle ja mitä tarvitaan
+## Esitiedot ja rajaus
 
-Lukija osaa ohjelmoida Pythonilla (taito *Ohjelmoinnin perusteet*).
-Lukion pitkää matematiikkaa ei edellytetä, mutta potenssit,
-logaritmit ja summamerkintä $\sum$ kannattaa muistaa. Tutoriaali
-valmistaa taitoihin *Tietorakenteet*, *Algoritmit* ja *Todennäköisyys
-ja tilastot*. Modulaariaritmetiikka on taidon *Kryptografia* ja Boolen
-algebra taidon *Digitaalitekniikka* perusta.
+Esitiedoksi riittää taito *Ohjelmoinnin perusteet*: lukija osaa
+kirjoittaa ja lukea Python-ohjelmia, joissa on funktioita, silmukoita,
+listoja ja sanakirjoja. Lukion pitkää matematiikkaa ei edellytetä,
+mutta potenssit, logaritmit ja summamerkintä $\sum$ kannattaa muistaa.
+
+Tutoriaali valmistaa taitoihin *Tietorakenteet*, *Algoritmit* ja
+*Todennäköisyys ja tilastot*. Modulaariaritmetiikka on taidon
+*Kryptografia* ja Boolen algebra taidon *Digitaalitekniikka* perusta.
+Rajauksen ulkopuolelle jäävät
+
+- todennäköisyyslaskenta, myös diskreetti (taito *Todennäköisyys ja
+  tilastot*)
+- algoritmien suunnittelu ja analyysi kasvunopeuden määritelmää
+  pidemmälle (taidot *Tietorakenteet* ja *Algoritmit*)
+- automaatit ja formaalit kielet (taito *Kääntäjätekniikka*)
+- logiikkapiirien minimointi (taito *Digitaalitekniikka*).
 
 | Luku | Kysymys | Ohjelmoinnissa |
 |------|---------|----------------|
 | Propositiologiikka | Milloin ehto on tosi? | ehtolauseet, refaktorointi |
 | Predikaatit ja SAT | Päteekö väite kaikille? | `all`, `any`, ratkaisijat |
-| Joukot ja funktiot | Mitä kokoelma sisältää? | `set`, hajautus |
+| Joukot ja funktiot | Mitä kokoelma sisältää? | `set`, hajautus, kasvunopeus |
 | Relaatiot | Miten alkiot liittyvät toisiinsa? | riippuvuudet, ryhmittely |
 | Todistaminen | Miksi algoritmi on oikein? | invariantit, `assert` |
 | Rekursio | Miten tehtävä pilkotaan? | rekursio, vaativuus |
@@ -44,10 +54,17 @@ käyttävät vain standardikirjastoa, erityisesti moduuleja `itertools`
 (muistaminen). Esimerkit tarkistetaan ruffilla ja mypyllä tiukassa
 tilassa, ja niiden tuloste verrataan talletettuun tulosteeseen.
 Ensimmäinen esimerkki tulostaa kaavan totuustaulun käymällä läpi
-kaikki muuttujien arvoyhdistelmät; tulos nähdään seuraavassa luvussa:
+kaikki muuttujien arvoyhdistelmät. Kaava on tässä implikaatio
+”jos $p$, niin $q$”, jonka merkitykseen seuraava luku palaa:
 
 ```{.python tiedosto="esimerkit/02-totuustaulu.py" osa="taulu"}
 ```
+
+```{.tuloste tiedosto="esimerkit/02-totuustaulu.odotettu" rivit="1-5"}
+```
+
+Kaaviot piirretään Graphvizilla tekstikuvauksista ja kuvat
+Matplotlibilla skriptillä `kuvat/piirra.py` (`make kuvat`).
 
 Kehityskontissa (`.devcontainer/diskreetti-matematiikka`) on Python
 ja tarkistustyökalut. Esimerkki ajetaan komennolla

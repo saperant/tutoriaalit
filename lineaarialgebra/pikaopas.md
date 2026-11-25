@@ -34,6 +34,7 @@ subtitle: Pikaopas · kaavat, NumPy ja numeeriset nyrkkisäännöt
 | sama $A$, uusi $b$ | sijoitukset | $2n^2$ |
 | symmetrinen pos. def. | Cholesky | $\tfrac{1}{3}n^3$ |
 | $\min \lVert Ax - b \rVert$ | QR / SVD (`lstsq`) | $O(mn^2)$ |
+| aste, ehtoluku, riippuvat sarakkeet | SVD $A = U \Sigma V^T$ | $O(mn^2)$ |
 | ominaisarvot | QR-algoritmi (`eig`, `eigh`) | $O(n^3)$ |
 | suurin ominaisarvo | potenssimenetelmä | matriisitulo/kierros |
 
@@ -50,8 +51,11 @@ aste $= n$ → yksi; muuten $n - r$ vapaata muuttujaa.
 
 # Numeriikka
 
-- Kuntoluku $\kappa = \sigma_{\max}/\sigma_{\min}$; $\kappa \approx
+- Ehtoluku $\kappa = \sigma_{\max}/\sigma_{\min}$; $\kappa \approx
   10^k$ vie noin $k$ numeroa (float64:ssä noin 16, float32:ssa 7).
+- SVD: $A v_i = \sigma_i u_i$; aste = nollasta poikkeavien
+  $\sigma_i$:den määrä; $A^+ = V \Sigma^+ U^T$; $k$ suurinta termiä on
+  paras asteen $k$ approksimaatio.
 - `solve`, ei `inv`; `lstsq`, ei $A^TA$; `eigh` symmetrisille.
 - Osittaistuenta aina; modifioitu Gram–Schmidt tai Householder.
 - Vertaa `np.allclose`illa; rajaa `acos`in argumentti välille $[-1, 1]$.

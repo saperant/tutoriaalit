@@ -22,6 +22,15 @@ $$\det \begin{pmatrix} a & b \\ c & d \end{pmatrix} = ad - bc.$$
 ```{.python tiedosto="esimerkit/06-determinantti.py" osa="det2"}
 ```
 
+```{.tuloste tiedosto="esimerkit/06-determinantti.odotettu" rivit="1-5"}
+```
+
+![Esimerkin viisi kuvausta. Pisteviivan rajaaman alueen pinta-ala on
+determinantin itseisarvo. Peilauksessa F-kirjain kääntyy peilikuvaksi
+(determinantti negatiivinen), ja litistyksessä koko taso painuu
+yhdelle suoralle (determinantti
+nolla).](kuvat/determinantti.png){width=100%}
+
 Kierto ja leikkaus säilyttävät pinta-alan (determinantti 1), skaalaus
 kertoo sen kertoimien tulolla ja peilaus kääntää suunnan. Viimeisen
 matriisin toinen sarake on ensimmäisen kaksinkertainen, joten koko taso
@@ -29,9 +38,11 @@ litistyy yhdelle suoralle.
 
 ## Determinantti eliminoinnilla
 
-Oppikirjojen kehityskaava (alideterminanttien summa) vaatii $n!$
-laskutoimitusta: jo $20 \times 20$-matriisille se on enemmän kuin
-universumin ikä nanosekunteina. Käytännössä determinantti lasketaan
+Oppikirjojen kehityskaava (alideterminanttien summa) vaatii yli $n!$
+laskutoimitusta. Jo $20 \times 20$-matriisille
+$20! \approx 2{,}4 \cdot 10^{18}$: nanosekunnin laskutoimituksilla se
+on 77 vuotta, ja $27 \times 27$-matriisille aika ylittää
+maailmankaikkeuden iän. Käytännössä determinantti lasketaan
 eliminoinnilla. Rivien lisääminen toisiinsa ei muuta determinanttia,
 rivien vaihto vaihtaa etumerkin, ja kolmiomatriisin determinantti on
 lävistäjän tulo:
@@ -41,7 +52,7 @@ $$\det A = (-1)^{\text{vaihtoja}} \, u_{11} u_{22} \cdots u_{nn}.$$
 ```{.python tiedosto="esimerkit/06-determinantti.py" osa="lu"}
 ```
 
-```{.tuloste tiedosto="esimerkit/06-determinantti.odotettu"}
+```{.tuloste tiedosto="esimerkit/06-determinantti.odotettu" rivit="6-"}
 ```
 
 Tulon determinantti on determinanttien tulo, $\det(AB) = \det A \det B$:
@@ -69,7 +80,8 @@ yksikkömatriisin $A^{-1}$:ksi.
 Käänteismatriisilla on luontevia käyttöjä: grafiikan kameran
 näkymämatriisi on kameran asentomatriisin käänteismatriisi, ja hiiren
 osoittama piste muunnetaan näytöltä maailmaan käänteisellä
-projektiolla. Kierron käänteismatriisi on sen transpoosi (luku 8), ja
+projektiolla. Kierron käänteismatriisi on sen transpoosi (luku
+*Ortogonaalisuus*), ja
 yhdistetyn kuvauksen käänteismatriisi on
 $(AB)^{-1} = B^{-1} A^{-1}$: kumotaan käänteisessä järjestyksessä.
 
@@ -80,8 +92,10 @@ näin sitä ei kannata laskea:
 
 - **Hitaampi.** Käänteismatriisi vaatii noin $2n^3$ laskutoimitusta,
   LU-hajotelma ja kaksi sijoitusta noin $\tfrac{2}{3} n^3$.
-- **Epätarkempi.** Huonokuntoisella matriisilla $A^{-1} b$ antaa
-  selvästi suuremman jäännöksen kuin suora ratkaisu (luku 12).
+- **Epätarkempi.** Huonokuntoisella matriisilla (suuri ehtoluku, luku
+  *Lineaariset yhtälöryhmät*) $A^{-1} b$ antaa selvästi suuremman
+  jäännöksen kuin suora ratkaisu. Ero mitataan luvussa *Numeeriset
+  näkökohdat*.
 - **Tuhlaileva.** Harvan matriisin käänteismatriisi on yleensä tiheä,
   joten se ei edes mahdu muistiin.
 
@@ -92,7 +106,7 @@ Koodissa se kirjoitetaan `np.linalg.solve(A, b)`.
 
 - **Älä käytä determinanttia singulaarisuustestinä.** Determinantin
   arvo riippuu skaalauksesta: $\det(0{,}1 \cdot I_{100}) = 10^{-100}$,
-  vaikka matriisi on täydellisen hyväkuntoinen. Käytä kuntolukua
+  vaikka matriisi on täydellisen hyväkuntoinen. Käytä ehtolukua
   (`np.linalg.cond`) tai astetta.
 - **Suurille matriiseille `slogdet`.** Determinantti ylivuotaa
   helposti. `np.linalg.slogdet` antaa etumerkin ja logaritmin, joita

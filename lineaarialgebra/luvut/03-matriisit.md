@@ -10,7 +10,8 @@ $$A(u + v) = Au + Av, \qquad A(k u) = k\,Au.$$
 Geometrisesti lineaarikuvaus pitää suorat suorina, yhdensuuntaiset
 yhdensuuntaisina ja origon paikallaan. Kierrot, skaalaukset,
 leikkaukset, peilaukset ja projektiot ovat lineaarikuvauksia; siirto ei
-ole (se liikuttaa origoa), ja siihen palataan luvussa 11.
+ole (se liikuttaa origoa), ja siihen palataan luvussa *Homogeeniset
+koordinaatit*.
 
 ## Matriisi ja vektori
 
@@ -41,8 +42,19 @@ vaakasuunnassa sitä enemmän, mitä korkeammalla ne ovat (kursivointi).
 ```{.python tiedosto="esimerkit/03-kuvaukset.py" osa="kuvaukset"}
 ```
 
+```{.tuloste tiedosto="esimerkit/03-kuvaukset.odotettu" rivit="1-4"}
+```
+
 ```{.python tiedosto="esimerkit/03-kuvaukset.py" osa="sarakkeet"}
 ```
+
+```{.tuloste tiedosto="esimerkit/03-kuvaukset.odotettu" rivit="5-6"}
+```
+
+![Peruskuvaukset tason kuviolle. Pisteviiva on yksikköneliön kuva, ja
+nuolet ovat kantavektorien $e_1$ ja $e_2$ kuvat eli matriisin
+sarakkeet. Kierron 30° nuolet ovat tulosteen $(0{,}87;\, 0{,}50)$ ja
+$(-0{,}50;\, 0{,}87)$.](kuvat/kuvaukset.png){width=100%}
 
 ## Yhdistetty kuvaus on matriisitulo
 
@@ -55,13 +67,19 @@ kuvion.
 ```{.python tiedosto="esimerkit/03-kuvaukset.py" osa="yhdistaminen"}
 ```
 
-```{.tuloste tiedosto="esimerkit/03-kuvaukset.odotettu"}
+```{.tuloste tiedosto="esimerkit/03-kuvaukset.odotettu" rivit="7-"}
 ```
+
+![Sama skaalaus $S$ (leveys kaksinkertaiseksi) ja kierto $R$ (90°)
+kummassakin järjestyksessä. Harmaa kuvio on alkuperäinen. Vasemmalla
+kuvio venytetään ensin ja käännetään sitten pystyyn; oikealla se
+käännetään ensin, jolloin venytys osuu sen
+korkeuteen.](kuvat/jarjestys.png){width=78%}
 
 Tason kierrot ovat poikkeus: ne vaihtuvat keskenään, koska kaksi
 kiertoa on vain kulmien summa. Kolmiulotteiset kierrot eri akselien
 ympäri eivät vaihdu, mikä on yksi syy siihen, miksi 3D-kierrot ovat
-hankalia (luku 8).
+hankalia (taito *Renderöinnin perusteet*).
 
 ## Matriisitulo itse toteutettuna
 

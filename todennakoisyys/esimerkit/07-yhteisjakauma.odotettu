@@ -1,0 +1,8 @@
+P(X): {0: '3/10', 1: '7/10'}
+P(Y): {0: '3/5', 1: '3/10', 2: '1/10'}
+riippumattomat (P(x, y) = P(x) P(y) kaikilla): False
+E[X] = 7/10, E[Y] = 1/2, E[XY] = 1/10
+Cov(X, Y) = E[XY] - E[X]E[Y] = -1/4
+korrelaatio = -0.813
+E[Y | X = 1] = 1/7 = 0.14
+E[Y | X = 0] = 4/3 = 1.33

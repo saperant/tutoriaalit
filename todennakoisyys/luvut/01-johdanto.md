@@ -13,15 +13,27 @@ tarkistetaan simuloimalla: teoria ja simulaatio tulostetaan rinnakkain.
 Simulaatio ei korvaa kaavaa, mutta se paljastaa väärin sovelletun
 kaavan nopeasti ja antaa vastauksen tilanteissa, joihin kaavaa ei ole.
 
-## Kenelle ja mitä tarvitaan
+## Esitiedot ja rajaus
 
-Lukija osaa ohjelmoida Pythonilla ja tuntee diskreetin matematiikan
-perusteet, erityisesti kombinatoriikan (taito *Diskreetti matematiikka*).
-Derivaattoja ja integraaleja käytetään jatkuvien jakaumien kohdalla
-kevyesti; laskut tehdään koodilla. Tutoriaali valmistaa taitoihin
-*Tiedonsiirto* (kohina ja bittivirhesuhde), *Säteenseuranta* (Monte
-Carlo -integrointi) ja *Arkkitehtuurin tutkiminen* (suorituskyvyn
-mallit). Jonoteoria on käsitelty taidossa *Tietoliikennetekniikka*.
+Esitiedoksi tarvitaan taito *Diskreetti matematiikka*: joukot,
+kombinatoriikka ja summamerkintä sekä sen esitietona Python-ohjelmointi.
+Jatkuvien jakaumien kohdalla käytetään integraalia pinta-alan
+merkityksessä; laskut tehdään koodilla, eikä integrointitekniikoita
+tarvita. Niitä opettaa taito *Differentiaali- ja integraalilaskenta*,
+joka käsittelee myös tiheysfunktion integraalina. Desibelit ja
+logaritmit kerrataan taidossa *Matematiikan perusteet ohjelmallisesti*.
+
+Tutoriaali valmistaa taitoihin *Digitaalinen tiedonsiirto* (kohina ja
+bittivirhesuhde), *Säteenseuranta ja fysikaalinen valaistus* (Monte
+Carlo -integrointi) ja *Arkkitehtuurin mallinnus ja suunnittelutilan
+tutkiminen* (suorituskyvyn mallit). Rajauksen ulkopuolelle jäävät
+
+- jonoteoria (taito *Tietoliikennetekniikka*)
+- pienimmän neliösumman sovituksen laskenta matriiseilla, Markovin
+  ketjut ja pääkomponenttianalyysi (taito *Lineaarialgebra*)
+- usean selittäjän regressio, varianssianalyysi ja Bayes-päättely
+  jakaumilla; niihin ohjaavat luvun *Lopuksi* lähteet
+- kryptografinen satunnaisuus (taito *Kryptografia*).
 
 | Luku | Kysymys | Käytännössä |
 |------|---------|-------------|
@@ -30,6 +42,7 @@ mallit). Jonoteoria on käsitelty taidossa *Tietoliikennetekniikka*.
 | Diskreetit jakaumat | Montako kertaa? | pakettihäviö, uudelleenyritykset |
 | Jatkuvat jakaumat | Kuinka kauan, kuinka paljon? | väliajat, mittausvirhe |
 | Odotusarvo ja varianssi | Mitä keskimäärin, kuinka hajallaan? | toleranssit |
+| Kaksi muuttujaa | Vaihtelevatko suureet yhdessä? | korrelaatio, regressio |
 | Raja-arvolauseet | Miksi keskiarvo toimii? | mittausten keskiarvoistus |
 | Kohina | Kuinka paljon signaalia? | SNR, differentiaalimittaus |
 | Satunnaisluvut | Mistä satunnaisuus tulee? | simulaatiot, testit |
@@ -42,17 +55,26 @@ mallit). Jonoteoria on käsitelty taidossa *Tietoliikennetekniikka*.
 
 Esimerkit ovat Python-ohjelmia hakemistossa `esimerkit/`. Tarkat
 laskut tehdään standardikirjastolla (`math`, `fractions`) ja
-simulaatiot NumPylla. Jokainen simulaatio käyttää kiinteää
-satunnaissiementä, joten tuloste on joka ajolla sama ja voidaan
-verrata talletettuun tulosteeseen. Esimerkit tarkistetaan ruffilla
-ja mypyllä tiukassa tilassa.
+simulaatiot NumPylla. Esimerkit tarkistetaan ruffilla ja mypyllä
+tiukassa tilassa.
 
-Ensimmäinen esimerkki laskee kahden nopan summan todennäköisyydet
-tarkasti murtolukuina ja vertaa komplementtisäännön tulosta
-simulaation frekvensseihin:
+Simulaatio arpoo satunnaislukuja, mutta sen tuloste on silti joka
+ajolla sama. Satunnaisluvut tuottaa *generaattori*, jonka lukujonon
+määrää alkuarvo eli *siemen* (`default_rng(2026)`): sama siemen antaa
+saman jonon. Näin tulostetta voidaan verrata talletettuun
+tulosteeseen. Ensimmäinen esimerkki heittää neljää noppaa ja laskee,
+kuinka usein mukana on vähintään yksi kutonen:
 
 ```{.python tiedosto="esimerkit/02-noppa.py" osa="simulointi"}
 ```
+
+```{.tuloste tiedosto="esimerkit/02-noppa.odotettu" rivit="5-"}
+```
+
+Mitä useammin koe toistetaan, sitä lähemmäs frekvenssi asettuu yhtä
+lukua. Seuraava luku laskee tuon luvun tarkasti ja palaa siemeneen.
+Kuvat piirretään Matplotlibilla skriptillä `kuvat/piirra.py`
+(`make kuvat`) samoilla siemenillä kuin esimerkit.
 
 Kehityskontissa (`.devcontainer/todennakoisyys`) on Python, NumPy ja
 tarkistustyökalut. Esimerkki ajetaan komennolla

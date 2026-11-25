@@ -4,7 +4,9 @@ Rekursiivinen määritelmä kuvaa asian sen pienempien tapausten avulla:
 Fibonaccin luku on kahden edellisen summa, lista on tyhjä tai alkio ja
 lista. Rekursiivinen algoritmi pilkkoo tehtävän pienemmiksi samanlaisiksi
 tehtäviksi. Rekursioyhtälö kertoo, paljonko työtä pilkkominen maksaa,
-ja sen ratkaisu on algoritmin aikavaativuus.
+ja sen ratkaisu on algoritmin aikavaativuus. Luku käyttää edellisen
+luvun induktiota (rekursion oikeellisuus) ja luvun *Joukot ja
+funktiot* kertaluokkamerkintöjä $O$ ja $\Theta$ (rekursion hinta).
 
 ## Rekursiivinen määritelmä ja hinta
 
@@ -24,12 +26,34 @@ $F(n)$ kasvaa kuin $\varphi^n$, jossa $\varphi = (1 + \sqrt{5})/2
 ```{.python tiedosto="esimerkit/07-fibonacci.py" osa="kutsut"}
 ```
 
+```{.tuloste tiedosto="esimerkit/07-fibonacci.odotettu" rivit="1-3"}
+```
+
 Hitaus johtuu siitä, että samat osatehtävät lasketaan uudelleen ja
 uudelleen: $F(n-2)$ lasketaan sekä suoraan että $F(n-1)$:n sisällä.
-Kun osatulokset muistetaan, työ putoaa lineaariseksi. Tämä on
-**dynaamisen ohjelmoinnin** ydin, ja se käsitellään taidossa
-*Algoritmit*. Muistaminen onnistuu dekoraattorilla, ja silmukka
-laskee saman ylhäältä alas ilman pinoa:
+Kutsupuusta sen näkee suoraan:
+
+```{.dot otsikko="Kutsun fib_naiivi(5) kutsupuu: 15 kutsua. Tummennettu alipuu F(3) lasketaan kahdesti ja F(2) kolmesti."}
+digraph {
+  nodesep=0.12; ranksep=0.3;
+  node [shape=box, fontsize=9, height=0.25, width=0.4];
+  edge [arrowsize=0.5];
+  a [label="F(5)"]; b [label="F(4)"]; c [label="F(3)", fillcolor="#C9D3D6"];
+  d [label="F(3)", fillcolor="#C9D3D6"]; e [label="F(2)"];
+  f [label="F(2)"]; g [label="F(1)"]; h [label="F(2)"]; i [label="F(1)"];
+  j [label="F(1)"]; k [label="F(0)"]; l [label="F(1)"]; m [label="F(0)"];
+  n [label="F(1)"]; o [label="F(0)"];
+  a -> b; a -> c; b -> d; b -> e; c -> f; c -> g;
+  d -> h; d -> i; e -> j; e -> k; f -> l; f -> m; h -> n; h -> o;
+}
+```
+
+Kun osatulokset muistetaan, jokainen arvo lasketaan kerran ja työ
+putoaa lineaariseksi. Tämä on **dynaamisen ohjelmoinnin** ydin, ja se
+käsitellään taidossa *Algoritmit*. Muistava rekursio etenee ylhäältä
+alas: se lähtee arvosta $F(n)$ ja laskeutuu perustapauksiin. Silmukka
+laskee samat arvot alhaalta ylös, perustapauksista kohti arvoa $F(n)$,
+eikä tarvitse pinoa:
 
 ```{.python tiedosto="esimerkit/07-fibonacci.py" osa="nopeat"}
 ```
@@ -50,7 +74,7 @@ silmukka on sekä nopea että oikein:
 ```{.python tiedosto="esimerkit/07-fibonacci.py" osa="binet"}
 ```
 
-```{.tuloste tiedosto="esimerkit/07-fibonacci.odotettu"}
+```{.tuloste tiedosto="esimerkit/07-fibonacci.odotettu" rivit="4-"}
 ```
 
 ## Rekursiosyvyys
@@ -65,7 +89,7 @@ noin tuhat kehystä, ja syvempi rekursio kaatuu:
 ```
 
 Monissa funktionaalisissa kielissä häntärekursio optimoidaan
-silmukaksi (taito *Funktionaalinen ohjelmointi*), mutta Python ja
+silmukaksi (taito *Funktionaalinen ohjelmointi (Racket)*), mutta Python ja
 useimmat valtavirtakielet eivät tee niin. Rekursio, jonka syvyys
 kasvaa syötteen mukana lineaarisesti, kirjoitetaan silmukaksi tai
 eksplisiittisellä pinolla. Rekursio, jonka syvyys on logaritminen
@@ -87,9 +111,37 @@ listan kahtia ($a = b = 2$) ja lomittaa lineaarisessa ajassa:
 
 Yhtälö $T(n) = 2T(n/2) + n$ ratkeaa **rekursiopuulla**: tasoja on
 $\log_2 n$, ja jokaisella tasolla lomitetaan yhteensä $n$ alkiota,
-joten $T(n) = \Theta(n \log n)$. Mittaus vahvistaa tämän:
+joten $T(n) = \Theta(n \log n)$.
+
+```{.dot otsikko="Lomituslajittelun rekursiopuu, kun n = 8. Solmussa on osatehtävän koko; jokaisen tason lomitustyö on yhteensä n."}
+digraph {
+  nodesep=0.15; ranksep=0.3;
+  node [shape=box, fontsize=9, height=0.25, width=0.35];
+  edge [arrowsize=0.5];
+  a [label="8"]; b1 [label="4"]; b2 [label="4"];
+  c1 [label="2"]; c2 [label="2"]; c3 [label="2"]; c4 [label="2"];
+  d1 [label="1"]; d2 [label="1"]; d3 [label="1"]; d4 [label="1"];
+  d5 [label="1"]; d6 [label="1"]; d7 [label="1"]; d8 [label="1"];
+  a -> b1; a -> b2; b1 -> c1; b1 -> c2; b2 -> c3; b2 -> c4;
+  c1 -> d1; c1 -> d2; c2 -> d3; c2 -> d4;
+  c3 -> d5; c3 -> d6; c4 -> d7; c4 -> d8;
+  node [shape=plaintext, style="", width=0];
+  t0 [label="1 · 8 = n"]; t1 [label="2 · 4 = n"];
+  t2 [label="4 · 2 = n"]; t3 [label="perustapaukset"];
+  edge [style=invis];
+  t0 -> t1 -> t2 -> t3;
+  { rank=same; a; t0; } { rank=same; b2; t1; }
+  { rank=same; c4; t2; } { rank=same; d8; t3; }
+}
+```
+
+Mittaus vahvistaa kertaluokan: vertailujen määrän suhde lukuun
+$n \log_2 n$ pysyy rajoitettuna.
 
 ```{.python tiedosto="esimerkit/07-hajota.py" osa="mittaus"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-hajota.odotettu" rivit="1-4"}
 ```
 
 ## Master-lause
@@ -107,7 +159,7 @@ $n^{\log_b a}$:
 ```{.python tiedosto="esimerkit/07-hajota.py" osa="master"}
 ```
 
-```{.tuloste tiedosto="esimerkit/07-hajota.odotettu"}
+```{.tuloste tiedosto="esimerkit/07-hajota.odotettu" rivit="5-"}
 ```
 
 Taulukko selittää kuuluisia algoritmeja: Karatsuba kertoo kaksi

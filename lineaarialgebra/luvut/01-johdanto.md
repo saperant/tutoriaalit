@@ -24,12 +24,29 @@ näkökulmasta kolmella tavalla yhtä aikaa:
   tarkka. Tutoriaali näyttää, milloin pyöristysvirhe on harmiton ja
   milloin se tuhoaa tuloksen, ja mitä sille voi tehdä.
 
-## Kenelle ja mitä tarvitaan
+## Esitiedot ja rajaus
 
-Lukija osaa ohjelmoida Pythonilla (taito *Ohjelmoinnin perusteet*).
-Koulumatematiikka riittää: funktiot, yhtälöt ja trigonometrian
-perusteet. Todistuksia ei tarvita; perustelut ovat geometrisia ja
-kokeellisia.
+Esitiedoksi riittää taito *Ohjelmoinnin perusteet*: lukija osaa
+kirjoittaa ja lukea Python-ohjelmia. Koulumatematiikka riittää:
+funktiot, yhtälöt ja trigonometrian perusteet. Tason vektorit ja
+pistetulo kerrataan luvussa *Vektorit*; lukion tasolla ne esittelee
+myös taito *Matematiikan perusteet ohjelmallisesti*. Todistuksia ei
+tarvita; perustelut ovat geometrisia ja kokeellisia.
+
+Tutoriaali ei käsittele abstrakteja vektoriavaruuksia eikä kompleksisia
+matriiseja. Muut rajaukset ja taidot, joissa aihe käsitellään:
+
+- virheanalyysi (jäännös ja virheraja), harvojen matriisien
+  iteratiiviset ratkaisijat ja regularisointi: taito *Numeeriset
+  menetelmät*
+- Fourier-muunnos ja kompleksiset vektorit: taito *Kompleksiluvut ja
+  Fourier-analyysi*
+- differentiaaliyhtälöryhmät ja niiden ominaisarvot: taito
+  *Differentiaaliyhtälöt ja Laplace-muunnos*
+- kovarianssin ja regression tilastollinen tulkinta: taito
+  *Todennäköisyys ja tilastot*
+- kolmiulotteiset kierrot, rasterointi ja valaistus: taito
+  *Renderöinnin perusteet*.
 
 | Luku | Kysymys |
 |------|---------|
@@ -42,6 +59,7 @@ kokeellisia.
 | Ortogonaalisuus | Miksi kohtisuorat kannat ovat numeerisesti parhaita? |
 | Pienimmän neliösumman sovitus | Miten malli sovitetaan kohinaiseen dataan? |
 | Ominaisarvot | Mihin suuntiin kuvaus vain venyttää? |
+| Singulaariarvohajotelma | Mistä kierroista ja venytyksistä mikä tahansa matriisi koostuu? |
 | Homogeeniset koordinaatit | Miten grafiikka siirtää ja projisoi matriiseilla? |
 | Numeeriset näkökohdat | Milloin tulokseen voi luottaa? |
 
@@ -54,12 +72,18 @@ vastinalkioiden tulojen summa.
 ```{.python tiedosto="esimerkit/01-ostoskori.py" osa="puhdas"}
 ```
 
+```{.tuloste tiedosto="esimerkit/01-ostoskori.odotettu" rivit="1-1"}
+```
+
 Kun koreja on monta, ne kootaan matriisiksi, jonka jokainen rivi on
 yksi kori. Matriisin ja vektorin tulo laskee kaikkien rivien
 pistetulot hintavektorin kanssa kerralla. NumPyssa operaattori `@`
 tarkoittaa matriisituloa:
 
 ```{.python tiedosto="esimerkit/01-ostoskori.py" osa="matriisi"}
+```
+
+```{.tuloste tiedosto="esimerkit/01-ostoskori.odotettu" rivit="2-3"}
 ```
 
 Hintojen muuttaminen tuotekohtaisella kertoimella on sekin
@@ -69,7 +93,7 @@ luvullaan.
 ```{.python tiedosto="esimerkit/01-ostoskori.py" osa="alennus"}
 ```
 
-```{.tuloste tiedosto="esimerkit/01-ostoskori.odotettu"}
+```{.tuloste tiedosto="esimerkit/01-ostoskori.odotettu" rivit="4-"}
 ```
 
 Tässä on koko tutoriaalin kaava pienessä mittakaavassa: data vektoreina,
@@ -99,10 +123,6 @@ tulosteeseen. Siksi tulosteet on pyöristetty niin, että ne ovat samat
 kaikilla koneilla: NumPyn laskentakirjastot voivat tuottaa viimeisiin
 desimaaleihin eroja suorittimen mukaan.
 
-## Mitä tutoriaali ei kata
-
-Tutoriaali ei käsittele abstrakteja vektoriavaruuksia, kompleksisia
-matriiseja eikä singulaariarvohajotelman teoriaa; SVD mainitaan
-työkaluna. Fourier-muunnos ja kompleksiset vektorit ovat taidon
-*Signaalimatematiikka* aihe, ja suurten harvojen matriisien iteratiiviset
-menetelmät jäävät numeeristen menetelmien kirjallisuuteen.
+Kuvat piirretään Matplotlibilla skriptillä `kuvat/piirra.py`
+(`make kuvat`). Kuvien luvut lasketaan samoin kuin esimerkeissä, joten
+kuva ja tuloste kertovat saman asian kahdella tavalla.

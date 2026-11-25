@@ -29,8 +29,18 @@ poisson = 2.0**3 * math.exp(-2.0) / math.factorial(3)
 normaali_alle = 0.5 * math.erfc(-1.645 / math.sqrt(2))   # Phi(1.645)
 # @loppu kaavat
 
+# @alku regressio
+y = 3.0 + 0.5 * x + rng.normal(0.0, 1.0, x.size)
+r = float(np.corrcoef(x, y)[0, 1])                 # korrelaatio
+b = float(np.cov(x, y)[0, 1]) / float(np.var(x, ddof=1))
+a = float(y.mean()) - b * float(x.mean())          # y = a + b x
+jaannos = y - (a + b * x)                          # piirrä nämä
+# @loppu regressio
+
 print(f"ka {ka:.3f}, s {s:.3f}, väli [{vali[0]:.3f}, {vali[1]:.3f}]")
 print(f"p50 {float(p50):.2f}, p95 {float(p95):.2f}, p99 {float(p99):.2f}")
 print(f"mediaanin väli [{float(ala):.3f}, {float(yla):.3f}],"
       f" virtoja {len(virrat)}")
 print(f"Bin {binomi:.4f}, Poisson {poisson:.4f}, Phi {normaali_alle:.4f}")
+print(f"r {r:.3f}, r^2 {r * r:.3f}, y = {a:.2f} + {b:.3f} x,"
+      f" jäännösten hajonta {float(jaannos.std(ddof=2)):.2f}")

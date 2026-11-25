@@ -1,0 +1,5 @@
+sigma 0.50 V: teoria 0.15866, simulointi 0.15858
+sigma 0.25 V: teoria 0.02275, simulointi 0.02266
+sigma 0.15 V: teoria 0.00043, simulointi 0.00042
+valkoinen: peräkkäisten näytteiden korrelaatio +0.00
+suodatettu: peräkkäisten näytteiden korrelaatio +0.75

@@ -20,6 +20,9 @@ tuloperiaatteella kahdeksan kertaa:
 ```{.python tiedosto="esimerkit/08-laskusaannot.py" osa="tulo"}
 ```
 
+```{.tuloste tiedosto="esimerkit/08-laskusaannot.odotettu" rivit="1-3"}
+```
+
 $36^8 \approx 2{,}8 \cdot 10^{12}$ kuulostaa paljolta, mutta
 näytönohjain kokeilee nopeita tiivisteitä miljardeja sekunnissa.
 Pituuden kasvattaminen kasvattaa vaihtoehtoja eksponentiaalisesti, kun
@@ -44,6 +47,9 @@ joten $P(n, k) = \binom{n}{k} \cdot k!$.
 ```{.python tiedosto="esimerkit/08-laskusaannot.py" osa="jarjestys"}
 ```
 
+```{.tuloste tiedosto="esimerkit/08-laskusaannot.odotettu" rivit="4-6"}
+```
+
 Kun toistot sallitaan ja järjestys ei merkitse, puhutaan
 **kombinaatioista toistoineen**: $k$ jäätelöpalloa $n$ mausta voi
 valita $\binom{n + k - 1}{k}$ tavalla. Kaava tulee ”tähdistä ja
@@ -53,7 +59,7 @@ makujen välissä, määrää annoksen yksikäsitteisesti.
 ```{.python tiedosto="esimerkit/08-laskusaannot.py" osa="toisto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/08-laskusaannot.odotettu"}
+```{.tuloste tiedosto="esimerkit/08-laskusaannot.odotettu" rivit="7-"}
 ```
 
 | Valinta | Järjestys merkitsee | Järjestys ei merkitse |
@@ -71,6 +77,9 @@ valitaanko tietty alkio vai ei.
 ```{.python tiedosto="esimerkit/08-binomi.py" osa="pascal"}
 ```
 
+```{.tuloste tiedosto="esimerkit/08-binomi.odotettu" rivit="1-7"}
+```
+
 Kertoimien identiteetit voi tarkistaa suoraan. **Binomilause**
 $(x + y)^n = \sum_{k=0}^{n} \binom{n}{k} x^k y^{n-k}$ antaa nimen
 kertoimille, ja kun $x = y = 1$, saadaan
@@ -78,6 +87,9 @@ $\sum_k \binom{n}{k} = 2^n$: osajoukkojen määrä kokoluokittain
 laskettuna (luku *Joukot ja funktiot*).
 
 ```{.python tiedosto="esimerkit/08-binomi.py" osa="identiteetit"}
+```
+
+```{.tuloste tiedosto="esimerkit/08-binomi.odotettu" rivit="8-11"}
 ```
 
 Kombinatorinen ajattelu ratkaisee laskutehtävän usein ilman
@@ -89,8 +101,12 @@ reitit ruutu ruudulta, ja luettelemalla:
 ```{.python tiedosto="esimerkit/08-binomi.py" osa="hilapolut"}
 ```
 
-```{.tuloste tiedosto="esimerkit/08-binomi.odotettu"}
+```{.tuloste tiedosto="esimerkit/08-binomi.odotettu" rivit="12-"}
 ```
+
+![Reittien määrä jokaiseen risteykseen on vasemman ja alemman
+naapurin summa, sama sääntö kuin Pascalin kolmiossa. Korostettu reitti
+on yksi 210:stä.](kuvat/hilapolut.png){width=58%}
 
 ## Lokeroperiaate
 
@@ -109,6 +125,9 @@ sen seuraukset eivät:
 ```{.python tiedosto="esimerkit/08-lokero.py" osa="lokero"}
 ```
 
+```{.tuloste tiedosto="esimerkit/08-lokero.odotettu" rivit="1-2"}
+```
+
 ## Inkluusio–ekskluusio
 
 Kun joukot ovat päällekkäisiä, summaperiaate laskee leikkauksen
@@ -121,6 +140,16 @@ $$\lvert A \cup B \cup C \rvert = \lvert A \rvert + \lvert B \rvert +
 ```{.python tiedosto="esimerkit/08-lokero.py" osa="inkluusio"}
 ```
 
+```{.tuloste tiedosto="esimerkit/08-lokero.odotettu" rivit="3-3"}
+```
+
+![Esimerkin joukot Vennin kaaviona. Alueiden luvut ovat erillisiä
+osia: $\lvert A \rvert = 267 + 133 + 33 + 67 = 500$. Summa
+$\lvert A \rvert + \lvert B \rvert + \lvert C \rvert$ laskee
+parileikkaukset kahdesti ja keskustan kolmesti; kaava poistaa parit ja
+palauttaa keskustan. Seitsemän alueen summa on
+734.](kuvat/venn-inkluusio.png){width=55%}
+
 Periaate ratkaisee myös **epäjärjestykset**: montako permutaatiota
 on, joissa yksikään alkio ei ole paikallaan? Jos jokainen vie
 pikkujoulujen lahjan ja nostaa satunnaisen, kuinka usein kukaan ei saa
@@ -130,7 +159,7 @@ osallistujamäärästä riippumatta:
 ```{.python tiedosto="esimerkit/08-lokero.py" osa="epajarjestys"}
 ```
 
-```{.tuloste tiedosto="esimerkit/08-lokero.odotettu"}
+```{.tuloste tiedosto="esimerkit/08-lokero.odotettu" rivit="4-"}
 ```
 
 ## Käytännössä

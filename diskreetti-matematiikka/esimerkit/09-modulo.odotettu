@@ -8,3 +8,7 @@ modpot == pow: True
 Fermat, p alkuluku: True
 2^(n-1) mod n, n = 91: 64
 2^(n-1) mod n, n = 561 (Carmichael): 1
+phi(26) = 12  phi(31) = 30  phi(61·53) = 3120 = 60·52
+Euler, n = 26: True
+Euler, n = 561: True
+Euler, n = 3233: True

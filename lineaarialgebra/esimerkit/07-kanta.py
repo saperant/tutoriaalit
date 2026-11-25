@@ -4,7 +4,7 @@ import numpy as np
 
 # @alku riippumattomuus
 # Vektorit ovat lineaarisesti riippumattomia, jos sarakkeista koottu
-# matriisi on täysiasteinen. Aste lasketaan singulaariarvoista.
+# matriisi on täysiasteinen. matrix_rank laskee asteen toleranssilla.
 joukot = {
     "e1, e2, e3": [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
     "u, v, u+v": [[1, 2, 0], [0, 1, 1], [1, 3, 1]],

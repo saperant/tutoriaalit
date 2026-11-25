@@ -23,3 +23,15 @@ kulma = np.degrees(np.arctan2(paa[1], paa[0]))
 print(f"pääsuunta {kulma:.1f}° (todellinen 30°)")
 print(f"pääkomponentti selittää {arvot[-1] / arvot.sum():.1%} varianssista")
 # @loppu pca
+
+# @alku definiitti
+# Kovarianssimatriisi on positiivisesti definiitti: x^T C x > 0 kaikilla
+# x != 0, eli kaikki ominaisarvot ovat positiivisia. Silloin
+# Choleskyn hajotelma C = L L^T on olemassa.
+print("ominaisarvot positiivisia:", bool(np.all(arvot > 0)))
+kokeet = rng.normal(size=(1000, 2))
+print("x^T C x > 0 tuhannella satunnaisella x:",
+      bool(np.all(np.einsum("ij,jk,ik->i", kokeet, C, kokeet) > 0)))
+L = np.linalg.cholesky(C)
+print("Cholesky C = L L^T:", bool(np.allclose(L @ L.T, C)))
+# @loppu definiitti

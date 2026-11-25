@@ -18,6 +18,7 @@ tulokset = {
     "np.linalg.matrix_rank(A)": np.linalg.matrix_rank(A),
     "np.linalg.eigvals(A)": np.sort(np.linalg.eigvals(A).real),
     "np.linalg.cond(A)": np.linalg.cond(A),
+    "np.linalg.svdvals(A)": np.linalg.svdvals(A),  # singulaariarvot
 }
 for lauseke, arvo in tulokset.items():
     teksti = str((np.round(np.asarray(arvo, dtype=float), 3)

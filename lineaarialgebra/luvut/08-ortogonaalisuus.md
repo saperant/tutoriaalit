@@ -7,7 +7,7 @@ eikä yhtälöryhmää tarvitse ratkaista:
 
 $$v = (v \cdot q_1)\, q_1 + (v \cdot q_2)\, q_2 + \dots + (v \cdot q_n)\, q_n.$$
 
-Jokainen termi on projektio yhdelle kantavektorille (luku 2), ja koska
+Jokainen termi on projektio yhdelle kantavektorille (luku *Vektorit*), ja koska
 kantavektorit ovat kohtisuorassa, projektiot eivät häiritse toisiaan.
 
 ## Ortogonaaliset matriisit
@@ -25,10 +25,14 @@ $(Qu) \cdot (Qv) = u^T Q^T Q v = u \cdot v$. Geometrisesti se on kierto
 ```{.python tiedosto="esimerkit/08-ortogonaalinen.py" osa="sailyttaa"}
 ```
 
+```{.tuloste tiedosto="esimerkit/08-ortogonaalinen.odotettu" rivit="1-4"}
+```
+
 Numeerisesti ortogonaaliset matriisit ovat parhaita mahdollisia: ne
-eivät vahvista pyöristysvirheitä, koska ne eivät venytä mitään. Siksi
-luotettavat algoritmit (QR, ominaisarvot, singulaariarvohajotelma)
-rakentuvat niiden varaan.
+eivät vahvista pyöristysvirheitä, koska ne eivät venytä mitään
+(ehtoluku on 1, pienin mahdollinen). Siksi luotettavat algoritmit,
+kuten tämän luvun QR-hajotelma ja myöhempien lukujen ominaisarvojen
+laskenta ja singulaariarvohajotelma, rakentuvat niiden varaan.
 
 ## Ajautuminen ja uudelleenortogonalisointi
 
@@ -41,7 +45,7 @@ grafiikka käyttää, tämä näkyy jo minuuteissa.
 ```{.python tiedosto="esimerkit/08-ortogonaalinen.py" osa="ajautuminen"}
 ```
 
-```{.tuloste tiedosto="esimerkit/08-ortogonaalinen.odotettu"}
+```{.tuloste tiedosto="esimerkit/08-ortogonaalinen.odotettu" rivit="5-"}
 ```
 
 Korjaus on palauttaa matriisi lähimmäksi kierroksi säännöllisin
@@ -70,6 +74,9 @@ alkuperäisestä. Ero näkyy, kun vektorit ovat lähes samansuuntaisia:
 ```{.python tiedosto="esimerkit/08-gram-schmidt.py" osa="vertailu"}
 ```
 
+```{.tuloste tiedosto="esimerkit/08-gram-schmidt.odotettu" rivit="1-2"}
+```
+
 Klassinen versio tuottaa vektoreita, jotka eivät ole lähelläkään
 kohtisuoria, vaikka matemaattisesti algoritmi on sama. Tämä on
 tutoriaalin tärkeimpiä oppeja: **matemaattisesti samat algoritmit
@@ -80,16 +87,16 @@ voivat käyttäytyä liukuluvuilla täysin eri tavoin.**
 Gram–Schmidt kirjoittaa matriisin muotoon $A = QR$, missä $Q$:n
 sarakkeet ovat ortonormaaleja ja $R$ on yläkolmiomatriisi (sen alkiot
 ovat projektioiden kertoimet). Kirjastot laskevat QR-hajotelman
-Householderin peilauksilla, jotka ovat vielä vakaampia kuin modifioitu
-Gram–Schmidt.
+Householderin peilauksilla, jotka kestävät pyöristysvirhettä vielä
+paremmin kuin modifioitu Gram–Schmidt.
 
 ```{.python tiedosto="esimerkit/08-gram-schmidt.py" osa="qr"}
 ```
 
-```{.tuloste tiedosto="esimerkit/08-gram-schmidt.odotettu"}
+```{.tuloste tiedosto="esimerkit/08-gram-schmidt.odotettu" rivit="3-"}
 ```
 
-QR-hajotelma on pienimmän neliösumman sovituksen (luku 9) ja
+QR-hajotelma on seuraavan luvun pienimmän neliösumman sovituksen ja
 ominaisarvojen laskennan (QR-algoritmi) perusta.
 
 ## Käytännössä

@@ -9,6 +9,16 @@ huomata, milloin se ei toimi.
 
 ## Todistustekniikat
 
+Todistus on ketju askelia, joista jokainen seuraa edellisistä
+**päättelysäännöllä**. Tärkein on **modus ponens**: väitteistä $p$ ja
+$p \to q$ seuraa $q$. **Modus tollens** päättelee toiseen suuntaan:
+väitteistä $\neg q$ ja $p \to q$ seuraa $\neg p$ (testi epäonnistui,
+ja oikea koodi läpäisisi testin, joten koodi ei ole oikein). Yleisin
+virhepäätelmä on **seurauksen myöntäminen**: väitteistä $q$ ja
+$p \to q$ *ei* seuraa $p$. Testin läpäisy ei todista koodia oikeaksi.
+Luvun *Propositiologiikka* totuustaulutarkistus näytti saman: kaksi
+ensimmäistä sääntöä ovat tautologioita, kolmas ei.
+
 **Suora todistus** etenee oletuksesta johtopäätökseen. Väite ”jos $n$
 on pariton, $n^2$ on pariton”: pariton $n = 2k + 1$, joten
 $n^2 = 4k^2 + 4k + 1 = 2(2k^2 + 2k) + 1$, joka on pariton.
@@ -24,6 +34,14 @@ vain $p_1, \ldots, p_k$, luku $p_1 p_2 \cdots p_k + 1$ ei olisi
 jaollinen millään niistä, joten sillä olisi alkutekijä listan
 ulkopuolelta.
 
+**Tapauksittain todistaminen** jakaa tilanteen vaihtoehtoihin, jotka
+yhdessä kattavat kaiken, ja todistaa väitteen jokaisessa erikseen.
+Väite ”$n^2 + n$ on parillinen”: jos $n$ on parillinen, tulo
+$n(n + 1)$ on parillinen, ja jos $n$ on pariton, $n + 1$ on parillinen.
+Ohjelmassa tapaustodistus on haarautuminen, joka käsittelee kaikki
+vaihtoehdot: tyyppitarkistin, joka vaatii `match`-lauseelta jokaisen
+luetellun tyypin arvon käsittelyn, tarkistaa juuri kattavuuden.
+
 **Vastaesimerkki** kumoaa yleisen väitteen. Yksikin riittää, ja
 ohjelma on niiden etsimisessä erinomainen.
 
@@ -37,7 +55,9 @@ luonnollisille luvuilla kahdessa vaiheessa:
    $P(n + 1)$ pätee.
 
 Dominoperiaate: ensimmäinen kaatuu, ja jokainen kaatuva kaataa
-seuraavan. Esimerkiksi $\sum_{i=1}^{n} i = \frac{n(n+1)}{2}$:
+seuraavan. Induktio ja summakaavat esitellään lukion matematiikan
+tasolla myös taidossa *Matematiikan perusteet ohjelmallisesti*.
+Esimerkiksi $\sum_{i=1}^{n} i = \frac{n(n+1)}{2}$:
 perusaskel $n = 0$ antaa $0 = 0$, ja induktioaskeleessa
 $\frac{n(n+1)}{2} + (n + 1) = \frac{(n+1)(n+2)}{2}$.
 
@@ -47,11 +67,17 @@ tuhat sekunnissa ja paljastaa väärän kaavan heti:
 ```{.python tiedosto="esimerkit/06-induktio.py" osa="kaavat"}
 ```
 
+```{.tuloste tiedosto="esimerkit/06-induktio.odotettu" rivit="1-3"}
+```
+
 Tarkistuksen ja todistuksen ero näkyy Eulerin polynomissa
 $n^2 + n + 41$, joka antaa alkuluvun 40 peräkkäisellä arvolla ja
 sitten ei:
 
 ```{.python tiedosto="esimerkit/06-induktio.py" osa="vastaesimerkki"}
+```
+
+```{.tuloste tiedosto="esimerkit/06-induktio.odotettu" rivit="4-4"}
 ```
 
 **Vahva induktio** olettaa väitteen kaikille luvuille $k < n$, ei vain
@@ -64,7 +90,7 @@ on tämän todistuksen suora käännös:
 ```{.python tiedosto="esimerkit/06-induktio.py" osa="vahva"}
 ```
 
-```{.tuloste tiedosto="esimerkit/06-induktio.odotettu"}
+```{.tuloste tiedosto="esimerkit/06-induktio.odotettu" rivit="5-"}
 ```
 
 Rekursion oikeellisuus todistetaan aina induktiolla: perustapaus on
@@ -134,8 +160,10 @@ modulaaripotenssit kryptografiassa (luku *Modulaariaritmetiikka*).
 
 ## Itsearviointi
 
-- Osaat käyttää suoraa todistusta, kontrapositiota ja vastaoletusta
-  yksinkertaisiin väitteisiin.
+- Osaat käyttää suoraa todistusta, kontrapositiota, vastaoletusta ja
+  tapauksittain todistamista yksinkertaisiin väitteisiin.
+- Osaat erottaa pätevän päättelysäännön (modus ponens, modus tollens)
+  virhepäätelmästä (seurauksen myöntäminen).
 - Osaat todistaa summakaavan tai rekursiivisen funktion oikeellisuuden
   induktiolla ja vahvalla induktiolla.
 - Osaat muotoilla silmukkainvariantin ja perustella sillä silmukan

@@ -5,7 +5,8 @@ vaatimukset puhuvat kuitenkin olioista: ”jokaisella tilauksella on
 asiakas”, ”jokin rivi ylittää rajan”. Predikaattilogiikka lisää
 muuttujat, jotka viittaavat olioihin, ja kvanttorit, jotka sanovat
 ”kaikilla” ja ”jollakin”. Luvun toinen puoli kääntää näkökulman
-toisin päin: annetaan kaava ja kysytään, voiko sen tehdä todeksi.
+toisin päin: sen sijaan, että tarkistettaisiin väite annetuilla
+arvoilla, annetaan kaava ja kysytään, voiko sen tehdä todeksi.
 Tämä SAT-ongelma on laskennan vaikeuden kulmakivi ja samalla
 yllättävän käyttökelpoinen työkalu.
 
@@ -22,6 +23,9 @@ tulee propositio. **Kvanttorit** sitovat muuttujan
   `any(P(x) for x in joukko)`.
 
 ```{.python tiedosto="esimerkit/03-kvanttorit.py" osa="kvanttorit"}
+```
+
+```{.tuloste tiedosto="esimerkit/03-kvanttorit.odotettu" rivit="1-3"}
 ```
 
 Kvanttorin negaatio vaihtaa kvanttorin ja vie negaation sisään:
@@ -43,6 +47,9 @@ tilaukset on maksettu” on tosi, koska vastaesimerkkiä ei ole.
 ```{.python tiedosto="esimerkit/03-kvanttorit.py" osa="tyhja"}
 ```
 
+```{.tuloste tiedosto="esimerkit/03-kvanttorit.odotettu" rivit="4-5"}
+```
+
 Tämä on matemaattisesti johdonmukaista mutta ohjelmassa usein bugi:
 tarkistus ”kaikki maksettu, joten lähetä” lähettää tyhjän tilauksen.
 Jos tyhjä kokoelma on virhe, se tarkistetaan erikseen.
@@ -57,7 +64,7 @@ Ohjelmassa sisäkkäiset kvanttorit ovat sisäkkäisiä generaattoreita:
 ```{.python tiedosto="esimerkit/03-kvanttorit.py" osa="sisakkaiset"}
 ```
 
-```{.tuloste tiedosto="esimerkit/03-kvanttorit.odotettu"}
+```{.tuloste tiedosto="esimerkit/03-kvanttorit.odotettu" rivit="6-"}
 ```
 
 Vaatimusmäärittelyt ja tietokantojen eheysehdot ovat
@@ -67,14 +74,37 @@ predikaattilogiikkaa. SQL:n `NOT EXISTS` on $\neg\exists$, ja
 
 ## SAT-ongelma
 
+Äärellisessä perusjoukossa kvanttorit purkautuvat propositiologiikaksi:
+$\forall x\, P(x)$ on konjunktio $P(x_1) \land \cdots \land P(x_n)$ ja
+$\exists x\, P(x)$ disjunktio $P(x_1) \lor \cdots \lor P(x_n)$. Vaatimus
+”jokaisella tentillä on jokin aikaväli” on siis pitkä propositiokaava,
+jonka muuttujat ovat väitteitä ”tentti $t$ on aikavälissä $a$”. Tähän
+asti kaavan arvo on laskettu annetuilla muuttujien arvoilla. Nyt
+kysytään päinvastoin, millä arvoilla kaava toteutuu.
+
 **Toteutuvuusongelma** (SAT) kysyy: onko propositiokaavalle sellaisia
 muuttujien arvoja, että kaava on tosi? Totuustaulu ratkaisee sen,
-mutta $2^n$ riviä kasvaa nopeasti mahdottomaksi: 100 muuttujaa antaa
-enemmän rivejä kuin maailmankaikkeudessa on atomeja. SAT on ensimmäinen
-NP-täydelliseksi todistettu ongelma (Cook 1971): mikä tahansa
-ongelma, jonka ratkaisun voi tarkistaa nopeasti, voidaan muuntaa
-SAT:ksi. Tehokasta yleistä algoritmia ei tunneta, eikä sitä luultavasti
-ole.
+mutta $2^n$ riviä kasvaa nopeasti mahdottomaksi. Jo 100 muuttujaa
+antaa $2^{100} \approx 1{,}3 \cdot 10^{30}$ riviä: miljardi riviä
+sekunnissa tarkistava kone käyttäisi niihin noin $4 \cdot 10^{13}$
+vuotta, kolmisentuhatta kertaa maailmankaikkeuden iän. 300 muuttujalla
+rivejä on enemmän kuin näkyvässä maailmankaikkeudessa atomeja (noin
+$10^{80}$).
+
+Ongelmien vaikeutta luokitellaan sen mukaan, miten ratkaisuun kuluva
+aika kasvaa syötteen koon $n$ mukana. Luokkaan **P** kuuluvat
+ongelmat, jotka voidaan *ratkaista* ajassa, joka on enintään jokin
+$n$:n potenssi (polynominen aika). Luokkaan **NP** kuuluvat ongelmat,
+joiden ehdotettu ratkaisu voidaan *tarkistaa* polynomisessa ajassa.
+SAT kuuluu luokkaan NP: annetut muuttujien arvot tarkistetaan
+laskemalla kaavan arvo kerran. Ongelma on **NP-vaikea**, jos jokainen
+NP:n ongelma voidaan muuntaa siksi polynomisessa ajassa, ja
+**NP-täydellinen**, jos se lisäksi itse kuuluu luokkaan NP. SAT on
+ensimmäinen NP-täydelliseksi todistettu ongelma (Cook 1971).
+NP-täydelliselle ongelmalle ei tunneta polynomista algoritmia, eikä
+sellaista luultavasti ole; kysymys ”onko P = NP” on tietojenkäsittelyn
+kuuluisin avoin ongelma. Luokat käsitellään tarkemmin taidossa
+*Algoritmit*.
 
 Silti nykyiset SAT-ratkaisijat ratkaisevat käytännössä kaavoja, joissa
 on miljoonia muuttujia. Niitä käytetään laitteiston verifioinnissa,
@@ -88,8 +118,8 @@ zypper ja sen libsolv-kirjasto) ja aikataulutuksessa. Perusta on
    ja sitten epätosi. Jos molemmat johtavat ristiriitaan, palataan.
 
 Kaava esitetään CNF:ssä lausekelistana. Literaali on kokonaisluku:
-$3$ tarkoittaa muuttujaa $x_3$ ja $-3$ sen negaatiota, kuten SAT-
-ratkaisijoiden DIMACS-tiedostomuodossa.
+$3$ tarkoittaa muuttujaa $x_3$ ja $-3$ sen negaatiota, kuten
+SAT-ratkaisijoiden DIMACS-tiedostomuodossa.
 
 ```{.python tiedosto="esimerkit/03-dpll.py" osa="dpll"}
 ```
@@ -98,8 +128,11 @@ ratkaisijoiden DIMACS-tiedostomuodossa.
 
 SAT-ratkaisijan arvo on siinä, että moni ongelma koodautuu sille
 luontevasti. Tenttiaikataulussa tentit, joilla on yhteisiä
-opiskelijoita, eivät saa olla samassa aikavälissä. Tämä on graafin
-väritys (luku *Graafit*). Jokaista paria (tentti, aikaväli) vastaa
+opiskelijoita, eivät saa olla samassa aikavälissä. Tilanteen voi
+piirtää verkoksi, jossa tentit ovat solmuja ja viiva yhdistää
+ristiriitaiset tentit; tehtävä on antaa solmuille värit (aikavälit)
+niin, että viivan päissä on eri värit. Tällaiseen graafin väritykseen
+palataan luvussa *Graafit*. Jokaista paria (tentti, aikaväli) vastaa
 muuttuja, ja ehdot ovat lausekkeita: jokaisella tentillä on vähintään
 yksi ja enintään yksi aikaväli, eikä kahdella ristiriitaisella tentillä
 ole samaa aikaväliä.
@@ -108,6 +141,20 @@ ole samaa aikaväliä.
 ```
 
 ```{.tuloste tiedosto="esimerkit/03-dpll.odotettu"}
+```
+
+```{.dot otsikko="Tenttien ristiriidat ja ratkaisijan löytämä aikataulu: numero ja sävy ovat aikaväli"}
+graph {
+  layout=neato; overlap=false;
+  node [shape=box, style="rounded,filled"];
+  matikka [label="matikka\n1", pos="0,1.2!", fillcolor="#FFFFFF"];
+  fysiikka [label="fysiikka\n2", pos="1.7,2.0!", fillcolor="#DDE4E6"];
+  ohjelmointi [label="ohjelmointi\n3", pos="1.7,0.4!", fillcolor="#9FB0B5"];
+  kemia [label="kemia\n1", pos="3.6,2.0!", fillcolor="#FFFFFF"];
+  tilastot [label="tilastot\n2", pos="3.6,0.4!", fillcolor="#DDE4E6"];
+  matikka -- fysiikka; matikka -- ohjelmointi; fysiikka -- ohjelmointi;
+  fysiikka -- kemia; ohjelmointi -- tilastot; kemia -- tilastot;
+}
 ```
 
 Kaksi aikaväliä ei riitä, koska matikka, fysiikka ja ohjelmointi ovat
@@ -146,3 +193,5 @@ ja uudelleenaloitukset, mutta perusrakenne on sama.
   se on ohjelmassa bugi.
 - Osaat kuvata SAT-ongelman, DPLL-algoritmin periaatteen ja koodata
   pienen ongelman CNF-muotoon.
+- Osaat selittää, mitä luokat P ja NP sekä sanat NP-vaikea ja
+  NP-täydellinen tarkoittavat.

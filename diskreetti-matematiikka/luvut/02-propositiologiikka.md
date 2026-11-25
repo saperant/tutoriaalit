@@ -24,12 +24,12 @@ epätosi (0). Niistä muodostetaan kaavoja konnektiiveilla:
 
 Kaavan merkitys määritellään **totuustaululla**, joka luettelee kaikki
 muuttujien arvoyhdistelmät. Muuttujia ollessa $n$ rivejä on $2^n$.
-Edellisen luvun funktio `totuustaulu` tuottaa implikaation taulun:
+Johdannon funktio `totuustaulu` tuotti implikaation taulun:
 
-```{.tuloste tiedosto="esimerkit/02-totuustaulu.odotettu"}
+```{.tuloste tiedosto="esimerkit/02-totuustaulu.odotettu" rivit="1-5"}
 ```
 
-Tulosteen alussa on implikaation taulu. Implikaatio yllättää usein:
+Implikaatio yllättää usein:
 $p \to q$ on tosi aina, kun $p$ on epätosi. Väite ”jos sataa, kadut
 kastuvat” ei valehtele poutapäivänä, vaikka kadut olisivat kuivat tai
 märät. Ohjelmassa implikaatio näkyy ehtona ”jos alennus on käytössä,
@@ -47,9 +47,14 @@ käymällä läpi kaikki $2^n$ yhdistelmää:
 ```{.python tiedosto="esimerkit/02-totuustaulu.py" osa="ekvivalenssi"}
 ```
 
-Tulosteen loppuosa vahvistaa tärkeimmät lait ja paljastaa yleisen
+```{.tuloste tiedosto="esimerkit/02-totuustaulu.odotettu" rivit="6-"}
+```
+
+Tuloste vahvistaa tärkeimmät lait ja paljastaa yleisen
 virheen: implikaation **käänteinen** $q \to p$ ei ole sama kuin
-$p \to q$, mutta **kontrapositio** $\neg q \to \neg p$ on. Keskeiset
+$p \to q$, mutta **kontrapositio** $\neg q \to \neg p$ on. Kolme
+viimeistä riviä ovat päättelysääntöjä, joihin palataan luvussa
+*Todistaminen ja invariantit*. Keskeiset
 lait kannattaa osata ulkoa, koska ne ovat refaktoroinnin perustyökaluja:
 
 | Laki | Muoto |

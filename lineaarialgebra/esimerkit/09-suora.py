@@ -20,7 +20,7 @@ x_normaali = np.linalg.solve(A.T @ A, A.T @ jannite)
 # @loppu normaali
 
 # @alku qr
-# QR: A = QR, jolloin Rx = Q^T u. Ei muodosta A^T A:ta, joten kuntoluku
+# QR: A = QR, jolloin Rx = Q^T u. Ei muodosta A^T A:ta, joten ehtoluku
 # ei neliöidy.
 Q, R = np.linalg.qr(A)
 x_qr = np.linalg.solve(R, Q.T @ jannite)
@@ -39,3 +39,12 @@ print("jäännös kohtisuorassa sarakkeita vastaan:",
 mitattu = 0.850
 print(f"jännite {mitattu} V -> {(mitattu - a) / b:.1f} °C")
 # @loppu tulos
+
+# @alku projektio
+# Projektiomatriisi P = A (A^T A)^-1 A^T vie minkä tahansa
+# mittausvektorin lähimpään sarakeavaruuden pisteeseen.
+P = A @ np.linalg.solve(A.T @ A, A.T)
+print("P u = A x:", bool(np.allclose(P @ jannite, A @ x_qr)))
+print("P P = P (projektio kahdesti = kerran):", bool(np.allclose(P @ P, P)))
+print("P symmetrinen:", bool(np.allclose(P, P.T)))
+# @loppu projektio

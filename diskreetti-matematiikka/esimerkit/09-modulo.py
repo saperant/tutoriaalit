@@ -46,3 +46,20 @@ print("Fermat, p alkuluku:", all(modpot(a, p - 1, p) == 1
 print("2^(n-1) mod n, n = 91:", modpot(2, 90, 91))
 print("2^(n-1) mod n, n = 561 (Carmichael):", modpot(2, 560, 561))
 # @loppu potenssi
+
+
+# @alku euler
+def phi(n: int) -> int:
+    """Eulerin funktio: montako luvuista 1…n on jaoton n:n kanssa."""
+    return sum(1 for a in range(1, n + 1) if math.gcd(a, n) == 1)
+
+
+# Eulerin lause: a^phi(n) ≡ 1 (mod n), kun syt(a, n) = 1. Alkuluvulle
+# phi(p) = p - 1 (Fermat), kahden alkuluvun tulolle (p - 1)(q - 1).
+print("phi(26) =", phi(26), " phi(31) =", phi(31),
+      " phi(61·53) =", phi(61 * 53), "= 60·52")
+for n in (26, 561, 61 * 53):
+    jaottomat = [a for a in range(1, n) if math.gcd(a, n) == 1]
+    print(f"Euler, n = {n}:",
+          all(modpot(a, phi(n), n) == 1 for a in jaottomat))
+# @loppu euler

@@ -33,6 +33,21 @@ subtitle: Pikaopas · jakaumat, laskusäännöt, välit ja testit
 ```{.python tiedosto="esimerkit/pikaopas.py" osa="kaavat"}
 ```
 
+# Kaksi muuttujaa
+
+| Suure | Kaava |
+|-------|-------|
+| kovarianssi | $\operatorname{Cov}(X,Y) = E[XY] - E[X]E[Y]$ |
+| korrelaatio | $\rho = \operatorname{Cov}/(\sigma_X \sigma_Y)$, $-1 \le \rho \le 1$ |
+| regressiosuora | $b = \operatorname{Cov}(x,y)/\operatorname{Var}(x)$, $a = \bar y - b\bar x$ |
+| selitysaste | $R^2 = r^2$ (yksi selittäjä) |
+
+```{.python tiedosto="esimerkit/pikaopas.py" osa="regressio"}
+```
+
+- Korrelaatio ei ole syy-yhteys eikä riippumattomuuden testi.
+- Katso hajontakuvio ja jäännökset, älä pelkkää $R^2$:ta.
+
 # Satunnaisluvut
 
 ```{.python tiedosto="esimerkit/pikaopas.py" osa="generaattori"}
@@ -61,7 +76,9 @@ subtitle: Pikaopas · jakaumat, laskusäännöt, välit ja testit
 | keskiarvoistus | $N$ mittausta: $+10\log_{10}N$ dB |
 | riippumattomat kohinat | $\sigma = \sqrt{\sigma_1^2 + \sigma_2^2}$ |
 | korreloituneet | $\sigma = \sigma_1 + \sigma_2$ |
+| kynnysilmaisu | $P(\text{virhe}) = Q(d/2\sigma)$, $Q(x) = \tfrac12\operatorname{erfc}(x/\sqrt2)$ |
 | hajautettu pyyntö | $P(\text{hidas}) = 1 - (1-p)^N$ |
+| testin voima | $1 - \beta$; otoskoko $\propto 1/\text{ero}^2$ |
 | monivertailu | Bonferroni: $\alpha / m$ |
 
 - Päätä otoskoko ja analyysi etukäteen; älä kurki.

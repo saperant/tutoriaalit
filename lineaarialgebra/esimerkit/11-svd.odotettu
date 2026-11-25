@@ -1,0 +1,14 @@
+singulaariarvot: [2.5583, 0.9772]
+A = U S V^T: True
+U ja V ortogonaalisia: True
+A v1 = s1 u1: True
+A v2 = s2 u2: True
+ellipsin pisin säde 2.5583, lyhin 0.9772
+|det A| = 2.5000 = s1 s2 = 2.5000
+sqrt(eig(A^T A)): [2.5583, 0.9772]
+ominaisvektorit = V:n sarakkeet (etumerkkiä vaille): True
+B:n singulaariarvot: ['4.12', '1.03', '~0']
+aste: 2 = matrix_rank: 2
+ehtoluku s1/s2 = 2.6180, np.linalg.cond = 2.6180
+pääsuunta 30.4°, selittää 97.5% varianssista
+s^2/(m-1) = kovarianssimatriisin ominaisarvot: True

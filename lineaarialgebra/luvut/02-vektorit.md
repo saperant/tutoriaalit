@@ -4,7 +4,9 @@ Vektori on järjestetty lukujono. Geometrisesti se on nuoli: tason
 vektori $(3, 4)$ osoittaa kolme yksikköä oikealle ja neljä ylös.
 Sama vektori voi kuvata paikkaa (pistettä suhteessa origoon),
 siirtymää, nopeutta, voimaa, väriä tai ostoskoria. Laskusäännöt ovat
-kaikille samat.
+kaikille samat. Tämä luku esittelee ne ja niiden geometrisen
+merkityksen; kaikki myöhemmät luvut rakentuvat näiden operaatioiden
+varaan.
 
 ## Summa ja skalaarilla kertominen
 
@@ -18,6 +20,15 @@ $$u + v = (u_1 + v_1, \dots, u_n + v_n), \qquad
 
 ```{.python tiedosto="esimerkit/02-vektorit.py" osa="perus"}
 ```
+
+```{.tuloste tiedosto="esimerkit/02-vektorit.odotettu" rivit="1-2"}
+```
+
+![Vasemmalla vektorien summa: nuolet asetetaan peräkkäin, ja
+järjestyksellä ei ole väliä (pisteviiva). Oikealla projektio, johon
+palataan tämän luvun osiossa *Projektio*: painovoima jaetaan rinteen
+suuntaiseen ja sitä vastaan kohtisuoraan
+osaan.](kuvat/vektorit.png){width=92%}
 
 Nämä kaksi operaatiota tekevät joukosta vektoriavaruuden: jokainen
 **lineaarikombinaatio** $a u + b v$ on taas vektori. Lineaarialgebra on
@@ -40,10 +51,13 @@ Se kuvaa pelkkää suuntaa.
 ```{.python tiedosto="esimerkit/02-vektorit.py" osa="normit"}
 ```
 
+```{.tuloste tiedosto="esimerkit/02-vektorit.odotettu" rivit="3-6"}
+```
+
 ```{.python tiedosto="esimerkit/02-vektorit.py" osa="numpy"}
 ```
 
-```{.tuloste tiedosto="esimerkit/02-vektorit.odotettu"}
+```{.tuloste tiedosto="esimerkit/02-vektorit.odotettu" rivit="7-"}
 ```
 
 Kahden pisteen etäisyys on niiden erotuksen normi
@@ -65,6 +79,9 @@ vastakkain.
 ```{.python tiedosto="esimerkit/02-pistetulo.py" osa="kulma"}
 ```
 
+```{.tuloste tiedosto="esimerkit/02-pistetulo.odotettu" rivit="1-3"}
+```
+
 Kosinin argumentti rajataan välille $[-1, 1]$, koska pyöristysvirhe voi
 tuottaa arvon 1,0000000000000002, ja `acos` kaatuu siihen. Tämä on
 tyypillinen numeerinen yksityiskohta: matemaattisesti mahdoton arvo on
@@ -84,11 +101,16 @@ rinnettä vastaan kohtisuoraan osaan:
 ```{.python tiedosto="esimerkit/02-pistetulo.py" osa="projektio"}
 ```
 
-```{.tuloste tiedosto="esimerkit/02-pistetulo.odotettu"}
+```{.tuloste tiedosto="esimerkit/02-pistetulo.odotettu" rivit="4-"}
 ```
 
+Edellä olevan kuvan oikea puoli näyttää jaon: projektio ja kohtisuora
+osa ovat suorakulmaisen kolmion kateetit ja alkuperäinen voima sen
+hypotenuusa.
+
 Projektio on koko tutoriaalin toistuva idea. Pienimmän neliösumman
-sovitus (luku 9) on projektio, Gram–Schmidt-menetelmä (luku 8) poistaa
+sovitus (luku *Pienimmän neliösumman sovitus*) on projektio,
+Gram–Schmidt-menetelmä (luku *Ortogonaalisuus*) poistaa
 projektioita, ja varjo grafiikassa on projektio tasolle.
 
 ## Ristitulo ja normaali

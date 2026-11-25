@@ -10,3 +10,5 @@ kontrapositio  pätee
 käänteinen     EI
 p ∨ ¬p tautologia: True
 modus ponens tautologia: True
+modus tollens tautologia: True
+seurauksen myöntäminen tautologia: False

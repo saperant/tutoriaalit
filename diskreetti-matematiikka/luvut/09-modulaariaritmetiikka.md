@@ -24,11 +24,17 @@ algoritmi päättyy, ja kierroksia on logaritminen määrä.
 ```{.python tiedosto="esimerkit/09-eukleides.py" osa="syt"}
 ```
 
+```{.tuloste tiedosto="esimerkit/09-eukleides.odotettu" rivit="1-4"}
+```
+
 **Laajennettu Eukleideen algoritmi** palauttaa lisäksi kertoimet $x$ ja
 $y$, joille $ax + by = \operatorname{syt}(a, b)$ (**Bézout'n
 identiteetti**). Kertoimet kulkevat rekursiossa ylöspäin:
 
 ```{.python tiedosto="esimerkit/09-eukleides.py" osa="laajennettu"}
+```
+
+```{.tuloste tiedosto="esimerkit/09-eukleides.odotettu" rivit="5-6"}
 ```
 
 **Pienin yhteinen jaettava** saadaan suurimmasta yhteisestä
@@ -38,7 +44,7 @@ Kaksi jaksollista tapahtumaa kohtaavat pyj:n välein:
 ```{.python tiedosto="esimerkit/09-eukleides.py" osa="pyj"}
 ```
 
-```{.tuloste tiedosto="esimerkit/09-eukleides.odotettu"}
+```{.tuloste tiedosto="esimerkit/09-eukleides.odotettu" rivit="7-"}
 ```
 
 ## Kongruenssit ja jäännökset ohjelmassa
@@ -58,6 +64,9 @@ Pythonin `math.fmod` palauttavat jaettavan merkkisen:
 ```{.python tiedosto="esimerkit/09-modulo.py" osa="jaannos"}
 ```
 
+```{.tuloste tiedosto="esimerkit/09-modulo.odotettu" rivit="1-3"}
+```
+
 ## Käänteisalkiot
 
 Luvun $a$ **käänteisalkio** modulo $m$ on $a^{-1}$, jolle
@@ -67,6 +76,9 @@ antaa suoraan $ax \equiv 1$. Python laskee käänteisalkion
 lausekkeella `pow(a, -1, m)`:
 
 ```{.python tiedosto="esimerkit/09-modulo.py" osa="kaanteis"}
+```
+
+```{.tuloste tiedosto="esimerkit/09-modulo.odotettu" rivit="4-6"}
 ```
 
 Tämä selittää luvun *Joukot ja funktiot* havainnon: $x \mapsto 3x \bmod 8$
@@ -86,7 +98,7 @@ perustelee algoritmin invariantilla).
 ```{.python tiedosto="esimerkit/09-modulo.py" osa="potenssi"}
 ```
 
-```{.tuloste tiedosto="esimerkit/09-modulo.odotettu"}
+```{.tuloste tiedosto="esimerkit/09-modulo.odotettu" rivit="7-10"}
 ```
 
 **Fermat'n pieni lause**: jos $p$ on alkuluku ja $p \nmid a$, niin
@@ -96,6 +108,30 @@ alkuluku. Kääntäen testi voi erehtyä: Carmichaelin luvut, kuten
 $561 = 3 \cdot 11 \cdot 17$, läpäisevät sen kaikilla jaottomilla
 kannoilla. Käytännön testit (Miller–Rabin) korjaavat tämän ja ovat
 avainten luonnin perusta.
+
+Fermat'n lause yleistyy yhdistetyille moduleille. **Eulerin funktio**
+$\varphi(n)$ on niiden lukujen $1, \ldots, n$ määrä, joilla ei ole
+yhteisiä tekijöitä $n$:n kanssa, eli niiden, joilla on käänteisalkio
+modulo $n$. Alkuluvulle $\varphi(p) = p - 1$ ja kahden eri alkuluvun
+tulolle $\varphi(pq) = (p - 1)(q - 1)$. **Eulerin lause**: jos
+$\operatorname{syt}(a, n) = 1$, niin
+
+$$a^{\varphi(n)} \equiv 1 \pmod{n}.$$
+
+```{.python tiedosto="esimerkit/09-modulo.py" osa="euler"}
+```
+
+```{.tuloste tiedosto="esimerkit/09-modulo.odotettu" rivit="11-"}
+```
+
+Eulerin lause on RSA-salauksen perusta. Jos $ed \equiv 1
+\pmod{\varphi(n)}$, niin $ed = 1 + k\varphi(n)$ ja
+$(m^e)^d = m \cdot (m^{\varphi(n)})^k \equiv m \pmod{n}$: potenssiin
+$d$ korottaminen kumoaa potenssiin $e$ korottamisen. (Päättely olettaa,
+että $\operatorname{syt}(m, n) = 1$; kiinalaisella jäännöslauseella
+tulos ulottuu kaikkiin viesteihin $m < n$.) Eksponentti $d$
+on $e$:n käänteisalkio modulo $\varphi(n)$, ja sen laskemiseen
+tarvitaan $n$:n tekijät $p$ ja $q$.
 
 ## Tarkisteet
 
@@ -107,12 +143,18 @@ täydentää summan seuraavaan kymmeneen:
 ```{.python tiedosto="esimerkit/09-tarkisteet.py" osa="viite"}
 ```
 
+```{.tuloste tiedosto="esimerkit/09-tarkisteet.odotettu" rivit="1-1"}
+```
+
 **IBAN** muuntaa kirjaimet luvuiksi ($A = 10$, …, $Z = 35$) ja vaatii,
 että koko luku on $\equiv 1 \pmod{97}$. Koska 97 on alkuluku ja
 riittävän suuri, menetelmä havaitsee kaikki yksittäiset numerovirheet
 ja lähes kaikki vierekkäisten numeroiden vaihdot:
 
 ```{.python tiedosto="esimerkit/09-tarkisteet.py" osa="iban"}
+```
+
+```{.tuloste tiedosto="esimerkit/09-tarkisteet.odotettu" rivit="2-3"}
 ```
 
 **Henkilötunnuksen** tarkistusmerkki on yhdeksännumeroisen luvun
@@ -124,7 +166,7 @@ jäännös muuttuu aina:
 ```{.python tiedosto="esimerkit/09-tarkisteet.py" osa="hetu"}
 ```
 
-```{.tuloste tiedosto="esimerkit/09-tarkisteet.odotettu"}
+```{.tuloste tiedosto="esimerkit/09-tarkisteet.odotettu" rivit="4-"}
 ```
 
 ## Kiinalainen jäännöslause
@@ -138,21 +180,26 @@ Ratkaisu rakennetaan käänteisalkioilla:
 ```{.python tiedosto="esimerkit/09-kiinalainen.py" osa="crt"}
 ```
 
-Lauseella on käytännön sovelluksia: RSA-salauksen purku lasketaan
-erikseen alkulukujen $p$ ja $q$ suhteen ja yhdistetään, mikä on noin
-neljä kertaa nopeampaa kuin suora laskenta. Myös suurten lukujen
+```{.tuloste tiedosto="esimerkit/09-kiinalainen.odotettu" rivit="1-3"}
+```
+
+Lauseella on käytännön sovelluksia: RSA-salauksen purku
+$m = c^d \bmod pq$ lasketaan erikseen alkulukujen $p$ ja $q$ suhteen ja
+yhdistetään, mikä on noin neljä kertaa nopeampaa kuin suora laskenta.
+Esimerkissä $d$ lasketaan Eulerin funktiosta
+$\varphi = (p - 1)(q - 1)$ kuten edellä. Myös suurten lukujen
 aritmetiikka voidaan hajauttaa pieniin moduleihin (*residue number
 system*).
 
 ```{.python tiedosto="esimerkit/09-kiinalainen.py" osa="rsa"}
 ```
 
-```{.tuloste tiedosto="esimerkit/09-kiinalainen.odotettu"}
+```{.tuloste tiedosto="esimerkit/09-kiinalainen.odotettu" rivit="4-"}
 ```
 
-Esimerkin luvut ovat opetuskäyttöön. Oikea RSA vaatii yli 2000-bittiset
-alkuluvut ja täytteen, eikä sitä kirjoiteta itse (taito
-*Kryptografia*).
+Esimerkin luvut ovat opetuskäyttöön. Oikea RSA vaatii vähintään
+2048-bittisen modulin $n = pq$ (kaksi noin 1024-bittistä alkulukua) ja
+täytteen, eikä sitä kirjoiteta itse (taito *Kryptografia*).
 
 ## Käytännössä
 
@@ -181,5 +228,7 @@ alkuluvut ja täytteen, eikä sitä kirjoiteta itse (taito
 - Osaat laskea käänteisalkion ja selittää, milloin se on olemassa.
 - Osaat toteuttaa nopean modulaaripotenssin ja selittää Fermat'n
   pienen lauseen ja sen käytön alkulukutestissä.
+- Osaat määritellä Eulerin funktion ja selittää Eulerin lauseella,
+  miksi RSA:n purku palauttaa viestin.
 - Osaat selittää, miten tarkisteet (viitenumero, IBAN, henkilötunnus)
   havaitsevat virheitä, ja soveltaa kiinalaista jäännöslausetta.

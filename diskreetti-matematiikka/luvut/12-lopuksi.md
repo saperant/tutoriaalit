@@ -28,17 +28,18 @@
 | $\forall$, $\exists$ | `all`, `any` | Predikaatit ja SAT |
 | CNF, SAT | rajoiteratkaisijat | Predikaatit ja SAT |
 | joukko, potenssijoukko | `set`, bittimaskit | Joukot ja funktiot |
+| $O$, $\Theta$ | työmäärän kertaluokka | Joukot ja funktiot |
 | injektio, bijektio | koodaus ja purku, hajautus | Joukot ja funktiot |
 | ekvivalenssirelaatio | ryhmittely avaimella | Relaatiot |
 | osittainen järjestys | topologinen järjestys | Relaatiot |
 | induktio, invariantti | rekursion ja silmukan oikeellisuus | Todistaminen |
 | rekursioyhtälö | aikavaativuus | Rekursio |
 | $\binom{n}{k}$, $n^k$ | testitapaukset, salasanat | Kombinatoriikka |
-| $a \bmod m$, $a^{-1}$ | tarkisteet, salaus | Modulaariaritmetiikka |
+| $a \bmod m$, $a^{-1}$, $\varphi(n)$ | tarkisteet, salaus | Modulaariaritmetiikka |
 | graafi, väritys | verkot, aikataulut | Graafit |
 | puu | hakemistot, jäsennyspuut | Puut |
 
-## Jatkotaidot taitopuussa
+## Jatkotaidot
 
 - *Tietorakenteet* ja *Algoritmit*: hakupuut, keot, hajautustaulut,
   lyhimmät polut, dynaaminen ohjelmointi ja vaativuusanalyysi

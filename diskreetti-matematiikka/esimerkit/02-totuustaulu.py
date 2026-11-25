@@ -53,6 +53,11 @@ for nimi, n, f, g in lait:
 
 print("p ∨ ¬p tautologia:",
       tautologia(1, lambda p: p or not p))  # noqa: SIM221
+# Päättelysäännöt: pätevä sääntö on tautologia, virhepäätelmä ei.
 print("modus ponens tautologia:", tautologia(
     2, lambda p, q: implikaatio(p and implikaatio(p, q), q)))
+print("modus tollens tautologia:", tautologia(
+    2, lambda p, q: implikaatio((not q) and implikaatio(p, q), not p)))
+print("seurauksen myöntäminen tautologia:", tautologia(
+    2, lambda p, q: implikaatio(q and implikaatio(p, q), p)))
 # @loppu ekvivalenssi

@@ -1,0 +1,9 @@
+cpu = 8.30 + 0.1476 * kuorma
+r = 0.975, r^2 = 0.950, selitysaste = 0.950
+jäännösten keskiarvo 0.000, keskihajonta 3.71 %-yks.
+lstsq antaa saman suoran: True
+ennuste kuormalla 300: 52.6 %
+vasteaika: selitysaste 0.84
+  pieni kuorma: jäännösten keskiarvo   +3.8 ms
+  keski kuorma: jäännösten keskiarvo   -6.4 ms
+  suuri kuorma: jäännösten keskiarvo   +2.6 ms

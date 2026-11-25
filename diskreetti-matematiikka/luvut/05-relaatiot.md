@@ -27,6 +27,9 @@ tarkistetaan suoraan:
 ```{.python tiedosto="esimerkit/05-relaatiot.py" osa="ominaisuudet"}
 ```
 
+```{.tuloste tiedosto="esimerkit/05-relaatiot.odotettu" rivit="1-4"}
+```
+
 ”Eri sana” on symmetrinen mutta ei transitiivinen: kissa ≠ sakki ja
 sakki ≠ kissa, mutta kissa = kissa. Tällainen relaatio ei kelpaa
 ryhmittelyyn.
@@ -48,6 +51,9 @@ avain sisällön tiiviste ja saman päivän tapahtumien avain päivämäärä.
 ```{.python tiedosto="esimerkit/05-relaatiot.py" osa="luokat"}
 ```
 
+```{.tuloste tiedosto="esimerkit/05-relaatiot.odotettu" rivit="5-8"}
+```
+
 Kanoninen avain tekee ryhmittelystä lineaarisen: jokainen alkio
 käsitellään kerran, kun taas parivertailu vaatisi $\binom{n}{2}$
 vertailua. Sama ajatus on tietokannan `GROUP BY` -lauseessa ja
@@ -66,13 +72,27 @@ se tavoittaa sen suoraan tai jonkin välisolmun $k$ kautta.
 ```{.python tiedosto="esimerkit/05-relaatiot.py" osa="sulkeuma"}
 ```
 
-```{.tuloste tiedosto="esimerkit/05-relaatiot.odotettu"}
+```{.tuloste tiedosto="esimerkit/05-relaatiot.odotettu" rivit="9-"}
 ```
 
-Algoritmi on $O(n^3)$, mikä riittää sadoille solmuille. Harvoille
-graafeille on nopeampaa tehdä haku jokaisesta solmusta (luku
-*Graafit*). Esimerkin relaatio ei ole symmetrinen (yhteydet ovat
-yksisuuntaisia), joten Oulusta ei pääse minnekään.
+```{.dot otsikko="Suorat junayhteydet (yhtenäinen viiva) ja transitiivisen sulkeuman lisäämät yhteydet (katkoviiva)"}
+digraph {
+  rankdir=LR; nodesep=0.35; ranksep=0.6;
+  Turku -> Helsinki -> Tampere -> Oulu;
+  Joensuu -> Joensuu;
+  edge [style=dashed, constraint=false];
+  Turku -> Tampere; Turku -> Oulu; Helsinki -> Oulu;
+}
+```
+
+Relaation voi piirtää nuolikaaviona: alkiot ovat solmuja, ja nuoli
+$a \to b$ tarkoittaa $a\, R\, b$. Sulkeuma lisää nuolen jokaisen
+nuoliketjun alusta loppuun. Kolme sisäkkäistä silmukkaa tekevät
+algoritmista kuutiollisen, $O(n^3)$ (luku *Joukot ja funktiot*), mikä
+riittää sadoille solmuille. Harvoille graafeille on nopeampaa tehdä
+haku jokaisesta solmusta (luku *Graafit*). Esimerkin relaatio ei ole
+symmetrinen (yhteydet ovat yksisuuntaisia), joten Oulusta ei pääse
+minnekään.
 
 ## Järjestysrelaatiot ja topologinen järjestys
 
@@ -82,6 +102,21 @@ tarvitse voida verrata: tiedostojärjestelmässä hakemisto on toisen
 alkuosa tai ei ole, ja kaksi rinnakkaista hakemistoa ovat
 vertailukelvottomia. **Täydellisessä järjestyksessä** kaikki parit
 ovat vertailukelpoisia, kuten luvuilla ja aakkosjärjestyksessä.
+
+Osittainen järjestys piirretään **Hassen kaaviona**: pienempi alkio on
+alempana, ja viiva vedetään vain välittömien seuraajien välille.
+Refleksiivisyyden silmukat ja transitiivisuudesta seuraavat viivat
+jätetään pois, koska ne voi päätellä. Luvun 12 tekijät jaollisuuden
+mukaan järjestettyinä näyttävät, että 4 ja 6 tai 2 ja 3 eivät ole
+vertailukelpoisia, vaikka molemmat jakavat luvun 12:
+
+```{.dot otsikko="Hassen kaavio: luvun 12 tekijät jaollisuusjärjestyksessä (alempi jakaa ylemmän)"}
+graph {
+  rankdir=BT; nodesep=0.5; ranksep=0.35;
+  node [shape=circle, width=0.35, fixedsize=true];
+  1 -- 2; 1 -- 3; 2 -- 4; 2 -- 6; 3 -- 6; 4 -- 12; 6 -- 12;
+}
+```
 
 Riippuvuudet muodostavat osittaisen järjestyksen, jos niissä ei ole
 kehää. **Topologinen järjestys** asettaa alkiot jonoon, joka on
@@ -97,6 +132,22 @@ joilla ei ole käsittelemättömiä riippuvuuksia:
 
 ```{.tuloste tiedosto="esimerkit/05-topologinen.odotettu"}
 ```
+
+```{.dot otsikko="Esimerkin riippuvuudet: nuoli osoittaa moduulista siihen, jota se tarvitsee. Numero on paikka käännösjärjestyksessä."}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.55;
+  node [shape=box];
+  sovellus [label="5 sovellus"]; kayttoliittyma [label="4 kayttoliittyma"];
+  tietokanta [label="3 tietokanta"]; grafiikka [label="2 grafiikka"];
+  apu [label="1 apu"];
+  sovellus -> kayttoliittyma; sovellus -> tietokanta;
+  kayttoliittyma -> grafiikka; kayttoliittyma -> apu;
+  tietokanta -> apu; grafiikka -> apu;
+}
+```
+
+Kaaviossa jokainen nuoli osoittaa suuremmasta numerosta pienempään:
+juuri se tekee järjestyksestä topologisen.
 
 Topologinen järjestys ratkaisee käännösjärjestyksen (Make, Bazel),
 pakettien asennusjärjestyksen, tietokantamigraatioiden järjestyksen ja
@@ -133,3 +184,5 @@ osallistuvat.
 - Osaat laskea transitiivisen sulkeuman Warshallin algoritmilla.
 - Osaat muodostaa topologisen järjestyksen Kahnin algoritmilla ja
   tunnistaa riippuvuuskehän.
+- Osaat piirtää relaation nuolikaaviona ja osittaisen järjestyksen
+  Hassen kaaviona.

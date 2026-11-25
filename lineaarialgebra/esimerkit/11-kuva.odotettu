@@ -1,0 +1,9 @@
+kuva 64 × 64, aste 17, lukuja 4096
+ k  lukuja  osuus  suht. virhe
+ 1     129     3%  0.246
+ 2     258     6%  0.176
+ 4     516    13%  0.076
+ 8    1032    25%  0.040
+16    2064    50%  0.007
+virhe = sqrt(sum s_i^2, i > k): True
+approksimaation aste: 4

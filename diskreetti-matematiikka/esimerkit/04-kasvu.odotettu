@@ -1,0 +1,10 @@
+     n  log2 n  n log2 n        n^2       2^n
+    10     3.3        33        100   1.0e+03
+   100     6.6       664      10000   1.3e+30
+  1000    10.0      9966    1000000  1.1e+301
+ 10000    13.3    132877  100000000         -
+f(n) <= 4n^2, kun n >= 11: True
+pätee jo arvolla n = 10: False
+n =   100: parit     4950 askelta, joukko   100
+n =  1000: parit   499500 askelta, joukko  1000
+n = 10000: parit 49995000 askelta, joukko 10000

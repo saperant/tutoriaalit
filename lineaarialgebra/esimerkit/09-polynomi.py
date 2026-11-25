@@ -1,4 +1,4 @@
-"""Polynomisovitus: ylisovitus ja normaaliyhtälöiden kuntoluku."""
+"""Polynomisovitus: ylisovitus ja normaaliyhtälöiden ehtoluku."""
 
 import numpy as np
 
@@ -19,10 +19,10 @@ for aste in (1, 3, 5, 11):
           f"uusissa pisteissä {'yli 1' if testi > 1 else f'{testi:5.3f}'}")
 # @loppu asteet
 
-# @alku kuntoluku
+# @alku ehtoluku
 for aste in (3, 7):
     V = np.vander(x, aste + 1, increasing=True)
     kv, kn = np.linalg.cond(V), np.linalg.cond(V.T @ V)
     print(f"aste {aste}: cond(V) ~1e{np.log10(kv):.0f}, "
           f"cond(V^T V) ~1e{np.log10(kn):.0f}")
-# @loppu kuntoluku
+# @loppu ehtoluku

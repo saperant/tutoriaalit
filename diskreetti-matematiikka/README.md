@@ -17,9 +17,9 @@ ja pikaopas
 3. Predikaatit ja SAT – kvanttorit ohjelmassa, DPLL-ratkaisija,
    ongelman koodaaminen SAT:ksi
 4. Joukot ja funktiot – operaatiot, potenssijoukko, injektio ja
-   bijektio, kardinaliteetti ja hajautus
+   bijektio, kardinaliteetti ja hajautus, kasvunopeus ja O-merkintä
 5. Relaatiot – ominaisuudet, ekvivalenssiluokat, transitiivinen
-   sulkeuma, topologinen järjestys
+   sulkeuma, Hassen kaavio, topologinen järjestys
 6. Todistaminen ja invariantit – induktio, vahva induktio,
    silmukkainvariantit
 7. Rekursio ja rekursioyhtälöt – Fibonacci, hajota ja hallitse,
@@ -27,7 +27,7 @@ ja pikaopas
 8. Kombinatoriikka – permutaatiot, kombinaatiot, binomikertoimet,
    lokeroperiaate, inkluusio–ekskluusio
 9. Modulaariaritmetiikka – Eukleides, käänteisalkiot, nopea potenssi,
-   tarkisteet, kiinalainen jäännöslause
+   Fermat'n ja Eulerin lauseet, tarkisteet, kiinalainen jäännöslause
 10. Graafit – esitystavat, komponentit, Euler ja Hamilton, väritys
 11. Puut – ominaisuudet, Cayleyn kaava, juurelliset puut
 12. Lopuksi – nyrkkisäännöt, jatkotaidot ja lähteet
@@ -37,14 +37,19 @@ ja pikaopas
 Esimerkit ovat hakemistossa `esimerkit/` ja käyttävät vain Pythonin
 standardikirjastoa. Ne tarkistetaan ruffilla ja mypyllä tiukassa
 tilassa, ja niiden tulostetta verrataan `.odotettu`-tiedostoihin.
+Kuvat piirtää `kuvat/piirra.py` (Matplotlib); kaaviot ovat lukujen
+Graphviz-lohkoja.
 
 ```text
 make testaa     # rakenteen tarkistus ja kaikki esimerkit
 make pdf        # tutoriaali ja pikaopas PDF:ksi
+make kuvat      # piirtää kuvat uudelleen (Matplotlib)
 python3 esimerkit/03-dpll.py
 ```
 
 Kehityskontti: `.devcontainer/diskreetti-matematiikka`.
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 ## Lisenssi
 

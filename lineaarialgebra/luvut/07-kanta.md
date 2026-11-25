@@ -24,6 +24,9 @@ aste on vektorien määrä.
 ```{.python tiedosto="esimerkit/07-kanta.py" osa="riippumattomuus"}
 ```
 
+```{.tuloste tiedosto="esimerkit/07-kanta.odotettu" rivit="1-3"}
+```
+
 **Kanta** on joukko lineaarisesti riippumattomia vektoreita, jotka
 virittävät koko avaruuden. Kannan koko on avaruuden **ulottuvuus**:
 tasossa kanta on aina kaksi vektoria, avaruudessa kolme.
@@ -38,6 +41,15 @@ ratkaisemista, ja takaisin pääsee kertomalla $B$:llä.
 ```{.python tiedosto="esimerkit/07-kanta.py" osa="koordinaatit"}
 ```
 
+```{.tuloste tiedosto="esimerkit/07-kanta.odotettu" rivit="8-"}
+```
+
+![Sama vektori $v$ kahdessa kannassa. Vakiokannassa kuljetaan kolme
+askelta suuntaan $e_1$ ja yksi suuntaan $e_2$. Kannassa
+$b_1 = (1, 1)$, $b_2 = (-1, 1)$ kuljetaan kaksi askelta suuntaan $b_1$
+ja yksi askel suuntaa $b_2$ vastaan. Nuoli on sama; vain ruudukko
+vaihtuu.](kuvat/kannanvaihto.png){width=82%}
+
 ## Esimerkki: värikoordinaatit
 
 Kuvanpakkaus vaihtaa värit RGB-kannasta kantaan, jossa ensimmäinen
@@ -49,7 +61,7 @@ YCoCg-muunnos on lineaarinen ja tarkasti käännettävä:
 ```{.python tiedosto="esimerkit/07-kanta.py" osa="vari"}
 ```
 
-```{.tuloste tiedosto="esimerkit/07-kanta.odotettu"}
+```{.tuloste tiedosto="esimerkit/07-kanta.odotettu" rivit="4-7"}
 ```
 
 Harmaasävyissä (valkoinen) värierot ovat nollia, joten kaikki tieto on
@@ -97,21 +109,24 @@ kaiken olennaisen:
 | vasen nolla-avaruus | tulosavaruuden suunnat, joihin $Ax$ ei koskaan osoita | $m - r$ |
 
 Yhtälöllä $Ax = b$ on ratkaisu täsmälleen silloin, kun $b$ on
-sarakeavaruudessa. Pienimmän neliösumman sovitus (luku 9) etsii
-sarakeavaruuden pisteen, joka on lähimpänä $b$:tä.
+sarakeavaruudessa. Pienimmän neliösumman sovitus (luku *Pienimmän
+neliösumman sovitus*) etsii sarakeavaruuden pisteen, joka on lähimpänä
+$b$:tä.
 
 ## Käytännössä
 
 - **Valitse koordinaatisto tehtävän mukaan.** Fysiikka on usein
   yksinkertaisinta kappaleen omissa koordinaateissa, grafiikka kameran
-  koordinaateissa ja tilastot pääkomponenttien kannassa (luku 10).
+  koordinaateissa ja tilastot pääkomponenttien kannassa (luku
+  *Ominaisarvot ja ominaisvektorit*).
   Muunna sisään, laske, muunna ulos.
 - **Nimeä koordinaatistot koodissa.** `p_maailma`, `p_kamera` ja
   `p_kappale` estävät sekoittamasta koordinaatistoja, joka on yleinen
   ja vaikeasti löydettävä virhe.
 - **Tarkista riippumattomuus asteella, ei determinantilla.**
-  `np.linalg.matrix_rank` käyttää singulaariarvoja ja kohtuullista
-  toleranssia; determinantin arvo riippuu skaalauksesta.
+  `np.linalg.matrix_rank` päättää toleranssilla, mikä lasketaan
+  nollaksi (luku *Singulaariarvohajotelma* näyttää miten);
+  determinantin arvo riippuu skaalauksesta.
 - **Tarkat luvut, kun rakenne on diskreetti.** Stoikiometria,
   verkkojen yhtenäisyys ja kombinatoriset ehdot kannattaa laskea
   murtoluvuilla tai kokonaisluvuilla.

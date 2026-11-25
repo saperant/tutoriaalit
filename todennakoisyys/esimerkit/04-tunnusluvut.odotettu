@@ -1,0 +1,4 @@
+E[X] = 7/2 = 3.50
+Var(X) = 35/12 = 2.917, keskihajonta 1.708
+100 000 heittoa: keskiarvo 3.50, varianssi 2.92
+Bin(100; 0,02): E[X] = 2.000 (np = 2.000), Var(X) = 1.960 (np(1-p) = 1.960)

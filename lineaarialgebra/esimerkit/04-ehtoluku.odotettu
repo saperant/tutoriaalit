@@ -1,0 +1,6 @@
+kohtisuorat:
+  ratkaisu [1.0, 1.0] -> häirittynä [1.0001, 0.9999]
+  virhe kasvoi 1-kertaiseksi, ehtoluku 1
+lähes yhdensuuntaiset:
+  ratkaisu [1.0, 1.0] -> häirittynä [-1.0, 3.0]
+  virhe kasvoi 28285-kertaiseksi, ehtoluku 40002

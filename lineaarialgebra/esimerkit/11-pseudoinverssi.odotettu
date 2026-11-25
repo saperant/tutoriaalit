@@ -1,0 +1,9 @@
+täysiasteinen: u = 0.5026 V + 9.914 mV/°C · T
+sama kuin np.linalg.pinv: True
+singulaariarvot: ['264', '17', '~0'] -> aste 2
+normaaliyhtälöiden ehtoluku yli 1e15: True
+pseudoinverssi = lstsq: True
+ennusteet samat kuin kahden sarakkeen mallilla: True
+toinen ratkaisu, sama jäännös: True
+pseudoinverssin ratkaisu on lyhin: True
+ja kohtisuorassa nolla-avaruutta vastaan: True

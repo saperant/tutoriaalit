@@ -1,10 +1,11 @@
 # Odotusarvo ja varianssi
 
 Jakauma kuvaa satunnaismuuttujan kokonaan, mutta usein riittää kaksi
-lukua: *odotusarvo* $E[X] = \sum_x x\,P(X = x)$ eli painotettu
-keskiarvo ja *varianssi* $\operatorname{Var}(X) = E[(X - E[X])^2]$
-eli hajonnan neliö. Niiden laskusäännöt tekevät monimutkaisista
-ongelmista helppoja.
+lukua: odotusarvo $E[X]$ ja varianssi $\operatorname{Var}(X)$, jotka
+määriteltiin luvussa *Diskreetit jakaumat*. Tähän asti ne on laskettu
+määritelmästä tai luettu taulukosta. Tämä luku opettaa laskusäännöt,
+joilla monimutkaisen suureen odotusarvo ja varianssi saadaan sen osien
+tunnusluvuista ilman, että jakaumaa tarvitsee tuntea.
 
 ## Odotusarvon lineaarisuus
 
@@ -39,9 +40,19 @@ Varianssille pätee $\operatorname{Var}(aX + b) = a^2
 sitä neliöllisesti. Riippumattomien muuttujien summan varianssi on
 varianssien summa:
 $$\operatorname{Var}(X + Y) = \operatorname{Var}(X) +
-\operatorname{Var}(Y) + 2\operatorname{Cov}(X, Y),$$
-jossa kovarianssi on nolla riippumattomille. Keskihajonnat eivät siis
-summaudu vaan niiden neliöt.
+\operatorname{Var}(Y), \qquad \text{kun } X \text{ ja } Y
+\text{ ovat riippumattomia.}$$
+Keskihajonnat eivät siis summaudu vaan niiden neliöt. Jos muuttujat
+riippuvat toisistaan, kaavaan tulee lisätermi, joka mittaa niiden
+yhteisvaihtelua. Se on kovarianssi, ja se määritellään seuraavassa
+luvussa.
+
+Odotusarvon voi laskea myös ehdolla: *ehdollinen odotusarvo*
+$E[X \mid A]$ on $X$:n odotusarvo niissä tapauksissa, joissa $A$
+sattuu. Kokonaisodotusarvo on ehdollisten painotettu keskiarvo,
+$E[X] = E[X \mid A]\,P(A) + E[X \mid \bar A]\,P(\bar A)$, samaan
+tapaan kuin kokonaistodennäköisyys luvussa *Ehdollinen todennäköisyys
+ja Bayesin kaava*.
 
 ## Toleranssien kasautuminen
 
@@ -80,9 +91,10 @@ varianssin luvulla $1{,}8^2$.
 - **Valitse toleranssianalyysi tilanteen mukaan.** RSS sopii suurille
   sarjoille ja riippumattomille komponenteille. Pahin tapaus sopii
   turvallisuuskriittisiin kohteisiin ja silloin, kun komponentit
-  tulevat samasta erästä ja niiden virheet korreloivat.
-- **Muista kovarianssi.** Kun virheillä on yhteinen syy, kuten lämpötila
-  tai valmistuserä, RSS aliarvioi kokonaisvirheen.
+  tulevat samasta erästä ja niiden virheet riippuvat toisistaan.
+- **Tarkista riippumattomuus.** Kun virheillä on yhteinen syy, kuten
+  lämpötila tai valmistuserä, RSS aliarvioi kokonaisvirheen (luku
+  *Kaksi muuttujaa: kovarianssi, korrelaatio ja regressio*).
 
 ## Itsearviointi
 
