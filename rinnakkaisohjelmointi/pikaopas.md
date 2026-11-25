@@ -92,6 +92,8 @@ lang: fi
   ilmoitus, siirrä solmu listalle; vapauta erissä solmut, joihin kukaan
   ei osoita.
 - **Edistymistakuut:** estävä < esteetön < lukoton < odotukseton.
+- **Linearisoituvuus:** operaatio näyttää tapahtuvan yhdessä pisteessä
+  kutsun ja paluun välissä (onnistunut CAS, julkaiseva kirjoitus).
 
 # Rinnakkaiset algoritmit
 
@@ -104,6 +106,8 @@ lang: fi
   siirtymän lisäys.
 - **Työnjako:** staattinen (deterministinen), syklinen (säännöllinen hinta),
   dynaaminen erälaskuri (tuntematon hinta), työnvarastaminen (skaalautuu).
+- **OpenMP** (`-fopenmp`): `#pragma omp parallel for reduction(+ : s)`,
+  `schedule(static | static, 1 | dynamic, n)`.
 - **Amdahl:** $S = 1/(s + (1-s)/p) \le 1/s$; **Gustafson:**
   $S = s + (1-s)p$.
 - **Väärä jakaminen:** kuumat säiekohtaiset muuttujat

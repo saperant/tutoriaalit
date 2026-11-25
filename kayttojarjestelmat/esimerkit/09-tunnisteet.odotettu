@@ -1,0 +1,15 @@
+käynnistys
+  todellinen tavallinen, tehollinen pääkäyttäjä, tallennettu pääkäyttäjä
+  avaus: onnistui, access: EACCES
+tilapäinen pudotus
+  todellinen tavallinen, tehollinen tavallinen, tallennettu pääkäyttäjä
+  avaus: EACCES
+  paluu pääkäyttäjäksi: onnistui
+  avaus: onnistui
+pysyvä pudotus
+  todellinen tavallinen, tehollinen tavallinen, tallennettu tavallinen
+  paluu pääkäyttäjäksi: EPERM
+  avaus: EACCES
+väärä järjestys
+  ryhmän vaihto käyttäjän jälkeen: EPERM
+  ryhmä on yhä pääkäyttäjän: kyllä

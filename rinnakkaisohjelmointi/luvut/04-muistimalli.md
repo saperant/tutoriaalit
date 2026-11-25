@@ -72,7 +72,34 @@ kirjoituksilla ja julkaisee sen yhdellä atomisella kirjoituksella:
 
 Kun lukija näkee lipun arvon `true` acquire-lukemisella, (2) synkronoituu
 (3):n kanssa. Koska (1) on ennen (2):ta samassa säikeessä, (1) tapahtuu
-ennen lukijan datan lukemista. Release estää aiempia operaatioita
+ennen lukijan datan lukemista. Kaaviossa tapahtumisjärjestys on nuolten
+muodostama polku: vasemmalla polku kulkee kirjoituksesta (1) lukuun
+asti, oikealla se katkeaa säikeiden välillä.
+
+```{.dot otsikko="Julkaisun tapahtumisjärjestys. Ohut nuoli on peräkkäisyys säikeen sisällä, paksu nuoli synkronointi säikeiden välillä. Relaxed-järjestyksellä synkronointia ei synny, joten kirjoitus ja luku ovat datakilpailussa."}
+digraph {
+  node [shape=box]; ranksep=0.4;
+  subgraph cluster_a { label="release ja acquire"; color=gray60;
+    subgraph cluster_a1 { label="julkaisija"; color=gray80;
+      a1 [label="(1) asetukset = …"];
+      a2 [label="(2) valmis.store(true,\nrelease)"]; a1 -> a2; }
+    subgraph cluster_a2 { label="lukija"; color=gray80;
+      a3 [label="(3) valmis.load(acquire)\n== true"];
+      a4 [label="lue asetukset"]; a3 -> a4; }
+    a2 -> a3 [label="  synkronoituu", penwidth=2];
+  }
+  subgraph cluster_b { label="relaxed"; color=gray60;
+    subgraph cluster_b1 { label="julkaisija"; color=gray80;
+      b1 [label="(1) asetukset = …"];
+      b2 [label="(2) valmis.store(true,\nrelaxed)"]; b1 -> b2; }
+    subgraph cluster_b2 { label="lukija"; color=gray80;
+      b3 [label="(3) valmis.load(relaxed)\n== true"];
+      b4 [label="lue asetukset"]; b3 -> b4; }
+    b2 -> b3 [style=invis]; b1 -> b4 [label="ei järjestystä:\ndatakilpailu", style=dashed, dir=none, constraint=false];
+  }
+}
+```
+ Release estää aiempia operaatioita
 siirtymästä release-kirjoituksen ohi myöhemmiksi, ja acquire estää
 myöhempiä operaatioita siirtymästä acquire-lukemisen ohi aiemmiksi.
 Ilman niitä datakilpailu syntyy, ja luku *ThreadSanitizer ja virheiden

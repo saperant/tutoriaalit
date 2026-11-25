@@ -2,8 +2,8 @@
 
 Edellisten lukujen välineillä rakennetaan rinnakkaisia algoritmeja. Tämä
 luku käy läpi standardikirjaston rinnakkaiset algoritmit, kaksi
-perusalgoritmia (reduktio ja prefiksisumma), työn jakamisen säikeille ja
-nopeutuksen teoreettiset rajat. Lopuksi mitataan väärää jakamista, joka
+perusalgoritmia (reduktio ja prefiksisumma), työn jakamisen säikeille,
+OpenMP:n ja nopeutuksen teoreettiset rajat. Lopuksi mitataan väärää jakamista, joka
 voi tehdä oikeasta rinnakkaisohjelmasta hitaamman kuin sarjallisesta.
 
 ## Suorituspolitiikat
@@ -43,8 +43,10 @@ valitsee TBB:n automaattisesti, ja ohjelma on linkitettävä valitsimella
 `-ltbb`; muuten linkitys epäonnistuu. Esimerkki valitsee siksi
 sarjallisen taustan itse makrolla `_GLIBCXX_USE_TBB_PAR_BACKEND`, jolloin
 se toimii samoin kaikilla koneilla ja osoittaa vain, että tulokset ovat
-oikeat. NVIDIA:n `nvc++`
-ajaa samat algoritmit näytönohjaimella (`-stdpar`).
+oikeat. Esimerkki ei siis aja mitään rinnakkain; rinnakkaisen ajon saa
+asentamalla TBB:n, poistamalla makron ja linkittämällä valitsimella
+`-ltbb`. NVIDIA:n `nvc++` ajaa samat algoritmit näytönohjaimella
+(`-stdpar`).
 
 ## Reduktio
 
@@ -117,6 +119,10 @@ $i$:n mukana:
 ```{.tuloste tiedosto="esimerkit/10-tyonjako.odotettu"}
 ```
 
+![Säiekohtainen kuorma suhteessa keskiarvoon (laskettu esimerkin
+hintafunktiosta). Staattisessa jaossa viimeinen säie saa kalleimmat
+tehtävät ja määrää koko laskennan keston.](kuvat/tyonjako.png){width=85%}
+
 - **Staattinen yhtenäinen jako** antaa viimeiselle säikeelle 1,75
   kertaa keskimääräisen kuorman: koko laskenta kestää 1,75 kertaa
   ihanteellisen ajan. Tulos on deterministinen, koska jako ei riipu
@@ -139,14 +145,58 @@ josta se ottaa tehtäviä toisesta päästä. Tyhjä työntekijä varastaa
 satunnaisen toisen jonon toisesta päästä. Kilpailua on vain
 varastettaessa, ja varastettava tehtävä on tyypillisesti iso (rekursion
 ylätaso). Cilk, Intel TBB, Rayon, Javan ForkJoinPool ja Go:n vuorontaja
-toimivat näin. Blumofen ja Leisersonin tulos (1999) takaa, että
-työnvarastaminen saavuttaa lähes optimaalisen ajan, kun ohjelmassa on
-riittävästi rinnakkaisuutta.
+toimivat näin.
+
+Työnvarastaminen sopii erityisesti *haarautuvaan* rinnakkaisuuteen
+(*fork–join*), jossa tehtävä jakaa itsensä rekursiivisesti osiin,
+kuten lomituslajittelu. Tällaisen laskennan rinnakkaisuutta kuvataan
+kahdella luvulla: *työ* $T_1$ on kaikkien operaatioiden määrä ja *jänne*
+$T_\infty$ pisin toisistaan riippuvien operaatioiden ketju. Nopeutus ei
+voi ylittää suhdetta $T_1 / T_\infty$, ja Blumofen ja Leisersonin tulos
+(1999) takaa, että työnvarastaminen saavuttaa $p$ suorittimella ajan
+$T_1/p + O(T_\infty)$. Rekursio katkaistaan käytännössä sarjalliseksi,
+kun osa on niin pieni, ettei tehtävän luominen enää kannata.
+
+## OpenMP lyhyesti
+
+Edellä reduktio ja työnjako kirjoitettiin käsin, jotta niiden rakenne
+näkyy. Laskentakoodissa sama tehdään useimmiten **OpenMP**:llä, joka on
+C:n, C++:n ja Fortranin vakiintunut laajennus jaetun muistin
+rinnakkaisuuteen. Silmukka merkitään kääntäjän direktiivillä, ja
+kääntäjä tuottaa säikeet, jaon ja yhdistämisen. GCC ja Clang tukevat
+sitä valitsimella `-fopenmp`; ilman valitsinta direktiivit ohitetaan ja
+ohjelma on sarjallinen.
+
+```{.cpp tiedosto="esimerkit/openmp/tyonjako.cc" osa="reduktio"}
+```
+
+Lause `reduction(+ : summa)` tekee saman kuin osion *Reduktio* käsin
+kirjoitettu versio: jokainen säie laskee paikalliseen kopioon, ja kopiot
+yhdistetään lopuksi. Ilman sitä `summa += i` olisi datakilpailu.
+Työnjako valitaan lauseella `schedule`:
+
+```{.cpp tiedosto="esimerkit/openmp/tyonjako.cc" osa="jako"}
+```
+
+```{.tuloste tiedosto="esimerkit/openmp/tyonjako.odotettu"}
+```
+
+Luvut ovat samat kuin omassa toteutuksessa: `schedule(static)` on
+yhtenäinen jako, `schedule(static, 1)` syklinen ja
+`schedule(dynamic, 32)` erälaskuri. OpenMP ei poista
+rinnakkaisohjelmoinnin sääntöjä: silmukan rungossa jaettuun dataan
+kirjoittaminen on edelleen datakilpailu, ja liukulukujen reduktion
+tulos riippuu jaosta. ThreadSanitizer ei tunne GCC:n OpenMP-kirjaston
+sisäistä synkronointia ja raportoi siitä vääriä hälytyksiä, joten tätä
+esimerkkiä ei ajeta sillä.
 
 ## Nopeutuksen rajat
 
-Jos ohjelmasta osuus $s$ on sarjallista, Amdahlin laki (1967) rajaa
-nopeutuksen $p$ suorittimella:
+Taito *Tietokonearkkitehtuuri* esitteli Amdahlin lain yleisessä
+muodossa: nopeutus on rajattu sen osan mukaan, jota parannus ei koske.
+Rinnakkaisohjelmassa tuo osa on sarjallinen osuus. Jos ohjelmasta
+osuus $s$ on sarjallista, Amdahlin laki (1967) rajaa nopeutuksen $p$
+suorittimella:
 
 $$S_A(p) = \frac{1}{s + (1 - s)/p} \le \frac{1}{s}.$$
 
@@ -160,6 +210,12 @@ $$S_G(p) = s + (1 - s)\,p.$$
 
 ```{.tuloste tiedosto="esimerkit/10-amdahl.odotettu"}
 ```
+
+![Nopeutus suorittimien määrän funktiona taulukon sarjallisilla
+osuuksilla (molemmat asteikot logaritmisia, pisteviiva on ihanteellinen
+nopeutus). Amdahlin käyrät taittuvat rajaansa $1/s$; Gustafsonin
+skaalatussa ongelmassa nopeutus kasvaa lähes
+suoraan.](kuvat/nopeutus.png){width=100%}
 
 Jo 5 %:n sarjallinen osuus rajaa nopeutuksen 20-kertaiseksi, vaikka
 suorittimia olisi tuhat. Sarjallista osuutta ovat paitsi sarjallinen koodi
@@ -213,6 +269,9 @@ esinouto käsittelee rivejä pareittain).
   toteutus oikeasti rinnakkaistaa (libstdc++ tarvitsee TBB:n).
 - **Kiinteä jako toistettaviin tuloksiin.** Liukulukujen reduktiossa
   tulos riippuu jaosta; älä yhdistä osia valmistumisjärjestyksessä.
+- **OpenMP silmukoille.** Kun rinnakkaistettava asia on silmukka
+  taulukon yli, direktiivi on lyhyempi ja vähemmän virhealtis kuin omat
+  säikeet.
 - **Dynaaminen jako tuntemattomalle kuormalle.** Atominen
   erälaskuri on yksinkertainen ja tehokas; työnvarastaminen skaalautuu
   pidemmälle.
@@ -227,5 +286,7 @@ esinouto käsittelee rivejä pareittain).
   miksi liukulukujen reduktion tulos riippuu jaosta.
 - Osaat valita staattisen, syklisen ja dynaamisen työnjaon välillä ja
   kuvata työnvarastamisen periaatteen.
+- Osaat rinnakkaistaa silmukan OpenMP:n `parallel for` -direktiivillä
+  ja valita `reduction`- ja `schedule`-lauseet.
 - Osaat laskea Amdahlin ja Gustafsonin lakien nopeutukset ja tunnistaa
   väärän jakamisen.

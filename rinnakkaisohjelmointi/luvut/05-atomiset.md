@@ -88,22 +88,33 @@ yhteistyön:
 `test_and_set` asettaa lipun ja palauttaa vanhan arvon. Lukon saanut säie
 näki arvon `false`. Acquire lukitessa ja release vapauttaessa tekevät
 lukosta oikean: kriittisen alueen kirjoitukset tapahtuvat ennen
-vapautusta ja siten ennen seuraavan säikeen lukitusta. Odotus
-`wait(true)` nukkuu, kunnes arvo muuttuu (Linuxissa futex), jolloin
-odottaja ei kuluta suoritinta eikä kuormita välimuistiväylää jatkuvilla
-kirjoituksilla.
+vapautusta ja siten ennen seuraavan säikeen lukitusta. Sisempi silmukka
+vain lukee lippua (*test and test-and-set*): jokainen `test_and_set` on
+kirjoitus, joka siirtää välimuistirivin yksinoikeudella pyörivälle
+ytimelle, kun taas lukijat voivat jakaa rivin.
+
+Käyttäjätilan spinlukolla on vaarallinen heikkous: jos lukkoa pitävä säie
+vuorontuu pois, muut pyörivät turhaan koko aikaviipaleensa ajan. Ytimessä
+näin ei käy, koska lukon haltijaa ei voi keskeyttää. Käyttäjätilassa
+ratkaisu on lakata pyörimästä ja pyytää ydintä herättämään, kun lukko
+vapautuu. C++20:n `wait` ja `notify_one` tekevät sen (Linuxissa
+futexilla, ks. taito *Käyttöjärjestelmät*):
+
+```{.cpp tiedosto="esimerkit/05-spinlukko.cpp" osa="odottava"}
+```
+
+Tämä ei ole enää spinlukko vaan yksinkertainen nukkuva lukko: hinta on
+järjestelmäkutsu jokaisessa vapautuksessa. `std::mutex` (glibc:n
+toteutus) yhdistää molemmat: se pyörii lyhyesti, nukahtaa sitten
+futexiin ja tekee herätyskutsun vain, jos joku odottaa. Se on lähes aina
+parempi kuin kumpikaan oma lukko, ja oma spinlukko on perusteltu vain
+mittausten perusteella.
 
 ```{.cpp tiedosto="esimerkit/05-spinlukko.cpp" osa="kaytto"}
 ```
 
 ```{.tuloste tiedosto="esimerkit/05-spinlukko.odotettu"}
 ```
-
-Käyttäjätilan spinlukolla on vaarallinen heikkous: jos lukkoa pitävä säie
-vuorontuu pois, muut pyörivät turhaan koko aikaviipaleensa ajan.
-`std::mutex` (glibc:n toteutus) pyörii lyhyesti ja nukahtaa sitten
-futexiin, mikä on lähes aina parempi. Oma spinlukko on perusteltu vain
-mittausten perusteella.
 
 ## `std::atomic_ref`: atominen hetken ajan
 
@@ -153,7 +164,7 @@ lopuksi.
   seuraa, jos se ei ole.
 - Osaat kirjoittaa compare_exchange-silmukan ja valita `weak`- ja
   `strong`-version välillä.
-- Osaat toteuttaa spinlukon `atomic_flag`illa ja perustella sen
-  muistijärjestykset.
+- Osaat toteuttaa spinlukon `atomic_flag`illa, perustella sen
+  muistijärjestykset ja kertoa, miten nukkuva lukko eroaa siitä.
 - Osaat käyttää `std::atomic_ref`iä tavalliseen dataan ja kertoa, milloin
   sen käyttö on turvallista.

@@ -139,6 +139,16 @@ pirstoutumista.
   kaikki oliot ovat samankokoisia tai vapautetaan kerralla (areena).
 - **Areena lyhytikäisille:** varaa lineaarisesti ja vapauta kaikki
   kerralla esimerkiksi pyynnön käsittelyn lopussa.
+- **Mittaa ytimen näkemää muistia, älä varauksia:** `free` palauttaa
+  lohkon varaajalle, ei välttämättä ytimelle. Pitkään ajavan
+  palvelun muistinkulutus (RSS, `/proc/<pid>/status`) voi kasvaa
+  pirstoutumisen takia, vaikka ohjelma ei vuoda.
+- **Samankokoiset ja samanikäiset yhteen:** eri-ikäisten ja
+  -kokoisten olioiden sekoittaminen samaan kekoon on pirstoutumisen
+  tavallisin syy.
+- **Sanitoija löytää sen, mitä varaaja ei tarkista:** käyttö
+  vapautuksen jälkeen ja ylivuodot näkyvät AddressSanitizerilla heti,
+  varaajan omassa kirjanpidossa vasta satunnaisena kaatumisena.
 
 ## Itsearviointi
 

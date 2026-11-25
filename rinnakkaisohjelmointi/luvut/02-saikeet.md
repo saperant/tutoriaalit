@@ -26,8 +26,11 @@ Ilman `std::ref`iä koodi ei kääntyisi lainkaan, koska kopio (oikea arvo)
 ei sido ei-vakioon viittaukseen. Kääntäjä estää siis yleisimmän virheen.
 Lambdat ovat vaarallisempia, koska ne sieppaavat viittauksen
 kysymättä: `[&]` kelpaa kääntäjälle, vaikka viitattu olio tuhoutuisi ennen
-säiettä. *Moderni C++* kertoo tällaisesta virheestä, ja luvussa
-*Atomiset operaatiot* on toinen. Säännöt:
+säiettä. Näin käy, kun säie viittaa paikalliseen muuttujaan, joka on
+määritelty säiettä pitävän olion jälkeen ja tuhoutuu siksi ennen kuin
+säie on odotettu. *Moderni C++* kertoo tällaisesta virheestä, ja sama
+sattui tämän tutoriaalin esimerkkiä kirjoitettaessa (luku *Atomiset
+operaatiot*). Säännöt:
 
 - Säikeelle annettavan lambdan sieppaukset luetellaan nimeltä.
 - Jokaisen viitatun olion on elettävä säiettä pidempään. `jthread`-oliot

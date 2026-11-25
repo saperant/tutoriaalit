@@ -8,8 +8,9 @@ Tutoriaalin luvut asettuvat näiden harhojen ympärille:
 |----------------------|-------------------------------------------|-------|
 | oma suoritin | prosessit, säikeet, kontekstinvaihto, vuorontaja | 2–4 |
 | oma muisti | alueet, sivuvirheet, copy-on-write, sivunkorvaus, varaajat | 5–7 |
-| pysyvät tiedostot | kuvaajat, inodet, sivuvälimuisti, journal, ajurit | 8–10 |
-| yhteistyö eristyksestä huolimatta | IPC, signaalit, synkronointi | 11–14 |
+| pysyvät tiedostot | kuvaajat, inodet, sivuvälimuisti, journal, ajurit | 8, 10–11 |
+| suojaus | tunnisteet, oikeusbitit, kyvyt, rajat, eristys | 9 |
+| yhteistyö eristyksestä huolimatta | IPC, signaalit, synkronointi | 12–15 |
 
 ## Nyrkkisäännöt
 
@@ -27,6 +28,8 @@ Tutoriaalin luvut asettuvat näiden harhojen ympärille:
 - **Signaalinkäsittelijä tekee vain merkinnän.** Työ tehdään
   pääsilmukassa; `signalfd` tai self-pipe yhdistää signaalit muihin
   tapahtumiin.
+- **Pienin riittävä oikeus.** Avaa etuoikeutetut resurssit ensin,
+  pudota oikeudet pysyvästi ja tarkista jokainen paluuarvo.
 - **Jaettu data vaatii synkronoinnin, ja lukot vaativat järjestyksen.**
   Odota ehtoa silmukassa, pidä kriittiset alueet lyhyinä ja lukitse
   aina samassa järjestyksessä.
@@ -43,6 +46,7 @@ Tutoriaalin luvut asettuvat näiden harhojen ympärille:
 | mitä muistia prosessilla on | `/proc/<pid>/maps`, `smaps`, `pmap` |
 | sivuvirheet ja vaihdot | `getrusage`, `/usr/bin/time -v`, `perf stat` |
 | avoimet kuvaajat | `/proc/<pid>/fd`, `lsof` |
+| tunnisteet, kyvyt ja rajat | `id`, `/proc/<pid>/status`, `getpcaps`, `prlimit` |
 | ytimen varaajat | `/proc/slabinfo`, `slabtop`, `/proc/buddyinfo` |
 | kilpatilanteet ja lukkojärjestys | ThreadSanitizer, Helgrind |
 
@@ -56,6 +60,8 @@ Tutoriaalin luvut asettuvat näiden harhojen ympärille:
   prioriteetin periytys ja ennustettava vasteaika mikro-ohjaimilla.
 - **Sulautettu Linux:** ytimen kääntäminen, laitepuu, ajurit ja
   käynnistysketju.
+- **Virtualisointi:** kontin rakentaminen nimiavaruuksista ja
+  cgroupeista sekä hypervisorit.
 - **Takaisinmallinnus:** järjestelmäkutsujen ja muistikartan
   tulkinta ohjelmien analyysissä.
 
@@ -79,7 +85,8 @@ Tutoriaalin luvut asettuvat näiden harhojen ympärille:
   normatiivinen määrittely, mukaan lukien signaaliturvalliset funktiot.
 - Linuxin man-sivut, <https://man7.org/linux/man-pages/>; erityisesti
   `syscall(2)`, `mmap(2)`, `signal(7)`, `signal-safety(7)`, `pipe(7)`,
-  `unix(7)` ja `futex(7)`.
+  `unix(7)`, `futex(7)`, `credentials(7)`, `capabilities(7)`,
+  `namespaces(7)` ja `seccomp(2)`.
 - Linuxin ytimen dokumentaatio, <https://docs.kernel.org/>: *CFS
   Scheduler* ja *EEVDF Scheduler* (scheduler/), *Memory Management*
   (mm/) ja *ext4 Data Structures and Algorithms* (filesystems/ext4/).

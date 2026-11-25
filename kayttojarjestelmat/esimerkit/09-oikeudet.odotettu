@@ -1,0 +1,14 @@
+== tiedoston bitit, omistajan avaus
+0000  luku: EACCES
+0004  luku: EACCES
+0400  luku: onnistui, kirjoitus: EACCES
+== umask
+pyydetty 0666, umask 027: tila 0640
+== hakemiston bitit
+0600  avaus nimellä: EACCES
+0300  avaus nimellä: onnistui, listaus: EACCES
+0500  poisto: EACCES
+0700  poisto: onnistui (tiedoston tila oli 0444)
+== EACCES ja EPERM
+oman tiedoston lahjoitus pääkäyttäjälle: EPERM
+vaihto pääkäyttäjäksi: EPERM

@@ -1,0 +1,4 @@
+ennen suodatinta: socket onnistui
+suodattimen jälkeen: socket EPERM
+muut kutsut toimivat: getpid onnistui
+lapsi peri suodattimen: socket EPERM

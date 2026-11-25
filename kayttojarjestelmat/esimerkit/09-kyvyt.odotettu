@@ -1,0 +1,12 @@
+pääkäyttäjä
+  CAP_KILL: on, CAP_DAC_OVERRIDE: on
+  signaali pääkäyttäjän prosessille: onnistui
+  pääkäyttäjän tiedoston avaus: onnistui
+tavallinen käyttäjä
+  CAP_KILL: ei, CAP_DAC_OVERRIDE: ei
+  signaali pääkäyttäjän prosessille: EPERM
+  pääkäyttäjän tiedoston avaus: EACCES
+tavallinen käyttäjä, jolla on CAP_KILL
+  CAP_KILL: on, CAP_DAC_OVERRIDE: ei
+  signaali pääkäyttäjän prosessille: onnistui
+  pääkäyttäjän tiedoston avaus: EACCES

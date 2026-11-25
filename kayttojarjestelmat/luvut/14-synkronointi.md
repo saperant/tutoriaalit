@@ -59,7 +59,7 @@ kuluttajat. Kaksi ehtomuuttujaa – "ei tyhjä" ja "ei täysi" – herättää
 vain sen osapuolen, jota tilan muutos koskee. Lopetusta varten jono
 suljetaan: kuluttajat tyhjentävät jäljellä olevat ja palaavat:
 
-```{.c tiedosto="esimerkit/13-tuottaja.c" osa="jono"}
+```{.c tiedosto="esimerkit/14-tuottaja.c" osa="jono"}
 ```
 
 Kolme tuottajaa laittaa kukin 10 000 lukua, ja kaksi kuluttajaa ottaa
@@ -67,7 +67,7 @@ niitä silmukassa `for (int x; ota(&jono, &x);)`, kunnes jono on
 suljettu ja tyhjä. Pääsäie sulkee jonon, kun kaikki tuottajat ovat
 valmiita:
 
-```{.tuloste tiedosto="esimerkit/13-tuottaja.odotettu"}
+```{.tuloste tiedosto="esimerkit/14-tuottaja.odotettu"}
 ```
 
 Tuotteiden jakautuminen kuluttajien kesken vaihtelee joka ajossa,
@@ -89,12 +89,12 @@ semafori, jonka alkuarvo on $n$, päästää $n$ säiettä yhtä aikaa: se
 sopii rajallisen resurssin, kuten tietokantayhteyksien tai
 puskuripaikkojen, laskemiseen.
 
-```{.c tiedosto="esimerkit/13-semafori.c" osa="semafori"}
+```{.c tiedosto="esimerkit/14-semafori.c" osa="semafori"}
 ```
 
 Kahdeksan säiettä kilpailee kolmesta paikasta 50 kierroksen ajan:
 
-```{.tuloste tiedosto="esimerkit/13-semafori.odotettu"}
+```{.tuloste tiedosto="esimerkit/14-semafori.odotettu"}
 ```
 
 Samanaikaisuuden enimmäismäärä mitataan atomisilla laskureilla:
@@ -116,7 +116,7 @@ toinen lukija on jo sisällä, jatkuva lukijavirta näännyttää
 kirjoittajat. Esimerkin lukko suosii kirjoittajia: uusi lukija odottaa,
 jos yksikin kirjoittaja odottaa:
 
-```{.c tiedosto="esimerkit/13-lukijat.c" osa="lukko"}
+```{.c tiedosto="esimerkit/14-lukijat.c" osa="lukko"}
 ```
 
 Testissä kirjoittajat siirtävät rahaa tililtä toiselle kahdessa
@@ -125,7 +125,7 @@ sisään kirjoittajan kanssa yhtä aikaa, se näkisi rikkinäisen tilan
 ja kasvattaisi rikkomuslaskuriaan. Neljä lukijaa ja kaksi kirjoittajaa
 tekevät kukin 2000 kierrosta:
 
-```{.tuloste tiedosto="esimerkit/13-lukijat.odotettu"}
+```{.tuloste tiedosto="esimerkit/14-lukijat.odotettu"}
 ```
 
 POSIXin valmis `pthread_rwlock_t` jättää suosimissäännön

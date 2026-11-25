@@ -30,10 +30,10 @@ sitä käytetään vain asetuksiin `SIG_IGN` ja `SIG_DFL`. Lipulla
 `SA_SIGINFO` käsittelijä saa lisätietoa: lähettäjän PID:n, syyn ja
 `sigqueue`-kutsulla lähetetyn arvon:
 
-```{.c tiedosto="esimerkit/12-signaalit.c" osa="kasittelija"}
+```{.c tiedosto="esimerkit/13-signaalit.c" osa="kasittelija"}
 ```
 
-```{.c tiedosto="esimerkit/12-signaalit.c" osa="asenna"}
+```{.c tiedosto="esimerkit/13-signaalit.c" osa="asenna"}
 ```
 
 ## Estäminen ja jonoutuminen
@@ -46,13 +46,13 @@ toimitetaan yhtenä. *Reaaliaikaiset* signaalit (`SIGRTMIN` …
 `SIGRTMAX`) jonoutuvat ja kantavat mukanaan arvon, ja ne toimitetaan
 lähetysjärjestyksessä:
 
-```{.c tiedosto="esimerkit/12-signaalit.c" osa="esto"}
+```{.c tiedosto="esimerkit/13-signaalit.c" osa="esto"}
 ```
 
-```{.c tiedosto="esimerkit/12-signaalit.c" osa="ohita"}
+```{.c tiedosto="esimerkit/13-signaalit.c" osa="ohita"}
 ```
 
-```{.tuloste tiedosto="esimerkit/12-signaalit.odotettu"}
+```{.tuloste tiedosto="esimerkit/13-signaalit.odotettu"}
 ```
 
 Jonoutumattomuudesta seuraa tärkeä sääntö: signaali kertoo, että
@@ -92,7 +92,7 @@ Turvallisin käsittelijä tekee vähiten: asettaa lipun tai kirjoittaa
 tavun putkeen (*self-pipe trick*), ja varsinainen työ tehdään
 pääsilmukassa. Esimerkin käsittelijä tekee juuri niin:
 
-```{.c tiedosto="esimerkit/12-keskeytys.c" osa="kasittelija"}
+```{.c tiedosto="esimerkit/13-keskeytys.c" osa="kasittelija"}
 ```
 
 ## Keskeytetyt järjestelmäkutsut
@@ -103,10 +103,10 @@ käsittelijä ajetaan. Sen jälkeen kutsu joko palauttaa virheen `EINTR`
 tai, jos käsittelijä asennettiin lipulla `SA_RESTART`, ydin aloittaa
 kutsun uudelleen automaattisesti:
 
-```{.c tiedosto="esimerkit/12-keskeytys.c" osa="kokeile"}
+```{.c tiedosto="esimerkit/13-keskeytys.c" osa="kokeile"}
 ```
 
-```{.tuloste tiedosto="esimerkit/12-keskeytys.odotettu"}
+```{.tuloste tiedosto="esimerkit/13-keskeytys.odotettu"}
 ```
 
 Ilman lippua `read` palasi heti virheellä, vaikka käsittelijä oli jo
@@ -114,7 +114,7 @@ kirjoittanut putkeen tavun. Lipun kanssa `read` jatkui ja luki tavun.
 `SA_RESTART` ei koske kaikkia kutsuja: `poll`, `select`, `nanosleep`
 ja aikarajalliset odotukset palauttavat aina `EINTR`. Kestävä ohjelma
 toistaa siksi estävät kutsut silmukassa, kun `errno` on `EINTR`, kuten
-luvun 11 esimerkki `sem_wait`-kutsulle.
+luvun 12 esimerkki `sem_wait`-kutsulle.
 
 ## Signaalit tiedostokuvaajina
 
@@ -125,10 +125,10 @@ joten signaaliturvallisuusongelmaakaan ei ole, ja kuvaajaa voi odottaa
 tapahtumasilmukkakirjastot toimivat näin (tai self-pipe-tempulla
 muissa järjestelmissä):
 
-```{.c tiedosto="esimerkit/12-signalfd.c" osa="signalfd"}
+```{.c tiedosto="esimerkit/13-signalfd.c" osa="signalfd"}
 ```
 
-```{.tuloste tiedosto="esimerkit/12-signalfd.odotettu"}
+```{.tuloste tiedosto="esimerkit/13-signalfd.odotettu"}
 ```
 
 Silmukka korjaa jokaisen herätyksen jälkeen kaikki päättyneet lapset

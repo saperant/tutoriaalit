@@ -158,10 +158,43 @@ jottei uni kerrytä sille etuoikeutta:
 Osuudet vastaavat kaavaa: $335 / (1024 + 1024 + 335) \approx 14{,}1\,\%$
 ja D:n tultua $3121 / 5504 \approx 56{,}7\,\%$. Todellinen CFS ajaa
 tehtävää kerrallaan pidemmän viipaleen (`sched_min_granularity`),
-jotta kontekstinvaihtoja ei tule liikaa, ja tasapainottaa jonoja
-suoritinten kesken. Ryhmävuorontamisella (cgroupit, ks. taito
-*Virtualisointi*) osuudet jaetaan ensin ryhmille ja sitten ryhmän
+jotta kontekstinvaihtoja ei tule liikaa. Ryhmävuorontamisella
+(cgroupit, luku 9) osuudet jaetaan ensin ryhmille ja sitten ryhmän
 sisällä.
+
+## Monta suoritinta
+
+Edellä vuorontajalla oli yksi suoritin ja yksi jono. Moniydinkoneessa
+yhteinen jono olisi pullonkaula, koska jokainen suoritin lukitsisi sen
+joka vuoronvaihdossa. Linuxissa ja muissa nykyisissä ytimissä on siksi
+*oma valmiusjono jokaista suoritinta kohden*, ja vuorontaja tekee
+kaksi erillistä päätöstä: mikä jonon tehtävistä ajetaan seuraavaksi ja
+missä jonossa kukin tehtävä on.
+
+Jälkimmäiseen vaikuttaa kaksi vastakkaista tavoitetta:
+
+- **Välimuistiaffiniteetti.** Tehtävän data on sen suorittimen
+  välimuisteissa, jolla se viimeksi ajoi. Siirto toiselle suorittimelle
+  maksaa kymmeniä tai satoja mikrosekunteja välimuistihuteina (ks.
+  taito *Tietokonearkkitehtuuri*), joten tehtävä kannattaa pitää
+  paikallaan.
+- **Kuorman tasaus.** Jos yhdellä suorittimella on neljä ajovalmista
+  tehtävää ja toinen on tyhjänä, kolme odottaa turhaan. Vuorontaja
+  tasaa jonoja määrävälein ja aina, kun jokin suoritin jää tyhjäksi
+  (se *varastaa* työtä muilta).
+
+Tasaus etenee laitteiston rakenteen mukaan: ensin saman ytimen
+säikeiden, sitten saman välimuistin jakavien ydinten ja viimeiseksi
+kantojen välillä. Monikantaisessa koneessa muisti on jaettu
+*NUMA-solmuihin*, ja toisen solmun muistin käyttö on hitaampaa, joten
+ydin yrittää pitää tehtävän lähellä muistiaan.
+
+Ohjelma voi rajata itse, millä suorittimilla se ajaa
+(`sched_setaffinity`, komento `taskset`). Luvun 3 esimerkki sitoi
+säikeet yhteen suorittimeen saadakseen aikaan tahattomia vaihtoja.
+Tavallisesti sitomista tarvitaan vain mittauksissa ja
+viiveherkissä palveluissa, sillä vuorontaja tuntee kuorman
+paremmin kuin yksittäinen ohjelma.
 
 ## Linuxin vuorontamisluokat
 
@@ -173,7 +206,7 @@ Korkeamman luokan ajovalmis tehtävä ajetaan aina ennen alempaa.
 `SCHED_FIFO`-tehtävä ajaa, kunnes estyy tai tärkeämpi herää; ikuinen
 silmukka siinä jumittaa suorittimen, joten ydin varaa oletuksena 5 %
 ajasta muille (`sched_rt_runtime_us`). Reaaliaikaprioriteetin asetus
-vaatii oikeuden `CAP_SYS_NICE`. Komentoriviltä politiikkaa vaihdetaan
+vaatii kyvyn `CAP_SYS_NICE` (luku 9). Komentoriviltä politiikkaa vaihdetaan
 komennolla `chrt` ja nice-arvoa komennoilla `nice` ja `renice`.
 
 ## Käytännössä
@@ -199,5 +232,8 @@ komennolla `chrt` ja nice-arvoa komennoilla `nice` ja `renice`.
 - Osaat kuvata monitasoisen palautejonon idean.
 - Osaat selittää CFS:n virtuaaliajan ja laskea nice-arvoja vastaavat
   suoritinosuudet.
+- Osaat selittää, miksi moniydinkoneessa on jono suoritinta kohden
+  ja miten välimuistiaffiniteetti ja kuorman tasaus vetävät eri
+  suuntiin.
 - Osaat nimetä Linuxin vuorontamisluokat ja kertoa, milloin kutakin
   käytetään.

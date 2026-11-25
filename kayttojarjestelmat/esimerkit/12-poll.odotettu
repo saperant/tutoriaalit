@@ -1,0 +1,7 @@
+tyhjä putki, O_NONBLOCK: EAGAIN
+ei dataa, aikaraja 0: poll palautti 0
+kuvaaja 1: lapsi 1: a
+kuvaaja 0: lapsi 0: b
+kuvaaja 1: lapsi 1: c
+kuvaaja 0: loppu
+kuvaaja 1: loppu

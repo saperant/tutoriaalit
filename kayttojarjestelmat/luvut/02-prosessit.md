@@ -68,9 +68,11 @@ sitä:
 
 ### Siirtymän hinta
 
-Järjestelmäkutsu maksaa nykyprosessorilla satoja nanosekunteja, eli
-satoja tavallisia käskyjä. Aikaa kuluu tilanvaihtoon, rekisterien
-tallennukseen, argumenttien tarkistukseen sekä Spectre- ja
+Järjestelmäkutsu maksaa nykyprosessorilla sadasta muutamaan sataan
+nanosekuntiin eli satoja kellojaksoja; samassa ajassa suoritin ehtisi
+tehdä satoja tai tuhansia tavallisia käskyjä. Aikaa kuluu
+tilanvaihtoon, rekisterien tallennukseen, argumenttien tarkistukseen
+sekä Spectre- ja
 Meltdown-haavoittuvuuksien vastatoimiin, jotka voivat tyhjentää
 välimuisteja ja vaihtaa sivutaulut. Siksi:
 
@@ -276,7 +278,7 @@ PID ja tilasana jäävät ytimeen, kunnes vanhempi lukee ne
 prosessitaulun paikan, mutta paikkoja on rajallisesti
 (`/proc/sys/kernel/pid_max`), ja palvelin, joka ei koskaan korjaa
 lapsiaan, täyttää taulun lopulta. Ratkaisuja on kolme: kutsu `wait`
-säännöllisesti, käsittele `SIGCHLD` (luku 12) tai aseta sen
+säännöllisesti, käsittele `SIGCHLD` (luku 13) tai aseta sen
 käsittelijäksi `SIG_IGN`, jolloin ydin korjaa lapset itse.
 
 Jos vanhempi päättyy ennen lastaan, lapsesta tulee *orpo*. Ydin
@@ -295,7 +297,7 @@ prosessi ajaa testejä:
 
 Lapsenlapsi odottaa putken sulkeutumista: `read` palauttaa nollan
 vasta, kun kaikki kirjoituspäät on suljettu. Tämä on luotettava tapa
-odottaa toisen prosessin tapahtumaa ilman ajastimia (luku 11).
+odottaa toisen prosessin tapahtumaa ilman ajastimia (luku 12).
 
 ## Käytännössä
 

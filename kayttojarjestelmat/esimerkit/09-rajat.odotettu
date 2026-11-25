@@ -1,0 +1,6 @@
+pehmeä raja 4096: kirjoitettiin 4096 / 6000 tavua
+seuraava kirjoitus: EFBIG
+pehmeä kovan tasolle: onnistui
+pehmeä kovan yli: EINVAL
+kovan nosto: EPERM
+lapsen rajat: pehmeä 8192, kova 8192

@@ -3,7 +3,8 @@
 Lukoton tietorakenne käyttää lukkojen sijaan atomisia operaatioita. Se ei
 ole automaattisesti nopeampi kuin lukolla suojattu rakenne, ja se on
 paljon vaikeampi tehdä oikein. Sen etu on edistymistakuu: yhden säikeen
-viivästys ei pysäytä muita. Tämä luku rakentaa kolme klassista lukotonta
+viivästys ei pysäytä muita. Tämä luku määrittelee ensin, mitä
+lukottomalta rakenteelta vaaditaan, rakentaa sitten kolme klassista
 rakennetta ja näyttää niiden tyypillisimmän virheen, ABA-ongelman.
 
 ## Edistymistakuut
@@ -23,6 +24,35 @@ odotus on sallittua pidempi. Keskimääräisessä läpäisyssä hyvä lukko voit
 usein lukottoman rakenteen, koska kilpailtu CAS on kallis ja epäonnistunut
 yritys toistetaan.
 
+## Milloin rinnakkainen rakenne on oikein
+
+Edistymistakuu kertoo, milloin rakenne etenee, mutta ei sitä, milloin
+se toimii oikein. Yksisäikeisen pinon oikeellisuus on helppo sanoa:
+`ota` palauttaa viimeksi lisätyn alkion. Rinnakkain operaatiot
+limittyvät ajassa, eikä "viimeksi" tarkoita enää mitään.
+
+Vakiintunut määritelmä on **linearisoituvuus** (*linearizability*,
+Herlihy ja Wing 1990). Rakenne on linearisoituva, jos jokainen operaatio
+näyttää tapahtuvan yhdessä hetkessä jossain kutsunsa ja paluunsa
+välissä, ja näin järjestettynä operaatiot muodostavat kelvollisen
+yksisäikeisen suorituksen. Tuo hetki on operaation
+**linearisointipiste**. Kaksi operaatiota, jotka eivät limity ajassa,
+pysyvät siis todellisessa järjestyksessään; limittyvät saa järjestää
+kummin päin tahansa.
+
+Tämän luvun rakenteissa linearisointipiste on yksi atominen operaatio:
+SPSC-renkaassa indeksin release-kirjoitus ja Treiberin pinossa
+onnistunut CAS. Epäonnistunut CAS ei muuta mitään, joten sen voi
+toistaa. Perustelu "tämän rivin jälkeen operaatio on tapahtunut, sitä
+ennen ei" on sama, jolla lukotonta koodia katselmoidaan.
+
+Linearisoituvuutta ei voi testata suoraan, mutta sen seurauksia voi:
+jokainen lisätty alkio otetaan täsmälleen kerran, eikä mitään katoa tai
+kahdennu. Luvun esimerkit ja luvun *ThreadSanitizer ja virheiden
+etsintä* stressitesti tarkistavat juuri tällaisia invariantteja.
+Taito *Hajautetut järjestelmät* käyttää samaa käsitettä usean koneen
+tietovarastoille.
+
 ## SPSC-rengaspuskuri
 
 Yksinkertaisin ja käytännössä hyödyllisin lukoton rakenne on rengaspuskuri
@@ -37,6 +67,17 @@ CAS-operaatioita ei tarvita lainkaan:
 ```
 
 ```{.tuloste tiedosto="esimerkit/08-spsc.odotettu"}
+```
+
+```{.dot otsikko="Rengas, jossa on kolme alkiota. Kumpaakin indeksiä kirjoittaa vain yksi säie, ja toinen lukee sen."}
+digraph {
+  node [shape=box];
+  r [shape=record, label="<p0> 0|<p1> 1|<p2> 2: a|<p3> 3: b|<p4> 4: c|<p5> 5|<p6> 6|<p7> 7"];
+  h [label="head_ = 2\nkirjoittaa vain kuluttaja (release),\ntuottaja lukee (acquire)"];
+  t [label="tail_ = 5\nkirjoittaa vain tuottaja (release),\nkuluttaja lukee (acquire)"];
+  h -> r:p2 [label="seuraava luettava"];
+  t -> r:p5 [label="seuraava vapaa"];
+}
 ```
 
 Muistijärjestykset muodostavat kaksi julkaisuparia:
@@ -92,7 +133,10 @@ rajattu jono on lukottomista rakenteista käytetyimpiä. Dmitry Vjukovin
 rakenteessa jokaisella paikalla on järjestysnumero, joka kertoo, kenen
 vuoro paikkaan on. Tuottajat kilpailevat kirjoitusindeksistä ja
 kuluttajat lukuindeksistä CAS:lla, mutta itse paikan käsittelee vain
-sen voittanut säie:
+sen voittanut säie. Tunnetuin rajoittamaton lukoton jono on Michaelin
+ja Scottin linkitetty jono (1996), jossa solmut varataan
+dynaamisesti; se tarvitsee seuraavan luvun takaisinottoa, joten tässä
+käytetään rajattua rakennetta:
 
 ```{.cpp tiedosto="esimerkit/08-mpmc.cpp" osa="jono"}
 ```
@@ -129,6 +173,28 @@ solmut voi kierrättää ja pään viereen mahtuu versiolaskuri:
 ```
 
 ```{.cpp tiedosto="esimerkit/08-aba.cpp" osa="lomitus"}
+```
+
+```{.dot otsikko="ABA-lomitus ilman versiolaskuria. Katkoviivalla piirretyt solmut ovat säikeen 2 hallussa. Lopussa pää osoittaa solmuun B, jota säie 2 käyttää, ja A (pisteviiva) on kadonnut pinosta."}
+digraph {
+  node [shape=box, width=0.5]; ranksep=0.35;
+  t1 [shape=plaintext, width=3.3, label="1. Säie 1 lukee: pää = A, seuraaja = B"];
+  t2 [shape=plaintext, width=3.3, label="2. Säie 2 ottaa A:n ja B:n"];
+  t3 [shape=plaintext, width=3.3, label="3. Säie 2 palauttaa A:n"];
+  t4 [shape=plaintext, width=3.3, label="4. Säie 1: CAS(pää: A → B) onnistuu"];
+  t1 -> t2 -> t3 -> t4 [style=invis];
+  p1 [label="pää", shape=ellipse]; p2 [label="pää", shape=ellipse];
+  p3 [label="pää", shape=ellipse]; p4 [label="pää", shape=ellipse];
+  a2 [label="A", style="dashed,rounded"]; b2 [label="B", style="dashed,rounded"];
+  b3 [label="B", style="dashed,rounded"]; b4 [label="B", style="dashed,rounded"];
+  a1 [label="A"]; b1 [label="B"]; c1 [label="C"]; c2 [label="C"];
+  a3 [label="A"]; c3 [label="C"]; c4 [label="C"];
+  a4 [label="A", style="dotted,rounded"];
+  { rank=same; t1 -> p1 [style=invis]; p1 -> a1 -> b1 -> c1; }
+  { rank=same; t2 -> p2 [style=invis]; p2 -> c2; c2 -> a2 -> b2 [style=invis]; }
+  { rank=same; t3 -> p3 [style=invis]; p3 -> a3 -> c3; c3 -> b3 [style=invis]; }
+  { rank=same; t4 -> p4 [style=invis]; p4 -> b4 -> c4; c4 -> a4 [style=invis]; }
+}
 ```
 
 ```{.tuloste tiedosto="esimerkit/08-aba.odotettu"}
@@ -173,6 +239,8 @@ Ratkaisuja on kolme:
 
 - Osaat erottaa estävän, lukottoman ja odotuksettoman rakenteen ja kertoa,
   mitä lukottomuus takaa ja mitä ei.
+- Osaat selittää linearisoituvuuden ja osoittaa rakenteen operaation
+  linearisointipisteen.
 - Osaat toteuttaa SPSC-rengaspuskurin ja perustella sen
   muistijärjestykset kahtena julkaisuparina.
 - Osaat toteuttaa Treiberin pinon ja kertoa, miksi solmuja ei voi

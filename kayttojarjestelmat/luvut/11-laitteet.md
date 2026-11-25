@@ -24,16 +24,16 @@ lohko) ja *laitenumero*, joka koostuu pää- ja alinumerosta. Pääluku
 valitsee ajurin, aliluku laitteen ajurin sisällä. Laitetiedoston
 avaus ohjaa kaikki kuvaajan operaatiot tälle ajurille:
 
-```{.c tiedosto="esimerkit/10-laitteet.c" osa="numerot"}
+```{.c tiedosto="esimerkit/11-laitteet.c" osa="numerot"}
 ```
 
 Pääluku 1 on ytimen muistilaitteiden ajuri, jonka alilaitteet
 toteuttavat pieniä mutta hyödyllisiä käytöksiä:
 
-```{.c tiedosto="esimerkit/10-laitteet.c" osa="kaytos"}
+```{.c tiedosto="esimerkit/11-laitteet.c" osa="kaytos"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-laitteet.odotettu"}
+```{.tuloste tiedosto="esimerkit/11-laitteet.odotettu"}
 ```
 
 `/dev/null` nielee kaiken ja on aina lopussa. `/dev/zero` tuottaa
@@ -60,7 +60,7 @@ määrittelemä numero ja argumentti yleensä osoitin rakenteeseen.
 `FIONREAD` kertoo, montako tavua on luettavissa ilman estymistä. Se
 toimii putkille, soketeille ja päätteille:
 
-```{.c tiedosto="esimerkit/10-ioctl.c" osa="fionread"}
+```{.c tiedosto="esimerkit/11-ioctl.c" osa="fionread"}
 ```
 
 ### Pseudopääte
@@ -74,16 +74,16 @@ kirjoittaa isäntäpuolta. Ikkunan koko asetetaan isännästä ja luetaan
 orjasta – juuri näin `ssh` välittää etäkoneelle tiedon ikkunan koon
 muutoksesta:
 
-```{.c tiedosto="esimerkit/10-ioctl.c" osa="pty"}
+```{.c tiedosto="esimerkit/11-ioctl.c" osa="pty"}
 ```
 
 Komento, jota laite ei tue, palauttaa virheen `ENOTTY` – nimi on
 peräisin ajalta, jolloin ioctl oli lähinnä päätteiden asia:
 
-```{.c tiedosto="esimerkit/10-ioctl.c" osa="tyhja"}
+```{.c tiedosto="esimerkit/11-ioctl.c" osa="tyhja"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-ioctl.odotettu"}
+```{.tuloste tiedosto="esimerkit/11-ioctl.odotettu"}
 ```
 
 `ioctl` on käytännöllinen mutta tyypitön: argumentin tyyppi riippuu
@@ -127,11 +127,16 @@ askeleella algoritmi valitsee palvelemattomista pyynnöistä seuraavan,
 ja liike lasketaan uran numeroiden erotuksena. Pyyntöjono on
 oppikirjojen klassinen:
 
-```{.c tiedosto="esimerkit/10-levyjono.c" osa="aja"}
+```{.c tiedosto="esimerkit/11-levyjono.c" osa="aja"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-levyjono.odotettu"}
+```{.tuloste tiedosto="esimerkit/11-levyjono.odotettu"}
 ```
+
+![Lukupään reitti neljällä algoritmilla (esimerkin tuloste). FCFS
+heiluu levyn päästä päähän, SSTF jättää kaukaisimman pyynnön
+viimeiseksi, ja SCAN käy levyn reunassa ennen
+kääntymistä.](kuvat/levyjono.png){width=100%}
 
 SSTF vie vain runsaan kolmanneksen FCFS:n liikkeestä. Se palvelee
 ensin lähimmät 65 ja 67, kääntyy alas 14:ään ja nousee vasta sitten,
@@ -141,6 +146,12 @@ reunaan (ura 199) asti ja palaa. C-LOOKin luvussa on mukana paluuhyppy
 hinta on pienempi.
 
 SSD-levyillä ei ole lukupäätä, ja järjestäminen on lähes hyödytöntä.
+Niiden erityispiirre on toinen: flash-muistin lohko on tyhjennettävä
+kokonaan ennen uudelleenkirjoitusta, joten aseman oma ohjain
+(engl. flash translation layer) kirjoittaa muutokset uuteen paikkaan,
+tasaa kulumista ja siivoaa vapautuneita lohkoja taustalla.
+Tiedostojärjestelmä auttaa kertomalla `TRIM`-käskyllä, mitkä lohkot
+se on vapauttanut.
 Linuxin vuorontajat (`mq-deadline`, `bfq`, `kyber` tai `none`)
 painottavat siksi muuta: määräaikoja, jotta pyynnöt eivät nääny,
 reiluutta prosessien kesken ja lukujen suosimista kirjoitusten edellä.

@@ -34,6 +34,27 @@ kirjoitettavaksi. Kirjain `p` tarkoittaa yksityistä kartoitusta.
 kahtia. Tiedoston kartoittamisesta alueiksi kertoo tarkemmin taito
 *Objektitiedostot, linkitys ja ABI*.
 
+Koko osoiteavaruus on harva: alueiden välissä on suuria
+kartoittamattomia välejä, ja niihin osuva osoitus on suojausvirhe.
+
+```{.dot otsikko="Linux-prosessin osoiteavaruus. Suuret osoitteet ovat ylhäällä. Jokainen laatikko on yksi tai useampi alue (VMA); välit ovat kartoittamatta."}
+digraph {
+  node [shape=plaintext];
+  t [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+   <tr><td bgcolor="gray85">ydin (ei näy käyttäjätilaan)</td><td border="0"></td></tr>
+   <tr><td>pino: paikalliset muuttujat, kasvaa alaspäin</td><td border="0" align="left">rw-p</td></tr>
+   <tr><td bgcolor="gray95">suojasivu ja kartoittamaton väli</td><td border="0" align="left">---</td></tr>
+   <tr><td>mmap-alue: jaetut kirjastot, suuret varaukset,<br/>säikeiden pinot, tiedostojen kartoitukset</td><td border="0" align="left">vaihtelee</td></tr>
+   <tr><td bgcolor="gray95">kartoittamaton väli</td><td border="0" align="left">---</td></tr>
+   <tr><td>keko: pienet malloc-varaukset, kasvaa ylöspäin</td><td border="0" align="left">rw-p</td></tr>
+   <tr><td>muuttujat (.data, .bss)</td><td border="0" align="left">rw-p</td></tr>
+   <tr><td>vakiot (.rodata)</td><td border="0" align="left">r--p</td></tr>
+   <tr><td>koodi (.text)</td><td border="0" align="left">r-xp</td></tr>
+   <tr><td bgcolor="gray95">osoite 0: kartoittamaton, nollaosoitin kaatuu</td><td border="0" align="left">---</td></tr>
+  </table>>];
+}
+```
+
 ## mmap
 
 `mmap` luo uuden alueen. Sen tärkeimmät valinnat ovat:

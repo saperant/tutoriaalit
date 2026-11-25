@@ -104,6 +104,22 @@ subtitle: Pikaopas · POSIX-kutsut, ytimen algoritmit ja sudenkuopat
   `rename` → hakemiston `fsync`.
 - stdio: pääte rivipuskuroitu, putki/tiedosto täysin, stderr ei.
 
+# Käyttäjät ja oikeudet
+
+- Prosessilla todellinen, tehollinen ja tallennettu UID; ydin
+  tarkistaa tehollisella (`access` todellisella).
+- Luokka valitaan järjestyksessä omistaja → ryhmä → muut, ja vain sen
+  bitit katsotaan. Tarkistus tehdään avattaessa.
+- Hakemisto: `r` listaus, `w` nimien lisäys ja poisto, `x` haku.
+- `EACCES` = bitit kieltävät; `EPERM` = vaatii etuoikeuden.
+- Pysyvä pudotus: `setgroups` → `setgid` → `setuid`; tarkista
+  paluuarvot ja se, ettei paluu onnistu.
+- Kyvyt: `CAP_DAC_OVERRIDE`, `CAP_KILL`, `CAP_NET_BIND_SERVICE` …;
+  `PR_SET_KEEPCAPS`, `capset`, tiedostolle `setcap`.
+- `setrlimit`: pehmeä raja voimassa, kova on katto; periytyy.
+- Eristys: nimiavaruudet (näkymä), cgroupit (kulutus), seccomp
+  (kutsut; `PR_SET_NO_NEW_PRIVS` ensin).
+
 # Tiedostojärjestelmä
 
 - Asettelu: superlohko, inodebittikartta, lohkobittikartta,
@@ -112,7 +128,7 @@ subtitle: Pikaopas · POSIX-kutsut, ytimen algoritmit ja sudenkuopat
 - Hakemisto = tiedosto (inode, nimi) -pareja; linkkejä 2 +
   alihakemistot.
 - Kaatuminen: vuotava lohko, orpo inode, kaksoisvaraus. Korjaus
-  `fsck` tai journal (sitoumus, toisto).
+  `fsck` tai journal (muutokset → sitoumus → paikoilleen; toisto).
 
 # Laitteet
 
@@ -136,6 +152,8 @@ subtitle: Pikaopas · POSIX-kutsut, ytimen algoritmit ja sudenkuopat
   kirjoittajat poissa. Ei lukijaa → `SIGPIPE`/`EPIPE`.
 - `PIPE_BUF` (4096) tavua tai alle = atominen kirjoitus.
 - `SCM_RIGHTS` siirtää kuvaajan, `SO_PEERCRED` tunnistaa vertaisen.
+- `poll(taulukko, n, aikaraja)`: `POLLIN`, `POLLOUT`, `POLLHUP`;
+  `O_NONBLOCK` → `EAGAIN`.
 
 # Signaalit
 
@@ -150,7 +168,7 @@ subtitle: Pikaopas · POSIX-kutsut, ytimen algoritmit ja sudenkuopat
 
 # Synkronointi
 
-```{.c tiedosto="esimerkit/13-tuottaja.c" osa="jono"}
+```{.c tiedosto="esimerkit/14-tuottaja.c" osa="jono"}
 ```
 
 - Odota ehtoa `while`-silmukassa; `signal` tai `broadcast` lukon

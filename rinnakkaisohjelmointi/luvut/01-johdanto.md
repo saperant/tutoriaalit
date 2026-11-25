@@ -61,16 +61,16 @@ Luku 1 on tämä johdanto ja luku 12 koostaa nyrkkisäännöt ja lähteet.
 2. *Säikeet ja tehtävät*: argumentit, poikkeukset, pysäytys ja `std::async`.
 3. *Säiepooli*: oma pooli tehtäväjonoineen ja sen sudenkuopat.
 4. *Muistimalli*: tapahtumisjärjestys, muistijärjestykset ja litmus-testit.
-5. *Atomiset operaatiot*: lukottomuus, `compare_exchange`, spinlukko ja
-   `std::atomic_ref`.
+5. *Atomiset operaatiot*: lukottomuus, `compare_exchange`, spinlukko,
+   nukkuva lukko ja `std::atomic_ref`.
 6. *Lukot*: monen lukon ottaminen, lukija–kirjoittaja-lukko ja raidoitus.
 7. *Ehtomuuttujat ja muut odotusvälineet*: rajattu jono, este, semafori ja
    kertaalustus.
-8. *Lukottomat tietorakenteet*: SPSC-rengas, Treiberin pino, MPMC-jono ja
-   ABA.
+8. *Lukottomat tietorakenteet*: linearisoituvuus, SPSC-rengas,
+   Treiberin pino, MPMC-jono ja ABA.
 9. *Muistin takaisinotto*: vaaraosoittimet, epookit ja viittauslaskenta.
 10. *Rinnakkaiset algoritmit ja työnjako*: suorituspolitiikat, reduktio,
-   prefiksisumma, kuorman tasaus, Amdahl ja väärä jakaminen.
+   prefiksisumma, kuorman tasaus, OpenMP, Amdahl ja väärä jakaminen.
 11. *ThreadSanitizer ja virheiden etsintä*: raporttien lukeminen,
     työkalun rajat ja stressitestaus.
 
@@ -86,7 +86,8 @@ AddressSanitizerin ja UndefinedBehaviorSanitizerin kanssa ja ajetaan.
 Esimerkit, joiden alussa on rivi `// TSAN`, käännetään ja ajetaan lisäksi
 ThreadSanitizerilla (`-fsanitize=thread`), joka löytää datakilpailut.
 Hakemiston `esimerkit/tsan/` ohjelmissa on tarkoituksellinen virhe, ja
-niiden testi vaatii, että ThreadSanitizer raportoi sen.
+niiden testi vaatii, että ThreadSanitizer raportoi sen. Hakemiston
+`esimerkit/openmp/` ohjelma käännetään valitsimella `-fopenmp`.
 
 Rinnakkaisen ohjelman tuloste ei saa riippua lomituksesta, jotta testi on
 toistettava. Siksi esimerkit tulostavat vain lopputuloksia,

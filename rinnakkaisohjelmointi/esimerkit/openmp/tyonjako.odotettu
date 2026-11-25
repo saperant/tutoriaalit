@@ -1,0 +1,4 @@
+summa 500000500000
+schedule(static): suurin/keskiarvo 1.75
+schedule(static, 1): suurin/keskiarvo 1.00
+schedule(dynamic, 32): kaikki tehty kylla

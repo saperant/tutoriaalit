@@ -23,7 +23,7 @@
     deterministisillä lomituksilla.** Tulosteet eivät saa riippua
     lomituksesta.
 
-## Mihin seuraavaksi
+## Jatkotaidot
 
 - *C++:n suorituskyky*: allokaattorit, siirtosemantiikka ja datan asettelu
   rinnakkaisen koodin nopeuttamiseksi.
@@ -31,6 +31,8 @@
   datarinnakkaiset algoritmit.
 - *Hajautetut järjestelmät*: rinnakkaisuus ilman jaettua muistia, viestit,
   osittaiset viat ja yhteisymmärrys.
+- *Suorituskyvyn analyysi ja optimointi*: rinnakkaisen ohjelman
+  mittaaminen ja väärän jakamisen kaltaisten ilmiöiden etsintä.
 - *Verkko-ohjelmointi*: samanaikaisuus asynkronisella I/O:lla ja
   korutiineilla.
 - *Reaaliaikakäyttöjärjestelmät*: prioriteetit, ajoitusanalyysi ja

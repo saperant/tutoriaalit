@@ -6,7 +6,7 @@ prosessin säikeet jakavat osoiteavaruuden, avoimet tiedostot ja
 signaalinkäsittelijät. Säikeiden luonti ja niiden välinen viestintä on
 siksi halvempaa kuin prosessien: dataa ei tarvitse kopioida, riittää
 että toinen säie lukee samaa muistia. Hinta on se, että jaetun datan
-käyttö on synkronoitava (luku 13), ja yhden säikeen muistivirhe kaataa
+käyttö on synkronoitava (luku 14), ja yhden säikeen muistivirhe kaataa
 koko prosessin.
 
 C-kielen taidossa säikeitä käytettiin kielen `<threads.h>`-rajapinnan

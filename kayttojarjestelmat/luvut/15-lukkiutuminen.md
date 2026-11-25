@@ -33,7 +33,7 @@ kumpikin säie ehtii ottaa ensimmäisen lukkonsa ennen kuin kumpikaan
 yrittää toista. Aikarajallinen `pthread_mutex_timedlock` tekee
 lukkiutumasta näkyvän virheen eikä jumia:
 
-```{.c tiedosto="esimerkit/14-ristikkain.c" osa="ristikkain"}
+```{.c tiedosto="esimerkit/15-ristikkain.c" osa="ristikkain"}
 ```
 
 Lukkiutuman erikoistapaus on säie, joka lukitsee saman tavallisen
@@ -41,7 +41,7 @@ mutexin kahdesti: se odottaa itseään. Virheitä tarkistava mutex
 (`PTHREAD_MUTEX_ERRORCHECK`) palauttaa silloin `EDEADLK` ja
 vapautettaessa ilman lukitusta `EPERM`, kuten esimerkin lopussa:
 
-```{.tuloste tiedosto="esimerkit/14-ristikkain.odotettu"}
+```{.tuloste tiedosto="esimerkit/15-ristikkain.odotettu"}
 ```
 
 ## Lukkojärjestys
@@ -53,10 +53,10 @@ ne aina nousevassa järjestyksessä, kehää ei voi syntyä: kehän
 kieltää. Tilisiirto lukitsee kaksi tiliä, ja järjestys tulee tilin
 numerosta eikä siitä, kumpi on lähde:
 
-```{.c tiedosto="esimerkit/14-jarjestys.c" osa="siirto"}
+```{.c tiedosto="esimerkit/15-jarjestys.c" osa="siirto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/14-jarjestys.odotettu"}
+```{.tuloste tiedosto="esimerkit/15-jarjestys.odotettu"}
 ```
 
 Neljä säiettä tekee 80 000 satunnaista siirtoa, eikä mikään
@@ -79,11 +79,14 @@ tarkoittaa, että $P_i$ odottaa resurssia, jota $P_j$ pitää. Lukkiutuma
 on graafin sykli, ja sen löytää syvyyshaulla, joka merkitsee
 nykyisellä polulla olevat solmut:
 
-```{.c tiedosto="esimerkit/14-pankkiiri.c" osa="sykli"}
+```{.c tiedosto="esimerkit/15-pankkiiri.c" osa="sykli"}
 ```
 
 Esimerkki tarkistaa kaksi graafia: ketjun P0 → P1 → P2 → P3 ja
-kehän P0 → P1 → P2 → P0. Tuloste on luvun lopussa.
+kehän P0 → P1 → P2 → P0:
+
+```{.tuloste tiedosto="esimerkit/15-pankkiiri.odotettu" rivit="1-2"}
+```
 
 ```{.dot otsikko="Odotusgraafit: ketju ei lukkiudu, kehä lukkiutuu"}
 digraph {
@@ -112,7 +115,7 @@ resurssityypistä. Pyyntö myönnetään vain, jos tila pysyy
 saada enimmäistarpeensa, päättyä ja vapauttaa resurssinsa seuraaville.
 Muuten pyytäjä odottaa, vaikka resursseja olisi vapaana:
 
-```{.c tiedosto="esimerkit/14-pankkiiri.c" osa="turvallinen"}
+```{.c tiedosto="esimerkit/15-pankkiiri.c" osa="turvallinen"}
 ```
 
 Pyyntö käsitellään kokeilemalla: resurssit siirretään pyytäjälle, tila
@@ -132,7 +135,7 @@ joita on yhteensä 10, 5 ja 7. Alussa vapaana on (3, 3, 2):
 
 Sitten P1 pyytää (1, 0, 2), P4 (3, 3, 0) ja P0 (0, 2, 0):
 
-```{.tuloste tiedosto="esimerkit/14-pankkiiri.odotettu"}
+```{.tuloste tiedosto="esimerkit/15-pankkiiri.odotettu" rivit="3-7"}
 ```
 
 P1:n pyyntö jättää tilan turvalliseksi ja myönnetään. P4:n pyyntöön ei
@@ -150,7 +153,7 @@ sulautetuissa järjestelmissä algoritmi on käyttökelpoinen malli.
 *Elolukossa* (engl. livelock) säikeet eivät ole estyneinä vaan
 väistävät toisiaan loputtomasti, tyypillisesti `trylock`-perääntymisen
 takia ilman satunnaista viivettä. *Nääntymisessä* järjestelmä etenee,
-mutta tietty säie ei pääse koskaan vuoroon (luvut 4 ja 13).
+mutta tietty säie ei pääse koskaan vuoroon (luvut 4 ja 14).
 
 ## Käytännössä
 
@@ -161,6 +164,14 @@ mutta tietty säie ei pääse koskaan vuoroon (luvut 4 ja 13).
 - **ERRORCHECK-mutex ja ThreadSanitizer kehityksessä:** ne löytävät
   itsensä lukitsevat säikeet ja lukkojärjestyksen rikkomukset ennen
   kuin lukkiutuma toteutuu.
+- **Pidä kerrallaan mahdollisimman harvaa lukkoa:** yhden lukon
+  varassa oleva koodi ei voi lukkiutua lukkojärjestyksen takia.
+- **Aikaraja ulkoisille resursseille:** tietokannan, verkon ja toisen
+  prosessin kanssa lukkojärjestystä ei voi sopia, joten odotukselle
+  asetetaan aikaraja ja operaatio perutaan ja yritetään uudelleen.
+- **Jumissa olevan ohjelman tutkiminen:** debuggerin
+  `thread apply all bt` näyttää, mitä lukkoa kukin säie odottaa;
+  odotusgraafin sykli löytyy pinojäljistä.
 
 ## Itsearviointi
 

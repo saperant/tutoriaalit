@@ -8,22 +8,23 @@ C++20:n uudet odotusvälineet `std::latch`, `std::barrier` ja
 
 ## Ehtomuuttuja
 
-Ehtomuuttuja yhdistää lukon ja odotuksen. `wait(lukko, ehto)` tekee
-seuraavan atomisesti:
+Ehtomuuttuja yhdistää lukon ja odotuksen: odottaja vapauttaa lukon ja
+nukahtaa yhdellä atomisella operaatiolla ja ottaa lukon uudelleen
+herätessään. Taito *Käyttöjärjestelmät* (luku *Synkronointi*) kertoo,
+miksi ehto on tarkistettava silmukassa: odotus voi palata ilman
+herätystä (*spurious wakeup*), ja toinen säie on voinut jo kuluttaa
+sen, minkä vuoksi herätettiin.
 
-1. Jos ehto on tosi, palaa heti lukko otettuna.
-2. Muuten vapauttaa lukon ja nukahtaa *samalla* operaatiolla, joten
-   herätys ei voi mennä ohi lukon vapautuksen ja nukahtamisen välissä.
-3. Herättyään ottaa lukon ja tarkistaa ehdon uudelleen.
-
-Ehdon tarkistus silmukassa on välttämätön kahdesta syystä. Odotus voi
-palata ilman herätystä (*spurious wakeup*), ja herätyksen ja lukon oton
-välissä toinen säie on voinut jo kuluttaa sen, minkä vuoksi herätettiin.
-Predikaatin ottava `wait` tekee silmukan valmiiksi. Ilman predikaattia
-syntyy myös **kadonnut herätys** (*lost wakeup*): jos ilmoitus tulee
-ennen kuin odottaja ehtii odottamaan, se nukkuu ikuisesti. Predikaatti
-tarkistetaan lukon alla ennen nukahtamista, joten ilmoitettu tila ei
-katoa.
+C++:ssa silmukkaa ei kirjoiteta itse. `wait(lukko, ehto)` saa ehdon
+predikaattina, tarkistaa sen lukon alla ennen nukahtamista ja jokaisen
+herätyksen jälkeen ja palaa vasta, kun ehto on tosi. Samalla katoaa
+toinenkin virhe, **kadonnut herätys** (*lost wakeup*): jos ilmoitus
+tulee ennen kuin odottaja ehtii odottamaan, predikaatiton `wait`
+nukkuisi ikuisesti, mutta predikaatti huomaa jo muuttuneen tilan.
+Lukon tyyppi on `std::unique_lock`, koska `wait`in on voitava vapauttaa
+se ja ottaa se uudelleen. Pysäytettävään säikeeseen sopii
+`std::condition_variable_any`, jonka `wait` ottaa myös `stop_token`in
+ja herää pysäytyspyyntöön (luku *Säikeet ja tehtävät*).
 
 ## Rajattu jono ja vastapaine
 

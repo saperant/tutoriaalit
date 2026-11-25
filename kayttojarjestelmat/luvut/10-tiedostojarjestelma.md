@@ -1,6 +1,6 @@
 # Oma tiedostojärjestelmä
 
-Edellisessä luvussa tiedostoja käytettiin ytimen rajapinnan kautta.
+Luvussa 8 tiedostoja käytettiin ytimen rajapinnan kautta.
 Tässä luvussa rakennetaan rajapinnan alla oleva kerros: *pikkufs*,
 pieni Unix-tyyppinen tiedostojärjestelmä, joka tallentaa kaiken
 tavalliseen 64 KiB:n levykuvatiedostoon. Rakenne on sama kuin ext2:ssa
@@ -27,7 +27,7 @@ Asettelu ja tietueet ovat otsakkeessa. `static_assert` varmistaa, että
 rakenteiden koot ovat täsmälleen levymuodon mukaiset, koska ne
 kirjoitetaan levylle sellaisinaan:
 
-```{.c tiedosto="esimerkit/09-pikkufs/pikkufs.h" osa="asettelu"}
+```{.c tiedosto="esimerkit/10-pikkufs/pikkufs.h" osa="asettelu"}
 ```
 
 Inode 0 on varattu tarkoittamaan "ei inodea", ja juurihakemisto on
@@ -36,7 +36,7 @@ mikä on turvallista, koska lohko 0 on aina superlohko. Rajapinta
 muistuttaa POSIXia, mutta virheet palautetaan negatiivisina
 `errno`-arvoina kuten ytimessä:
 
-```{.c tiedosto="esimerkit/09-pikkufs/pikkufs.h" osa="rajapinta"}
+```{.c tiedosto="esimerkit/10-pikkufs/pikkufs.h" osa="rajapinta"}
 ```
 
 ## Lohkot ja bittikartat
@@ -83,7 +83,7 @@ Funktio `lohko` muuntaa tiedoston sisäisen lohkonumeron levyn
 lohkonumeroksi ja varaa puuttuvan lohkon kirjoitettaessa. Se on
 tiedostojärjestelmän "sivutaulu":
 
-```{.c tiedosto="esimerkit/09-pikkufs/pikkufs.c" osa="lohko"}
+```{.c tiedosto="esimerkit/10-pikkufs/pikkufs.c" osa="lohko"}
 ```
 
 Luku ja kirjoitus (`lue_data`, `kirjoita_data`) käsittelevät
@@ -99,7 +99,7 @@ inoden numero ja enintään 27-merkkinen nimi. Poistettu tietue
 merkitään nollainodella, ja uusi nimi täyttää ensimmäisen vapaan
 paikan. Nimen haku käy tietueet läpi järjestyksessä:
 
-```{.c tiedosto="esimerkit/09-pikkufs/pikkufs.c" osa="etsi"}
+```{.c tiedosto="esimerkit/10-pikkufs/pikkufs.c" osa="etsi"}
 ```
 
 Polku `/docs/muistio.txt` selvitetään osa kerrallaan juuresta alkaen
@@ -127,7 +127,7 @@ poistetaan hakemistosta, sitten – jos se oli viimeinen nimi – inode
 ja lohkot vapautetaan. Järjestys on tärkeä kaatumisen kannalta, kuten
 kohta näytetään:
 
-```{.c tiedosto="esimerkit/09-pikkufs/pikkufs.c" osa="poista"}
+```{.c tiedosto="esimerkit/10-pikkufs/pikkufs.c" osa="poista"}
 ```
 
 ## Käyttö
@@ -137,14 +137,30 @@ Esittely alustaa levyn, luo hakemiston `/docs`, tiedoston
 tiedoston `/iso.bin`, joka tarvitsee 12 lohkoa ja siksi epäsuoran
 lohkon. Jokainen kutsu tulostaa tuloksensa:
 
-```{.c tiedosto="esimerkit/09-pikkufs/main.c" osa="tulos"}
+```{.c tiedosto="esimerkit/10-pikkufs/main.c" osa="tulos"}
 ```
+
+```{.tuloste tiedosto="esimerkit/10-pikkufs.odotettu" rivit="1-17"}
+```
+
+Listauksessa näkyvät edellä kuvatut rakenteet: nimet `muistio.txt` ja
+`m` osoittavat samaan inodeen 3, jonka linkkilaskuri on 2, ja juuren
+linkkimäärä on 3 (oma `.`, oma `..` ja alihakemiston `..`).
 
 Sen jälkeen levy suljetaan ja liitetään uudelleen, ja tiedostot
 luetaan takaisin. Kaikki tieto on luettava levykuvasta, joten tämä
-todistaa, että rakenteet todella tallentuvat. Lopuksi kokeillaan
-virhetilanteita – ne palauttavat samat koodit, joita POSIX käyttää –
-ja poistetaan tiedostot. Tuloste on luvun lopussa.
+todistaa, että rakenteet todella tallentuvat:
+
+```{.tuloste tiedosto="esimerkit/10-pikkufs.odotettu" rivit="18-20"}
+```
+
+Lopuksi kokeillaan virhetilanteita – ne palauttavat samat koodit,
+joita POSIX käyttää – ja poistetaan tiedostot. Nimen `/m` takana data
+säilyy, vaikka alkuperäinen nimi poistettiin, ja tarkistus (seuraava
+osio) ei löydä virheitä:
+
+```{.tuloste tiedosto="esimerkit/10-pikkufs.odotettu" rivit="21-34"}
+```
 
 ## Kaatuminen ja tarkistus
 
@@ -169,7 +185,7 @@ tarkistusohjelmalla.
 Tarkistus (`fsck`) käy koko hakemistopuun läpi, laskee jokaisen inoden
 viittaukset ja merkitsee käytössä olevat lohkot:
 
-```{.c tiedosto="esimerkit/09-pikkufs/pikkufs.c" osa="kaylapi"}
+```{.c tiedosto="esimerkit/10-pikkufs/pikkufs.c" osa="kaylapi"}
 ```
 
 Tuloksia verrataan inodejen linkkilaskureihin sekä inode- ja
@@ -180,23 +196,60 @@ Esittely simuloi kaatumista kirjoittamalla levykuvaan suoraan: lohko
 100 merkitään varatuksi ilman omistajaa, ja juuren linkkilaskuri
 turmellaan:
 
-```{.c tiedosto="esimerkit/09-pikkufs/main.c" osa="kaatuminen"}
+```{.c tiedosto="esimerkit/10-pikkufs/main.c" osa="kaatuminen"}
 ```
 
-```{.tuloste tiedosto="esimerkit/09-pikkufs.odotettu"}
+```{.tuloste tiedosto="esimerkit/10-pikkufs.odotettu" rivit="35-39"}
 ```
+
+## Journalointi
 
 Tarkistus on hidas, koska se lukee koko levyn metatiedot: teratavun
 levyllä se voi kestää tunteja. Siksi nykyiset tiedostojärjestelmät
-käyttävät *journalointia*. Ennen kuin metatietoja muutetaan
-paikoillaan, muutokset kirjoitetaan peräkkäin journaliin ja perään
-kirjoitetaan sitoumusmerkintä. Kaatumisen jälkeen journal toistetaan:
-valmiit tapahtumat tehdään loppuun, keskeneräiset hylätään. Btrfs ja ZFS käyttävät sen sijaan
-copy-on-write-puita: mitään ei kirjoiteta paikoilleen, vaan uusi
-versio kirjoitetaan muualle ja juuriosoitin vaihdetaan atomisesti.
-Ytimessä tiedostojärjestelmät toteuttavat VFS-rajapinnan, jonka
-operaatioita (`lookup`, `mkdir`, `link`, `unlink`) pikkufs:n
-funktiot vastaavat.
+(ext4, XFS, NTFS) käyttävät *journalointia*, tietokannoista tuttua
+ennakkoon kirjoitettavaa lokia. Yhden operaation kaikki
+lohkomuutokset muodostavat *tapahtuman*, ja se viedään levylle
+neljässä vaiheessa:
+
+```{.dot otsikko="Tapahtuma journalissa. Muutos on voimassa siitä hetkestä, kun sitoumuslohko on levyllä; paikoilleen kirjoitus voi tapahtua myöhemmin."}
+digraph {
+  rankdir=LR; node [shape=box];
+  j [shape=record, label="{alku|bittikartan\nuusi sisältö|inoden\nuusi sisältö|sitoumus}"];
+  p [label="lohkot omille\npaikoilleen\n(checkpoint)"];
+  v [label="journalin tila\nvapautetaan"];
+  j -> p [label="3"]; p -> v [label="4"];
+  a [label="1. muutokset\njournaliin", shape=plaintext];
+  b [label="2. sitoumus", shape=plaintext];
+  a -> j; b -> j;
+}
+```
+
+Kaatumisen jälkeen ydin lukee journalin. Tapahtumat, joilla on
+sitoumuslohko, *toistetaan*: niiden lohkot kirjoitetaan paikoilleen
+uudelleen, mikä on vaaratonta, vaikka osa olisi jo ehditty kirjoittaa.
+Tapahtumat ilman sitoumusta hylätään, ikään kuin operaatiota ei olisi
+koskaan aloitettu. Palautuksen kesto riippuu journalin koosta eikä
+levyn koosta, joten se vie sekunteja.
+
+Hinta on, että jokainen journaloitu lohko kirjoitetaan kahdesti.
+Siksi oletuksena journaloidaan vain metatiedot. ext4:n oletustilassa
+(`data=ordered`) tiedoston data kirjoitetaan suoraan paikalleen
+*ennen* kuin siihen viittaavan metatiedon tapahtuma sitoutetaan, joten
+kaatumisen jälkeen inode ei osoita lohkoon, jossa on vanhaa tai
+vierasta dataa. Tila `data=journal` vie myös datan journalin kautta.
+
+Journal suojaa tiedostojärjestelmän rakennetta, ei sovelluksen dataa.
+Luvun 8 säännöt pätevät edelleen: `fsync` kirjoittaa tiedoston datan
+ja sitouttaa tapahtuman, jossa sen metatiedot ovat, ja `rename` on
+atominen, koska se on yksi tapahtuma. Ilman `fsync`-kutsua uusi sisältö
+voi kuitenkin olla vielä sivuvälimuistissa, kun nimenvaihto on jo
+levyllä.
+
+Btrfs ja ZFS käyttävät journalin sijaan copy-on-write-puita: mitään
+ei kirjoiteta paikoilleen, vaan uusi versio kirjoitetaan muualle ja
+juuriosoitin vaihdetaan atomisesti. Ytimessä tiedostojärjestelmät
+toteuttavat VFS-rajapinnan, jonka operaatioita (`lookup`, `mkdir`,
+`link`, `unlink`) pikkufs:n funktiot vastaavat.
 
 ## Käytännössä
 
@@ -205,6 +258,14 @@ funktiot vastaavat.
   mikä tekee järjestelmästä luotettavan.
 - **Mieti kirjoitusjärjestys kaatumisen kannalta:** jokaisen
   välivaiheen on oltava joko oikea tai vaarattomasti korjattava.
+- **Journal ei korvaa `fsync`-kutsua:** se pitää hakemistot ja
+  bittikartat ehjinä, mutta sovelluksen data on levyllä vasta
+  `fsync`-kutsun jälkeen.
+- **Tila voi loppua kahdella tavalla:** `ENOSPC` tulee myös silloin,
+  kun inodet loppuvat, vaikka lohkoja olisi vapaana (`df -i`).
+- **Levykuva on tavallinen tiedosto:** tiedostojärjestelmää voi tutkia
+  ja testata ilman laitetta, kuten tässä luvussa (`mkfs`, `debugfs`
+  ja silmukkalaite `losetup` oikeille tiedostojärjestelmille).
 
 ## Itsearviointi
 
@@ -216,3 +277,5 @@ funktiot vastaavat.
   hakemiston linkkimäärä on 2 + alihakemistot.
 - Osaat luetella, mitä epäjohdonmukaisuuksia kaatuminen voi jättää,
   ja miten `fsck` ja journalointi ne hoitavat.
+- Osaat kuvata journaloidun tapahtuman vaiheet ja kertoa, mitä
+  palautus tekee sitoutetulle ja sitoutumattomalle tapahtumalle.

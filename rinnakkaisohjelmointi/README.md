@@ -4,7 +4,10 @@ Tiivis suomenkielinen tutoriaali moniydinsuorittimien hyödyntämisestä
 C++:lla: säikeet ja tehtävät, säiepooli, C++:n muistimalli ja
 litmus-testit, atomiset operaatiot, lukot ja odotusvälineet, lukottomat
 tietorakenteet ja muistin takaisinotto, rinnakkaiset algoritmit ja
-työnjako sekä rinnakkaisuusvirheiden etsintä ThreadSanitizerilla.
+työnjako (myös OpenMP:llä) sekä rinnakkaisuusvirheiden etsintä
+ThreadSanitizerilla.
+
+Esitiedot: taidot *Käyttöjärjestelmät* ja *Moderni C++*.
 
 Valmis dokumentti:
 [rinnakkaisohjelmointi.pdf](https://saperant.github.io/tutoriaalit/materiaalit/rinnakkaisohjelmointi.pdf),
@@ -25,12 +28,18 @@ rinnakkaisuusvirhe. `esimerkit/Makefile` ajaa ne ThreadSanitizerilla ja
 tarkistaa, että raportissa on tiedoston `<nimi>.raportti` rivit.
 
 ```text
-make testaa   # rakenne, esimerkit ja ThreadSanitizer-raportit
+make testaa   # rakenne, esimerkit, ThreadSanitizer-raportit ja OpenMP
 make pdf      # PDF:t
+make kuvat    # kuvaajat (Matplotlib)
 ```
 
+Hakemiston `esimerkit/openmp/` ohjelma käännetään GCC:llä valitsimella
+`-fopenmp`, ja sen tulostetta verrataan tiedostoon `<nimi>.odotettu`.
+
 Kehityskontissa (`.devcontainer/rinnakkaisohjelmointi`) ovat kääntäjät,
-sanitoijat ja dokumenttityökalut.
+sanitoijat ja dokumenttityökalut. Esimerkkien avaaminen kehityskontissa
+ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 ## Lisenssi
 

@@ -4,21 +4,38 @@
 # <nimi>.raportti rivit ("..." on jokerimerkki). GCC symboloi pinot itse;
 # Clangin raportista tarkistetaan otsikko, koska llvm-symbolizer ei ole
 # aina asennettuna. Muut esimerkit testaa yhteinen testaaja.
+#
+# Hakemiston openmp/ ohjelma käännetään GCC:llä valitsimella -fopenmp
+# (libgomp tulee GCC:n mukana), ja sen tulostetta verrataan tiedostoon
+# <nimi>.odotettu.
 GCC   := $(firstword $(shell command -v g++-14 g++ 2>/dev/null))
 CLANG := $(firstword $(shell command -v clang++-20 clang++ 2>/dev/null))
 LIPUT := -std=c++23 -Wall -Wextra -Wpedantic -Werror -g -fsanitize=thread
 OHJELMAT := $(basename $(notdir $(wildcard tsan/*.cc)))
 export TSAN_OPTIONS := halt_on_error=1
 
-.PHONY: kaikki rivit siivoa $(OHJELMAT)
-kaikki: rivit $(OHJELMAT)
+.PHONY: kaikki rivit openmp siivoa $(OHJELMAT)
+kaikki: rivit $(OHJELMAT) openmp
 
 rivit:
 	@python3 -c 'import sys; v = [f"{t}:{n}: rivi on liian pitkä" \
 	    for t in sys.argv[1:] for n, r in enumerate(open(t, \
 	    encoding="utf-8"), 1) if len(r.rstrip("\n")) > 78]; \
 	    print(*v, sep="\n") if v else None; sys.exit(bool(v))' \
-	    tsan/*.cc tsan/*.raportti tsan/*.sh
+	    tsan/*.cc tsan/*.raportti tsan/*.sh openmp/*.cc
+
+openmp:
+	@mkdir -p bin
+	@if ! echo 'int main(){}' | $(GCC) -x c++ -fopenmp - \
+	    -o bin/openmp-testi 2>/dev/null; then \
+	    echo "OHITETTU: kääntäjä ilman OpenMP:tä"; \
+	else \
+	    $(GCC) -std=c++23 -Wall -Wextra -Wpedantic -Werror -g -fopenmp \
+	        -fsanitize=address,undefined openmp/tyonjako.cc \
+	        -o bin/openmp-tyonjako && \
+	    bin/openmp-tyonjako | diff openmp/tyonjako.odotettu - && \
+	    echo "OK: openmp/tyonjako"; \
+	fi
 
 $(OHJELMAT): %:
 	@mkdir -p bin

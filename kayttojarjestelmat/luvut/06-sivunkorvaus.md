@@ -62,6 +62,12 @@ kuin kehyksiä on:
 
 ## Tulosten tulkinta
 
+![Sivuvirheet kehysmäärän funktiona kolmella viittausjonolla (esimerkin
+tuloste). Keskimmäisessä FIFO ja Clock tekevät neljällä kehyksellä
+enemmän virheitä kuin kolmella, ja oikeanpuoleisessa virheet putoavat
+kerralla, kun työjoukko mahtuu
+muistiin.](kuvat/sivunkorvaus.png){width=100%}
+
 Perusjonolla kolmella kehyksellä FIFO tekee 15 sivuvirhettä, Clock
 14, LRU 12 ja OPT 9. LRU:n ja optimin väliin jää eroa, mutta FIFO on
 selvästi huonoin. Clockin jäljessä näkyy toinen mahdollisuus: kun

@@ -26,6 +26,28 @@ uusi luku eivät vaihda järjestystä, eli juuri sitä store buffering
 -tilannetta, jonka vain `seq_cst` kieltää (luku *Muistimalli*). Siksi
 esimerkki käyttää oletusjärjestystä.
 
+```{.dot otsikko="Vaaraosoittimen protokolla, kun poistaja irrottaa solmun lukijan vahvistuksen jälkeen. Aika kulkee alaspäin. Poistaja näkee ilmoituksen ja lykkää vapautusta, kunnes lukija on tyhjentänyt vaaraosoittimensa."}
+digraph {
+  node [shape=box]; ranksep=0.3;
+  subgraph cluster_l { label="lukija"; color=gray70;
+    l1 [label="1. lue pää: solmu A"];
+    l2 [label="2. ilmoita: vaaraosoitin = A"];
+    l3 [label="3. vahvista: pää on yhä A"];
+    l4 [label="4. käytä solmua A"];
+    l5 [label="5. tyhjennä vaaraosoitin"];
+    l1 -> l2 -> l3 -> l4 -> l5; }
+  subgraph cluster_p { label="poistaja"; color=gray70;
+    p1 [label="irrota A pinosta"];
+    p2 [label="lue vaaraosoittimet:\nA on ilmoitettu"];
+    p3 [label="siirrä A odotuslistalle"];
+    p4 [label="myöhemmin: A ei ole\nilmoitettu, vapauta"];
+    p1 -> p2 -> p3 -> p4; }
+  l3 -> p1 [style=invis];
+  l2 -> p2 [label="näkyy", style=dashed, constraint=false];
+  l5 -> p4 [label="näkyy", style=dashed, constraint=false];
+}
+```
+
 ```{.cpp tiedosto="esimerkit/09-vaaraosoittimet.cpp" osa="vapautus"}
 ```
 

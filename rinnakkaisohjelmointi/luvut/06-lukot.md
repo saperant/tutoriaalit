@@ -115,10 +115,11 @@ yhtenäinen tilannekuva, kaikki lukot otetaan aina samassa järjestyksessä.
   odottaa I/O:ta, kaikki muut jonottavat. Lukon alla ei tehdä I/O:ta eikä
   kutsuta tuntematonta koodia, kuten takaisinkutsuja.
 - **Prioriteetin inversio**: matalan prioriteetin säie pitää lukkoa,
-  korkea odottaa, ja keskitason säie vie suorittimen. Mars Pathfinder
-  -luotain käynnistyi tästä syystä toistuvasti uudelleen vuonna 1997.
-  Ratkaisu on prioriteetin periytyminen (`PTHREAD_PRIO_INHERIT`), jota
-  reaaliaikakäyttöjärjestelmät käyttävät (taito *Reaaliaikakäyttöjärjestelmät*).
+  korkea odottaa, ja keskitason säie vie suorittimen (ks. taito
+  *Käyttöjärjestelmät*, luku *Vuorontaminen*). Ratkaisu on prioriteetin
+  periytyminen, jota `std::mutex` ei tarjoa: se valitaan
+  pthread-mutexin ominaisuudella `PTHREAD_PRIO_INHERIT`
+  (taito *Reaaliaikakäyttöjärjestelmät*).
 - **Kilpailu itse**: kun lukkoa pyytää moni ydin, sen välimuistirivi
   liikkuu ytimeltä toiselle ja odottajat nukkuvat ja heräävät. Lukon
   hinta on pieni ilman kilpailua ja suuri sen kanssa.

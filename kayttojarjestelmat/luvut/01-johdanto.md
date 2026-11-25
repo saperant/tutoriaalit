@@ -26,12 +26,15 @@ levyn vuorontaminen ja oma tiedostojärjestelmä levykuvassa.
   sivunkorvausalgoritmit ja muistinvaraajan sisäinen rakenne.
 - **Tiedostot ja laitteet:** kuvaajat, inodet, linkit, puskurointi ja
   `fsync`, oma tiedostojärjestelmä sekä merkki- ja lohkolaitteet.
+- **Käyttäjät, oikeudet ja suojaus:** prosessin tunnisteet, oikeuksien
+  tarkistus, setuid ja kyvyt, resurssirajat sekä eristyksen mekanismit
+  (nimiavaruudet, cgroupit, seccomp).
 - **Prosessien välinen kommunikaatio:** putket, jaettu muisti,
   viestijonot, UNIX-soketit ja signaalit.
 - **Synkronointi ja lukkiutuminen:** mutex, ehtomuuttuja ja semafori,
   klassiset ongelmat sekä lukkiutumisen ehdot ja välttäminen.
 
-## Esitiedot ja lähitaidot
+## Esitiedot ja rajaus
 
 Tutoriaali rakentuu taidon *Tietokonearkkitehtuuri* päälle. Sieltä
 oletetaan tutuiksi etuoikeustasot, ansat ja keskeytykset (luku *Ansat
@@ -49,14 +52,16 @@ toisteta täällä:
 |----------------|-----------------------------|---------------------------|
 | Komentorivi ja Linux | prosessit ja signaalit käyttäjälle (`ps`, `kill`, työt) | mitä komentojen alla tapahtuu |
 | Objektitiedostot, linkitys ja ABI | ELF, ohjelman lataus, dynaaminen linkittäjä | `exec` ja muistikartta |
-| Virtualisointi | nimiavaruudet, cgroups, hypervisorit | prosessi eristyksen perusyksikkönä |
+| Virtualisointi | kontin rakentaminen nimiavaruuksista ja cgroupeista, hypervisorit | tunnisteet, kyvyt ja eristyksen mekanismit periaatteena |
 | C-kieli | säikeet ja lukot kielen tasolla | ytimen ja POSIXin näkökulma |
 
-Jatkotaitoja ovat *Rinnakkaisohjelmointi* (muistimallit, lukottomat
-rakenteet), *Verkko-ohjelmointi* (soketit verkon yli), *Reaaliaikakäyttöjärjestelmät*
-(reaaliaikainen vuorontaminen), *Sulautettu Linux* (ajurit ja
-käynnistys) ja *Takaisinmallinnus* (järjestelmäkutsut ja muistikartta
-analyysin välineinä).
+Jatkotaidot on lueteltu viimeisessä luvussa.
+
+Lukujärjestys seuraa ytimen kolmea harhaa. Luvut 2–4 käsittelevät
+suoritinta, luvut 5–7 muistia ja luvut 8–11 tiedostoja, oikeuksia ja
+laitteita. Luvut 12–15 kertovat, miten eristetyt prosessit ja säikeet
+tekevät yhteistyötä. Jokainen luku nojaa edellisiin, joten ne
+kannattaa lukea järjestyksessä.
 
 ## Ydin ja sen rakenne
 
@@ -73,6 +78,11 @@ päälinjaa:
   Vikasietoinen, mutta jokainen palvelu maksaa viestin.
 - **Hybridi** (Windows NT, XNU): mikroytimen rakenne, mutta suuri osa
   palveluista ajetaan ytimen tilassa.
+
+Koneen käynnistyessä laiteohjelmisto (UEFI) lataa
+käynnistyslataimen, tämä ytimen, ja ydin käynnistää ensimmäisen
+prosessin, jonka numero on 1 (luku 2). Ketju käydään läpi taidossa
+*Sulautettu Linux*; tässä tutoriaalissa ydin on jo käynnissä.
 
 Esimerkit ajetaan Linuxissa. Rajapinnat ovat POSIXin mukaisia, ja
 Linux-kohtaiset laajennukset (`signalfd`, `/proc`) merkitään tekstissä.
@@ -102,4 +112,6 @@ POSIX-funktiot ilmoittavat virheestä palauttamalla -1 ja asettamalla
 Jokaisen esimerkin alussa oleva `#define _GNU_SOURCE` avaa C23-tilassa
 POSIX- ja Linux-laajennukset (`fork`, `MAP_ANONYMOUS` …). Komento
 `make testaa` ajaa esimerkit, ja kehityskontissa
-(`.devcontainer/kayttojarjestelmat`) on mukana `strace`.
+(`.devcontainer/kayttojarjestelmat`) on mukana `strace`. Luvun 9
+kaksi esimerkkiä tarvitsee pääkäyttäjän oikeudet; luku kertoo, miten
+ne ajetaan.
