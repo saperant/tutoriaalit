@@ -16,7 +16,8 @@ Dekompilointi on sallittua tekijänoikeuslain ja EU:n
 ohjelmistodirektiivin rajoissa (ks. luku 1). Muokattu radiolaite ei
 välttämättä ole enää vaatimustenmukainen. Tietoturvaheikkouksista
 ilmoitetaan vastuullisesti valmistajalle. Tekijät eivät vastaa
-väärinkäytöstä.
+väärinkäytöstä. Luvussa 1 ovat lailliset ja eettiset rajat ja luvussa
+11 lailliset harjoituskohteet (CTF, avoimet laiteohjelmistot).
 
 Valmis dokumentti:
 [laiteohjelmiston-takaisinmallinnus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/laiteohjelmiston-takaisinmallinnus.pdf),
@@ -35,12 +36,15 @@ pikaopas
 5. Funktioiden ja kirjastojen tunnistaminen – kutsupuu, allekirjoitukset,
    algoritmit vakioista
 6. Kääntäjän tuottamat rakenteet – tietuetaulukot, hyppytaulut
-7. Debug-rajapinnat – sarjakonsoli, JTAG/SWD, gdb, debug-lukitus
-8. Emulointi QEMU:lla – koko kortti, protokolla, toistettavuus
+7. Debug-rajapinnat – laite QEMU:ssa, sarjakonsoli, JTAG/SWD, gdb,
+   debug-lukitus
+8. Emulointi QEMU:lla – sarjaliikenteen tallennus, protokolla,
+   toistettavuus
 9. Emulointi Unicornilla – yksittäiset funktiot, tarkisteet ja salaus
 10. Ammatilliset käyttötapaukset – suorituskyky, rikki käännös,
     tietoturva-auditointi
-11. Lopuksi – puolustuksen yhteenveto, Ghidra, miten jatkaa, lähteet
+11. Lopuksi – puolustuksen yhteenveto, Ghidra, lailliset
+    harjoituskohteet, lähteet
 
 ## Rakentaminen
 
@@ -58,8 +62,7 @@ tulosteen tiedostoon `odotettu`. `esimerkit/testaa.sh` ajaa ne.
 Kehityskontti on hakemistossa
 `.devcontainer/laiteohjelmiston-takaisinmallinnus`.
 
-Kaikki kohteet ovat paketin omia ohjelmia. Luvussa 1 ovat
-takaisinmallinnuksen lailliset ja eettiset rajat.
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks. [Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 ## Lisenssi
 

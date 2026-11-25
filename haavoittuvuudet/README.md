@@ -60,6 +60,8 @@ gdb:n, binutilsin, AFL++:n, AArch64-ristikääntäjän, Pythonin (`ruff`,
 `odotettu`. Kehityskontti on hakemistossa
 `.devcontainer/haavoittuvuudet`.
 
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks. [Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
+
 ## Lisenssi
 
 Creative Commons Nimeä–JaaSamoin 4.0 (CC BY-SA 4.0), myös esimerkit.

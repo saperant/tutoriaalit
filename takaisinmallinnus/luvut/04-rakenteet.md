@@ -9,6 +9,42 @@ tietueet. Tämän luvun kohde on käännetty `-O1`:llä ja valitsimella
 ```{.c tiedosto="esimerkit/03-rakenteet/ohjaus.c" osa="luokka"}
 ```
 
+Kuviot on helpointa hahmottaa *ohjausvuograafina* (*control-flow
+graph*, CFG): solmut ovat *peruslohkoja* eli käskyjonoja, joihin
+tullaan vain alusta ja joista poistutaan vain lopusta, ja kaaret ovat
+hyppyjä. Disassemblerit piirtävät graafin funktiosta (radare2:n
+`agf`, Ghidran Function Graph), ja luvun kolme ohjauskuviota
+erottuvat siitä muodoltaan:
+
+```{.dot otsikko="Luvun ohjauskuviot ohjausvuograafeina. Ehtolause haarautuu ja yhtyy, silmukassa on kaari taaksepäin, ja hyppytaulusta lähtee yksi kaari jokaiseen haaraan."}
+digraph {
+  nodesep=0.25; ranksep=0.3;
+  subgraph cluster_if {
+    label="ehtolause"; color="#5B6B70"; style=dashed;
+    i0 [label="cmp; jXX"]; i1 [label="then"]; i2 [label="else"];
+    i3 [label="jatko"];
+    i0 -> i1 [label=" ei hyppyä"]; i0 -> i2 [label=" hyppy"];
+    i1 -> i3; i2 -> i3;
+  }
+  subgraph cluster_s {
+    label="silmukka (kierretty)"; color="#5B6B70"; style=dashed;
+    s0 [label="alkutarkistus"]; s1 [label="runko"];
+    s2 [label="ehto: cmp; jXX"]; s3 [label="jatko"];
+    s0 -> s1; s1 -> s2; s2 -> s1 [label=" taaksepäin"];
+    s2 -> s3; s0 -> s3;
+  }
+  subgraph cluster_h {
+    label="switch (hyppytaulu)"; color="#5B6B70"; style=dashed;
+    h0 [label="rajatarkistus:\ncmp; ja"]; h1 [label="jmp [taulu + i*4]"];
+    h2 [label="case 0"]; h3 [label="case 1"]; h4 [label="…", shape=plain, style=""];
+    h5 [label="default"]; h6 [label="jatko"];
+    h0 -> h1; h0 -> h5 [label=" yli rajan"];
+    h1 -> h2; h1 -> h3; h1 -> h4;
+    h2 -> h6; h3 -> h6; h4 -> h6; h5 -> h6;
+  }
+}
+```
+
 ## Ehtolauseet
 
 ```{.tuloste tiedosto="esimerkit/03-rakenteet/odotettu" osa="t1"}

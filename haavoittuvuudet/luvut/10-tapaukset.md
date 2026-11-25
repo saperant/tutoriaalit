@@ -154,7 +154,7 @@ BoringSSL:n.
   kokoa vasten (luku 2).
 - *Prosessi*: katselmointi protokollan jäsentimille, harvoin tarvittavat
   laajennukset pois oletuksena (pienempi hyökkäyspinta) ja riittävät
-  resurssit kriittisille riippuvuuksille (*Turvallinen kehitys*).
+  resurssit kriittisille riippuvuuksille (*Tietoturva kehitystyössä*).
 - *Rajaus*: yksityisen avaimen erottaminen eri prosessiin tai
   laitteistomoduuliin olisi estänyt avainten vuodon; ASLR ja NX eivät
   auta pelkkää lukua vastaan.
@@ -339,7 +339,7 @@ toistettaviin käännöksiin ja tarpeettomien riippuvuuksien karsimiseen
   toistettavat käännökset (*reproducible builds*) suoraan
   versionhallinnasta; binääristen testitiedostojen alkuperän tarkistus;
   ylläpitäjien resursointi ja useampi ylläpitäjä
-  (*Turvallinen kehitys*: toimitusketju, SBOM ja SLSA).
+  (*Tietoturva kehitystyössä*: toimitusketju, SBOM ja SLSA).
 - *Riippuvuudet*: jokainen linkitetty kirjasto kasvattaa luotettavaa
   koodia; kevyt rajapinta (esim. palveluilmoitus ilman koko libsystemd:tä)
   olisi poistanut yhteyden.
@@ -379,8 +379,8 @@ yhdistelmä toistuu: rajatarkistus, fuzzaus ja sanitoijat (luvut 2, 8
 ja 9) olisivat löytäneet useimmat ennen julkaisua. Toiseksi suurimmat
 vahingot syntyivät tapauksissa, joissa virhe ei ollut yksittäinen
 koodirivi vaan oletus prosessista: kuka katselmoi, mitä testataan ja
-mihin luotetaan. Ne korjataan kehitystavoilla, joita *Turvallinen
-kehitys* käsittelee.
+mihin luotetaan. Ne korjataan kehitystavoilla, joita *Tietoturva
+kehitystyössä* käsittelee.
 
 ## Käytännössä
 

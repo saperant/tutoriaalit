@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Debuggerin havaitseminen ja havaitsemisen ohittaminen.
+# Debuggerin havaitseminen paketin omassa esimerkkiohjelmassa ja koe,
+# joka näyttää, miksi asiakaskoodin tarkistus ei ole suoja (luku 10).
 source ./yhteinen.sh
 
 "$CC" -std=c23 -O2 -Wall -Wextra -Werror suojattu.c -o suojattu

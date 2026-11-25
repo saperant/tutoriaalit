@@ -50,28 +50,31 @@ piiriltä. Nämä vaativat laitteiston, joten ne jäivät tämän paketin
 ulkopuolelle, mutta periaatteet ovat samat: hae kuva, tunnista
 arkkitehtuuri, lue koodi, aja emulaattorissa.
 
-## Miten jatkaa
+## Miten jatkaa laillisesti
 
 Taitoa harjoittaa parhaiten omilla laitteilla ja avoimilla kohteilla:
 
 - **CTF-tapahtumat.** Monessa CTF-kilpailussa on sulautettuja ja
   laitteisto-osioita (*embedded*, *hardware*, *rev*). Tapahtumat ja
-  tulokset ovat sivustolla CTFtime.org. CTF-tehtävät ovat laillisia
-  harjoituskohteita, jotka on tehty ratkaistaviksi.
+  tulokset ovat sivustolla `ctftime.org`, ja aloittelijalle sopivia
+  harjoituskirjastoja ovat picoCTF (`picoctf.org`) ja pwn.college
+  (`pwn.college`). CTF-tehtävät ovat laillisia harjoituskohteita,
+  jotka on tehty ratkaistaviksi; lue silti jokaisen palvelun säännöt.
 - **Avoin laiteohjelmisto.** Zephyr, RIOT ja Apache NuttX ovat avoimia
   sulautettuja käyttöjärjestelmiä, joiden kuvia voi kääntää itse ja
   tutkia lähdekoodi vieressä — paras tapa harjoitella, koska vastaus on
   saatavilla. Reititin- ja IoT-puolella OpenWrt on avoin ja hyvin
   dokumentoitu.
-- **Oma laite.** Käännä itse tehty laiteohjelmisto (esim.
-  *Mikrokontrollerit*-taidon esimerkit), riisu symbolit ja tutki sitä
-  kuin tuntematonta. Vertaa päättelyäsi lähdekoodiin.
+- **Oma laite.** Käännä itse tehty laiteohjelmisto (esimerkiksi taidon
+  *Mikrokontrollerit ja bare-metal-ohjelmointi* esimerkit), riisu
+  symbolit ja tutki sitä kuin tuntematonta. Vertaa päättelyäsi
+  lähdekoodiin.
 
 Muista rajat: vieraan laitteen tai kaupallisen tuotteen suojausten
 kiertäminen ilman lupaa ei kuulu näihin harjoituksiin, ja
 tietoturvaheikkoudet ilmoitetaan vastuullisesti valmistajalle.
 
-## Lähitaidot taitopuussa
+## Jatkotaidot
 
 *Takaisinmallinnus* on tämän paketin suora esitieto (x86-64, ELF,
 työkalut) ja *Mikrokontrollerit ja bare-metal-ohjelmointi* antaa
@@ -79,7 +82,8 @@ Cortex-M:n perustan. *Objektitiedostot, linkitys ja ABI* selittää
 ELF:n, symbolit ja linkkerin osakarsinnan. *Sulautettujen järjestelmien
 tietoturva* kattaa korjaukset: turvallisen käynnistyksen,
 allekirjoitukset, avainvarastot ja debug-lukituksen. *Haavoittuvuuksien
-analyysi ja hyödyntäminen* syventää muistiturvallisuuden virheet.
+analyysi ja torjunta* syventää muistiturvallisuuden virheet ja niiden
+korjaamisen.
 *Oheislaiteväylät* ja *Reaaliaikakäyttöjärjestelmät* auttavat
 tunnistamaan väylä- ja RTOS-rakenteita laiteohjelmistosta.
 
@@ -95,8 +99,9 @@ tunnistamaan väylä- ja RTOS-rakenteita laiteohjelmistosta.
   qemu.org. Unicorn Engine: unicorn-engine.org. Capstone:
   capstone-engine.org.
 - Euroopan parlamentin ja neuvoston direktiivi 2009/24/EY
-  tietokoneohjelmien oikeudellisesta suojasta (6 artikla, dekompilointi)
-  ja tekijänoikeuslaki 404/1961, 25 j ja 25 k § (finlex.fi).
+  tietokoneohjelmien oikeudellisesta suojasta (5 artiklan 3 kohta:
+  tutkiminen; 6 artikla: dekompilointi) ja tekijänoikeuslaki 404/1961,
+  25 j ja 25 k § (finlex.fi).
 
 ## Lisenssi
 

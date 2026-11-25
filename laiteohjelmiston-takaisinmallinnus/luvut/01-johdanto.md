@@ -75,7 +75,8 @@ Sulautetuissa laitteissa on lisäksi omat rajansa:
 Tietoturvaheikkouksista ilmoitetaan vastuullisesti (*coordinated
 vulnerability disclosure*): valmistajalle ilmoitetaan ensin ja
 julkaisulle sovitaan kohtuullinen aika. Tekijät eivät vastaa tämän
-materiaalin väärinkäytöstä.
+materiaalin väärinkäytöstä. Laillisia harjoituskohteita (CTF-tehtävät,
+avoimet laiteohjelmistot) on lueteltu luvussa 11.
 
 ## Mitä tutoriaali kattaa
 
@@ -89,24 +90,37 @@ miten näkyvä heikkous korjataan omassa laitteessa. Syvemmät suojaukset
 lukitus, salaus) ovat taidossa *Sulautettujen järjestelmien
 tietoturva*, johon viitataan.
 
+## Esitiedot ja rajaus
+
+Lukijan oletetaan osaavan taidon *Takaisinmallinnus* perusteet
+(objdump, radare2, gdb, x86-64-assembly, ELF) ja taidon
+*Mikrokontrollerit ja bare-metal-ohjelmointi* perusteet (Cortex-M:n
+vektoritaulu, linkkeriskripti, muistikartta). Objektitiedostojen ja
+linkityksen osalta viitataan taitoon *Objektitiedostot, linkitys ja
+ABI*.
+
 Kohde on ARM Cortex-M3 QEMU:n `mps2-an385`-kortilla, sama kuin taidossa
-*Mikrokontrollerit ja bare-metal-ohjelmointi*. Linux-pohjaiset laitteet
-(reitittimet, kamerat) mainitaan, mutta niiden juuritiedostojärjestelmät
-(squashfs, cpio) ja käyttötila kuuluvat taitoon *Sulautettu Linux*.
+*Mikrokontrollerit ja bare-metal-ohjelmointi*. Rajauksia:
 
-## Esitiedot ja työkalut
+- **Linux-pohjaiset laitteet** (reitittimet, kamerat) mainitaan, mutta
+  niiden kuvien purkua (osiot, SquashFS- ja cpio-tiedostojärjestelmät,
+  käynnistysskriptit) ei käsitellä. *Sulautettu Linux* opettaa, mistä
+  osista tällainen kuva rakennetaan.
+- **Fyysinen laitteisto** (logiikka-analysaattori, JTAG/SWD-sovitin,
+  flash-piirin lukeminen) jää pois, koska esimerkit ajetaan
+  emulaattorissa. Oikeiden piirien lukusuojausten ohittamista ei
+  opeteta.
+- **Suojausten toteutus** on taidossa *Sulautettujen järjestelmien
+  tietoturva*; tässä todetaan, onko suojaus päällä ja pitääkö se.
 
-Lukijan oletetaan osaavan *Takaisinmallinnus*-taidon perusteet
-(objdump, radare2, gdb, x86-64-assembly, ELF) ja
-*Mikrokontrollerit*-taidon perusteet (Cortex-M:n vektoritaulu,
-linkkeriskripti, muistikartta). Objektitiedostojen ja linkityksen
-osalta viitataan taitoon *Objektitiedostot, linkitys ja ABI*.
+## Työkalut ja esimerkit
 
 Työkalut ovat avointa lähdekoodia: GNU binutils (`arm-none-eabi-`),
 radare2, gdb, QEMU sekä Pythonin kirjastot Capstone (disassemblointi)
 ja Unicorn (emulointi). Ghidra on alan laajin avoin
-takaisinmallinnuskehys; sitä ei ajeta tässä ympäristössä, mutta sen
-rooli esitellään luvussa 11.
+takaisinmallinnuskehys (*Takaisinmallinnus*); sitä ei ajeta tässä
+ympäristössä, mutta sen rooli laiteohjelmistotyössä kuvataan luvussa
+11.
 
 Esimerkit ovat hakemistossa `esimerkit/`. Laitteen rakentaa
 `esimerkit/laite/Makefile`, ja analyysit ovat hakemistoja
@@ -116,8 +130,3 @@ laitteen lähdekoodia; ELF-tiedostoja käytetään vain vastausavaimena,
 jolla päättelyt tarkistetaan. `esimerkit/testaa.sh` ajaa kaikki
 analyysit, ja kehityskontti on hakemistossa
 `.devcontainer/laiteohjelmiston-takaisinmallinnus`.
-
-Laitteen PDF-dokumentti ja pikaopas ovat osoitteissa
-[laiteohjelmiston-takaisinmallinnus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/laiteohjelmiston-takaisinmallinnus.pdf)
-ja
-[laiteohjelmiston-takaisinmallinnus-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/laiteohjelmiston-takaisinmallinnus-pikaopas.pdf).

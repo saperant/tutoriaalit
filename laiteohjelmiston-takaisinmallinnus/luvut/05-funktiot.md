@@ -39,7 +39,8 @@ Osa funktioista on C-kirjaston koodia (`memcpy`, `strcmp`), joka on
 sama kaikissa samalla työkaluketjulla käännetyissä ohjelmissa. Ne
 tunnistaa *allekirjoituksista*: funktion ensimmäiset tavut, joista
 `bl`-kutsujen kohdeosoitteet (jotka riippuvat linkityksestä) on
-peitetty. Tämä on sama idea kuin IDA:n FLIRT ja Ghidran Function ID.
+peitetty. Tämä on sama idea kuin IDA:n FLIRT ja Ghidran Function ID,
+ja *Takaisinmallinnus* käytti sitä riisuttuihin x86-64-ohjelmiin.
 Allekirjoitukset tehdään viiteohjelmasta, joka käyttää samoja funktioita
 ja käännetään samalla kääntäjällä:
 

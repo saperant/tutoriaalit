@@ -1,6 +1,8 @@
 """Palauttaa litistetyn funktion ohjausvuon tilakoneesta.
 
-Käyttö: python3 litistys.py OHJELMA FUNKTIO
+Käyttö: python3 litistys.py [--dot] OHJELMA FUNKTIO
+
+Valitsin --dot tulostaa tilakoneen Graphviz-kaaviona.
 
 Litistetty funktio on silmukka, jonka välittäjä (dispatcher) vertaa
 tilamuuttujaa vakioihin ja hyppää vastaavaan lohkoon. Lohko asettaa
@@ -80,9 +82,11 @@ def lohko(kaskyt: list[Kasky], alku: int, tilat: set[int],
 
 
 def main() -> None:
-    kaskyt = ilman_tayttoa(pura(sys.argv[1])[sys.argv[2]])
+    args = sys.argv[1:]
+    dot = "--dot" in args
+    ohjelma, funktio = [a for a in args if a != "--dot"]
+    kaskyt = ilman_tayttoa(pura(ohjelma)[funktio])
     muuttuja, alkutila, taulu = tilakone(kaskyt)
-    print(f"tilamuuttuja {muuttuja}, välittäjässä {len(taulu)} tilaa")
     # Välittäjän alku on ensimmäinen tilamuuttujan vertailu; lohkot
     # palaavat sinne suoraan tai yhteisen jmp-käskyn kautta.
     alku = next(k.osoite for k in kaskyt if k.nimi == "cmp"
@@ -98,14 +102,34 @@ def main() -> None:
         nimet[tila] = f"T{len(nimet)}"
         _, seuraavat, _ = lohko(kaskyt, taulu[tila], set(taulu), valittaja)
         jono.extend(seuraavat)
+    rivit = []
     for tila, nimi in nimet.items():
         maara, seuraavat, paluu = lohko(kaskyt, taulu[tila], set(taulu),
                                         valittaja)
         kohteet = [nimet[s] for s in seuraavat] + (["paluu"] if paluu else [])
+        rivit.append((nimi, tila, maara, kohteet))
+    if dot:
+        tulosta_dot(rivit)
+        return
+    print(f"tilamuuttuja {muuttuja}, välittäjässä {len(taulu)} tilaa")
+    for nimi, tila, maara, kohteet in rivit:
         kohde = " | ".join(kohteet)
         print(f"{nimi} {tila:#010x} {maara:2} käskyä -> {kohde}")
     for tila in sorted(set(taulu) - set(nimet)):
         print(f"saavuttamaton tila {tila:#010x}")
+
+
+def tulosta_dot(rivit: list[tuple[str, int, int, list[str]]]) -> None:
+    """Tilakone Graphviz-muodossa: solmu tilaa ja kaari siirtymää kohti."""
+    print("digraph {")
+    print("  rankdir=LR; nodesep=0.3; ranksep=0.4;")
+    print('  paluu [shape=plain, style=""];')
+    for nimi, _, maara, _ in rivit:
+        print(f'  {nimi} [label="{nimi}\\n{maara} käskyä"];')
+    for nimi, _, _, kohteet in rivit:
+        for kohde in kohteet:
+            print(f"  {nimi} -> {kohde};")
+    print("}")
 
 
 if __name__ == "__main__":

@@ -20,6 +20,24 @@ mallinnus on hook, joka kerää DATA-rekisteriin kirjoitetut tavut:
 ```{.python tiedosto="esimerkit/tyokalut/emu.py" osa="hookit"}
 ```
 
+```{.dot otsikko="Unicornissa laitteesta on vain se, mikä kartoitetaan: kolme muistialuetta, yksi sivu paluuosoitteelle ja hook UART0:n rekistereihin."}
+digraph {
+  rankdir=LR; nodesep=0.2; ranksep=0.55;
+  skripti [label="Python-skripti:\nargumentit r0–r3,\nlr = paluusivu,\npc = funktio"];
+  subgraph cluster_u {
+    label="Unicorn: pelkkä prosessori"; color="#5B6B70"; style=dashed;
+    flash [label="0x00000000 flash-kuva"]; ram [label="0x20000000 RAM ja pino"];
+    oheis [label="0x40000000 oheislaitealue"];
+    paluu [label="0x30000000 paluusivu"];
+  }
+  hook [label="hook: UART0:n\nkirjoitukset talteen"];
+  tulos [label="paluuarvo r0,\nkäskymäärä"];
+  skripti -> flash [label="aja"];
+  oheis -> hook;
+  paluu -> tulos [label="pysähdys"];
+}
+```
+
 ## Tarkistusfunktion ajaminen
 
 Luvussa 5 funktio `0x109fc` tunnistettiin CRC-32:ksi vakiosta

@@ -18,6 +18,34 @@ mitkä niistä valmis ohjelma sisältää.
 
 Pinokanari käsiteltiin luvussa 3 ja ohjausvuon eheys tulee luvussa 7.
 
+Suojaukset ovat kerroksia, eivät vaihtoehtoja. Jokainen pysäyttää
+virheen eri vaiheessa, ja seuraava kerros on sitä varten, että
+edellinen pettää:
+
+```{.dot otsikko="Puolustuksen kerrokset virheen elinkaaren mukaan. Mitä aikaisemmin virhe pysähtyy, sitä halvempi se on; tämän luvun ja luvun 7 suojaukset ovat kolmas ja neljäs kerros."}
+digraph {
+  nodesep=0.25; ranksep=0.22;
+  node [width=2.2];
+  v1 [label="virhe kirjoitetaan"]; v2 [label="virhe on koodissa"];
+  v3 [label="muisti korruptoituu ajossa"];
+  v4 [label="ohjausvuo yritetään kaapata"];
+  v5 [label="prosessi on vieraan vallassa"];
+  v1 -> v2 -> v3 -> v4 -> v5;
+  node [shape=plain, style="", width=0];
+  s1 [label="1. turvalliset rajapinnat, varoitukset,\lmuistiturvallinen kieli (luku 2)\l"];
+  s2 [label="2. staattinen analyysi, sanitoijat, fuzzaus,\lkatselmointi (luvut 2, 8 ja 9)\l"];
+  s3 [label="3. pinokanari, FORTIFY_SOURCE,\lvaraajan tarkistukset (luvut 3, 4 ja 6)\l"];
+  s4 [label="4. NX, ASLR ja PIE, RELRO,\lCFI, CET, PAC (luvut 6 ja 7)\l"];
+  s5 [label="5. vähimmät oikeudet, hiekkalaatikko,\lavainten erottelu\l"];
+  edge [arrowhead=none, style=dashed];
+  { rank=same; v1 -> s1; }
+  { rank=same; v2 -> s2; }
+  { rank=same; v3 -> s3; }
+  { rank=same; v4 -> s4; }
+  { rank=same; v5 -> s5; }
+}
+```
+
 ## Mitä ohjelmassa on
 
 Paketin `tarkista.py` lukee ohjelman otsakkeen, segmentit, dynaamisen

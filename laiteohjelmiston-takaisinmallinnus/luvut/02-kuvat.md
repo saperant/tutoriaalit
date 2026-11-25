@@ -66,7 +66,8 @@ Kun muoto on selvä, seuraava kysymys on, mitä tiedosto sisältää.
 *Shannonin entropia* mittaa tavujen satunnaisuutta: 0 bittiä tavua
 kohden on pelkkää täytettä, 4–5 tekstiä, 5–6,5 konekieltä ja lähes 8
 pakattua tai salattua dataa. Lohkoittain laskettu entropia paljastaa
-tiedoston rakenteen ilman, että sisältöä tulkitaan:
+tiedoston rakenteen ilman, että sisältöä tulkitaan. Keino on sama,
+jolla *Takaisinmallinnus* erotti tiedostomuodon salatun lohkon:
 
 ```{.python tiedosto="esimerkit/tyokalut/entropia.py" osa="luokka"}
 ```
@@ -74,6 +75,7 @@ tiedoston rakenteen ilman, että sisältöä tulkitaan:
 Luettavat merkkijonot ovat nopein vihje tarkoitukseen: virheilmoitukset,
 komentojen nimet, versiotekstit ja muotoilumerkkijonot. `strings -n 12`
 näyttää vähintään 12 merkin jonot ja `-t x` niiden siirtymän.
+Molempia sovelletaan seuraavaksi LT-100:n päivityspakettiin.
 
 ## Säiliömuodon purkaminen
 
@@ -88,12 +90,34 @@ sanat usealla tulkinnalla.
 ```{.tuloste tiedosto="esimerkit/02-paketti/odotettu" osa="s1"}
 ```
 
-Entropia erottaa osat: alku on otsaketta ja matalan entropian dataa,
-loppu korkean entropian lohko (pakattu ohje). Otsakkeen sanat
+Tiedosto alkaa taikaluvulla `LT1P`, jota seuraa pieniä lukuja. Entropia
+lohkoittain:
+
+```{.bash tiedosto="esimerkit/02-paketti/aja.sh" osa="entropia"}
+```
+
+```{.tuloste tiedosto="esimerkit/02-paketti/odotettu" osa="s2"}
+```
+
+![Sama tuloste käyränä. Osioiden rajat (pystyviivat) selviävät vasta alempana, mutta ne näkyvät käyrässä jo nyt: konekielen tasanne, tekstin ja asetusten notkahdus ja pakatun lohkon hyppy lähelle kahdeksaa.](kuvat/entropia.png){width=90%}
+
+Entropia erottaa kolme aluetta: pitkä jakso konekielen tasolla
+(5–6,5), sen lopussa matalamman entropian jakso ja viimeisenä korkean
+entropian lohko, joka on pakattu tai salattu. Merkkijonot osuvat
+matalan entropian jaksoon:
+
+```{.bash tiedosto="esimerkit/02-paketti/aja.sh" osa="merkkijonot"}
+```
+
+```{.tuloste tiedosto="esimerkit/02-paketti/odotettu" osa="s3"}
+```
+
+Virheilmoitukset ja komentojen ohjetekstit kertovat, että alku on
+sovelluksen koodia ja sen vakiodataa. Otsakkeen sanat
 kymmenjärjestelmässä, kahtena puolisanana ja ASCIIna kertovat, mitkä
 kentät ovat lukuja, mitkä osoitteita ja mitkä taikalukuja:
 
-```{.tuloste tiedosto="esimerkit/02-paketti/odotettu" osa="s4"}
+```{.tuloste tiedosto="esimerkit/02-paketti/odotettu" osa="s4" asti="004c"}
 ```
 
 Taikaluku `LT1P`, versionumero `0x00020401` (2.4.1), laitetunnus,
@@ -106,7 +130,7 @@ sisällä, se nollataan laskennan ajaksi:
 ```{.python tiedosto="esimerkit/tyokalut/tarkistehaku.py" osa="haku"}
 ```
 
-```{.tuloste tiedosto="esimerkit/02-paketti/odotettu" osa="s5"}
+```{.tuloste tiedosto="esimerkit/02-paketti/odotettu" osa="s4" alkaen="0x0018 ="}
 ```
 
 Otsakkeen tarkiste kattaa koko paketin (kenttä itse nollattuna), ja
@@ -121,7 +145,38 @@ varaan.
 ```{.python tiedosto="esimerkit/tyokalut/lt1.py" osa="jasenna"}
 ```
 
+```{.bash tiedosto="esimerkit/02-paketti/aja.sh" osa="edestakaisin"}
+```
+
 ```{.tuloste tiedosto="esimerkit/02-paketti/odotettu" osa="s5"}
+```
+
+Purettu ja uudelleen koottu paketti on tavulleen sama kuin
+alkuperäinen, ja kolmas osio purkautuu käyttöohjeeksi.
+
+```{.dot otsikko="Päivityspaketin `.lt1` rakenne pääteltynä. Otsakkeen osiokuvaukset kertovat kunkin osion tyypin, latausosoitteen, pituuden ja tarkisteen; osiot seuraavat otsaketta samassa järjestyksessä."}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.5;
+  node [shape=plain, style=""];
+  p [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" align="left"><i>paketti</i></td></tr>
+    <tr><td bgcolor="#EEF1F6" width="110" port="o">otsake ja osiokuvaukset<br/><font point-size="8">0x50 tavua</font></td></tr>
+    <tr><td width="110">sovellus<br/><font point-size="8">4608 tavua, raaka → 0x10100</font></td></tr>
+    <tr><td width="110">asetukset<br/><font point-size="8">256 tavua, raaka → 0x3f000</font></td></tr>
+    <tr><td width="110">resurssit<br/><font point-size="8">1403 tavua, zlib</font></td></tr>
+  </table>>];
+  o [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0"> </td><td border="0" align="left"><i>otsake ja osiokuvaukset (0x50 tavua)</i></td><td border="0"> </td></tr>
+    <tr><td border="0" align="right"><font face="JetBrains Mono" point-size="8">0x00</font></td><td align="left">"LT1P", muoto 1, otsakkeen pituus 0x20</td><td border="0" align="left"><font point-size="8">taikaluku</font></td></tr>
+    <tr><td border="0" align="right"><font face="JetBrains Mono" point-size="8">0x08</font></td><td align="left">laitetunnus, versio 2.4.1</td><td border="0" align="left"><font point-size="8"> </font></td></tr>
+    <tr><td border="0" align="right"><font face="JetBrains Mono" point-size="8">0x10</font></td><td align="left">osioita 3, allekirjoituksen pituus 0</td><td border="0" align="left"><font point-size="8"> </font></td></tr>
+    <tr><td border="0" align="right"><font face="JetBrains Mono" point-size="8">0x18</font></td><td align="left">CRC-32, koko 6348</td><td border="0" align="left"><font point-size="8">koko paketista</font></td></tr>
+    <tr><td border="0" align="right"><font face="JetBrains Mono" point-size="8">0x20</font></td><td align="left">osiokuvaus 1</td><td border="0" align="left"><font point-size="8">tyyppi, osoite, pituus, CRC-32</font></td></tr>
+    <tr><td border="0" align="right"><font face="JetBrains Mono" point-size="8">0x30</font></td><td align="left">osiokuvaus 2</td><td border="0" align="left"><font point-size="8"> </font></td></tr>
+    <tr><td border="0" align="right"><font face="JetBrains Mono" point-size="8">0x40</font></td><td align="left">osiokuvaus 3</td><td border="0" align="left"><font point-size="8"> </font></td></tr>
+  </table>>];
+  p:o:e -> o:w [style=dashed];
+}
 ```
 
 ## Käytännössä
@@ -146,8 +201,8 @@ varaan.
 
 - Osaat tunnistaa ELF-, raaka-, Intel HEX- ja S-record-muodon tiedoston
   alusta ja tunnistaa Cortex-M:n vektoritaulun raa'asta kuvasta.
-- Osaat lukea entropiakäyrää ja päätellä siitä täytteen, koodin ja
-  pakatun tai salatun datan rajat.
+- Osaat lukea entropiakäyrää ja päätellä siitä täytteen, tekstin,
+  koodin ja pakatun tai salatun datan rajat.
 - Osaat selvittää tuntemattoman säiliömuodon otsakkeen kentät ja
   tunnistaa tarkisteen laskemalla sen eri alueista.
 - Osaat kirjoittaa muodolle jäsentimen ja todeta sen oikeaksi

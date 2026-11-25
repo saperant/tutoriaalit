@@ -3,7 +3,7 @@ title: Laiteohjelmiston takaisinmallinnus
 subtitle: Pikaopas · ARM Cortex-M, QEMU · objdump, radare2, gdb, Unicorn
 ---
 
-# Vastuu ja rajat
+# Vastuulauseke ja rajat
 
 Vain omat laitteet tai kohteet, joihin on lupa. Dekompilointi
 tekijänoikeuslain ja EU:n ohjelmistodirektiivin rajoissa. Muokattu

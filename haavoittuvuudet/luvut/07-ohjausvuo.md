@@ -11,7 +11,33 @@ suojausten ymmärtämiseksi ja näyttää, miten *ohjausvuon eheyden*
 
 ## Periaate
 
-```{.text tiedosto="esimerkit/07-ohjausvuo/kaavio.txt"}
+```{.dot otsikko="Paluuosoitteen merkitys. Vasemmalla `ret` palaa kutsujaan. Oikealla pino on korruptoitunut: paluuosoitteiden paikalla on osoitteita ohjelman omiin käskyjonoihin, jotka päättyvät `ret`-käskyyn, joten suoritus etenee niiden kautta ketjuna."}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.45;
+  node [shape=plain, style=""];
+  ehja [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" align="left"><i>ehjä pino</i></td></tr>
+    <tr><td width="95">muuttujat</td></tr>
+    <tr><td>tallennettu rbp</td></tr>
+    <tr><td port="p" bgcolor="#EEF1F6">paluuosoite</td></tr>
+    <tr><td>kutsujan kehys</td></tr>
+  </table>>];
+  kutsuja [label="kutsujan\nkoodi", shape=box, style="rounded,filled"];
+  rikki [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" align="left"><i>korruptoitunut pino</i></td></tr>
+    <tr><td width="110" bgcolor="#F6D5D5">ylikirjoitettu</td></tr>
+    <tr><td bgcolor="#F6D5D5">ylikirjoitettu</td></tr>
+    <tr><td port="a" bgcolor="#F6D5D5">osoite A</td></tr>
+    <tr><td port="b" bgcolor="#F6D5D5">osoite B</td></tr>
+  </table>>];
+  ga [label="omaa koodia:\n… ret", shape=box, style="rounded,filled"];
+  gb [label="omaa koodia:\n… ret", shape=box, style="rounded,filled"];
+  ehja:p:e -> kutsuja [label=" ret"];
+  rikki:a:e -> ga [label=" 1. ret"];
+  rikki:b:e -> gb [label=" 2. ret"];
+  ga -> gb [style=dashed, constraint=false];
+  kutsuja -> rikki [style=invis];
+}
 ```
 
 Tavallisessa paluussa `ret` ottaa pinosta osoitteen, jonka `call`
@@ -25,7 +51,26 @@ epäsuorilla hypyillä ja kutsuilla (*jump-oriented programming*).
 Ketjun rakentaminen vaatii, että osoitteet tunnetaan (ASLR estää), että
 paluuosoite voidaan ylikirjoittaa huomaamatta (kanari estää jatkuvan
 ylivuodon) ja että `ret` ja epäsuorat hypyt voivat mennä minne tahansa.
-Viimeistä vastaan on kaksi suojausperhettä:
+
+| Suojaus | Mikä ketjusta katkeaa |
+|---------|-----------------------|
+| ASLR | osoitteita ei tiedetä etukäteen |
+| pinokanari | jatkuva ylivuoto havaitaan ennen `ret`-käskyä |
+| varjopino (CET SHSTK, GCS) | `ret` vertaa osoitetta suojattuun kopioon |
+| PAC (Arm) | paluuosoite allekirjoitetaan ja tarkistetaan ennen paluuta |
+| CFI, IBT, BTI | epäsuora hyppy kelpaa vain sallittuun kohtaan |
+
+Viimeistä ehtoa vastaan on kaksi suojausperhettä:
+
+```{.dot otsikko="Ohjausvuon kaksi reunaa ja niiden suojaukset. Suora kutsu on koodissa kiinteä; epäsuoran kutsun kohde ja paluuosoite luetaan muistista, joten ne tarkistetaan."}
+digraph {
+  rankdir=LR; nodesep=0.5; ranksep=1.6;
+  k [label="kutsuja"]; f [label="funktio"];
+  k -> f [label="eteenpäin: epäsuora kutsu tai hyppy\nCFI tarkistaa tyypin, IBT ja BTI kohdemerkinnän"];
+  f -> k [label="taaksepäin: ret\nvarjopino tai PAC tarkistaa paluuosoitteen"];
+}
+```
+
 
 - **Takaisinpäin suuntautuvan** ohjausvuon (*backward edge*, paluut)
   suojaus: paluuosoite tarkistetaan suojattua kopiota tai
@@ -124,6 +169,13 @@ kanssa ja `autiasp` tarkistaa sen. Käskyt on koodattu `hint`-käskyinä,
 jotta ne ovat vanhemmilla prosessoreilla tyhjiä. Erillistä `bti c`
 -käskyä ei tarvita, koska `paciasp` kelpaa myös BTI:n kohdemerkinnäksi.
 Applen ARM-prosessorit ja Androidin uudet laitteet käyttävät PAC:ia.
+
+Samaan perheeseen kuuluu *muistin tunnisteet* (*memory tagging
+extension*, MTE, ARMv8.5): jokainen varaus ja siihen osoittava osoitin
+saavat neljän bitin tunnisteen, ja prosessori pysäyttää muistiviittauksen,
+jossa ne eroavat. MTE ei suojaa ohjausvuota vaan havaitsee itse
+muistivirheen, ylivuodon ja käytön vapautuksen jälkeen, laitteiston
+nopeudella myös tuotannossa.
 
 ## Käytännössä
 

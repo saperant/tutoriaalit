@@ -1,4 +1,5 @@
-# Ohittaa koko päätösfunktion: debuggeri_havaittu palauttaa heti 0.
+# Koe omalla esimerkkiohjelmalla: debuggeri palauttaa päätösfunktiosta
+# debuggeri_havaittu heti nollan, joten tarkistus ei suojaa mitään.
 # @alku ohita-kaikki
 break debuggeri_havaittu
 commands

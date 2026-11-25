@@ -46,6 +46,23 @@ Fuzzeri aloittaa *korpuksesta*: kansiosta, jossa on kelvollisia
 esimerkkisyötteitä. Tässä niitä on kaksi pientä viestiä. Fuzzeri
 muuntelee niitä (vaihtaa, lisää ja poistaa tavuja, yhdistää syötteitä)
 ja tallentaa korpukseen jokaisen muunnelman, joka kasvatti kattavuutta.
+
+```{.dot otsikko="Kattavuusohjatun fuzzauksen palautesilmukka. Uutta koodia tavoittanut syöte palaa korpukseen, ja kaatunut syöte tallennetaan löydökseksi."}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.3;
+  korpus [label="korpus", shape=cylinder];
+  muuntele [label="valitse syöte\nja muuntele"];
+  aja [label="aja kohde\n(kattavuus,\nsanitoijat)"];
+  tulos [label="tulos?", shape=diamond];
+  loydos [label="löydös:\nminimoi, korjaa,\nregressiotesti"];
+  hylkaa [label="hylkää", shape=plain, style=""];
+  korpus -> muuntele -> aja -> tulos;
+  tulos -> loydos [label="kaatui"];
+  tulos -> hylkaa [label="ei uutta"];
+  tulos -> korpus [xlabel="uutta kattavuutta:\nlisää korpukseen", constraint=false];
+}
+```
+
 Ajo tehdään tässä kiinteällä siemenellä ja rajatulla ajomäärällä:
 
 ```{.bash tiedosto="esimerkit/08-fuzzaus/aja.sh" osa="sumenna"}
@@ -154,7 +171,11 @@ ovat tarpeen vain pitkissä ajoissa (prosessorin taajuusasetus, ytimen
 - **Kirjoita kohdefunktio jokaiselle jäsentimelle**, joka käsittelee
   ulkopuolista dataa: tiedostomuodot, protokollat, asetukset.
 - **Fuzzaa sanitoijien kanssa** (ASan ja UBSan), koska ilman niitä
-  suurin osa muistivirheistä ei kaada ohjelmaa.
+  suurin osa muistivirheistä ei kaada ohjelmaa. Clangin
+  MemorySanitizer (`-fsanitize=memory`) löytää alustamattoman muistin
+  käytön ja ThreadSanitizer (`-fsanitize=thread`) säikeiden
+  datakilpailut; kumpaakaan ei voi yhdistää ASaniin, joten ne ajetaan
+  omina käännöksinään.
 - **Aloita hyvästä korpuksesta** ja tallenna se versionhallintaan tai
   artefaktiksi.
 - **Minimoi löydös ja lisää se regressiotestiksi** ennen korjausta.

@@ -35,6 +35,32 @@ T5 0xe5013b7c  3 käskyä -> T3
 T6 0xb85e20f9 13 käskyä -> T7
 T7 0x2a9364c5  9 käskyä -> T1
 # @loppu t4
+== tilakone Graphviz-kaaviona
+# @alku kaavio
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.4;
+  paluu [shape=plain, style=""];
+  T0 [label="T0\n7 käskyä"];
+  T1 [label="T1\n7 käskyä"];
+  T2 [label="T2\n19 käskyä"];
+  T3 [label="T3\n21 käskyä"];
+  T4 [label="T4\n7 käskyä"];
+  T5 [label="T5\n3 käskyä"];
+  T6 [label="T6\n13 käskyä"];
+  T7 [label="T7\n9 käskyä"];
+  T0 -> T1;
+  T1 -> T2;
+  T1 -> T3;
+  T2 -> T4;
+  T2 -> T5;
+  T3 -> paluu;
+  T4 -> T6;
+  T4 -> T7;
+  T5 -> T3;
+  T6 -> T7;
+  T7 -> T1;
+}
+# @loppu kaavio
 == läpinäkymätön predikaatti
 # @alku t5
 tarkistettu 165542 arvoa, vastaesimerkkejä 0

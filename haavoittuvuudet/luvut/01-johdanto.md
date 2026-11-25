@@ -115,13 +115,18 @@ löydetään ja korjataan järjestelmällisesti. Luku 10 kertoo, miltä
 nämä virheet ovat näyttäneet oikeissa ohjelmissa ja miten ne olisi
 voitu välttää.
 
+Lukujen 1–9 esimerkit ovat samannumeroisissa hakemistoissa
+(`esimerkit/03-pino` ja niin edelleen). Luvun 10 koodiotteet ovat
+hakemistossa `esimerkit/tapaukset` ja luvun 11 esimerkki hakemistossa
+`esimerkit/10-ilmoittaminen`.
+
 ## Esitiedot ja rajaus
 
 *Takaisinmallinnus* on tärkein esitieto: x86-64-assemblyn lukeminen,
 pinokehys, gdb:n eräajo ja `objdump`. Tämä paketti viittaa niihin eikä
 toista niitä. *C-kieli* ja *Objektitiedostot, linkitys ja ABI*
-(RELRO, PIE, GOT ja PLT) ovat taustaa. *Turvallinen kehitys* käsittelee
-kehitysprosessia, staattista analyysia (SAST), riippuvuuksien hallintaa
+(RELRO, PIE, GOT ja PLT) ovat taustaa. *Tietoturva kehitystyössä*
+käsittelee kehitysprosessia, staattista analyysia (SAST), riippuvuuksien hallintaa
 ja toimitusketjua organisaation tasolla; *Tietoturvan perusteet*
 uhkamallinnusta ja sääntelyä. *Web-sovellusten tietoturva* käsittelee
 web-haavoittuvuudet; tämä paketti keskittyy natiivikoodiin.

@@ -63,6 +63,18 @@ omissa järjestelmissä. Omaa palvelinta, kotiverkkoa ja omia ohjelmia
 kannattaa testata säännöllisesti, ja juuri siihen tämän paketin työkalut
 on tarkoitettu.
 
+## Jatkotaidot
+
+*Tietoturva kehitystyössä* vie tämän paketin työkalut tiimin
+prosessiin: staattinen analyysi ja fuzzaus CI:ssä, riippuvuudet ja
+toimitusketju. *Sulautettujen järjestelmien tietoturva* ja
+*Laiteohjelmiston takaisinmallinnus* käsittelevät samoja virheitä
+laitteissa, joissa suojauksia on vähemmän. *Web-sovellusten
+tietoturva* kattaa web-haavoittuvuudet ja *Virtualisointi* eristyksen,
+jolla virheen vaikutus rajataan. Esitiedoista *Takaisinmallinnus*,
+*Objektitiedostot, linkitys ja ABI*, *C-kieli* ja *Tietoturvan
+perusteet* kannattaa kerrata tarpeen mukaan.
+
 ## Lähteet
 
 Standardit ja ohjeet:
@@ -126,8 +138,3 @@ Kirjoja:
 - Dowd, M., McDonald, J. ja Schuh, J.: The Art of Software Security
   Assessment. Addison-Wesley, 2006.
 - Zalewski, M.: The Tangled Web. No Starch Press, 2011.
-
-Taitopuun lähitaidot: *Takaisinmallinnus*, *Turvallinen kehitys*,
-*Tietoturvan perusteet*, *Web-sovellusten tietoturva*, *Sulautettujen
-järjestelmien tietoturva*, *Laiteohjelmiston takaisinmallinnus*,
-*Objektitiedostot, linkitys ja ABI* ja *C-kieli*.

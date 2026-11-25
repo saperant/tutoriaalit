@@ -18,5 +18,7 @@ otsikko "palautettu tilakone"
 # @alku litistys
 python3 litistys.py luhn luhn_litistetty
 # @loppu litistys
+otsikko "tilakone Graphviz-kaaviona"
+python3 litistys.py --dot luhn luhn_litistetty
 otsikko "läpinäkymätön predikaatti"
 python3 predikaatti.py

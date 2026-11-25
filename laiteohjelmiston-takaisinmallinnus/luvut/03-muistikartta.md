@@ -101,9 +101,46 @@ paljastuu asetuslohkon taikaluvuksi. Käynnistyslatain käyttää
 lisäksi System Control Spacea (`0xE000E000`); siitä selviää koodissa,
 että se asettaa VTOR:n ennen hyppyä sovellukseen.
 
+```{.dot otsikko="LT-100:n muistikartta luvun päättelyjen mukaan. Vasemmalla flash-kuvan neljä käytettyä aluetta, oikealla koko osoiteavaruus."}
+digraph {
+  nodesep=0.3;
+  node [shape=plain, style=""];
+  flash [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0"> </td><td border="0" align="left"><i>flash-kuva</i></td><td border="0"> </td></tr>
+    <tr><td border="0" align="right"><font face="JetBrains Mono" point-size="8">0x00000</font></td><td bgcolor="#EEF1F6" width="120">käynnistyslatain</td><td border="0" align="left"><font point-size="8">860 tavua</font></td></tr>
+    <tr><td border="0" align="right"><font face="JetBrains Mono" point-size="8"> </font></td><td style="dashed" width="120">tyhjää (0xFF)</td><td border="0" align="left"><font point-size="8"> </font></td></tr>
+    <tr><td border="0" align="right"><font face="JetBrains Mono" point-size="8">0x10000</font></td><td bgcolor="#EEF1F6" width="120">sovelluksen otsake</td><td border="0" align="left"><font point-size="8">24 tavua</font></td></tr>
+    <tr><td border="0" align="right"><font face="JetBrains Mono" point-size="8">0x10100</font></td><td bgcolor="#EEF1F6" height="40" width="120">sovellus</td><td border="0" align="left"><font point-size="8">4608 tavua</font></td></tr>
+    <tr><td border="0" align="right"><font face="JetBrains Mono" point-size="8"> </font></td><td style="dashed" width="120">tyhjää (0xFF)</td><td border="0" align="left"><font point-size="8"> </font></td></tr>
+    <tr><td border="0" align="right"><font face="JetBrains Mono" point-size="8">0x3f000</font></td><td bgcolor="#EEF1F6" width="120">asetuslohko</td><td border="0" align="left"><font point-size="8">52 tavua</font></td></tr>
+  </table>>];
+  avaruus [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0"> </td><td border="0" align="left"><i>osoiteavaruus</i></td><td border="0"> </td></tr>
+    <tr><td border="0" align="right"><font face="JetBrains Mono" point-size="8">0x00000000</font></td><td bgcolor="#EEF1F6" width="80">flash</td><td border="0" align="left"><font point-size="8">koodi, vakiot</font></td></tr>
+    <tr><td border="0" align="right"><font face="JetBrains Mono" point-size="8">0x20000000</font></td><td width="80">RAM</td><td border="0" align="left"><font point-size="8">data, pino</font></td></tr>
+    <tr><td border="0" align="right"><font face="JetBrains Mono" point-size="8">0x40004000</font></td><td width="80">UART0</td><td border="0" align="left"><font point-size="8">konsoli</font></td></tr>
+    <tr><td border="0" align="right"><font face="JetBrains Mono" point-size="8">0x40028000</font></td><td width="80">FPGAIO</td><td border="0" align="left"><font point-size="8">LED</font></td></tr>
+    <tr><td border="0" align="right"><font face="JetBrains Mono" point-size="8">0xE000E000</font></td><td width="80">SCS</td><td border="0" align="left"><font point-size="8">VTOR</font></td></tr>
+  </table>>];
+}
+```
+
 Oheislaitekartta on nyt riittävä koodin lukemiseen: tiedetään, mihin
 osoitteeseen kuva kuuluu, missä RAM ja pino ovat ja mitä rekistereitä
-koodi koskettaa.
+koodi koskettaa. Samalla hahmottuu käynnistysketju:
+
+```{.dot otsikko="Käynnistysketju vektoritaulujen ja käynnistyslataimen vakioiden perusteella. Luku 7 varmistaa ketjun debuggerilla."}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.3;
+  r [label="reset:\nMSP ja PC\nosoitteesta 0"];
+  b [label="käynnistyslatain\ntarkistaa otsakkeen\n0x10000 (LTAP, CRC)"];
+  v [label="VTOR = 0x10100,\nMSP ja PC sovelluksen\nvektoritaulusta"];
+  s [label="sovellus"];
+  h [label="hylkäys:\nsovellusta ei\nkäynnistetä", shape=plain, style=""];
+  r -> b -> v -> s;
+  b -> h [label=" ei kelpaa", style=dashed];
+}
+```
 
 ## Käytännössä
 

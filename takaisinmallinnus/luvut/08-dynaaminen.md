@@ -50,9 +50,12 @@ paluuarvon:
 Alennuskoodin tarkistus palauttaa nollan (hylätty), mutta kun paluuarvo
 `rax` asetetaan ykköseksi, ohjelma jatkaa kuin koodi olisi kelvannut.
 Tämä on analyysikeino: näin selviää, mitä hyväksytyn koodin polulla
-tapahtuu, ilman että algoritmia tarvitsee vielä ratkaista. Omaa
-ohjelmaa tutkimalla näkee myös, miksi paluuarvoon nojaava tarkistus on
-heikko suojaus; luku 10 jatkaa aiheesta.
+tapahtuu, ilman että algoritmia tarvitsee vielä ratkaista. Kohde on
+paketin oma ohjelma. Toisen ohjelman lisenssi- tai kopiosuojauksen
+kiertämiseen keinoa ei ole tarkoitettu, eikä laki sitä salli (luku 1).
+Suunnittelijalle koe näyttää, miksi asiakkaan koneella tehty,
+paluuarvoon nojaava tarkistus on heikko suojaus; luku 10 jatkaa
+aiheesta.
 
 ## Kutsujen jäljitys
 
@@ -137,7 +140,10 @@ argumentteja ja paluuarvoja, kerätä tilastoja tai tallentaa dataa
 tiedostoon. Sillä jäljitetään esimerkiksi salausrajapintoja (`EVP_*`),
 muistinvarausta ja verkkokutsuja. Staattisesti linkitettyihin tai
 suoriin järjestelmäkutsuihin se ei pure; niihin käytetään gdb:tä tai
-`seccomp`-pohjaisia työkaluja.
+`seccomp`-pohjaisia työkaluja. *Dynaaminen instrumentointi* (Frida,
+DynamoRIO, Valgrind) yleistää koukutuksen: työkalu lisää omaa koodiaan
+mihin tahansa ohjelman kohtaan ajon aikana, ei vain kirjastofunktioiden
+rajalle.
 
 ## Käytännössä
 

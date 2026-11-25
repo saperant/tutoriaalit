@@ -47,6 +47,21 @@ kunnes ohjelma kaatuu:
 
 Puskuri on 16 tavua, ja sen jälkeen on 8 tavun tallennettu
 kehysosoitin; 24 tavun jälkeen alkaa paluuosoite.
+
+```{.dot otsikko="Funktion `tarkista` kehys. Kopiointi etenee puskurin alusta kohti suurempia osoitteita, joten ylivuoto osuu siihen, mikä on puskurin yläpuolella. Ilman kanaria tallennettu `rbp` on 16 ja paluuosoite 24 tavun päässä puskurin alusta."}
+digraph {
+  node [shape=plain, style=""];
+  a [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" align="right"><font point-size="8">suuret osoitteet</font></td><td width="130">kutsujan kehys</td><td border="0" align="left"><font point-size="8"> </font></td></tr>
+    <tr><td border="0" align="right"><font point-size="8">rbp+8</font></td><td bgcolor="#F6D5D5" width="130">paluuosoite</td><td border="0" align="left"><font point-size="8">ret hyppää tähän osoitteeseen</font></td></tr>
+    <tr><td border="0" align="right"><font point-size="8">rbp</font></td><td bgcolor="#F6D5D5" width="130">tallennettu rbp</td><td border="0" align="left"><font point-size="8"> </font></td></tr>
+    <tr><td border="0" align="right"><font point-size="8">rbp-8</font></td><td style="dashed" width="130">kanari</td><td border="0" align="left"><font point-size="8">vain kanarikäännöksessä: tarkistetaan ennen ret-käskyä</font></td></tr>
+    <tr><td border="0" align="right"><font point-size="8"> </font></td><td bgcolor="#EEF1F6" width="130">tunnus[16]</td><td border="0" align="left"><font point-size="8">kopiointi alkaa tästä ja etenee ylöspäin</font></td></tr>
+    <tr><td border="0" align="right"><font point-size="8">pienet osoitteet</font></td><td border="0" width="130"> </td><td border="0" align="left"><font point-size="8"> </font></td></tr>
+  </table>>];
+}
+```
+
 Syötteen 40 A-kirjainta ylikirjoittivat sen, ja `ret` yritti hypätä
 osoitteeseen `0x4141414141414141`. Se ei ole kelvollinen
 x86-64-osoite, joten prosessori kieltäytyi ja ohjelma sai SIGSEGV:n

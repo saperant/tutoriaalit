@@ -7,12 +7,11 @@ QEMU emuloi koko kortin, Unicorn (luku 9) yksittäisiä funktioita.
 
 ## Koko kortin emulointi
 
-QEMU:n `mps2-an385`-kone emuloi Cortex-M3:n ja sen oheislaitteet, joten
-LT-100:n flash-kuva ajetaan sellaisenaan. `-icount` tekee ajosta
-käsky käskyltä toistettavan, `-semihosting` välittää laitteen
-lopetuksen, ja sarjaportti kytketään vakiosyötteeseen ja -tulosteeseen.
-Tämän tutoriaalin `qemu`-apufunktio (hakemistossa `yhteinen.sh`)
-kokoaa valitsimet. Ajetaan komentosarja ja tallennetaan sarjaliikenne:
+Luvussa 7 laite käynnistettiin apufunktiolla `qemu`, joka lataa
+flash-kuvan `mps2-an385`-koneeseen ja kytkee sarjaportin
+vakiosyötteeseen ja -tulosteeseen. Nyt ajetaan pidempi komentosarja ja
+tallennetaan koko sarjaliikenne tiedostoon funktiolla `qemu_raw`,
+koska mukana on binääridataa:
 
 ```{.bash tiedosto="esimerkit/08-qemu/aja.sh" osa="istunto"}
 ```
@@ -27,9 +26,9 @@ erikseen.
 
 ## Binäärisen tulosteen tulkinta
 
-Lokin siirto lähettää kehyksiä, jotka luvussa 2 tunnistettiin
-alustavasti ja luvussa 6 varmistettiin `switch`-lauseesta. Kehysten
-heksavedos:
+Lokin siirto lähettää kehyksiä. Luvussa 6 nähtiin, että laite käsittelee
+kehykset `switch`-lauseella tyypin mukaan; nyt nähdään, miltä kehykset
+näyttävät linjalla. Kehysten heksavedos:
 
 ```{.bash tiedosto="esimerkit/08-qemu/aja.sh" osa="kehykset"}
 ```
@@ -42,7 +41,7 @@ kehys, `0x7e 0x10` lokitietue ja `0x7e 0x11` lopetus. Ajamalla laitetta
 eri syötteillä kehysprotokollan saa selville kokonaan — tämä on
 yhteentoimivuustyön ydin.
 
-## Toistettavuus ja koputus
+## Toistettavuus ja kuvan muuttaminen
 
 `-icount`-tilassa sama syöte tuottaa tavulleen saman tulosteen joka
 ajolla, mikä tekee analyysista toistettavaa ja testit luotettaviksi:

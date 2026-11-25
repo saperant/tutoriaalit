@@ -30,7 +30,8 @@ Reset-käsittelijä:
 
 Reset kopioi alustetun datan flashista RAMiin (kaksi osoiteväliä
 literaalivarannosta) ja nollaa `.bss`-alueen; se on sama koodi, joka
-*Mikrokontrollerit*-taidossa kirjoitettiin C:llä. Funktion perässä
+taidossa *Mikrokontrollerit ja bare-metal-ohjelmointi* kirjoitettiin
+C:llä. Funktion perässä
 oleva literaalivaranto näkyy pelkkinä sanoina:
 
 ```{.bash tiedosto="esimerkit/04-thumb/aja.sh" osa="varanto"}

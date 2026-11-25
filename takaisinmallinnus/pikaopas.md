@@ -79,17 +79,21 @@ subtitle: Pikaopas · Linux x86-64, ELF · objdump, radare2, gdb
 | varmistus | jäsennin, joka kirjoittaa tiedoston uudelleen samaksi |
 | protokolla | kaappaus: vakiotavut, pituus, numero, pyyntö/vastaus |
 
-# Obfuskoinnin purku
+# Obfuskoinnin tunnistus ja purku
 
-| Tekniikka | Purku |
-|-----------|-------|
-| salatut merkkijonot | lue muistista ajossa, tai pura `.rodata` skriptillä |
-| ohjausvuon litistys | lue välittäjän tila → lohko ja seuraajat |
+| Tekniikka (tunnistus) | Purku tai johtopäätös |
+|-----------------------|-----------------------|
+| salatut merkkijonot (`strings` tyhjä) | lue muistista ajossa, tai pura `.rodata` skriptillä |
+| ohjausvuon litistys (välittäjä) | lue välittäjän tila → lohko ja seuraajat |
 | läpinäkymätön predikaatti | todista ehto vakioksi, etsi kuollut haara |
-| debuggerin havaitseminen | `set $rax`, tai paikkaa kutsu: `xor eax,eax; nop` |
+| debuggerin havaitseminen (`ptrace`, `TracerPid`) | yksi haara konekielessä: ei suojaa mitään |
 
 # Muista
 
 Havainnoi ennen purkua · etene ristiviittauksin · nimeä heti ·
 dekompilaattori kartoittaa, konekieli ratkaisee · varmista
-toteutuksella · skriptaa kaikki · vain omat ohjelmat ja luvallinen työ.
+toteutuksella · skriptaa kaikki · salaisuus ei kuulu asiakaskoodiin.
+
+**Vastuulauseke.** Vain omat ohjelmat ja kohteet, joihin on lain tai
+kirjallisen luvan antama oikeus; ei toisten ohjelmien suojausten
+kiertämiseen. Harjoituskohteet: pääoppaan luku 12.

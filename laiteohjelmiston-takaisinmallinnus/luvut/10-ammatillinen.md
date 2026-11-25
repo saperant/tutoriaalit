@@ -77,9 +77,9 @@ hallitusti:
 
 Pinon suojaus muuttaa muistin korruption hallituksi pysäytykseksi,
 mutta oikea korjaus on tarkistaa pituus ennen kopiointia (korjattu
-versiossa 2.4.2). Muistiturvallisuuden virheet ja niiden hyödyntäminen
-ja torjunta ovat taidossa *Haavoittuvuuksien analyysi ja
-hyödyntäminen*.
+versiossa 2.4.2). Muistiturvallisuuden virheiden löytäminen,
+korjaaminen ja suojaukset ovat taidossa *Haavoittuvuuksien analyysi ja
+torjunta*.
 
 **Allekirjoittamaton päivitys.** Otsakkeen allekirjoituskenttä on nolla,
 ja käynnistyslatain 1.2 hyväksyy sovelluksen pelkän CRC:n perusteella.

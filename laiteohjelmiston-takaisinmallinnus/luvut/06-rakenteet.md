@@ -3,8 +3,8 @@
 Kääntäjä tuottaa tunnistettavia kuvioita korkean tason rakenteista:
 taulukot muuttuvat osoitinaritmetiikaksi, `switch` hyppytauluksi ja
 tietueet kiinteiksi siirtymiksi. Kun kuviot tunnistaa, rakenteen voi
-lukea konekielestä takaisin. *Takaisinmallinnus*-taidon luvussa nämä
-käytiin x86-64:llä; tässä katsotaan samat ARM-koodissa.
+lukea konekielestä takaisin. *Takaisinmallinnus* käy samat kuviot
+läpi x86-64:llä; tässä ne katsotaan ARM-koodissa.
 
 ## Tietuetaulukot
 
@@ -28,7 +28,8 @@ Kolmesta eri taulukosta kaksi on vektoritaulun jäänteitä (pelkkiä
 funktio-osoittimia), mutta kaksi on selkeitä tietueita: komentotaulu
 (nimi, ohje, käsittelijä) ja tehtävätaulu (nimi, jakso, käsittelijä).
 `huolto`- ja `lue`-komentojen ohjekenttä on nolla — ne ovat
-piilokomentoja, joita ohje ei näytä (tähän palataan luvussa 10). Nyt
+piilokomentoja, joita ohje ei näytä. `huolto` kysyy salasanaa, ja
+luku 9 näyttää, miksi salasana ei suojaa komentoa. Nyt
 tiedetään laitteen komennot ja jaksolliset tehtävät nimineen ilman,
 että yhtäkään käsittelijää on luettu.
 
@@ -50,9 +51,9 @@ lukee taulukon ja laskee kohteet; alkioiden määrä tulee edeltävästä
 ```{.tuloste tiedosto="esimerkit/06-rakenteet/odotettu" osa="s2"}
 ```
 
-Funktio `0x10810` (joka luvussa 5 tunnistui kehysten käsittelijäksi)
-sisältää viiden tapauksen hyppytaulun: se on `switch` kehyksen tyypin
-mukaan. Hyppytaulun käskykuvio ja sitä edeltävä rajatarkistus:
+Funktio `0x10810` sisältää viiden tapauksen hyppytaulun. Komentotaulun
+`kehys`-komennon käsittelijä kutsuu sitä, joten se on kehysten
+käsittelijä ja hyppytaulu `switch` kehyksen tyypin mukaan. Hyppytaulun käskykuvio ja sitä edeltävä rajatarkistus:
 
 ```{.bash tiedosto="esimerkit/06-rakenteet/aja.sh" osa="tbb"}
 ```

@@ -43,11 +43,19 @@ järjestelmien testaamiseen tarvitaan aina lupa. Kun työ koskee
 työnantajan tai asiakkaan ohjelmaa, sovi rajat kirjallisesti ennen
 aloittamista.
 
-Tämän tutoriaalin harjoitukset tehdään vain omille ohjelmille. Luvun
-10 suojausten ohitukset ja paikkaukset kohdistuvat paketin omaan
-esimerkkiohjelmaan, ja niiden tarkoitus on näyttää, miksi tällaiset
-suojaukset eivät kestä: se on tärkeää tietää, kun omaa ohjelmaa
-suunnitellaan.
+**Vastuulauseke.** Materiaali on tarkoitettu opetukseen, omien
+ohjelmien tutkimiseen ja luvalliseen ammattityöhön. Käytä tekniikoita
+vain omiin ohjelmiisi tai kohteisiin, joihin sinulla on lain tai
+kirjallisen luvan antama oikeus. Tämä on yleiskuvaus, ei oikeudellinen
+neuvo, eivätkä tekijät vastaa materiaalin väärinkäytöstä.
+
+Tämän tutoriaalin harjoitukset tehdään vain paketin omille, itse
+käännetyille ohjelmille. Lukujen 8 ja 10 kokeet, joissa oman
+esimerkkiohjelman tarkistus ohitetaan debuggerilla tai tiedostoa
+muuttamalla, näyttävät, miksi asiakasohjelman omat tarkistukset eivät
+ole suoja: se on tärkeää tietää, kun omaa ohjelmaa suunnitellaan.
+Laillisia harjoituskohteita, kuten CTF-kilpailujen
+takaisinmallinnustehtäviä, on lueteltu luvussa 12.
 
 ## Mitä tutoriaali kattaa
 
@@ -55,19 +63,19 @@ Pääkohde on Linuxin x86-64 ja ELF-tiedostot. AArch64:ää ja RISC-V:tä
 käsitellään vertailuna, laiteohjelmistot omana taitonaan (*Laiteohjelmiston
 takaisinmallinnus*).
 
-| Luku | Aihe | Työkalut |
-|------|------|----------|
-| 2 | x86-64-assemblyn lukeminen | `objdump` |
-| 3 | Disassemblointi ja dekompilointi | `objdump`, radare2 |
-| 4 | Kääntäjän tuottamat rakenteet | Python-analyysi |
-| 5 | Optimoinnit konekielessä | `objdump`, Python |
-| 6 | C++-ohjelmat | `c++filt`, `readelf`, gdb |
-| 7 | Symbolittomat ohjelmat | `.eh_frame`, allekirjoitukset |
-| 8 | Dynaaminen analyysi | gdb, strace, ltrace, `LD_PRELOAD` |
-| 9 | Tiedostomuodot ja protokollat | heksavedos, entropia, Python |
-| 10 | Obfuskointi ja sen purkaminen | Python, gdb |
-| 11 | Kokonainen analyysi | kaikki edellä |
-| 12 | Lopuksi | Ghidra, nyrkkisäännöt, lähteet |
+| Luku | Aihe | Työkalut | Esimerkit |
+|--|-----------------------|--------------------|--------------------|
+| 2 | x86-64-assemblyn lukeminen | `objdump` | `01-x86` |
+| 3 | Disassemblointi ja dekompilointi | `objdump`, radare2 | `02-purku` |
+| 4 | Kääntäjän tuottamat rakenteet | Python-analyysi | `03-rakenteet` |
+| 5 | Optimoinnit konekielessä | `objdump`, Python | `04-optimoinnit` |
+| 6 | C++-ohjelmat | `c++filt`, `readelf`, gdb | `05-cpp` |
+| 7 | Symbolittomat ohjelmat | `.eh_frame`, allekirjoitukset | `06-strip` |
+| 8 | Dynaaminen analyysi | gdb, strace, ltrace, `LD_PRELOAD` | `07-gdb`, `08-jaljitys` |
+| 9 | Tiedostomuodot ja protokollat | heksavedos, entropia, Python | `09-muoto`, `10-protokolla` |
+| 10 | Obfuskointi ja sen purkaminen | Python, gdb | `11-xor`, `12-litistys`, `13-antidebug` |
+| 11 | Kokonainen analyysi | kaikki edellä | `14-yhteentoimivuus` |
+| 12 | Lopuksi | harjoituskohteet, lähteet | |
 
 Staattinen analyysi (luvut 2–7) lukee ohjelmaa ajamatta sitä. Se kattaa
 kaikki polut, myös harvoin suoritetut, mutta vaatii tulkintaa.
@@ -75,7 +83,7 @@ Dynaaminen analyysi (luku 8) havainnoi ajossa olevaa ohjelmaa: arvot
 ovat varmoja, mutta vain ajetut polut näkyvät. Käytännön työ vuorottelee
 näiden välillä, kuten luvuissa 9–11.
 
-## Esitiedot ja jatkotaidot
+## Esitiedot ja rajaus
 
 *Objektitiedostot, linkitys ja ABI* on tärkein esitieto: ELF:n osiot,
 symbolit, relokaatiot, GOT ja PLT, C++:n nimien koristelu ja
@@ -87,16 +95,25 @@ kirjoittamisen; tässä luetaan x86-64:ää, ja luku 2 kokoaa tarvittavan.
 *Kääntäjätekniikka* selittää, miksi kääntäjä tekee luvuissa 4 ja 5
 näkyvät muunnokset.
 
-Jatkotaitoja ovat *Laiteohjelmiston takaisinmallinnus* (laiteohjelmistokuvat,
-ARM- ja Thumb-koodi, emulointi) ja *Haavoittuvuuksien analyysi ja
-hyödyntäminen*.
+Luku 6 olettaa lisäksi, että C++:n luokat, virtuaalifunktiot,
+poikkeukset ja vakiokirjaston `std::string` ja `std::vector` ovat
+tuttuja lähdekoodin tasolla (*Moderni C++*). Luku kertaa kunkin
+mekanismin yhdellä virkkeellä, ja sen voi ohittaa: myöhemmät luvut
+eivät nojaa siihen.
+
+Rajauksia: kohteet ovat Linuxin ELF-ohjelmia, joten Windowsin PE- ja
+macOS:n Mach-O-muotoa ei käsitellä. Haittaohjelma-analyysista
+opetetaan menetelmät mutta ei oikeiden näytteiden käsittelyä; siihen
+tarvitaan eristetty analyysiympäristö (luku 10). Muistivirheiden
+löytäminen ja korjaaminen on oma taitonsa (*Haavoittuvuuksien analyysi
+ja torjunta*), samoin laiteohjelmistot.
 
 ## Työkalut ja esimerkit
 
 Esimerkit on tehty Ubuntu 24.04:llä: GCC 14, binutils 2.42, gdb 15,
 radare2 5.5, strace ja ltrace. Kehityskontti
 (`.devcontainer/takaisinmallinnus`) sisältää ne. Ghidraa ei ole
-Ubuntun paketeissa, joten sen käyttö esitellään luvussa 12 ja
+Ubuntun paketeissa, joten sen käyttö esitellään luvussa 3 tekstinä ja
 esimerkit tehdään komentorivityökaluilla. Kaikki analyysit ovat
 skriptejä, jotka voi ajaa uudelleen: hyvän takaisinmallinnustyön tulos
 on toistettava, ei muistikuva siitä, mitä joskus näki ruudulla.

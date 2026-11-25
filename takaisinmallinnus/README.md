@@ -10,6 +10,16 @@ päättely sekä obfuskoinnin purkaminen. Kohteet ovat paketin omia, itse
 käännettyjä ohjelmia, ja jokainen analyysi on skripti, joka ajetaan ja
 tarkistetaan.
 
+**Vastuulauseke.** Materiaali on tarkoitettu opetukseen, omien
+ohjelmien tutkimiseen ja luvalliseen ammattityöhön. Kaikki kohteet
+ovat paketin omia ohjelmia. Käytä tekniikoita vain omiin ohjelmiisi
+tai kohteisiin, joihin sinulla on lain tai kirjallisen luvan antama
+oikeus; toisten ohjelmien kopiosuojausten ja lisenssitarkistusten
+kiertämiseen materiaalia ei ole tarkoitettu. Luvussa 1 on
+takaisinmallinnuksen lailliset ja eettiset rajat ja luvussa 12
+lailliset harjoituskohteet (CTF). Tekijät eivät vastaa materiaalin
+väärinkäytöstä.
+
 Valmis dokumentti:
 [takaisinmallinnus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/takaisinmallinnus.pdf),
 pikaopas
@@ -20,7 +30,7 @@ pikaopas
 1. Johdanto – käyttökohteet, laki ja etiikka, työkalut
 2. x86-64-assemblyn lukeminen – rekisterit, kutsukonventio, pinokehys
 3. Disassemblointi ja dekompilointi – lineaarinen vs. rekursiivinen,
-   radare2, ristiviittaukset
+   radare2, ristiviittaukset, Ghidra
 4. Kääntäjän tuottamat rakenteet – ehdot, silmukat, hyppytaulut, tietueet
 5. Optimoinnit konekielessä – upotus, häntäkutsut, vektorointi, jako
    vakiolla
@@ -29,9 +39,10 @@ pikaopas
 8. Dynaaminen analyysi – gdb, strace, ltrace, `LD_PRELOAD`
 9. Tiedostomuodot ja protokollat – heksavedos, entropia, jäsennin
 10. Obfuskointi ja sen purkaminen – salatut merkkijonot, litistys,
-    anti-debug
+    debuggerin havaitseminen ja miksi se ei ole suoja
 11. Kokonainen analyysi – yhteentoimivuustyö alusta loppuun
-12. Lopuksi – Ghidra, muut arkkitehtuurit, nyrkkisäännöt, lähteet
+12. Lopuksi – muut arkkitehtuurit, nyrkkisäännöt, lailliset
+    harjoituskohteet, lähteet
 
 ## Rakentaminen
 
@@ -47,8 +58,7 @@ kohdeohjelma, analyysiskriptit ja `aja.sh`. `esimerkit/testaa.sh` ajaa
 ne ja vertaa tulosteita tiedostoihin `odotettu`. Kehityskontti on
 hakemistossa `.devcontainer/takaisinmallinnus`.
 
-Kaikki kohteet ovat paketin omia ohjelmia. Luvussa 1 on
-takaisinmallinnuksen lailliset ja eettiset rajat.
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks. [Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 ## Lisenssi
 

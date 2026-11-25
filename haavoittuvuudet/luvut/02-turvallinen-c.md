@@ -167,8 +167,8 @@ koska loppunollalle ei ole tilaa (tarkistus
 `misplaced-operator-in-strlen-in-alloc`). Eri analysaattorit löytävät eri asioita, joten
 niitä kannattaa ajaa useampaa. Kaupallisia vaihtoehtoja ovat
 esimerkiksi Coverity ja CodeQL (jälkimmäinen on maksuton avoimille
-projekteille); *Turvallinen kehitys* käsittelee analyysin liittämistä
-kehitysprosessiin.
+projekteille); *Tietoturva kehitystyössä* käsittelee analyysin
+liittämistä kehitysprosessiin.
 
 ## Käytännössä
 

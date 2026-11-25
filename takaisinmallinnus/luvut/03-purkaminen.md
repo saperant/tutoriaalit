@@ -137,9 +137,38 @@ dekompilaattorit erehtyvät tyypeissä ja rakenteissa, kun koodi on
 optimoitua. Dekompilaattorin tuloste on hypoteesi, joka tarkistetaan
 konekielestä.
 
-radare2:n `r2ghidra`-laajennus tuo Ghidran dekompilaattorin radare2:een;
-Cutter on radare2:n graafinen käyttöliittymä ja Rizin sen haara.
-Ghidraa käsitellään luvussa 12.
+radare2:n `r2ghidra`-laajennus tuo Ghidran dekompilaattorin
+radare2:een.
+
+## Ghidra ja muut työkalut
+
+Ghidra on Yhdysvaltain NSA:n julkaisema avoimen lähdekoodin (Apache
+2.0) takaisinmallinnuskehys, jonka vahvuus on hyvä dekompilaattori
+useille arkkitehtuureille. Myöhemmät luvut viittaavat siihen, kun
+jokin käsin tehty vaihe on Ghidrassa valmiina. Sitä ei ole Ubuntun
+paketeissa eikä tämän paketin kehityskontissa, joten esimerkit tehdään
+komentorivityökaluilla ja Ghidran käyttö kuvataan tässä tekstinä.
+Peruskäyttö:
+
+- **Projekti ja import.** Ohjelma tuodaan projektiin, ja automaattinen
+  analyysi (*auto-analysis*) löytää funktiot, viittaukset ja tyypit.
+- **Listausnäkymä ja dekompilaattori** rinnakkain: vasemmalla konekieli,
+  oikealla C:tä muistuttava tuloste. Nimet ja tyypit, jotka asettaa
+  jompaankumpaan, päivittyvät toiseen.
+- **Rakenteet ja tyypit.** Kun olion asettelu on päätelty, sen voi
+  määritellä rakenteena, jolloin dekompilaattori näyttää kenttien nimet
+  siirtymien sijaan. Virtuaalitaulut ja C++-luokat (luku 6) saa samaan
+  tapaan.
+- **Headless-tila** `analyzeHeadless` ajaa analyysin ja skriptit ilman
+  käyttöliittymää. Skriptit kirjoitetaan Javalla tai Pythonilla
+  (Jython/PyGhidra), ja ne pääsevät käsiksi funktioihin,
+  dekompilaatioon ja ristiviittauksiin. Näin analyysin saa
+  toistettavaksi samaan tapaan kuin tämän paketin skriptit.
+
+Vastaavia työkaluja: IDA Pro (kaupallinen, alan standardi), Binary
+Ninja ja Hopper (kaupallisia) sekä radare2, sen haara Rizin ja näiden
+graafiset käyttöliittymät iaito ja Cutter (avoimia). Dekompilaattorin tuloste on kaikissa hypoteesi, joka
+tarkistetaan konekielestä.
 
 ## Käytännössä
 

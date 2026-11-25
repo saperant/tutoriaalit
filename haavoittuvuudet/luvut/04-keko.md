@@ -34,6 +34,23 @@ voi lukea:
 ```{.tuloste tiedosto="esimerkit/04-keko/odotettu" osa="t5"}
 ```
 
+```{.dot otsikko="Kaksi peräkkäistä 32 tavun lohkoa ennen kopiointia ja sen jälkeen. 37 tavun kopiointi täyttää oman lohkonsa ja jatkaa naapurin koko-kenttään ja dataan (punaiset)."}
+digraph {
+  nodesep=0.35;
+  node [shape=plain, style=""];
+  ennen [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" align="left" colspan="4"><i>ennen</i></td></tr>
+    <tr><td bgcolor="#EEF1F6" width="70">koko 0x21<br/><font point-size="8">8 tavua</font></td><td width="90">kentta<br/><font point-size="8">pyydetty 16, käytössä 24</font></td><td bgcolor="#EEF1F6" width="70">koko 0x21<br/><font point-size="8">8 tavua</font></td><td width="90">seuraava (istunto)<br/><font point-size="8">24 tavua</font></td></tr>
+    <tr><td border="0" colspan="2"><font point-size="8">lohko 1: 32 tavua</font></td><td border="0" colspan="2"><font point-size="8">lohko 2: 32 tavua</font></td></tr>
+  </table>>];
+  jalkeen [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" align="left" colspan="4"><i>37 tavun kopioinnin jälkeen</i></td></tr>
+    <tr><td bgcolor="#EEF1F6" width="70">koko 0x21<br/><font point-size="8">ennallaan</font></td><td bgcolor="#F6D5D5" width="90">muistiinpanon alku<br/><font point-size="8">24 tavua</font></td><td bgcolor="#F6D5D5" width="70">"hdu kent"<br/><font point-size="8">koko-kenttä tuhottu</font></td><td bgcolor="#F6D5D5" width="90">5 tavua tekstiä + vanha data<br/><font point-size="8">istunnon alku tuhottu</font></td></tr>
+  </table>>];
+  ennen -> jalkeen [style=invis];
+}
+```
+
 16 tavun pyyntö saa 32 tavun lohkon (`0x20`): 8 tavua metatietoa ja
 tasaus 16 tavuun. Alin bitti (`0x1`) kertoo, että edellinen lohko on
 käytössä. Seuraava varaus alkaa 32 tavun päästä, ja kopiointi
@@ -83,6 +100,17 @@ antaa vapautetun lohkon seuraavalle samankokoiselle pyynnölle:
 ```
 
 ```{.tuloste tiedosto="esimerkit/04-keko/odotettu" osa="t6"}
+```
+
+```{.dot otsikko="Käyttö vapautuksen jälkeen aikajanana: vanha osoitin jää osoittamaan lohkoon, jonka varaaja antaa seuraavalle pyytäjälle."}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.25;
+  a [label="1. varaus\nvanha → lohko\n(vieraan istunto)"];
+  b [label="2. free(vanha)\nlohko vapaa, vanha\nosoittaa siihen yhä"];
+  c [label="3. uusi varaus\nsama lohko\n(ylläpitäjän istunto)"];
+  d [label="4. vanha->…\nlukee tai muuttaa\nylläpitäjän istuntoa"];
+  a -> b -> c -> d;
+}
 ```
 
 Vanha osoitin osoittaa nyt ylläpitäjän istuntoon. Jos ohjelma kirjoittaa

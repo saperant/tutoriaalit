@@ -70,6 +70,22 @@ on ymmärretty. Tämä on tiukin mahdollinen testi.
 ```{.tuloste tiedosto="esimerkit/09-muoto/odotettu" osa="t5"}
 ```
 
+```{.dot otsikko="Päätelty tiedostomuoto. Otsaketta seuraa vaihtelevan pituisia mittaustietueita, sitten pituuskentällä alkava kalibrointilohko ja lopuksi tarkiste. Luvut ovat little endian -muodossa."}
+digraph {
+  nodesep=0.25; ranksep=0.3;
+  node [shape=plain, style=""];
+  t [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" align="left" colspan="6"><i>tiedosto</i></td></tr>
+    <tr><td bgcolor="#EEF1F6">"KMTD"<br/><font point-size="8">4 tavua</font></td><td bgcolor="#EEF1F6">versio<br/><font point-size="8">u16</font></td><td bgcolor="#EEF1F6">liput<br/><font point-size="8">u16</font></td><td bgcolor="#EEF1F6">määrä<br/><font point-size="8">u32</font></td><td port="m" width="110">mittaus × määrä<br/><font point-size="8">10 + nimen pituus</font></td><td>lohkon koko<br/><font point-size="8">u32</font></td><td>kalibrointilohko<br/><font point-size="8">salattu</font></td><td>CRC-32<br/><font point-size="8">u32</font></td></tr>
+  </table>>];
+  m [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" align="left" colspan="6"><i>mittaus</i></td></tr>
+    <tr><td>aikaleima<br/><font point-size="8">u32</font></td><td>lämpötila × 100<br/><font point-size="8">i16</font></td><td>kosteus × 10<br/><font point-size="8">u16</font></td><td>anturi<br/><font point-size="8">u8</font></td><td>nimen pituus<br/><font point-size="8">u8</font></td><td>nimi<br/><font point-size="8">pituuden verran</font></td></tr>
+  </table>>];
+  t:m:s -> m:n;
+}
+```
+
 Jäsennin lukee otsakkeen, mittaukset ja kalibrointilohkon, tarkistaa
 CRC:n ja kirjoittaa tiedoston uudelleen: tulos on identtinen. Korkean
 entropian lohko jää salatuksi, mutta sen rajat ja tarkiste tunnetaan,
@@ -98,6 +114,16 @@ vastauksen suhteen sekä tarkistesumman:
 ```{.tuloste tiedosto="esimerkit/10-protokolla/odotettu" osa="t2"}
 ```
 
+```{.dot otsikko="Päätelty kehys. Tarkiste on tyypin, järjestysnumeron, pituuden ja hyötykuorman tavujen summa modulo 256."}
+digraph {
+  node [shape=plain, style=""];
+  k [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0"><font point-size="8">tavu 0</font></td><td border="0"><font point-size="8">1</font></td><td border="0"><font point-size="8">2</font></td><td border="0"><font point-size="8">3</font></td><td border="0"><font point-size="8">4 …</font></td><td border="0"><font point-size="8">viimeinen</font></td></tr>
+    <tr><td bgcolor="#EEF1F6">tahdistus<br/><font point-size="8">0xa5</font></td><td>tyyppi<br/><font point-size="8">vastaus: | 0x80</font></td><td>järjestysnumero</td><td>pituus <i>n</i></td><td width="120">hyötykuorma<br/><font point-size="8"><i>n</i> tavua</font></td><td>tarkiste</td></tr>
+  </table>>];
+}
+```
+
 Päättely tunnistaa kehyksen rakenteen: tahdistustavu `0xa5`, tyyppi,
 järjestysnumero, pituus, hyötykuorma ja tarkistesumma. Vastauksen tyyppi
 on pyynnön tyyppi tai-operoituna `0x80`:llä, ja vastaus kaiuttaa
@@ -107,7 +133,8 @@ komennot: `0x03` kysyy nimen, `0x01` lukee tilan, `0x02` asettaa
 arvon ja saa vastaukseksi vanhan arvon. Oikeassa työssä kaappaus
 saadaan Wiresharkilla, loogisella analysaattorilla tai väylän
 koukutuksella, ja monimutkaisempaan päättelyyn on työkaluja kuten
-Wiresharkin omat erittelijät ja protokollien sumutustestaus.
+Wiresharkin omat erittelijät ja protokollatoteutuksen fuzzaus
+(*Haavoittuvuuksien analyysi ja torjunta*).
 
 ## Käytännössä
 

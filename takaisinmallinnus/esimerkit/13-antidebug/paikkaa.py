@@ -6,6 +6,12 @@ Etsii funktiosta KUTSUJA suoran kutsun (call rel32, 5 tavua) funktioon
 KUTSUTTAVA ja korvaa sen käskyillä xor eax,eax (31 c0) ja kolmen tavun
 nop (0f 1f 00): kutsu "palauttaa" aina nollan. Muu tiedosto säilyy
 ennallaan, joten osoitteet eivät muutu.
+
+Skripti kuuluu luvun 10 kokeeseen, jonka kohde on paketin oma
+esimerkkiohjelma: se näyttää, että ohjelman haltija voi aina muuttaa
+tiedoston tavuja, joten suojaus ei saa nojata asiakaskoodin
+tarkistukseen. Toisten ohjelmien suojausten kiertämiseen sitä ei ole
+tarkoitettu.
 """
 
 import shutil

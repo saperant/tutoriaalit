@@ -1,32 +1,5 @@
 # Lopuksi {.runko-lahteet}
 
-## Ghidra
-
-Ghidra on Yhdysvaltain NSA:n julkaisema avoimen lähdekoodin (Apache
-2.0) takaisinmallinnuskehys, jonka vahvuus on hyvä dekompilaattori
-useille arkkitehtuureille. Sitä ei ole Ubuntun paketeissa eikä sitä
-asennettu tähän ympäristöön, joten se esitellään tässä tekstinä.
-Peruskäyttö:
-
-- **Projekti ja import.** Ohjelma tuodaan projektiin, ja automaattinen
-  analyysi (*auto-analysis*) löytää funktiot, viittaukset ja tyypit.
-- **Listausnäkymä ja dekompilaattori** rinnakkain: vasemmalla konekieli,
-  oikealla C:tä muistuttava tuloste. Nimet ja tyypit, jotka asettaa
-  jompaankumpaan, päivittyvät toiseen.
-- **Rakenteet ja tyypit.** Kun olion asettelu on päätelty, sen voi
-  määritellä rakenteena, jolloin dekompilaattori näyttää kenttien nimet
-  siirtymien sijaan. Virtuaalitaulut ja C++-luokat saa samaan tapaan.
-- **Headless-tila** `analyzeHeadless` ajaa analyysin ja skriptit ilman
-  käyttöliittymää. Skriptit kirjoitetaan Javalla tai Pythonilla
-  (Jython/PyGhidra), ja ne pääsevät käsiksi funktioihin,
-  dekompilaatioon ja ristiviittauksiin. Näin analyysin saa
-  toistettavaksi samaan tapaan kuin tämän paketin skriptit.
-
-Vastaavia työkaluja: IDA Pro (kaupallinen, alan standardi), Binary
-Ninja ja Hopper (kaupallisia), radare2 ja sen graafinen Cutter
-(avoimia). Dekompilaattorin tuloste on kaikissa hypoteesi, joka
-tarkistetaan konekielestä.
-
 ## Muut arkkitehtuurit
 
 Pääkohde oli x86-64, mutta periaatteet siirtyvät:
@@ -67,15 +40,46 @@ vaihtuvat.
 - **Pysy laillisella ja eettisellä alueella.** Omat ohjelmat,
   yhteentoimivuus, luvallinen tutkimus; dokumentoi, mitä teet ja miksi.
 
+## Miten jatkaa laillisesti
+
+Takaisinmallinnusta oppii tekemällä, ja kohteita on riittävästi ilman,
+että kenenkään toisen ohjelmaan tarvitsee koskea luvatta:
+
+- **Omat ohjelmat.** Käännä omaa koodiasi eri optimointitasoilla ja
+  kääntäjillä ja lue tulos. Se on myös taidon tavallisin käyttö
+  työssä: suorituskykyongelman tai kääntäjän virheen selvittäminen.
+- **Avoimen lähdekoodin ohjelmat.** Riisu jakelun paketin ohjelma
+  symboleista, analysoi se ja tarkista päätelmät lähdekoodista.
+- **Harjoitustehtävät ja kilpailut.** *CTF* (*capture the flag*) on
+  kilpailumuoto, jossa ratkaistaan tätä varten tehtyjä tehtäviä;
+  takaisinmallinnus (*reversing*) on yksi vakiolajeista. Tehtävien
+  analysointi on luvallista sääntöjen puitteissa, joten lue jokaisen
+  palvelun säännöt ennen aloittamista.
+
+| Palvelu | Mitä tarjoaa | Osoite |
+|---------|--------------|--------|
+| picoCTF | aloittelijoille suunnattu kilpailu ja harjoituskirjasto (Carnegie Mellon) | `picoctf.org` |
+| OverTheWire | komentorivipohjaiset harjoitussarjat, myös binääritehtäviä | `overthewire.org` |
+| pwn.college | yliopistotasoinen kurssimateriaali ja harjoitukset (Arizona State University) | `pwn.college` |
+| CTFtime | kansainvälisten CTF-kilpailujen kalenteri ja tulokset | `ctftime.org` |
+
+Harrastajat julkaisevat myös pieniä takaisinmallinnettaviksi
+tarkoitettuja harjoitusohjelmia (*crackme*). Aja tuntemattoman tekijän
+ohjelma vain eristetyssä virtuaalikoneessa.
+
+Muiden ohjelmiin siirrytään vasta, kun oikeus on selvä: laillisen
+käyttäjän oikeus tutkia ohjelmaa ja saavuttaa yhteentoimivuus
+(luku 1), työnantajan tai asiakkaan kirjallinen toimeksianto tai
+valmistajan haavoittuvuusohjelman säännöt.
+
 ## Jatkotaidot
 
 *Laiteohjelmiston takaisinmallinnus* käsittelee laiteohjelmistokuvia,
 ARM- ja Thumb-koodia sekä emulointia (QEMU, Unicorn).
-*Haavoittuvuuksien analyysi ja hyödyntäminen* rakentuu tämän ja
-*Tietoturvan perusteiden* päälle: muistiturvallisuuden virheet,
-suojaukset ja niiden kiertäminen. *Kääntäjätekniikka* syventää, miksi
-kääntäjä tuottaa näkemäsi koodin, ja *Objektitiedostot, linkitys ja
-ABI* on tämän paketin tärkein esitieto.
+*Haavoittuvuuksien analyysi ja torjunta* rakentuu tämän paketin
+päälle: muistiturvallisuuden virheet, niiden löytäminen ja korjaaminen
+sekä suojaukset, jotka rajaavat virheiden vaikutusta.
+*Kääntäjätekniikka* syventää, miksi kääntäjä tuottaa näkemäsi koodin.
 
 ## Lähteet
 
@@ -93,7 +97,8 @@ ABI* on tämän paketin tärkein esitieto.
 - DWARF Debugging Information Format, Version 5 (`.eh_frame`,
   virheenjäljitystieto): dwarfstd.org.
 - Euroopan parlamentin ja neuvoston direktiivi 2009/24/EY
-  tietokoneohjelmien oikeudellisesta suojasta (13 ja 14 artikla).
+  tietokoneohjelmien oikeudellisesta suojasta (5 artiklan 3 kohta:
+  tutkiminen; 6 artikla: dekompilointi).
 - Tekijänoikeuslaki 404/1961, 25 j ja 25 k § (dekompilointi ja
   tutkiminen): finlex.fi.
 

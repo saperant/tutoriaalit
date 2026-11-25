@@ -4,7 +4,17 @@ C++-ohjelman konekielessä on samat rakenteet kuin C-ohjelmassa, mutta
 lisäksi kielen mekanismit: koristellut nimet, virtuaalitaulut,
 ajonaikainen tyyppitieto (RTTI), poikkeustaulut ja vakiokirjaston
 tyyppien sisäinen asettelu. Kun ne tunnistaa, luokkahierarkian voi
-palauttaa melko tarkasti. Esimerkin kohde on pieni muotohierarkia:
+palauttaa melko tarkasti.
+
+Luku olettaa, että C++ on tuttu lähdekoodin tasolla (*Moderni C++*).
+Lyhyt kertaus luvussa tarvittavista käsitteistä: *virtuaalifunktio* on
+jäsenfunktio, jonka toteutus valitaan ajon aikana olion todellisen
+luokan mukaan, ja *puhdas virtuaalifunktio* (`= 0`) tekee luokasta
+abstraktin. *Purkaja* (*destructor*) ajetaan, kun olio tuhotaan.
+`std::unique_ptr` on osoitin, joka omistaa kohteensa ja vapauttaa sen
+itse, `dynamic_cast` tarkistaa olion tyypin ajon aikana, ja poikkeus
+(`throw`, `catch`) siirtää suorituksen kutsupinoa ylöspäin lähimpään
+sieppaajaan. Esimerkin kohde on pieni muotohierarkia:
 
 ```{.cpp tiedosto="esimerkit/05-cpp/muodot.cpp" osa="luokat"}
 ```
@@ -52,6 +62,35 @@ virtuaalifunktiot alkavat esittelyjärjestyksessä: kaksi purkajaa,
 sen taulussa on `Muoto::nimi`. `Muoto` on abstrakti (puhdas
 virtuaalifunktio), eikä sen taulua tarvita, koska `Muoto`-olioita ei
 luoda: kääntäjä on jättänyt sen pois.
+
+```{.dot otsikko="`Ympyra`-olio, sen virtuaalitaulu ja tyyppitieto edellisen tulosteen mukaan. Olion ensimmäinen sana osoittaa taulun paikkaan 2, ja `call [rax+0x10]` lukee paikan 4."}
+digraph {
+  rankdir=LR; nodesep=0.4; ranksep=0.7;
+  node [shape=plain, style=""];
+  olio [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" colspan="2" align="left"><i>Ympyra-olio (keossa)</i></td></tr>
+    <tr><td border="0"><font point-size="8">+0</font></td><td port="vptr" bgcolor="#EEF1F6" width="80">vptr</td></tr>
+    <tr><td border="0"><font point-size="8">+8</font></td><td>sade_</td></tr>
+  </table>>];
+  vt [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" colspan="2" align="left"><i>vtable for Ympyra (.data.rel.ro)</i></td></tr>
+    <tr><td border="0"><font point-size="8">[0]</font></td><td align="left">0 (siirtymä olion alkuun)</td></tr>
+    <tr><td border="0"><font point-size="8">[1]</font></td><td port="ti" align="left">typeinfo for Ympyra</td></tr>
+    <tr><td border="0"><font point-size="8">[2]</font></td><td port="p2" bgcolor="#EEF1F6" align="left">~Ympyra (täydellinen)</td></tr>
+    <tr><td border="0"><font point-size="8">[3]</font></td><td bgcolor="#EEF1F6" align="left">~Ympyra (poistava)</td></tr>
+    <tr><td border="0"><font point-size="8">[4]</font></td><td bgcolor="#EEF1F6" align="left">Ympyra::pinta_ala</td></tr>
+    <tr><td border="0"><font point-size="8">[5]</font></td><td bgcolor="#EEF1F6" align="left">Ympyra::nimi</td></tr>
+  </table>>];
+  ti [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" align="left"><i>typeinfo for Ympyra</i></td></tr>
+    <tr><td align="left">__si_class_type_info</td></tr>
+    <tr><td align="left">nimi "6Ympyra"</td></tr>
+    <tr><td port="kanta" align="left">typeinfo for Muoto</td></tr>
+  </table>>];
+  olio:vptr:e -> vt:p2:w;
+  vt:ti:e -> ti:w;
+}
+```
 
 Virtuaalikutsu on konekielessä kaksi epäsuoraa latausta ja epäsuora
 kutsu:
@@ -117,6 +156,26 @@ skripti lukee asettelun libstdc++:n oliosta suoraan muistista:
 | `std::vector<T>` | 24 | alku, loppu, varatun alueen loppu |
 | `std::unique_ptr<T>` | 8 | osoitin |
 | `std::shared_ptr<T>` | 16 | osoitin, viitelaskurilohko |
+
+```{.dot otsikko="libstdc++:n `std::string` on 32 tavua. Lyhyen merkkijonon data on olion omassa puskurissa, pitkän keossa, ja puskurin paikalla on kapasiteetti."}
+digraph {
+  nodesep=0.3; ranksep=0.35;
+  node [shape=plain, style=""];
+  lyhyt [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" align="left" width="50"><i>lyhyt</i></td><td border="0"><font point-size="8">+0</font></td><td border="0"><font point-size="8">+8</font></td><td border="0" colspan="2"><font point-size="8">+16 … +31</font></td></tr>
+    <tr><td border="0"> </td><td bgcolor="#EEF1F6" width="110">data-osoitin<br/><font point-size="8">= olio + 16</font></td><td width="70">pituus 3</td><td colspan="2" width="180">"abc\\0"<br/><font point-size="8">16 tavun puskuri</font></td></tr>
+  </table>>];
+  pitka [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" align="left" width="50"><i>pitka</i></td><td border="0"><font point-size="8">+0</font></td><td border="0"><font point-size="8">+8</font></td><td border="0"><font point-size="8">+16</font></td><td border="0"><font point-size="8">+24</font></td></tr>
+    <tr><td border="0"> </td><td port="d" bgcolor="#EEF1F6" width="110">data-osoitin</td><td width="70">pituus 40</td><td width="100">kapasiteetti 40</td><td width="80">ei käytössä</td></tr>
+  </table>>];
+  keko [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" align="left" width="50"><i>keko</i></td><td width="180">"xxxx…x\\0"<br/><font point-size="8">41 tavua</font></td></tr>
+  </table>>];
+  lyhyt -> pitka [style=invis];
+  pitka:d:s -> keko:n;
+}
+```
 
 Lyhyt merkkijono (enintään 15 merkkiä) on olion omassa puskurissa:
 data-osoitin osoittaa olion sisään (*small string optimization*).
