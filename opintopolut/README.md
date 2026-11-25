@@ -15,11 +15,11 @@ Taitoja on 104, yhteensä noin 461 op. Valmis PDF: [opintopolut.pdf](https://sap
 | Sulautettujen ohjelmistojen kehittäjä | Linux-laiteajurit, Reaaliaikakäyttöjärjestelmät | 17 | 72 |
 | Signaalinkäsittelyn ja ohjelmistoradion kehittäjä | Ohjelmistoradio | 13 | 61 |
 | Grafiikkaohjelmoija | GPU-laskenta, Säteenseuranta ja fysikaalinen valaistus | 19 | 87 |
-| Hajautettujen järjestelmien kehittäjä | Skaalautuvien järjestelmien suunnittelu, Säiliöt ja pilvi-infrastruktuuri | 18 | 88 |
+| Hajautettujen järjestelmien kehittäjä | Kontit ja pilvi-infrastruktuuri, Skaalautuvien järjestelmien suunnittelu | 18 | 88 |
 | Takaisinmallintaja ja tietoturva-analyytikko | Haavoittuvuuksien analyysi ja torjunta, Laiteohjelmiston takaisinmallinnus | 15 | 69 |
-| Algoritmiikan ja ohjelmistokehityksen perusta | Edistyneet algoritmit ja tietorakenteet, Käännösjärjestelmät, testaus ja CI | 10 | 41 |
+| Algoritmiikan ja ohjelmistokehityksen perusta | Edistyneet algoritmit ja tietorakenteet, Käännösjärjestelmät, testaus ja CI | 11 | 46 |
 | Web-kehittäjä | Web-sovellukset | 7 | 29 |
-| Taustajärjestelmäkehittäjä | Säiliöt ja pilvi-infrastruktuuri, Taustapalvelut | 7 | 33 |
+| Taustajärjestelmäkehittäjä | Kontit ja pilvi-infrastruktuuri, Taustapalvelut | 7 | 33 |
 | Mobiilikehittäjä (Android) | Android-sovellukset | 4 | 18 |
 | Digitaalisen piirisuunnittelun asiantuntija | ASIC-toteutus, Laitteiston verifiointi, SoC-integraatio | 13 | 63 |
 | Infrastruktuuri- ja ylläpitoasiantuntija | Palvelinympäristöt | 5 | 23 |
@@ -108,7 +108,7 @@ flowchart LR
     verkko_ohjelmointi["✓ Verkko-ohjelmointi"]
     hajautetut_jarjestelmat["✓ Hajautetut järjestelmät"]
     jarjestelmasuunnittelu["✓ Skaalautuvien järjestelmien suunnittelu"]
-    kontit_ja_pilvi["✓ Säiliöt ja pilvi-infrastruktuuri"]
+    kontit_ja_pilvi["✓ Kontit ja pilvi-infrastruktuuri"]
     verkkoinfrastruktuuri["✓ Verkkoinfrastruktuuri"]
     tietoliikennetekniikka["✓ Tietoliikennetekniikka"]
     palvelinymparistot["✓ Palvelinympäristöt"]
@@ -177,6 +177,7 @@ flowchart LR
   versionhallinta --> rakennus_ja_testaus
   bash --> rakennus_ja_testaus
   komentorivi --> kehitysymparistot
+  ohjelmoinnin_perusteet --> diskreetti_matematiikka
   ohjelmoinnin_perusteet --> lineaarialgebra
   lineaarialgebra --> signaalimatematiikka
   diskreetti_matematiikka --> todennakoisyys
@@ -190,9 +191,11 @@ flowchart LR
   diskreetti_matematiikka --> tietorakenteet
   tietorakenteet --> algoritmit
   algoritmit --> edistyneet_algoritmit
+  moderni_cpp --> edistyneet_algoritmit
   algoritmit --> kaantajatekniikka
   assembly --> kaantajatekniikka
   funktionaalinen_ohjelmointi --> kaantajatekniikka
+  moderni_cpp --> kaantajatekniikka
   diskreetti_matematiikka --> digitaalitekniikka
   c_kieli --> assembly
   digitaalitekniikka --> assembly
@@ -360,12 +363,12 @@ flowchart LR
 
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
-| Diskreetti matematiikka | 5 | – | [valmis](../diskreetti-matematiikka/) |
+| Diskreetti matematiikka | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../diskreetti-matematiikka/) |
 | Lineaarialgebra | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../lineaarialgebra/) |
 | Matematiikan perusteet ohjelmallisesti | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../matematiikan-perusteet/) |
-| Todennäköisyys ja tilastot | 3 | Diskreetti matematiikka | [valmis](../todennakoisyys/) |
 | Differentiaali- ja integraalilaskenta | 5 | Matematiikan perusteet ohjelmallisesti | [valmis](../analyysi/) |
 | Kompleksiluvut ja Fourier-analyysi | 5 | Lineaarialgebra | [valmis](../signaalimatematiikka/) |
+| Todennäköisyys ja tilastot | 3 | Diskreetti matematiikka | [valmis](../todennakoisyys/) |
 | Differentiaaliyhtälöt ja Laplace-muunnos | 5 | Differentiaali- ja integraalilaskenta, Lineaarialgebra | [valmis](../differentiaaliyhtalot/) |
 | Numeeriset menetelmät | 5 | Differentiaali- ja integraalilaskenta, Lineaarialgebra | [valmis](../numeeriset-menetelmat/) |
 
@@ -375,16 +378,16 @@ flowchart LR
 |-------|---:|------------|------|
 | Tietorakenteet | 5 | C-kieli, Diskreetti matematiikka | [valmis](../tietorakenteet/) |
 | Algoritmit | 5 | Tietorakenteet | [valmis](../algoritmit/) |
-| Edistyneet algoritmit ja tietorakenteet | 5 | Algoritmit | [valmis](../edistyneet-algoritmit/) |
-| Kääntäjätekniikka | 5 | Algoritmit, Assembly, Funktionaalinen ohjelmointi (Racket) | [valmis](../kaantajatekniikka/) |
+| Edistyneet algoritmit ja tietorakenteet | 5 | Algoritmit, Moderni C++ | [valmis](../edistyneet-algoritmit/) |
+| Kääntäjätekniikka | 5 | Algoritmit, Assembly, Funktionaalinen ohjelmointi (Racket), Moderni C++ | [valmis](../kaantajatekniikka/) |
 
 ### Tietokonejärjestelmät
 
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
 | Digitaalitekniikka | 5 | Diskreetti matematiikka | [valmis](../digitaalitekniikka/) |
-| Assembly | 5 | C-kieli, Digitaalitekniikka | [valmis](../assembly/) |
 | Miten tietokone laskee | 3 | C-kieli | [valmis](../tietokonearitmetiikka/) |
+| Assembly | 5 | C-kieli, Digitaalitekniikka | [valmis](../assembly/) |
 | Objektitiedostot, linkitys ja ABI | 3 | Assembly | [valmis](../binaarit-ja-linkitys/) |
 | Tietokonearkkitehtuuri | 5 | Assembly | [valmis](../tietokonearkkitehtuuri/) |
 | Käyttöjärjestelmät | 5 | Tietokonearkkitehtuuri | [valmis](../kayttojarjestelmat/) |
@@ -397,18 +400,18 @@ flowchart LR
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
 | Elektroniikan perusteet ja SPICE | 5 | Matematiikan perusteet ohjelmallisesti | [valmis](../elektroniikan-perusteet/) |
+| Lukujen esitys ja kiinteän pilkun aritmetiikka | 3 | Digitaalitekniikka, Miten tietokone laskee | [valmis](../kiintea-pilkku/) |
 | RTL-suunnittelu SystemVerilogilla | 5 | Digitaalitekniikka | [valmis](../rtl-suunnittelu/) |
 | RTL-suunnittelu VHDL:llä | 5 | Digitaalitekniikka | [valmis](../vhdl/) |
 | ASIC-toteutus | 5 | RTL-suunnittelu SystemVerilogilla | [valmis](../asic-toteutus/) |
+| Analogiaelektroniikka | 5 | Differentiaaliyhtälöt ja Laplace-muunnos, Elektroniikan perusteet ja SPICE | [valmis](../analogiaelektroniikka/) |
 | EDA-työkaluketjujen automatisointi | 3 | Käännösjärjestelmät, testaus ja CI, Python työkaluohjelmointiin, RTL-suunnittelu SystemVerilogilla, Tcl | [valmis](../eda-skriptaus/) |
 | FPGA-toteutus | 5 | RTL-suunnittelu SystemVerilogilla | [valmis](../fpga-toteutus/) |
 | Laitteiston verifiointi | 5 | Python työkaluohjelmointiin, RTL-suunnittelu SystemVerilogilla | [valmis](../verifiointi/) |
-| Lukujen esitys ja kiinteän pilkun aritmetiikka | 3 | Digitaalitekniikka, Miten tietokone laskee | [valmis](../kiintea-pilkku/) |
-| Analogiaelektroniikka | 5 | Differentiaaliyhtälöt ja Laplace-muunnos, Elektroniikan perusteet ja SPICE | [valmis](../analogiaelektroniikka/) |
+| DSP-algoritmien laitteistototeutus | 5 | Digitaalinen signaalinkäsittely, FPGA-toteutus, Laitteiston verifiointi, Lukujen esitys ja kiinteän pilkun aritmetiikka | [valmis](../dsp-laitteisto/) |
 | Korkean tason mallinnus (SystemC/TLM) | 5 | Lukujen esitys ja kiinteän pilkun aritmetiikka, Moderni C++, Tietokonearkkitehtuuri | [valmis](../hlm-mallinnus/) |
 | SoC-integraatio | 5 | RTL-suunnittelu SystemVerilogilla, Tietokonearkkitehtuuri | [valmis](../soc-integraatio/) |
 | Arkkitehtuurin mallinnus ja suunnittelutilan tutkiminen | 5 | Korkean tason mallinnus (SystemC/TLM), Suorituskyvyn analyysi ja optimointi, Todennäköisyys ja tilastot | [valmis](../arkkitehtuurin-tutkiminen/) |
-| DSP-algoritmien laitteistototeutus | 5 | Digitaalinen signaalinkäsittely, FPGA-toteutus, Laitteiston verifiointi, Lukujen esitys ja kiinteän pilkun aritmetiikka | [valmis](../dsp-laitteisto/) |
 | Korkean tason synteesi | 5 | FPGA-toteutus, Korkean tason mallinnus (SystemC/TLM) | [valmis](../hls/) |
 | Laitteiston kuvausstandardit (SystemRDL, IP-XACT) | 5 | EDA-työkaluketjujen automatisointi, SoC-integraatio | [valmis](../kuvausstandardit/) |
 
@@ -436,10 +439,10 @@ flowchart LR
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
 | Tietoverkot | 5 | Komentorivi ja Linux | [valmis](../tietoverkot/) |
-| Säiliöt ja pilvi-infrastruktuuri | 5 | Tietoverkot | [valmis](../kontit-ja-pilvi/) |
+| Kontit ja pilvi-infrastruktuuri | 5 | Tietoverkot | [valmis](../kontit-ja-pilvi/) |
 | Verkkoinfrastruktuuri | 5 | Tietoverkot | [valmis](../verkkoinfrastruktuuri/) |
-| Palvelinympäristöt | 5 | Säiliöt ja pilvi-infrastruktuuri, Verkkoinfrastruktuuri | [valmis](../palvelinymparistot/) |
-| Palveluarkkitehtuurit | 5 | Säiliöt ja pilvi-infrastruktuuri, Taustapalvelut | [valmis](../palveluarkkitehtuurit/) |
+| Palvelinympäristöt | 5 | Kontit ja pilvi-infrastruktuuri, Verkkoinfrastruktuuri | [valmis](../palvelinymparistot/) |
+| Palveluarkkitehtuurit | 5 | Kontit ja pilvi-infrastruktuuri, Taustapalvelut | [valmis](../palveluarkkitehtuurit/) |
 | Tietoliikennetekniikka | 5 | Python työkaluohjelmointiin, Tietoverkot, Todennäköisyys ja tilastot | [valmis](../tietoliikennetekniikka/) |
 | Verkko-ohjelmointi | 5 | Käyttöjärjestelmät, Tietoverkot | [valmis](../verkko-ohjelmointi/) |
 | Hajautetut järjestelmät | 5 | Algoritmit, Rinnakkaisohjelmointi, Verkko-ohjelmointi | [valmis](../hajautetut-jarjestelmat/) |
@@ -483,8 +486,8 @@ flowchart LR
 | Kotlin | 3 | Java | [valmis](../kotlin/) |
 | Rust | 5 | C-kieli | [valmis](../rust/) |
 | TypeScript | 3 | JavaScript | [valmis](../typescript/) |
-| C ja assembly yhteen | 2 | Assembly | [valmis](../c-asm-integraatio/) |
 | Python ja C/C++ yhteen | 3 | Moderni C++, Python työkaluohjelmointiin | [valmis](../python-c-integraatio/) |
+| C ja assembly yhteen | 2 | Assembly | [valmis](../c-asm-integraatio/) |
 | C++:n suorituskyky | 3 | Moderni C++, Suorituskyvyn analyysi ja optimointi | [valmis](../cpp-suorituskyky/) |
 
 ### Sovelluskehitys
@@ -495,8 +498,8 @@ flowchart LR
 | SQL ja relaatiotietokannat | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../sql/) |
 | Taustapalvelut | 5 | Java, SQL ja relaatiotietokannat, Tietoverkot | [valmis](../taustapalvelut/) |
 | Android-sovellukset | 5 | Kotlin | [valmis](../android-sovellukset/) |
-| Integraatiotestaus ja Testcontainers | 5 | Python työkaluohjelmointiin, SQL ja relaatiotietokannat, Säiliöt ja pilvi-infrastruktuuri | [valmis](../integraatiotestaus/) |
-| NoSQL-tietokannat | 5 | SQL ja relaatiotietokannat, Säiliöt ja pilvi-infrastruktuuri | [valmis](../nosql/) |
+| Integraatiotestaus ja Testcontainers | 5 | Kontit ja pilvi-infrastruktuuri, Python työkaluohjelmointiin, SQL ja relaatiotietokannat | [valmis](../integraatiotestaus/) |
+| NoSQL-tietokannat | 5 | Kontit ja pilvi-infrastruktuuri, SQL ja relaatiotietokannat | [valmis](../nosql/) |
 | Web-sovellukset | 5 | HTML ja CSS, Tietoverkot, TypeScript | [valmis](../web-sovellukset/) |
 | Web-sovelluskehykset ja niiden periaatteet | 5 | Web-sovellukset | [valmis](../web-sovelluskehykset/) |
 
@@ -508,4 +511,4 @@ flowchart LR
 | Tekninen dokumentaatio | 4 | Python työkaluohjelmointiin, Versionhallinta (Git) | [valmis](../tekninen-dokumentaatio/) |
 | Testivetoinen kehitys ja testisuunnittelu | 5 | Python työkaluohjelmointiin, Versionhallinta (Git) | [valmis](../testivetoinen-kehitys/) |
 | Tiimit ja organisaatiomallit | 3 | Ohjelmistoprojektin hallinta | [valmis](../tiimit-ja-organisaatiot/) |
-| Jatkuva integraatio ja toimitus | 5 | Säiliöt ja pilvi-infrastruktuuri, Testivetoinen kehitys ja testisuunnittelu | suunniteltu |
+| Jatkuva integraatio ja toimitus | 5 | Kontit ja pilvi-infrastruktuuri, Testivetoinen kehitys ja testisuunnittelu | suunniteltu |

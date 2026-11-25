@@ -321,7 +321,7 @@ id = "diskreetti-matematiikka"
 nimi = "Diskreetti matematiikka"
 alue = "matematiikka"
 kuvaus = "Logiikka, joukot, kombinatoriikka, todistaminen ja graafit ohjelmoijan näkökulmasta."
-edellyttaa = []
+edellyttaa = ["ohjelmoinnin-perusteet"]
 aiheet = [
   "propositio- ja Boolen logiikka",
   "joukot, relaatiot ja funktiot",
@@ -524,7 +524,7 @@ id = "edistyneet-algoritmit"
 nimi = "Edistyneet algoritmit ja tietorakenteet"
 alue = "algoritmit"
 kuvaus = "Tasapainotetut ja erikoistuneet tietorakenteet, merkkijonoalgoritmit ja laskennallinen vaativuus."
-edellyttaa = ["algoritmit"]
+edellyttaa = ["algoritmit", "moderni-cpp"]
 aiheet = [
   "tasapainotetut puut ja B-puut",
   "trie, segmenttipuu ja union-find",
@@ -544,7 +544,7 @@ id = "kaantajatekniikka"
 nimi = "Kääntäjätekniikka"
 alue = "algoritmit"
 kuvaus = "Pienen ohjelmointikielen kääntäjän rakentaminen jäsentimestä koodingenerointiin."
-edellyttaa = ["algoritmit", "assembly", "funktionaalinen-ohjelmointi"]
+edellyttaa = ["algoritmit", "assembly", "funktionaalinen-ohjelmointi", "moderni-cpp"]
 aiheet = [
   "selaus ja jäsennys (rekursiivinen laskeutuminen)",
   "abstrakti syntaksipuu ja semanttinen analyysi",
@@ -1242,7 +1242,7 @@ tutoriaali = "jarjestelmasuunnittelu"
 
 [[taito]]
 id = "kontit-ja-pilvi"
-nimi = "Säiliöt ja pilvi-infrastruktuuri"
+nimi = "Kontit ja pilvi-infrastruktuuri"
 alue = "hajautetut"
 kuvaus = "Palvelujen paketointi säiliöihin ja niiden ajaminen orkestroidussa ympäristössä."
 edellyttaa = ["tietoverkot"]
