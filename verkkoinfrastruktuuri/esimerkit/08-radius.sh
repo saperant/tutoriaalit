@@ -93,10 +93,12 @@ valmis() { grep -q 'Ready to process requests' "$R/radius.log"; }
 if ! odota 30 valmis; then cat "$R/radius.log" >&2; exit 1; fi
 
 # @alku kysely
+# NAS:n osoite annetaan itse (viimeinen argumentti): oletuksena radtest
+# selvittää sen koneen nimestä, eikä nimiavaruudessa ole nimipalvelua.
 kysy() {   # kysy KÄYTTÄJÄ SALASANA
     echo "$1:"
     { ns nas radtest "$1" "$2" 10.70.0.10 0 Jaettu-Salaisuus-Tamakin \
-        2> /dev/null || true; } |
+        0 10.70.0.2 2> /dev/null || true; } |
         awk '/^Received/ {print "  " $2}
              /Tunnel-Private-Group-Id/ {gsub(/"/, ""); print "  VLAN " $3}'
 }
@@ -107,7 +109,8 @@ kysy liisa arvaus
 # Vianetsintää varten: jos palvelin ei vastaa, radtestin tuloste ja
 # palvelimen loki tulostetaan, jolloin ne näkyvät testin erotuksessa.
 if ! ns nas radtest liisa Kesa-2026 10.70.0.10 0 Jaettu-Salaisuus-Tamakin \
-        > "$R/radtest.log" 2>&1 || ! grep -q '^Received' "$R/radtest.log"; then
+        0 10.70.0.2 > "$R/radtest.log" 2>&1 ||
+        ! grep -q '^Received' "$R/radtest.log"; then
     echo "--- radtest"; cat "$R/radtest.log"
     echo "--- radius.log"; cat "$R/radius.log"
 fi

@@ -1,12 +1,12 @@
 package fi.esimerkki.ostokset.lista
 
+import app.cash.turbine.ReceiveTurbine
 import app.cash.turbine.test
 import fi.esimerkki.ostokset.malli.Tuote
 import fi.esimerkki.ostokset.testi.MainDispatcherRule
 import fi.esimerkki.ostokset.testi.VaarennosRepository
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
@@ -36,14 +36,26 @@ class ListaViewModelTest {
     @Test fun epaonnistunutSynkronointiNayttaaViestin() = runTest {
         repo.verkkoToimii = false
         vm.tila.test {
-            skipItems(2)
+            // Välitiloja voi tulla enemmän tai vähemmän (StateFlow yhdistää
+            // peräkkäiset arvot), joten odotetaan ehtoja eikä laskettuja
+            // tiloja.
+            odota { !it.ladataan }
             vm.synkronoi()
-            assertTrue(awaitItem().synkronoidaan)
-            val valmis = awaitItem()
-            assertFalse(valmis.synkronoidaan)
+            odota { it.synkronoidaan }
+            val valmis = odota { !it.synkronoidaan }
             assertEquals(Viesti.EiYhteytta, valmis.viesti)
             vm.viestiNaytetty()
-            assertEquals(null, awaitItem().viesti)
+            assertEquals(null, odota { it.viesti == null }.viesti)
+        }
+    }
+
+    /** Ottaa tiloja vastaan, kunnes ehto täyttyy, ja palauttaa sen tilan. */
+    private suspend fun ReceiveTurbine<ListaUiState>.odota(
+        ehto: (ListaUiState) -> Boolean,
+    ): ListaUiState {
+        while (true) {
+            val tila = awaitItem()
+            if (ehto(tila)) return tila
         }
     }
 }

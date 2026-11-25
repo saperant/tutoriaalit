@@ -111,7 +111,10 @@ repository.
 
 Testi kerää tilaa **Turbine**-kirjastolla, joka tekee Flow'n arvoista
 jonon: `awaitItem` odottaa seuraavaa arvoa, ja testi epäonnistuu, jos
-arvoja jää käsittelemättä.
+arvoja jää käsittelemättä. StateFlow yhdistää peräkkäiset arvot, joten
+välitilojen määrä voi vaihdella koneen nopeuden mukaan. Siksi
+jälkimmäinen testi odottaa ehtoja (`odota`) eikä laske tiloja: tiloja
+laskeva versio meni läpi kehityskoneella mutta epäonnistui CI:ssä.
 
 ```{.kotlin tiedosto="esimerkit/app/src/test/java/fi/esimerkki/ostokset/lista/ListaViewModelTest.kt" osa="testi"}
 ```
