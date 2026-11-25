@@ -1,0 +1,23 @@
+// Package varasto pitää kirjaa tuotteiden saldoista.
+//
+// Varasto on turvallinen käyttää useasta goroutinesta, ja sen nolla-arvo
+// on käyttövalmis:
+//
+//	var v varasto.Varasto
+//	err := v.Lisaa("FI-7", 5)
+//
+// # Tunnukset
+//
+// Tuotetunnus on kaksi kirjainta, viiva ja numero, esimerkiksi FI-7.
+// Tunnukset normalisoidaan isoiksi kirjaimiksi, joten fi-7 ja FI-7 ovat
+// sama tuote.
+//
+// # Virheet
+//
+// Metodit palauttavat käärittyjä virheitä, joihin verrataan
+// [errors.Is]-funktiolla:
+//
+//   - [ErrTuntematon]: tuotetta ei ole varastossa
+//   - [ErrSaldoEiRiita]: [Varasto.Ota] pyysi enemmän kuin saldo sallii
+//   - [ErrMaara]: määrä ei ole positiivinen
+package varasto

@@ -5,7 +5,8 @@ rakenteina (`struct`) ja luettelotyyppeinä (`enum`), metodit
 `impl`-lohkoissa ja yhteiset rajapinnat *piirteinä* (*trait*). Piirre
 on lähinnä C++20:n konseptin ja abstraktin kantaluokan yhdistelmä: sitä
 voi käyttää sekä käännösaikaisena rajana että ajonaikaisena
-rajapintana.
+rajapintana. Aiemmat luvut ovat käyttäneet rakenteita ja piirteitä
+valmiina; tässä luvussa ne määritellään itse.
 
 ## Rakenteet ja metodit
 
@@ -67,6 +68,35 @@ virtuaalitauluun (*fat pointer*). Sitä käytetään aina osoittimen takana
 ```{.tuloste tiedosto="esimerkit/07-piirteet.odotettu"}
 ```
 
+```{.dot otsikko="Vektori `muodot` esimerkistä. Jokainen `Box<dyn Muoto>` on kaksi osoitinta: dataan ja tyypin virtuaalitauluun. Kutsu `m.ala()` hakee funktion osoitteen taulusta. Geneerisessä funktiossa `tulosta_ala` taulua ei ole, vaan kääntäjä tuottaa funktiosta oman kopion kummallekin tyypille."}
+digraph {
+  rankdir=LR; nodesep=0.35; ranksep=1.0;
+  node [shape=plain, style=""];
+  v [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" colspan="2" align="left"><i>muodot: Vec&lt;Box&lt;dyn Muoto&gt;&gt;</i></td></tr>
+    <tr><td port="d0" bgcolor="#EEF1F6">data</td><td port="t0" bgcolor="#EEF1F6">vtable</td></tr>
+    <tr><td port="d1" bgcolor="#EEF1F6">data</td><td port="t1" bgcolor="#EEF1F6">vtable</td></tr></table>>];
+  y [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left"><i>Ympyra (keko)</i></td></tr>
+    <tr><td bgcolor="#FFFFFF">sade: 2.0</td></tr></table>>];
+  r [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left"><i>Suorakulmio (keko)</i></td></tr>
+    <tr><td bgcolor="#FFFFFF">leveys: 4.0</td></tr><tr><td bgcolor="#FFFFFF">korkeus: 0.5</td></tr></table>>];
+  ty [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left"><i>virtuaalitaulu: Muoto for Ympyra</i></td></tr>
+    <tr><td bgcolor="#FFFFFF" align="left">drop, koko, tasaus</td></tr>
+    <tr><td bgcolor="#FFFFFF" align="left">ala → Ympyra::ala</td></tr>
+    <tr><td bgcolor="#FFFFFF" align="left">nimi → Ympyra::nimi</td></tr></table>>];
+  tr [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left"><i>virtuaalitaulu: Muoto for Suorakulmio</i></td></tr>
+    <tr><td bgcolor="#FFFFFF" align="left">drop, koko, tasaus</td></tr>
+    <tr><td bgcolor="#FFFFFF" align="left">ala → Suorakulmio::ala</td></tr>
+    <tr><td bgcolor="#FFFFFF" align="left">nimi → Muoto::nimi (oletus)</td></tr></table>>];
+  y -> v:d0:w [dir=back]; v:t0:e -> ty;
+  r -> v:d1:w [dir=back]; v:t1:e -> tr;
+}
+```
+
 | | Geneerinen `<T: Piirre>` | Piirreolio `dyn Piirre` |
 |---|---|---|
 | Sidonta | käännösaikana | ajon aikana virtuaalitaulusta |
@@ -119,7 +149,15 @@ rajavirheenä.
 Oma iteraattori toteuttaa yhden metodin, `next`, ja saa kaikki
 sovittimet ja kuluttajat oletustoteutuksina. `?` toimii myös
 `Option`-arvolle: `checked_add` palauttaa `None` ylivuodossa, ja
-iteraattori päättyy:
+iteraattori päättyy.
+
+Rivi `type Item = u64;` määrittelee piirteen *liitännäistyypin*
+(*associated type*). Tyyppiparametrin valitsee kutsuja, ja sama tyyppi
+voi toteuttaa geneerisen piirteen monta kertaa (`From<i32>` ja
+`From<u8>`). Liitännäistyypin valitsee toteutus, ja niitä on yksi:
+tyypillä on vain yksi `Iterator`-toteutus, joten alkion tyyppiä ei
+tarvitse kertoa käyttöpaikassa. Rajoissa se kirjoitetaan muodossa
+`Iterator<Item = u64>`.
 
 ```{.rust tiedosto="esimerkit/07-geneerinen.rs" osa="iterator"}
 ```
@@ -148,6 +186,44 @@ metodeilla, jotka ottavat ja palauttavat `self`-arvon:
 
 Yksinkertaisemmissa tapauksissa riittää `Default`-piirre ja
 rakennepäivitys: `Asetukset { portti: 8080, ..Default::default() }`.
+
+## Makrot lyhyesti
+
+Huutomerkkiin päättyvät nimet, kuten `println!` ja `vec!`, ovat
+*makroja*: ne saavat syötteekseen koodin palasia ja tuottavat
+käännösaikana uutta koodia. Makro voi tehdä sen, mihin funktio ei
+pysty: ottaa vaihtelevan määrän argumentteja, tarkistaa muotoilujonon
+tai tuottaa `impl`-lohkon. Makroja on kahta päälajia.
+
+*Deklaratiivinen makro* kirjoitetaan `macro_rules!`-määrittelyllä, joka
+on joukko hahmoja ja niitä vastaavia koodipohjia. Toisin kuin C:n
+esikääntäjän makrot, se käsittelee jäsennettyjä lausekkeita eikä
+tekstiä, ja sen sisäiset muuttujat eivät sekoitu kutsujan muuttujiin
+(*hygienia*):
+
+```{.rust tiedosto="esimerkit/07-makrot.rs" osa="makro"}
+```
+
+*Proseduraalinen makro* on erilliseen crateen kirjoitettu Rust-funktio,
+jonka kääntäjä ajaa. Niitä käytetään kolmessa muodossa: `derive`-makro
+tuottaa piirteen toteutuksen tyypin määrittelystä, attribuuttimakro
+(`#[test]`, Tokion `#[tokio::main]`) muokkaa funktiota tai tyyppiä, ja
+funktiomainen makro näyttää kutsulta. Useimmat kehittäjät käyttävät
+proseduraalisia makroja päivittäin mutta kirjoittavat niitä harvoin.
+
+```{.rust tiedosto="esimerkit/07-makrot.rs" osa="derive"}
+```
+
+```{.rust tiedosto="esimerkit/07-makrot.rs" osa="kaytto"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-makrot.odotettu"}
+```
+
+Makro on viimeinen keino. Funktio tai geneerinen tyyppi on helpompi
+lukea, tyyppitarkistetaan määrittelykohdassaan ja antaa paremmat
+virheilmoitukset. Makron tuottaman koodin näkee komennolla
+`cargo expand` (erillinen asennettava työkalu).
 
 ## Käytännössä
 
@@ -187,3 +263,6 @@ rakennepäivitys: `Asetukset { portti: 8080, ..Default::default() }`.
 - Osaat kirjoittaa geneerisen tyypin, jonka metodeilla on piirrerajoja,
   ja oman iteraattorin.
 - Osaat käyttää newtype- ja rakentajamallia.
+- Osaat kertoa, mitä `derive` ja muut makrot tekevät, lukea
+  yksinkertaisen `macro_rules!`-määrittelyn ja perustella, milloin
+  makro on funktiota parempi.

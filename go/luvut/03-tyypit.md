@@ -3,7 +3,9 @@
 Go on staattisesti ja vahvasti tyypitetty: jokaisella lausekkeella on
 käännösaikana tunnettu tyyppi, eikä tyyppien välillä tehdä
 implisiittisiä muunnoksia. Tyypit päätellään esittelyssä, joten niitä
-kirjoitetaan harvoin näkyviin.
+kirjoitetaan harvoin näkyviin. Luku käy läpi perustyypit, muunnokset
+ja vakiot, sitten tulostuksen ja lopuksi syötteen lukemisen
+vakiosyötteestä, tiedostosta ja komentoriviltä.
 
 ## Perustyypit ja nolla-arvot
 
@@ -59,6 +61,28 @@ time.Duration and int)
 Tämä on hyödyllistä: yksiköt eivät sekoitu vahingossa. Vakio
 `250 * time.Millisecond` kelpaa, koska tyypitön vakio `250` saa
 tarvittavan tyypin.
+
+## Rakenteet ja metodit lyhyesti
+
+Omat tyypit käsitellään luvussa 7, mutta jo tämän luvun esimerkit
+tarvitsevat niistä kaksi asiaa. *Rakenne* (`struct`) kokoaa nimettyjä
+kenttiä yhdeksi tyypiksi. *Metodi* on funktio, jonka nimen edellä on
+*vastaanottaja* eli arvo, jolle metodia kutsutaan; Pythonissa sama
+parametri on `self`. Luokkaa ei ole: metodin voi määritellä mille
+tahansa samassa paketissa nimetylle tyypille, myös kokonaisluvulle.
+
+```{.go tiedosto="esimerkit/03-rakenne.go" osa="rakenne"}
+```
+
+```{.go tiedosto="esimerkit/03-rakenne.go" osa="kaytto"}
+```
+
+```{.tuloste tiedosto="esimerkit/03-rakenne.odotettu"}
+```
+
+Koosteliteraali `Mittaus{...}` luo arvon, ja kenttään viitataan
+pisteellä. Luku 5 kertoo, milloin vastaanottaja on arvo ja milloin
+osoitin.
 
 ## Vakiot ja iota
 
@@ -148,6 +172,45 @@ Virhetulosteeseen kirjoitetaan `rivi 5: strconv.ParseFloat: parsing
 - Tulostusjärjestys on lajiteltu, koska kartan läpikäyntijärjestys
   vaihtelee ajosta toiseen.
 
+## Tiedostot ja komentoriviliput
+
+Komentorivityökalu saa syötteensä useimmiten tiedostosta ja asetuksensa
+lipuista. Tiedosto avataan funktiolla `os.Open` (lukemiseen) tai
+`os.Create` (kirjoittamiseen), ja se suljetaan itse. `os.File` ei
+puskuroi, joten rivipohjainen luku ja kirjoitus kääritään
+`bufio`-paketin tyyppeihin:
+
+```{.go tiedosto="esimerkit/03-tiedosto.go" osa="kirjoita"}
+```
+
+```{.go tiedosto="esimerkit/03-tiedosto.go" osa="lue"}
+```
+
+`defer` siirtää kutsun funktion loppuun (luku 4), joten tiedosto
+sulkeutuu kaikilla paluupoluilla. Pienen tiedoston voi lukea kerralla
+funktiolla `os.ReadFile` ja kirjoittaa funktiolla `os.WriteFile`.
+
+`flag`-paketti jäsentää liput. Jokainen lippu esitellään nimellä,
+oletusarvolla ja ohjetekstillä, ja `flag.Parse` täyttää arvot.
+Lippujen jälkeen tulevat argumentit saadaan funktioilla `flag.Args` ja
+`flag.Arg`; jäsentämätön komentorivi on viipaleessa `os.Args`.
+
+```{.go tiedosto="esimerkit/03-tiedosto.go" osa="main"}
+```
+
+```{.go tiedosto="esimerkit/03-tiedosto.go" osa="aja"}
+```
+
+Ajo komennolla `tiedosto -raja 21 mittaukset.txt` tulostaa:
+
+```{.tuloste tiedosto="esimerkit/03-tiedosto.odotettu"}
+```
+
+Tiedostovirhe on tyyppiä `*fs.PathError`, jonka viesti kertoo
+toiminnon, polun ja syyn. Syytä verrataan `errors.Is`-funktiolla
+(luku 8), ei viestin tekstiä tutkimalla. Lippu `-h` tulostaa
+ohjetekstit, ja tuntematon lippu lopettaa ohjelman paluuarvolla 2.
+
 ## Käytännössä
 
 - **Tee nolla-arvosta hyödyllinen.** Suunnittele tyypit niin, että
@@ -166,6 +229,12 @@ Virhetulosteeseen kirjoitetaan `rivi 5: strconv.ParseFloat: parsing
   `iota + 1`. Silloin alustamaton kenttä erottuu.
 - **Virheilmoitukset `os.Stderr`-virtaan**, tulokset vakiotulosteeseen.
   Silloin ohjelmaa voi käyttää putkessa.
+- **Tarkista kirjoitetun tiedoston `Close`.** Käyttöjärjestelmä voi
+  ilmoittaa kirjoitusvirheestä vasta suljettaessa. Luetun tiedoston
+  sulkemisvirheellä ei ole merkitystä, joten `defer f.Close()` riittää.
+- **Puskuroi ja tyhjennä.** `bufio.Writer` kerää pienet kirjoitukset
+  yhdeksi järjestelmäkutsuksi, mutta data on perillä vasta
+  `Flush`-kutsun jälkeen.
 - **Hinta.** `fmt`-funktiot käyttävät heijastusta ja `any`-parametreja,
   jotka voivat allokoida. Kuumassa silmukassa `strconv.AppendInt` ja
   `strings.Builder` ovat moninkertaisesti nopeampia.
@@ -181,3 +250,6 @@ Virhetulosteeseen kirjoitetaan `rivi 5: strconv.ParseFloat: parsing
   tyypille `String`-metodin.
 - Osaat lukea rivipohjaista syötettä `bufio.Scanner`-tyypillä ja
   käsitellä jäsennys- ja lukuvirheet.
+- Osaat määritellä rakenteen ja sille metodin.
+- Osaat lukea ja kirjoittaa tiedoston puskuroidusti, sulkea sen
+  oikein ja jäsentää komentorivin liput `flag`-paketilla.

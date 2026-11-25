@@ -1,0 +1,9 @@
+package varasto // import "example.com/kauppa/varasto"
+
+func (v *Varasto) Ota(t string, maara int) error
+    Ota vähentää tuotteen saldoa määrän verran.
+
+    Saldo ei voi mennä negatiiviseksi: jos määrä ylittää saldon, Ota palauttaa
+    virheen ErrSaldoEiRiita eikä muuta saldoa. Tuntemattomalle tuotteelle virhe
+    on ErrTuntematon.
+

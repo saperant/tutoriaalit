@@ -16,6 +16,25 @@ lukkoa, säie siirtyy ajamaan toista. Siksi verkkopalvelin voi käyttää
 yhtä goroutinea yhteyttä kohden ilman tapahtumasilmukkaa ja
 takaisinkutsuja.
 
+```{.dot otsikko="Ajoittimen kolme käsitettä. G on goroutine, P looginen suoritin (niitä on `GOMAXPROCS` kappaletta) ja M käyttöjärjestelmän säie. Jokaisella P:llä on oma jono ajovalmiita goroutineja, ja M ajaa goroutinea vain pitäessään P:tä. Kun goroutine jää estävään järjestelmäkutsuun, sen M luovuttaa P:n toiselle säikeelle, joten muut goroutinet jatkavat."}
+digraph {
+  rankdir=TB; nodesep=0.3; ranksep=0.45;
+  subgraph cluster_p1 { label="P1"; style=rounded; color="#9AA3AF";
+    g1 [label="G1\najossa"]; q1 [label="jono: G4, G5", shape=box, style="rounded"];
+  }
+  subgraph cluster_p2 { label="P2"; style=rounded; color="#9AA3AF";
+    g2 [label="G2\najossa"]; q2 [label="jono: G6", shape=box, style="rounded"];
+  }
+  m1 [label="M1 (säie)", shape=box]; m2 [label="M2 (säie)", shape=box];
+  m3 [label="M3 (säie)\nestävä järjestelmäkutsu", shape=box];
+  g3 [label="G3\nodottaa kutsua"];
+  g1 -> m1; g2 -> m2; g3 -> m3;
+  q1 -> g1 [style=dashed, label="seuraava"]; q2 -> g2 [style=dashed];
+  ydin [label="käyttöjärjestelmän ydin ja suoritinytimet", shape=box, style="rounded"];
+  m1 -> ydin; m2 -> ydin; m3 -> ydin;
+}
+```
+
 Goroutinella ei ole paluuarvoa eikä kahvaa. Sen valmistumista odotetaan
 `sync.WaitGroup`-laskurilla tai kanavalla, ja tulokset välitetään
 kanavaa tai jaettua, suojattua muuttujaa pitkin. Pääohjelman päättyminen
@@ -47,6 +66,31 @@ voi edetä. `default`-haara tekee valinnasta tukkeutumattoman:
 ```{.tuloste tiedosto="esimerkit/10-kanavat.odotettu"}
 ```
 
+### Ajastimet
+
+`select`-lauseen tavallisin käyttö on aikaraja: odotetaan tulosta tai
+ajastinta sen mukaan, kumpi ehtii ensin. `time.NewTimer` palauttaa
+ajastimen, jonka kanavaan `C` tulee arvo ajan kuluttua. `time.NewTicker`
+lähettää arvon toistuvasti jakson välein, ja se on pysäytettävä
+`Stop`-metodilla, kun sitä ei enää tarvita:
+
+```{.go tiedosto="esimerkit/10-ajastimet.go" osa="aikaraja"}
+```
+
+```{.go tiedosto="esimerkit/10-ajastimet.go" osa="jakso"}
+```
+
+```{.go tiedosto="esimerkit/10-ajastimet.go" osa="kaytto"}
+```
+
+```{.tuloste tiedosto="esimerkit/10-ajastimet.odotettu"}
+```
+
+`time.After(d)` on lyhyt muoto kertakäyttöiselle ajastimelle:
+`case <-time.After(d):`. Kun aikaraja koskee koko kutsuketjua eikä yhtä
+odotusta, se annetaan kontekstina (`context.WithTimeout`, tämän luvun
+loppupuolella), jolloin myös kutsutut funktiot näkevät sen.
+
 Kanavasuunta kirjoitetaan tyyppiin: `<-chan T` vain vastaanottaa ja
 `chan<- T` vain lähettää. Funktio, joka palauttaa `<-chan T`, lupaa
 kutsujalle, että se itse sulkee kanavan.
@@ -71,6 +115,23 @@ malli. Tehtävät tulevat kanavasta, tulokset menevät toiseen, ja
 `WaitGroup` kertoo, milloin tuloskanavan voi sulkea:
 
 ```{.go tiedosto="esimerkit/10-tyojono.go" osa="allas"}
+```
+
+```{.dot otsikko="Työntekijäaltaan rakenne. Syöttäjä sulkee `jono`-kanavan, kun tehtävät loppuvat, jolloin työntekijöiden `range`-silmukat päättyvät. Sulkija odottaa `WaitGroup`-laskuria ja sulkee `tulokset`-kanavan, jolloin kerääjän silmukka päättyy."}
+digraph {
+  rankdir=TB; nodesep=0.4; ranksep=0.35;
+  syottaja [label="syöttäjä\nclose(jono)"];
+  jono [label="jono\nchan tehtava", shape=cylinder];
+  t1 [label="työntekijä 1"]; t2 [label="työntekijä 2"]; t3 [label="työntekijä n"];
+  tulokset [label="tulokset\nchan tulos", shape=cylinder];
+  keraaja [label="kerääjä\nrange tulokset"];
+  sulkija [label="sulkija\nwg.Wait(); close(tulokset)"];
+  syottaja -> jono; jono -> t1; jono -> t2; jono -> t3;
+  t1 -> tulokset; t2 -> tulokset; t3 -> tulokset; tulokset -> keraaja;
+  t3 -> sulkija [style=dashed, label="wg.Done()", constraint=false];
+  sulkija -> tulokset [style=dashed, label="close"];
+  { rank=same; t1; t2; t3; sulkija; }
+}
 ```
 
 ```{.tuloste tiedosto="esimerkit/10-tyojono.odotettu"}
@@ -200,6 +261,8 @@ vaiheet lopettavat:
   ja välittää tuloksia kanavilla.
 - Osaat käyttää puskuroituja ja puskuroimattomia kanavia,
   `close`-kutsua ja `select`-lausetta oikein.
+- Osaat rajata odotuksen ajastimella ja toistaa työtä jaksoittain
+  `time.Ticker`-tyypillä niin, että ajastin pysäytetään.
 - Osaat toteuttaa työntekijäaltaan ja putken, jotka eivät vuoda
   goroutineja.
 - Osaat valita kanavan, lukon ja atomisen operaation välillä.

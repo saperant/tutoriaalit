@@ -39,6 +39,15 @@ struct RustOtsake {
 // @loppu asettelu
 
 fn main() {
+    // @alku raaka
+    let mut arvo = 7_i32;
+    let osoitin: *mut i32 = &mut arvo; // luonti on turvallista
+    // SAFETY: osoitin on luotu elävästä muuttujasta, eikä muita
+    // viitteitä siihen ole käytössä.
+    unsafe { *osoitin += 1 };
+    println!("{arvo}");
+    // @loppu raaka
+
     // @alku kaytto
     let mut naytteet = [1, 2, 3, 4, 5, 6];
     let (vasen, oikea) = jaa_kahtia(&mut naytteet, 2);

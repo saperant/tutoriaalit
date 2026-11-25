@@ -75,6 +75,20 @@
 | Lokitus | standardi `log/slog` |
 | Telemetria | `go.opentelemetry.io/otel` |
 
+## Jatkotaidot
+
+Tästä edetään taitopuussa aiheen mukaan:
+
+- *Taustapalvelut* ja *Verkko-ohjelmointi*: palvelut ja protokollat,
+  joita luku 11 sivusi.
+- *Kontit ja pilvi-infrastruktuuri*: ympäristö, jossa Go-palvelut
+  useimmiten ajetaan ja jonka työkalut on kirjoitettu Go:lla.
+- *Hajautetut järjestelmät*: monen palvelun yhteistoiminta.
+- *Rinnakkaisohjelmointi*: luvun 10 välineiden yleinen teoria.
+- *Suorituskyvyn analyysi ja optimointi*: mittaaminen ja profilointi.
+- *Tekninen dokumentaatio*: lukujen 9 ja 12 dokumentaatiovälineiden
+  yleiset periaatteet.
+
 ## Lähteet ja jatkolukeminen
 
 Ensisijaiset lähteet:
@@ -105,9 +119,3 @@ Kirjat ja kurssit:
 - Uber Go Style Guide: <https://github.com/uber-go/guide>
   (CC BY 4.0).
 
-Taitopuussa Go:sta jatketaan taitoihin *Taustapalvelut*,
-*Verkko-ohjelmointi*, *Säiliöt ja pilvi-infrastruktuuri* ja
-*Hajautetut järjestelmät*.
-Rinnakkaisuuden teoria on taidossa *Rinnakkaisohjelmointi* ja
-suorituskyvyn mittaaminen taidossa *Suorituskyvyn analyysi ja
-optimointi*.

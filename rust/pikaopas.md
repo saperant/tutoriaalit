@@ -14,7 +14,7 @@ subtitle: Pikaopas kokeneelle kehittäjälle · Rust 1.80, painos 2021
 | Lint | `cargo clippy --all-targets -- -D warnings` |
 | Muotoilu | `cargo fmt`, CI:ssä `cargo fmt --check` |
 | Testit | `cargo test`, `cargo test nimi -- --nocapture` |
-| Dokumentaatio | `cargo doc --open`, `rustup doc --std` |
+| Dokumentaatio | `cargo doc --open`, `cargo test --doc`, `rustup doc --std` |
 | Riippuvuudet | `cargo add serde --features derive`, `cargo tree` |
 | Turvallisuus | `cargo audit`, `cargo deny check` |
 | UB-tarkistus | `cargo +nightly miri test` |

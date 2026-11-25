@@ -52,15 +52,13 @@ pakettiin koko polulla:
 ```{.go tiedosto="esimerkit/09-kauppa/varasto/varasto.go" osa="tuonnit"}
 ```
 
-```{.go tiedosto="esimerkit/09-kauppa/varasto/varasto.go" osa="tyyppi"}
+```{.go tiedosto="esimerkit/09-kauppa/varasto/varasto.go" osa="tyyppi" alkaen="// Virheet"}
 ```
 
-```{.go tiedosto="esimerkit/09-kauppa/varasto/varasto.go" osa="ota"}
+```{.go tiedosto="esimerkit/09-kauppa/varasto/varasto.go" osa="ota" alkaen="// Ota"}
 ```
 
-Sisäinen paketti validoi tuotetunnukset. Sen dokumentaatiokommentti
-alkaa sanoilla `Package tunnus`, ja jokaisella julkisella nimellä on
-kommentti, joka alkaa nimellä:
+Sisäinen paketti validoi tuotetunnukset:
 
 ```{.go tiedosto="esimerkit/09-kauppa/internal/tunnus/tunnus.go"}
 ```
@@ -83,6 +81,57 @@ $ go run ./cmd/kauppa < testdata/komennot.txt
 
 ```{.tuloste tiedosto="esimerkit/09-kauppa/testdata/odotettu.txt"}
 ```
+
+## Dokumentaatiokommentit
+
+Go:n dokumentaatio kirjoitetaan tavallisina kommentteina suoraan
+esittelyn yläpuolelle, ilman erillistä merkintäkieltä. *Dokumentaatiokommentti*
+(*doc comment*) alkaa dokumentoitavan nimen nimellä ja on kokonainen
+virke: `// Ota vähentää tuotteen saldoa…`. Ensimmäinen virke on
+tiivistelmä, joka näkyy luetteloissa. Kommentin ja esittelyn välissä ei
+saa olla tyhjää riviä.
+
+Paketin kommentti alkaa sanoilla `Package nimi` ja on yhdessä paketin
+tiedostoista. Pitkä johdanto kirjoitetaan omaan tiedostoonsa `doc.go`,
+jossa ei ole muuta koodia:
+
+```{.go tiedosto="esimerkit/09-kauppa/varasto/doc.go"}
+```
+
+Kommentissa on kevyt muotoilu (Go 1.19): `#`-alkuinen rivi on otsikko,
+sisennetty lohko on koodia, viivalla alkavat sisennetyt rivit ovat
+luettelo ja hakasulkeissa oleva nimi, kuten `[Varasto.Ota]` tai `[errors.Is]`, on
+linkki nimen dokumentaatioon. `gofmt` muotoilee myös kommentit.
+Vanhentunut nimi merkitään kappaleella, joka alkaa sanalla
+`Deprecated:` ja kertoo, mitä käyttää tilalla.
+
+`go doc` näyttää dokumentaation komentoriviltä, ja sama teksti näkyy
+julkaistulle moduulille pkg.go.dev-sivustolla:
+
+```
+$ go doc ./varasto
+```
+
+```{.tuloste tiedosto="esimerkit/09-kauppa/testdata/godoc-paketti.txt"}
+```
+
+```
+$ go doc ./varasto Varasto.Ota
+```
+
+```{.tuloste tiedosto="esimerkit/09-kauppa/testdata/godoc-ota.txt"}
+```
+
+Tutoriaalin testit vertaavat näitä tulosteita tallennettuihin, joten
+teksti ja koodi pysyvät yhdessä:
+
+```{.makefile tiedosto="esimerkit/Makefile" osa="godoc"}
+```
+
+Dokumentaation esimerkit kirjoitetaan testitiedostoihin
+esimerkkifunktioina, jotka `go test` ajaa (luku 12). Dokumentaation
+suunnittelu lukijan mukaan ja julkaisu käsitellään taidossa *Tekninen
+dokumentaatio*.
 
 ## Riippuvuudet
 
@@ -112,9 +161,16 @@ $ go mod why -m golang.org/x/text
 - **Työtilat.** `go work` yhdistää useita paikallisia moduuleja
   kehityksen ajaksi muuttamatta niiden `go.mod`-tiedostoja.
 
-Tämän tutoriaalin muut esimerkit ovat yksittäisiä tiedostoja, jotka
-käännetään ilman moduulia (`GO111MODULE=off`). Oikea projekti alkaa
-aina komennolla `go mod init`.
+Kehitystyökalun, kuten koodigeneraattorin tai lintterin, voi Go
+1.24:stä alkaen kirjata `go.mod`-tiedostoon `tool`-rivillä
+(`go get -tool polku`), jolloin sen versio lukittuu kuten muidenkin
+riippuvuuksien ja se ajetaan komennolla `go tool nimi`. Go 1.23 ei
+tunne riviä, joten esimerkkimoduulissa sitä ei ole.
+
+Tämän tutoriaalin muut esimerkit ovat yksittäisiä tiedostoja ilman
+`go.mod`-tiedostoa: `go run tiedosto.go` ja `go vet tiedosto.go`
+toimivat yksittäiselle tiedostolle, joka käyttää vain
+standardikirjastoa. Oikea projekti alkaa aina komennolla `go mod init`.
 
 ## Alustus
 
@@ -133,6 +189,10 @@ parametreina.
 - **Ei toistoa nimissä.** Kutsuja kirjoittaa `varasto.Varasto` ja
   `tunnus.Normalisoi`, joten nimeä `varasto.VarastoVarasto` tai
   `tunnus.NormalisoiTunnus` ei tarvita.
+- **Jokaisella julkisella nimellä on dokumentaatiokommentti.** Se
+  kertoo sen, mitä allekirjoitus ei kerro: milloin funktio palauttaa
+  virheen, kuka omistaa palautetun viipaleen ja onko tyyppi turvallinen
+  käyttää useasta goroutinesta.
 - **Pieni julkinen rajapinta.** Kaikki julkinen on lupaus
   yhteensopivuudesta. Aloita sisäisellä ja julkaise tarpeen mukaan;
   `internal` pitää moduulin yhteisen koodin piilossa.
@@ -161,3 +221,6 @@ parametreina.
   valinnan.
 - Osaat järjestää projektin `cmd`-, `internal`- ja kirjastopaketteihin
   niin, että pääohjelma on ohut ja logiikka testattavissa.
+- Osaat kirjoittaa paketin ja sen julkisten nimien
+  dokumentaatiokommentit ja lukea dokumentaatiota `go doc`
+  -komennolla.

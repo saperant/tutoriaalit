@@ -13,6 +13,24 @@ otsake (osoitin, pituus ja kapasiteetti). Merkkijonoliteraalit ja
 `static`-muuttujat ovat ohjelman datasegmentissä, ja niihin viittaavien
 viitteiden elinaika on `'static`.
 
+```{.dot otsikko="`String` on pinossa kolmen sanan otsake, ja teksti on keossa. `&str` on osoitin ja pituus samaan puskuriin: funktion `otsikko` paluuarvo ei kopioi merkkejä."}
+digraph {
+  rankdir=TB; nodesep=0.6; ranksep=0.6;
+  node [shape=plain, style=""];
+  s [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left" colspan="3"><i>raportti: String (pino)</i></td></tr>
+    <tr><td port="p" bgcolor="#EEF1F6">osoitin</td><td port="l" bgcolor="#EEF1F6">pituus 31</td><td port="c" bgcolor="#EEF1F6">kapasiteetti 31</td></tr></table>>];
+  v [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left" colspan="2"><i>otsikko(&amp;raportti): &amp;str (pino)</i></td></tr>
+    <tr><td port="p" bgcolor="#EEF1F6">osoitin</td><td port="l" bgcolor="#EEF1F6">pituus 14</td></tr></table>>];
+  keko [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td port="a" bgcolor="#FFFFFF">Viikkoraportti</td><td bgcolor="#FFFFFF">\nKaikki kunnossa.</td></tr>
+    <tr><td border="0" align="left" colspan="2"><i>keko: 31 tavua</i></td></tr></table>>];
+  s:p:s -> keko:a:n;
+  v:p:s -> keko:a:n;
+}
+```
+
 ## Omistajuuden säännöt
 
 1. Jokaisella arvolla on yksi omistaja.
@@ -32,6 +50,41 @@ kommentissa.
 ```{.rust tiedosto="esimerkit/05-omistajuus.rs" osa="kaytto"}
 ```
 
+```{.tuloste tiedosto="esimerkit/05-omistajuus.odotettu" rivit="1-6"}
+```
+
+```{.dot otsikko="Kopio: `let kopio = raportti.clone();` varaa uuden puskurin ja kopioi tekstin. Kummallakin puskurilla on oma omistajansa."}
+digraph {
+  rankdir=TB; nodesep=0.6; ranksep=0.5;
+  node [shape=plain, style=""];
+  a1 [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left" colspan="3"><i>raportti</i></td></tr>
+    <tr><td port="p" bgcolor="#EEF1F6">osoitin</td><td port="l" bgcolor="#EEF1F6">pituus</td><td port="c" bgcolor="#EEF1F6">kapasiteetti</td></tr></table>>];
+  a2 [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left" colspan="3"><i>kopio</i></td></tr>
+    <tr><td port="p" bgcolor="#EEF1F6">osoitin</td><td port="l" bgcolor="#EEF1F6">pituus</td><td port="c" bgcolor="#EEF1F6">kapasiteetti</td></tr></table>>];
+  b1 [shape=box, style=filled, fillcolor="#FFFFFF", label="Viikkoraportti…"];
+  b2 [shape=box, style=filled, fillcolor="#FFFFFF", label="Viikkoraportti…"];
+  a1:p:s -> b1; a2:p:s -> b2;
+}
+```
+
+```{.dot otsikko="Siirto: `arkistoi(raportti);` kopioi vain otsakkeen funktion parametriin. Puskurilla on yhä yksi omistaja, ja kääntäjä kieltää vanhan nimen käytön."}
+digraph {
+  rankdir=TB; nodesep=0.6; ranksep=0.5;
+  node [shape=plain, style=""];
+  c1 [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left" colspan="3"><font color="#9AA3AF"><i>raportti kutsujassa: siirretty</i></font></td></tr>
+    <tr><td port="p" bgcolor="#FFFFFF"><font color="#9AA3AF">osoitin</font></td><td port="l" bgcolor="#FFFFFF"><font color="#9AA3AF">pituus</font></td><td port="c" bgcolor="#FFFFFF"><font color="#9AA3AF">kapasiteetti</font></td></tr></table>>];
+  c2 [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left" colspan="3"><i>parametri raportti</i></td></tr>
+    <tr><td port="p" bgcolor="#EEF1F6">osoitin</td><td port="l" bgcolor="#EEF1F6">pituus</td><td port="c" bgcolor="#EEF1F6">kapasiteetti</td></tr></table>>];
+  b3 [shape=box, style=filled, fillcolor="#FFFFFF", label="Viikkoraportti…"];
+  c2:p:s -> b3;
+  c1:p:s -> b3 [style=dotted, arrowhead=none];
+}
+```
+
 `clone()` tekee syvän kopion. Se on aina näkyvä, joten kalliit kopiot
 löytyvät koodista hakemalla. Pienet arvotyypit, jotka eivät omista
 resursseja, toteuttavat `Copy`-piirteen. Niiden sijoitus kopioi, eikä
@@ -40,7 +93,7 @@ alkuperäinen muutu käyttökelvottomaksi:
 ```{.rust tiedosto="esimerkit/05-omistajuus.rs" osa="copy"}
 ```
 
-```{.tuloste tiedosto="esimerkit/05-omistajuus.odotettu"}
+```{.tuloste tiedosto="esimerkit/05-omistajuus.odotettu" rivit="7-7"}
 ```
 
 ## Lainaussäännöt
@@ -66,6 +119,15 @@ error[E0502]: cannot borrow `jono` as mutable because it is also
 
 Lainaus kestää sen viimeiseen käyttöön asti, ei näkyvyysalueen loppuun
 (*non-lexical lifetimes*). Siksi jälkimmäinen `push` on sallittu.
+
+```{.ajoituskaavio otsikko="Lainojen voimassaolo esimerkin riveillä. Jaettu laina `ensimmainen` on voimassa riviltä 3 viimeiseen käyttöönsä rivillä 5. Rivin 4 `push` tarvitsee muokkaavan lainan samaan aikaan, joten se hylätään; rivillä 6 jaettu laina on jo päättynyt."}
+{"signal": [
+  {"name": "rivi", "wave": "======",
+   "data": ["2", "3", "4", "5", "6", "7"]},
+  {"name": "&jono[0] (ensimmainen)", "wave": "01..0."},
+  {"name": "&mut jono (push)", "wave": "0.1010"}
+]}
+```
 
 Toinen sääntö estää roikkuvat viitteet. Viite paikalliseen muuttujaan
 ei voi palata funktiosta:
@@ -124,10 +186,13 @@ koko rakennetta ei voi kuluttaa:
 ```{.rust tiedosto="esimerkit/05-drop.rs" osa="jarjestys"}
 ```
 
+```{.tuloste tiedosto="esimerkit/05-drop.odotettu" rivit="1-10"}
+```
+
 ```{.rust tiedosto="esimerkit/05-drop.rs" osa="take"}
 ```
 
-```{.tuloste tiedosto="esimerkit/05-drop.odotettu"}
+```{.tuloste tiedosto="esimerkit/05-drop.odotettu" rivit="11-14"}
 ```
 
 `std::mem::replace` ja `std::mem::swap` ovat yleisempiä muotoja samasta

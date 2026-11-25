@@ -53,14 +53,4 @@ fn main() {
         .find(|n| n % 2 == 0 && *n > 50);
     println!("{ensimmainen_parillinen_nelio:?}");
     // @loppu laiska
-
-    // @alku sulkeuma
-    let raja = 5_000;
-    let isot = |t: &&Tilaus| t.summa_snt >= raja; // sieppaa rajan
-    let mut nimet: Vec<&str> =
-        tilaukset.iter().filter(isot).map(|t| t.asiakas).collect();
-    nimet.sort_unstable();
-    nimet.dedup();
-    println!("{nimet:?}");
-    // @loppu sulkeuma
 }

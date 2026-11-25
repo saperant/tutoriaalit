@@ -104,6 +104,34 @@ func ExampleVarasto() {
 
 // @loppu esimerkki
 
+// @alku esimerkit
+// Nimi ExampleVarasto_Ota liittää esimerkin metodiin Varasto.Ota.
+func ExampleVarasto_Ota() {
+	var v varasto.Varasto
+	_ = v.Lisaa("FI-7", 5)
+	err := v.Ota("FI-7", 9)
+	fmt.Println(errors.Is(err, varasto.ErrSaldoEiRiita))
+	// Output: true
+}
+
+// Example_toimitus on koko paketin esimerkki, jonka loppuosa
+// "toimitus" erottaa sen muista. Kartan läpikäyntijärjestys vaihtelee,
+// joten tulosteen rivit saavat tulla missä järjestyksessä tahansa.
+func Example_toimitus() {
+	var v varasto.Varasto
+	toimitus := map[string]int{"FI-7": 5, "SE-2": 4}
+	for tunnus, maara := range toimitus {
+		if err := v.Lisaa(tunnus, maara); err == nil {
+			fmt.Println("lisätty", tunnus)
+		}
+	}
+	// Unordered output:
+	// lisätty SE-2
+	// lisätty FI-7
+}
+
+// @loppu esimerkit
+
 // @alku vertailu
 func BenchmarkLisaa(b *testing.B) {
 	var v varasto.Varasto

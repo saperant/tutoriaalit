@@ -47,4 +47,13 @@ func main() {
 	q.Y = 0 // sama kuin (*q).Y = 0
 	fmt.Println(*p, p == q)
 	// @loppu osoitin
+
+	// @alku new
+	laskuri := new(int) // *int, joka osoittaa nolla-arvoon
+	*laskuri += 2
+	jono := make([]int, 2, 8)      // viipale: pituus 2, kapasiteetti 8
+	hinnat := make(map[string]int) // tyhjä kartta, johon voi kirjoittaa
+	hinnat["kahvi"] = 350
+	fmt.Println(*laskuri, len(jono), cap(jono), hinnat)
+	// @loppu new
 }

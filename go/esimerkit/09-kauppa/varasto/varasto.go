@@ -1,5 +1,3 @@
-// Package varasto pitää kirjaa tuotteiden saldoista. Varasto on
-// turvallinen käyttää useasta goroutinesta.
 package varasto
 
 // @alku tuonnit
@@ -16,7 +14,8 @@ import (
 // @loppu tuonnit
 
 // @alku tyyppi
-// Virheet, joihin kutsuja voi verrata errors.Is-funktiolla.
+
+// Virheet, joihin kutsuja voi verrata [errors.Is]-funktiolla.
 var (
 	ErrTuntematon   = errors.New("tuntematon tuote")
 	ErrSaldoEiRiita = errors.New("saldo ei riitä")
@@ -53,7 +52,12 @@ func (v *Varasto) Lisaa(t string, maara int) error {
 }
 
 // @alku ota
-// Ota vähentää saldoa. Saldo ei voi mennä negatiiviseksi.
+
+// Ota vähentää tuotteen saldoa määrän verran.
+//
+// Saldo ei voi mennä negatiiviseksi: jos määrä ylittää saldon, Ota
+// palauttaa virheen [ErrSaldoEiRiita] eikä muuta saldoa. Tuntemattomalle
+// tuotteelle virhe on [ErrTuntematon].
 func (v *Varasto) Ota(t string, maara int) error {
 	t, err := tarkista(t, maara)
 	if err != nil {

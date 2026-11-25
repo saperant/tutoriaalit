@@ -2,7 +2,10 @@
 
 Go:n työkalut tulevat kielen mukana, ja niiden käyttö on yhtenäistä
 kaikissa projekteissa: `go build`, `go test`, `go vet` ja `gofmt` toimivat
-samoin jokaisessa moduulissa ilman asetustiedostoja.
+samoin jokaisessa moduulissa ilman asetustiedostoja. Yleiset testauksen
+ja jatkuvan integraation käytännöt käsitellään taidossa
+*Käännösjärjestelmät, testaus ja CI*; tämä luku näyttää Go:n välineet
+luvun 9 esimerkkimoduulilla.
 
 ## Käännös
 
@@ -20,6 +23,15 @@ samoin jokaisessa moduulissa ilman asetustiedostoja.
 Ristikäännös on Go:n vahvuus: yksi komento tuottaa ohjelman toiselle
 käyttöjärjestelmälle ja arkkitehtuurille. Konttikuvaan riittää yksi
 staattinen tiedosto ilman käyttöjärjestelmän kirjastoja.
+
+Kaksi kommenttimuotoista direktiiviä liittyy käännökseen. `//go:embed
+polku` muuttujan esittelyn yläpuolella upottaa tiedoston tai hakemiston
+sisällön ohjelmaan käännösaikana (paketti `embed`), joten mallipohjat,
+SQL-migraatiot ja staattiset verkkotiedostot kulkevat samassa
+tiedostossa kuin ohjelma. `//go:generate komento` kirjaa komennon,
+jolla tiedoston generoitu koodi tuotetaan. `go build` ei aja sitä,
+vaan kehittäjä ajaa `go generate ./...` ja tallentaa tuloksen
+versionhallintaan.
 
 ## Laadun tarkistus
 
@@ -90,6 +102,28 @@ vanhene:
 ```{.go tiedosto="esimerkit/09-kauppa/varasto/varasto_test.go" osa="esimerkki"}
 ```
 
+Esimerkki liitetään dokumentoitavaan nimeen funktion nimellä:
+
+| Funktion nimi | Dokumentoi |
+|---------------|------------|
+| `Example` | koko paketin |
+| `ExampleVarasto` | tyypin `Varasto` |
+| `ExampleVarasto_Ota` | metodin `Varasto.Ota` |
+| `ExampleNormalisoi` | funktion `Normalisoi` |
+| `Example_toimitus`, `ExampleVarasto_toinen` | saman kohteen lisäesimerkki; loppuosa alkaa pienellä kirjaimella |
+
+Kun tulosteen rivien järjestys ei ole määrätty, kommentti on
+`// Unordered output:`, ja rivejä verrataan joukkona. Esimerkki ilman
+`Output`-kommenttia käännetään mutta sitä ei ajeta.
+
+```{.go tiedosto="esimerkit/09-kauppa/varasto/varasto_test.go" osa="esimerkit"}
+```
+
+Esimerkkifunktio on Go:n vastine muiden kielten dokumentaatiotesteille
+(Pythonin `doctest`, Rustin doctestit): dokumentaation esimerkki on
+samalla testi. Dokumentaatiokommentit käsiteltiin luvussa 9 ja
+dokumentaation testaus yleisemmin taidossa *Tekninen dokumentaatio*.
+
 Pitkät odotetut tulosteet ovat tiedostoissa hakemistossa `testdata`.
 Lippu `-paivita` kirjoittaa ne uudelleen, kun muutos on tarkoituksellinen,
 ja muutos tarkistetaan versionhallinnan erona:
@@ -136,6 +170,10 @@ raportoi allokaatiot:
 $ go test -run '^$' -bench . -benchmem ./varasto
 BenchmarkLisaa-4   29735126    37.49 ns/op    0 B/op   0 allocs/op
 ```
+
+Go 1.24:stä alkaen silmukka kirjoitetaan `for b.Loop() { ... }`.
+Se ajaa alustuksen vain kerran ja estää kääntäjää poistamasta
+mitattavaa koodia; `b.N`-silmukka toimii edelleen.
 
 Mittaukset vaihtelevat, joten muutosta verrataan useamman ajon
 tilastolla: `go test -bench . -count=10 > uusi.txt` ja
@@ -198,7 +236,8 @@ pyynnön tunnisteen:
 - Osaat kääntää ohjelman toiselle alustalle ja liittää siihen
   versiotiedon käännöksessä.
 - Osaat kirjoittaa taulukkotestejä alitesteineen, testiapureita ja
-  esimerkkifunktioita.
+  esimerkkifunktioita ja nimetä esimerkin niin, että se liittyy oikeaan
+  tyyppiin tai metodiin.
 - Osaat käyttää kultaisia tiedostoja ja fuzz-testausta.
 - Osaat kirjoittaa vertailuajon, mitata allokaatiot ja profiloida
   ohjelman `pprof`-työkalulla.

@@ -22,8 +22,10 @@ mitä arvo sisältää:
 ```{.go tiedosto="esimerkit/05-arvot.go" osa="kopiot"}
 ```
 
-```{.tuloste tiedosto="esimerkit/05-arvot.odotettu"}
+```{.tuloste tiedosto="esimerkit/05-arvot.odotettu" rivit="1-3"}
 ```
+
+Metodit `Siirra` ja `SiirraPaikallaan` näytetään seuraavassa osiossa.
 
 ## Osoittimet
 
@@ -34,6 +36,23 @@ muuttujan osoitteen voi palauttaa turvallisesti; kääntäjä siirtää
 muuttujan kekoon tarvittaessa.
 
 ```{.go tiedosto="esimerkit/05-arvot.go" osa="osoitin"}
+```
+
+```{.tuloste tiedosto="esimerkit/05-arvot.odotettu" rivit="4-4"}
+```
+
+Arvoja luodaan kolmella tavalla. Koosteliteraali `&Piste{3, 4}` on
+tavallisin: se luo arvon ja palauttaa sen osoitteen. `new(T)` varaa
+tyypin `T` nolla-arvon ja palauttaa osoittimen siihen; sitä tarvitaan
+lähinnä perustyypeille, joille koosteliteraalia ei ole. `make` on
+erikseen viipaleille, kartoille ja kanaville, koska ne ovat otsakkeita,
+joiden takana oleva tietorakenne on alustettava ennen käyttöä. `make`
+palauttaa arvon, ei osoitinta:
+
+```{.go tiedosto="esimerkit/05-arvot.go" osa="new"}
+```
+
+```{.tuloste tiedosto="esimerkit/05-arvot.odotettu" rivit="5-5"}
 ```
 
 Metodin vastaanottaja on joko arvo tai osoitin. Arvovastaanottaja saa
@@ -146,6 +165,8 @@ suoritusajankohta on määrittelemätön.
 - Osaat kertoa, mitä sijoitus kopioi rakenteelle, taulukolle,
   viipaleelle, kartalle ja osoittimelle.
 - Osaat valita arvo- ja osoitinvastaanottajan välillä perustellusti.
+- Osaat kertoa, milloin arvo luodaan koosteliteraalilla, milloin
+  `new`-funktiolla ja milloin `make`-funktiolla.
 - Osaat selittää pakoanalyysin ja tarkistaa sen tulokset lipulla
   `-gcflags=-m`.
 - Osaat mitata allokaatioita ja vähentää niitä esivaraamalla.

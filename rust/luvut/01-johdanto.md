@@ -53,7 +53,9 @@ paketeittain, ja eri painoksia käyttävät paketit toimivat yhdessä.
 Tämän tutoriaalin esimerkit on testattu Rust 1.80:llä ja painoksella
 2021, jotka ovat Ubuntu 24.04:n pakettivarastossa. Uudemmat versiot
 kääntävät esimerkit sellaisinaan. Kun teksti mainitsee uudemman version
-ominaisuuden, se kerrotaan.
+ominaisuuden, se kerrotaan. Painos 2024 (Rust 1.85 ja uudemmat) on
+uusien projektien oletus. Tämän tutoriaalin aiheista se muuttaa
+lähinnä `unsafe`-koodin merkintöjä, ja erot kerrotaan luvussa 12.
 
 Kieltä ei ole standardoitu ISO-standardiksi. Viitetoteutus on `rustc`,
 jonka taustana on LLVM. Kieliviite (*The Rust Reference*) ja
@@ -87,7 +89,9 @@ clippy-driver --edition 2021 -D warnings -D clippy::all \
 
 Cargo-projektissa sama tehdään komennoilla `cargo clippy -- -D warnings`
 ja `cargo run`. Kehityskontissa (`.devcontainer/rust`) työkalut ovat
-valmiina.
+valmiina; kontin avaaminen neuvotaan taidossa *Kehitysympäristöt ja Dev
+Containers*. Komento `make testaa` paketin juuressa kääntää ja ajaa
+kaikki esimerkit ja vertaa tulosteet tallennettuihin.
 
 ## Ensimmäinen ohjelma
 
@@ -131,6 +135,29 @@ Ohjelmassa ei varata eikä vapauteta muistia käsin, vaikka merkkijonot ja
 hakemisto ovat keossa: arvot vapautuvat, kun niiden omistaja poistuu
 näkyvyysalueelta.
 
+## Esitiedot ja rajaus
+
+Esitieto on taito *C-kieli*: lukijan oletetaan tuntevan osoittimet,
+pinon ja keon eron sekä käännöksen ja linkityksen pääpiirteet.
+Tutoriaali vertaa Rustia jatkuvasti C:hen ja C++:aan, koska Rustin
+säännöt on helpointa ymmärtää niiden virheiden kautta, jotka säännöt
+estävät. C++:aa ei tarvitse osata; vertailut siihen ovat lisätietoa.
+
+Tutoriaali opettaa kielen ja sen työkalut. Yleiset aiheet käsitellään
+omissa taidoissaan, ja luvut viittaavat niihin:
+
+| Aihe | Taito |
+|------|-------|
+| tietorakenteiden ja algoritmien teoria | *Tietorakenteet*, *Algoritmit* |
+| säikeiden, lukkojen ja muistimallin yleiset käsitteet | *Rinnakkaisohjelmointi* |
+| mittaaminen ja optimointi | *Suorituskyvyn analyysi ja optimointi* |
+| linkitys ja binäärirajapinnat | *Objektitiedostot, linkitys ja ABI* |
+| testauksen ja CI:n yleiset käytännöt | *Käännösjärjestelmät, testaus ja CI* |
+| dokumentaation suunnittelu ja julkaisu | *Tekninen dokumentaatio* |
+
+Verkkopalvelut, tietokannat ja sulautetut järjestelmät Rustilla jäävät
+tutoriaalin ulkopuolelle; viimeinen luku kertoo, mistä jatkaa.
+
 ## Tutoriaalin rakenne
 
 Luku 2 on tarkoitettu kokeneelle C- tai C++-kehittäjälle, joka haluaa
@@ -141,7 +168,3 @@ Luvuissa 6–9 käsitellään kokoelmat, piirteet, virheenkäsittely ja
 älykkäät osoittimet, luvuissa 10–12 modulit, säikeet ja `unsafe`-koodi
 C-rajapintoineen ja luvussa 13 työkalut. Luku 14 kokoaa idiomit ja
 lähteet.
-
-Taitopuussa Rustin esitieto on *C-kieli*. Tutoriaali vertaa Rustia
-jatkuvasti C:hen ja C++:aan, koska Rustin säännöt on helpointa
-ymmärtää niiden virheiden kautta, jotka säännöt estävät.

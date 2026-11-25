@@ -69,6 +69,21 @@ kaikki lähettäjät on vapautettu:
 ```{.tuloste tiedosto="esimerkit/11-kanava.odotettu"}
 ```
 
+```{.dot otsikko="Työjonon rakenne. Pääsäie lähettää työt yhteen kanavaan, jonka vastaanottopään työläiset jakavat lukon takana. Jokaisella työläisellä on oma kopionsa tuloskanavan lähetyspäästä. Kanava sulkeutuu, kun sen kaikki lähetyspäät on vapautettu."}
+digraph {
+  rankdir=TB; nodesep=0.4; ranksep=0.35;
+  paa [label="pääsäie\ntyo_tx"];
+  jono [label="työkanava\nArc<Mutex<Receiver>>", shape=cylinder];
+  t1 [label="työläinen 1"]; t2 [label="työläinen 2"]; t3 [label="työläinen 3"];
+  tulos [label="tuloskanava\ntulos_rx", shape=cylinder];
+  keraa [label="pääsäie\ntulos_rx.iter()"];
+  paa -> jono [label="send"];
+  jono -> t1 [label="recv"]; jono -> t2; jono -> t3;
+  t1 -> tulos [label="send"]; t2 -> tulos; t3 -> tulos;
+  tulos -> keraa;
+}
+```
+
 Työjonon vastaanottaja on yksi, joten työläiset jakavat sen
 `Arc<Mutex<Receiver>>`-rakenteella. Kaksi `drop`-kutsua ovat olennaisia:
 jos alkuperäinen `tulos_tx` jäisi eloon, `tulos_rx.iter()` odottaisi
@@ -129,6 +144,19 @@ pienin mahdollinen suorittaja, joka näyttää mekanismin:
 ```
 
 ```{.tuloste tiedosto="esimerkit/11-async.odotettu"}
+```
+
+```{.dot otsikko="Yksi odotuskierros. Suorittaja kutsuu `poll`-metodia (1). Future ei ole valmis, joten se jättää herättäjän tapahtumalähteelle ja palauttaa `Pending` (2). Suorittaja nukkuu, kunnes tapahtumalähde kutsuu herättäjää (3), ja kysyy sitten uudelleen (4). Esimerkissä `Vuoro` kutsuu herättäjää itse heti."}
+digraph {
+  rankdir=TB; nodesep=1.2; ranksep=0.7;
+  s [label="suorittaja\n(suorita)"];
+  f [label="future\n(async fn -tilakone)"];
+  t [label="tapahtumalähde\n(I/O, ajastin)"];
+  s -> f [label=" 1: poll(cx)\l 4: poll(cx)\l"];
+  f -> s [label=" 2: Pending\l 4: Ready(arvo)\l"];
+  f -> t [label=" 2: herättäjä talteen"];
+  t -> s [label=" 3: wake()", constraint=false];
+}
 ```
 
 Käytännössä suorittaja on kirjasto, useimmiten Tokio. Se tarjoaa

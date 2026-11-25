@@ -37,10 +37,30 @@ korvaa C:n `goto`-lauseen ja lippumuuttujat:
 
 Funktion parametrien ja paluuarvon tyypit kirjoitetaan aina näkyviin.
 Paluuarvo on funktion viimeinen lauseke, tai se palautetaan
-`return`-lauseella aiemmin. Funktioita ei voi kuormittaa (*overload*),
-eikä parametreilla ole oletusarvoja. Niiden tilalla käytetään eri
-nimiä, `Option`-parametreja tai rakentajaa (luku 7). Funktio, joka ei
-palaa koskaan, palauttaa tyypin `!` (esim. `std::process::exit`).
+`return`-lauseella aiemmin. Useita arvoja palautetaan monikkona, jonka
+kutsuja purkaa `let`-lauseessa:
+
+```{.rust tiedosto="esimerkit/04-funktiot.rs" osa="funktiot"}
+```
+
+Funktioita ei voi kuormittaa (*overload*), eikä parametreilla ole
+oletusarvoja. Niiden tilalla käytetään eri nimiä, `Option`-parametreja
+tai rakentajaa (luku 7). Funktio, joka ei palaa koskaan, palauttaa
+tyypin `!` (esim. `std::process::exit`).
+
+Funktio on myös arvo. Tyyppi `fn(f64) -> f64` on funktio-osoitin kuten
+C:n `double (*)(double)`, ja sen paikalle kelpaa nimetty funktio, metodi
+tai *sulkeuma* (*closure*) `|x| lauseke`, joka ei käytä ympäristönsä
+muuttujia. Ympäristöään sieppaavat sulkeumat käsitellään luvussa 6.
+
+```{.rust tiedosto="esimerkit/04-funktiot.rs" osa="osoitin"}
+```
+
+```{.rust tiedosto="esimerkit/04-funktiot.rs" osa="kaytto"}
+```
+
+```{.tuloste tiedosto="esimerkit/04-funktiot.odotettu"}
+```
 
 ## enum: merkitty unioni
 
@@ -55,6 +75,20 @@ tapahtumat ovat omat tyyppinsä, ja siirtymäfunktio käsittelee
 tila–tapahtuma-parit yhdessä `match`-lausekkeessa:
 
 ```{.rust tiedosto="esimerkit/04-tilakone.rs" osa="tilat"}
+```
+
+```{.dot otsikko="Funktion `siirtyma` tilat ja siirtymät. Kaaren nimi on tapahtuma ja hakasulkeissa hahmon ehto. Yhdistelmät, joita kuvassa ei ole, jättävät tilan ennalleen."}
+digraph {
+  rankdir=LR; nodesep=0.5; ranksep=1.1;
+  Suljettu; Yhdistaa [label="Yhdistaa\n{ yritykset }"];
+  Auki [label="Auki\n{ istunto }"];
+  Suljettu -> Yhdistaa [label="Avaa"];
+  Yhdistaa -> Auki [label="Onnistui(istunto)"];
+  Yhdistaa -> Yhdistaa [label="Epaonnistui\n[yritykset < 3]"];
+  Yhdistaa -> Suljettu [label="Epaonnistui\n[yritykset = 3]"];
+  Yhdistaa -> Suljettu [label="Sulje"];
+  Auki -> Suljettu [label="Sulje"];
+}
 ```
 
 - Muunnelmalla voi olla nimettyjä kenttiä (`Yhdistaa { yritykset }`),
@@ -157,3 +191,5 @@ joten virheiden käsittely ei peitä jäsentimen rakennetta.
   kanssa, ja mitä `#[non_exhaustive]` tekee.
 - Osaat käyttää `loop`-, `while let`- ja `for`-silmukoita sekä
   nimiöityä `break`-lausetta.
+- Osaat kirjoittaa funktion, joka palauttaa monikon, ja välittää
+  funktion toiselle funktiolle funktio-osoittimena.

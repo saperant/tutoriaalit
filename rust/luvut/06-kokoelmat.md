@@ -3,7 +3,9 @@
 Standardikirjaston kokoelmat ovat `std::collections`-modulissa, ja ne
 kaikki toimivat iteraattoreiden kanssa. Iteraattorit ovat Rustin
 tärkein abstraktio datan käsittelyyn: ne korvaavat indeksisilmukat ja
-kääntyvät yhtä tehokkaaksi koodiksi.
+kääntyvät yhtä tehokkaaksi koodiksi. Luku esittelee ensin kokoelmat ja
+sulkeumat, joita iteraattorien metodit käyttävät, ja sitten
+iteraattorit, hajautustaulun ja merkkijonot.
 
 ## Kokoelmat
 
@@ -20,6 +22,39 @@ kääntyvät yhtä tehokkaaksi koodiksi.
 haku avaimella, järjestys tai jonon molemmat päät. Kokoelmien yleiset
 ominaisuudet käsitellään taitopuun taidoissa *Tietorakenteet* ja
 *Algoritmit*; tässä luvussa keskitytään Rustin rajapintoihin.
+
+## Sulkeumat
+
+Kokoelmien ja iteraattorien metodit ottavat parametrikseen *sulkeumia*.
+Sulkeuma (*closure*) `|x| lauseke` on nimetön funktio, joka voi siepata
+ympäristönsä muuttujia. Kääntäjä valitsee sieppaustavan sen mukaan,
+mitä sulkeuma muuttujalla tekee, ja sieppaus noudattaa luvun 5
+lainaussääntöjä. Sulkeuman tyyppi toteuttaa yhden tai useamman
+kolmesta piirteestä:
+
+| Piirre | Sulkeuma | Sieppaus | Kutsut |
+|--------|----------|----------|--------|
+| `Fn` | vain lukee | jaettu lainaus | monta, myös rinnakkain |
+| `FnMut` | muuttaa siepattua arvoa | muokkaava lainaus | monta, yksi kerrallaan |
+| `FnOnce` | luovuttaa siepatun arvon | siirto | yksi |
+
+Funktio, joka ottaa sulkeuman parametrina, valitsee piirteistä
+väljimmän, joka sille riittää. `move`-sana siirtää siepatut arvot
+sulkeuman omistukseen. Sitä tarvitaan, kun sulkeuma elää luontipaikkaansa
+pidempään: paluuarvona tai toisessa säikeessä (luku 11).
+
+```{.rust tiedosto="esimerkit/06-sulkeumat.rs" osa="parametri"}
+```
+
+```{.rust tiedosto="esimerkit/06-sulkeumat.rs" osa="kaytto"}
+```
+
+```{.tuloste tiedosto="esimerkit/06-sulkeumat.odotettu"}
+```
+
+Jokaisella sulkeumalla on oma nimetön tyyppinsä, joten kaksi samalta
+näyttävää sulkeumaa ovat eri tyyppiä. Sulkeuma, joka ei sieppaa mitään,
+kelpaa myös funktio-osoittimeksi (luku 4).
 
 ## Iteraattorit
 
@@ -44,6 +79,9 @@ käyvät iteraattorin läpi:
 ```{.rust tiedosto="esimerkit/06-iteraattorit.rs" osa="koosteet"}
 ```
 
+```{.tuloste tiedosto="esimerkit/06-iteraattorit.odotettu" rivit="1-2"}
+```
+
 `collect` rakentaa minkä tahansa kokoelman, joka toteuttaa
 `FromIterator`-piirteen. Kohdetyyppi annetaan muuttujan tyyppinä tai
 *turbokalamuodossa* `collect::<Vec<_>>()`.
@@ -53,6 +91,9 @@ Viipaleilla on lisäksi ikkunoita ja paloja käsittelevät iteraattorit:
 ```{.rust tiedosto="esimerkit/06-iteraattorit.rs" osa="ikkunat"}
 ```
 
+```{.tuloste tiedosto="esimerkit/06-iteraattorit.odotettu" rivit="3-4"}
+```
+
 Iteraattorit ovat *laiskoja*: sovittimet eivät tee mitään ennen kuin
 kuluttaja pyytää alkioita. Siksi päättymätön lukuväli `1..` on
 käyttökelpoinen, kun `find` lopettaa ensimmäiseen osumaan:
@@ -60,18 +101,7 @@ käyttökelpoinen, kun `find` lopettaa ensimmäiseen osumaan:
 ```{.rust tiedosto="esimerkit/06-iteraattorit.rs" osa="laiska"}
 ```
 
-## Sulkeumat
-
-Sulkeuma (*closure*) `|x| lauseke` on nimetön funktio, joka voi siepata
-ympäristönsä muuttujia. Kääntäjä valitsee sieppaustavan käytön
-mukaan: lainaus, muokkaava lainaus tai siirto (`move |x| ...`).
-Sulkeumalla on oma tyyppinsä, ja se toteuttaa piirteen `Fn`, `FnMut`
-tai `FnOnce` sen mukaan, mitä se tekee siepatuille arvoille.
-
-```{.rust tiedosto="esimerkit/06-iteraattorit.rs" osa="sulkeuma"}
-```
-
-```{.tuloste tiedosto="esimerkit/06-iteraattorit.odotettu"}
+```{.tuloste tiedosto="esimerkit/06-iteraattorit.odotettu" rivit="5-5"}
 ```
 
 ## Hajautustaulu ja entry-rajapinta
@@ -174,6 +204,8 @@ käyttöjärjestelmän nimille, jotka eivät välttämättä ole UTF-8:aa, sekä
   kuluttaja, ja kertoa, milloin muistia varataan.
 - Osaat erottaa `iter`-, `iter_mut`- ja `into_iter`-metodit ja niiden
   alkioiden tyypit.
+- Osaat kirjoittaa funktion, joka ottaa tai palauttaa sulkeuman, ja
+  valita rajaksi `Fn`-, `FnMut`- tai `FnOnce`-piirteen.
 - Osaat käyttää `entry`-rajapintaa laskentaan ja ryhmittelyyn.
 - Osaat käsitellä UTF-8-merkkijonoja ilman indeksointia ja selittää
   `String`- ja `&str`-tyyppien eron.

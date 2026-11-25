@@ -28,6 +28,7 @@ tarkistaa.
 | Lukko omistaa datan | lukon ottamista ei voi unohtaa | 11 |
 | Turvallinen kääre `unsafe`-koodille | muistiturvallisuuden kapselointi | 12 |
 | `-sys`-crate ja kääre-crate | C-kirjaston käyttö Rustista | 12 |
+| Dokumentaatiotesti | esimerkit, jotka eivät vanhene | 13 |
 
 ## Nyrkkisäännöt
 
@@ -87,6 +88,21 @@ vakiintuneessa ulkoisessa kirjastossa. Kirjastoja voi selata osoitteissa
 | satunnaisluvut | `rand` |
 | säännölliset lausekkeet | `regex` |
 
+## Jatkotaidot
+
+Tästä edetään taitopuussa aiheen mukaan:
+
+- *Rinnakkaisohjelmointi*: säikeiden, lukkojen ja muistimallin yleinen
+  teoria, jota luku 11 sovelsi.
+- *Suorituskyvyn analyysi ja optimointi*: mittaaminen ja profilointi.
+- *Objektitiedostot, linkitys ja ABI*: mitä luvun 12 C-rajapinnan alla
+  tapahtuu.
+- *Verkko-ohjelmointi* ja *Mikrokontrollerit ja bare-metal-ohjelmointi*:
+  sovellusalueet, joissa Rustia käytetään paljon (jälkimmäisessä
+  `no_std`-ympäristössä).
+- *Tekninen dokumentaatio*: luvun 13 dokumentaatiotyökalujen yleiset
+  periaatteet.
+
 ## Lähteet ja jatkolukeminen
 
 - **The Rust Programming Language** ("The Book"), Steve Klabnik ja
@@ -120,6 +136,3 @@ vakiintuneessa ulkoisessa kirjastossa. Kirjastoja voi selata osoitteissa
 - **Jon Gjengset: Rust for Rustaceans** (No Starch Press 2021).
   Jatkokurssi kokeneelle Rust-ohjelmoijalle.
 
-Taitopuussa Rustia hyödyntävät muun muassa taidot *Rinnakkaisohjelmointi*,
-*Suorituskyvyn analyysi ja optimointi*, *Verkko-ohjelmointi* ja
-*Mikrokontrollerit ja bare-metal-ohjelmointi* (`no_std`-ympäristö).

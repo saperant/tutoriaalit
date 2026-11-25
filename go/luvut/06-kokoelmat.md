@@ -15,12 +15,79 @@ pituus ja kapasiteetti. Viipaleen viipalointi ei kopioi dataa:
 ```{.go tiedosto="esimerkit/06-viipaleet.go" osa="otsake"}
 ```
 
+```{.tuloste tiedosto="esimerkit/06-viipaleet.odotettu" rivit="1-2"}
+```
+
+```{.dot otsikko="Viipale on otsake, joka osoittaa taustataulukkoon. `data` ja `osa` jakavat saman taulukon: `osa` alkaa indeksistä 1, joten sen kapasiteetti on neljä. Sijoitus `osa[0] = 7` näkyy siksi myös `data`-viipaleessa. Harmaat alkiot ovat kapasiteettia pituuden takana."}
+digraph {
+  rankdir=TB; nodesep=0.7; ranksep=0.6;
+  node [shape=plain, style=""];
+  d [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left" colspan="3"><i>data</i></td></tr>
+    <tr><td port="p" bgcolor="#EEF1F6">osoitin</td><td port="l" bgcolor="#EEF1F6">pituus 3</td><td port="c" bgcolor="#EEF1F6">kapasiteetti 5</td></tr></table>>];
+  o [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left" colspan="3"><i>osa = data[1:3]</i></td></tr>
+    <tr><td port="p" bgcolor="#EEF1F6">osoitin</td><td port="l" bgcolor="#EEF1F6">pituus 2</td><td port="c" bgcolor="#EEF1F6">kapasiteetti 4</td></tr></table>>];
+  t [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td port="c0" bgcolor="#FFFFFF" width="34">0</td><td port="c1" bgcolor="#FFFFFF" width="34">7</td><td port="c2" bgcolor="#FFFFFF" width="34">0</td><td port="c3" bgcolor="#E5E7EB" width="34">0</td><td port="c4" bgcolor="#E5E7EB" width="34">0</td></tr>
+    <tr><td border="0"><font point-size="8">0</font></td><td border="0"><font point-size="8">1</font></td><td border="0"><font point-size="8">2</font></td><td border="0"><font point-size="8">3</font></td><td border="0"><font point-size="8">4</font></td></tr>
+    <tr><td border="0" align="left" colspan="5"><i>taustataulukko [5]int</i></td></tr></table>>];
+  d:p:s -> t:c0:n;
+  o:p:s -> t:c1:n;
+}
+```
+
 `append` lisää alkion. Jos kapasiteettia on jäljellä, alkio kirjoitetaan
 samaan taustataulukkoon; muuten varataan uusi, suurempi taulukko ja data
 kopioidaan. Tästä seuraa Go:n tunnetuin viipalesudenkuoppa: `append`
 lyhyempään viipaleeseen voi kirjoittaa toisen viipaleen alkion päälle.
 
 ```{.go tiedosto="esimerkit/06-viipaleet.go" osa="sudenkuoppa"}
+```
+
+```{.tuloste tiedosto="esimerkit/06-viipaleet.odotettu" rivit="3-4"}
+```
+
+```{.dot otsikko="`append`-sudenkuoppa: `alku := pohja[:2]` on pituudeltaan kaksi, mutta sen kapasiteetti ulottuu taulukon loppuun. `append(alku, \"UUSI\")` mahtuu, joten se kirjoittaa samaan taulukkoon alkion `c` päälle, ja muutos näkyy `pohja`-viipaleessa."}
+digraph {
+  rankdir=TB; nodesep=0.7; ranksep=0.6;
+  node [shape=plain, style=""];
+  p [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left" colspan="3"><i>pohja</i></td></tr>
+    <tr><td port="p" bgcolor="#EEF1F6">osoitin</td><td port="l" bgcolor="#EEF1F6">pituus 4</td><td port="c" bgcolor="#EEF1F6">kapasiteetti 4</td></tr></table>>];
+  a [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left" colspan="3"><i>alku (append-kutsun jälkeen)</i></td></tr>
+    <tr><td port="p" bgcolor="#EEF1F6">osoitin</td><td port="l" bgcolor="#EEF1F6">pituus 3</td><td port="c" bgcolor="#EEF1F6">kapasiteetti 4</td></tr></table>>];
+  ta [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td port="c0" bgcolor="#FFFFFF" width="40">a</td><td port="c1" bgcolor="#FFFFFF" width="40">b</td><td port="c2" bgcolor="#F8D7DA" width="40">UUSI</td><td port="c3" bgcolor="#FFFFFF" width="40">d</td></tr>
+    <tr><td border="0"><font point-size="8">0</font></td><td border="0"><font point-size="8">1</font></td><td border="0"><font point-size="8">2</font></td><td border="0"><font point-size="8">3</font></td></tr>
+    <tr><td border="0" align="left" colspan="4"><i>yhteinen taustataulukko</i></td></tr></table>>];
+  p:p:s -> ta:c0:n;
+  a:p:s -> ta:c0:n;
+}
+```
+
+```{.dot otsikko="Täysi viipalelauseke `pohja[:2:2]` rajaa kapasiteetin kahteen. `append(rajattu, \"erillinen\")` ei mahdu, joten se varaa uuden taulukon ja kopioi alkiot sinne. `pohja` ja sen taulukko eivät muutu."}
+digraph {
+  rankdir=TB; nodesep=0.7; ranksep=0.6;
+  node [shape=plain, style=""];
+  p [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left" colspan="3"><i>pohja</i></td></tr>
+    <tr><td port="p" bgcolor="#EEF1F6">osoitin</td><td port="l" bgcolor="#EEF1F6">pituus 4</td><td port="c" bgcolor="#EEF1F6">kapasiteetti 4</td></tr></table>>];
+  r [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left" colspan="3"><i>rajattu (append-kutsun jälkeen)</i></td></tr>
+    <tr><td port="p" bgcolor="#EEF1F6">osoitin</td><td port="l" bgcolor="#EEF1F6">pituus 3</td><td port="c" bgcolor="#EEF1F6">kapasiteetti 4</td></tr></table>>];
+  tc [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td port="c0" bgcolor="#FFFFFF" width="40">a</td><td port="c1" bgcolor="#FFFFFF" width="40">b</td><td port="c2" bgcolor="#FFFFFF" width="40">UUSI</td><td port="c3" bgcolor="#FFFFFF" width="40">d</td></tr>
+    <tr><td border="0"><font point-size="8">0</font></td><td border="0"><font point-size="8">1</font></td><td border="0"><font point-size="8">2</font></td><td border="0"><font point-size="8">3</font></td></tr>
+    <tr><td border="0" align="left" colspan="4"><i>pohjan taustataulukko</i></td></tr></table>>];
+  tb [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td port="c0" bgcolor="#FFFFFF" width="48">a</td><td port="c1" bgcolor="#FFFFFF" width="48">b</td><td port="c2" bgcolor="#FFFFFF" width="48">erillinen</td><td port="c3" bgcolor="#E5E7EB" width="48"> </td></tr>
+    <tr><td border="0"><font point-size="8">0</font></td><td border="0"><font point-size="8">1</font></td><td border="0"><font point-size="8">2</font></td><td border="0"><font point-size="8">3</font></td></tr>
+    <tr><td border="0" align="left" colspan="4"><i>uusi taulukko</i></td></tr></table>>];
+  p:p:s -> tc:c0:n;
+  r:p:s -> tb:c0:n;
+}
 ```
 
 Täysi viipalelauseke `s[alku:loppu:max]` rajaa kapasiteetin, jolloin
@@ -34,12 +101,15 @@ mutta tulos on aina sijoitettava takaisin:
 ```{.go tiedosto="esimerkit/06-viipaleet.go" osa="kasvu"}
 ```
 
+```{.tuloste tiedosto="esimerkit/06-viipaleet.odotettu" rivit="5-5"}
+```
+
 `slices`-paketti kattaa tavalliset toimenpiteet:
 
 ```{.go tiedosto="esimerkit/06-viipaleet.go" osa="kopio"}
 ```
 
-```{.tuloste tiedosto="esimerkit/06-viipaleet.odotettu"}
+```{.tuloste tiedosto="esimerkit/06-viipaleet.odotettu" rivit="6-7"}
 ```
 
 Nil-viipale (`var s []int`) ja tyhjä viipale (`[]int{}`) toimivat
@@ -139,6 +209,8 @@ joten I/O-koodi voi pysyä tavuissa ilman muunnoksia.
 
 Go 1.23 toi omat iteraattorit: funktio, jonka tyyppi on
 `func(yield func(T) bool)` (`iter.Seq[T]`), kelpaa `range`-lauseeseen.
+Hakasulkeissa oleva `T` on tyyppiparametri: sama määrittely toimii
+mille tahansa alkiotyypille (luku 7).
 Silmukan runko on `yield`-funktio, ja `break` näkyy iteraattorille
 `yield`-kutsun palauttamana `false`-arvona:
 
@@ -196,9 +268,9 @@ viisi metodia, ja paketti ylläpitää kekoehtoa:
 
 ## Käytännössä
 
-- **Esivaraa kapasiteetti**, kun alkioiden määrä tiedetään:
-  `make([]T, 0, n)`. Älä käytä `make([]T, n)` ja `append`-kutsua
-  yhdessä, sillä tulos alkaa `n` nolla-arvolla.
+- **`make([]T, n)` ja `append` eivät kuulu yhteen.** Esivaraus
+  (luku 5) kirjoitetaan `make([]T, 0, n)`. `make([]T, n)` luo `n`
+  nolla-arvoa, ja `append` lisää uudet alkiot niiden perään.
 - **Palauta kopio sisäisestä viipaleesta**, jos kutsuja ei saa muuttaa
   olion tilaa. Ota vastaan viipale ja tallenna se vain, jos dokumentoit
   omistuksen siirtyvän.

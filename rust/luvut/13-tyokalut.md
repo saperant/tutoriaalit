@@ -90,9 +90,78 @@ moduli merkitään `#[cfg(test)]`.
 | Integraatiotesti | `tests/*.rs`, oma crate | vain julkisen rajapinnan |
 | Dokumentaatiotesti | `///`-kommentin koodilohko | julkisen rajapinnan |
 
-Dokumentaatiotestit ovat Rustin erikoisuus: kirjaston
-dokumentaatiokommentin esimerkkikoodi käännetään ja ajetaan
-`cargo test`-komennolla, joten dokumentaation esimerkit eivät vanhene.
+Esimerkkipaketti `13-kesto` on oikea Cargo-kirjasto, jossa ovat kaikki
+kolme testityyppiä. Yksikkötestit ovat kirjaston lähdetiedoston lopussa
+ja integraatiotesti omassa tiedostossaan hakemistossa `tests/`:
+
+```{.rust tiedosto="esimerkit/13-kesto/src/lib.rs" osa="yksikkotestit"}
+```
+
+```{.rust tiedosto="esimerkit/13-kesto/tests/edestakaisin.rs" osa="integraatio"}
+```
+
+## Dokumentaatio ja doctestit
+
+Rustin dokumentaatio kirjoitetaan lähdekoodiin. Kommentti `///`
+dokumentoi sitä seuraavan nimen ja `//!` sen, jonka sisällä kommentti
+on, tavallisesti koko craten tiedoston `lib.rs` alussa. Teksti on
+Markdownia, ja `cargo doc` tuottaa siitä HTML-sivuston samalla
+`rustdoc`-työkalulla, jolla standardikirjaston dokumentaatio on tehty.
+
+```{.rust tiedosto="esimerkit/13-kesto/src/lib.rs" osa="crate"}
+```
+
+Dokumentaatiokommentin koodilohko on *dokumentaatiotesti* (*doctest*):
+`cargo test` kääntää jokaisen lohkon omaksi ohjelmakseen, joka käyttää
+cratea julkisen rajapinnan kautta, ja ajaa sen. Esimerkki ei siis voi
+vanhentua huomaamatta. Risuaidalla alkava rivi käännetään mutta
+jätetään pois sivulta; yllä se antaa lohkolle paluutyypin, jotta
+`?` toimii.
+
+Funktion dokumentaatio alkaa yhden virkkeen tiivistelmällä, joka näkyy
+myös modulin sisällysluettelossa. Sen jälkeen tulevat vakiintuneet
+osiot: `# Examples`, `# Errors` (milloin funktio palauttaa virheen),
+`# Panics` (milloin se paniikoi) ja `unsafe`-funktioilla `# Safety`
+(luku 12). Hakasulkeissa oleva nimi, kuten `` [`muotoile`] ``, on linkki
+toiseen nimeen, ja rustdoc varoittaa, jos kohdetta ei ole:
+
+```{.rust tiedosto="esimerkit/13-kesto/src/lib.rs" osa="jasenna"}
+```
+
+Koodilohkon attribuutti muuttaa testin tulkintaa: `should_panic`
+vaatii paniikin, `no_run` kääntää mutta ei aja (esim. verkkoa käyttävä
+esimerkki), `compile_fail` vaatii käännösvirheen ja `ignore` ohittaa
+lohkon.
+
+```{.rust tiedosto="esimerkit/13-kesto/src/lib.rs" osa="jaa"}
+```
+
+`cargo test` ajaa yksikkötestit, integraatiotestit ja
+dokumentaatiotestit tässä järjestyksessä. Pelkät dokumentaatiotestit
+ajetaan komennolla `cargo test --doc`:
+
+```{.tuloste tiedosto="esimerkit/13-kesto/testit.odotettu"}
+```
+
+Lintti `missing_docs` varoittaa jokaisesta julkisesta nimestä, jolla ei
+ole dokumentaatiota, myös `enum`-tyypin muunnelmista ja rakenteen
+julkisista kentistä. Se kytketään päälle `Cargo.toml`-tiedostossa tai
+craten alussa attribuutilla `#![warn(missing_docs)]`:
+
+```{.toml tiedosto="esimerkit/13-kesto/Cargo.toml"}
+```
+
+Esimerkkien `Makefile` ajaa samat tarkistukset kuin CI ajaisi:
+Clippyn ja rustdocin varoitukset ovat virheitä, ja lopuksi
+varmistetaan, että dokumentoimaton julkinen funktio todella pysäyttää
+tarkistuksen:
+
+```{.makefile tiedosto="esimerkit/Makefile" osa="kesto"}
+```
+
+Dokumentaation suunnittelu lukijan mukaan, rajapintadokumentaation
+julkaisu ja dokumentaation testaus yleisemmin käsitellään taidossa
+*Tekninen dokumentaatio*.
 
 ## Virheenjäljitys ja profilointi
 
@@ -117,8 +186,13 @@ Mittaamisen ja optimoinnin menetelmät käsitellään taitopuun taidossa
 
 - **CI:n vähimmäistarkistukset.** `cargo fmt --check`,
   `cargo clippy --all-targets -- -D warnings`, `cargo test` ja
-  `cargo doc` jokaisessa muutoksessa. Lisäksi `cargo audit`
+  `cargo doc` (ympäristömuuttujalla `RUSTDOCFLAGS="-D warnings"`)
+  jokaisessa muutoksessa. Lisäksi `cargo audit`
   riippuvuuksien haavoittuvuuksille ja tarvittaessa Miri.
+- **Kirjaston julkinen rajapinta dokumentoidaan kokonaan.**
+  `missing_docs` pitää huolen kattavuudesta, ja jokaisen julkisen
+  funktion esimerkki on dokumentaatiotesti. Dokumentaatio kertoo sen,
+  mitä allekirjoitus ei kerro: virheet, paniikit ja invariantit.
 - **Pienin tuettu versio.** Kirjasto ilmoittaa `rust-version`-kentässä
   vanhimman kääntäjäversion, jolla se toimii, ja CI testaa sen.
 - **Testit rajapinnan kautta.** Yksikkötestit testaavat yksittäisiä
@@ -147,6 +221,9 @@ Mittaamisen ja optimoinnin menetelmät käsitellään taitopuun taidossa
   poikkeuksen lintille.
 - Osaat kirjoittaa yksikkö-, integraatio- ja dokumentaatiotestejä sekä
   yksinkertaisen ominaisuustestin.
+- Osaat dokumentoida craten ja sen julkiset nimet `//!`- ja
+  `///`-kommenteilla vakiintuneine osioineen ja tarkistaa
+  dokumentaation `cargo doc`- ja `cargo test --doc` -komennoilla.
 - Osaat jäljittää virheen `dbg!`-makrolla, kutsupinolla ja
   debuggerilla sekä profiloida julkaisuversion.
 - Osaat koota Rust-projektin CI-tarkistukset.

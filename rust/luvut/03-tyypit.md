@@ -25,6 +25,9 @@ liittää literaaliin (`7_i64`, `2.5_f32`).
 ```{.rust tiedosto="esimerkit/03-tyypit.rs" osa="perustyypit"}
 ```
 
+```{.tuloste tiedosto="esimerkit/03-tyypit.odotettu" rivit="1-2"}
+```
+
 Muuttuja on oletuksena muuttumaton. `let mut` sallii muutokset, ja
 kääntäjä varoittaa turhasta `mut`-sanasta. Muuttumattomuus on
 oletuksena siksi, että suurin osa muuttujista ei muutu, ja harvat
@@ -47,6 +50,9 @@ error[E0308]: mismatched types
 Muunnoksia on kolmenlaisia:
 
 ```{.rust tiedosto="esimerkit/03-tyypit.rs" osa="muunnokset"}
+```
+
+```{.tuloste tiedosto="esimerkit/03-tyypit.odotettu" rivit="3-3"}
 ```
 
 - `From`/`Into` on häviötön muunnos, joka onnistuu aina, esimerkiksi
@@ -76,6 +82,9 @@ Kun ylivuoto on mahdollinen, toiminta valitaan metodilla:
 ```{.rust tiedosto="esimerkit/03-tyypit.rs" osa="ylivuoto"}
 ```
 
+```{.tuloste tiedosto="esimerkit/03-tyypit.odotettu" rivit="4-7"}
+```
+
 ## Lausekkeet ja varjostus
 
 Lähes kaikki Rustissa on lauseke. Lohkon arvo on sen viimeinen lauseke
@@ -89,7 +98,7 @@ vaiheittain eikä välivaiheita enää tarvita:
 ```{.rust tiedosto="esimerkit/03-tyypit.rs" osa="varjostus"}
 ```
 
-```{.tuloste tiedosto="esimerkit/03-tyypit.odotettu"}
+```{.tuloste tiedosto="esimerkit/03-tyypit.odotettu" rivit="8-8"}
 ```
 
 ## Tulostus ja muotoilu
@@ -109,6 +118,15 @@ tulevat leveys, tasaus, tarkkuus ja muoto:
 | `{:x}` `{:#x}` `{:b}` `{:e}` | heksa, `0x`-etuliite, binääri, eksponentti |
 | `{:?}` `{:#?}` | `Debug`-muoto, monirivinen |
 | `{:.*}` | tarkkuus argumenttina |
+
+Omat tyypit käsitellään luvussa 7, mutta tulostus tarvitsee niistä
+kolme käsitettä jo nyt. *Rakenne* (`struct`) kokoaa nimettyjä kenttiä
+kuten C:ssä. *Piirre* (*trait*) on nimetty joukko metodeja, jotka tyyppi
+voi toteuttaa; C:ssä lähin vastine on funktio-osoitintaulu ja C++:ssa
+abstrakti kantaluokka. Lohko `impl Piirre for Tyyppi { ... }` kirjoittaa
+piirteen metodit tyypille, ja metodin ensimmäinen parametri `&self` on
+viite arvoon, jolle metodia kutsutaan. Attribuutti `#[derive(...)]`
+pyytää kääntäjää tuottamaan toteutuksen itse.
 
 Tyyppi tulostuu `{}`-muodossa, jos se toteuttaa `Display`-piirteen, ja
 `{:?}`-muodossa, jos se toteuttaa `Debug`-piirteen. `Debug` johdetaan
@@ -156,13 +174,53 @@ riveistä:
 `stdin().lock()` lukitsee syötteen kerran koko silmukan ajaksi.
 Lukitsematon `stdin().read_line()` ottaa lukon jokaisella kutsulla.
 
+## Tiedostot ja argumentit
+
+Komentoriviargumentit saadaan iteraattorista `std::env::args_os()`.
+Polut ovat tyyppiä `Path` (lainattu) ja `PathBuf` (omistava), koska
+käyttöjärjestelmän tiedostonimi ei välttämättä ole kelvollista UTF-8:aa.
+`std::env::args()` palauttaa `String`-arvoja ja aiheuttaa paniikin,
+jos argumentti ei ole UTF-8:aa.
+
+```{.rust tiedosto="esimerkit/03-tiedosto.rs" osa="argumentit"}
+```
+
+Tiedosto avataan funktiolla `File::open` tai luodaan funktiolla
+`File::create`. Kumpikin palauttaa `io::Result`-arvon, ja `File`
+sulkeutuu itsestään, kun arvo poistuu näkyvyysalueelta. `File` ei
+puskuroi: jokainen luku ja kirjoitus on järjestelmäkutsu. Siksi tiedosto
+kääritään lähes aina `BufReader`- tai `BufWriter`-tyyppiin:
+
+```{.rust tiedosto="esimerkit/03-tiedosto.rs" osa="kirjoita"}
+```
+
+```{.rust tiedosto="esimerkit/03-tiedosto.rs" osa="lue"}
+```
+
+Pienen tiedoston voi lukea kerralla funktiolla `fs::read_to_string`
+(tai `fs::read` tavuina) ja kirjoittaa funktiolla `fs::write`. Kun
+ohjelma ajetaan argumentilla `mittaukset.txt`, se kirjoittaa tiedoston,
+lukee sen kahdella tavalla ja poistaa sen:
+
+```{.rust tiedosto="esimerkit/03-tiedosto.rs" osa="aja"}
+```
+
+```{.tuloste tiedosto="esimerkit/03-tiedosto.odotettu"}
+```
+
+Viimeinen rivi on `io::Error`-arvon `Display`-muoto. Virheen lajin saa
+metodilla `kind()` (esim. `io::ErrorKind::NotFound`), jos ohjelman pitää
+reagoida siihen. Oikean komentoriviohjelman valitsimet jäsennetään
+yleensä `clap`-kirjastolla, joka tuottaa myös käyttöohjeen.
+
 ## Käytännössä
 
 - **Oikea kokonaislukutyyppi.** Indeksit, pituudet ja koot ovat
   `usize`. Muut luvut valitaan arvoalueen mukaan; `i32` on hyvä oletus,
   `u64` tavumäärille ja aikaleimoille. Älä käytä etumerkitöntä tyyppiä
   vain siksi, ettei arvo voi olla negatiivinen, jos sitä vähennetään:
-  `a - b` aiheuttaa paniikin, kun `b > a`.
+  kun `b > a`, `a - b` aiheuttaa kehitysversiossa paniikin ja kiertää
+  julkaisuversiossa hiljaa valtavaksi luvuksi.
 - **`From` ennen `as`-muunnosta.** `i64::from(x)` dokumentoi, että
   muunnos on häviötön, ja lakkaa kääntymästä, jos tyypit muuttuvat.
   Clippyn `cast_lossless`- ja `cast_possible_truncation`-lintit
@@ -185,6 +243,11 @@ Lukitsematon `stdin().read_line()` ottaa lukon jokaisella kutsulla.
 - **Puskuroitu tuloste.** `println!` lukitsee stdoutin joka kutsulla,
   ja stdout on rivipuskuroitu. Suuria tulostemääriä varten
   otetaan `io::stdout().lock()` ja kääritään se `BufWriter`-tyyppiin.
+- **`flush` ennen sulkemista.** `BufWriter` tyhjentää puskurinsa myös
+  vapautuessaan, mutta silloin kirjoitusvirhe katoaa. Kutsu
+  `flush()` itse ja käsittele sen tulos.
+- **`Path` poluille, ei `String`.** `Path::join`, `with_extension` ja
+  `file_name` käsittelevät erottimet oikein kaikilla alustoilla.
 
 ## Itsearviointi
 
@@ -197,3 +260,5 @@ Lukitsematon `stdin().read_line()` ottaa lukon jokaisella kutsulla.
 - Osaat toteuttaa `Display`-piirteen ja käyttää muotoilumääreitä.
 - Osaat lukea ja jäsentää rivipohjaista syötettä niin, että virheelliset
   rivit raportoidaan.
+- Osaat lukea komentoriviargumentit sekä lukea ja kirjoittaa tiedoston
+  puskuroidusti niin, että I/O-virheet välittyvät kutsujalle.

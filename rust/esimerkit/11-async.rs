@@ -34,8 +34,8 @@ async fn lataa(nimi: &str, vaiheita: u32) -> String {
 
 // @alku suorittaja
 /// Minimaalinen suorittaja: pollaa futurea, ja jos se ei ole valmis,
-/// nukkuu kunnes herättäjä herättää säikeen. Tokio ja async-std
-/// tekevät saman tehokkaasti tuhansille tehtäville ja I/O-tapahtumille.
+/// nukkuu kunnes herättäjä herättää säikeen. Tokio tekee saman
+/// tehokkaasti tuhansille tehtäville ja I/O-tapahtumille.
 struct SaikeenHerattaja(Thread);
 
 impl Wake for SaikeenHerattaja {

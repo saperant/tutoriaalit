@@ -1,6 +1,8 @@
 # unsafe ja C-rajapinta
 
-Turvallinen Rust ei voi ilmaista kaikkea: käyttöjärjestelmän ja
+Edelliset luvut pysyivät turvallisessa Rustissa. Tämä luku käsittelee
+sen rajan: mitä `unsafe` tarkoittaa, miten se kapseloidaan ja miten
+Rust ja C kutsuvat toisiaan. Turvallinen Rust ei voi ilmaista kaikkea: käyttöjärjestelmän ja
 C-kirjastojen kutsut, laitteistorekisterit ja jotkin tietorakenteet
 tarvitsevat toimintoja, joiden oikeellisuutta kääntäjä ei voi
 tarkistaa. Ne kirjoitetaan `unsafe`-lohkoihin. `unsafe` on lupaus
@@ -22,7 +24,10 @@ luonti on turvallista; vain sen dereferointi vaatii `unsafe`-lohkon.
 Ilman lohkoa rivi `*osoitin += 1` olisi käännösvirhe E0133
 (*dereference of raw pointer is unsafe*):
 
-```{.rust tiedosto="esimerkit/pikaopas.rs" osa="raaka"}
+```{.rust tiedosto="esimerkit/12-unsafe.rs" osa="raaka"}
+```
+
+```{.tuloste tiedosto="esimerkit/12-unsafe.odotettu" rivit="1-1"}
 ```
 
 `unsafe`-koodin on noudatettava samoja sääntöjä kuin turvallisen
@@ -100,6 +105,20 @@ staattiseksi tai jaetuksi kirjastoksi (`crate-type = ["staticlib"]` tai
 `"cdylib"`). `cbindgen` tuottaa tästä C-otsikkotiedoston, ja `bindgen`
 tuottaa C-otsikoista Rust-esittelyt `build.rs`-skriptissä.
 
+Painos 2024 tekee kolmesta tämän luvun kohdasta näkyvämpiä. Esimerkit
+on kirjoitettu painoksella 2021, ja erot ovat:
+
+| Asia | Painos 2021 | Painos 2024 |
+|------|-------------|-------------|
+| vieraan kielen esittelyt | `extern "C" { ... }` | `unsafe extern "C" { ... }` |
+| linkitysattribuutit | `#[no_mangle]` | `#[unsafe(no_mangle)]` |
+| viite `static mut` -muuttujaan | varoitus | käännösvirhe |
+
+Syy on kaikissa sama: kohta sisältää lupauksen, jota kääntäjä ei voi
+tarkistaa, ja painos 2024 vaatii `unsafe`-sanan sen merkiksi. Muuttuvan
+globaalin tilan tilalle suositellaan atomisia tyyppejä tai
+`Mutex`-tyyppiä (luku 11).
+
 ## Muistiasettelu
 
 Rust saa järjestää rakenteen kentät uudelleen täytteen
@@ -113,7 +132,7 @@ noudattavat alustan C-ABI:a:
 ```{.rust tiedosto="esimerkit/12-unsafe.rs" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/12-unsafe.odotettu"}
+```{.tuloste tiedosto="esimerkit/12-unsafe.odotettu" rivit="2-"}
 ```
 
 C-järjestyksessä `u32`-kenttä on tasattava neljään tavuun, joten

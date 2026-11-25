@@ -50,7 +50,11 @@ uusi merkitys ja `range` kokonaisluvun yli (1.22) sekä omat iteraattorit
 (1.23).
 
 Tämän tutoriaalin esimerkit on testattu Go 1.23:lla, joka on Ubuntu
-24.04:n pakettivarastossa. Kieli on määritelty spesifikaatiossa (*The Go
+24.04:n pakettivarastossa. Uudemmat versiot kääntävät ne sellaisinaan.
+Kun uudempi versio tarjoaa tässä opetetulle tavalle paremman
+vaihtoehdon, teksti mainitsee sen versionumeroineen (esimerkiksi
+vertailuajojen `b.Loop` ja `go.mod`-tiedoston `tool`-rivi, molemmat
+Go 1.24). Kieli on määritelty spesifikaatiossa (*The Go
 Programming Language Specification*). Päätoteutus on Googlen `gc`.
 Muita toteutuksia ovat GCC:n `gccgo` ja mikrokontrollereille ja
 WebAssemblylle tarkoitettu TinyGo.
@@ -79,7 +83,10 @@ go run 01-sanalaskuri.go < 01-sanalaskuri.syote
 ```
 
 Moduuli ja testit esitellään luvuissa 9 ja 12. Kehityskontissa
-(`.devcontainer/go`) työkalut ovat valmiina.
+(`.devcontainer/go`) työkalut ovat valmiina; kontin avaaminen neuvotaan
+taidossa *Kehitysympäristöt ja Dev Containers*. Komento `make testaa`
+paketin juuressa tarkistaa, kääntää ja ajaa kaikki esimerkit ja vertaa
+tulosteet tallennettuihin.
 
 ## Ensimmäinen ohjelma
 
@@ -113,6 +120,26 @@ Syöte ja tuloste:
 - Koodi on `gofmt`-muotoiltu: sisennys sarkaimin ja kentät tasattu.
   Muotoilusta ei väitellä Go-projekteissa.
 
+## Esitiedot ja rajaus
+
+Esitieto on taito *Ohjelmoinnin perusteet (Python)*: lukijan oletetaan
+osaavan muuttujat, ehdot, silmukat, funktiot ja listojen ja sanakirjojen
+käytön jollakin kielellä. Osoittimia tai käännettäviä kieliä ei
+tarvitse tuntea ennalta; ne esitellään luvuissa 3–5.
+
+Tutoriaali opettaa kielen, sen standardikirjaston ytimen ja työkalut.
+Yleiset aiheet käsitellään omissa taidoissaan, ja luvut viittaavat
+niihin:
+
+| Aihe | Taito |
+|------|-------|
+| tietorakenteiden ja algoritmien teoria | *Tietorakenteet*, *Algoritmit* |
+| kilpailutilanteet, lukot ja muistimallit yleisesti | *Rinnakkaisohjelmointi* |
+| HTTP, soketit ja protokollat | *Verkko-ohjelmointi* |
+| REST-rajapinnat, tietokannat ja tunnistautuminen | *Taustapalvelut* |
+| testauksen ja CI:n yleiset käytännöt | *Käännösjärjestelmät, testaus ja CI* |
+| dokumentaation suunnittelu ja julkaisu | *Tekninen dokumentaatio* |
+
 ## Tutoriaalin rakenne
 
 Luku 2 on tarkoitettu kokeneelle kehittäjälle, joka osaa jonkin toisen
@@ -121,9 +148,3 @@ kokoelmat, omat tyypit ja rajapinnat sekä virheenkäsittelyn. Luku 9
 esittelee paketit ja moduulit, luku 10 rinnakkaisuuden, luku 11
 `net/http`-paketin ja luku 12 työkalut ja testauksen. Luku 13 kokoaa
 idiomit, hinnat ja lähteet.
-
-Taitopuussa Go:n esitieto on *Ohjelmoinnin perusteet*. Go:ta käytetään
-erityisesti taidoissa *Taustapalvelut*, *Verkko-ohjelmointi* ja
-*Säiliöt ja pilvi-infrastruktuuri*. Rinnakkaisuuden yleiset
-käsitteet opetetaan taidossa *Rinnakkaisohjelmointi*, ja tämä
-tutoriaali keskittyy Go:n erityispiirteisiin.

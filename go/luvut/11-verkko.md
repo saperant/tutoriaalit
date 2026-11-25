@@ -60,8 +60,10 @@ aikarajat, paniikin käsittely.
 
 ## Testaus ja asiakas
 
-`httptest.NewServer` käynnistää oikean palvelimen paikalliseen porttiin.
-`httptest.NewRecorder` kutsuu käsittelijää suoraan ilman verkkoa, mikä
+Testifunktiot ja `go test` esitellään luvussa 12. `net/http/httptest`
+on kuitenkin tavallinen paketti, ja tässä sitä käytetään suoraan
+ohjelmasta. `httptest.NewServer` käynnistää oikean palvelimen
+paikalliseen porttiin. `httptest.NewRecorder` kutsuu käsittelijää suoraan ilman verkkoa, mikä
 sopii yksikkötesteihin. Esimerkki ajaa pyynnöt oikean asiakkaan kautta:
 
 ```{.go tiedosto="esimerkit/11-palvelu.go" osa="asiakas"}

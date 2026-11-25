@@ -38,10 +38,45 @@ vaihtoehtoja (`|`), jos jokainen vaihtoehto sitoo samat muuttujat:
 ```{.tuloste tiedosto="esimerkit/09-lauseke.odotettu"}
 ```
 
+```{.dot otsikko="Esimerkin viimeinen lauseke ennen sievennystä ja sen jälkeen. Jokainen kaari on `Box`. Sievennys siirtää alipuun `x` uuteen puuhun ja vapauttaa solmut, joita ei enää tarvita."}
+digraph {
+  rankdir=TB; nodesep=0.25; ranksep=0.35;
+  subgraph cluster_ennen { label="ennen: (x + 0) * (1.5 + 2)"; style=rounded; color="#9AA3AF";
+    t1 [label="Tulo"]; s1 [label="Summa"]; s2 [label="Summa"];
+    x1 [label="x"]; n0 [label="0"]; n1 [label="1.5"]; n2 [label="2"];
+    t1 -> s1; t1 -> s2; s1 -> x1; s1 -> n0; s2 -> n1; s2 -> n2;
+  }
+  subgraph cluster_jalkeen { label="jälkeen: x * 3.5"; style=rounded; color="#9AA3AF";
+    t2 [label="Tulo"]; x2 [label="x"]; n3 [label="3.5"];
+    t2 -> x2; t2 -> n3;
+  }
+}
+```
+
 `Lauseke` vie 24 tavua. Suurin muunnelma on `Muuttuja(String)`, ja
 kääntäjä tallentaa tunnisteen `String`-kentän käyttämättömiin
 bittikuvioihin (*niche*), joten tunniste ei vie lisätilaa. Summa- ja
 tulosolmut ovat kahden osoittimen kokoisia.
+
+### Deref-pakotus
+
+`Box<T>`, `Rc<T>`, `String` ja `Vec<T>` toteuttavat `Deref`-piirteen,
+joka kertoo, mihin tyyppiin osoitin viittaa. Kun viitteen tyyppi ei
+täsmää parametriin, kääntäjä kokeilee `Deref`-muunnoksia peräkkäin
+(*deref coercion*). Tästä syystä luvun 5 ohje "ota `&str`, älä
+`&String`" toimii: `&String` muuntuu itsestään `&str`-viitteeksi ja
+`&Vec<T>` viipaleeksi `&[T]`. Sama ketju käydään läpi metodikutsussa,
+joten älykkään osoittimen läpi voi kutsua sisällön metodeja suoraan.
+
+```{.rust tiedosto="esimerkit/09-deref.rs" osa="deref"}
+```
+
+```{.tuloste tiedosto="esimerkit/09-deref.odotettu"}
+```
+
+Muunnos on käännösaikainen eikä maksa mitään. Se toimii vain viitteille
+ja vain `Deref`-ketjun suuntaan; lukutyyppien välillä vastaavaa
+automaattista muunnosta ei ole.
 
 ## Rc, Weak ja RefCell: jaettu omistus
 
@@ -64,6 +99,23 @@ laskurit eivät koskaan laskisi nollaan:
 ```
 
 ```{.tuloste tiedosto="esimerkit/09-jaettu.odotettu"}
+```
+
+```{.dot otsikko="Hakemistopuun omistus kahden `lisaa`-kutsun jälkeen. Yhtenäinen nuoli on vahva viite (`Rc`), katkoviiva heikko (`Weak`). Solmussa ovat laskurit: `koti`-hakemistolla on kaksi omistajaa (muuttuja ja juuren lapsivektori) ja yksi heikko viite lapseltaan. Jos katkoviivat olisivat vahvoja, vanhempi ja lapsi pitäisivät toisensa elossa ikuisesti."}
+digraph {
+  rankdir=TB; nodesep=0.9; ranksep=0.4;
+  vj [label="muuttuja juuri", shape=plaintext, style=""];
+  vk [label="muuttuja koti", shape=plaintext, style=""];
+  va [label="muuttuja ada", shape=plaintext, style=""];
+  j [label="\"\" (juuri)\nvahvat 1, heikot 1"];
+  k [label="\"home\"\nvahvat 2, heikot 1"];
+  a [label="\"ada\"\nvahvat 2, heikot 0"];
+  vj -> j; vk -> k; va -> a;
+  { rank=same; j; k; a; }
+  j -> k [label="lapset"]; k -> a [label="lapset"];
+  k -> j [style=dashed, label="vanhempi", constraint=false];
+  a -> k [style=dashed, label="vanhempi", constraint=false];
+}
 ```
 
 `Weak::upgrade` palauttaa `Option<Rc<T>>`: `None`, jos kohde on jo
@@ -159,6 +211,8 @@ tarkoittaa, ettei tyyppi sisällä lyhytikäisiä viitteitä. Siksi
   sitä siirtämällä alipuita.
 - Osaat valita `Box`-, `Rc`-, `Arc`-, `Cell`- ja `RefCell`-tyypin
   välillä ja kertoa niiden hinnan.
+- Osaat selittää, miksi `&String` kelpaa `&str`-parametrille ja miksi
+  `Rc<T>`:n läpi voi kutsua `T`:n metodeja.
 - Osaat katkaista viitesyklin `Weak`-viitteellä ja selittää, miksi sykli
   vuotaa muistia.
 - Osaat kirjoittaa elinaikamerkinnät funktioon ja viitteitä sisältävään

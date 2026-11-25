@@ -5,11 +5,17 @@ ja yhteinen käyttäytyminen kuvataan rajapinnoilla, jotka tyypit
 toteuttavat implisiittisesti. Uudelleenkäyttö tehdään upottamalla ja
 geneerisillä funktioilla, ei periytymällä.
 
+Rakenteen ja metodin määrittely esiteltiin luvussa 3 ja arvo- ja
+osoitinvastaanottajan ero luvussa 5. Tämä luku rakentaa niiden päälle:
+miten tyyppi luodaan hallitusti, miten tyyppejä koostetaan ja miten
+rajapinnat ja tyyppiparametrit irrottavat koodin konkreettisista
+tyypeistä.
+
 ## Rakenteet ja konstruktorit
 
-Rakenteen kentät ja metodit näkyvät paketin ulkopuolelle, jos niiden
-nimi alkaa isolla kirjaimella. Pienellä kirjaimella alkavat ovat
-paketin sisäisiä, mikä on Go:n ainoa kapselointikeino.
+Isolla kirjaimella alkava kenttä tai metodi näkyy paketin ulkopuolelle,
+pienellä alkava ei (luku 9). Alla `Tili`-rakenteen kentät ovat siksi
+paketin sisäisiä, ja muu koodi käyttää tiliä vain sen metodien kautta.
 
 Jos tyypin nolla-arvo on kelvollinen, konstruktoria ei tarvita. Jos
 tyypillä on invariantti, se luodaan `Uusi`- tai `New`-alkuisella
@@ -117,6 +123,31 @@ tuottaa ei-nil-rajapinnan:
 ```
 
 ```{.tuloste tiedosto="esimerkit/07-nilrajapinta.odotettu"}
+```
+
+```{.dot otsikko="Rajapinta-arvo on kaksi sanaa: dynaaminen tyyppi ja arvo. Vertailu `err == nil` on tosi vain, kun molemmat puuttuvat. Keskimmäisessä tapauksessa tyyppi on asetettu, vaikka osoitin on nil."}
+digraph {
+  rankdir=TB; nodesep=0.8; ranksep=0.25;
+  node [shape=plain, style=""];
+  a [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left" colspan="2"><i>validoi(&quot;Aino&quot;)</i></td></tr>
+    <tr><td bgcolor="#EEF1F6">tyyppi: –</td><td port="a" bgcolor="#EEF1F6">arvo: –</td></tr>
+    <tr><td border="0" align="left" colspan="2">err == nil: true</td></tr></table>>];
+  b [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left" colspan="2"><i>validoiVaarin(&quot;Aino&quot;)</i></td></tr>
+    <tr><td bgcolor="#EEF1F6">tyyppi: *ValidointiVirhe</td><td port="a" bgcolor="#EEF1F6">arvo: nil</td></tr>
+    <tr><td border="0" align="left" colspan="2">err == nil: false</td></tr></table>>];
+  c [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left" colspan="2"><i>validoi(&quot;&quot;)</i></td></tr>
+    <tr><td bgcolor="#EEF1F6">tyyppi: *ValidointiVirhe</td><td port="a" bgcolor="#EEF1F6">arvo: osoitin</td></tr>
+    <tr><td border="0" align="left" colspan="2">err == nil: false</td></tr></table>>];
+  v [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left"><i>ValidointiVirhe</i></td></tr>
+    <tr><td bgcolor="#FFFFFF">Kentta: &quot;nimi&quot;</td></tr></table>>];
+  a -> b -> c [style=invis];
+  { rank=same; c; v; }
+  c:a:e -> v;
+}
 ```
 
 Sääntö: funktio, jonka paluutyyppi on `error`, palauttaa `nil`-literaalin
