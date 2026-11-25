@@ -1,0 +1,8 @@
+// Vääriä tyyppejä ja tuntematon muuttuja.
+{
+  "name": "Kesto",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+  "forwardPorts": 8000,
+  "runArgs": "--init",
+  "workspaceFolder": "/workspaces/${workspaceFolderBasename}"
+}

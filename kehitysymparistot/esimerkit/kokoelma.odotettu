@@ -1,0 +1,6 @@
+kehityskontteja yli 90: kyllä
+nimi kertoo paketin (name): kyllä
+yhteinen Dockerfile (build.dockerfile): kyllä
+rakennusargumentit ovat Dockerfilen tuntemia: kyllä
+avautuu paketin esimerkkeihin (workspaceFolder): kyllä
+läpäisee tarkistimen: kyllä

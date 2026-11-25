@@ -1,0 +1,23 @@
+// Kesto-projektin kehityskontti. Tiedosto on JSONia, jossa saa olla
+// kommentteja.
+{
+  "name": "Kesto",
+  // Kuva rakennetaan viereisestä Dockerfilesta.
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "remoteUser": "vscode",
+  "containerEnv": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  // Ajetaan kerran, kun kontti on luotu.
+  "postCreateCommand": "make ymparisto",
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python"],
+      "settings": {
+        "python.testing.pytestEnabled": true
+      }
+    }
+  }
+}

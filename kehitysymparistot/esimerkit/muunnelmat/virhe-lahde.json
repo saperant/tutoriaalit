@@ -1,0 +1,6 @@
+// Sekä valmis kuva että Dockerfile: kumpaa käytetään?
+{
+  "name": "Kesto",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+  "build": { "context": ".." }
+}

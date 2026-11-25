@@ -44,7 +44,7 @@ flowchart LR
     bash["✓ Bash-skriptaus"]
     python_tyokalut["✓ Python työkaluohjelmointiin"]
     rakennus_ja_testaus["✓ Käännösjärjestelmät, testaus ja CI"]
-    kehitysymparistot["Kehitysympäristöt ja Dev Containers"]
+    kehitysymparistot["✓ Kehitysympäristöt ja Dev Containers"]
   end
   subgraph matematiikka["Matematiikka"]
     diskreetti_matematiikka["✓ Diskreetti matematiikka"]
@@ -349,7 +349,7 @@ flowchart LR
 | Ohjelmoinnin perusteet (Python) | 5 | – | [valmis](../ohjelmoinnin-perusteet/) |
 | Bash-skriptaus | 3 | Komentorivi ja Linux, Ohjelmoinnin perusteet (Python) | [valmis](../bash/) |
 | C-kieli | 5 | Komentorivi ja Linux, Ohjelmoinnin perusteet (Python) | [valmis](../c-kieli/) |
-| Kehitysympäristöt ja Dev Containers | 2 | Komentorivi ja Linux | suunniteltu |
+| Kehitysympäristöt ja Dev Containers | 2 | Komentorivi ja Linux | [valmis](../kehitysymparistot/) |
 | Python | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../python/) |
 | Versionhallinta (Git) | 2 | Komentorivi ja Linux | [valmis](../versionhallinta/) |
 | Käännösjärjestelmät, testaus ja CI | 3 | Bash-skriptaus, C-kieli, Versionhallinta (Git) | [valmis](../rakennus-ja-testaus/) |

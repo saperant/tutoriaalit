@@ -1,0 +1,22 @@
+// Liitokset ja ympäristömuuttujat: välimuisti säilyy nimetyssä
+// taltiossa, vaikka kontti rakennetaan uudelleen.
+{
+  "name": "Rust-projekti",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "..",
+    "args": { "RUST_VERSIO": "1.80" }
+  },
+  "mounts": [
+    "source=cargo-valimuisti,target=/usr/local/cargo/registry,type=volume"
+  ],
+  "containerEnv": {
+    "CARGO_TARGET_DIR": "/tmp/target"
+  },
+  // Arvo luetaan omalta koneelta; salaisuutta ei kirjoiteta tiedostoon.
+  "remoteEnv": {
+    "REKISTERIN_TUNNUS": "${localEnv:REKISTERIN_TUNNUS}"
+  },
+  "runArgs": ["--cap-add=SYS_PTRACE"],
+  "hostRequirements": { "cpus": 4, "memory": "8gb" }
+}

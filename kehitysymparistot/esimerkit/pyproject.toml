@@ -1,0 +1,19 @@
+# Python-esimerkkien tarkistukset (ruff ja mypy).
+[tool.ruff]
+line-length = 78
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "N", "A", "RUF"]
+# S603/S607: skriptit käynnistävät Dockerin omilla argumenteillaan.
+ignore = ["S603", "S607"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["devkontti", "kesto"]
+
+[tool.ruff.lint.per-file-ignores]
+"**/test_*.py" = ["S101"]
+
+[tool.mypy]
+strict = true
+mypy_path = ["projekti"]

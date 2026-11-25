@@ -1,0 +1,17 @@
+muunnelmat/kuva.json: OK
+muunnelmat/liitokset.json: OK
+muunnelmat/ominaisuudet.json: OK
+muunnelmat/soketti.json: OK
+  huomio: jakaa isännän Docker-soketin: kontista voi hallita koko isäntää
+  huomio: käyttäjänä root
+  huomio: kuvan versio on lukitsematta
+muunnelmat/virhe-lahde.json: VIRHE
+  virhe: build.dockerfile: puuttuu
+  virhe: vain yksi lähde: image, build
+muunnelmat/virhe-nimi.json: VIRHE
+  virhe: postCreateComand: tuntematon kenttä (tarkoititko postCreateCommand?)
+muunnelmat/virhe-tyypit.json: VIRHE
+  virhe: forwardPorts: pitää olla taulukko
+  virhe: runArgs: pitää olla taulukko
+  virhe: tuntematon muuttuja ${workspaceFolderBasename}
+projekti/.devcontainer/devcontainer.json: OK

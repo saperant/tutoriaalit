@@ -1,0 +1,7 @@
+// Kirjoitusvirhe kentän nimessä: kontti käynnistyy, mutta komentoa
+// ei koskaan ajeta.
+{
+  "name": "Kesto",
+  "build": { "dockerfile": "Dockerfile" },
+  "postCreateComand": "make ymparisto"
+}

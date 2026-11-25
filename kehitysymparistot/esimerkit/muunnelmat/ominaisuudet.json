@@ -1,0 +1,22 @@
+// Peruskuva ja ominaisuudet (features): työkalut lisätään kuvaan
+// valmiina paloina ilman omaa Dockerfilea.
+{
+  "name": "Web-palvelu",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.12"
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "24"
+    }
+  },
+  // Kontin portti 8000 näkyy omalla koneella osoitteessa localhost:8000.
+  "forwardPorts": [8000],
+  "portsAttributes": {
+    "8000": { "label": "kehityspalvelin", "onAutoForward": "notify" }
+  },
+  "postCreateCommand": "pip install --user -r requirements.txt",
+  "postStartCommand": "git fetch --quiet",
+  "remoteUser": "vscode"
+}

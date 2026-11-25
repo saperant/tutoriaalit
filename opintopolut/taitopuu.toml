@@ -310,6 +310,7 @@ laajuus = 2
 testaus = "devcontainer.json-tiedostojen skeematarkistus, kontin rakennus ja testiajo Dockerilla"
 roadmap = []
 amk = "Ohjelmistokehityksen työkalut"
+tutoriaali = "kehitysymparistot"
 
 # ---------------------------------------------------------------------
 # Matematiikka
