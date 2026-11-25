@@ -76,6 +76,17 @@ koska sen resursseja käytetään uudelleen. Liian vähän ruutuja jättää
 GPU:n odottamaan CPU:ta; liian moni kasvattaa viivettä syötteestä
 kuvaan.
 
+```{.ajoituskaavio otsikko="Kaksi ruutua limittäin. Kun GPU piirtää ruutua 1, CPU tallentaa jo ruudun 2 komentoja. Ruudun 1 puskurit vapautuvat uudelleenkäyttöön vasta, kun GPU on saanut sen valmiiksi, eli ruudun 3 tallennukseen."}
+{"signal": [
+  {"name": "CPU tallentaa", "wave": "=.=.=.=.",
+   "data": ["ruutu 1", "ruutu 2", "ruutu 3", "ruutu 4"]},
+  {"name": "GPU piirtää", "wave": "x.=.=.=.",
+   "data": ["ruutu 1", "ruutu 2", "ruutu 3"]},
+  {"name": "näytöllä", "wave": "x...=.=.",
+   "data": ["ruutu 1", "ruutu 2"]}
+]}
+```
+
 ## Käytännössä
 
 - **Synkronoinnin validointi testeihin.** Se löytää puuttuvat ja

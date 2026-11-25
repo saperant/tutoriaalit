@@ -10,6 +10,21 @@ ohjelmoitavaa vaihetta, **verteksivarjostin** ja
 
 ## Vaiheet
 
+```{.dot otsikko="Grafiikkaputken vaiheet. Ohjelmoitavat vaiheet (tummempi tausta) kirjoittaa sovellus; muut ovat kiinteitä ja niitä ohjataan asetuksilla."}
+digraph {
+  rankdir=LR; nodesep=0.2; ranksep=0.3;
+  node [shape=box, style="rounded,filled", fillcolor="#EEF0F2"];
+  syote [label="kärjet ja\nindeksit"];
+  vv [label="verteksi-\nvarjostin", fillcolor="#C9CEEE"];
+  kok [label="kolmion kokoaminen,\nleikkaus, jako,\nkarsinta"];
+  rast [label="rasterointi"];
+  z [label="syvyystesti"];
+  fv [label="fragmentti-\nvarjostin", fillcolor="#C9CEEE"];
+  out [label="väri- ja\nsyvyyspuskuri"];
+  syote -> vv -> kok -> rast -> z -> fv -> out;
+}
+```
+
 | Vaihe | Tässä toteutuksessa | Näytönohjaimessa |
 |-------|---------------------|------------------|
 | syötteen kokoaminen | `Malli`, kolmioiden indeksit | verteksi- ja indeksipuskurit |
@@ -89,7 +104,9 @@ materiaalillaan:
 ```
 
 ![Koko putken tulos: mipmapattu lattia, tekstuuroitu kuutio ja
-pikseleittäin valaistu pallo, 2 × 2 -ylinäytteistys.](kuvat/12-putki.png){width=60%}
+pikseleittäin valaistu pallo, 2 × 2 -ylinäytteistys. Kirjan kuva on
+renderöity nelinkertaisella tarkkuudella (`make kuvat`); testin
+tarkistussumma on 120 × 80 pikselin kuvasta.](kuvat/12-putki.png){width=80%}
 
 Tilastot kertovat, mitä putki teki. Lattian kahdesta kolmiosta yksi
 leikattiin lähitasoa vastaan, koska lattia jatkuu kameran taakse.
@@ -128,7 +145,7 @@ Näytönohjaimissa samat ideat ovat laitteistossa: tuhannet
 varjostinytimet suorittavat samaa ohjelmaa eri pikseleille
 (SIMT-malli), rasteroija ja syvyystesti ovat kiinteää logiikkaa, ja
 mobiilipiireissä koko ruutu käsitellään ruutu kerrallaan sirun
-sisäisessä muistissa. Taito *GPU-ohjelmointi* rakentaa saman
+sisäisessä muistissa. Taito *GPU-ohjelmointi: OpenGL ja Vulkan* rakentaa saman
 kohtauksen OpenGL:llä ja Vulkanilla.
 
 ## Käytännössä

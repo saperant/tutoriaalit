@@ -81,6 +81,10 @@ vain Bresenhamilla ja `D` vain DDA:lla.
 ```{.tuloste tiedosto="esimerkit/03-viivat.odotettu"}
 ```
 
+![Sama ruudukko kuvana kahdeksankertaisesti suurennettuna. Vaaleat
+pikselit ovat samat molemmilla algoritmeilla, oranssit piirsi vain
+Bresenham ja siniset vain DDA.](kuvat/03-viivat.png){width=70%}
+
 Erot syntyvät vain sarakkeissa, joissa ideaali suora kulkee
 täsmälleen kahden pikselin keskipisteiden puolivälistä. Silloin
 kumpikin pikseli on yhtä hyvä, ja algoritmit ratkaisevat tasapelin

@@ -1,30 +1,10 @@
-# SPIR-V, kuvaajat ja push-vakiot
+# Kuvaajat ja push-vakiot
 
-## Varjostimien kääntäminen etukäteen
-
-Vulkan ei lue GLSL:ää vaan **SPIR-V**:tä, binääristä välikieltä.
-Varjostimet käännetään rakennusvaiheessa samalla tavalla kuin muukin
-koodi. Tämän tutoriaalin Makefile tekee sen glslc-kääntäjällä:
-
-```{.makefile tiedosto="esimerkit/Makefile" osa="spirv"}
-```
-
-Etukäteen kääntämisellä on kolme etua: virheet löytyvät
-rakennuksessa eivätkä ajurissa käyttäjän koneella, ajurin ei tarvitse
-jäsentää lähdekoodia, ja sama SPIR-V kelpaa kaikille valmistajille.
-Ajuri kääntää SPIR-V:n edelleen laitteen konekielelle putkea
-luotaessa (luku 8).
-
-SPIR-V:n voi tuottaa myös HLSL:stä (DXC) tai Slangista, mikä
-mahdollistaa saman varjostinkoodin käytön Direct3D:n ja Vulkanin
-välillä. Työkaluja:
-
-| Työkalu | Tehtävä |
-|---------|---------|
-| `glslc`, `glslangValidator` | GLSL → SPIR-V ja GLSL:n tarkistus |
-| `spirv-dis`, `spirv-val` | SPIR-V tekstiksi ja tarkistus |
-| `spirv-opt` | optimointi ja koon pienennys |
-| `spirv-cross` | SPIR-V → GLSL, HLSL, MSL; heijastustieto |
+Luvun 8 kolmio ei tarvinnut varjostimeen muuta dataa kuin kärjet.
+Tavallinen varjostin lukee lisäksi puskureita ja tekstuureja: kameran
+matriisin, valot ja materiaalin. Tässä luvussa kerrotaan, miten
+Vulkanissa resurssit annetaan varjostimelle ja miten pieni
+piirtokohtainen data kulkee ilman puskuria.
 
 ## Resurssit varjostimelle
 
@@ -57,6 +37,25 @@ osa:
 ```{.cpp tiedosto="esimerkit/10-vk-kuvaajat.cpp" osa="asettelu"}
 ```
 
+```{.dot otsikko="Kuvaajien oliot. Asettelu kuvaa joukon muodon, allas antaa muistin, ja joukkoon kirjoitetaan viittaukset resursseihin. Putki tuntee vain asettelun, joten saman putken kanssa voi käyttää eri joukkoja."}
+digraph {
+  rankdir=LR; nodesep=0.22; ranksep=0.4;
+  node [shape=box, style="rounded,filled", fillcolor="#EEF0F2"];
+  dsl [label="VkDescriptorSetLayout\n(sidonta 0: uniform-puskuri)"];
+  pl [label="VkPipelineLayout\n(joukkojen asettelut +\npush-vakioiden alue)"];
+  pipe [label="VkPipeline"];
+  pool [label="VkDescriptorPool"];
+  set [label="VkDescriptorSet", fillcolor="#C9CEEE"];
+  ubo [label="VkBuffer\n(uniform-data)", fillcolor="#F4E6DA"];
+  sh [label="varjostin:\nset = 0, binding = 0", shape=ellipse];
+  dsl -> pl -> pipe;
+  dsl -> set [label="muoto"];
+  pool -> set [label="varataan"];
+  set -> ubo [label="viittaa", style=dashed];
+  set -> sh [label="sidotaan\npiirrossa", style=dashed];
+}
+```
+
 Joukot varataan altaasta, ja niihin kirjoitetaan resurssien osoitteet:
 
 ```{.cpp tiedosto="esimerkit/10-vk-kuvaajat.cpp" osa="joukko"}
@@ -87,9 +86,6 @@ Silloin piirtojen välillä ei vaihdeta kuvaajia lainkaan.
 
 ## Käytännössä
 
-- **Käännä varjostimet rakennuksessa ja varoitukset virheiksi**
-  (`glslc -Werror`). Ajonaikainen käännös on vain työkaluille ja
-  kokeiluille.
 - **Pidä varjostimet ja C++-rakenteet synkronissa** heijastuksella
   (SPIRV-Reflect, spirv-cross) tai generoimalla rakenteet; käsin
   ylläpidetyt asettelut ajautuvat eroon.
@@ -103,8 +99,8 @@ Silloin piirtojen välillä ei vaihdeta kuvaajia lainkaan.
 
 ## Itsearviointi
 
-- Osaat kääntää GLSL:n SPIR-V:ksi rakennuksessa ja ladata sen
-  varjostinmoduuliksi.
+- Osaat pitää C++-rakenteet ja varjostimen lohkot samassa asettelussa
+  (std140 uniform-puskurille, std430 push-vakioille).
 - Osaat luoda kuvaajajoukon asettelun, putken asettelun, altaan ja
   joukon sekä kirjoittaa joukkoon puskurin.
 - Osaat käyttää push-vakioita ja tiedät niiden kokorajan.

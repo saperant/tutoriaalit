@@ -1,6 +1,7 @@
 # Suorituskyvyn mittaaminen
 
-Suorituskyvyn tutoriaalin luku 2 käsitteli mittaamisen periaatteet:
+Taito *Suorituskyvyn analyysi ja optimointi* käsitteli mittaamisen
+periaatteet:
 toistot, lämmittely, mediaani ja kohinan lähteet. Ne pätevät GPU:lla
 sellaisinaan, mutta kello on eri. CPU:n kello ei näe, milloin GPU
 aloittaa ja lopettaa, koska komennot vain lähetetään jonoon. Kun
@@ -40,7 +41,7 @@ Kolme yksityiskohtaa:
 Esimerkin testitila tarkistaa vain, että aikaleimat toimivat. Ajat
 vaihtelevat koneittain eikä niitä verrata:
 
-```{.tuloste tiedosto="esimerkit/12-mittaus.odotettu"}
+```{.tuloste tiedosto="esimerkit/10-mittaus.odotettu"}
 ```
 
 ## Toistot ja mediaani
@@ -51,7 +52,7 @@ hitaampi, koska ajuri valmistelee resursseja tai laite herää
 virransäästötilasta. Mittaus ajetaan siksi useasti, ensimmäinen ajo
 hylätään, ja tuloksena raportoidaan mediaani:
 
-```{.cpp tiedosto="esimerkit/12-mittaus.cpp" osa="mediaani"}
+```{.cpp tiedosto="esimerkit/10-mittaus.cpp" osa="mediaani"}
 ```
 
 Oikealla GPU:lla kellotaajuus nousee kuormassa ja laskee lämmetessä.
@@ -69,7 +70,7 @@ muistiin PCIe-väylää pitkin. PCIe 4.0 x16 siirtää käytännössä noin 25
 Gt/s ja PCIe 5.0 noin 50 Gt/s, kun laitteen oma muisti on kymmeniä
 kertoja nopeampi. Siirto on usein koko laskennan kallein osa:
 
-```{.cpp tiedosto="esimerkit/12-mittaus.cpp" osa="siirto"}
+```{.cpp tiedosto="esimerkit/10-mittaus.cpp" osa="siirto"}
 ```
 
 Lavapipellä molemmat puskurit ovat samaa keskusmuistia, ja kopion
@@ -101,7 +102,7 @@ kertaa $x \leftarrow ax + b$ ja kirjoittaa tuloksen:
 ```{.glsl tiedosto="esimerkit/varjostimet/kuorma.comp" osa="kuorma"}
 ```
 
-```{.cpp tiedosto="esimerkit/12-mittaus.cpp" osa="roofline"}
+```{.cpp tiedosto="esimerkit/10-mittaus.cpp" osa="roofline"}
 ```
 
 Mittaustilassa lavapipe antoi seuraavanlaisia tuloksia (kuormitettu
@@ -115,10 +116,17 @@ kone, suuntaa-antavia):
 | 64 | 16 | 4,5 | 0,3 |
 | 256 | 64 | 4,4 | 0,1 |
 
+![Sama taulukko roofline-kuvaajana. Mallin kaksi rajaa on otettu
+taulukon suurimmasta kaistasta (4,3 Gt/s) ja suurimmasta
+laskunopeudesta (4,5 Glaskua/s). Mittaus seuraa rajoja päistään, ja
+siirtymä niiden välillä on pehmeä.](kuvat/10-roofline.png){width=68%}
+
 Pienellä intensiteetillä ydin on muistisidonnainen, ja laskunopeus
-kasvaa intensiteetin mukana. Noin 16 laskusta tavua kohden alkaen
-laskunopeus ei enää kasva, ja ydin on laskentasidonnainen. Taitekohta
-on tämän laitteen harjanne. Oikealla GPU:lla molemmat rajat ovat
+kasvaa intensiteetin mukana. Rajojen leikkauspiste eli harjanne on
+tällä laitteella noin yhden laskun kohdalla tavua kohden, mutta
+siirtymä on pehmeä: laskunopeus saavuttaa kattonsa vasta noin 16
+laskulla tavua kohden, minkä jälkeen ydin on selvästi
+laskentasidonnainen. Oikealla GPU:lla molemmat rajat ovat
 satoja kertoja korkeammalla, mutta käyrän muoto on sama. Harjanne on
 yleensä 10–100 laskua tavua kohden, joten useimmat ytimet ovat
 muistisidonnaisia. Tämän ytimen laskuja ei voi laskea rinnakkain,

@@ -34,6 +34,11 @@ kohtisuorasta etäisyydestä $\mathbf{l}$ keskipisteestä säteeseen,
 $r^2 - |\mathbf{l}|^2$, ja pienemmän juuren muodossa $c / q$, jossa
 ei vähennetä lähes yhtä suuria lukuja:
 
+![Säde ja pallo. Juuret $t_1$ ja $t_2$ ovat säteen tulo- ja
+lähtökohta, ja $\mathbf{l}$ on kohtisuora etäisyys keskipisteestä
+säteeseen. Pallon sisältä alkavalla säteellä vain suurempi juuri on
+positiivinen.](kuvat/03-pallo.png){width=48%}
+
 ```{.cpp tiedosto="esimerkit/yhteinen/sade.hpp" osa="pallo"}
 ```
 
@@ -97,6 +102,15 @@ interpoloidaan kärkien normaalit ja tekstuurikoordinaatit kuten
 rasteroinnissa. Säteenseurannassa interpolointi on aina
 perspektiivikorjattu, koska painot lasketaan suoraan kolmion tasossa.
 
+Kun kärkien normaalit interpoloidaan, kolmioverkko näyttää sileältä,
+mutta *varjostusnormaali* poikkeaa silloin kolmion *geometrisesta
+normaalista*. Valaistus lasketaan varjostusnormaalilla. Säteen
+lähtöpisteen siirto ja päätös siitä, kummalla puolella pintaa suunta
+on, tehdään geometrisella normaalilla; muuten heijastunut säde voi
+lähteä pinnan sisään ja valo vuotaa loivissa kulmissa. Tämän
+tutoriaalin kohtauksissa pallot ovat analyyttisiä ja kolmioilla on
+yksi normaali, joten eroa ei synny.
+
 ## Laatikko: laattamenetelmä
 
 Akselien suuntainen laatikko (AABB) on kolmen *laatan* leikkaus:
@@ -105,6 +119,10 @@ Kunkin laatan sisällä säde on välillä
 $[(x_\text{min} - o_x)/d_x,\ (x_\text{max} - o_x)/d_x]$, ja laatikossa
 se on kaikkien kolmen välin leikkauksessa. Jos leikkaus on tyhjä, säde
 menee ohi:
+
+![Laattamenetelmä kahdessa ulottuvuudessa. Säde on kummankin laatan
+sisällä yhdellä välillä, ja laatikon sisällä se on välien yhteisellä
+osalla.](kuvat/03-laatta.png){width=55%}
 
 ```{.cpp tiedosto="esimerkit/yhteinen/sade.hpp" osa="laatikko"}
 ```

@@ -10,6 +10,30 @@ välineensä. Edellisten lukujen algoritmit käyttivät niitä kaikkia:
 | työryhmien välillä | uusi ajo ja putken este | monivaiheinen reduktio, lajittelu |
 | GPU:n ja CPU:n välillä | aita (fence) tai aikajanasemafori | tulosten luku |
 
+```{.dot otsikko="Tahdistuksen tasot sisäkkäin. Mitä sisempänä riippuvuus on, sitä halvempi tahdistus on."}
+digraph {
+  rankdir=LR; nodesep=0.2; ranksep=0.5; compound=true;
+  node [shape=box, style="rounded,filled", fillcolor="#C9CEEE"];
+  cpu [label="CPU:\nisäntäohjelma", fillcolor="#EEF0F2"];
+  subgraph cluster_ajo1 {
+    label="ajo 1 (vkCmdDispatch)"; style="rounded"; color="#5B6B70";
+    subgraph cluster_ryhma {
+      label="työryhmä: barrier(), jaettu muisti"; style="rounded,filled";
+      fillcolor="#F4E6DA"; color="#C0652A";
+      a0 [label="aliryhmä 0"]; a1 [label="aliryhmä 1"];
+    }
+    r1 [label="työryhmä 1", fillcolor="#F4E6DA"];
+  }
+  subgraph cluster_ajo2 {
+    label="ajo 2"; style="rounded"; color="#5B6B70";
+    r2 [label="työryhmät", fillcolor="#F4E6DA"];
+  }
+  a1 -> r2 [label="putken este", ltail=cluster_ajo1, lhead=cluster_ajo2];
+  r2 -> cpu [label="aita tai\nsemafori", ltail=cluster_ajo2];
+  a0 -> a1 [style=invis];
+}
+```
+
 Algoritmin suunnittelu GPU:lle on pitkälti sitä, että työ jaetaan
 näille tasoille: mahdollisimman paljon aliryhmään ja työryhmään,
 joissa tahdistus on halpaa, ja mahdollisimman vähän ajojen välisiä
@@ -76,7 +100,7 @@ globaalia estettä ei ole, ja riippuvuus ilmaistaan ajojen rajalla:
 Este kuuluu ajojen väliin komentopuskurissa. Se sanoo, että edellisten
 laskentavaiheiden varastokirjoitusten on oltava valmiita ja
 näkyviä ennen kuin seuraavat laskentavaiheet lukevat tai kirjoittavat.
-GPU-ohjelmoinnin luku 9 kävi esteiden osat läpi grafiikan kannalta.
+Taito *GPU-ohjelmointi: OpenGL ja Vulkan* kävi esteiden osat läpi grafiikan kannalta.
 Laskennassa vaiheita on vain yksi, `COMPUTE_SHADER`, mutta sama
 erottelu suoritus- ja muistiriippuvuuden välillä pätee.
 
@@ -90,16 +114,16 @@ validointi** seuraa jokaisen puskurin käyttöjä ja ilmoittaa
 vaaratilanteista (hazard) riippumatta siitä, mitä laite sattuu
 tekemään. Esimerkki kokeilee kahta järjestystä kolmella esteellä:
 
-```{.cpp tiedosto="esimerkit/11-synkronointi.cpp" osa="esteet"}
+```{.cpp tiedosto="esimerkit/09-synkronointi.cpp" osa="esteet"}
 ```
 
-```{.cpp tiedosto="esimerkit/11-synkronointi.cpp" osa="raw"}
+```{.cpp tiedosto="esimerkit/09-synkronointi.cpp" osa="raw"}
 ```
 
-```{.cpp tiedosto="esimerkit/11-synkronointi.cpp" osa="war"}
+```{.cpp tiedosto="esimerkit/09-synkronointi.cpp" osa="war"}
 ```
 
-```{.tuloste tiedosto="esimerkit/11-synkronointi.odotettu"}
+```{.tuloste tiedosto="esimerkit/09-synkronointi.odotettu"}
 ```
 
 Tulos näyttää esteiden kaksi puolta:

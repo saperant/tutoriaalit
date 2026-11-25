@@ -1,6 +1,6 @@
 # GPU:n suoritusmalli
 
-GPU-ohjelmoinnin luku 2 esitteli SIMT-mallin: säikeet ajetaan
+Taito *GPU-ohjelmointi: OpenGL ja Vulkan* esitteli SIMT-mallin: säikeet ajetaan
 ryhminä, jotka suorittavat saman käskyn kerrallaan, ja hajoava
 haarautuminen ajaa molemmat haarat maskattuina. Tässä luvussa sama
 malli nähdään laskentavarjostimen kannalta. Laskennassa ryhmä on
@@ -32,6 +32,11 @@ leveyden, Vulkan 1.3:ssa voi pyytää sitä putkea luotaessa
 (`requiredSubgroupSize`), jos laite sallii leveyden valinnan.
 Esimerkkien Makefile kiinnittää lavapipen leveyden kahdeksaan
 (luku 1), joten tulosteet ovat samat kaikilla koneilla.
+
+![Sama 32 säikeen työryhmä kolmella aliryhmän leveydellä. Aliryhmät
+ovat tässä työryhmän peräkkäisiä säikeitä; määrittely ei takaa sitä,
+ja esimerkki tarkistaa sen
+lavapipelle.](kuvat/03-aliryhmat.png){width=90%}
 
 Esimerkki tarkistaa kolme asiaa: aliryhmän koon, sen, että aliryhmät
 ovat työryhmän peräkkäisiä säikeitä, ja aliryhmän summan. Tulokset

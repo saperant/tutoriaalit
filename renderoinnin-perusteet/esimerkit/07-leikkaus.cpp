@@ -55,4 +55,26 @@ int main() {
         ascii(kuva, 1, 2);
     }
     // @loppu vertailu
+
+#ifdef KUVITUS  // make kuvat: sama kolmio suurempana, vasemmalla leikattu
+    const int S = 4;
+    Kuva rinnakkain(2 * L * S + 4, K * S, {90, 90, 90});
+    for (int i = 0; i < 2; ++i) {
+        Kohde kohde(L * S, K * S, {0.02, 0.03, 0.06});
+        Asetukset as;
+        as.leikkaa = i == 0;
+        as.karsinta = false;
+        piirra(kohde, m,
+               [&](const Verteksi& v) {
+                   return Tulos<0>{vp * piste4(v.paikka), {}};
+               },
+               [](const auto&, const auto&) { return Vari{0.8, 0.8, 0.75}; },
+               as);
+        Kuva kuva = kohde.kuvaksi();
+        for (int y = 0; y < K * S; ++y)
+            for (int x = 0; x < L * S; ++x)
+                rinnakkain(i * (L * S + 4) + x, y) = kuva(x, y);
+    }
+    tallenna_ppm(rinnakkain, "07-leikkaus.ppm");
+#endif
 }

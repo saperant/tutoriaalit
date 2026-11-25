@@ -44,7 +44,7 @@ haut. Esimerkki laskee siksi varjostinten osoitteet myös mallilla:
 neljän tavun pankkia. Malli on yksinkertaistus, mutta se vastaa sitä,
 mitä NVIDIA:n ja AMD:n profiloijat raportoivat.
 
-```{.cpp tiedosto="esimerkit/09-transpoosi.cpp" osa="malli"}
+```{.cpp tiedosto="esimerkit/08-transpoosi.cpp" osa="malli"}
 ```
 
 ## Matriisin transpoosi
@@ -60,6 +60,11 @@ Luku on yhtenäinen: aallon kaistat lukevat rivin peräkkäisiä alkioita.
 Kirjoitus ei ole: naapurikaistat kirjoittavat sarakkeen peräkkäisille
 riveille, jotka ovat 760 sanan päässä toisistaan.
 
+![Suoran transpoosin muistiliikenne pienessä matriisissa. Numerot
+ovat yhden aallon kaistoja. Luku osuu yhteen muistisegmenttiin,
+kirjoitus jokaisella kaistalla
+omaansa.](kuvat/08-transpoosi.png){width=75%}
+
 Laatoitettu versio siirtää 32 × 32 alkion laatan jaetun muistin
 kautta. Se lukee laatan rivit yhtenäisesti jaettuun muistiin ja
 kirjoittaa ne kohteeseen myös riveittäin. Kääntö tapahtuu jaetussa
@@ -71,10 +76,10 @@ muistissa, jossa satunnaishaut ovat halpoja:
 Sama varjostin käännetään kahdella tavalla. Erikoistusvakio `TAYTE`
 määrää jaetun muistin rivin pituudeksi 32 tai 33:
 
-```{.cpp tiedosto="esimerkit/09-transpoosi.cpp" osa="putket"}
+```{.cpp tiedosto="esimerkit/08-transpoosi.cpp" osa="putket"}
 ```
 
-```{.tuloste tiedosto="esimerkit/09-transpoosi.odotettu"}
+```{.tuloste tiedosto="esimerkit/08-transpoosi.odotettu"}
 ```
 
 Suora versio koskee kirjoittaessaan keskimäärin 31 segmenttiä aaltoa
@@ -131,15 +136,16 @@ suorassa versiossa, koska niiden lataamia laatan osia tarvitaan.
 Jälkimmäinen este estää seuraavan laatan latauksen ennen kuin kaikki
 säikeet ovat lukeneet nykyisen.
 
-```{.cpp tiedosto="esimerkit/10-matriisitulo.cpp" osa="intensiteetti"}
+```{.cpp tiedosto="esimerkit/08-matriisitulo.cpp" osa="intensiteetti"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-matriisitulo.odotettu"}
+```{.tuloste tiedosto="esimerkit/08-matriisitulo.odotettu"}
 ```
 
 Laatoitus nostaa **laskentaintensiteetin** 0,25:stä neljään
-laskutoimitukseen tavua kohden. Roofline-mallissa (suorituskyvyn
-tutoriaalin luku 3) suora versio on syvällä muistisidonnaisella
+laskutoimitukseen tavua kohden. Roofline-mallissa (taito
+*Suorituskyvyn analyysi ja optimointi*) suora versio on syvällä
+muistisidonnaisella
 alueella. Laite, jonka kaista on 1 Tt/s, rajoittaa sen 250
 Glaskuun/s, kun laskentateho voi olla kymmeniä teralaskuja.
 Laatoitettu versio nostaa rajan 4 Tlaskuun/s. Tuotantotason

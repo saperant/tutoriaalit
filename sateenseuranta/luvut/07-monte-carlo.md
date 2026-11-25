@@ -86,6 +86,12 @@ keskiarvo paljastaa mahdollisen harhan:
 ```{.tuloste tiedosto="esimerkit/07-montecarlo.odotettu"}
 ```
 
+![Sama tulos kuvaajina. Vasemmalla virhe logaritmisilla asteikoilla:
+molemmat estimaattorit noudattavat kulmakerrointa $-1/2$, ja
+kosinipainotus siirtää suoran alemmas. Oikealla väärän tiheyden
+estimaatti: se asettuu väärään arvoon eikä lähesty
+tarkkaa.](kuvat/07-konvergenssi.png){width=92%}
+
 Tulos näyttää kolme asiaa.
 
 1. **Virhe pienenee kuten $1/\sqrt{N}$.** RMSE kerrottuna

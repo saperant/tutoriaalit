@@ -27,6 +27,11 @@ osoittimen sijaan. Kolmioita ei kopioida: lehdet viittaavat
 järjestystaulukon väliin, ja rakentaminen järjestää sen niin, että
 jokaisen lehden kolmiot ovat peräkkäin.
 
+![Kahdeksan kolmion BVH tasossa: vasemmalla sisäkkäiset laatikot,
+oikealla sama puuna. Saman tason laatikot ovat samanvärisiä.
+Laatikot voivat mennä päällekkäin, mutta jokainen kolmio kuuluu
+yhteen lehteen.](kuvat/04-bvh-periaate.png){width=90%}
+
 ```{.cpp tiedosto="esimerkit/yhteinen/bvh.hpp" osa="rakenne"}
 ```
 
@@ -35,10 +40,10 @@ ja maksimi $-\infty$. Kun kaksi laatikkoa yhdistetään laajentamalla
 ensimmäistä toisen kulmilla, tyhjän laatikon "kulmat" ovat
 äärettömyyksiä, ja tuloksesta tulee ääretön. Oikea yhdiste ottaa
 minimeistä minimin ja maksimeista maksimin, jolloin tyhjä laatikko on
-neutraalialkio. Ensimmäinen versio tämän luvun SAH-jaosta teki
-juuri tämän virheen, ja puun lehdistä tuli kymmenien kolmioiden
-kokoisia, koska jokainen tyhjä lokero teki jaosta äärettömän
-kalliin:
+neutraalialkio. Virhe ei kaada ohjelmaa eikä muuta kuvaa. Se
+huonontaa puuta: SAH-jaossa jokainen tyhjä lokero tekee jaosta
+äärettömän kalliin, ja lehdistä tulee kymmenien kolmioiden kokoisia.
+Sen paljastavat vain laskurit:
 
 ```{.cpp tiedosto="esimerkit/yhteinen/sade.hpp" osa="yhdiste"}
 ```
@@ -140,6 +145,12 @@ tapaukset, joita kamera ei näe, kuten säteet maaston alta:
 
 ```{.tuloste tiedosto="esimerkit/04-bvh.odotettu"}
 ```
+
+![Vasemmalla kohtaus SAH-puulla renderöitynä, oikealla
+laatikkotestien määrä pikseleittäin: musta 0, punainen 30, keltainen 60
+ja valkoinen vähintään 90 testiä. Kalleimpia ovat säteet, jotka
+hipovat pallon reunaa tai maaston pintaa: ne käyvät läpi monta
+laatikkoa osumatta mihinkään.](kuvat/04-bvh.png){width=95%}
 
 Raakahaku testaa jokaista 3 072 kolmiota; BVH:t testaavat noin
 kahta kolmiota ja 16–19 laatikkoa. Laatikkotesti on halvempi kuin

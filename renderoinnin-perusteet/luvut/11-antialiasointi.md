@@ -36,6 +36,11 @@ sarakkeella. Neljä kierrettyä näytettä antaa vaaka- ja pystyreunoille
 viisi tasoa, saman verran kuin $4 \times 4$ -ruudukko neljänneksellä
 sen näytteistä. $2 \times 2$ -ruudukko antaa vain kolme.
 
+![Näytteiden paikat pikselin sisällä. Oikean reunan merkit näyttävät,
+kuinka monella eri korkeudella näytteitä on: yhtä monessa portaassa
+vaakasuora reuna voi liukua pikselin
+yli.](kuvat/11-naytekuviot.png){width=75%}
+
 ```{.cpp tiedosto="esimerkit/11-antialiasointi.cpp" osa="naytteet"}
 ```
 
@@ -59,6 +64,11 @@ kertoo hinnan:
 
 ```{.tuloste tiedosto="esimerkit/11-antialiasointi.odotettu"}
 ```
+
+![Kolmion peitto pikselin kirkkautena, kahdeksankertaisesti
+suurennettuna. Ylhäällä ilman reunanpehmennystä ja SSAA 2 × 2,
+alhaalla SSAA 4 × 4 ja MSAA neljällä kierretyllä
+näytteellä.](kuvat/11-antialiasointi.png){width=85%}
 
 Ilman reunanpehmennystä suurin virhe on 0,66: reunapikseli, josta
 kaksi kolmasosaa on kolmion sisällä, jää tyhjäksi. $2 \times 2$

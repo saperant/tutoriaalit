@@ -30,6 +30,12 @@ määrällä kierroksia. Ylösvaihe rakentaa summapuun kuten reduktio
 (luku 4). Alasvaihe korvaa juuren nollalla ja valuttaa summat
 takaisin alas, jolloin jokainen lehti saa vasemmalla olevien summan.
 
+![Molemmat algoritmit kahdeksalle alkiolle. Värilliset solut
+muuttuvat kierroksella. Hillis–Steele käyttää lähes kaikkia säikeitä
+joka kierroksella; Blellochin ylösvaihe on reduktion puu, ja
+alasvaiheessa vasen lapsi saa vanhemman arvon ja oikea vanhemman ja
+vasemman summan.](kuvat/05-skannaus.png){width=100%}
+
 Esimerkki toteuttaa molemmat ensin CPU:lla samassa järjestyksessä kuin
 varjostimet ja laskee työn:
 
@@ -117,6 +123,10 @@ täyttävät alkiot uuteen tiiviiseen taulukkoon. Se tehdään kolmella
 ajolla: liputus (1 tai 0), lippujen poissulkeva skannaus ja hajautus,
 jossa jokainen valittu alkio kirjoitetaan skannauksen antamaan
 paikkaan:
+
+![Virran tiivistys kahdeksalle alkiolle, ehtona jaollisuus kolmella.
+Skannattu arvo on valitun alkion paikka
+tuloksessa.](kuvat/05-tiivistys.png){width=72%}
 
 ```{.glsl tiedosto="esimerkit/varjostimet/tiivista.comp" osa="tiivista"}
 ```

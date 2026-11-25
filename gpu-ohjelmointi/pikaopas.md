@@ -21,6 +21,8 @@ subtitle: Pikaopas · grafiikkaputki, varjostimet, Vulkanin oliot ja synkronoint
 - **Verteksimuoto:** `glCreateVertexArrays`,
   `glVertexArrayVertexBuffer`, `glVertexArrayAttribFormat`,
   `glVertexArrayAttribBinding`.
+- **Indeksit:** `glVertexArrayElementBuffer`, `glDrawElements`;
+  Vulkanissa `vkCmdBindIndexBuffer`, `vkCmdDrawIndexed`.
 - **Ohjelma:** `glCreateShader`, `glCompileShader`, `glLinkProgram`;
   lue aina lokit.
 - **Uniformit:** `glProgramUniform*`; UBO:

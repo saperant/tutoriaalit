@@ -18,14 +18,23 @@ kantalukulajitteluksi. Tämä tutoriaali opettaa nämä *rinnakkaiset
 primitiivit*: reduktion, prefiksisumman, histogrammin ja lajittelun.
 Niistä rakennetaan lähes kaikki muu GPU-laskenta.
 
-Esitietoina ovat taidot *GPU-ohjelmointi* ja *Suorituskyvyn analyysi
+## Esitiedot ja rajaus
+
+Esitietoina ovat taidot *GPU-ohjelmointi: OpenGL ja Vulkan* ja *Suorituskyvyn analyysi
 ja optimointi*. Ensimmäisestä tarvitaan Vulkanin perusteet: instanssi,
 laite ja jonot, muisti ja puskurit, komentopuskurit, kuvaajajoukot,
 push-vakiot, SPIR-V ja esteet. Niitä ei selitetä tässä uudestaan,
-vaan viitataan GPU-ohjelmoinnin lukuihin. Jälkimmäisestä tarvitaan
+vaan viitataan taitoon *GPU-ohjelmointi: OpenGL ja Vulkan*. Jälkimmäisestä tarvitaan
 roofline-malli, muistihierarkia ja mittaamisen periaatteet, joita
 sovelletaan tässä GPU:hun. Taito *Rinnakkaisohjelmointi* käsittelee
 samoja primitiivejä CPU:n säikeillä ja muistimallin kannalta.
+
+Tutoriaali käyttää Vulkanin laskentavarjostimia ja pysyy
+primitiiveissä. Valmistajakohtaiset rajapinnat (CUDA, HIP, SYCL)
+esitellään vain vertailuna luvussa 10. Koneoppimisen kehykset,
+usean GPU:n laskenta ja kokonaiset sovellukset, kuten
+hiukkassimulaatio, rajataan pois. Luvun 7 lopussa kuvataan
+esimerkkinä, miten naapurihaku kootaan primitiiveistä.
 
 ## Rajapinnat
 
@@ -112,6 +121,10 @@ Esimerkkien hakemistossa `make` kääntää varjostimet ja ohjelmat, ajaa
 ne ja vertaa tulosteet. `make aja-04-reduktio` ajaa yhden esimerkin, ja
 `make mittaa` ajaa kaikki mittaustilassa. Kehityskontissa
 (`.devcontainer/gpu-laskenta`) kaikki tarvittava on valmiina.
+Esimerkkitiedoston numero on sen luvun numero, jossa esimerkki
+käsitellään. Algoritmien periaatekuvat piirtää `kuvat/piirra.py`
+(`make kuvat` paketin juuressa); niitä ei tarvita esimerkkien
+ajamiseen.
 
 ## Tutoriaalin rakenne
 

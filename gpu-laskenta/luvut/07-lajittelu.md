@@ -20,6 +20,12 @@ lajitellaan vuorotellen nousevaksi ja laskevaksi, jolloin kahdesta
 vierekkäisestä lohkosta tulee yksi bitoninen jono. Vaiheen askeleet
 $j = k/2, k/4, \dots, 1$ yhdistävät sen lajitelluksi.
 
+![Bitoninen lajitteluverkko kahdeksalle alkiolle. Jokainen
+pystynuoli on yksi vertaa ja vaihda -pari, ja saman sarakkeen parit
+tehdään rinnakkain. Vaiheet $k = 2$ ja $k = 4$ tekevät lohkoista
+vuorotellen nousevia ja laskevia, ja viimeinen vaihe yhdistää
+bitonisen jonon lajitelluksi.](kuvat/07-bitoninen.png){width=100%}
+
 Askeleessa $(k, j)$ alkio $i$ verrataan alkioon $i \oplus j$, ja
 suunta riippuu bitistä $i \mathbin{\&} k$. Yksi askel on yksi ajo:
 
@@ -92,6 +98,11 @@ GPU:lla jokainen kierros on kolme vaihetta, jotka on jo opittu:
    aloituspaikka plus samaa numeroa olevien aiempien avainten määrä
    työryhmässä.
 
+![Yksi kierros kahdeksalle avaimelle, numerona avaimen kaksi alinta
+bittiä. Saman numeron avaimet säilyttävät keskinäisen järjestyksensä
+(13, 9 ja 5 lokerossa 1), mikä tekee kierroksesta
+vakaan.](kuvat/07-kantaluku.png){width=95%}
+
 ```{.glsl tiedosto="esimerkit/varjostimet/radix_laske.comp" osa="laske"}
 ```
 
@@ -114,17 +125,17 @@ aliryhmäoperaatiot vaativat.
 Isännällä kierrokset ajavat dataa vuorotellen puskurista A puskuriin B
 ja takaisin. Kuvaajajoukot molempiin suuntiin luodaan kerran:
 
-```{.cpp tiedosto="esimerkit/08-kantaluku.cpp" osa="lajittelija"}
+```{.cpp tiedosto="esimerkit/07-kantaluku.cpp" osa="lajittelija"}
 ```
 
 Vakaus testataan erikseen. Avaimen yläbitit ovat lajitteluavain ja
 alabitit alkuperäinen järjestys. Kun lajitellaan vain yläbittien
 mukaan, tuloksen on oltava sama kuin `std::stable_sort`-funktiolla:
 
-```{.cpp tiedosto="esimerkit/08-kantaluku.cpp" osa="vakaus"}
+```{.cpp tiedosto="esimerkit/07-kantaluku.cpp" osa="vakaus"}
 ```
 
-```{.tuloste tiedosto="esimerkit/08-kantaluku.odotettu"}
+```{.tuloste tiedosto="esimerkit/07-kantaluku.odotettu"}
 ```
 
 Jokainen kierros on viisi ajoa: laskenta, kolme skannausajoa ja
@@ -141,6 +152,31 @@ kohden, jolloin kierroksia on neljä ja muistiliikennettä vähemmän.
 Hajautus kirjoittaa avaimet ensin jaettuun muistiin numeron mukaan
 järjestettyinä, jotta globaalin muistin kirjoitukset osuvat
 peräkkäisiin osoitteisiin (luku 8).
+
+## Primitiivit yhdessä: naapurihaku ruudukolla
+
+Kokonaiset GPU-algoritmit kootaan tähän asti opituista osista.
+Tavallinen esimerkki on hiukkassimulaation naapurihaku: jokaisen
+hiukkasen on löydettävä ne hiukkaset, jotka ovat enintään etäisyyden
+$h$ päässä. Kaikkien parien vertailu on $O(n^2)$, mutta tasainen
+ruudukko, jonka ruudun sivu on $h$, rajaa haun hiukkasen omaan ja
+viereisiin ruutuihin. Ruudukko rakennetaan neljällä ajolla:
+
+1. **Kartta**: jokainen säie laskee hiukkasensa ruudun numeron
+   (kuten SAXPY, luku 2).
+2. **Lajittelu**: hiukkaset lajitellaan ruudun numeron mukaan
+   kantalukulajittelulla, jolloin saman ruudun hiukkaset ovat
+   taulukossa peräkkäin.
+3. **Histogrammi ja skannaus**: ruutujen hiukkasmäärien poissulkeva
+   skannaus antaa jokaisen ruudun aloituspaikan lajitellussa
+   taulukossa (luvut 5 ja 6).
+4. **Haku**: jokainen säie käy läpi oman ruutunsa ja kahdeksan
+   (kolmessa ulottuvuudessa 26) naapuriruutua aloituspaikkojen avulla.
+
+Vaiheiden välillä on riippuvuus työryhmien yli, joten jokainen on oma
+ajonsa (luku 9). Sama rakenne, avaimen laskenta, lajittelu ja
+aloituspaikkojen skannaus, toistuu törmäystunnistuksessa, valojen
+jakamisessa ruutuihin ja kiihdytysrakenteiden rakentamisessa.
 
 ## Käytännössä
 
@@ -161,6 +197,8 @@ peräkkäisiin osoitteisiin (luku 8).
 
 ## Itsearviointi
 
+- Osaat kuvata, miten ruudukkopohjainen naapurihaku kootaan kartasta,
+  lajittelusta, histogrammista ja skannauksesta.
 - Osaat toteuttaa bitonisen lajitteluverkon ajoina ja jaetussa
   muistissa sekä laskea sen askeleet ja työn.
 - Osaat selittää, miksi lajitteluverkot sopivat GPU:lle, vaikka ne

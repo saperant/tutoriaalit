@@ -37,9 +37,15 @@ Globaali indeksi on `gl_WorkGroupID * gl_WorkGroupSize +
 gl_LocalInvocationID`. Yksiulotteinen data käyttää vain x-akselia;
 kuvat ja matriisit käyttävät x- ja y-akselia.
 
+![Ajo jakautuu työryhmiin ja työryhmä säikeisiin. Kuvassa työryhmän
+koko on 8 ja dataa 20 alkiota, joten ryhmiä tarvitaan kolme ja
+viimeisen ryhmän neljä viimeistä säiettä jää datan ulkopuolelle
+(osio *Työryhmien määrä ja
+reunat*).](kuvat/02-tyoryhmat.png){width=95%}
+
 Varastopuskurit (storage buffer) noudattavat **std430**-asettelua,
 jossa `float`- ja `uint`-taulukot ovat tiiviitä kuten C++:ssa. Rakenteet
-ja `vec3` saavat täytettä (GPU-ohjelmoinnin luku 4). Määreet
+ja `vec3` saavat täytettä (taito *GPU-ohjelmointi: OpenGL ja Vulkan*). Määreet
 `readonly` ja `writeonly` kertovat kääntäjälle ja lukijalle, mihin
 puskuria käytetään. Ne myös auttavat synkronoinnin validointia (luku 9).
 
@@ -172,6 +178,14 @@ suuntaan:
 ```{.tuloste tiedosto="esimerkit/02-erikoistus.odotettu"}
 ```
 
+Sumennus on esimerkki **sapluunalaskennasta** (stencil): jokainen
+tulos lasketaan alkion ja sen kiinteän naapuruston arvoista.
+Kuvankäsittelyn suotimet ja ruudukkopohjaiset simulaatiot ovat samaa
+muotoa. Niissä on kaksi toistuvaa kysymystä: mitä reunan yli
+ulottuva naapurusto lukee, ja miten naapurityöryhmien tarvitsemat
+päällekkäiset alkiot (halo) ladataan, jos laatta siirretään jaettuun
+muistiin (luku 8).
+
 Tulos on kokonaislukuja, joten vertailu on tarkka, ja tiiviste on sama
 kaikille ryhmäkoille. Työryhmän muoto vaikuttaa vain nopeuteen.
 Laatikkosumennuksessa naapurit ovat kahdessa suunnassa, joten neliön
@@ -192,8 +206,8 @@ validointikerros ilmoitti virheestä
 
 ## Varjostimien kääntäminen
 
-Varjostimet käännetään SPIR-V:ksi rakennuksessa kuten
-GPU-ohjelmoinnin tutoriaalissa. Laskentavarjostimen pääte on `.comp`:
+Varjostimet käännetään SPIR-V:ksi rakennuksessa kuten taidossa
+*GPU-ohjelmointi: OpenGL ja Vulkan*. Laskentavarjostimen pääte on `.comp`:
 
 ```{.makefile tiedosto="esimerkit/Makefile" osa="spirv"}
 ```

@@ -31,6 +31,29 @@ toistuva koodi kootaan apukirjastoon, kuten tässä `yhteinen/vk.hpp`.
 | `VkPipeline` | koko putken tila: varjostimet, rasterointi, sekoitus |
 | `VkFence`, `VkSemaphore`, esteet | synkronointi |
 
+```{.dot otsikko="Vulkanin oliot ja niiden syntyjärjestys. Nuoli osoittaa oliosta siihen, joka luodaan sen avulla; katkoviiva tarkoittaa käyttöä."}
+digraph {
+  rankdir=LR; nodesep=0.18; ranksep=0.4;
+  node [shape=box, style="rounded,filled", fillcolor="#EEF0F2"];
+  inst [label="VkInstance", fillcolor="#C9CEEE"];
+  phys [label="VkPhysicalDevice"];
+  dev [label="VkDevice", fillcolor="#C9CEEE"];
+  q [label="VkQueue"];
+  pool [label="VkCommandPool"];
+  cb [label="VkCommandBuffer"];
+  mem [label="VkDeviceMemory"];
+  res [label="VkBuffer,\nVkImage"];
+  pipe [label="VkPipeline"];
+  sync [label="VkFence,\nVkSemaphore"];
+  inst -> phys -> dev;
+  dev -> q; dev -> pool -> cb; dev -> mem; dev -> res; dev -> pipe;
+  dev -> sync;
+  mem -> res [style=dashed, label="sidotaan"];
+  cb -> q [style=dashed, label="lähetetään"];
+  pipe -> cb [style=dashed, label="sidotaan"];
+}
+```
+
 Rakenteet välitetään `…CreateInfo`-tietueina, joiden ensimmäinen kenttä
 `sType` kertoo tyypin ja `pNext` mahdollistaa laajennusrakenteiden
 ketjuttamisen. Esimerkeissä rakenteet alustetaan C++20:n nimetyillä

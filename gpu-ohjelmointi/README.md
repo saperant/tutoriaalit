@@ -14,7 +14,7 @@ Esitiedot: taidot *Renderöinnin perusteet* ja *Rinnakkaisohjelmointi*.
 
 ## Esimerkit
 
-`esimerkit/` sisältää 14 C++23-ohjelmaa (GCC 14), apuotsakkeet
+`esimerkit/` sisältää 15 C++23-ohjelmaa (GCC 14), apuotsakkeet
 (`yhteinen/`) ja Vulkanin varjostimet (`varjostimet/`). Ne ajetaan
 ilman näytönohjainta Mesan ohjelmistorenderöijillä: OpenGL
 llvmpipellä EGL:n kautta ilman ikkunaa ja Vulkan lavapipellä
@@ -38,5 +38,8 @@ vulkan-validationlayers glslc`. Kehityskontissa
 
 `make testaa` tarkistaa rakenteen ja ajaa esimerkit, `make pdf`
 rakentaa PDF:t.
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 Lisenssi: CC BY-SA 4.0.

@@ -45,6 +45,13 @@ säilyy.
 ```{.tuloste tiedosto="esimerkit/10-naytteistys.odotettu"}
 ```
 
+![Ylhäällä 64 näytepistettä kolmella tavalla: satunnaiset kasautuvat
+ja jättävät aukkoja, ositetuissa on yksi piste ruutua kohden, ja
+Haltonin jono täyttää alueen tasaisesti. Alhaalla esimerkin
+tulosteen virheet: satunnaiset noudattavat kulmakerrointa $-1/2$,
+kaksi muuta lähes kulmakerrointa
+$-3/4$.](kuvat/10-naytepisteet.png){width=88%}
+
 Kun näytteitä on 64 kertaa enemmän, satunnaisten näytteiden virhe
 pienenee kahdeksasosaan, kuten $1/\sqrt{N}$ ennustaa. Ositettujen ja
 Haltonin näytteiden virhe pienenee 25-osaan. Reunalle teoreettinen
@@ -137,6 +144,13 @@ kirkkaille alueille.
 
 ```{.tuloste tiedosto="esimerkit/10-savykuvaus.odotettu"}
 ```
+
+![Sama Cornellin laatikko nelinkertaisella valotuksella kolmella
+käyrällä: vasemmalla leikkaus, keskellä Reinhard, oikealla ACES.
+Leikkaus polttaa katon ja seinien yläosat tasaiseksi väriksi.
+Reinhard säilyttää sävyerot mutta latistaa kontrastin, ja ACES
+säilyttää kontrastin ja taittaa kirkkaat alueet
+pehmeästi.](kuvat/10-savykuvaus.png){width=100%}
 
 Keskiharmaa (radianssi 0,18) koodautuu leikkauksella tavuksi 118,
 Reinhardilla 109 ja ACES-käyrällä 141. ACES-kuva näyttää siksi

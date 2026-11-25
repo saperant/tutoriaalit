@@ -33,8 +33,12 @@ koordinaatit kulkevat nollasta yhteen kuvan yli:
 ```{.cpp tiedosto="esimerkit/05-tekstuurit.cpp" osa="suurennus"}
 ```
 
-```{.tuloste tiedosto="esimerkit/05-tekstuurit.odotettu"}
+```{.tuloste tiedosto="esimerkit/05-tekstuurit.odotettu" rivit="1-3"}
 ```
+
+![Sama 2 × 2 -tekstuuri venytettynä 64 × 64 pikseliin: vasemmalla
+lähin teksel, oikealla lineaarinen
+suodatus.](kuvat/05-suodatus.png){width=55%}
 
 Lähin teksel (`GL_NEAREST`) antaa terävät reunat, joten jokainen
 teksel näkyy 32×32-ruutuna. Lineaarinen suodatus (`GL_LINEAR`)
@@ -52,6 +56,9 @@ oikea keskiarvo on harmaa. Tämä on **laskostumista** (aliasing), ja
 liikkuvassa kuvassa se näkyy välkkeenä ja moiré-kuvioina.
 
 ```{.cpp tiedosto="esimerkit/05-tekstuurit.cpp" osa="pienennys"}
+```
+
+```{.tuloste tiedosto="esimerkit/05-tekstuurit.odotettu" rivit="4-6"}
 ```
 
 Mip-tasoilla näytteistin valitsee tason, jonka tekselit ovat suunnilleen

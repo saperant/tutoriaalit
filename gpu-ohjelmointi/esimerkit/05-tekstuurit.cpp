@@ -131,6 +131,17 @@ int main() {
         glDeleteTextures(1, &mip);
     }
     // @loppu pienennys
+
+    // Kuvitus (make kuvat): sama 2×2-tekstuuri kahdella suodatuksella.
+    {
+        Kehys kehys(64, 64);
+        const GLuint t = luo_tekstuuri(2, 2, {0, 255, 255, 0}, false);
+        piirra(t, GL_NEAREST, GL_NEAREST, 16, 8);
+        kehys.lue().tallenna_ppm("bin/05-lahin.ppm");
+        piirra(t, GL_LINEAR, GL_LINEAR, 16, 8);
+        kehys.lue().tallenna_ppm("bin/05-lineaarinen.ppm");
+        glDeleteTextures(1, &t);
+    }
     GlKonteksti::tarkista();
     glDeleteVertexArrays(1, &vao);
     glDeleteProgram(ohjelma);

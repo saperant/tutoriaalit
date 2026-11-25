@@ -51,6 +51,11 @@ jaetaan kahdeksi kolmioksi viuhkana. Yhden tason leikkaus tuottaa
 enintään yhden lisäkärjen, joten kuuden tason leikkaus voi tuottaa
 enintään yhdeksänkulmion.
 
+![Kolmion leikkaus yhtä tasoa vastaan. Tason hyväksytyllä puolella
+olevat kärjet säilyvät, ja jokaisen tason ylittävän reunan kohdalle
+syntyy uusi kärki (oranssi
+neliö).](kuvat/07-leikkaus-periaate.png){width=78%}
+
 ## Kolmio kameran takana
 
 Seuraava esimerkki leikkaa lattiakolmion, jonka kärki $c$ on kameran
@@ -59,18 +64,31 @@ takana, ja piirtää sen leikkauksen kanssa ja ilman:
 ```{.cpp tiedosto="esimerkit/07-leikkaus.cpp" osa="kolmio"}
 ```
 
-```{.cpp tiedosto="esimerkit/07-leikkaus.cpp" osa="vertailu"}
-```
-
-```{.tuloste tiedosto="esimerkit/07-leikkaus.odotettu"}
+```{.tuloste tiedosto="esimerkit/07-leikkaus.odotettu" rivit="1-9"}
 ```
 
 Kärjen $c$ arvo $w$ on negatiivinen, ja $z + w < 0$ kertoo, että se on
 lähitason takana. Leikkaus korvaa sen kahdella kärjellä, jotka ovat
 täsmälleen lähitasolla ($z + w = 0$, $w$ on lähitason etäisyys 0,5).
-Leikattu nelikulmio täyttää ruudun alaosan, kuten lattian kuuluukin.
+Sama kolmio piirretään sitten kahdesti, leikkaus päällä ja pois:
+
+```{.cpp tiedosto="esimerkit/07-leikkaus.cpp" osa="vertailu"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-leikkaus.odotettu" alkaen="leikkaus päällä" asti="lattia"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-leikkaus.odotettu" alkaen="leikkaus pois" asti="lattia"}
+```
+
+![Sama kolmio suuremmalla tarkkuudella: vasemmalla leikattuna,
+oikealla ilman leikkausta. Ohjelma tulostaa kuvat myös
+merkkeinä.](kuvat/07-leikkaus.png){width=85%}
+
+Leikattu nelikulmio täyttää ruudun alaosan, kuten lattian kuuluukin
+(538 pikseliä).
 Ilman leikkausta kärki $c$ peilautuu ylös horisontin taakse, ja
-kolmiosta piirtyy vain kapea suikale. Peilautuminen kääntää myös
+kolmiosta piirtyy vain kapea suikale (32 pikseliä). Peilautuminen kääntää myös
 kolmion kiertosuunnan, joten takapintojen karsinta hylkäisi sen
 kokonaan. Siksi karsinta on esimerkissä pois, jotta virheellinen
 kolmio näkyy.

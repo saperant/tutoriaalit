@@ -62,4 +62,17 @@ int main() {
     std::printf("%d pikseliä, joista %d eri kuin DDA:lla\n", yhteensa,
                 eroja);
     // @loppu tahti
+
+#ifdef KUVITUS  // make kuvat: sama ruudukko kuvana
+    Kuva kuva(L, K, {24, 24, 28});
+    for (int y = 0; y < K; ++y)
+        for (int x = 0; x < L; ++x) {
+            char m = ruutu[static_cast<std::size_t>(y)]
+                          [static_cast<std::size_t>(x)];
+            if (m == '#') kuva(x, y) = {225, 225, 225};
+            if (m == 'B') kuva(x, y) = {255, 150, 40};
+            if (m == 'D') kuva(x, y) = {70, 160, 255};
+        }
+    tallenna_ppm(kuva, "03-viivat.ppm");
+#endif
 }

@@ -27,6 +27,28 @@ väliin jäävän säteen. Kolme pintatyyppiä käsitellään eri tavoin:
 - **Lasi** lähettää kaksi sädettä, heijastuneen ja taittuneen, ja
   painottaa ne Fresnelin kertoimella.
 
+```{.dot otsikko="Yhden pikselin sädepuu. Diffuusi osuma päättää haaran varjosäteeseen; peili jatkaa yhdellä ja lasi kahdella säteellä, kunnes syvyysraja katkaisee rekursion."}
+digraph {
+  rankdir=LR; nodesep=0.18; ranksep=0.4;
+  node [shape=box, style="rounded,filled", fillcolor="#EEF0F2"];
+  kamera [label="kamera", fillcolor="#C9CEEE"];
+  lasi [label="lasi"];
+  peili [label="peili"];
+  d1 [label="diffuusi"]; d2 [label="diffuusi"]; d3 [label="diffuusi"];
+  v1 [label="valo", shape=ellipse, fillcolor="#F4E6DA"];
+  v2 [label="valo", shape=ellipse, fillcolor="#F4E6DA"];
+  v3 [label="varjossa", shape=ellipse, fillcolor="#F4E6DA"];
+  kamera -> lasi [label="primääri"];
+  lasi -> peili [label="heijastus"];
+  lasi -> d1 [label="taittuminen"];
+  peili -> d2 [label="heijastus"];
+  d1 -> v1 [label="varjosäde", style=dashed];
+  d2 -> v2 [label="varjosäde", style=dashed];
+  lasi -> d3 [label="(sisältä ulos)", style=dotted];
+  d3 -> v3 [label="varjosäde", style=dashed];
+}
+```
+
 Normaali käännetään aina säteen tulopuolelle. Pallon normaali osoittaa
 ulos, mutta lasin sisältä tuleva säde osuu pintaan sisäpuolelta, ja
 heijastus, taittuminen ja lähtöpisteen siirto tarvitsevat tulopuolen
@@ -59,6 +81,11 @@ tapahtuu, kun valo tulee tiheämmästä aineesta loivassa kulmassa.
 Kriittinen kulma on $\sin\theta_c = n_2 / n_1$; lasista ilmaan se on
 noin 42°.
 
+![Taittuminen ja kokonaisheijastus. Tiheämpään aineeseen mennessään
+säde taittuu kohti normaalia. Tiheämmästä aineesta tuleva säde
+heijastuu kokonaan, kun tulokulma ylittää kriittisen
+kulman.](kuvat/05-snell.png){width=88%}
+
 ```{.cpp tiedosto="esimerkit/yhteinen/materiaali.hpp" osa="fresnel"}
 ```
 
@@ -87,6 +114,9 @@ sama.
 
 ```{.tuloste tiedosto="esimerkit/05-fresnel.odotettu"}
 ```
+
+![Sama taulukko kuvaajana: heijastuskerroin tulokulman funktiona.
+Pisteet ovat esimerkin tulosteesta.](kuvat/05-fresnel.png){width=68%}
 
 Lasi heijastaa kohtisuoraan 4 % valosta, mutta loivassa kulmassa
 lähes kaiken. Tämän näkee järven pinnasta: suoraan alas katsottaessa

@@ -1,7 +1,35 @@
 # Vulkan: putki, komentopuskurit ja piirto
 
 Luvun 3 kolmio piirretään nyt Vulkanilla. Kuva ja raportti ovat samat
-kuin OpenGL:llä, mutta jokainen vaihe on näkyvissä.
+kuin OpenGL:llä, mutta jokainen vaihe on näkyvissä. Ensimmäinen ero
+tulee vastaan jo ennen putkea: varjostimet eivät ole enää
+merkkijonoja ohjelman sisällä.
+
+## Varjostimet SPIR-V:nä
+
+Vulkan ei lue GLSL:ää vaan **SPIR-V**:tä, binääristä välikieltä.
+Varjostimet käännetään rakennusvaiheessa samalla tavalla kuin muukin
+koodi. Tämän tutoriaalin Makefile tekee sen glslc-kääntäjällä:
+
+```{.makefile tiedosto="esimerkit/Makefile" osa="spirv"}
+```
+
+Etukäteen kääntämisellä on kolme etua: virheet löytyvät
+rakennuksessa eivätkä ajurissa käyttäjän koneella, ajurin ei tarvitse
+jäsentää lähdekoodia, ja sama SPIR-V kelpaa kaikille valmistajille.
+Ajuri kääntää SPIR-V:n edelleen laitteen konekielelle, kun putki
+luodaan.
+
+SPIR-V:n voi tuottaa myös HLSL:stä (DXC) tai Slangista, mikä
+mahdollistaa saman varjostinkoodin käytön Direct3D:n ja Vulkanin
+välillä. Työkaluja:
+
+| Työkalu | Tehtävä |
+|---------|---------|
+| `glslc`, `glslangValidator` | GLSL → SPIR-V ja GLSL:n tarkistus |
+| `spirv-dis`, `spirv-val` | SPIR-V tekstiksi ja tarkistus |
+| `spirv-opt` | optimointi ja koon pienennys |
+| `spirv-cross` | SPIR-V → GLSL, HLSL, MSL; heijastustieto |
 
 ## Putki on muuttumaton
 
@@ -72,6 +100,18 @@ saatava valmiiksi:
 ```{.cpp tiedosto="esimerkit/yhteinen/vk.hpp" osa="siirtyma"}
 ```
 
+```{.dot otsikko="Esimerkin kohdekuvan asettelut. Jokainen nuoli on este komentopuskurissa."}
+digraph {
+  rankdir=LR; nodesep=0.25; ranksep=0.45;
+  node [shape=box, style="rounded,filled", fillcolor="#EEF0F2"];
+  u [label="UNDEFINED\n(luotu, sisältö\nmäärittelemätön)"];
+  c [label="COLOR_ATTACHMENT_\nOPTIMAL\n(piirtokohde)", fillcolor="#C9CEEE"];
+  t [label="TRANSFER_SRC_\nOPTIMAL\n(kopioinnin lähde)", fillcolor="#F4E6DA"];
+  u -> c [label="ennen piirtoa"];
+  c -> t [label="ennen lukua\nCPU:lle"];
+}
+```
+
 Piirto tapahtuu **dynaamisen renderöinnin** (Vulkan 1.3) sisällä.
 Liitännät annetaan suoraan `vkCmdBeginRendering`-kutsulle. Vanhempi
 tapa, render pass ja framebuffer -oliot, on edelleen tuettu, ja se on
@@ -90,8 +130,12 @@ VRAMiin, jos syvyyttä ei tarvita myöhemmin.
 ```{.tuloste tiedosto="esimerkit/08-vk-kolmio.odotettu"}
 ```
 
-Tulos on sama kuin OpenGL:llä, ja validointikerros ei löytänyt
-virheitä.
+Tulos on sama kuin OpenGL:llä (sama kuva kuin luvussa 3), ja
+validointikerros ei löytänyt virheitä.
+
+Indeksoitu piirto toimii kuten OpenGL:ssä: indeksipuskuri sidotaan
+komennolla `vkCmdBindIndexBuffer`, ja piirtokomento on
+`vkCmdDrawIndexed`.
 
 ## Ikkuna ja swapchain
 
@@ -105,6 +149,9 @@ ilman näyttöä, joten swapchain ohitetaan.
 
 ## Käytännössä
 
+- **Käännä varjostimet rakennuksessa ja varoitukset virheiksi**
+  (`glslc -Werror`). Ajonaikainen käännös on vain työkaluille ja
+  kokeiluille.
 - **Kokoa toistuvat rakenteet apukoodiksi heti**, mutta näe ensin
   koko ketju kerran. Vulkan-koodin virheet ovat lähes aina
   unohtuneita kenttiä tai väärää järjestystä.
@@ -124,6 +171,8 @@ ilman näyttöä, joten swapchain ohitetaan.
 
 ## Itsearviointi
 
+- Osaat kääntää GLSL:n SPIR-V:ksi rakennuksessa ja ladata sen
+  varjostinmoduuliksi.
 - Osaat luoda grafiikkaputken ja selittää, miksi putki on muuttumaton
   ja mitä dynaaminen tila tarkoittaa.
 - Osaat tallentaa komentopuskurin, lähettää sen jonoon ja odottaa sen

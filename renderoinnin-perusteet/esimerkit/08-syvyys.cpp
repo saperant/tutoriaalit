@@ -67,4 +67,27 @@ int main() {
         }
     }
     // @loppu piirto
+
+#ifdef KUVITUS  // make kuvat: sama kohtaus suurempana, 16 ja 24 bittiä
+    const int S = 4;
+    Kuva rinnakkain(2 * L * S + 4, K * S, {90, 90, 90});
+    int i = 0;
+    for (int bitit : {16, 24}) {
+        Kohde kohde(L * S, K * S, {0.02, 0.03, 0.06});
+        Asetukset as;
+        as.syvyysbitit = bitit;
+        piirra(kohde, lattia(-1), vv,
+               [](const auto&, const auto&) { return Vari{1, 0, 0}; },
+               as);
+        piirra(kohde, lattia(-0.999), vv,
+               [](const auto&, const auto&) { return Vari{0.1, 0.3, 1}; },
+               as);
+        Kuva kuva = kohde.kuvaksi();
+        for (int y = 0; y < K * S; ++y)
+            for (int x = 0; x < L * S; ++x)
+                rinnakkain(i * (L * S + 4) + x, y) = kuva(x, y);
+        ++i;
+    }
+    tallenna_ppm(rinnakkain, "08-syvyys.ppm");
+#endif
 }

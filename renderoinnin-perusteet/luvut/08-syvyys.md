@@ -30,7 +30,7 @@ Syvyyspuskurilla piirtojärjestyksellä ei ole väliä tulokselle (paitsi
 täsmälleen yhtä syvillä pinnoilla). Poikkeus ovat läpinäkyvät pinnat,
 joiden väri sekoitetaan taustaan. Ne piirretään läpinäkymättömien
 jälkeen takaa eteen lajiteltuina, ja syvyyspuskuriin niitä ei
-kirjoiteta.
+kirjoiteta. Sekoitus toteutetaan taidossa *GPU-ohjelmointi: OpenGL ja Vulkan*.
 
 ## Syvyyden jakauma
 
@@ -48,8 +48,13 @@ lähitasolla 0,1 ja kaukotasolla 100:
 ```{.cpp tiedosto="esimerkit/08-syvyys.cpp" osa="jakauma"}
 ```
 
-```{.tuloste tiedosto="esimerkit/08-syvyys.odotettu"}
+```{.tuloste tiedosto="esimerkit/08-syvyys.odotettu" rivit="1-10"}
 ```
+
+![Syvyyspuskurin arvo etäisyyden funktiona (etäisyysakseli on
+logaritminen). Lähitasolla 0,1 puolet arvoista kuluu etäisyyksiin
+alle 0,2. Lähitaso 1 siirtää saman käyrän kymmenkertaiselle
+etäisyydelle.](kuvat/08-syvyysjakauma.png){width=62%}
 
 Puolet koko syvyysalueesta kuluu etäisyyksiin 0,1–0,2, ja 90
 prosenttia etäisyyksiin alle yhden. Sarakkeet oikealla kertovat, kuinka
@@ -72,7 +77,15 @@ sen päälle, joten oikeassa kuvassa punaista ei näy lainkaan:
 ```{.cpp tiedosto="esimerkit/08-syvyys.cpp" osa="piirto"}
 ```
 
-16-bittisellä puskurilla kaukaiset rivit (yllä `#`) jäävät punaisiksi:
+```{.tuloste tiedosto="esimerkit/08-syvyys.odotettu" rivit="12-21"}
+```
+
+![Sama kohtaus suuremmalla tarkkuudella: vasemmalla 16-bittinen ja
+oikealla 24-bittinen syvyyspuskuri. Punainen kaista horisontin
+tuntumassa on alempi lattia, jonka ylemmän olisi pitänyt
+peittää.](kuvat/08-syvyys.png){width=85%}
+
+16-bittisellä puskurilla kaukaiset rivit (tulosteessa `#`) jäävät punaisiksi:
 ylemmän lattian syvyys pyöristyy samaksi kuin alemman, ja testi
 `z < puskuri` hylkää sen. 24 bittiä ja liukuluku selviävät tästä
 kohtauksesta. Viistossa kulmassa katsottu pinta on pahin tapaus,

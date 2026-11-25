@@ -22,12 +22,13 @@
 10. **CPU ja GPU eivät odota toisiaan kesken ruudun**: limitetyt
     ruudut ja resurssi per ruutu.
 
-## Mihin seuraavaksi
+## Jatkotaidot
 
 - *GPU-laskenta*: laskentavarjostimet, jaettu muisti, reduktiot ja
   lajittelu sekä niiden käyttö grafiikassa (hiukkaset, valojen
   klusterointi, GPU-ohjattu renderöinti).
-- *Säteenseuranta*: fysikaalinen valon kulku ja polunseuranta.
+- *Säteenseuranta ja fysikaalinen valaistus*: fysikaalinen valon
+  kulku ja polunseuranta.
   Laitteistokiihdytetty säteenseuranta (Vulkanin ray tracing
   -laajennukset) yhdistää sen rasterointiin.
 - *Peliohjelmointi* ja *Reaaliaikaiset moninpelit*: renderöinnin

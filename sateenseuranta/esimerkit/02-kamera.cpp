@@ -5,7 +5,11 @@
 #include "yhteinen/kuva.hpp"
 #include "yhteinen/satunnainen.hpp"
 
+#ifdef KUVITUS   // make kuvat: suurempi kuva tähän dokumenttiin
+const int L = 384, K = 288;
+#else
 const int L = 64, K = 48;
+#endif
 const Pallo PALLOT[] = {{{-1.1, 0.5, 0}, 0.5}, {{0, 0.7, 0.6}, 0.7},
                         {{1.2, 0.4, -0.4}, 0.4}};
 const Vari VARIT[] = {{0.8, 0.15, 0.1}, {0.8, 0.8, 0.8}, {0.1, 0.3, 0.8}};

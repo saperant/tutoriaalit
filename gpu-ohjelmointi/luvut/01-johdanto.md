@@ -16,13 +16,20 @@ minkä OpenGL-ajuri teki sen puolesta. Työtä on enemmän, mutta
 hinnat ja riippuvuudet näkyvät, ja ne ovat samat myös
 Direct3D 12:ssa, Metalissa ja WebGPU:ssa.
 
+## Esitiedot ja rajaus
+
 Esitietoina ovat taidot *Renderöinnin perusteet* (koordinaatistot,
 muunnosmatriisit, rasterointi ja valaistusmallit) ja
 *Rinnakkaisohjelmointi*. Tarvittava renderöinnin teoria kerrataan
-lyhyesti siellä, missä sitä käytetään. GPU:lla tehtävä
-yleiskäyttöinen laskenta (laskentavarjostimet, reduktiot,
-lajittelu) on taidon *GPU-laskenta* asia; tämä tutoriaali keskittyy
-grafiikkaan.
+lyhyesti siellä, missä sitä käytetään.
+
+Tutoriaali keskittyy grafiikkaan. GPU:lla tehtävä yleiskäyttöinen
+laskenta (laskentavarjostimet, reduktiot, lajittelu) on taidon
+*GPU-laskenta* asia, ja valon kulun fysikaalinen simulointi taidon
+*Säteenseuranta ja fysikaalinen valaistus*. Geometria-, tessellaatio-
+ja mesh-varjostimia sekä säteenseurannan laajennuksia ei käsitellä.
+Esimerkit piirtävät muistissa olevaan kuvaan eivätkä avaa ikkunaa;
+ikkunaan piirtämisen rakenne (swapchain) kuvataan tekstinä luvussa 8.
 
 ## Rajapinnat
 

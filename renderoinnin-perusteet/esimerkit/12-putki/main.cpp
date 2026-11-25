@@ -3,7 +3,11 @@
 
 #include "varjostin.hpp"
 
+#ifdef KUVITUS  // make kuvat: sama kohtaus suurempana kirjan kuvaksi
+const int L = 480, K = 320, N = 2;
+#else
 const int L = 120, K = 80, N = 2;  // kuvan koko ja ylinäytteistys
+#endif
 
 // @alku kohtaus
 struct Kappale {

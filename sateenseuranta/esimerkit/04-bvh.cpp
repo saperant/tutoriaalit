@@ -126,4 +126,31 @@ int main() {
     std::printf("    SAH        %.1f laatikkoa, %.1f kolmiota\n",
                 ls.laatikot / 400.0, ls.kolmiot / 400.0);
     // @loppu satunnaiset
+
+#ifdef KUVITUS  // make kuvat: kuva ja laatikkotestien määrä pikseleittäin
+    const int W = 240, H = 180;
+    Kamera k = kamera({2.5, 2.2, -3.5}, {0, 0.5, 0}, {0, 1, 0}, 1.7, W, H);
+    Vec3 valo = normalisoi({-0.5, 1, -0.4});
+    Kehys rinnakkain(2 * W + 4, H);
+    for (int y = 0; y < H; ++y)
+        for (int x = 0; x < W; ++x) {
+            BvhLaskuri l;
+            Sade s = k.sade(x + 0.5, y + 0.5);
+            BvhOsuma o = leikkaa_bvh(sah, kolmiot, s, l);
+            double v = 0.1;
+            if (o.kolmio >= 0)
+                v = 0.05 + 0.8 * std::fabs(piste(normaali(kolmiot[o.kolmio]),
+                                                 valo));
+            rinnakkain(x, y) = {v, v, v};
+            // Väriasteikko: 0 testiä musta, 30 punainen, 60 keltainen,
+            // 90 tai enemmän valkoinen.
+            double m = std::min(1.0, static_cast<double>(l.laatikot) / 90);
+            rinnakkain(W + 4 + x, y) = {std::min(1.0, 3 * m),
+                                        std::clamp(3 * m - 1, 0.0, 1.0),
+                                        std::clamp(3 * m - 2, 0.0, 1.0)};
+        }
+    for (int y = 0; y < H; ++y)
+        for (int x = W; x < W + 4; ++x) rinnakkain(x, y) = {0.1, 0.1, 0.1};
+    tallenna_ppm(rinnakkain, "04-bvh.ppm");
+#endif
 }

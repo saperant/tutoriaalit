@@ -49,7 +49,7 @@ tiedostoon `<nimi>.odotettu`. Ajat tulostetaan vain mittaustilassa.
 ```text
 cd esimerkit
 make               # varjostimet, ohjelmat, ajot ja vertailu
-make aja-08-kantaluku
+make aja-07-kantaluku
 make mittaa        # ajat GPU:n aikaleimoilla (vaihtelevat koneittain)
 ```
 
@@ -61,6 +61,10 @@ valmiina.
 ## Rakentaminen
 
 `make testaa` tarkistaa rakenteen ja ajaa esimerkit, `make pdf`
-rakentaa PDF:t.
+rakentaa PDF:t ja `make kuvat` piirtää algoritmien periaatekuvat
+(Matplotlib).
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 Lisenssi: CC BY-SA 4.0.

@@ -18,6 +18,8 @@ tunnetuilla tapauksilla ja satunnaistesteillä, kiihdytysrakenne
 vertaamalla raakahakuun ja integraattori vertaamalla tunnettuihin
 analyyttisiin arvoihin.
 
+## Esitiedot ja rajaus
+
 Esitietoina ovat taidot *Renderöinnin perusteet*, *Todennäköisyys ja
 tilastot* ja *Algoritmit*. Renderöinnin perusteista käytetään
 kuvapuskuria, lineaarista valoa ja sRGB-koodausta (luku *Kuvat ja
@@ -27,6 +29,13 @@ tarvitaan odotusarvo, varianssi, suurten lukujen laki ja Monte
 Carlo -menetelmän perusidea (luvut *Odotusarvo ja varianssi*,
 *Raja-arvolauseet* ja *Monte Carlo -menetelmät*). Algoritmeista
 tarvitaan rekursio, hajota ja hallitse sekä vaativuusanalyysi.
+
+Renderöijä lasketaan prosessorilla yhdessä säikeessä, ja kohtaukset
+ovat pieniä. Näytönohjaimen säteenseurantarajapinnat kuuluvat taitoon
+*GPU-ohjelmointi: OpenGL ja Vulkan* ja rinnakkaistus taitoon *Rinnakkaisohjelmointi*.
+Spektrinen renderöinti, väliaineet (sumu, savu), ympäristövalaistus
+kuvasta ja kaksisuuntaiset menetelmät rajataan pois; luku *Lopuksi*
+kertoo, mistä niitä kannattaa lähteä opiskelemaan.
 
 ## Mihin säteenseurantaa tarvitaan
 
@@ -38,7 +47,7 @@ ennustamiseen: kuinka paljon päivänvaloa huoneeseen tulee, häikäiseekö
 lamppu. Reaaliaikaisessa grafiikassa näytönohjaimet ovat vuodesta 2018
 lähtien sisältäneet säteenseurannan laitteistoyksiköt, ja pelit
 yhdistävät rasteroinnin ja muutaman säteen pikseliä kohden kohinan
-poistoon. Taito *GPU-ohjelmointi* mainitsee Vulkanin säteenseurannan
+poistoon. Taito *GPU-ohjelmointi: OpenGL ja Vulkan* mainitsee Vulkanin säteenseurannan
 laajennukset; tämän tutoriaalin BVH ja leikkaustestit ovat juuri ne,
 jotka laitteisto toteuttaa.
 
@@ -111,7 +120,9 @@ näytteitä on 16 kertaa enemmän".
 Esimerkit kirjoittavat kuvan myös PPM-tiedostoon. Tämän dokumentin
 kuvat on tuotettu niistä komennolla `make kuvat`, joka kääntää
 esimerkit optimoituina ja makrolla `KUVITUS`, jolloin kuvat ovat
-suurempia ja näytteitä on enemmän. Testeissä kuvat ovat pieniä
+suurempia ja näytteitä on enemmän. Selittävät piirrokset ja
+mittaustulosten kuvaajat tekee `kuvat/piirra.py` Matplotlibilla;
+kuvaajien luvut se lukee esimerkkien `.odotettu`-tiedostoista. Testeissä kuvat ovat pieniä
 (32 × 24 – 80 × 40 pikseliä), koska sanitoijien kanssa käännetty
 koodi on kymmeniä kertoja hitaampaa.
 

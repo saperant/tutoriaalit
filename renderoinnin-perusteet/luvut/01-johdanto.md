@@ -9,12 +9,22 @@ lasketaan väri ja lähimmän pinnan väri jää näkyviin. Tämä tutoriaali
 rakentaa koko ketjun alusta asti tavallisena C++-ohjelmana, jotta
 jokainen vaihe on näkyvissä ja testattavissa.
 
+## Esitiedot ja rajaus
+
 Esitietoina ovat taidot *Lineaarialgebra* ja *Moderni C++*.
 Lineaarialgebrasta tarvitaan vektorit, matriisit, homogeeniset
 koordinaatit sekä katse- ja perspektiivimatriisi, jotka johdettiin
 sen luvussa *Homogeeniset koordinaatit*. Täällä niitä
 käytetään eikä johdeta uudelleen: kun matriisi tulee vastaan, luku
 kertoo, mitä sen tulos tarkoittaa pikseleiden kannalta.
+
+Tutoriaali rakentaa rasteroivan putken ohjelmistona, ja siihen se
+myös rajautuu. Näytönohjaimen ohjelmointi (OpenGL, Vulkan,
+varjostinkielet, puskurit) on taidossa *GPU-ohjelmointi: OpenGL ja Vulkan*. Varjot,
+heijastukset, epäsuora valo ja fysikaalisesti perustellut materiaalit
+ovat taidossa *Säteenseuranta ja fysikaalinen valaistus*. Mallien
+lataamista tiedostoista, animaatiota ja pelimoottorin rakennetta ei
+käsitellä.
 
 ## Mihin renderöinnin perusteita tarvitaan
 
@@ -58,7 +68,7 @@ tekstuurit (`tekstuuri.hpp`), valaistus (`valo.hpp`) ja itse putki
 (`putki.hpp`). Kirjasto on kirjoitettu selkeäksi, ei nopeaksi; luvussa
 *Grafiikkaputki* kerrotaan, mitä nopea toteutus tekisi toisin.
 
-Jatkotaidot ovat *GPU-ohjelmointi*, joka siirtää saman putken
+Jatkotaidot ovat *GPU-ohjelmointi: OpenGL ja Vulkan*, joka siirtää saman putken
 näytönohjaimelle OpenGL:llä ja Vulkanilla, ja *Säteenseuranta ja
 fysikaalinen valaistus*, joka laskee valon kulun toisella tavalla:
 pikselistä maailmaan eikä kolmiosta pikseleihin.
@@ -88,7 +98,10 @@ tallentaa vertailukuvaksi ja ajaa regressiotestinä.
 Esimerkit kirjoittavat kuvan myös PPM-tiedostoon. Tämän dokumentin
 kuvat on tuotettu niistä komennolla `make kuvat`, joka kääntää
 esimerkit optimoituina ja muuntaa kuvat PNG-muotoon pienellä
-Python-skriptillä (`kuvat/ppm2png.py`).
+Python-skriptillä (`kuvat/ppm2png.py`). Pikselitason kuvat on
+suurennettu, jotta yksittäiset pikselit erottuvat. Selittävät
+piirrokset ja kuvaajat tekee `kuvat/piirra.py` Matplotlibilla; niitä
+ei tarvita esimerkkien ajamiseen.
 
 ## Työkalut
 

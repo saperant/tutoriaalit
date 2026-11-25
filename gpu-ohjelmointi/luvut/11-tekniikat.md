@@ -90,6 +90,11 @@ valaistuksen:
 ```{.tuloste tiedosto="esimerkit/11-viivastetty.odotettu"}
 ```
 
+![G-puskurin kolme liitäntää geometriavaiheen jälkeen: pinnan väri,
+normaali ja sijainti maailmassa (koordinaatit väreinä). Valaistusvaihe
+lukee vain näitä kuvia eikä piirrä geometriaa
+uudelleen.](kuvat/11-gpuskuri.png){width=95%}
+
 ![Viivästetty varjostus: kolme pistevaloa lattialla ja seinällä.](kuvat/11-viivastetty.png){width=40%}
 
 Valaistuksen kustannus on nyt (näkyvät pikselit) × (valot), eikä se

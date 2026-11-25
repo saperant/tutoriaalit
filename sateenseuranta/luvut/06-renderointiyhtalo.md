@@ -48,8 +48,15 @@ yli on $\pi$, ei $2\pi$.
 Pinnan heijastusta kuvaa kaksisuuntainen heijastusjakaumafunktio
 BRDF (*bidirectional reflectance distribution function*)
 $f(\omega_i, \omega_o)$: suuntaan $\omega_o$ heijastuvan radianssin
-suhde suunnasta $\omega_i$ tulevaan irradianssiin. Fysikaalisesti
-järkevällä BRDF:llä on kolme ominaisuutta:
+suhde suunnasta $\omega_i$ tulevaan irradianssiin.
+
+![BRDF:n suureet pinnan pisteessä. Suunnasta $\omega_i$ pienestä
+avaruuskulmasta $d\omega_i$ tuleva radianssi $L_i$ tuottaa
+irradianssin $L_i \cos\theta_i\,d\omega_i$, ja BRDF kertoo, kuinka
+suuri osa siitä lähtee suuntaan
+$\omega_o$.](kuvat/06-puolipallo.png){width=58%}
+
+Fysikaalisesti järkevällä BRDF:llä on kolme ominaisuutta:
 
 1. **Ei-negatiivisuus**: $f \ge 0$.
 2. **Vastavuoroisuus** (Helmholtz): $f(\omega_i, \omega_o) =

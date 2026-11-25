@@ -47,6 +47,12 @@ mikään ei ole negatiivinen:
 ```{.cpp tiedosto="esimerkit/yhteinen/rasteri.hpp" osa="rasteroi"}
 ```
 
+![Reunafunktiot pikseliruudukolla. Rasteroija käy läpi rajaavan
+suorakulmion pikselit ja hyväksyy ne, joiden keskipisteessä mikään
+kolmesta reunafunktiosta ei ole negatiivinen. Jokaisen reunan
+ulkopuolella yksi funktio on
+negatiivinen.](kuvat/04-reunafunktio.png){width=62%}
+
 Jos kolmion kärjet ovat myötäpäivään, ala on negatiivinen ja kärjet
 `b` ja `c` vaihdetaan, jotta sama testi toimii. Painot vaihdetaan
 takaisin ennen kutsua, joten kutsuja saa painot alkuperäisessä
@@ -98,6 +104,10 @@ kertaa pikseli piirrettiin:
 
 ```{.tuloste tiedosto="esimerkit/04-peitto.odotettu"}
 ```
+
+![Samat kuviot väreinä: ylhäällä reunat mukaan lukien, alhaalla
+vasen-ylä-säännöllä. Harmaa pikseli on piirretty kerran, oranssi
+kahdesti ja punainen useammin.](kuvat/04-peitto.png){width=60%}
 
 Ilman sääntöä vaakasuora keskijana on piirretty kahdesti ja
 kuusikulmion keskipiste kuudesti. Säännön kanssa jokainen pikseli on

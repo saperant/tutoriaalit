@@ -51,4 +51,7 @@ int main() {
     tilasto("rautalanka", kuva);
     ascii(kuva, 1, 2);
     // @loppu rautalanka
+#ifdef KUVITUS  // make kuvat
+    tallenna_ppm(kuva, "05-muunnokset.ppm");
+#endif
 }

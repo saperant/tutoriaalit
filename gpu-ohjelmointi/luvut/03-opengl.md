@@ -109,6 +109,45 @@ edeltävän. Oikeassa sovelluksessa tulos luetaan vain testeissä tai
 kuvakaappauksissa; muuten luku tehdään asynkronisesti
 pikselipuskuriin (PBO), jotta CPU ja GPU eivät odota toisiaan.
 
+## Indeksoitu piirto
+
+Useimmissa malleissa sama kärki kuuluu moneen kolmioon: kuution kulma
+kolmeen sivuun ja sileän pinnan kärki keskimäärin kuuteen kolmioon.
+**Indeksipuskuri** (element buffer) tallentaa kärjet kerran ja kolmiot
+kärkien numeroina. Nelikulmio on pienin esimerkki:
+
+```{.cpp tiedosto="esimerkit/03-indeksit.cpp" osa="data"}
+```
+
+Indeksipuskuri on tavallinen puskuri, joka liitetään
+verteksitaulukkoon. Piirtokutsu on `glDrawElements`, jolle kerrotaan
+indeksien määrä ja tyyppi:
+
+```{.cpp tiedosto="esimerkit/03-indeksit.cpp" osa="indeksoitu"}
+```
+
+Vertailuksi sama nelikulmio puretaan kuudeksi kärjeksi ja piirretään
+`glDrawArrays`-kutsulla:
+
+```{.cpp tiedosto="esimerkit/03-indeksit.cpp" osa="purettu"}
+```
+
+```{.cpp tiedosto="esimerkit/03-indeksit.cpp" osa="raportti"}
+```
+
+```{.tuloste tiedosto="esimerkit/03-indeksit.odotettu"}
+```
+
+Kuvat ovat pikselilleen samat. Indeksoitu versio vie vähemmän muistia,
+ja verteksivarjostin ajettiin neljästi kuuden sijaan (putken
+tilastokysely `GL_VERTEX_SHADER_INVOCATIONS`). Laite saa ajaa
+varjostimen samalle kärjelle uudelleen, jos kärki on ehtinyt poistua
+sen välimuistista, joten neljä on alaraja eikä takuu. Oikeissa
+malleissa säästö on suurempi: kärki vie kymmeniä tavuja (sijainti,
+normaali, tekstuurikoordinaatit) ja indeksi kaksi tai neljä.
+16-bittinen indeksi riittää 65 536 kärjelle, ja suuremmat mallit
+käyttävät 32-bittisiä indeksejä.
+
 ## Käytännössä
 
 - **Käytä DSA:ta ja debug-kontekstia.** Ne poistavat kaksi yleisintä
@@ -116,8 +155,11 @@ pikselipuskuriin (PBO), jotta CPU ja GPU eivät odota toisiaan.
   jääneen virheen. Kehitysversiossa debug-viestit ovat aina päällä.
 - **Tarkista varjostimien käännös ja linkitys aina.** Ajurit eroavat
   siinä, mitä ne hyväksyvät. Koodi, joka kääntyy yhdellä valmistajalla,
-  voi hylkääntyä toisella. `glslangValidator` (luku 10) tarkistaa
+  voi hylkääntyä toisella. `glslangValidator` (luku 8) tarkistaa
   GLSL:n määrittelyä vasten ilman ajuria.
+- **Indeksoi mallit.** Jaetut kärjet tallennetaan ja varjostetaan
+  kerran. Mallien tiedostomuodot ja työkalut tuottavat indeksoitua
+  dataa valmiiksi.
 - **Puskurit kerralla ja harvoin.** Puskurin luonti on kallis; luo ne
   käynnistyksessä ja päivitä sisältöä. `glNamedBufferStorage` kertoo
   ajurille etukäteen, miten puskuria käytetään.
@@ -138,5 +180,7 @@ pikselipuskuriin (PBO), jotta CPU ja GPU eivät odota toisiaan.
   sidontapiste, askel, siirtymä ja attribuutin muoto.
 - Osaat selittää leikkausavaruuden, perspektiivijaon ja NDC:n sekä
   sen, miten `out`-muuttujat interpoloidaan fragmenteille.
+- Osaat piirtää indeksoidun mallin ja kertoa, mitä indeksipuskuri
+  säästää.
 - Osaat piirtää omaan kehyspuskuriin ja lukea tuloksen CPU:lle sekä
   kertoa, miksi luku on kallis.

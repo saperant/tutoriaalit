@@ -5,7 +5,11 @@
 #include "yhteinen/kuva.hpp"
 #include "yhteinen/materiaali.hpp"
 
+#ifdef KUVITUS   // make kuvat: suurempi kuva tähän dokumenttiin
+const int L = 384, K = 288;
+#else
 const int L = 64, K = 48;
+#endif
 
 // @alku kohtaus
 struct Esine {

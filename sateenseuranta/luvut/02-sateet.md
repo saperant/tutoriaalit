@@ -34,6 +34,10 @@ silloin $f = 1/\tan(\theta/2)$, missä $\theta$ on pystysuuntainen
 näkökenttä, aivan kuten perspektiivimatriisissa. Kameran kanta
 lasketaan katsesuunnasta ja ylösvektorista ristitulolla:
 
+![Neulanreikäkamera sivulta. Säde lähtee silmästä, kulkee kuvatason
+pikselin kautta ja jatkuu, kunnes se osuu lähimpään
+pintaan.](kuvat/02-kamerakaavio.png){width=70%}
+
 ```{.cpp tiedosto="esimerkit/yhteinen/kamera.hpp" osa="kamera"}
 ```
 

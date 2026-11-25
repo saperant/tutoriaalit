@@ -1,9 +1,12 @@
 // Viivästetty varjostus: geometriavaihe kirjoittaa pintojen tiedot
 // G-puskuriin (useaan väriliitäntään), ja valaistusvaihe laskee valot
 // kerran pikseliä kohden koko ruudun kattavalla kolmiolla.
+#include <algorithm>
 #include <array>
+#include <cstdint>
 #include <numbers>
 #include <print>
+#include <vector>
 
 #include "gl.hpp"
 #include "matriisi.hpp"
@@ -82,6 +85,35 @@ constexpr std::array<V, 12> kohtaus{{
     {2, 2, -1, 0, 0, 1, .9f, .9f, .6f},  {-2, 2, -1, 0, 0, 1, .9f, .9f, .6f},
 }};
 
+// Lukee liitännän liukulukuina ja tallentaa sen kuvana: arvo * kerroin
+// + siirto välille 0–1.
+static void tallenna_liitanta(GLuint tekstuuri, int l, int k, float kerroin,
+                              float siirto, const char* polku) {
+    std::vector<float> arvot(static_cast<std::size_t>(l * k * 4));
+    glGetTextureImage(tekstuuri, 0, GL_RGBA, GL_FLOAT,
+                      static_cast<GLsizei>(arvot.size() * sizeof(float)),
+                      arvot.data());
+    Kuva kuva(l, k);
+    for (int y = 0; y < k; ++y) {
+        for (int x = 0; x < l; ++x) {
+            const auto lahde =
+                static_cast<std::size_t>(((k - 1 - y) * l + x) * 4);
+            const auto kohde = static_cast<std::size_t>((y * l + x) * 4);
+            // Tyhjennetty pikseli (ei geometriaa) on kokonaan nolla.
+            const bool tyhja =
+                arvot[lahde] == 0.0f && arvot[lahde + 1] == 0.0f &&
+                arvot[lahde + 2] == 0.0f && arvot[lahde + 3] == 0.0f;
+            for (std::size_t c = 0; c < 3; ++c) {
+                const float v = tyhja ? 0.0f
+                                      : arvot[lahde + c] * kerroin + siirto;
+                kuva.rgba[kohde + c] = static_cast<std::uint8_t>(
+                    std::clamp(v, 0.0f, 1.0f) * 255.0f + 0.5f);
+            }
+        }
+    }
+    kuva.tallenna_ppm(polku);
+}
+
 int main() {
     GlKonteksti gl;
     constexpr int L = 144, K = 96;
@@ -156,6 +188,11 @@ int main() {
     const Kuva kuva = kehys.lue();
     GlKonteksti::tarkista();
     kuva.tallenna_ppm("bin/11-viivastetty.ppm");
+    // Kuvitus (make kuvat): G-puskurin liitännät väreinä. Normaali ja
+    // sijainti skaalataan välille 0–1.
+    tallenna_liitanta(g[0], L, K, 1.0f, 0.0f, "bin/11-g-albedo.ppm");
+    tallenna_liitanta(g[1], L, K, 0.5f, 0.5f, "bin/11-g-normaali.ppm");
+    tallenna_liitanta(g[2], L, K, 0.25f, 0.5f, "bin/11-g-sijainti.ppm");
     // @alku raportti
     for (const auto& v : valot) {
         const auto [x, y] =

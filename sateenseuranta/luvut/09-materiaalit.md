@@ -18,6 +18,12 @@ joiden normaalit ovat jakautuneet makroskooppisen normaalin ympärille.
 Valo heijastuu suunnasta $\mathbf{l}$ suuntaan $\mathbf{v}$ vain niistä
 faseteista, joiden normaali on puolivälivektori
 $\mathbf{h} = (\mathbf{l} + \mathbf{v}) / |\mathbf{l} + \mathbf{v}|$.
+
+![Mikrofasettipinta poikkileikkauksena. Valo heijastuu katsojaan vain
+faseteista, joiden normaali on $\mathbf{h}$ (oranssit). Osa niistä
+jää naapurifasettien varjoon tai taakse, minkä termi $G$
+huomioi.](kuvat/09-mikrofasetit.png){width=70%}
+
 BRDF on
 
 $$f(\mathbf{l}, \mathbf{v}) = \frac{D(\mathbf{h})\,G(\mathbf{l},
@@ -123,11 +129,12 @@ ja Monte Carlo -estimaatti osuu siihen. Kullan ja Contyn
 (2017) monisirontakorjaus lisää puuttuvan energian taulukoidulla
 termillä.
 
-Ensimmäinen versio tämän luvun eristeestä antoi loivassa kulmassa
-albedon 1,15: diffuusikerros kerrottiin vain heijastuksen $1 - F$:llä
-puolivälivektorin kulmassa. Testi paljasti virheen, ja läpäisyn
-kertominen molempiin suuntiin korjasi sen. Monessa
-reaaliaikamoottorissa on yhä sama yksinkertaistus.
+Sama testi paljastaa myös hienovaraisemman virheen. Jos eristeen
+diffuusikerros kerrotaan vain heijastuksen $1 - F$:llä
+puolivälivektorin kulmassa, albedo nousee loivassa kulmassa arvoon
+1,15. Valo kulkee pinnan läpi kahdesti, sisään ja ulos, joten läpäisy
+on kerrottava molempiin suuntiin. Monessa reaaliaikamoottorissa on
+yhä sama yksinkertaistus.
 
 ## Valkoinen uuni
 

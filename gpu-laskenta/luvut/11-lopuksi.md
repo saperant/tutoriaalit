@@ -24,7 +24,7 @@
 10. **Mittaa kohdelaitteella.** Lavapipe testaa oikeellisuuden; nopeus
     mitataan sillä laitteella, jolle ohjelma tehdään.
 
-## Mihin seuraavaksi
+## Jatkotaidot
 
 - *Säteenseuranta ja fysikaalinen valaistus*: polunseuranta on luonteva
   GPU-laskennan sovellus, ja sen kiihdytysrakenteet rakennetaan GPU:lla

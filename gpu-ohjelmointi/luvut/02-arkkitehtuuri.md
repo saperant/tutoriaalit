@@ -57,7 +57,8 @@ huonommin viive piiloutuu.
 Muistin kaistanleveys (satoja gigatavuja tai teratavuja sekunnissa)
 on silti usein pullonkaula. Grafiikassa kaistaa kuluttavat
 tekstuurien luku, kehyspuskurin kirjoitus ja sekoitus. Luku 12
-palaa tähän.
+palaa tähän, ja taito *GPU-laskenta* käsittelee muistihierarkian
+tarkemmin laskennan kannalta.
 
 ## Kiinteät yksiköt ja grafiikkaputki
 
@@ -79,6 +80,23 @@ laitteistossa seuraavasti:
    suodatuksen laitteistossa.
 7. **Syvyys- ja sapluunatesti, sekoitus ja kirjoitus** (kiinteä,
    ROP) kehyspuskuriin.
+
+```{.dot otsikko="Grafiikkaputki laitteistossa. Tummemmat vaiheet ovat ohjelmoitavia varjostimia, muut kiinteitä yksiköitä, joita ohjataan asetuksilla."}
+digraph {
+  rankdir=LR; nodesep=0.2; ranksep=0.28;
+  node [shape=box, style="rounded,filled", fillcolor="#EEF0F2"];
+  ia [label="syötteen\nkokoaminen"];
+  vs [label="verteksi-\nvarjostin", fillcolor="#C9CEEE"];
+  pa [label="kokoaminen,\nleikkaus, jako"];
+  ra [label="rasterointi"];
+  ez [label="aikainen\nsyvyystesti"];
+  fs [label="fragmentti-\nvarjostin", fillcolor="#C9CEEE"];
+  rop [label="testit, sekoitus,\nkirjoitus"];
+  tex [label="tekstuuri-\nyksikkö", shape=ellipse, fillcolor="#F4E6DA"];
+  ia -> vs -> pa -> ra -> ez -> fs -> rop;
+  tex -> fs [style=dashed];
+}
+```
 
 Mobiili-GPU:t (ja osin työpöydänkin) renderöivät ruudun pieninä
 *ruutuina* (tile-based): ruudun kolmiot lajitellaan ensin ruuduille,

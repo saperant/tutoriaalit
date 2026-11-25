@@ -35,7 +35,7 @@ laajempi:
 - **Näytönohjain.** Säteenseurantayksiköt käyvät BVH:n läpi ja
   testaavat kolmiot laitteistossa; ohjelmoija kirjoittaa varjostimet
   osumille ja ohituksille (Vulkan Ray Tracing, DirectX Raytracing,
-  OptiX). Taito *GPU-ohjelmointi* käsittelee rajapinnat.
+  OptiX). Taito *GPU-ohjelmointi: OpenGL ja Vulkan* käsittelee rajapinnat.
 - **Liukuluvut.** Yksinkertainen tarkkuus (`float`) puolittaa
   muistin ja kaksinkertaistaa SIMD-leveyden, mutta tekee
   itseleikkauksesta vakavamman ongelman.
@@ -47,12 +47,15 @@ laajempi:
   löytävät kaustiikat ja vaikeat valopolut.
 - **Osallistuvat aineet**: savu, sumu ja iho, joissa valo siroaa
   aineen sisällä.
+- **Ympäristövalaistus kuvasta**: taivas tai studio valaisee
+  kohtauksen suuren dynamiikan panoraamakuvana, jonka kirkkaita
+  kohtia näytteistetään tärkeyden mukaan.
 - **Matalan diskrepanssin jonot** kaikille ulottuvuuksille ja
   neuroverkkopohjainen kohinan poisto.
 
-## Mihin seuraavaksi
+## Jatkotaidot
 
-- *GPU-ohjelmointi*: rasterointiputki ja säteenseurannan
+- *GPU-ohjelmointi: OpenGL ja Vulkan*: rasterointiputki ja säteenseurannan
   laajennukset näytönohjaimella.
 - *Rinnakkaisohjelmointi*: säikeet, tehtävät ja SIMD, joilla
   renderöijä saadaan käyttämään koko prosessoria.

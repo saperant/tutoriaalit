@@ -25,8 +25,11 @@ toistettavaa: kiinteät siemenet ja oma PCG32-generaattori.
 ```text
 make testaa   # rakenne ja esimerkit
 make pdf      # PDF:t
-make kuvat    # kuvitus kuvat/*.png esimerkkien PPM-kuvista
+make kuvat    # kuvitus: esimerkkien PPM-kuvat, piirrokset ja kuvaajat
 ```
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 Kehityskontissa (`.devcontainer/sateenseuranta`) on kääntäjät ja
 dokumenttityökalut.

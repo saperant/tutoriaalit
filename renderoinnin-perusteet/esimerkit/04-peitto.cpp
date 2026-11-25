@@ -48,4 +48,27 @@ void laske(bool saanto) {
 int main() {
     laske(false);
     laske(true);
+
+#ifdef KUVITUS  // make kuvat: piirtokerrat väreinä, ylhäällä ilman sääntöä
+    Kuva kuva(L, 2 * K + 1, {24, 24, 28});
+    for (int osa = 0; osa < 2; ++osa) {
+        std::vector<std::vector<int>> n(K, std::vector<int>(L, 0));
+        for (const auto& t : kolmiot())
+            rasteroi(t[0], t[1], t[2], L, K,
+                     [&](int x, int y, Bary) {
+                         ++n[static_cast<std::size_t>(y)]
+                            [static_cast<std::size_t>(x)];
+                     },
+                     osa == 1);
+        for (int y = 0; y < K; ++y)
+            for (int x = 0; x < L; ++x) {
+                int v = n[static_cast<std::size_t>(y)]
+                         [static_cast<std::size_t>(x)];
+                if (v == 1) kuva(x, osa * (K + 1) + y) = {200, 200, 200};
+                if (v == 2) kuva(x, osa * (K + 1) + y) = {255, 160, 40};
+                if (v > 2) kuva(x, osa * (K + 1) + y) = {230, 50, 50};
+            }
+    }
+    tallenna_ppm(kuva, "04-peitto.ppm");
+#endif
 }

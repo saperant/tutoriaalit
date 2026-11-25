@@ -18,6 +18,11 @@ Valaistus lasketaan pinnan pisteessä neljällä yksikkövektorilla:
 - $v$ osoittaa pinnasta **katsojaa** kohti,
 - $r = 2 (n \cdot l) n - l$ on valon **heijastussuunta**.
 
+![Valaistuksen vektorit pinnan pisteessä. Heijastussuunta $r$ on
+valon suunnan $l$ peilikuva normaalin suhteen. Puolivälivektori $h$
+on suuntien $l$ ja $v$ puolivälissä; se esitellään Blinn–Phongin
+mallin yhteydessä.](kuvat/09-vektorit.png){width=58%}
+
 Kaikkien on oltava samassa koordinaatistossa (yleensä maailmassa tai
 kamerassa) ja normalisoituja. Kaksi yleisintä virhettä ovat juuri
 nämä: normaali on mallin koordinaatistossa ja valo maailmassa, tai
@@ -145,7 +150,7 @@ oikealta vain lineaarisilla arvoilla.
 Varjoja nämä mallit eivät tuota: pinta on valaistu, jos se on
 kääntynyt valoon päin, vaikka sen ja valon välissä olisi jotain.
 Varjot vaativat näkyvyystestin valosta katsottuna, joko varjokartalla
-(taito *GPU-ohjelmointi*) tai säteellä (*Säteenseuranta ja
+(taito *GPU-ohjelmointi: OpenGL ja Vulkan*) tai säteellä (*Säteenseuranta ja
 fysikaalinen valaistus*).
 
 ## Käytännössä

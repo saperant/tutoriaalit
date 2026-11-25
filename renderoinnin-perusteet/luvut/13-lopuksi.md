@@ -21,9 +21,9 @@
 10. **Tee kuvista testattavia**: deterministinen laskenta,
     tarkistussummat ja vaihekohtaiset tilastot.
 
-## Mihin seuraavaksi
+## Jatkotaidot
 
-- *GPU-ohjelmointi*: sama putki OpenGL:llä ja Vulkanilla, varjostimet
+- *GPU-ohjelmointi: OpenGL ja Vulkan*: sama putki OpenGL:llä ja Vulkanilla, varjostimet
   GLSL:nä, puskurit, synkronointi ja tekniikat kuten varjokartat ja
   viivästetty varjostus.
 - *Säteenseuranta ja fysikaalinen valaistus*: näkyvyys säteillä

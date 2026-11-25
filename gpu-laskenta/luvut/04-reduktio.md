@@ -41,6 +41,11 @@ välissä on `barrier()`:
 ```{.glsl tiedosto="esimerkit/varjostimet/reduktio_jaettu.comp" osa="jaettu"}
 ```
 
+![Sama puu kahdeksalle säikeelle ja 16 alkiolle. Värilliset solut
+ovat tasolla aktiivisten säikeiden summat: aktiivisia on aina ryhmän
+alusta 8, 4, 2 ja 1. Jokaisen tason jälkeen kaikki säikeet odottavat
+esteellä.](kuvat/04-reduktiopuu.png){width=80%}
+
 Kolme yksityiskohtaa on tärkeitä:
 
 1. **Ensimmäinen yhteenlasku tehdään latauksessa.** Jokainen 256

@@ -78,4 +78,19 @@ int main() {
                 std::printf("  |%s|\n", r.c_str());
     }
     // @loppu vertailu
+
+#ifdef KUVITUS  // make kuvat: neljä tapaa 2 x 2 -asetelmana
+    Kuva kuva(2 * L + 1, 2 * K + 1, {90, 90, 90});
+    int i = 0;
+    for (const Tapa& t : tavat) {
+        for (int y = 0; y < K; ++y)
+            for (int x = 0; x < L; ++x) {
+                double p = peitto(x, y, t.kuvio);  // lineaarinen kirkkaus
+                kuva(i % 2 * (L + 1) + x, i / 2 * (K + 1) + y) =
+                    koodaa({p, p, p});
+            }
+        ++i;
+    }
+    tallenna_ppm(kuva, "11-antialiasointi.ppm");
+#endif
 }

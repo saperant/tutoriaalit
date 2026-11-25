@@ -4,7 +4,7 @@
 #   make             kääntää varjostimet ja ohjelmat, ajaa ne ja vertaa
 #                    tulosteet tiedostoihin <nimi>.odotettu
 #   make aja-NIMI    kääntää ja ajaa yhden esimerkin
-#   make kuvat       muuntaa ajojen kuvat PNG:ksi hakemistoon ../kuvat
+#   make kuvat       kokoaa ajojen kuvat PNG:ksi (../kuvat/kokoa.py)
 #   make siivoa      poistaa käännöstuotteet
 #
 # Ajot käyttävät Mesan ohjelmistorenderöijiä, joten näytönohjainta tai
@@ -54,12 +54,9 @@ $(AJOT): aja-%: bin/% $(VARJOSTIMET)
 bin:
 	mkdir -p bin
 
-KUVAT := 03-kolmio 06-syvyys 11-varjokartta 11-viivastetty
+KUVAT := 03-kolmio 05-tekstuurit 06-syvyys 11-varjokartta 11-viivastetty
 kuvat: $(addprefix aja-,$(KUVAT))
-	python3 -c 'import sys; from PIL import Image; \
-	[(lambda k: k.resize((k.width * 4, k.height * 4), Image.NEAREST))( \
-	  Image.open(f"bin/{n}.ppm")).save(f"../kuvat/{n}.png", optimize=True) \
-	 for n in sys.argv[1:]]' $(KUVAT)
+	python3 ../kuvat/kokoa.py
 
 siivoa:
 	rm -rf bin

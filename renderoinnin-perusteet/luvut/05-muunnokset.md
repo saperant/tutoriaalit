@@ -19,6 +19,21 @@ kysymällä, missä koordinaatistossa mikin arvo on.
 | NDC | näkymäportti | kuutio $[-1, 1]^3$ |
 | ruutu | – | pikselit, $y$ alas, syvyys 0–1 |
 
+```{.dot otsikko="Kärjen matka koordinaatistosta toiseen. Kolme ensimmäistä muunnosta ovat matriiseja ja kuuluvat verteksivarjostimelle; jako ja näkymäportti ovat putken kiinteitä vaiheita."}
+digraph {
+  rankdir=LR; nodesep=0.25; ranksep=0.35;
+  node [shape=box, style="rounded,filled", fillcolor="#E4E6F4"];
+  malli -> maailma [label="M"];
+  maailma -> kamera [label="V"];
+  kamera -> leikkaus [label="P"];
+  leikkaus -> ndc [label="÷ w"];
+  ndc -> ruutu [label="näkymä-\nportti"];
+  leikkaus [label="leikkaus-\navaruus", fillcolor="#F4E6DA"];
+  ndc [label="NDC", fillcolor="#F4E6DA"];
+  ruutu [fillcolor="#F4E6DA"];
+}
+```
+
 Tässä tutoriaalissa käytetään samoja sopimuksia kuin taidossa
 *Lineaarialgebra*: sarakevektorit, joten muunnos kirjoitetaan
 vasemmalle ($M p$), ja OpenGL:n tyyliset koordinaatistot, joissa
@@ -61,6 +76,11 @@ C++:na:
 ```{.cpp tiedosto="esimerkit/yhteinen/vektori.hpp" osa="kamera"}
 ```
 
+![Näkymäkartio sivulta. Perspektiiviprojektio kuvaa pisteen sille
+suoralle, joka kulkee silmän ja pisteen kautta; kaukainen piste päätyy
+lähemmäs kuvan keskustaa. Vain lähi- ja kaukotason välinen alue
+piirretään.](kuvat/05-nakymakartio.png){width=70%}
+
 Projektiomatriisin parametri `f` on $1/\tan(\theta/2)$, missä
 $\theta$ on pystysuora näkökenttä. Arvo 1,5 vastaa noin 67 astetta ja
 1,2 noin 80 astetta. Suurempi `f` on kapeampi näkökenttä eli
@@ -70,7 +90,9 @@ neliönä myös leveällä ruudulla.
 Matriisin viimeinen rivi $(0, 0, -1, 0)$ kopioi kamerakoordinaattien
 $-z$:n eli etäisyyden katsesuunnassa koordinaattiin $w$. Kun leikkausavaruuden
 koordinaatit jaetaan myöhemmin $w$:llä, kaukaiset pisteet siirtyvät
-lähemmäs keskustaa: se on perspektiivi.
+lähemmäs keskustaa: se on perspektiivi. Näkökentän, kuvasuhteen ja
+ortografisen projektion vaikutus kuvaan käsitellään luvun
+*Perspektiivi* lopussa.
 
 ## Verteksin matka
 
@@ -83,6 +105,16 @@ kerrotaan jokainen kärki:
 
 ```{.cpp tiedosto="esimerkit/05-muunnokset.cpp" osa="vaiheet"}
 ```
+
+```{.tuloste tiedosto="esimerkit/05-muunnokset.odotettu" rivit="1-6"}
+```
+
+Tulosteesta näkee jokaisen vaiheen merkityksen. Maailmassa kärki on
+kierretty ja nostettu 0,5 ylös. Kamerakoordinaateissa sen $z$ on
+negatiivinen (kärki on kameran edessä), ja itseisarvo on etäisyys
+kamerasta katsesuunnassa. Leikkausavaruuden $w$ on sama luku. NDC:ssä
+kaikki näkyvät pisteet ovat kuutiossa $[-1, 1]^3$, ja ruudulla kärki
+on pikselissä (44, 16).
 
 Viimeinen vaihe on **näkymäportti** (viewport): NDC:n $x$ välillä
 $-1 \ldots 1$ venytetään välille $0 \ldots \text{leveys}$, $y$
@@ -100,16 +132,15 @@ kulkemalla sivun kärjet ympäri:
 ```{.cpp tiedosto="esimerkit/05-muunnokset.cpp" osa="rautalanka"}
 ```
 
-```{.tuloste tiedosto="esimerkit/05-muunnokset.odotettu"}
+```{.tuloste tiedosto="esimerkit/05-muunnokset.odotettu" rivit="7-7"}
 ```
 
-Tulosteesta näkee jokaisen vaiheen merkityksen. Maailmassa kärki on
-kierretty ja nostettu 0,5 ylös. Kamerakoordinaateissa sen $z$ on
-negatiivinen (kärki on kameran edessä), ja itseisarvo on etäisyys
-kamerasta katsesuunnassa. Leikkausavaruuden $w$ on sama luku. NDC:ssä kaikki
-näkyvät pisteet ovat kuutiossa $[-1, 1]^3$, ja ruudulla kärki on
-pikselissä (44, 16). Rautalankamallissa näkyvät myös takasärmät,
-koska viivat eivät tiedä mitään peittämisestä.
+![Kuution rautalankamalli, 64 × 48 pikseliä viisinkertaisesti
+suurennettuna. Ohjelma tulostaa saman kuvan myös merkkeinä
+(`ascii`).](kuvat/05-muunnokset.png){width=50%}
+
+Rautalankamallissa näkyvät myös takasärmät, koska viivat eivät tiedä
+mitään peittämisestä.
 
 ## Kuution malli
 
@@ -130,6 +161,11 @@ järjestyksessä $(-u, -v), (u, -v), (u, v), (-u, v)$ kiertävät
 vastapäivään normaalin suunnasta katsottuna. Kiertosuunta on osa
 mallin dataa: luvussa *Syvyys ja näkyvyys* sen avulla hylätään
 kameraan päin kääntymättömät kolmiot.
+
+Sama rakenne, kärkitaulukko ja siihen viittaavat indeksit, on
+näytönohjaimen verteksi- ja indeksipuskureissa (taito
+*GPU-ohjelmointi: OpenGL ja Vulkan*), ja mallien tiedostomuodot kuten OBJ ja glTF
+tallentavat kolmioverkon samalla tavalla.
 
 ## Normaalit
 
