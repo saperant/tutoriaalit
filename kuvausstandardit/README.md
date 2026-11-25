@@ -27,10 +27,10 @@ pikaopas: [kuvausstandardit-pikaopas.pdf](https://saperant.github.io/tutoriaalit
 8. UVM-rekisterimalli
 9. IP-XACT – rakenne, XML Pythonilla, vienti ja tuonti
 10. CMSIS-SVD ja laitepuu
-11. Muut kuvaukset suunnitteluvuossa – SDC, UPF, Liberty, LEF/DEF,
-    SPEF, GDSII, VCD/FST
-12. Työkaluketju ja CI – tahdin tarkistus ja rekisterikartan
+11. Työkaluketju ja CI – tahdin tarkistus ja rekisterikartan
     versiointi
+12. Muut kuvaukset suunnitteluvuossa – liitteenomainen katsaus: SDC,
+    UPF, Liberty, LEF/DEF, SPEF, GDSII, VCD/FST
 13. Lopuksi – nyrkkisäännöt ja lähteet
 
 ## Esimerkit
@@ -54,6 +54,9 @@ Tarvittavat työkalut: Python 3.12, ruff, mypy, pytest,
 systemrdl-compiler, PeakRDL (regblock, cheader, uvm, ipxact),
 Verilator, GCC tai Clang, xmllint, dtc ja tclsh. Ne ovat valmiina
 kehityskontissa `.devcontainer/kuvausstandardit`.
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 ## Lisenssi
 

@@ -1,0 +1,37 @@
+# Lohkon gpio rekisterikuvaus. Muoto on sama kuin taidon
+# EDA-työkaluketjujen automatisointi rekisterikuvauksessa, yhdellä
+# yksinkertaistuksella: jokainen rekisteri on yksi kenttä, jolla on
+# leveys. Rekisterilohko, otsake ja dokumentti generoidaan tästä:
+#   make generoi
+
+[lohko]
+nimi = "gpio"
+kuvaus = "Yleiskäyttöiset 8-bittiset tulot ja lähdöt"
+
+[[rekisteri]]
+nimi = "ULOS"
+osoite = 0x00
+leveys = 8
+paasy = "rw"
+kuvaus = "Lähtöjen tila"
+
+[[rekisteri]]
+nimi = "SISAAN"
+osoite = 0x04
+leveys = 8
+paasy = "ro"
+kuvaus = "Tulojen tila (tahdistettu)"
+
+[[rekisteri]]
+nimi = "SALLI"
+osoite = 0x08
+leveys = 8
+paasy = "rw"
+kuvaus = "Keskeytykset sallittu tulon nousevalla reunalla"
+
+[[rekisteri]]
+nimi = "REUNAT"
+osoite = 0x0C
+leveys = 8
+paasy = "w1c"
+kuvaus = "Havaitut nousevat reunat; ykkösen kirjoitus nollaa"

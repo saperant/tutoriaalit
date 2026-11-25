@@ -12,9 +12,31 @@ käytetään standardimuotoja, kuten SystemRDL:ää (Accellera) ja
 IP-XACT:ia (IEEE 1685), ja niille on avoimia ja kaupallisia
 generaattoreita. Periaate on sama kuin tässä luvussa, jossa kuvaus on
 pieni TOML-tiedosto ja generaattori satakunta riviä Pythonia.
-Taidossa *SoC-integraatio* rekisterilohkot kytketään väylään. Tässä
-keskitytään siihen, miten ne tuotetaan ja miten tuotettu koodi
-pidetään kuvauksen kanssa samassa tahdissa.
+Taidossa *SoC-integraatio* samalla kuvausmuodolla tuotetut
+rekisterilohkot kytketään väylään ja rekisterityypit käydään läpi
+laitteiston kannalta. Taito *Laitteiston kuvausstandardit (SystemRDL,
+IP-XACT)* tekee saman standardimuodoilla ja valmiilla
+generaattoreilla. Tässä keskitytään siihen, miten generaattori
+rakennetaan ja miten tuotettu koodi pidetään kuvauksen kanssa samassa
+tahdissa.
+
+```{.dot otsikko="Yksi kuvaus, neljä tuotetta. CI tuottaa tiedostot uudelleen ja vertaa niitä tallennettuihin (katkoviiva)."}
+digraph {
+  rankdir=LR;
+  node [shape=box, fontsize=10];
+  kuvaus [label="rekisterit.toml", shape=ellipse];
+  malli [label="malli ja\ntarkistus"];
+  sv [label="ajastin_regs.sv\n(RTL)", shape=ellipse];
+  h [label="ajastin_regs.h\n(C-otsake)", shape=ellipse];
+  md [label="ajastin_regs.md\n(dokumentti)", shape=ellipse];
+  tb [label="ajastin_regs_tb.sv\n(testipenkki)", shape=ellipse];
+  ci [label="CI: tuota ja vertaa"];
+  kuvaus -> malli;
+  malli -> sv; malli -> h; malli -> md; malli -> tb;
+  sv -> ci [style=dashed]; h -> ci [style=dashed];
+  md -> ci [style=dashed]; tb -> ci [style=dashed];
+}
+```
 
 ## Kuvaus
 
@@ -32,13 +54,18 @@ jonka laitteisto asettaa ja ohjelmisto nollaa kirjoittamalla siihen
 ykkösen. Muiden bittien kirjoittaminen nollaksi ei silloin vahingossa
 nollaa lippua.
 
+![Rekisterien CTRL ja STATUS bittikentät piirrettynä samasta
+kuvauksesta (`kuvat/piirra.py`). Harmaat bitit ovat varattuja: ne
+luetaan nollina, eikä niihin kirjoittaminen vaikuta
+mihinkään.](kuvat/bittikentat.png){width=92%}
+
 ## Malli ja tarkistus
 
 Kuvaus luetaan tietueiksi `Lohko`, `Rekisteri` ja `Kentta`. Kentän
 tietueessa on ominaisuudet `leveys` ja `maski`, joita generaattorit ja
 tarkistin käyttävät. Ennen kuin mitään tuotetaan, kuvaus tarkistetaan. Tarkistin kerää
 kaikki virheet kerralla, jotta kuvauksen kirjoittaja voi korjata ne
-yhdellä kierroksella:
+yhdellä kierroksella.
 
 Rekisteritasolla tarkistetaan nimet, osoitteiden tasaus ja
 päällekkäiset osoitteet. Kentät tarkistetaan rekisteri kerrallaan:

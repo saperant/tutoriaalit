@@ -1,0 +1,13 @@
+# Lähdeluettelo: ainoa paikka, jossa kohteiden lähdetiedostot, makrot
+# ja parametrit luetellaan. Lint, simulaattorit ja synteesi saavat
+# komentorivinsä tästä (vuo/lahteet.py).
+
+[laskuri]
+ylin = "laskuri"
+lahteet = ["rtl/laskuri.sv"]
+parametrit = { LEVEYS = 8 }
+
+[alu]
+ylin = "alu"
+lahteet = ["rtl/alu.sv"]
+makrot = ["VIKA"]

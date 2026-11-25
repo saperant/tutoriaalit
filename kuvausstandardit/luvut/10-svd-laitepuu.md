@@ -63,10 +63,11 @@ käännetään esimerkiksi `svd2rust`-ruutu CI:ssä.
 
 ## Laitepuu
 
-Taidossa *Sulautettu Linux* laitepuu esiteltiin kuvauksena, josta ydin
-löytää laitteet. Taidossa *Linux-laiteajurit* ajuri sidottiin
-laitteeseen `compatible`-merkkijonolla ja luki osoitealueen ja
-keskeytyksen solmun ominaisuuksista `reg` ja `interrupts`. Kaikki kolme
+Laitepuu (*devicetree*) on kuvaus, josta käyttöjärjestelmän ydin
+löytää piirin laitteet (taito *Sulautettu Linux*). Ajuri sidotaan
+laitteeseen `compatible`-merkkijonolla, ja se lukee osoitealueen ja
+keskeytyksen solmun ominaisuuksista `reg` ja `interrupts` (taito
+*Linux-laiteajurit*). Kaikki kolme
 ominaisuutta ovat samassa kuvauksessa kuin rekisterit:
 
 ```{.python tiedosto="esimerkit/kuvaus/laitepuu.py" osa="solmut"}

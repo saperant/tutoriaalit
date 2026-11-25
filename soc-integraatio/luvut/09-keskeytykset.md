@@ -158,6 +158,37 @@ molemmat, vaikka vain tulon 0 keskeytys on sallittu. Tila ja sallinta
 ovat erillään: ohjelmisto voi lukea tapahtumat myös kyselemällä
 (polling) sallimatta keskeytyksiä.
 
+## Keskeytyksen viive
+
+Polun ajallinen kulku näkyy saman ajon aaltomuodosta. Kaavio alkaa
+ensimmäisestä GPIO-reunasta:
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/keskeytys.json" otsikko="GPIO-keskeytys simulaatiosta: tulon reunasta ytimen ansaan kuluu 11 kellojaksoa."}
+```
+
+Jakso 1 on vasemmalla, ja tulo nousee jaksolla 2. Kaksi
+tahdistuskiikkua ja reunantunnistus vievät kolme jaksoa, joten
+`REUNAT[0]` asettuu jaksolla 5. GPIO:n
+keskeytyslinja ja PLICin `MEIP` nousevat samalla jaksolla, koska
+niiden välillä on vain kombinatorista logiikkaa. Ydin on juuri
+hakemassa käskyä osoitteesta `0x5B0`, eikä monivaiheinen ydin keskeytä
+kesken käskyn: se hakee käskyn, suorittaa sen (odotussilmukan
+muistiluku) ja ottaa ansan vasta, kun seuraava haku alkaisi. Jaksolla
+13 `mcause` saa arvon `0x8000000B` (ulkoinen keskeytys) ja `pc` hyppää
+käsittelijään (`mtvec` = `0x38`). `mepc`:hen tallentui `0x5B4`, käsky,
+jota ei ehditty aloittaa.
+
+Viive tapahtumasta ansaan on siis 11 jaksoa: kolme oheislaitteessa ja
+kahdeksan ytimessä. Ytimen osuus vaihtelee sen mukaan, mikä käsky on
+kesken, ja pahin tapaus on pisin käsky, jota ei voi keskeyttää.
+Käsittelijän ensimmäiseen hyödylliseen käskyyn on vielä matkaa:
+sisääntulokoodi tallentaa rekisterit pinoon, ja käsittelijä lukee
+PLICin LUNASTA-rekisterin. Samassa ajossa `MEIP` laskee lunastuksen
+myötä 277 jaksoa reunan jälkeen ja `REUNAT[0]` kuittauksen myötä 332
+jakson jälkeen. Valtaosa siitä on rekisterien tallennusta ja
+väyläsiirtoja, joista jokainen vie tässä järjestelmässä parikymmentä
+jaksoa (luku 5).
+
 ## Käytännössä
 
 - **Kuittaa syy, ei vain ohjainta.** Tasoliipaistu keskeytys palaa heti,
@@ -176,8 +207,9 @@ ovat erillään: ohjelmisto voi lukea tapahtumat myös kyselemällä
   useamman käskyn, pääohjelma estää keskeytykset päivityksen ajaksi.
 - **Mittaa viive.** Keskeytyksen viive (tapahtumasta käsittelijän
   ensimmäiseen käskyyn) koostuu ohjaimen, ytimen ja sisääntulokoodin
-  viiveistä. Reaaliaikajärjestelmässä se lasketaan pahimman tapauksen
-  mukaan (*Reaaliaikakäyttöjärjestelmät*).
+  viiveistä, kuten edellä mitattiin. Reaaliaikajärjestelmässä se
+  lasketaan pahimman tapauksen mukaan (taito
+  *Reaaliaikakäyttöjärjestelmät*).
 
 ## Itsearviointi
 
@@ -191,3 +223,5 @@ ovat erillään: ohjelmisto voi lukea tapahtumat myös kyselemällä
   valmis-kirjoituksella.
 - Osaat valita taso- ja reunaliipaisun välillä ja tunnistaa kummankin
   virhetavat.
+- Osaat lukea keskeytyksen viiveen aaltomuodosta ja kertoa, mistä
+  osista se koostuu.

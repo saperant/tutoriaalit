@@ -65,8 +65,8 @@ Työkalut lukevat kuvauksia ja:
 
 IP-XACT on raskas kirjoittaa käsin, ja rekisterien kuvaamiseen
 käytetään usein kevyempiä muotoja: SystemRDL (Accellera), OpenTitanin
-`hjson`-rekisterikuvaukset tai yksinkertainen JSON/YAML, kuten luvun 8
-generaattorissa. Idea on sama: kuvaus on ainoa lähde, ja kaikki muu
+`hjson`-rekisterikuvaukset tai yksinkertainen TOML, JSON tai YAML,
+kuten luvun 8 generaattorissa. Idea on sama: kuvaus on ainoa lähde, ja kaikki muu
 generoidaan siitä.
 
 ## Lisenssit
@@ -108,6 +108,8 @@ vaihe:
 Pikku-SoC:n ohjelmat seuraavat samaa järjestystä: `kaynnistys.c` lukee
 tunnisteet (vaihe 2), `keskeytykset.c` ja `dma.c` käyttävät lohkoja
 (vaihe 3), ja `dma.c` kuormittaa kytkintä kahdella isännällä (vaihe 4).
+Vaiheen 1 lohkotestit ovat luvussa 13, jossa GPIO ja RAM testataan
+yksinään cocotb:llä ennen kuin ne ovat osa järjestelmää.
 
 ## Käytännössä
 

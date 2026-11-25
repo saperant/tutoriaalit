@@ -1,12 +1,15 @@
 # Muut kuvaukset suunnitteluvuossa
 
+Tämä luku on liitteenomainen katsaus, eikä muu taito nojaa siihen.
 Rekisterikuvaukset ovat vain yksi suunnitteluvuon koneluettavista
 kuvauksista. Laitteiston toteutus kulkee RTL:stä piiriksi joukon
 standardoituja tiedostomuotoja kautta, ja jokainen niistä on jonkin
 työkalun syöte ja toisen tuote. Tämän luvun tarkoitus on tunnistaa ne:
 mitä kukin kuvaa, kuka sen kirjoittaa ja missä vuon vaiheessa sitä
 käytetään. Tarkemmin niitä käytetään taidoissa *ASIC-toteutus* ja
-*FPGA-toteutus*.
+*FPGA-toteutus*; tehoalueiden simuloitu sekvenssi on taidossa
+*SoC-integraatio* ja aaltomuotojen ohjelmallinen käsittely taidossa
+*EDA-työkaluketjujen automatisointi*.
 
 ## Yleiskuva
 

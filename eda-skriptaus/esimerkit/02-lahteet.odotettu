@@ -1,0 +1,16 @@
+[laskuri]
+  verilator --lint-only -Wall --top-module laskuri -GLEVEYS=8
+      rtl/laskuri.sv
+  iverilog -g2012 -s laskuri -Plaskuri.LEVEYS=8 -o laskuri.vvp
+      rtl/laskuri.sv
+  yosys: read_verilog -sv rtl/laskuri.sv
+  yosys: chparam -set LEVEYS 8 laskuri
+  paluuarvot (lint, icarus): [0, 0]
+[alu]
+  verilator --lint-only -Wall --top-module alu -DVIKA
+      rtl/alu.sv
+  iverilog -g2012 -s alu -DVIKA -o alu.vvp
+      rtl/alu.sv
+  yosys: read_verilog -sv -DVIKA rtl/alu.sv
+  paluuarvot (lint, icarus): [0, 0]
+hylätty: x: puuttuu rtl/puuttuu.sv

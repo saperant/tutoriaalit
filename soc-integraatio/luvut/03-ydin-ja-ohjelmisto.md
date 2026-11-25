@@ -40,6 +40,32 @@ Ydin tarvitsee järjestelmältä lisäksi:
 - **Väylävirheen**: väylän virhevastaus muuttuu ytimessä poikkeukseksi
   (luku 12).
 
+### Debug-liitäntä
+
+Tuotantoytimellä on vielä yksi rajapinta, jota Pikku-SoC:n ytimessä ei
+ole: debug. RISC-V:n debug-määrittelyssä piirin ulkopuolinen debuggeri
+puhuu JTAG-nastojen kautta *siirtomoduulille* (DTM), joka välittää
+rekisterilukuja ja -kirjoituksia *debug-moduulille* (DM). Debug-moduuli
+on integroijan kytkettävä lohko, ja sillä on kolme liitäntää
+järjestelmään:
+
+- **Pysäytys- ja jatkopyynnöt ytimelle.** Pysäytetty ydin suorittaa
+  debug-moduulin antamia käskyjä, joilla debuggeri lukee ja kirjoittaa
+  rekistereitä.
+- **Väyläisäntä (system bus access).** Debuggeri voi lukea ja
+  kirjoittaa muistia ja oheislaitteita suoraan kytkimen kautta
+  pysäyttämättä ydintä. Kytkimeen tulee siis yksi isäntä lisää.
+- **Nollaus.** Debuggeri voi nollata järjestelmän mutta ei itseään,
+  joten debug-logiikalla on oma nollausalueensa (luku 11).
+
+Integroinnin kannalta tärkein seuraus on, että debuggeri on isäntä,
+joka lukee rekistereitä silloinkin, kun ohjelmisto ei niitä lue.
+Muistinäkymä, joka näyttää oheislaitteen rekisterit, lukee ne kaikki.
+Jos lukemisella on sivuvaikutus (FIFOn tyhjeneminen, lipun nollaus),
+debuggeri muuttaa järjestelmän tilaa pelkästään katsomalla. Tästä
+syystä luku 8 suosittelee kuittausta kirjoittamalla (W1C) lukemisen
+sijaan.
+
 ## Käännösketju
 
 Ohjelmisto käännetään ristikääntäjällä, joka tuottaa koodia ytimen
@@ -153,6 +179,8 @@ kymmeniä tai satoja jaksoja, koska se ei voi tulla välimuistista.
 
 ## Itsearviointi
 
+- Osaat kertoa, mitä liitäntöjä debug-moduuli tarvitsee järjestelmään
+  ja miksi debuggeri tekee lukemisen sivuvaikutuksista ongelman.
 - Osaat kuvata ytimen ulkoiset liitännät: väylät, nollausvektorin,
   keskeytykset ja virhevasteen.
 - Osaat valita ristikääntäjän `-march`- ja `-mabi`-valitsimet ytimen

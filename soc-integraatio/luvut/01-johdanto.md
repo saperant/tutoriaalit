@@ -17,12 +17,27 @@ suoritinta, kellotettava ja nollattava oikein, ja koko kokonaisuuden on
 toimittava ohjelmiston kanssa.
 
 Tämä tutoriaali opettaa integroinnin kokoamalla pienen mutta
-täydellisen järjestelmäpiirin. Esitietona on taito *RTL-suunnittelu
-SystemVerilogilla*: moduulit, kellotettu logiikka, tilakoneet, FIFOt ja
-kellotusalueiden ylitys oletetaan tutuiksi, eikä niitä kerrata. Taito
-*Tietokonearkkitehtuuri* (käskykanta, datapolku, muistihierarkia,
-keskeytykset) on hyödyllinen tausta; tarvittavat asiat kerrotaan
-lyhyesti.
+täydellisen järjestelmäpiirin.
+
+## Esitiedot ja rajaus
+
+Esitietoina ovat taidot *RTL-suunnittelu SystemVerilogilla* ja
+*Tietokonearkkitehtuuri*. Edellisestä oletetaan tutuiksi moduulit,
+kellotettu logiikka, tilakoneet, FIFOt ja kellotusalueiden ylitys,
+eikä niitä kerrata. Jälkimmäisestä tarvitaan käskykanta, datapolku,
+muistihierarkia ja keskeytysten ajatus; RISC-V:n ansat kerrataan
+luvussa 9 siltä osin kuin integrointi niitä tarvitsee. Ohjelmat ovat
+lyhyitä C-ohjelmia ilman käyttöjärjestelmää, ja niiden lukemiseen
+riittää C:n perusteiden tuntemus.
+
+Rajaus: lohkojen sisäinen suunnittelu ja verifiointimenetelmät ovat
+taidoissa *RTL-suunnittelu SystemVerilogilla* ja *Laitteiston
+verifiointi*, fyysinen toteutus taidoissa *FPGA-toteutus* ja
+*ASIC-toteutus*. Rekisterigeneraattorin rakentaminen ja CI ovat
+taidossa *EDA-työkaluketjujen automatisointi* ja standardit
+kuvausmuodot taidossa *Laitteiston kuvausstandardit (SystemRDL,
+IP-XACT)*. Laiteohjelmiston kirjoittaminen oikealle piirille on
+taidossa *Mikrokontrollerit ja bare-metal-ohjelmointi*.
 
 ## Pikku-SoC
 
@@ -117,7 +132,11 @@ muistikartan ja sen, miten ohjelmisto pääsee laitteistoon käsiksi.
 Luvut 4–6 käsittelevät väyliä ja kytkentää, luvut 7–8 valmiiden ja
 generoitujen lohkojen käyttöä ja luvut 9–11 järjestelmän palveluja:
 keskeytyksiä, DMA:ta sekä kello-, nollaus- ja tehoalueita. Luku 12
-kokoaa virhetilanteet ja niiden tarkistamisen.
+kokoaa virhetilanteet ja niiden tarkistamisen. Luku 13 testaa kaksi
+lohkoa yksinään cocotb:llä. Se on sijoitettu loppuun, koska se
+käyttää lukujen 4, 5 ja 8 väyliä ja rekistereitä, mutta työjärjestyksessä
+lohkotesti tehdään ennen integrointia (luku 7): sen voi lukea heti
+luvun 8 jälkeen.
 
 Kokenut lukija voi lukea kunkin luvun lopussa olevan itsearvioinnin ja
 ohittaa luvun, jos hallitsee sen väitteet. Pikaoppaassa on

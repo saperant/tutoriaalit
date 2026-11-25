@@ -1,0 +1,31 @@
+# Lohkon syscon rekisterikuvaus. Muoto on sama kuin taidon
+# EDA-työkaluketjujen automatisointi rekisterikuvauksessa, yhdellä
+# yksinkertaistuksella: jokainen rekisteri on yksi kenttä, jolla on
+# leveys. Rekisterilohko, otsake ja dokumentti generoidaan tästä:
+#   make generoi
+
+[lohko]
+nimi = "syscon"
+kuvaus = "Järjestelmäohjain: tunniste, apurekisteri ja lopetus"
+
+[[rekisteri]]
+nimi = "TUNNISTE"
+osoite = 0x00
+leveys = 32
+paasy = "vakio"
+nollaus = 0x534F4331
+kuvaus = "SoC:n tunniste ASCII-merkkeinä: \"SOC1\""
+
+[[rekisteri]]
+nimi = "APU"
+osoite = 0x04
+leveys = 32
+paasy = "rw"
+kuvaus = "Vapaasti käytettävä apurekisteri"
+
+[[rekisteri]]
+nimi = "LOPETA"
+osoite = 0x08
+leveys = 8
+paasy = "wo"
+kuvaus = "Simulaatio päättyy; arvo on paluukoodi"

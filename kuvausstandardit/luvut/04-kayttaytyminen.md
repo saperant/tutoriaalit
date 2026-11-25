@@ -29,7 +29,14 @@ arvolle tallennuksen lisäksi:
 | `singlepulse` | kirjoitettu ykkönen on lähdössä yhden jakson | (WO) |
 
 Kertapulssi on käynnistysbitin luonteva muoto. Ohjelmisto kirjoittaa
-ykkösen, laitteisto näkee pulssin, ja kenttä on taas nolla. Lukemalla
+ykkösen, laitteisto näkee pulssin, ja kenttä on taas nolla.
+Käyttäytyminen on ajallista, joten se näkyy parhaiten aaltomuodosta.
+Kaavio on tuotetusta lohkosta simuloituna (testipenkki esitellään
+luvussa 6):
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/kertapulssi.json" otsikko="Kertapulssi simulaatiosta: APB-kirjoitus (asetus- ja siirtovaihe) osoitteeseen 0 ja sitä seuraava yhden jakson pulssi laitteistolle. Toinen siirto on luku, joka palauttaa nollan."}
+```
+ Lukemalla
 nollautuva laskuri kertoo tapahtumat edellisen lukemisen jälkeen
 ilman erillistä nollauskirjoitusta:
 
@@ -84,6 +91,16 @@ Kuvaus kertoo kaiken tämän, joten generaattori tuottaa tilan, sallinnan
 ja keskeytyslähdön logiikan, ja UVM-malli ja dokumentaatio tietävät,
 että tila on W1C.
 
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/keskeytys.json" otsikko="Tila, sallinta ja keskeytys simulaatiosta. Laitteiston hwset-pulssi asettaa tilabitin, mutta intr nousee vasta, kun sallinta kirjoitetaan osoitteeseen 0x0C. Ykkösen kirjoitus tilarekisteriin 0x08 kuittaa bitin, ja intr laskee."}
+```
+
+Kaaviossa näkyy kolme asiaa, jotka kuvaus lupasi. Tilabitti asettuu
+heti seuraavalla kellon reunalla ja pysyy, vaikka `hwset` kestää vain
+jakson. Ensimmäinen siirto osoitteeseen `0x08` on luku, eikä se muuta
+tilaa. Keskeytys seuraa tilan ja sallinnan JA-tuloa ilman viivettä:
+se nousee samalla reunalla kuin sallinta ja laskee samalla reunalla
+kuin tila.
+
 Lisäksi `intr`-kentälle voidaan kuvata, onko keskeytys taso- vai
 reunaliipaistu (`posedge`, `negedge`, `bothedge`, `level`) ja jääkö
 asetettu bitti päälle (`stickybit`) vai seuraako se tuloa (`nonsticky`).
@@ -132,3 +149,5 @@ näy luettelossa lainkaan.
 - Osaat kuvata keskeytyslähteen sallintoineen ja selittää tila-,
   sallinta- ja keskeytysrakenteen.
 - Osaat lukea lohkon laitteistorajapinnan tuotetusta raportista.
+- Osaat lukea kertapulssin ja keskeytysrakenteen toiminnan
+  ajoituskaaviosta.

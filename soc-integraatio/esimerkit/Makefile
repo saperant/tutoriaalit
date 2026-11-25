@@ -31,7 +31,7 @@ VFLAGS := --binary -Wall --assert -j 2
 
 kaikki: generoitu $(OHJELMAT:%=$(RAKENNUS)/%.ok) \
         $(RAKENNUS)/tarkistin.ok $(RAKENNUS)/tehoalue.ok \
-        $(RAKENNUS)/kaavio.ok cocotb
+        $(RAKENNUS)/purske.ok $(RAKENNUS)/kaavio.ok cocotb
 
 # Generoitujen tiedostojen on vastattava kuvauksia.
 generoitu:
@@ -39,16 +39,16 @@ generoitu:
 	mypy --strict --no-error-summary \
 	    --cache-dir=$(RAKENNUS)/mypy gen/rekisterit.py
 	@mkdir -p $(RAKENNUS)/gen
-	python3 gen/rekisterit.py gen/syscon.json $(RAKENNUS)/gen
-	python3 gen/rekisterit.py gen/gpio.json $(RAKENNUS)/gen
+	python3 gen/rekisterit.py gen/syscon.toml $(RAKENNUS)/gen
+	python3 gen/rekisterit.py gen/gpio.toml $(RAKENNUS)/gen
 	@for f in $(RAKENNUS)/gen/*; do \
 	    diff -u gen/$$(basename $$f) $$f || \
 	    { echo "gen/ ei ole ajan tasalla: make generoi"; exit 1; }; \
 	done
 
 generoi:
-	python3 gen/rekisterit.py gen/syscon.json gen
-	python3 gen/rekisterit.py gen/gpio.json gen
+	python3 gen/rekisterit.py gen/syscon.toml gen
+	python3 gen/rekisterit.py gen/gpio.toml gen
 
 # @alku ohjelma
 $(RAKENNUS)/%.elf: sw/%.c $(TUKI) sw/soc.h sw/tuki.h sw/soc.ld \
@@ -103,6 +103,19 @@ $(RAKENNUS)/tehoalue.ok: rtl/tehoalue.sv tb/tb_tehoalue.sv \
 	diff -u odotettu/tehoalue.odotettu $(RAKENNUS)/tehoalue.tuloste
 	@touch $@
 
+# AXI4-purskeet (luku 4): sama kopio sana kerrallaan ja purskeina omassa
+# testipenkissään. Lohko ei kuulu SoC:hen, jonka kytkin on AXI4-Lite.
+PURSKE := rtl/ram_purske.sv rtl/axi_purske_tarkistin.sv tb/tb_purske.sv
+$(RAKENNUS)/purske.ok: $(PURSKE) odotettu/purske.odotettu
+	@mkdir -p $(RAKENNUS)
+	MAKEFLAGS= verilator $(VFLAGS) --top-module tb_purske \
+	    -Mdir $(RAKENNUS)/purske -o Vtb_purske $(PURSKE) \
+	    > $(RAKENNUS)/purske.log
+	$(RAKENNUS)/purske/Vtb_purske \
+	    | grep -v 'Verilog \$$finish' > $(RAKENNUS)/purske.tuloste
+	diff -u odotettu/purske.odotettu $(RAKENNUS)/purske.tuloste
+	@touch $@
+
 # Kirjan ajoituskaavio (luku 5) tuotetaan käynnistysohjelman
 # simulaatiosta: ensimmäinen kirjoitus UARTiin AXI4-Lite-puolelta
 # APB-puolelle. Tulos verrataan tiedostoon kaaviot/uart-kirjoitus.json;
@@ -114,8 +127,23 @@ APB_S := psel=PSEL,penable=PENABLE,pwrite=PWRITE,paddr=PADDR
 APB_S := $(APB_S),pwdata=PWDATA,pready=PREADY
 TEHO_S := sammuta,kaynnista,vaihe,eristys,kello_paalla,virta
 TEHO_S := $(TEHO_S),alue_nollaus_n,sisainen,lahto
+# Keskeytys (luku 9): GPIO:n tulon reunasta ytimen ansaan.
+KESK_S := g_tulo=tulo,g_reunat=REUNAT[0],g_kesk=gpio_kesk,meip=MEIP
+KESK_S := $(KESK_S),y_tila=ydin,y_pc=pc,y_mcause=mcause
+# DMA (luku 10): yksi sana DMA:n isäntäportissa ja ytimen haut.
+DMA_S := d_tila=DMA,d_arvalid=ARVALID,d_arready=ARREADY,d_rvalid=RVALID
+DMA_S := $(DMA_S),d_awvalid=AWVALID,d_wvalid=WVALID,d_bvalid=BVALID
+DMA_S := $(DMA_S),y_arvalid=ydin:ARVALID,y_rvalid=ydin:RVALID
+# Purske (luku 4): neljän sanan luku ja kirjoitus.
+PUR_S := arvalid=ARVALID,arready=ARREADY,arlen=ARLEN,rvalid=RVALID
+PUR_S := $(PUR_S),rready=RREADY,rdata=RDATA,rlast=RLAST,awvalid=AWVALID
+PUR_S := $(PUR_S),awready=AWREADY,wvalid=WVALID,wready=WREADY,wdata=WDATA
+PUR_S := $(PUR_S),wlast=WLAST,bvalid=BVALID,bready=BREADY
+MUOTOILE := python3 -m json.tool --indent 1 --no-ensure-ascii
+KAAVIOT := uart-kirjoitus tehoalue keskeytys dma-sana purske
 $(RAKENNUS)/kaavio.ok: $(RTL) tb/testipenkki.sv $(RAKENNUS)/kaynnistys.hex \
-                       kaaviot/uart-kirjoitus.json kaaviot/tehoalue.json \
+                       $(RAKENNUS)/keskeytykset.hex $(RAKENNUS)/dma.hex \
+                       $(KAAVIOT:%=kaaviot/%.json) $(PURSKE) \
                        rtl/tehoalue.sv tb/tb_tehoalue.sv
 	MAKEFLAGS= verilator $(VFLAGS) --trace -DJALJITYS \
 	    --top-module testipenkki -Mdir $(RAKENNUS)/jalki -o Vtestipenkki \
@@ -142,6 +170,29 @@ $(RAKENNUS)/kaavio.ok: $(RTL) tb/testipenkki.sv $(RAKENNUS)/kaynnistys.hex \
 	rm -f $(RAKENNUS)/tehoalue.vcd
 	if [ "$(PAIVITA)" = 1 ]; then cp $(RAKENNUS)/tehoalue.json kaaviot/; fi
 	diff -u kaaviot/tehoalue.json $(RAKENNUS)/tehoalue.json
+	$(RAKENNUS)/jalki/Vtestipenkki +ohjelma=$(RAKENNUS)/keskeytykset.hex \
+	    > /dev/null
+	$(KAAVIO) $(RAKENNUS)/jalki.vcd --kello kello --alku 9242 --jaksot 16 \
+	    --signaalit $(KESK_S) --luettelo y_tila=HAE:SUORITA:MUISTI \
+	    | $(MUOTOILE) > $(RAKENNUS)/keskeytys.json
+	$(RAKENNUS)/jalki/Vtestipenkki +ohjelma=$(RAKENNUS)/dma.hex > /dev/null
+	$(KAAVIO) $(RAKENNUS)/jalki.vcd --kello kello --alku 8969 --jaksot 14 \
+	    --signaalit $(DMA_S) \
+	    --luettelo d_tila=VAPAA:LUE:ODOTA_R:KIRJOITA:ODOTA_B \
+	    | $(MUOTOILE) > $(RAKENNUS)/dma-sana.json
+	rm -f $(RAKENNUS)/jalki.vcd
+	MAKEFLAGS= verilator $(VFLAGS) --trace -DJALJITYS \
+	    --top-module tb_purske -Mdir $(RAKENNUS)/purskejalki \
+	    -o Vtb_purske $(PURSKE) > $(RAKENNUS)/purskejalki.log
+	$(RAKENNUS)/purskejalki/Vtb_purske > /dev/null
+	$(KAAVIO) $(RAKENNUS)/purske.vcd --kello kello --alku 4 --jaksot 13 \
+	    --naytteistys ennen --kanta d --signaalit $(PUR_S) \
+	    | $(MUOTOILE) > $(RAKENNUS)/purske.json
+	rm -f $(RAKENNUS)/purske.vcd
+	for k in keskeytys dma-sana purske; do \
+	    if [ "$(PAIVITA)" = 1 ]; then cp $(RAKENNUS)/$$k.json kaaviot/; fi; \
+	    diff -u kaaviot/$$k.json $(RAKENNUS)/$$k.json || exit 1; \
+	done
 	@touch $@
 
 .PRECIOUS: $(RAKENNUS)/%.elf $(RAKENNUS)/%.hex

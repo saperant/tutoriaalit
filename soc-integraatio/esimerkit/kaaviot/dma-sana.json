@@ -1,0 +1,51 @@
+{
+ "signal": [
+  {
+   "name": "kello",
+   "wave": "p............."
+  },
+  {
+   "name": "DMA",
+   "wave": "=....==....==.",
+   "data": [
+    "LUE",
+    "ODOTA_R",
+    "KIRJOITA",
+    "ODOTA_B",
+    "LUE"
+   ]
+  },
+  {
+   "name": "ARVALID",
+   "wave": "1....0......1."
+  },
+  {
+   "name": "ARREADY",
+   "wave": "0...10....1.0."
+  },
+  {
+   "name": "RVALID",
+   "wave": "0....10......."
+  },
+  {
+   "name": "AWVALID",
+   "wave": "0.....1....0.."
+  },
+  {
+   "name": "WVALID",
+   "wave": "0.....1....0.."
+  },
+  {
+   "name": "BVALID",
+   "wave": "0..........10."
+  },
+  {
+   "name": "ydin:ARVALID",
+   "wave": "1.0.1...0..1.."
+  },
+  {
+   "name": "ydin:RVALID",
+   "wave": "0.10....10...."
+  }
+ ]
+}

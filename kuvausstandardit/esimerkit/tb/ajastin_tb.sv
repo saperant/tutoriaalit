@@ -17,6 +17,14 @@ module ajastin_tb;
     ajastin_pkg::ajastin__in_t hwif_in;
     ajastin_pkg::ajastin__out_t hwif_out;
 
+    // Laitteiston tulot ajetaan omista muuttujista jatkuvilla
+    // sijoituksilla, jolloin lohkon kombinaatiologiikka nakee muutoksen
+    // heti eika vasta seuraavalla kellon reunalla.
+    logic        valmis_hwset = 0;
+    logic [15:0] laskuri = 16'h1234;
+    assign hwif_in.STATUS.VALMIS.hwset = valmis_hwset;
+    assign hwif_in.LASKURI.ARVO.next   = laskuri;
+
     ajastin dut (
         .clk, .rst,
         .s_apb_psel(psel), .s_apb_penable(penable),
@@ -30,8 +38,6 @@ module ajastin_tb;
     `include "apb.svh"
 
     initial begin
-        hwif_in.STATUS.VALMIS.hwset = 0;
-        hwif_in.LASKURI.ARVO.next = 16'h1234;
         repeat (3) @(negedge clk);
         rst = 0;
 
@@ -47,8 +53,8 @@ module ajastin_tb;
         kielletty('h8, "LASKURI: kirjoitus kielletty");
         odota('h8, 32'h0000_1234, "LASKURI ennallaan");
 
-        @(negedge clk) hwif_in.STATUS.VALMIS.hwset = 1;
-        @(negedge clk) hwif_in.STATUS.VALMIS.hwset = 0;
+        @(negedge clk) valmis_hwset = 1;
+        @(negedge clk) valmis_hwset = 0;
         odota('h4, 32'h0000_0001, "STATUS.VALMIS asettui");
         huomio($sformatf("keskeytys, IE=1: %0d", hwif_out.STATUS.intr));
         kirjoita('h0, 32'h0000_0501);

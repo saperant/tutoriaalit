@@ -7,18 +7,27 @@ kirjoitetaan käsin, ne alkavat erota ensimmäisestä muutoksesta lähtien.
 Ratkaisu on kirjoittaa rekisterit kerran koneluettavaan muotoon ja
 generoida kaikki kolme siitä.
 
+Sama aihe on kolmessa taidossa eri painotuksin. Tässä luvussa
+katsotaan rekistereitä laitteiston kannalta: mitä pääsytapoja on,
+miltä generoitu lohko näyttää ja miten se kytketään käsin
+kirjoitettuun logiikkaan ja väylään. Taito *EDA-työkaluketjujen
+automatisointi* käyttää samaa kuvausmuotoa ja opettaa itse
+generaattorin: bittikentät, tuotetut testit ja tahdissa pysymisen
+CI:ssä. Taito *Laitteiston kuvausstandardit (SystemRDL, IP-XACT)*
+korvaa oman muodon standardeilla ja valmiilla generaattoreilla.
+
 ## Kuvaus
 
-Pikku-SoC:n GPIO-lohkon rekisterit on kuvattu JSON-tiedostossa:
+Pikku-SoC:n GPIO-lohkon rekisterit on kuvattu TOML-tiedostossa:
 
-```{.json tiedosto="esimerkit/gen/gpio.json"}
+```{.toml tiedosto="esimerkit/gen/gpio.toml"}
 ```
 
-Jokaisella rekisterillä on siirto lohkon alusta, leveys, tyyppi,
-nollausarvo ja kuvaus. Tyyppi kertoo, miten ohjelmisto ja laitteisto
-käyttävät rekisteriä:
+Jokaisella rekisterillä on osoite (siirtymä lohkon alusta), leveys,
+pääsytapa, nollausarvo ja kuvaus. Pääsytapa kertoo, miten ohjelmisto
+ja laitteisto käyttävät rekisteriä:
 
-| Tyyppi | Ohjelmisto | Laitteisto | Esimerkki |
+| Pääsy | Ohjelmisto | Laitteisto | Esimerkki |
 |--------|------------|------------|-----------|
 | `rw` | kirjoittaa ja lukee | lukee arvon | ohjausrekisteri, lähdöt |
 | `ro` | lukee | antaa arvon | tila, tulot |
@@ -26,7 +35,7 @@ käyttävät rekisteriä:
 | `w1c` | lukee; ykkösen kirjoitus nollaa bitin | asettaa bittejä | keskeytysten tila |
 | `vakio` | lukee | – | tunniste, versio |
 
-Tyyppi `w1c` (write 1 to clear) on keskeytystilarekisterien
+Pääsytapa `w1c` (write 1 to clear) on keskeytystilarekisterien
 vakiotapa. Ohjelmisto kuittaa käsittelemänsä tapahtumat kirjoittamalla
 lukemansa arvon takaisin, eikä se voi vahingossa nollata tapahtumaa,
 joka tuli lukemisen ja kirjoittamisen välissä: kirjoitettava arvo
@@ -39,11 +48,11 @@ sisältää ykkösen vain niissä biteissä, jotka ohjelmisto näki.
 ```{.python tiedosto="esimerkit/gen/rekisterit.py" osa="lue"}
 ```
 
-Tarkistukset ovat generaattorin tärkein osa. Päällekkäinen siirto,
+Tarkistukset ovat generaattorin tärkein osa. Päällekkäinen osoite,
 tasaamaton osoite tai liian leveä nollausarvo on virhe kuvauksessa, ja
 se pysäytetään ennen kuin virheellistä RTL:ää tai otsaketta syntyy.
 
-Tyyppi määrää, mitä portteja generoitu lohko tarjoaa ympäröivälle
+Pääsytapa määrää, mitä portteja generoitu lohko tarjoaa ympäröivälle
 logiikalle:
 
 ```{.python tiedosto="esimerkit/gen/rekisterit.py" osa="portit"}
@@ -66,7 +75,7 @@ kuvausta generoimatta tai generoitua tiedostoa käsin, testi kaatuu.
 
 ## Generoitu otsake ja dokumentaatio
 
-Sama kuvaus tuottaa C-otsakkeen. Rakenne vastaa rekisterien siirtoja,
+Sama kuvaus tuottaa C-otsakkeen. Rakenne vastaa rekisterien osoitteita,
 ja käännösaikaiset tarkistukset varmistavat sen:
 
 ```{.c tiedosto="esimerkit/gen/gpio_regs.h"}
@@ -117,7 +126,8 @@ yksinkertaisena ja lohkon logiikan tavallisena RTL:nä.
 
 - Osaat kuvata rekisterilohkon koneluettavasti ja perustella, miksi
   RTL, otsake ja dokumentaatio generoidaan samasta lähteestä.
-- Osaat valita rekisterille oikean tyypin (rw, ro, wo, w1c, vakio).
+- Osaat valita rekisterille oikean pääsytavan (rw, ro, wo, w1c,
+  vakio).
 - Osaat selittää, miksi W1C-kuittaus on turvallinen ja
   read-to-clear vaarallinen.
 - Osaat lukea generoidun APB-rekisterilohkon ja kytkeä sen ympäröivään

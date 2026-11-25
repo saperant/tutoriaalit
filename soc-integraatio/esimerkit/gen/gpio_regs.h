@@ -1,4 +1,4 @@
-/* Generoitu tiedostosta gpio.json (gen/rekisterit.py). Älä muokkaa. */
+/* Generoitu tiedostosta gpio.toml (gen/rekisterit.py). Älä muokkaa. */
 /* Yleiskäyttöiset 8-bittiset tulot ja lähdöt */
 #ifndef GPIO_REGS_H
 #define GPIO_REGS_H

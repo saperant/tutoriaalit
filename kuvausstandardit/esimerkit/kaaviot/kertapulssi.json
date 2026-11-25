@@ -1,0 +1,44 @@
+{
+ "signal": [
+  {
+   "name": "clk",
+   "wave": "p....."
+  },
+  {
+   "name": "PSEL",
+   "wave": "01.01."
+  },
+  {
+   "name": "PENABLE",
+   "wave": "0.10.1"
+  },
+  {
+   "name": "PWRITE",
+   "wave": "01..0."
+  },
+  {
+   "name": "PADDR",
+   "wave": "=.....",
+   "data": [
+    "00"
+   ]
+  },
+  {
+   "name": "PWDATA",
+   "wave": "==..=.",
+   "data": [
+    "00000000",
+    "00000001",
+    "00000000"
+   ]
+  },
+  {
+   "name": "PREADY",
+   "wave": "0.10.1"
+  },
+  {
+   "name": "KAYNNISTA",
+   "wave": "0..10."
+  }
+ ]
+}

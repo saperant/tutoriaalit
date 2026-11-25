@@ -1,0 +1,7 @@
+sana kerrallaan: 64 sanaa, 320 jaksoa, väärin 0
+16 sanan purskeet: 64 sanaa, 140 jaksoa, väärin 0
+rikkomuksia oikeissa siirroissa: 0
+tarkistin: lukupurske 0x0ff8, 4 siirtoa ylittää 4 KiB:n rajan
+tarkistin: WLAST väärin siirrossa 2/4
+tarkistin: WLAST väärin siirrossa 4/4
+rikkomuksia yhteensä: 3

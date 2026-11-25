@@ -17,11 +17,50 @@ rinnakkaisuuden välinen kompromissi:
 | Hierarkia | nopeat ristikytkimellä, hitaat siltojen takana | kohtuullinen | lähes kaikki SoC:t |
 | Verkko piirillä (NoC) | pakettikytkentäinen, skaalautuva | suuri suunnittelutyö | suuret moniydinpiirit |
 
+```{.dot otsikko="Kolme kytkentärakennetta. I on isäntä ja O orja. Jaetussa väylässä kaikki siirrot kulkevat yhden välittäjän läpi, ristikytkimessä jokaisella orjalla on oma välittäjänsä, ja hierarkiassa hitaat orjat ovat sillan takana."}
+digraph {
+  rankdir=LR; nodesep=0.18; ranksep=0.3;
+  node [shape=box, fontsize=9, width=0.35, height=0.28];
+  subgraph cluster_j { label="jaettu väylä"; fontsize=9; color=gray;
+    ja [label="I"]; jb [label="I"]; jv [label="välittäjä ja\ndekooderi"];
+    jo [label="O"]; jp [label="O"];
+    ja -> jv; jb -> jv; jv -> jo; jv -> jp; }
+  subgraph cluster_r { label="ristikytkin"; fontsize=9; color=gray;
+    ra [label="I"]; rb [label="I"];
+    rv [label="välittäjä"]; rw [label="välittäjä"];
+    ro [label="O"]; rp [label="O"];
+    ra -> rv; ra -> rw; rb -> rv; rb -> rw; rv -> ro; rw -> rp; }
+  subgraph cluster_h { label="hierarkia"; fontsize=9; color=gray;
+    ha [label="I"]; hb [label="I"]; hx [label="risti-\nkytkin"];
+    hm [label="muisti"]; hs [label="silta"];
+    hu [label="O"]; hv [label="O"]; hw [label="O"];
+    ha -> hx; hb -> hx; hx -> hm; hx -> hs; hs -> hu; hs -> hv; hs -> hw; }
+}
+```
+
 Pikku-SoC:n kytkin on jaettu väylä: se välittää yhden siirron
 kerrallaan ja on siksi pieni ja helppo varmentaa. Kun DMA kopioi
 muistia, ytimen pitää odottaa vuoroaan, ja hinta näkyy luvussa 10.
 Ristikytkimessä ydin voisi lukea APB-laitetta samaan aikaan, kun DMA
 käyttää RAMia.
+
+Kytkimen sisällä on neljä osaa, jotka seuraavat osiot käyvät läpi:
+
+```{.dot otsikko="Pikku-SoC:n kytkin. Välittäjä valitsee isännän, dekooderi orjan, ja reititys kytkee valitun parin yhteen siirron ajaksi. Osoite, joka ei osu mihinkään alueeseen, päätyy oletusorjalle."}
+digraph {
+  rankdir=LR; nodesep=0.25; ranksep=0.4;
+  node [shape=box, fontsize=10];
+  ydin [label="ydin\n(silta)"]; dma [label="DMA"];
+  subgraph cluster_k { label="kytkin.sv"; fontsize=10; color=gray;
+    val [label="välittäjä\n(vuorottelu)"];
+    dek [label="dekooderi\n(kanta ja maski)"];
+    rei [label="reititys"];
+    ole [label="oletusorja\n(DECERR)"];
+    val -> dek -> rei; dek -> ole [style=dashed]; }
+  ram [label="RAM\n0x0000_0000"]; apb [label="APB-silta\n0x1000_0000"];
+  ydin -> val; dma -> val; rei -> ram; rei -> apb;
+}
+```
 
 ## Dekoodaus
 

@@ -18,6 +18,28 @@ miksi kuvauksen kannattaa olla standardimuotoinen.
 | käyttöjärjestelmä | laitepuu | perusosoite, koko, keskeytys, yhteensopivuus |
 | integraatiotyökalu | IP-XACT | väyläliitännät, muistikartat, portit |
 
+```{.dot otsikko="Yksi lähde ja sen kuluttajat tämän taidon työkaluilla. Jokainen generaattori lukee saman käännetyn mallin ja tuottaa yhden tiedoston. CI tuottaa kaiken uudelleen ja vertaa tallennettuihin (luku 11)."}
+digraph {
+  rankdir=LR; nodesep=0.12; ranksep=0.5;
+  node [shape=box, fontsize=10];
+  rdl [label="ajastin.rdl", shape=ellipse];
+  malli [label="systemrdl-compiler\n(malli ja tarkistukset)"];
+  rdl -> malli;
+  g1 [label="PeakRDL-regblock\najastin.sv"];
+  g2 [label="PeakRDL-cheader\najastin.h"];
+  g3 [label="PeakRDL-uvm\najastin_uvm.sv"];
+  g4 [label="PeakRDL-ipxact\najastin.xml"];
+  g5 [label="omat generaattorit\najastin.md, soc.svd, soc.dtsi"];
+  malli -> g1; malli -> g2; malli -> g3; malli -> g4; malli -> g5;
+  k1 [label="simulointi ja synteesi", shape=plaintext];
+  k2 [label="ajuri (C)", shape=plaintext];
+  k3 [label="UVM-ympäristö", shape=plaintext];
+  k4 [label="integraatiotyökalu", shape=plaintext];
+  k5 [label="käsikirja, debuggeri,\nkäyttöjärjestelmä", shape=plaintext];
+  g1 -> k1; g2 -> k2; g3 -> k3; g4 -> k4; g5 -> k5;
+}
+```
+
 Kun yksi rivi kuvauksessa muuttuu, kaikki seitsemän muuttuvat
 samassa muutoksessa. Käsin ylläpidettynä muutos tehdään seitsemään
 paikkaan, eri ihmisten toimesta, eri aikaan. Virheet ovat tyypillisesti
@@ -61,7 +83,8 @@ Osoitteet, bitit, pääsytavat ja nollausarvot ovat samat. Käsin
 kirjoitetussa SystemRDL-kuvauksessa on kuitenkin tietoa, jota
 TOML-muoto ei pystynyt ilmaisemaan: `VALMIS`-lipun asettaa laitteisto
 (`hwset`), se on keskeytyslähde (`intr`), ja keskeytys on sallittu vain,
-kun `CTRL.IE` on päällä. Omassa muodossa tämä logiikka kirjoitettiin
+kun `CTRL.IE` on päällä. Nämä ominaisuudet käydään läpi luvuissa 3
+ja 4; tässä riittää havainto, että ne ovat kuvauksessa. Omassa muodossa tämä logiikka kirjoitettiin
 käsin generoidun lohkon ympärille. SystemRDL:ssä se on osa kuvausta,
 ja generaattori tuottaa sen.
 

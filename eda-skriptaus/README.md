@@ -14,15 +14,17 @@ pikaopas: [eda-skriptaus-pikaopas.pdf](https://saperant.github.io/tutoriaalit/ma
 ## Sisältö
 
 1. Johdanto – esitiedot, esimerkkiprojekti ja työkalut
-2. Suunnitteluvuon rakenne – vaiheet, tasot, leimat ja varhainen
-   katkaisu, Make vai Python, ajohakemistot ja manifestit
+2. Suunnitteluvuon rakenne – vaiheet, riippuvuusverkko kuvana, tasot,
+   leimat ja varhainen katkaisu, Make vai Python, lähdeluettelo
+   yhdestä paikasta, ajohakemistot ja manifestit
 3. Työkalujen ohjaus – eräajo, lokit, paluuarvot, aikakatkaisu,
    työkaluversiot, kaksi simulaattoria yhden rajapinnan takana
 4. Tcl työkalun sisällä – Yosysin Tcl-tila, virheensieto ja
    kaupallisen työkalun eräajon malli
 5. Raporttien jäsentäminen – yhteinen tietomalli, Yosys, STA,
-   Verilator, Icarus, simulointi ja kattavuus, Markdown- ja
-   HTML-koosteet, jäsentimien testit
+   Verilator, Icarus, simulointi ja kattavuus, VCD-aaltomuotojen
+   jäsennys ja tarkistus, Markdown- ja HTML-koosteet, jäsentimien
+   testit
 6. Varoitukset ja laatuportit – vakavuus, sallitut varoitukset
    perusteluineen ja voimassaoloaikoineen, räikkä
 7. Regressioajot – testilista, rinnakkaisuus, siemenet ja
@@ -40,7 +42,7 @@ pikaopas: [eda-skriptaus-pikaopas.pdf](https://saperant.github.io/tutoriaalit/ma
 Hakemistossa `esimerkit/` on pieni laitteistoprojekti (laskuri, ALU,
 ohjainlohko ja testipenkki), sen vuota ohjaava Python-kirjasto `vuo/`,
 Tcl-skriptit Yosysille ja tätä tutoriaalia varten kirjoitetulle
-opetus-sta-ajoitusanalysaattorille sekä 12 esimerkkiohjelmaa. Ne ajavat
+opetus-sta-ajoitusanalysaattorille sekä 15 esimerkkiohjelmaa. Ne ajavat
 Verilatorin, Icarus Verilogin, Yosysin ja Tcl-tulkin oikeasti.
 Työkalujen versioista riippuvat luvut tulostetaan vain arvioina, joten
 odotetut tulosteet eivät muutu työkalupäivityksissä. Python
@@ -50,7 +52,11 @@ pytest-testit.
 ```text
 make testaa        # rakenne, esimerkit ja tulosteet
 make pdf           # eda-skriptaus.pdf ja eda-skriptaus-pikaopas.pdf
+make kuvat         # piirtää kuvat/-hakemiston kuvaajat (Matplotlib)
 ```
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 Tarvittavat työkalut: Python 3.12, ruff, mypy, pytest, Verilator,
 Icarus Verilog, Yosys ja Tcl 8.6 sekä C-kääntäjä. Ne ovat valmiina

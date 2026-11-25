@@ -1,7 +1,9 @@
 # UVM-rekisterimalli
 
-Taidossa *Laitteiston verifiointi* esiteltiin UVM:n rakenne: sekvenssit,
-ajurit, monitorit ja tulostaulut. UVM:ssä on lisäksi
+UVM (*Universal Verification Methodology*) on SystemVerilogin
+verifiointikirjasto, jonka testipenkki koostuu sekvensseistä,
+ajureista, monitoreista ja tulostauluista; rakenne käsitellään
+taidossa *Laitteiston verifiointi*. UVM:ssä on lisäksi
 rekisterikerros (*register abstraction layer*, RAL), jolla testit
 käsittelevät rekistereitä niminä eivätkä osoitteina: `regs.CTRL.write`
 eikä väylän kirjoitus osoitteeseen 0. Kerroksen malli on rekisterikartan

@@ -39,16 +39,16 @@ tuotetun RTL:n simulointi ja tuotteiden vertailu edestakaisin. Puute
 näkyy nopeimmin kentän käyttäytymisessä ja tuotettujen nimien
 vakaudessa.
 
-## Mihin tästä
+## Jatkotaidot
 
-- **Laitteiston verifiointi**: UVM-testipenkin rakenne, johon
+- *Laitteiston verifiointi*: UVM-testipenkin rakenne, johon
   tuotettu rekisterimalli liitetään, ja kattavuus rekistereille.
-- **SoC-integraatio**: lohkojen kytkeminen väyliin ja piirin
-  muistikartta, jonka tuotettu SVD ja laitepuu kuvaavat.
-- **Linux-laiteajurit** ja **Mikrokontrollerit ja bare-metal-
-  ohjelmointi**: tuotettujen otsakkeiden ja laitepuun käyttäjät.
-- **ASIC-toteutus** ja **FPGA-toteutus**: SDC-, UPF-, Liberty- ja
+- *Linux-laiteajurit* ja *Mikrokontrollerit ja bare-metal-
+  ohjelmointi*: tuotettujen otsakkeiden ja laitepuun käyttäjät.
+- *ASIC-toteutus* ja *FPGA-toteutus*: SDC-, UPF-, Liberty- ja
   LEF/DEF-kuvaukset vuon osina.
+- *Tekninen dokumentaatio*: tuotetun rekisteridokumentin paikka
+  muussa dokumentaatiossa.
 
 ## Lähteet ja lisälukemista
 

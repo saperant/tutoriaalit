@@ -30,7 +30,19 @@ lint ja synteesi:
 
 Muut vaiheet ovat samanlaisia: ajoitusanalyysi lukee synteesin
 netlistan, käännös testipenkin ja RTL:n, ja simulointi ajaa käännöksen
-tuottaman ohjelman. Kaksi asiaa kannattaa huomata. Ensinnäkin jokainen tuloste menee
+tuottaman ohjelman. Koska vuo on dataa, siitä saa myös kuvan. Funktio
+`dot` käy vaiheet läpi ja kirjoittaa ne tiedostoineen Graphvizin
+DOT-kielellä:
+
+```{.python tiedosto="esimerkit/vuo/verkko.py" osa="dot"}
+```
+
+```{.dot tiedosto="esimerkit/02-verkko.odotettu" alkaen="digraph vuo" asti="}" otsikko="Esimerkkiprojektin vuo. Laatikot ovat vaiheita ja soikiot tiedostoja. Katkoviiva on riippuvuus, jonka välissä ei kulje tiedostoa: synteesi ajetaan vasta, kun lint on mennyt läpi."}
+```
+
+Kuva on piirretty esimerkin `02-verkko.py` tulosteesta, joka
+tarkistetaan testeissä. Kun vuohon lisätään vaihe, kuva muuttuu
+mukana eikä vanhene. Kaksi asiaa kannattaa huomata. Ensinnäkin jokainen tuloste menee
 ajohakemistoon, ei lähdekoodin viereen. Saman vuon voi siksi ajaa
 rinnakkain eri parametreilla, ja ajohakemiston poistaminen palauttaa
 projektin puhtaaseen tilaan. Toiseksi simuloinnin syöte on käännöksen
@@ -54,7 +66,18 @@ ja ajoitusanalyysin mutta ei simulointia. Kehä riippuvuuksissa
 (`a` tarvitsee `b`:tä, joka tarvitsee `a`:ta) on vuon määrittelyvirhe,
 ja `prepare()` ilmoittaa siitä poikkeuksella ennen kuin mitään on
 ajettu. Tasot lajitellaan nimen mukaan, jotta tulostus ja lokit ovat
-samassa järjestyksessä joka ajolla.
+samassa järjestyksessä joka ajolla. Luvun 1 työkalutarkistus tulostaa
+esimerkkiprojektin tasot:
+
+```{.python tiedosto="esimerkit/01-tyokalut.py" osa="tasot"}
+```
+
+```{.tuloste tiedosto="esimerkit/01-tyokalut.odotettu" alkaen="taso 1"}
+```
+
+Lint ja simulaattorin käännös eivät riipu toisistaan, joten ne ovat
+samalla tasolla. Synteesi odottaa lintiä, simulointi käännöstä ja
+ajoitusanalyysi synteesiä.
 
 ## Tila ja inkrementaalisuus
 
@@ -100,6 +123,11 @@ ajeta. Tätä kutsutaan varhaiseksi katkaisuksi (*early cutoff*):
 muutoksen eteneminen pysähtyy vaiheeseen, jonka tulos ei muuttunut.
 Suurissa vuoissa se säästää tunteja, kun esimerkiksi RTL:n kommentin
 korjaus ei käynnistä uutta synteesiä ja sijoittelua.
+
+Sama näkyy kuvana, kun vaiheet väritetään ajon tilojen mukaan:
+
+```{.dot tiedosto="esimerkit/02-verkko.odotettu" alkaen="digraph katkaisu" asti="}" otsikko="Varhainen katkaisu kohdassa 4. Vain käännös ajettiin (korostettu); muut vaiheet olivat ajan tasalla (harmaa). Muutos pysähtyi tiedostoon obj/sim, jonka sisältö ei muuttunut."}
+```
 
 Kohdassa 6 lint epäonnistuu, ja sen jälkeiset vaiheet ohitetaan.
 Simulointihaara ei riipu laskurista, joten se on yhä ajan tasalla.
@@ -151,6 +179,43 @@ käyttöliittymä (`make synteesi`), ja sen säännöt kutsuvat Python-vuota.
 Tällöin Python-vuolta kannattaa poistaa ulomman Maken `MAKEFLAGS`
 (luku 3).
 
+## Lähdeluettelo yhdestä paikasta
+
+Edellä jokainen vaihe luetteli lähdetiedostonsa itse. Kahdella
+tiedostolla se toimii, mutta oikeassa projektissa tiedostoja on
+satoja, ja niihin liittyy hakupolkuja, makroja ja parametreja. Jos
+lint, simulaattori ja synteesi saavat listansa eri paikoista, ne
+ennen pitkää käsittelevät eri suunnitelmaa: simulaatio menee läpi
+tiedostolla, jota synteesi ei koskaan näe. Siksi lähteet kuvataan
+kerran, ja jokaisen työkalun komentorivi tuotetaan kuvauksesta.
+Samaan perustuvat simulaattorien `.f`-tiedostot ja FuseSoCin
+`.core`-kuvaukset.
+
+```{.toml tiedosto="esimerkit/asetukset/lahteet.toml"}
+```
+
+```{.python tiedosto="esimerkit/vuo/lahteet.py" osa="kohde"}
+```
+
+Jokaista työkalua varten on pieni funktio, joka kääntää saman tietueen
+työkalun omaksi kieleksi. Makro on kaikille `-D`, mutta parametri on
+Verilatorille `-G`, Icarukselle `-P` ylimmän moduulin nimellä ja
+Yosysille erillinen komento:
+
+```{.python tiedosto="esimerkit/vuo/lahteet.py" osa="komennot"}
+```
+
+```{.python tiedosto="esimerkit/02-lahteet.py" osa="kokeet"}
+```
+
+```{.tuloste tiedosto="esimerkit/02-lahteet.odotettu"}
+```
+
+Molemmat työkalut hyväksyvät luettelon (paluuarvot 0), ja luettelo,
+jossa on olematon tiedosto, hylätään ennen kuin yhtään työkalua on
+käynnistetty. Vaiheen syötteiksi (`Vaihe.syotteet`) kelpaa sama
+`Kohde.lahteet`, jolloin myös leima seuraa luetteloa.
+
 ## Ajohakemistot ja parametrit
 
 Parametrisweeppi ajaa saman vuon usealla parametriarvolla. Jokainen
@@ -188,6 +253,8 @@ työhakemistossa commitoimattomia muutoksia.
   tuloksen, se lukee sen tiedostosta, joka on sen syötteissä. Pelkkä
   järjestys ilman tiedostoriippuvuutta rikkoutuu inkrementaalisessa
   ajossa.
+- **Lähteet yhdestä luettelosta.** Lint, simulaattorit ja synteesi
+  saavat tiedostonsa, makronsa ja parametrinsa samasta kuvauksesta.
 - **Manifesti jokaiseen ajoon.** Kolmen kuukauden kuluttua kukaan ei
   muista, millä asetuksilla tulos syntyi.
 
@@ -200,5 +267,9 @@ työhakemistossa commitoimattomia muutoksia.
   peruste uudelleenajolle ja mitä varhainen katkaisu tarkoittaa.
 - Osaat kertoa, miksi Make-vuo ei huomaa parametrin muutosta, ja
   korjata sen.
+- Osaat kuvata projektin lähteet yhdessä luettelossa ja tuottaa siitä
+  usean työkalun komentorivit.
+- Osaat tuottaa vuon riippuvuusverkosta kuvan samasta kuvauksesta,
+  josta vuo ajetaan.
 - Osaat järjestää parametroidut ajot omiin hakemistoihinsa ja
   kirjoittaa manifestin, josta ajon voi toistaa.

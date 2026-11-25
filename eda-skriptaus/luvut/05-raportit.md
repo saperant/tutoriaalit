@@ -43,8 +43,8 @@ paremmin se kestää työkalun päivitykset.
 
 ## Ihmiselle tarkoitettu raportti
 
-Ajoitusraportti on tekstiä. Tämä on opetus-sta:n tallennettu raportti
-8-bittisestä laskurista:
+Ajoitusraportti on tekstiä. Tämä on luvun 4 opetus-sta:n tallennettu
+raportti 8-bittisestä laskurista:
 
 ```{.tuloste tiedosto="esimerkit/naytteet/sta.txt"}
 ```
@@ -107,6 +107,50 @@ Järjestys on tärkeä: ensin etsitään tulosrivit, sitten aikakatkaisun
 merkki, ja jos mitään ei löydy, ajo on virhe. Puuttuva tulosrivi
 tarkoittaa, että simulaattori kaatui tai testipenkki päättyi ennen
 loppua.
+
+## Aaltomuodot: VCD
+
+Simulaattorin yksityiskohtaisin tuloste on aaltomuototiedosto. Sitä
+katsotaan yleensä käsin aaltomuotoikkunassa, mutta VCD (*Value Change
+Dump*) on tekstiä, ja sen voi lukea ohjelmalla. Otsake nimeää
+signaalit ja antaa kullekin lyhyen tunnuksen. Runko on luettelo
+aikaleimoja (`#15`) ja niillä muuttuneita arvoja (`1!` tai
+`b101 "`):
+
+```{.python tiedosto="esimerkit/vuo/vcd.py" osa="jasenna"}
+```
+
+Jäsennetystä tiedostosta poimitaan signaalien arvot kellon nousevilla
+reunoilla. Arvo luetaan juuri ennen reunaa, koska sen arvon kiikku
+reunalla näkee:
+
+```{.python tiedosto="esimerkit/vuo/vcd.py" osa="naytteet"}
+```
+
+Näytteistä voi tarkistaa sääntöjä, joita testipenkki ei tarkista.
+Esimerkki simuloi laskurin Icaruksella pienellä testipenkillä, joka
+vain ajaa syötteet ja tallentaa VCD:n, ja tarkistaa Pythonilla
+laskurin säännön jokaiselta reunalta:
+
+```{.python tiedosto="esimerkit/05-vcd.py" osa="tarkistus"}
+```
+
+```{.tuloste tiedosto="esimerkit/05-vcd.odotettu"}
+```
+
+Viimeinen rivi näyttää, että tarkistus myös löytää vian: kun yhtä
+näytettä muutetaan, sääntö rikkoutuu kahdella reunalla. Samasta
+VCD:stä tuotetaan kirjan ajoituskaavio. Kaavio verrataan testeissä
+tallennettuun, joten se muuttuu vain, jos piirin käytös muuttuu:
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/laskuri.json" otsikko="Laskurin simulaatio VCD:stä: nollauksen vapautus, tauko (sallittu = 0) ja ylivuoto arvosta 7 arvoon 0."}
+```
+
+Jälkikäteinen tarkistus sopii sääntöihin, jotka koskevat koko ajoa:
+kättelyn viiveet, pulssien pituudet, signaalien keskinäinen järjestys.
+Suurissa simulaatioissa VCD kasvaa gigatavuihin, joten tallennus
+rajataan kiinnostaviin signaaleihin tai käytetään simulaattorin
+tiiviimpää muotoa (FST), jonka voi muuntaa VCD:ksi.
 
 ## Koosteet
 
@@ -173,6 +217,8 @@ ristiriitainen raportti, kaatunut simulointi ja aikakatkaisu.
   tuntematon muoto on virhe, joka pysäyttää vuon.
 - **Ankkuroidut lausekkeet.** `^` rivin alkuun ja `re.M`, jotta
   lauseke ei osu viestin keskelle tai jatkoriville.
+- **Aaltomuodoista tarkistetaan sääntöjä, ei katsota käyriä.**
+  Ohjelma käy läpi jokaisen reunan, ihminen ei.
 - **Näytteet versionhallintaan.** Jokaisesta raporttityypistä ja
   jokaisesta käytetystä työkaluversiosta tallennetaan näyte ja testi.
 
@@ -183,5 +229,7 @@ ristiriitainen raportti, kaatunut simulointi ja aikakatkaisu.
   raporteista.
 - Osaat tarkistaa raportin sisäisen johdonmukaisuuden ja hylätä
   raportin, jota jäsennin ei ymmärrä.
+- Osaat jäsentää VCD-tiedoston, näytteistää signaalit kellon
+  reunoilla ja tarkistaa niistä piirin säännön.
 - Osaat tuottaa tietomallista Markdown- ja HTML-koosteen.
 - Osaat testata jäsentimet tallennetuilla näyteraporteilla.

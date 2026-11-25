@@ -16,6 +16,17 @@ module tapahtumat_tb;
     tapahtumat_pkg::tapahtumat__in_t hwif_in;
     tapahtumat_pkg::tapahtumat__out_t hwif_out;
 
+    // Testipenkki ajaa laitteiston tuloja omilla muuttujillaan, jotka
+    // kytketaan rakenteen kenttiin jatkuvilla sijoituksilla. Nain
+    // rekisterilohkon kombinaatiologiikka nakee muutoksen samalla
+    // hetkella eika vasta seuraavalla kellon reunalla.
+    logic        incr = 0, ylivuoto_hwset = 0, virhe_hwset = 0;
+    logic [31:0] nayte = 32'hCAFE_0042;
+    assign hwif_in.TAPAHTUMAT.MAARA.incr    = incr;
+    assign hwif_in.KESKEYTYS.YLIVUOTO.hwset = ylivuoto_hwset;
+    assign hwif_in.KESKEYTYS.VIRHE.hwset    = virhe_hwset;
+    assign hwif_in.NAYTE.ARVO.next          = nayte;
+
     tapahtumat dut (
         .clk, .rst,
         .s_apb_psel(psel), .s_apb_penable(penable),
@@ -26,6 +37,25 @@ module tapahtumat_tb;
         .hwif_in, .hwif_out);
 
     `include "apb.svh"
+
+`ifdef JALJITYS
+    // Aaltomuoto kirjan ajoituskaavioita varten (Makefilen kohde
+    // kaavio). Rakenteiden kentat tuodaan omiksi johdoikseen; etuliite
+    // j_ pitaa nimet yksikasitteisina aaltomuodossa.
+    /* verilator lint_off UNUSEDSIGNAL */
+    wire j_kaynnista = hwif_out.OHJAUS.KAYNNISTA.value;
+    wire j_hwset     = virhe_hwset;
+    wire j_virhe     = dut.field_storage.KESKEYTYS.VIRHE.value;
+    wire j_salli     = hwif_out.SALLI.VIRHE.value;
+    wire j_intr      = hwif_out.KESKEYTYS.intr;
+    /* verilator lint_on UNUSEDSIGNAL */
+    initial begin
+        string tiedosto;
+        if (!$value$plusargs("vcd=%s", tiedosto)) tiedosto = "tapahtumat.vcd";
+        $dumpfile(tiedosto);
+        $dumpvars(1, tapahtumat_tb);
+    end
+`endif
 
     // @alku havainnot
     // Laitteiston puolen havainnot: montako jaksoa pulssi kesti ja
@@ -40,16 +70,12 @@ module tapahtumat_tb;
 
     // incr on ylhaalla n nousevan reunan ajan.
     task automatic tapahtumia(input int n);
-        @(negedge clk) hwif_in.TAPAHTUMAT.MAARA.incr = 1;
+        @(negedge clk) incr = 1;
         repeat (n) @(negedge clk);
-        hwif_in.TAPAHTUMAT.MAARA.incr = 0;
+        incr = 0;
     endtask
 
     initial begin
-        hwif_in.TAPAHTUMAT.MAARA.incr = 0;
-        hwif_in.KESKEYTYS.YLIVUOTO.hwset = 0;
-        hwif_in.KESKEYTYS.VIRHE.hwset = 0;
-        hwif_in.NAYTE.ARVO.next = 32'hCAFE_0042;
         repeat (3) @(negedge clk);
         rst = 0;
 
@@ -67,8 +93,8 @@ module tapahtumat_tb;
         tapahtumia(70000);
         odota('h04, 32'h0000_FFFF, "TAPAHTUMAT saturoitui");
 
-        @(negedge clk) hwif_in.KESKEYTYS.VIRHE.hwset = 1;
-        @(negedge clk) hwif_in.KESKEYTYS.VIRHE.hwset = 0;
+        @(negedge clk) virhe_hwset = 1;
+        @(negedge clk) virhe_hwset = 0;
         odota('h08, 32'h0000_0002, "KESKEYTYS.VIRHE asettui");
         huomio($sformatf("keskeytys ennen sallintaa: %0d",
                          hwif_out.KESKEYTYS.intr));

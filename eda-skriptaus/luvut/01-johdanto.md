@@ -30,7 +30,7 @@ tulos syntyi. Tämä taito käsittelee juuri näitä ominaisuuksia:
 - **CI laitteistoprojektille** tarvitsee työkalukontit,
   lisenssipalvelimet, artefaktit ja välimuistit.
 
-## Esitiedot
+## Esitiedot ja rajaus
 
 Taito rakentuu neljän edeltäjänsä päälle, eikä niiden asioita toisteta:
 
@@ -44,7 +44,10 @@ Taito rakentuu neljän edeltäjänsä päälle, eikä niiden asioita toisteta:
 Taidot *Laitteiston verifiointi*, *FPGA-toteutus*, *ASIC-toteutus* ja
 *SoC-integraatio* kertovat, mitä vuon vaiheissa tapahtuu. Tässä
 keskitytään siihen, miten vaiheet kytketään toisiinsa ja miten niiden
-tuloksia käsitellään.
+tuloksia käsitellään. Yleinen CI:n ja toimitusputken suunnittelu on
+taidossa *Jatkuva integraatio ja toimitus*, ja rekisterikuvausten
+standardimuodot (SystemRDL, IP-XACT) taidossa *Laitteiston
+kuvausstandardit (SystemRDL, IP-XACT)*.
 
 ## Esimerkkiprojekti
 
@@ -86,18 +89,11 @@ kaatuminen tulee vasta keskellä vuota ja näyttää työkalun virheeltä:
 ```{.python tiedosto="esimerkit/01-tyokalut.py" osa="tyokalut"}
 ```
 
-Vuo itse on kuvattu vaiheina, jotka luku 2 käy läpi. Vaiheet voi
-järjestää tasoihin: saman tason vaiheet eivät riipu toisistaan, joten
-ne voi ajaa rinnakkain.
-
-```{.python tiedosto="esimerkit/01-tyokalut.py" osa="tasot"}
+```{.tuloste tiedosto="esimerkit/01-tyokalut.odotettu" asti="Kaikki työkalut"}
 ```
 
-```{.tuloste tiedosto="esimerkit/01-tyokalut.odotettu"}
-```
-
-Lint ja simulaattorin käännös eivät riipu toisistaan. Synteesi odottaa
-lintiä, simulointi käännöstä ja ajoitusanalyysi synteesiä.
+Sama ohjelma tulostaa lopuksi vuon vaiheet tasoittain. Ne esitellään
+luvussa 2.
 
 ## Esimerkkien ajaminen
 

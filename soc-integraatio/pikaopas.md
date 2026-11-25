@@ -51,7 +51,7 @@ vaiheessa: `psel && penable && pwrite`.
 
 # Rekisterityypit
 
-| Tyyppi | Ohjelmisto | Laitteisto |
+| Pääsy | Ohjelmisto | Laitteisto |
 |--------|------------|------------|
 | rw | kirjoittaa/lukee | lukee |
 | ro | lukee | antaa |
@@ -116,7 +116,7 @@ CLINT: MTIP = `mtime >= mtimecmp`. 64-bittinen kirjoitus RV32:lla:
 |---------|---------|
 | `make -C esimerkit` | kaikki simulaatiot ja tarkistukset |
 | `make -C esimerkit aja-virheet` | yksi ohjelma |
-| `make -C esimerkit generoi` | rekisterilohkot JSON:sta |
+| `make -C esimerkit generoi` | rekisterilohkot TOML-kuvauksista |
 | `verilator --binary -Wall --assert` | simulaattorin käännös |
 | `riscv64-unknown-elf-gcc -march=rv32i_zicsr -mabi=ilp32` | ohjelman käännös |
 | `objcopy -O verilog --verilog-data-width=4` | `$readmemh`-kuva |

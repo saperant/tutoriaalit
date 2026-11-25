@@ -45,13 +45,31 @@ ja DMA:n kopiointia:
 ```{.tuloste tiedosto="esimerkit/odotettu/dma.odotettu"}
 ```
 
-DMA on nopeampi, mutta ei paljon: 64 sanaa kesti 1402 jaksoa eli noin
-22 jaksoa sanaa kohden. Syitä on kolme, ja ne kertovat, mistä DMA:n
+DMA on nopeampi, mutta ei paljon: ohjelmiston mittaamana 64 sanaa
+kesti 1402 jaksoa eli noin 22 jaksoa sanaa kohden. Luku sisältää
+muutakin kuin siirron, ja aaltomuoto erottelee osat:
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/dma-sana.json" otsikko="Kopion toinen sana simulaatiosta: DMA:n tilasta LUE seuraavaan LUE-tilaan kuluu 12 jaksoa. Ylhäällä DMA:n tila ja sen isäntäportin kättelyt, alhaalla ytimen lukupyynnöt samassa kytkimessä."}
+```
+
+Yksi sana vie väylällä noin 12 jaksoa: luku (osoite ja data), kirjoitus
+(osoite ja data yhtä aikaa) ja vastaus, ja jokaisen välissä DMA
+odottaa vuoroaan, koska ytimen pyynnöt (alimmat rivit) käyttävät
+samaa kytkintä. Koko 64 sanan kopio vie väylällä 766 jaksoa
+ensimmäisestä lukupyynnöstä viimeiseen vastaukseen. Loput noin 640
+jaksoa mittauksesta kuluvat neljään rekisterikirjoitukseen, joilla
+siirto käynnistetään, ja keskeytyksen käsittelyyn siirron lopussa.
+Lyhyessä kopiossa kiinteä hinta on siis lähes yhtä suuri kuin itse
+siirto.
+
+Itse siirron hitaudelle on kolme syytä, ja ne kertovat, mistä DMA:n
 suorituskyky oikeasti tulee:
 
 1. **Yksi sana kerrallaan.** AXI4-Lite ei tunne purskeita, joten
    jokainen sana tarvitsee oman luvun ja kirjoituksen kättelyineen.
-   Täyden AXI4:n purske kuljettaisi 16 sanaa yhdellä osoitteella.
+   Täyden AXI4:n purske kuljettaisi 16 sanaa yhdellä osoitteella:
+   luvun 4 lohkotestissä sama 64 sanan kopio vei purskeina 140 jaksoa
+   eli 2,2 jaksoa sanaa kohden.
 2. **Ei avoimia siirtoja.** DMA odottaa jokaisen vastauksen ennen
    seuraavaa pyyntöä. Oikea DMA lähettää useita lukuja ennen
    ensimmäistä vastausta ja kirjoittaa sisäisestä FIFOsta.

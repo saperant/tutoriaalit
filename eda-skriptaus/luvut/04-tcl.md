@@ -73,8 +73,11 @@ jokaiselle portille ja kiikun asetusaika. Raportin rakenne on silti
 sama kuin oikeissa STA-työkaluissa: lähtö- ja loppupiste, polun
 saapumisaika, vaadittu aika ja niiden erotus, slack, sekä tila `MET`
 tai `VIOLATED`. Komento palauttaa tilan Tcl-arvona, joten skripti voi
-toimia sen mukaan. Raportti näytetään luvussa 5, jossa se
-jäsennetään.
+toimia sen mukaan. Raportti 8-bittisestä laskurista näyttää tältä
+(luku 5 jäsentää sen):
+
+```{.tuloste tiedosto="esimerkit/naytteet/sta.txt"}
+```
 
 Eräajon kehys on tiedoston lopussa:
 

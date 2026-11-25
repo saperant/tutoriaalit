@@ -1,4 +1,4 @@
-/* Generoitu tiedostosta syscon.json (gen/rekisterit.py). Älä muokkaa. */
+/* Generoitu tiedostosta syscon.toml (gen/rekisterit.py). Älä muokkaa. */
 /* Järjestelmäohjain: tunniste, apurekisteri ja lopetus */
 #ifndef SYSCON_REGS_H
 #define SYSCON_REGS_H

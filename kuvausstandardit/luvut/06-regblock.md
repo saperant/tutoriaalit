@@ -66,7 +66,12 @@ kentällä ei ole tallennusta. Kuvaamattomat bitit luetaan nollina.
 ## Testipenkki
 
 Testipenkki kytkee lohkon APB-väylään ja ohjaa laitteiston puolta
-suoraan rakenteiden jäsenten kautta:
+rakenteiden jäsenten kautta. Tulot ajetaan testipenkin omista
+muuttujista jatkuvilla sijoituksilla. Jos jäseniin kirjoitetaan suoraan
+`initial`-lohkosta, Verilator 5.020 välittää muutoksen lohkon
+kombinaatiologiikalle vasta seuraavalla kellon reunalla, ja lippu
+asettuu jakson myöhässä. Syy on sama kuin `MULTIDRIVEN`-varoituksessa
+jäljempänä: simulaattori käsittelee rakennetta yhtenä signaalina.
 
 ```{.systemverilog tiedosto="esimerkit/tb/ajastin_tb.sv" osa="kytkenta"}
 ```
@@ -94,6 +99,9 @@ monta kirjoitus- ja lukuilmoitusta tuli:
 
 ```{.systemverilog tiedosto="esimerkit/tb/tapahtumat_tb.sv" osa="havainnot"}
 ```
+
+Luvun 4 ajoituskaaviot on tuotettu tämän testipenkin aaltomuodosta
+(`make kaavio`), ja testit vertaavat niitä tallennettuihin.
 
 ## Tuotetun koodin varoitukset
 

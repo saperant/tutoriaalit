@@ -97,11 +97,19 @@ on deterministinen, joten oikeaa epävakautta siihen ei saa:
 ```{.tuloste tiedosto="esimerkit/08-historia.odotettu"}
 ```
 
+![Sama historia kuvana. Vasemmalla trendi, jossa versiosta on mukana
+viimeisin ajo. Oikealla jokainen ajo siemenittäin: versio c3 rikkoo
+neljä siementä, ja c4:n uusinta-ajossa siemen 7 vaihtaa tulosta,
+vaikka koodi on sama.](kuvat/historia.png){width=92%}
+
 Trendi näyttää, että versio c3 rikkoi testin. Versio c4 näyttää
 paremmalta kuin c3, mutta vain siksi, että uusinta-ajossa siemen 7 meni
 läpi. Ensimmäisen hylkäävän version kysely osoittaa versioon c3, ja
 epävakaiden kysely löytää siemenen 7. Ilman historiaa c4:n parempi
-tulos olisi voinut näyttää korjaukselta.
+tulos olisi voinut näyttää korjaukselta. Kuva on piirretty samasta
+tietokannasta samoilla kyselyillä (`kuvat/piirra.py`): tällainen
+ruudukko on yksinkertaisin kojelauta, ja se tehdään Matplotlibilla
+muutamalla kymmenellä rivillä.
 
 ## Mitä historiasta voi tehdä
 

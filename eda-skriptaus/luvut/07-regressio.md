@@ -8,6 +8,11 @@ näkyä vain osalla siemenistä. Suuressa projektissa regressiossa on
 tuhansia ajoja, ja niiden tuloksista on saatava nopeasti selville,
 montako eri vikaa on ja mitkä ajot toistavat ne.
 
+Työnjako taidon *Laitteiston verifiointi* kanssa on tämä: siellä
+käsitellään, mitä regressiossa ajetaan ja miksi (testisuunnitelma,
+ärsykkeet, kattavuusmalli). Tässä luvussa ja seuraavassa käsitellään,
+miten ajot ajetaan, ryhmitellään ja tallennetaan.
+
 ## Testilista
 
 Testit kuvataan tiedostossa, ei koodissa:
@@ -79,8 +84,10 @@ satunnaisuudesta.
 ## Virheallekirjoitukset
 
 Kun 7 ajoa 12:sta epäonnistuu, kehittäjä haluaa tietää, onko kyseessä
-yksi vika vai seitsemän. Virheviestistä tehdään *allekirjoitus*, jossa
-ajosta toiseen vaihtelevat arvot on korvattu merkinnällä:
+yksi vika vai seitsemän. Virheviestistä tehdään *allekirjoitus*
+(*failure signature*; taidossa *Laitteiston verifiointi* samaa
+kutsutaan virheen tunnisteeksi), jossa ajosta toiseen vaihtelevat
+arvot on korvattu merkinnällä:
 
 ```{.python tiedosto="esimerkit/vuo/regressio.py" osa="allekirjoitus"}
 ```

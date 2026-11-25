@@ -32,7 +32,7 @@ kulkevat samoissa työkaluketjuissa: ajoitusrajoitteet (SDC),
 virranhallinnan aikomus (UPF), solukirjastot (Liberty), fyysiset
 kuvaukset (LEF/DEF) ja aaltomuodot (VCD/FST).
 
-## Esitiedot
+## Esitiedot ja rajaus
 
 Taito rakentuu kahden edeltäjänsä päälle, eikä niiden asioita toisteta:
 
@@ -41,10 +41,17 @@ Taito rakentuu kahden edeltäjänsä päälle, eikä niiden asioita toisteta:
 | SoC-integraatio | APB- ja AXI-väylät, rekisterilohkot, muistikartat, keskeytykset ja IP-XACT:n idea |
 | EDA-työkaluketjujen automatisointi | Python-vuot, oma rekisterigeneraattori, tuotettujen tiedostojen tahdin tarkistus CI:ssä |
 
-Rekisterimallin verifiointi viittaa taitoon *Laitteiston
-verifiointi*, C-otsakkeiden käyttö taitoihin *Mikrokontrollerit ja
-bare-metal-ohjelmointi* ja *Oheislaiteväylät*, ja laitepuu taitoihin
-*Sulautettu Linux* ja *Linux-laiteajurit*.
+Kolme lukua sivuaa taitoja, jotka eivät ole esitietoja. UVM-
+rekisterimalli (luku 8) liittyy taitoon *Laitteiston verifiointi*,
+C-otsakkeiden käyttö (luku 7) taitoihin *Mikrokontrollerit ja
+bare-metal-ohjelmointi* ja *Oheislaiteväylät* ja laitepuu (luku 10)
+taitoihin *Sulautettu Linux* ja *Linux-laiteajurit*. Luvut kertovat
+tarvittavan taustan lyhyesti, ja ne voi lukea ilman näitä taitoja.
+
+Rajaus: tässä käytetään valmiita generaattoreita eikä rakenneta omaa
+(se tehtiin taidossa *EDA-työkaluketjujen automatisointi*), ja
+IP-XACT:sta käsitellään muistikartan vienti ja tuonti, ei kokonaisen
+piirin kokoamista `design`-kuvauksista.
 
 ## Esimerkit
 
@@ -75,6 +82,22 @@ Esimerkkihakemiston rakenne:
 
 Numeroidut ohjelmat `01-malli.py` … `13-muut.py` ovat lukujen
 esimerkit. Jokaisen tulostetta verrataan tiedostoon `.odotettu`.
+Ohjelmien numerot seuraavat aiheiden järjestystä, eivät lukujen
+numeroita:
+
+| Luku | Ohjelmat |
+|------|----------|
+| 2 Yksi totuuden lähde | `12-siirtyma` |
+| 3 SystemRDL:n perusteet | `01-malli` |
+| 4 Kenttien käyttäytyminen | `03-kayttaytyminen` |
+| 5 Parametrit, taulukot ja tarkistukset | `04-parametrit`, `02-virheet` |
+| 6 Rekisterilohko RTL:ksi | `05-regblock` |
+| 7 Ohjelmisto ja dokumentaatio | `06-c`, `07-dokumentit` |
+| 8 UVM-rekisterimalli | `08-uvm` |
+| 9 IP-XACT | `09-ipxact` |
+| 10 CMSIS-SVD ja laitepuu | `10-svd-laitepuu` |
+| 11 Työkaluketju ja CI | `11-tahdissa` |
+| 12 Muut kuvaukset | `13-muut` |
 
 ```text
 cd esimerkit
@@ -111,6 +134,7 @@ tahansa ulkopuolisen IP:n kohdalla.
 Luvut 2–5 käsittelevät kuvauksia: miksi standardi, SystemRDL:n
 perusteet, kenttien käyttäytyminen sekä parametrit ja tarkistukset.
 Luvut 6–10 käyvät läpi kuluttajat yksi kerrallaan: RTL, ohjelmisto ja
-dokumentaatio, UVM, IP-XACT sekä SVD ja laitepuu. Luku 11 esittelee
-muut suunnitteluvuon kuvaukset ja luku 12 työkaluketjun ja CI:n.
+dokumentaatio, UVM, IP-XACT sekä SVD ja laitepuu. Luku 11 kokoaa
+työkaluketjun ja CI:n. Luku 12 on liitteenomainen katsaus muihin
+suunnitteluvuon kuvauksiin, jotka eivät koske rekistereitä.
 Kokenut lukija voi aloittaa lukujen itsearvioinneista.

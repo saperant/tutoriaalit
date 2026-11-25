@@ -1,0 +1,4 @@
+# Generaattori (gen/rekisterit.py) käyttää tomllib-kirjastoa, joka on
+# vakiokirjastossa Python 3.11:stä alkaen.
+target-version = "py312"
+line-length = 78

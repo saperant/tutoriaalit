@@ -51,6 +51,11 @@
   väylän palomuurit ja IOMMU.
 - *Arkkitehtuurin mallinnus ja suunnittelutilan tutkiminen*: väylien
   ja muistien suorituskyvyn mallintaminen ennen RTL:ää.
+- *EDA-työkaluketjujen automatisointi*: luvun 8 rekisterikuvaus
+  bittikenttineen, generaattorin rakentaminen, tuotetut testit ja CI.
+- *Laitteiston kuvausstandardit (SystemRDL, IP-XACT)*: sama
+  standardimuodoilla ja valmiilla generaattoreilla, IP-XACT-kuvaukset
+  ja laitepuu.
 
 ## Lähteet
 

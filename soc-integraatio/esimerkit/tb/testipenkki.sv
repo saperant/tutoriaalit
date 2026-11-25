@@ -68,6 +68,24 @@ module testipenkki;
   wire [11:0] paddr   = u_soc.apb_m[0].paddr;
   wire [31:0] pwdata  = u_soc.apb_m[0].pwdata;
   wire        pready  = u_soc.apb_s[0].pready;
+  // Keskeytyksen kulku (luku 9): GPIO:n tulosta ytimen ansaan.
+  wire        g_tulo   = gpio_ulos[0];
+  wire        g_reunat = u_soc.u_gpio.reunat[0];
+  wire        g_kesk   = u_soc.gpio_kesk;
+  wire        meip     = u_soc.ulkoinen_kesk;
+  wire [1:0]  y_tila   = u_soc.u_ydin.tila;
+  wire [31:0] y_pc     = u_soc.u_ydin.pc;
+  wire [31:0] y_mcause = u_soc.u_ydin.mcause;
+  // DMA:n ja ytimen siirrot kytkimen isäntäporteissa (luku 10).
+  wire        y_arvalid = u_soc.isanta_m[0].arvalid;
+  wire        y_rvalid  = u_soc.isanta_s[0].rvalid;
+  wire        d_arvalid = u_soc.isanta_m[1].arvalid;
+  wire        d_arready = u_soc.isanta_s[1].arready;
+  wire        d_rvalid  = u_soc.isanta_s[1].rvalid;
+  wire        d_awvalid = u_soc.isanta_m[1].awvalid;
+  wire        d_wvalid  = u_soc.isanta_m[1].wvalid;
+  wire        d_bvalid  = u_soc.isanta_s[1].bvalid;
+  wire [2:0]  d_tila    = u_soc.u_dma.tila;
   /* verilator lint_on UNUSEDSIGNAL */
   initial begin
     $dumpfile("build/jalki.vcd");

@@ -135,6 +135,55 @@ yksi osoite ja kättely kuljettavat esimerkiksi 64 tavun välimuistirivin,
 kun AXI4-Lite tarvitsisi 16 erillistä siirtoa. Luvun 10 DMA käyttää
 AXI4-Liteä, ja sen kopiointinopeudessa näkyy tämä hinta.
 
+## Purske mitattuna
+
+Pikku-SoC:n kytkin on AXI4-Lite, joten pursketta kokeillaan sen
+ulkopuolella omassa testipenkissään. `rtl/ram_purske.sv` on AXI4-orja,
+joka tukee INCR-purskeita. Osoitekättely tallentaa aloitusindeksin ja
+siirtojen määrän, ja sen jälkeen orja laskee osoitteen itse:
+
+```{.systemverilog tiedosto="esimerkit/rtl/ram_purske.sv" osa="purske"}
+```
+
+Lukukanavalla orja antaa sanan joka jaksolla niin kauan kuin isäntä
+pitää `RREADY`n ylhäällä, ja `RLAST` merkitsee viimeisen.
+Kirjoituksessa vastaus `B` tulee kerran koko purskeesta, ei jokaisesta
+sanasta. Testipenkin isäntä on kaksi tehtävää:
+
+```{.systemverilog tiedosto="esimerkit/tb/tb_purske.sv" osa="isanta"}
+```
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/purske.json" otsikko="Neljän sanan purske simulaatiosta: luku (AR, neljä R-siirtoa, RLAST) ja kirjoitus (AW, neljä W-siirtoa, WLAST, yksi B). Arvot on näytetty sellaisina kuin ne ovat kellon nousevalla reunalla."}
+```
+
+Purskeessa on kaksi sääntöä, joita AXI4-Litessä ei ole, ja ne
+kannattaa antaa tarkistimen valvottaviksi (luku 12):
+
+```{.systemverilog tiedosto="esimerkit/rtl/axi_purske_tarkistin.sv" osa="saannot"}
+```
+
+Testipenkki kopioi samat 64 sanaa kahdesti: ensin sana kerrallaan
+(`AxLEN` = 0, kuten AXI4-Lite) ja sitten 16 sanan purskeina. Lopuksi se
+tekee kaksi tahallista virhettä:
+
+```{.tuloste tiedosto="esimerkit/odotettu/purske.odotettu"}
+```
+
+Sana kerrallaan kopio vie viisi jaksoa sanaa kohden: lukuosoite ja
+data sekä kirjoitusosoite, data ja vastaus. Purskeina sama kopio vie
+140 jaksoa eli 2,2 jaksoa sanaa kohden, koska osoite ja vastaus
+maksetaan kerran 16 sanasta. Loput erosta ihanteeseen (yksi jakso
+sanaa kohden) tulee siitä, että tämä isäntä lukee purskeen kokonaan
+ennen kuin alkaa kirjoittaa. Oikea DMA lukisi ja kirjoittaisi yhtä
+aikaa FIFOn läpi. Tarkistin huomasi molemmat virheet: purskeen, joka
+alkaa osoitteesta `0xFF8` ja jatkuu sivun rajan yli, sekä `WLAST`in,
+joka nousi toisessa siirrossa eikä neljännessä.
+
+Mittaus on lohkotason tulos, ei Pikku-SoC:n: purskeiden tuominen
+järjestelmään vaatisi kytkimen, joka välittää purskeen kokonaisena, ja
+sillan AXI4-Lite-orjille. Se on integroinnin tavallinen kompromissi:
+nopea väylä muisteille ja kevyt väylä rekistereille (luku 5).
+
 ## Käytännössä
 
 - **AXI4-Lite rekistereille, AXI4 datalle.** Rekisteriliitännät
@@ -166,5 +215,9 @@ AXI4-Liteä, ja sen kopiointinopeudessa näkyy tämä hinta.
   W-kanavan eri jaksoilla.
 - Osaat kertoa, mitä purskeet, tunnisteet ja avoimet siirrot tuovat
   täyteen AXI4:ään ja milloin niitä tarvitaan.
+- Osaat lukea INCR-purskeen ajoituskaaviosta ja laskea, montako jaksoa
+  sama kopio vie sana kerrallaan ja purskeina.
+- Osaat nimetä purskeen kaksi lisäsääntöä (4 KiB:n raja ja `xLAST`) ja
+  tarkistaa ne simulaatiossa.
 - Osaat valita oikean vastauskoodin (OKAY, SLVERR, DECERR)
   virhetilanteeseen.

@@ -34,15 +34,20 @@ joihin kannattaa tutustua ennen oman vuokehyksen kirjoittamista:
 | PeakRDL, SystemRDL Compiler | rekisterikuvaukset SystemRDL-muodossa |
 | Bazel, Buck2 | sisältötiivisteisiin perustuva inkrementaalinen rakentaminen |
 
-## Mihin tästä
+## Jatkotaidot
 
-- **Laitteiston verifiointi**: testipenkkien rakenne, kattavuusmallit,
+- *Laitteiston verifiointi*: testipenkkien rakenne, kattavuusmallit,
   formaali verifiointi ja regressioiden sisältö.
-- **FPGA-toteutus** ja **ASIC-toteutus**: vuon vaiheet, joita tässä
+- *FPGA-toteutus* ja *ASIC-toteutus*: vuon vaiheet, joita tässä
   ohjattiin. Kaupallisten työkalujen Tcl-skriptit noudattavat luvun 4
   mallia.
-- **SoC-integraatio**: rekisterilohkot väylässä ja ohjelmiston ja
+- *SoC-integraatio*: rekisterilohkot väylässä ja ohjelmiston ja
   laitteiston rajapinta.
+- *Laitteiston kuvausstandardit (SystemRDL, IP-XACT)*: luvun 9
+  rekisterikuvaus standardimuodoilla ja valmiilla generaattoreilla.
+- *Jatkuva integraatio ja toimitus*: putken suunnittelu, artefaktit ja
+  julkaisukäytännöt yleisesti; luku 10 käsitteli vain laitteiston
+  erityispiirteet.
 
 ## Lähteet ja lisälukemista
 

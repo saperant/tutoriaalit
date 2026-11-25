@@ -1,13 +1,13 @@
-"""Rekisterigeneraattori: JSON-kuvaus → SystemVerilog, C ja Markdown.
+"""Rekisterigeneraattori: TOML-kuvaus → SystemVerilog, C ja Markdown.
 
 Käyttö:
-    python3 rekisterit.py gpio.json kohdehakemisto
+    python3 rekisterit.py gpio.toml kohdehakemisto
 
 Yksi kuvaus tuottaa kolme tiedostoa, jotka pysyvät siksi aina
 yhtäpitävinä: APB-orjana toimivan rekisterilohkon (<nimi>_regs.sv),
 ohjelmiston otsakkeen (<nimi>_regs.h) ja dokumentaation (<nimi>_regs.md).
 
-Rekisterityypit:
+Pääsytavat (kuvauksen kenttä paasy):
     rw     ohjelmisto kirjoittaa ja lukee, laitteisto lukee (q)
     ro     laitteisto antaa arvon (d), ohjelmisto lukee
     wo     ohjelmiston kirjoitus antaa laitteistolle arvon ja pulssin
@@ -19,22 +19,22 @@ Rekisterityypit:
 from __future__ import annotations
 
 import argparse
-import json
 import sys
 import textwrap
+import tomllib
 from dataclasses import dataclass
 from pathlib import Path
 
-TYYPIT = ("rw", "ro", "wo", "w1c", "vakio")
+PAASYT = ("rw", "ro", "wo", "w1c", "vakio")
 OTSAKE = "Generoitu tiedostosta {lahde} (gen/rekisterit.py). Älä muokkaa."
 
 
 @dataclass(frozen=True)
 class Rekisteri:
     nimi: str
-    siirto: int
+    osoite: int             # siirtymä lohkon alusta
     leveys: int
-    tyyppi: str
+    paasy: str
     nollaus: int
     kuvaus: str
 
@@ -49,23 +49,24 @@ class Lohko:
 # @alku lue
 def lue(polku: Path) -> Lohko:
     """Lukee ja tarkistaa kuvauksen. Virheet kerrotaan heti."""
-    data = json.loads(polku.read_text("utf-8"))
+    data = tomllib.loads(polku.read_text("utf-8"))
     rekisterit = []
-    for r in data["rekisterit"]:
-        rek = Rekisteri(r["nimi"], r["siirto"], r["leveys"], r["tyyppi"],
+    for r in data["rekisteri"]:
+        rek = Rekisteri(r["nimi"], r["osoite"], r["leveys"], r["paasy"],
                         r.get("nollaus", 0), r["kuvaus"])
-        if rek.tyyppi not in TYYPIT:
-            raise ValueError(f"{rek.nimi}: tuntematon tyyppi {rek.tyyppi}")
-        if rek.siirto % 4 or not 0 <= rek.siirto < 0x1000:
-            raise ValueError(f"{rek.nimi}: siirto {rek.siirto:#x}")
+        if rek.paasy not in PAASYT:
+            raise ValueError(f"{rek.nimi}: tuntematon pääsy {rek.paasy}")
+        if rek.osoite % 4 or not 0 <= rek.osoite < 0x1000:
+            raise ValueError(f"{rek.nimi}: osoite {rek.osoite:#x}")
         if not 1 <= rek.leveys <= 32 or rek.nollaus >= 1 << rek.leveys:
             raise ValueError(f"{rek.nimi}: leveys tai nollausarvo")
         rekisterit.append(rek)
-    siirrot = [r.siirto for r in rekisterit]
-    if len(set(siirrot)) != len(siirrot):
-        raise ValueError("päällekkäiset siirrot")
-    rekisterit.sort(key=lambda r: r.siirto)
-    return Lohko(data["nimi"], data["kuvaus"], tuple(rekisterit))
+    osoitteet = [r.osoite for r in rekisterit]
+    if len(set(osoitteet)) != len(osoitteet):
+        raise ValueError("päällekkäiset osoitteet")
+    rekisterit.sort(key=lambda r: r.osoite)
+    lohko = data["lohko"]
+    return Lohko(lohko["nimi"], lohko["kuvaus"], tuple(rekisterit))
 # @loppu lue
 
 
@@ -79,7 +80,7 @@ def portit(r: Rekisteri) -> list[str]:
         "wo": [f"output logic {w}{n}_q", f"output logic {n}_we"],
         "w1c": [f"input  logic {w}{n}_set", f"output logic {w}{n}_q"],
         "vakio": [],
-    }[r.tyyppi]
+    }[r.paasy]
 # @loppu portit
 
 
@@ -116,21 +117,21 @@ def sv(lohko: Lohko, lahde: str) -> str:
     ]
     for r in lohko.rekisterit:
         n, w = r.nimi.lower(), r.leveys
-        osuma = f"apb_m.paddr == 12'h{r.siirto:03X}"
+        osuma = f"apb_m.paddr == 12'h{r.osoite:03X}"
         nollaus = f"{w}'h{r.nollaus:X}"
         alku = "  always_ff @(posedge kello or negedge nollaus_n)"
-        if r.tyyppi == "rw":
+        if r.paasy == "rw":
             rivit += [alku,
                       f"    if (!nollaus_n) {n}_q <= {nollaus};",
                       f"    else if (kirjoita && {osuma})",
                       (f"      {n}_q <= {w}'(sovita(32'({n}_q), "
                        "apb_m.pwdata, maski));"),
                       ""]
-        elif r.tyyppi == "wo":
+        elif r.paasy == "wo":
             rivit += [f"  assign {n}_we = kirjoita && {osuma};",
                       f"  assign {n}_q  = apb_m.pwdata[{w - 1}:0];",
                       ""]
-        elif r.tyyppi == "w1c":
+        elif r.paasy == "w1c":
             rivit += [alku,
                       f"    if (!nollaus_n) {n}_q <= {nollaus};",
                       f"    else if (kirjoita && {osuma})",
@@ -150,9 +151,9 @@ def sv(lohko: Lohko, lahde: str) -> str:
         n = r.nimi.lower()
         arvo = {"rw": f"{n}_q", "ro": f"{n}_d", "wo": "'0",
                 "w1c": f"{n}_q", "vakio": f"{r.leveys}'h{r.nollaus:X}"}
-        virhe = "kirjoita" if r.tyyppi in ("ro", "vakio") else "1'b0"
-        rivit += [f"      12'h{r.siirto:03X}: begin",
-                  f"        apb_s.prdata  = 32'({arvo[r.tyyppi]});",
+        virhe = "kirjoita" if r.paasy in ("ro", "vakio") else "1'b0"
+        rivit += [f"      12'h{r.osoite:03X}: begin",
+                  f"        apb_s.prdata  = 32'({arvo[r.paasy]});",
                   f"        apb_s.pslverr = {virhe};",
                   "      end"]
     rivit += [
@@ -177,18 +178,18 @@ def c(lohko: Lohko, lahde: str) -> str:
              "typedef struct {"]
     kohta, vara = 0, 0
     for r in lohko.rekisterit:
-        if r.siirto > kohta:
+        if r.osoite > kohta:
             rivit.append(f"    uint32_t varattu{vara}"
-                         f"[{(r.siirto - kohta) // 4}];")
+                         f"[{(r.osoite - kohta) // 4}];")
             vara += 1
-        laatu = "const " if r.tyyppi in ("ro", "vakio") else ""
+        laatu = "const " if r.paasy in ("ro", "vakio") else ""
         rivit.append(f"    volatile {laatu}uint32_t {r.nimi};"
-                     f"  /* {r.siirto:#05x} {r.tyyppi} */")
-        kohta = r.siirto + 4
+                     f"  /* {r.osoite:#05x} {r.paasy} */")
+        kohta = r.osoite + 4
     rivit += [f"}} {lohko.nimi}_regs_t;", ""]
     for r in lohko.rekisterit:
         rivit.append(f"_Static_assert(offsetof({lohko.nimi}_regs_t, "
-                     f"{r.nimi}) == {r.siirto:#x}, \"{r.nimi}\");")
+                     f"{r.nimi}) == {r.osoite:#x}, \"{r.nimi}\");")
     rivit.append("")
     for r in lohko.rekisterit:
         rivit.append(f"#define {iso}_{r.nimi}_MASKI "
@@ -201,9 +202,9 @@ def md(lohko: Lohko, lahde: str) -> str:
     rivit = [f"<!-- {OTSAKE.format(lahde=lahde)} -->",
              f"# {lohko.nimi}", "", lohko.kuvaus, ""]
     for r in lohko.rekisterit:
-        teksti = (f"Tyyppi {r.tyyppi}, {r.leveys} bittiä, "
+        teksti = (f"Pääsy {r.paasy}, {r.leveys} bittiä, "
                   f"nollausarvo 0x{r.nollaus:X}. {r.kuvaus}.")
-        rivit += [f"## {r.nimi} (0x{r.siirto:03X})", "",
+        rivit += [f"## {r.nimi} (0x{r.osoite:03X})", "",
                   *textwrap.wrap(teksti, 72), ""]
     return "\n".join(rivit)
 
