@@ -36,6 +36,19 @@
 - **Eristetyt sivuvaikutukset:** aika, satunnaisuus ja ympäristö
   korvattavina, jotta tulokset toistuvat.
 
+## Jatkotaidot
+
+- *EDA-työkaluketjujen automatisointi* soveltaa näitä välineitä
+  laitteistosuunnittelun työkaluketjuihin: synteesi- ja
+  ajoitusraporttien jäsentämiseen, regressioajoihin ja
+  rekisterikuvauksista generoituun koodiin.
+- *Python ja C/C++ yhteen* jatkaa suorituskykyyn: kun NumPy ei riitä,
+  osa työkalusta kirjoitetaan C++:lla ja kutsutaan Pythonista.
+- *Laitteiston verifiointi* käyttää Pythonia testipenkkien
+  kirjoittamiseen (cocotb).
+- *Tekninen dokumentaatio* jatkaa dokumentaatiomerkkijonoista työkalun
+  käyttöohjeeseen ja rajapintaviitteeseen.
+
 ## Lähteet ja lisälukemista
 
 - **Pythonin dokumentaatio** (<https://docs.python.org/3/>):
@@ -55,24 +68,3 @@
   asetukset.
 - **Command Line Interface Guidelines** (<https://clig.dev>):
   komentorivityökalujen suunnitteluperiaatteet.
-
-## Mihin tästä eteenpäin
-
-Taito *EDA-työkaluketjujen automatisointi* soveltaa näitä välineitä
-laitteistosuunnittelun
-työkaluketjuihin: synteesi- ja ajoitusraporttien jäsentämiseen,
-regressioajoihin ja rekisterikuvauksista generoituun koodiin. Taito
-*Python ja C/C++ yhteen* jatkaa suorituskykyyn: kun NumPy ei riitä,
-osa työkalusta kirjoitetaan C++:lla ja kutsutaan Pythonista. Taito
-*Laitteiston verifiointi* käyttää Pythonia testipenkkien
-kirjoittamiseen (cocotb). Taito *Tekninen dokumentaatio* jatkaa
-dokumentaatiomerkkijonoista työkalun käyttöohjeeseen ja
-rajapintaviitteeseen.
-
-## Lisenssi
-
-Tämä tutoriaali ja sen esimerkkikoodit on lisensoitu Creative Commons
-Nimeä–JaaSamoin 4.0 Kansainvälinen -lisenssillä (CC BY-SA 4.0,
-<https://creativecommons.org/licenses/by-sa/4.0/deed.fi>). Teosta saa
-kopioida, levittää ja muokata, kunhan alkuperäinen lähde mainitaan ja
-muokatut versiot jaetaan samalla lisenssillä.

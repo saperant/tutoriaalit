@@ -64,10 +64,22 @@ jäsenet), sopimukset (*contracts*), joilla funktion esi- ja jälkiehdot
 voi kirjoittaa osaksi sen esittelyä, sekä `std::execution`-kirjaston
 asynkroniseen ohjelmointiin.
 
-**Erityistarpeet** käsitellään taitopuun omissa taidoissa, joissa tämä
-tutoriaali on esitietona. Tällaisia ovat esimerkiksi *C++:n
-suorituskyky*, *Python ja C/C++ yhteen*, *Rinnakkaisohjelmointi*,
-*Verkko-ohjelmointi* ja *Korkean tason mallinnus (SystemC/TLM)*.
+## Jatkotaidot
+
+Erityistarpeet käsitellään taidoissa, joissa tämä tutoriaali on
+esitietona:
+
+- *C++:n suorituskyky*: kielen rakenteiden hinnat mitattuina.
+- *Rinnakkaisohjelmointi*: säikeet, muistijärjestykset ja lukottomat
+  rakenteet.
+- *Edistyneet algoritmit ja tietorakenteet* ja *Kääntäjätekniikka*:
+  suuremmat C++-ohjelmat.
+- *Verkko-ohjelmointi*: soketit ja palvelinmallit.
+- *Python ja C/C++ yhteen*: C++-kirjasto Pythonin käytettäväksi.
+- *Renderöinnin perusteet* ja *Peliohjelmointi*: grafiikka ja pelit
+  C++:lla.
+- *Korkean tason mallinnus (SystemC/TLM)*: laitteiston mallinnus
+  C++-kirjastolla.
 
 ## Lähteet ja jatkolukeminen
 
@@ -112,11 +124,3 @@ suorituskyky*, *Python ja C/C++ yhteen*, *Rinnakkaisohjelmointi*,
   mikrovertailut.
 - **Qt** (<https://www.qt.io>) – graafiset käyttöliittymät ja laaja
   sovelluskehys.
-
-## Lisenssi
-
-Tämä tutoriaali ja sen esimerkkikoodit on lisensoitu Creative Commons
-Nimeä–JaaSamoin 4.0 Kansainvälinen -lisenssillä (CC BY-SA 4.0,
-<https://creativecommons.org/licenses/by-sa/4.0/deed.fi>). Teosta saa
-kopioida, levittää ja muokata, kunhan alkuperäinen lähde mainitaan ja
-muokatut versiot jaetaan samalla lisenssillä.

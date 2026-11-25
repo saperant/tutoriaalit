@@ -60,9 +60,9 @@ C++26:n sisältö on päätetty, mutta kääntäjätuki on vielä keskeneräinen
 Tässä tutoriaalissa pitäydytään C++23:ssa ja niissä sen osissa, joita
 yleiset kääntäjät jo tukevat.
 
-## Kenelle tutoriaali on tarkoitettu
+## Esitiedot ja rajaus
 
-Tutoriaali olettaa, että lukija osaa ohjelmoida C:llä tai tuntee
+Esitietona on taito *C-kieli*: lukija osaa ohjelmoida C:llä tai tuntee
 muuten C-tyylisen syntaksin: muuttujat, funktiot, silmukat, rakenteet
 ja osoittimet. Aiempaa C++:n tuntemusta ei tarvita. Luvut
 [C:stä C++:aan](#cstä-caan) ja [Luokan perusteet](#luokan-perusteet)
@@ -70,6 +70,21 @@ esittelevät viittaukset, standardikirjaston merkkijonon ja vektorin
 sekä luokat, ja myöhemmät luvut nojaavat niihin. Tavoitteena ei ole
 kattaa koko kieltä, vaan esitellä ne piirteet, joiden varaan
 nykyaikainen C++-koodi rakentuu.
+
+Kieliriippumattomat aiheet käsitellään omissa taidoissaan, ja tämä
+tutoriaali kertoo, miten ne tehdään C++:lla:
+
+- algoritmien ja tietorakenteiden suunnittelu: taidot *Algoritmit* ja
+  *Tietorakenteet*
+- suorituskyvyn mittaaminen ja C++:n rakenteiden hinnat: taidot
+  *Suorituskyvyn analyysi ja optimointi* ja *C++:n suorituskyky*
+- rinnakkaisuuden mallit ja muistijärjestykset: taito
+  *Rinnakkaisohjelmointi*
+- verkko-ohjelmointi: taito *Verkko-ohjelmointi*
+- käännösjärjestelmät ja testikehykset: taito *Käännösjärjestelmät,
+  testaus ja CI*.
+
+## Kenelle tutoriaali on tarkoitettu
 
 Tutoriaali palvelee kolmella tavalla:
 
@@ -83,10 +98,6 @@ Tutoriaali palvelee kolmella tavalla:
   Niissä kerrotaan, miten C++-kehittäjät asioita oikeasti käyttävät:
   nimetyt mallit, parhaat käytännöt perusteluineen sekä kielikohtaiset
   hinnat ja sudenkuopat.
-
-Kieliriippumattomat aiheet, kuten algoritmien suunnittelu, yleinen
-suorituskykyanalyysi ja verkko-ohjelmointi, käsitellään taitopuun omissa
-tutoriaaleissa. Tämä tutoriaali kertoo, miten ne tehdään C++:lla.
 
 ## Työkalut
 

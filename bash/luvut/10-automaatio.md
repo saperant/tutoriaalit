@@ -4,7 +4,7 @@ Bashin tärkein käyttö on automaatio: asennukset, käyttöönotot,
 varmuuskopiot ja ylläpitotyöt. Niille on vakiintunut joukko malleja,
 jotka tekevät skriptistä turvallisen ajaa uudelleen, kokeilla etukäteen
 ja keskeyttää. Tämä luku kokoaa ne. Konttien ja pilvi-infrastruktuurin
-automaatiotyökalut käsitellään taitopuun taidossa *Säiliöt ja
+automaatiotyökalut käsitellään taidossa *Kontit ja
 pilvi-infrastruktuuri*.
 
 ## Idempotenssi

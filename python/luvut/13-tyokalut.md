@@ -10,8 +10,9 @@ optimointi*; tämä luku näyttää Pythonin välineet.
 ## pytest
 
 pytestin perusteet (testifunktio, `assert`, parametrisointi ja
-`pytest.raises`) esitellään taidossa *Ohjelmoinnin perusteet*. Tässä
-ne kerrataan yhdellä esimerkillä ja lisätään kiintopisteet ja doctest.
+`pytest.raises`) esitellään taidossa *Ohjelmoinnin perusteet
+(Python)*. Tässä ne kerrataan yhdellä esimerkillä ja lisätään
+kiintopisteet ja doctest.
 
 pytest on Pythonin tosiasiallinen testikehys. Testit ovat tavallisia
 funktioita, joiden nimi alkaa `test_`, ja tarkistukset tavallisia

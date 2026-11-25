@@ -41,13 +41,17 @@
 | välitön käyttöliittymä | käyttöliittymän tilan synkronointi | Ääni ja käyttöliittymä |
 | palvelun paikantaja | globaalien järjestelmien (ääni, loki) haku ilman singletonia | ks. Nystrom |
 
-## Mihin tästä eteenpäin
+## Jatkotaidot
 
+- *3D-peliohjelmointi*: kolmiulotteisen pelin rakenne: orientaatiot ja
+  kvaterniot, muunnoshierarkia, kamerat, 3D-törmäykset ja animaatio.
+- *Pelifysiikka*: jäykät kappaleet, rajoitteet ja nivelet sekä pehmeät
+  kappaleet luvun *Fysiikka ja törmäysvaste* jatkoksi.
 - *Reaaliaikaiset moninpelit*: tilan synkronointi, asiakkaan ennustus,
   viiveen kompensointi ja rollback. Tämän tutoriaalin determinismi ja
   tallenteet ovat sen perusta.
-- *Renderöinnin perusteet* ja *GPU-ohjelmointi*: grafiikkaputki,
-  varjostimet, OpenGL ja Vulkan.
+- *Renderöinnin perusteet* ja *GPU-ohjelmointi: OpenGL ja Vulkan*:
+  grafiikkaputki, varjostimet, OpenGL ja Vulkan.
 - *C++:n suorituskyky* ja *Suorituskyvyn analyysi ja optimointi*:
   datan asettelu, profilointi ja vektorointi.
 - *Algoritmit* ja *Numeeriset menetelmät*: reitinhaun ja
@@ -83,11 +87,3 @@
 - Pelimoottorien dokumentaatio: Godot (<https://docs.godotengine.org/>),
   Unity (<https://docs.unity3d.com/>), Unreal
   (<https://dev.epicgames.com/documentation/>).
-
-## Lisenssi
-
-Tämä tutoriaali ja sen esimerkkikoodit on lisensoitu Creative Commons
-Nimeä–JaaSamoin 4.0 Kansainvälinen -lisenssillä (CC BY-SA 4.0,
-<https://creativecommons.org/licenses/by-sa/4.0/deed.fi>). Teosta saa
-kopioida, levittää ja muokata, kunhan alkuperäinen lähde mainitaan ja
-muokatut versiot jaetaan samalla lisenssillä.

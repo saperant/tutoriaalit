@@ -42,10 +42,10 @@
 | syötebudjetti | nopeushuijaus, tulvitus | Huijaamisen esto |
 | laajeneva haku | otteluiden muodostus | Pelipalvelimet |
 
-## Mihin tästä eteenpäin
+## Jatkotaidot
 
-- *Verkko-ohjelmointi*: soketit, tapahtumasilmukat, protokollien
-  suunnittelu ja vikasietoisuus syvemmin.
+- *Pelifysiikka*: determinismi ja kiinteä aika-askel fysiikkamoottorissa;
+  lukitusaskel ja rollback vaativat, että sama syöte tuottaa saman tilan.
 - *Hajautetut järjestelmät* ja *Skaalautuvien järjestelmien suunnittelu*:
   pelipalvelinten taustajärjestelmät, skaalaus ja tietokannat.
 - *Kontit ja pilvi-infrastruktuuri*: pelipalvelinten ajaminen konteissa
@@ -81,9 +81,3 @@
   GameNetworkingSockets (<https://github.com/ValveSoftware/GameNetworkingSockets>,
   BSD).
 - Agones: pelipalvelimet Kubernetesissa. <https://agones.dev/>.
-
-## Lisenssi
-
-Tämä teos on lisensoitu Creative Commons Nimeä–JaaSamoin 4.0
-Kansainvälinen -lisenssillä (CC BY-SA 4.0). Esimerkkien koodi on samalla
-lisenssillä.

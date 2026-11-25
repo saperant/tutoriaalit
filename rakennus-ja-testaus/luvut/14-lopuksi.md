@@ -49,20 +49,20 @@
 | artefakti | raportit ja lokit vianetsintään | 12 |
 | gdb eräajona | toistettava vianetsintä, CI:n kutsupinot | 13 |
 
-## Mihin tästä eteenpäin
+## Jatkotaidot
 
-- **Jatkuva integraatio ja toimitus:** putkien yleiset periaatteet,
+- *Jatkuva integraatio ja toimitus*: putkien yleiset periaatteet,
   julkaisu ja toimitus tämän tutoriaalin rakennus- ja testiputken
   jatkoksi.
-- **Sulautettu Linux:** ristiinkäännös, CMaken työkaluketjutiedostot
+- *Sulautettu Linux*: ristiinkäännös, CMaken työkaluketjutiedostot
   (*toolchain file*), Buildroot ja Yocto sekä ohjelmien testaus
   emulaattorissa.
-- **EDA-työkaluketjujen automatisointi:** simulaattorien ja
+- *EDA-työkaluketjujen automatisointi*: simulaattorien ja
   synteesityökalujen ajaminen Makella ja CI:ssä, regressiotestaus ja
   tulosten raportointi.
-- **Objektitiedostot, linkitys ja ABI:** linkkerin toiminta,
+- *Objektitiedostot, linkitys ja ABI*: linkkerin toiminta,
   symbolien näkyvyys ja jaettujen kirjastojen yhteensopivuus syvemmin.
-- **Tietoturva kehitystyössä:** toimitusketjun turvallisuus,
+- *Tietoturva kehitystyössä*: toimitusketjun turvallisuus,
   riippuvuuksien eheys, CI:n oikeudet ja salaisuudet sekä
   kovennusvalitsimet.
 
@@ -98,9 +98,3 @@
 - Debugging with GDB. Free Software Foundation,
   <https://sourceware.org/gdb/documentation/>. Eräajo, vahtipisteet ja
   ytimen vedokset.
-
-## Lisenssi
-
-Tämä teos on lisensoitu Creative Commons Nimeä–JaaSamoin 4.0
-Kansainvälinen -lisenssillä (CC BY-SA 4.0). Esimerkkikoodia saa käyttää
-saman lisenssin ehdoin.

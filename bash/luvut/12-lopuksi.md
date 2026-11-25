@@ -106,6 +106,17 @@ ilmoittaa Bash-rakenteista. Testaa skripti sillä kuorella, jolla se
 ajetaan: Debianin ja Ubuntun `/bin/sh` on `dash`, Alpinen BusyBoxin
 `ash`.
 
+## Jatkotaidot
+
+- *Käännösjärjestelmät, testaus ja CI*: skriptit käännösten ja testien
+  automatisoinnissa; Bash on taidon esitieto.
+- *Python työkaluohjelmointiin*: työkalut, joissa on enemmän omaa
+  logiikkaa kuin Bashiin kannattaa kirjoittaa.
+- *Kontit ja pilvi-infrastruktuuri* ja *Sulautettu Linux*: Bash konttien
+  käynnistysskripteissä ja järjestelmän alustuksessa.
+- *EDA-työkaluketjujen automatisointi*: skriptit laitesuunnittelun
+  työkaluketjuissa.
+
 ## Lähteet ja jatkolukeminen
 
 - **GNU Bash Reference Manual** (<https://www.gnu.org/software/bash/manual/>)
@@ -141,19 +152,3 @@ ajetaan: Debianin ja Ubuntun `/bin/sh` on `dash`, Alpinen BusyBoxin
   käsittely kuten `awk`.
 - **GNU Parallel** (<https://www.gnu.org/software/parallel/>):
   monipuolinen rinnakkaisajo, myös etäkoneilla.
-
-### Mihin tästä eteenpäin
-
-Taitopuussa Bash on esitietona taidolle *Käännösjärjestelmät, testaus ja
-CI*, jossa skriptejä käytetään käännösten ja testien automatisointiin.
-*Säiliöt ja pilvi-infrastruktuuri* ja *Sulautettu Linux* käyttävät
-Bashia konttien käynnistysskripteissä ja järjestelmän alustuksessa, ja
-*EDA-työkaluketjujen automatisointi* laitesuunnittelun työkaluketjuissa.
-
-## Lisenssi
-
-Tämä tutoriaali ja sen esimerkkikoodit on lisensoitu Creative Commons
-Nimeä–JaaSamoin 4.0 Kansainvälinen -lisenssillä (CC BY-SA 4.0,
-<https://creativecommons.org/licenses/by-sa/4.0/deed.fi>). Teosta saa
-kopioida, levittää ja muokata, kunhan alkuperäinen lähde mainitaan ja
-muokatut versiot jaetaan samalla lisenssillä.

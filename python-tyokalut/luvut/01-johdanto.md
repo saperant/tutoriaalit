@@ -9,12 +9,22 @@ päätetään, onko piiri valmis valmistukseen.
 
 Tämä tutoriaali opettaa kirjoittamaan tällaiset työkalut Pythonilla
 niin, että ne ovat luotettavia, testattuja ja muiden käytettävissä.
-Kielen idiomit ovat esitietona taidossa *Python*, ja komentorivin käyttö
-taidossa *Komentorivi ja Linux*. Tästä jatketaan taitoon
-*EDA-työkaluketjujen automatisointi*, jossa samoilla välineillä
-hallitaan laitteistosuunnittelun työkaluketjuja, ja taitoon *Tekninen
-dokumentaatio*, jossa työkalun ohjeet ja rajapintaviite tuotetaan
-lähdekoodista.
+
+## Esitiedot ja rajaus
+
+Esitietoina ovat taidot *Python* (kielen idiomit, tyypitys ja testaus)
+ja *Komentorivi ja Linux* (komentorivin käyttö, putket ja prosessit).
+
+Tutoriaali ei käsittele seuraavia aiheita:
+
+- kielen omat rakenteet ja paketoinnin perusteet syvemmin: taito
+  *Python*
+- laitteistosuunnittelun työkaluketjujen hallinta samoilla välineillä:
+  taito *EDA-työkaluketjujen automatisointi*
+- työkalun ohjeiden ja rajapintaviitteen tuottaminen lähdekoodista:
+  taito *Tekninen dokumentaatio*
+- C- ja C++-laajennukset, kun NumPy ei riitä: taito *Python ja C/C++
+  yhteen*.
 
 ## Mitä hyvä työkalu tekee
 

@@ -47,23 +47,24 @@
 | riippuvuuksien injektointi propsina | testattavuus | 8 |
 | koodin pilkkominen, render-as-you-fetch | latausaika, vesiputoukset | 11 |
 
-## Mihin seuraavaksi
+## Jatkotaidot
 
-- **Kehykset ja kirjastot.** Tuotannossa reititys, datan haku ja
-  välimuisti tulevat kirjastoista: React Router tai TanStack Router,
-  TanStack Query, lomakkeisiin React Hook Form, saavutettaviin
-  komponentteihin React Aria tai Radix. SSR-kehykset (Next.js, React
-  Router, Remix) yhdistävät palvelimen ja selaimen.
-- **Taustapalvelut.** Rajapinnan, tietokannan, todennuksen ja
-  valtuutuksen toteutus palvelimella: taito *Taustapalvelut*.
-- **Kontit ja pilvi-infrastruktuuri.** Sovelluksen julkaisu, CDN ja palvelinasetukset
-  (SPA fallback, otsakkeet): taito *Kontit ja pilvi-infrastruktuuri*.
-- **Muut kehykset.** Vue, Svelte ja Angular perustuvat samoihin
-  käsitteisiin; signaalien malli on tuttu luvusta 3. Taito
-  *Web-sovelluskehykset ja niiden periaatteet* tekee saman sovelluksen
-  Reactilla, Vuella, Angularilla ja Sveltellä ja vertaa niiden
-  renderöintimalleja, mallipohjia ja tilanhallintaa. Sieltä löytyvät
-  myös kehyksen valinnan perusteet.
+- *Web-sovelluskehykset ja niiden periaatteet*: Vue, Svelte ja Angular
+  perustuvat samoihin käsitteisiin; signaalien malli on tuttu
+  luvusta 3. Taito tekee saman sovelluksen Reactilla, Vuella,
+  Angularilla ja Sveltellä ja vertaa niiden renderöintimalleja,
+  mallipohjia ja tilanhallintaa. Sieltä löytyvät myös kehyksen valinnan
+  perusteet.
+- *Taustapalvelut*: rajapinnan, tietokannan, todennuksen ja
+  valtuutuksen toteutus palvelimella.
+- *Kontit ja pilvi-infrastruktuuri*: sovelluksen julkaisu, CDN ja
+  palvelinasetukset (SPA fallback, otsakkeet).
+
+Tuotannossa reititys, datan haku ja välimuisti tulevat kirjastoista:
+React Router tai TanStack Router, TanStack Query, lomakkeisiin React
+Hook Form, saavutettaviin komponentteihin React Aria tai Radix.
+SSR-kehykset (Next.js, React Router, Remix) yhdistävät palvelimen ja
+selaimen.
 
 ## Lähteet ja jatkolukeminen
 

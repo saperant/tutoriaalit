@@ -8,12 +8,28 @@ vaikeus ei ole yksittäisissä algoritmeissa vaan siinä, että kaiken on
 valmistuttava 16 millisekunnissa joka ruudulla, toistettavasti ja ilman
 nykimistä.
 
-Tutoriaali olettaa, että lukija osaa modernin C++:n (taito *Moderni
-C++*) ja lineaarialgebran perusteet (vektorit ja matriisit). Tavoitteena
-on ymmärtää, mitä pelimoottori tekee pelin alla: pelisilmukka, syöte,
+Tavoitteena on ymmärtää, mitä pelimoottori tekee pelin alla: pelisilmukka, syöte,
 tilat, piirto, entiteetit, törmäykset, fysiikka, resurssit, ääni ja
 käyttöliittymä. Lopuksi kootaan kokonainen pieni peli, *Kipinä*, ja
 sille SDL2-kirjastoon perustuva ikkunaversio.
+
+## Esitiedot ja rajaus
+
+Esitietoina ovat taidot *Moderni C++* ja *Lineaarialgebra*: lukija osaa
+modernin C++:n ja lineaarialgebran perusteet (vektorit ja matriisit).
+
+Tutoriaalin pelit ovat kaksiulotteisia. Se ei käsittele seuraavia
+aiheita:
+
+- kolmiulotteisen pelin rakenne (orientaatiot, kamerat, 3D-törmäykset,
+  animaatio): taito *3D-peliohjelmointi*; luku *3D ja pelimoottorit*
+  on silta siihen
+- jäykän kappaleen dynamiikka, rajoitteet ja pehmeät kappaleet: taito
+  *Pelifysiikka*
+- verkkopelaaminen (tilan synkronointi, viiveen piilottaminen,
+  rollback): taito *Reaaliaikaiset moninpelit*
+- renderöinnin matematiikka ja grafiikkarajapinnat: taidot
+  *Renderöinnin perusteet* ja *GPU-ohjelmointi: OpenGL ja Vulkan*.
 
 ## Mihin peliohjelmointia tarvitaan
 
@@ -46,11 +62,6 @@ tunnistaa sen rajat (luku *3D ja pelimoottorit*).
 | Ääni ja käyttöliittymä | miksaus, välitön käyttöliittymä |
 | Kipinä | kokonainen peli ja SDL2-etupää |
 | 3D ja pelimoottorit | näkymäpuu, kamera, moottorien periaatteet |
-
-Verkkopelaaminen (tilan synkronointi, viiveen piilottaminen, rollback)
-on oma taitonsa, *Reaaliaikaiset moninpelit*, joka jatkaa tästä.
-Renderöinnin matematiikka ja grafiikkarajapinnat ovat taidoissa
-*Renderöinnin perusteet* ja *GPU-ohjelmointi*.
 
 ## Esimerkit ja työkalut
 

@@ -59,12 +59,25 @@ ominaisuus on uusi. Vanhemmissa standardeissa kirjoitetussa koodissa
 näkyy usein vanhempia muotoja, kuten `NULL` ja `#include <stdbool.h>`,
 joten nekin mainitaan.
 
-## Kenelle tutoriaali on tarkoitettu
+## Esitiedot ja rajaus
 
-Tutoriaali olettaa, että lukija osaa ohjelmoida jollakin kielellä ja
-tuntee perusasiat, kuten muuttujat, ehtolauseet, silmukat ja funktiot.
-C:n erityispiirteet, kuten osoittimet, muistinhallinta ja
-määrittelemätön käyttäytyminen, käydään läpi alusta.
+Esitietoina ovat taidot *Ohjelmoinnin perusteet (Python)* ja
+*Komentorivi ja Linux*: lukija osaa ohjelmoida jollakin kielellä, tuntee
+perusasiat, kuten muuttujat, ehtolauseet, silmukat ja funktiot, ja osaa
+ajaa komentoja päätteessä. C:n erityispiirteet, kuten osoittimet,
+muistinhallinta ja määrittelemätön käyttäytyminen, käydään läpi alusta.
+
+Tutoriaali ei käsittele seuraavia aiheita:
+
+- C++: taito *Moderni C++*
+- käännösjärjestelmät (Make, CMake), testikehykset ja jatkuva
+  integraatio perusteita pidemmälle: taito *Käännösjärjestelmät, testaus
+  ja CI*
+- tietorakenteiden ja algoritmien toteutus: taidot *Tietorakenteet* ja
+  *Algoritmit*
+- lukujen esitys ja liukulukujen käytös: taito *Miten tietokone laskee*
+- objektitiedostot ja linkityksen yksityiskohdat: taito
+  *Objektitiedostot, linkitys ja ABI*.
 
 ## Työkalut
 

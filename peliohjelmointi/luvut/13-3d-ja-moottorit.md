@@ -4,7 +4,9 @@
 tilat, entiteetit, törmäykset ja resurssit. Uutta ovat muunnosten
 hierarkia, kamera ja projektio sekä grafiikkaputki, joka piirtää
 kolmioita näytönohjaimella. Tässä luvussa käydään läpi, miten peli
-liittyy renderöintiin, ja mitä pelimoottori tekee puolestasi.
+liittyy renderöintiin, ja mitä pelimoottori tekee puolestasi. Luku on
+silta: kolmiulotteisen pelin rakenne käsitellään kokonaan taidossa
+*3D-peliohjelmointi*.
 
 ## Näkymäpuu
 
@@ -53,7 +55,7 @@ vaikka niiden paikallisia muunnoksia ei muutettu. Kauempana oleva auto
 piirtyy lähemmäs ruudun keskustaa. Oikeassa renderöinnissä
 projektiomatriisi kuvaa myös syvyyden z-puskuria varten, ja
 näytönohjain tekee jaon (taidot *Renderöinnin perusteet* ja
-*GPU-ohjelmointi*).
+*GPU-ohjelmointi: OpenGL ja Vulkan*).
 
 ## Pelin ja renderöinnin raja
 

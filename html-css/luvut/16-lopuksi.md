@@ -41,7 +41,7 @@ Testaus:
 18. Saavutettavuuspuu, näppäimistö, 200 %:n zoomaus ja 320 pikselin
     leveys jokaiselle uudelle näkymälle.
 
-## Mihin tästä
+## Jatkotaidot
 
 - *Web-sovellukset*: DOM, tapahtumat, lomakkeiden käsittely
   JavaScriptillä, saavutettavat dynaamiset komponentit ja suorituskyky.

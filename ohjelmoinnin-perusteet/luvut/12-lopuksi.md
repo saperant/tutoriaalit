@@ -31,19 +31,19 @@
   jälkeen.
 - Ensin toimiva, sitten siisti.
 
-## Mihin tästä eteenpäin
+## Jatkotaidot
 
-Taitopuussa ohjelmoinnin perusteista avautuvat muun muassa:
+Ohjelmoinnin perusteista avautuvat muun muassa:
 
-- **Python**: idiomaattinen Python ohjelmoinnin osaavalle:
+- *Python*: idiomaattinen Python ohjelmoinnin osaavalle:
   iteraattorit, tyypitys, kontekstinhallinta, rinnakkaisuus ja hinnat.
-- **Tietorakenteet** ja **Algoritmit**: miten tehokkaat ohjelmat
+- *Tietorakenteet* ja *Algoritmit*: miten tehokkaat ohjelmat
   rakennetaan ja miten niiden suoritusaika arvioidaan.
-- **Komentorivi ja Linux** ja **Versionhallinta (Git)**: jokaisen
+- *Komentorivi ja Linux* ja *Versionhallinta (Git)*: jokaisen
   ohjelmoijan päivittäiset työkalut.
-- **SQL ja relaatiotietokannat**: tiedon tallentaminen ja kyselyt.
-- **C-kieli**: miten tietokone toimii lähempänä laitteistoa.
-- **Funktionaalinen ohjelmointi (Racket)**: toinen tapa ajatella
+- *SQL ja relaatiotietokannat*: tiedon tallentaminen ja kyselyt.
+- *C-kieli*: miten tietokone toimii lähempänä laitteistoa.
+- *Funktionaalinen ohjelmointi (Racket)*: toinen tapa ajatella
   ohjelmia.
 
 ## Lähteet ja jatkolukeminen
@@ -79,11 +79,3 @@ teokseen.
 | Testaus | `pytest` |
 | Virheiden etsintä | `breakpoint()`, editorin debuggeri |
 | Kokeilut | `python3` (REPL) |
-
-## Lisenssi
-
-Tämä tutoriaali ja sen esimerkkikoodit on lisensoitu Creative Commons
-Nimeä–JaaSamoin 4.0 Kansainvälinen -lisenssillä (CC BY-SA 4.0,
-<https://creativecommons.org/licenses/by-sa/4.0/deed.fi>). Teosta saa
-kopioida, levittää ja muokata, kunhan alkuperäinen lähde mainitaan ja
-muokatut versiot jaetaan samalla lisenssillä.

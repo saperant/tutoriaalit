@@ -73,13 +73,19 @@ dashilla, eivätkä Bashin laajennukset toimi. Skriptin kieli on siis
 päätettävä tietoisesti: POSIX-`sh`, kun skriptin on toimittava
 pienimmissäkin ympäristöissä, ja Bash muualla.
 
-## Kenelle tutoriaali on tarkoitettu
+## Esitiedot ja rajaus
 
-Tutoriaali olettaa taitopuun taidot *Komentorivi ja Linux* (tiedostot,
-oikeudet, prosessit, putket ja uudelleenohjaukset interaktiivisessa
-käytössä) ja *Ohjelmoinnin perusteet* (muuttujat, ehdot, silmukat ja
+Esitietoina ovat taidot *Komentorivi ja Linux* (tiedostot, oikeudet,
+prosessit, putket ja uudelleenohjaukset interaktiivisessa käytössä) ja
+*Ohjelmoinnin perusteet (Python)* (muuttujat, ehdot, silmukat ja
 funktiot). Bashin omat piirteet, kuten lainaus, laajennukset, paluuarvot
 ja virheiden käsittely, käydään läpi alusta.
+
+Tutoriaali ei opeta komentorivin perustyökaluja uudelleen: ne ovat
+taidossa *Komentorivi ja Linux*. Käännösten, testien ja jatkuvan
+integraation automatisointi on taidossa *Käännösjärjestelmät, testaus ja
+CI*, ja suuremmat työkalut kirjoitetaan Pythonilla (taito *Python
+työkaluohjelmointiin*).
 
 Toisessa kielessä kokenut lukija aloittaa luvusta 2, joka kokoaa Bashin
 ajattelutavan, hinnat ja sudenkuopat. Jokaisen luvun lopussa on

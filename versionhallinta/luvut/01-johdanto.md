@@ -12,6 +12,22 @@ kun ytimen aiemman työkalun käyttölupa päättyi. Gitin suunnittelua
 ohjasivat ytimen tarpeet: tuhansia kehittäjiä, valtava historia,
 nopeus ja eheys. Ne näkyvät yhä sen ominaisuuksissa.
 
+## Esitiedot ja rajaus
+
+Esitietona on taito *Komentorivi ja Linux*: komentojen ajaminen
+päätteessä, tiedostot ja hakemistot sekä tekstieditorin käyttö.
+Ohjelmointitaitoa ei tarvita.
+
+Tutoriaali ei käsittele seuraavia aiheita:
+
+- testien ajaminen jokaisesta muutoksesta: taito *Käännösjärjestelmät,
+  testaus ja CI*
+- runkopohjainen kehitys ja toimitusputki syvemmin: taito *Jatkuva
+  integraatio ja toimitus*
+- salaisuusvuodot, allekirjoitukset ja haarasuojaukset: taito
+  *Tietoturva kehitystyössä*
+- GitOps: taito *Kontit ja pilvi-infrastruktuuri*.
+
 ## Hajautettu versionhallinta
 
 Vanhemmissa keskitetyissä järjestelmissä (CVS, Subversion) historia oli

@@ -9,8 +9,19 @@ käännöstyökalut, CSS:ää vain selain.
 
 Tämä tutoriaali opettaa kaksi ensimmäistä kerrosta niin, että tuloksena
 on sivuja, jotka toimivat kaikilla laitteilla ja kaikille käyttäjille.
-Esitietoja ei tarvita. JavaScript ja interaktiiviset sovellukset
-kuuluvat taitoihin *JavaScript* ja *Web-sovellukset*.
+
+## Esitiedot ja rajaus
+
+Esitietoja ei tarvita: taito on taitopuun lähtöpisteitä.
+
+Tutoriaali ei käsittele seuraavia aiheita:
+
+- JavaScript-kieli: taito *JavaScript*
+- interaktiiviset sovellukset, DOM ja tapahtumat: taito
+  *Web-sovellukset*
+- sovelluskehykset: taito *Web-sovelluskehykset ja niiden periaatteet*
+- selaimen tietoturva (XSS, sisällön turvallisuuskäytäntö): taidot
+  *Tietoturvan perusteet* ja *Web-sovellusten tietoturva*.
 
 ## Historia ja standardit
 

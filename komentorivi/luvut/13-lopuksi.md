@@ -39,15 +39,15 @@
 - **Kopioitu komento verkkosivulta** voi sisältää näkymättömiä
   merkkejä tai muuta kuin miltä näyttää. Liitä se ensin editoriin.
 
-## Mihin tästä eteenpäin
+## Jatkotaidot
 
-Taitopuussa komentorivi on esitieto taidoille *Bash-skriptaus*, jossa
-putket ja työkalut kootaan luotettaviksi skripteiksi, sekä
-*Versionhallinta (Git)*, *C-kieli*, *Python työkaluohjelmointiin* ja
-*Tietoverkot*. Järjestelmän sisäinen toiminta,
-eli prosessit, muisti, tiedostojärjestelmät ja järjestelmäkutsut,
-käsitellään taidossa *Käyttöjärjestelmät*. Kontit ja palvelinten
-automaatio kuuluvat taitoon *Säiliöt ja pilvi-infrastruktuuri*.
+- *Bash-skriptaus*: putket ja työkalut kootaan luotettaviksi
+  skripteiksi.
+- *Versionhallinta (Git)*, *C-kieli*, *Python työkaluohjelmointiin* ja
+  *Tietoverkot*: komentorivi on näiden esitieto.
+- *Käyttöjärjestelmät*: järjestelmän sisäinen toiminta, eli prosessit,
+  muisti, tiedostojärjestelmät ja järjestelmäkutsut.
+- *Kontit ja pilvi-infrastruktuuri*: kontit ja palvelinten automaatio.
 
 ## Lähteet ja lisämateriaali
 
@@ -100,11 +100,3 @@ automaatio kuuluvat taitoon *Säiliöt ja pilvi-infrastruktuuri*.
 - Modernit vaihtoehdot: `ripgrep` (`rg`) grepin, `fd` findin, `jq`
   JSON-datan ja `htop` topin tilalle. Perustyökalut on silti osattava,
   koska ne löytyvät jokaisesta järjestelmästä.
-
-## Lisenssi
-
-Tämä tutoriaali ja sen esimerkkikoodit on lisensoitu Creative Commons
-Nimeä–JaaSamoin 4.0 Kansainvälinen -lisenssillä (CC BY-SA 4.0,
-<https://creativecommons.org/licenses/by-sa/4.0/deed.fi>). Teosta saa
-kopioida, levittää ja muokata, kunhan alkuperäinen lähde mainitaan ja
-muokatut versiot jaetaan samalla lisenssillä.

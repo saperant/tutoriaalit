@@ -75,6 +75,24 @@ ja avoimen lähdekoodin projekteissa.
     määrittelemättömän käyttäytymisen tulokseen, vaikka koodi näyttäisi
     toimivan.
 
+## Jatkotaidot
+
+C-kieli on esitietona suurelle osalle taitopuuta:
+
+- *Moderni C++*: sama laiteläheisyys, mutta tyyppijärjestelmä ja
+  kirjasto, jotka hoitavat resurssit ohjelmoijan puolesta.
+- *Tietorakenteet* ja *Algoritmit*: rakenteiden ja algoritmien toteutus
+  C:llä.
+- *Käännösjärjestelmät, testaus ja CI*: Make, CMake, testit ja
+  sanitoijat suuremmassa projektissa.
+- *Assembly*, *Objektitiedostot, linkitys ja ABI* ja
+  *Käyttöjärjestelmät*: mitä C-ohjelmasta tulee konekielenä ja miten
+  käyttöjärjestelmä ajaa sen.
+- *Mikrokontrollerit ja bare-metal-ohjelmointi*: C ilman
+  käyttöjärjestelmää.
+- *C ja assembly yhteen* ja *Python ja C/C++ yhteen*: C:n yhdistäminen
+  muihin kieliin.
+
 ## Lähteet ja jatkolukeminen
 
 - **cppreference.com** (<https://en.cppreference.com/w/c>) sisältää
@@ -105,18 +123,3 @@ ja avoimen lähdekoodin projekteissa.
   makroilla tyypitettyjä tietorakenteita.
 - **SQLite** (<https://sqlite.org>): sulautettava tietokanta ja
   esimerkki huolellisesti testatusta C-koodista.
-
-### Mihin tästä eteenpäin
-
-Taitopuussa C-kieli on esitietona muun muassa tietorakenteille,
-assemblylle, käyttöjärjestelmille ja sulautetuille järjestelmille.
-Erityistarpeisiin on omat taitonsa, kuten C:n ja assemblyn sekä Pythonin
-ja C:n yhteiskäyttö.
-
-## Lisenssi
-
-Tämä tutoriaali ja sen esimerkkikoodit on lisensoitu Creative Commons
-Nimeä–JaaSamoin 4.0 Kansainvälinen -lisenssillä (CC BY-SA 4.0,
-<https://creativecommons.org/licenses/by-sa/4.0/deed.fi>). Teosta saa
-kopioida, levittää ja muokata, kunhan alkuperäinen lähde mainitaan ja
-muokatut versiot jaetaan samalla lisenssillä.

@@ -20,7 +20,7 @@
    riippuvuudet ja salaisuudet eivät kuulu historiaan.
 10. **Pakolliset tarkistukset CI:ssä, koukut nopeaksi palautteeksi.**
 
-## Mihin tästä eteenpäin
+## Jatkotaidot
 
 - *Käännösjärjestelmät, testaus ja CI* rakentaa tämän päälle: CI-putki
   ajaa testit jokaiselle pushille ja pull requestille.
@@ -49,8 +49,3 @@
 - *Conventional Commits*, <https://www.conventionalcommits.org>.
 - Semanttinen versiointi: <https://semver.org/lang/fi/>.
 - GitHubin `gitignore`-mallipohjat: <https://github.com/github/gitignore>.
-
-## Lisenssi
-
-Tämä tutoriaali ja sen esimerkit on lisensoitu Creative Commons
-Nimeä–JaaSamoin 4.0 Kansainvälinen -lisenssillä (CC BY-SA 4.0).

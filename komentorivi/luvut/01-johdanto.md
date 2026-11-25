@@ -10,10 +10,23 @@ ratkaisee tehtävän, johon ei ole valmista ohjelmaa.
 
 Tämä tutoriaali opettaa Linuxin käyttöä komentoriviltä: tiedostot ja
 oikeudet, putket, tekstinkäsittelyn työkalut, prosessit, ympäristön,
-paketit ja palvelut sekä etäkäytön. Esitietoja ei tarvita. Skriptien
-kirjoittaminen, eli funktiot, virheenkäsittely ja luotettavat
-automaatiot, opetetaan taidossa *Bash-skriptaus*, joka rakentuu tämän
-päälle.
+paketit ja palvelut sekä etäkäytön.
+
+## Esitiedot ja rajaus
+
+Esitietoja ei tarvita: taito on taitopuun lähtöpisteitä.
+
+Tutoriaali ei käsittele seuraavia aiheita:
+
+- skriptien kirjoittaminen, eli funktiot, virheenkäsittely ja
+  luotettavat automaatiot: taito *Bash-skriptaus*, joka rakentuu tämän
+  päälle
+- versionhallinta: taito *Versionhallinta (Git)*
+- järjestelmän sisäinen toiminta (prosessit, muisti,
+  tiedostojärjestelmät ja järjestelmäkutsut): taito *Käyttöjärjestelmät*
+- verkon toiminta perustyökaluja pidemmälle: taito *Tietoverkot*
+- kontit ja palvelinten automaatio: taito *Kontit ja
+  pilvi-infrastruktuuri*.
 
 ## Pääte, kuori ja komennot
 

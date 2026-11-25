@@ -12,12 +12,25 @@ kanssa: merkkijonot muuttuivat Unicodeksi ja `print` funktioksi.
 Siirtymä kesti yli kymmenen vuotta, ja Python 2:n tuki päättyi 2020.
 Vanhoissa ohjeissa näkyy yhä Python 2 -koodia, joten tämä mainitaan.
 
-Tutoriaali ei opeta ohjelmoinnin perusteita. Se olettaa, että lukija
-osaa kirjoittaa Pythonilla muuttujia, ehtoja, silmukoita, funktioita ja
-yksinkertaisia luokkia (taito *Ohjelmoinnin perusteet (Python)*).
 Tavoitteena on idiomaattinen ja ammattimainen Python: miten kieli toimii
 pinnan alla, mitkä rakenteet ovat kalliita, ja miten tuotantokoodi
 tyypitetään, testataan ja jäsennetään paketeiksi.
+
+## Esitiedot ja rajaus
+
+Esitietona on taito *Ohjelmoinnin perusteet (Python)*: tutoriaali ei
+opeta ohjelmoinnin perusteita, vaan olettaa, että lukija osaa kirjoittaa
+Pythonilla muuttujia, ehtoja, silmukoita, funktioita ja yksinkertaisia
+luokkia.
+
+Tutoriaali ei käsittele seuraavia aiheita:
+
+- komentorivityökalut, tiedostomuotojen jäsentäminen ja ulkoisten
+  ohjelmien ohjaus: taito *Python työkaluohjelmointiin*
+- C- ja C++-laajennukset: taito *Python ja C/C++ yhteen*
+- rinnakkaisuuden yleinen teoria: taito *Rinnakkaisohjelmointi*
+- verkkopalvelut, tietokannat ja data-analyysin kirjastot: ne mainitaan
+  viimeisen luvun kirjastotaulukossa.
 
 ## Mihin Python sopii ja mihin ei
 

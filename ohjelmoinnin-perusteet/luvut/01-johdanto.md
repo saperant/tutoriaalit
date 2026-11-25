@@ -11,6 +11,17 @@ ohjelmoinut aiemmin. Kieli on Python, mutta käsitteet (arvot, tyypit,
 ohjausrakenteet, funktiot, tietorakenteet, virheet, luokat, modulit ja
 testit) ovat samat kaikissa yleisissä ohjelmointikielissä.
 
+## Esitiedot ja rajaus
+
+Esitietoja ei tarvita: taito on taitopuun lähtöpisteitä. Tietokoneen
+peruskäyttö (tiedostot, hakemistot, tekstin kirjoittaminen) riittää.
+
+Tutoriaali ei käy läpi Pythonin kaikkia piirteitä. Idiomaattinen ja
+ammattimainen Python on taidossa *Python*, tehokkaiden ohjelmien
+rakentaminen taidoissa *Tietorakenteet* ja *Algoritmit* ja
+ohjelmoijan päivittäiset työkalut taidoissa *Komentorivi ja Linux* ja
+*Versionhallinta (Git)*.
+
 ## Mitä tutoriaali opettaa
 
 Tavoite on oikea ohjelmointitaito, ei syntaksin luettelo. Siksi:
@@ -27,11 +38,6 @@ Tavoite on oikea ohjelmointitaito, ei syntaksin luettelo. Siksi:
   tarkistustyökalu hylkää, tai ohjelma, joka kaatuu.
 - Sisältölukujen lopussa on *Kokeile itse* -tehtäviä, joiden ratkaisun
   voi tarkistaa automaattisesti (ks. *Tehtävät*).
-
-Tutoriaali ei käy läpi Pythonin kaikkia piirteitä. Kun perusteet ovat
-hallussa, taitopuussa seuraavat taito *Python* (idiomaattinen ja
-ammattimainen Python), *Tietorakenteet*, *Algoritmit*, *Versionhallinta (Git)*
-ja *Komentorivi ja Linux*.
 
 ## Miksi Python
 

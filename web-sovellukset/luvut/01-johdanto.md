@@ -6,11 +6,6 @@ varausjärjestelmä, verkkopankki, sähköposti tai projektinhallinta.
 Tämä tutoriaali opettaa rakentamaan sellaisen niin, että se on
 ylläpidettävä, testattu, saavutettava ja turvallinen.
 
-Esitietoina ovat taidot *TypeScript*, *HTML ja CSS* ja *Tietoverkot*:
-tyyppijärjestelmä, semanttinen HTML ja saavutettavuuden perusteet sekä
-HTTP:n ja selaimen ja palvelimen välisen liikenteen perusteet
-oletetaan. Niitä ei toisteta.
-
 Kaikki esimerkit kuuluvat samaan sovellukseen: kokoustilojen
 varausjärjestelmään. Luvut etenevät periaatteista kehykseen. Ensin
 selaimen omilla rajapinnoilla nähdään, mitä ongelmia kehykset
@@ -19,12 +14,20 @@ ratkaisevat, sitten samat asiat tehdään Reactilla.
 ![Valmis sovellus: kokoustilojen haku. Tilan varauslomake on
 luvussa 5.](kuvat/01-tilat.png){width=70%}
 
+## Esitiedot ja rajaus
+
+Esitietoina ovat taidot *TypeScript*, *HTML ja CSS* ja *Tietoverkot*:
+tyyppijärjestelmä, semanttinen HTML ja saavutettavuuden perusteet sekä
+HTTP:n ja selaimen ja palvelimen välisen liikenteen perusteet
+oletetaan. Niitä ei toisteta.
+
 Tämä on React-opas. Muiden kehysten (Vue, Angular, Svelte) ratkaisut
 samoihin ongelmiin ja kehysten yhteiset periaatteet ovat taidossa
 *Web-sovelluskehykset ja niiden periaatteet*, jossa sama sovellus
 tehdään neljällä kehyksellä. Tämä tutoriaali on sen esitieto: tässä
 opitut käsitteet (tila, komponentti, yksisuuntainen datavirta, efekti)
-ovat ne, joita siellä verrataan.
+ovat ne, joita siellä verrataan. Rajapinnan, tietokannan, todennuksen ja
+valtuutuksen toteutus palvelimella on taidossa *Taustapalvelut*.
 
 ## Sovellusarkkitehtuurit
 

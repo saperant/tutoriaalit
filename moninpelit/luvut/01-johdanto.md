@@ -9,12 +9,22 @@ välein. Moninpeliohjelmointi on näiden kahden aikaskaalan
 sovittamista: miten maailma pidetään yhtenäisenä ja reiluna, kun tieto
 on aina hieman vanhaa ja osa siitä katoaa.
 
-Tutoriaali olettaa taidon *Peliohjelmointi*: kiinteä aika-askel,
-kokonaislukuaika, oma satunnaislukugeneraattori ja deterministinen
-simulaatio ovat tämän tutoriaalin perusta, eikä niitä käydä uudelleen
-läpi. Verkon peruskäsitteet (IP, UDP, TCP, portit, MTU) ovat taidossa
-*Tietoverkot*, ja sokettiohjelmointi syvemmin taidossa
-*Verkko-ohjelmointi*.
+## Esitiedot ja rajaus
+
+Esitietoina ovat taidot *Peliohjelmointi* ja *Verkko-ohjelmointi*.
+Kiinteä aika-askel, kokonaislukuaika, oma satunnaislukugeneraattori ja
+deterministinen simulaatio ovat tämän tutoriaalin perusta, eikä niitä
+käydä uudelleen läpi. Verkon peruskäsitteet (IP, UDP, TCP, portit, MTU;
+taito *Tietoverkot*) ja soketit oletetaan tutuiksi.
+
+Tutoriaali ei käsittele seuraavia aiheita:
+
+- pelipalvelinten taustajärjestelmät, skaalaus ja tietokannat: taidot
+  *Hajautetut järjestelmät* ja *Skaalautuvien järjestelmien suunnittelu*
+- fysiikkamoottorin toteutus, jonka determinismiin lukitusaskel ja
+  rollback nojaavat: taito *Pelifysiikka*
+- todennus ja palvelinten suojaus: taidot *Web-sovellusten tietoturva*
+  ja *Palveluarkkitehtuurin tietoturva*.
 
 ## Mitä tutoriaali kattaa
 

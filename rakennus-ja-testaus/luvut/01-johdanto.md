@@ -32,10 +32,10 @@ Tämä tutoriaali opettaa nuo taidot yhden pienen C-projektin avulla:
   välimuisteineen ja artefakteineen.
 - **Debuggaus:** gdb eräajona kaatumisen ja vahtipisteiden tutkimiseen.
 
-## Mitä oletetaan
+## Esitiedot ja rajaus
 
-Tutoriaali rakentuu taitojen *C-kieli*, *Versionhallinta (Git)* ja
-*Bash-skriptaus* päälle. C:n syntaksi, osoittimet ja muistinhallinta
+Esitietoina ovat taidot *C-kieli*, *Versionhallinta (Git)* ja
+*Bash-skriptaus*. C:n syntaksi, osoittimet ja muistinhallinta
 oletetaan tutuiksi, samoin Gitin haarat ja komentorivin perusteet.
 C-kielen tutoriaalin luku *Työkalut ja testaus* esitteli varoitukset,
 gdb:n, sanitoijat ja staattisen analyysin yksittäisen ohjelman
@@ -45,9 +45,9 @@ testeihin ja CI:hin, jossa ne ajetaan jokaisesta muutoksesta.
 Objektitiedostojen rakenne, symbolien sidonta ja ABI käsitellään
 syvemmin taidossa *Objektitiedostot, linkitys ja ABI*, ja
 toimitusketjun turvallisuus (riippuvuuksien eheys, CI:n oikeudet ja
-salaisuudet) taidossa *Tietoturva kehitystyössä*. Tämän tutoriaalin
-taitoja käyttävät jatkotaidot *Sulautettu Linux* (ristiinkäännös ja
-jakelun rakentaminen) ja *EDA-työkaluketjujen automatisointi*.
+salaisuudet) taidossa *Tietoturva kehitystyössä*. Putkien yleiset
+periaatteet, julkaisu ja toimitus ovat taidossa *Jatkuva integraatio ja
+toimitus*.
 
 ## Esimerkkiprojekti
 

@@ -73,6 +73,16 @@ jatkaa.
 | säikeet I/O:hon, korutiinit | säikeet Python-laskentaan (GIL) |
 | `__slots__`, `array`, NumPy | miljoonat tavalliset oliot (`__dict__`) |
 
+## Jatkotaidot
+
+- *Python työkaluohjelmointiin*: komentorivityökalut, tiedostomuodot ja
+  ulkoisten ohjelmien ohjaus.
+- *Python ja C/C++ yhteen*: laajennukset ja suorituskyky.
+- *Rinnakkaisohjelmointi*: rinnakkaisuuden yleiset mallit.
+- *Käännösjärjestelmät, testaus ja CI*: projektin automaatio.
+- *Tekninen dokumentaatio*: docstringit, Sphinx ja dokumentaation
+  testaus.
+
 ## Lähteet
 
 **Virallinen dokumentaatio**
@@ -117,16 +127,3 @@ jatkaa.
 | Numeerinen laskenta ja data | NumPy, pandas, Polars, SciPy |
 | Komentorivi | argparse (standardikirjasto), Typer, Click |
 | Testaus | pytest-cov, Hypothesis (ominaisuuspohjainen testaus) |
-
-Taitopuun jatkotaidot: *Python ja C/C++ yhteen* laajennuksiin ja
-suorituskykyyn, *Rinnakkaisohjelmointi* yleisiin rinnakkaisuuden
-malleihin ja *Käännösjärjestelmät, testaus ja CI* projektin
-automaatioon.
-
-## Lisenssi
-
-Tämä tutoriaali ja sen esimerkkikoodit on lisensoitu Creative Commons
-Nimeä–JaaSamoin 4.0 Kansainvälinen -lisenssillä (CC BY-SA 4.0,
-<https://creativecommons.org/licenses/by-sa/4.0/deed.fi>). Teosta saa
-kopioida, levittää ja muokata, kunhan alkuperäinen lähde mainitaan ja
-muokatut versiot jaetaan samalla lisenssillä.
