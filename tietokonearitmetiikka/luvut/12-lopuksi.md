@@ -68,6 +68,15 @@
 | Stokastinen pyöristys | pysähtyvä kertymä matalalla tarkkuudella | 9 |
 | Lohkominen (tiling) | datan uudelleenkäyttö välimuistissa | 11 |
 
+## Jatkotaidot
+
+Taitopuussa tästä jatketaan taitoihin *Lukujen esitys ja kiinteän pilkun aritmetiikka*,
+jossa samoja kysymyksiä ratkaistaan laitteistossa ja signaalinkäsittelyssä,
+ja *Suorituskyvyn analyysi ja optimointi*, jossa mitataan ja optimoidaan välimuistin ja
+SIMD-käskyjen käyttöä. GPU:iden laskenta ja koneoppimisen muodot
+jatkuvat taidossa *GPU-laskenta*. Virheanalyysi, ehtoluku ja
+algoritmien stabiilisuus ovat taidon *Numeeriset menetelmät* aiheita.
+
 ## Lähteet ja jatkolukeminen
 
 ### Standardit
@@ -130,15 +139,6 @@
   koodin.
 - Float Toy (<https://evanw.github.io/float-toy/>) ja IEEE-754 Analysis
   (<https://weitz.de/ieee/>) näyttävät liukuluvun bitit selaimessa.
-
-### Mihin tästä eteenpäin
-
-Taitopuussa tästä jatketaan taitoihin *Lukujen esitys ja kiinteän pilkun aritmetiikka*,
-jossa samoja kysymyksiä ratkaistaan laitteistossa ja signaalinkäsittelyssä,
-ja *Suorituskyvyn analyysi ja optimointi*, jossa mitataan ja optimoidaan välimuistin ja
-SIMD-käskyjen käyttöä. GPU:iden laskenta ja koneoppimisen muodot
-jatkuvat taidossa *GPU-laskenta*. Virheanalyysi, ehtoluku ja
-algoritmien stabiilisuus ovat taidon *Numeeriset menetelmät* aiheita.
 
 ## Lisenssi
 

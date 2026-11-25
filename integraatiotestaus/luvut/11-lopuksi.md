@@ -28,11 +28,22 @@ käynnistyy testin alussa ja katoaa lopuksi.
 - **Päästä päähän -testit** selaimella (Playwright, Selenium) ja koko
   järjestelmän testiympäristöt.
 - **Suorituskykytestit.** Kontit sopivat niihinkin, mutta mittaaminen
-  vaatii vakaan ympäristön (taito *Suorituskyky*).
+  vaatii vakaan ympäristön (taito *Suorituskyvyn analyysi ja
+  optimointi*).
 - **Kubernetes-testit** (k3s-moduuli, kind), joissa testataan
   käyttöönottoa eikä sovellusta.
 - **Mutaatiotestaus,** joka mittaa, löytävätkö testit tarkoituksella
-  tehdyt virheet.
+  tehdyt virheet (taito *Testivetoinen kehitys ja testisuunnittelu*).
+
+## Jatkotaidot
+
+- *Jatkuva integraatio ja toimitus* sijoittaa integraatiotestit
+  toimitusputkeen.
+- *Palveluarkkitehtuurit* käsittelee rajapintojen versiointia, jonka
+  tarpeen sopimustesti paljastaa.
+- *NoSQL-tietokannat* ajaa muita tietokantoja samaan tapaan konteissa.
+- *Taustapalvelut* näyttää Testcontainersin Javan ja Springin
+  näkökulmasta.
 
 ## Lähteet
 

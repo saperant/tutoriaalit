@@ -24,7 +24,7 @@
     paljasta konsistenssin, transaktioiden tai kyselysuunnitelman
     eroja.
 
-## Mihin tästä
+## Jatkotaidot
 
 - *Integraatiotestaus ja Testcontainers* näyttää, miten tämän
   tutoriaalin tapaan oikeita tietokantoja käytetään sovelluksen

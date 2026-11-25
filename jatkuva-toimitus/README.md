@@ -14,7 +14,7 @@ Valmiit dokumentit:
 ja pikaopas
 [jatkuva-toimitus-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/jatkuva-toimitus-pikaopas.pdf).
 
-Esitiedot ovat *Testivetoinen kehitys ja testisuunnittelu* ja *Säiliöt
+Esitiedot ovat *Testivetoinen kehitys ja testisuunnittelu* ja *Kontit
 ja pilvi-infrastruktuuri*. Esimerkkien lukemiseen riittää
 *Ohjelmoinnin perusteet (Python)* ja *Versionhallinta (Git)*.
 
@@ -57,6 +57,9 @@ Esimerkit käyttävät Pythonin standardikirjastoa ja Gitiä sekä
 tarkistimia ruff, mypy, pytest, yamllint ja check-jsonschema.
 Kehityskontissa (`.devcontainer/jatkuva-toimitus`) työkalut ovat
 valmiina.
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 ## Lisenssi
 

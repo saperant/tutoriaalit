@@ -27,7 +27,7 @@ keinoilla kuin koodin laatuongelmat:
 5. **Dokumentaatio testataan.** Esimerkit ajetaan, linkit
    tarkistetaan ja varoitukset ovat virheitä (luku 12).
 
-## Mitä oletetaan
+## Esitiedot ja rajaus
 
 Lukija osaa Pythonia ja sen työkaluja (taito *Python
 työkaluohjelmointiin*: moduulit, pytest, tyyppivihjeet) ja Gitin

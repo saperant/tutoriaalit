@@ -54,7 +54,7 @@ Lopulta kyse on ihmisistä. Rakenne voi estää hyvän työn tai tehdä sen
 mahdolliseksi, mutta se ei korvaa luottamusta, osaamista eikä selkeää
 tavoitetta.
 
-## Minne seuraavaksi
+## Jatkotaidot
 
 - *Jatkuva integraatio ja toimitus* käsittelee toimitusputken ja
   mittarit, joilla tämän tutoriaalin muutosten vaikutusta arvioidaan.

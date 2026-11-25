@@ -68,14 +68,14 @@ Sama tehtävä GNU Octavella näyttää, että työkalut ovat vaihdettavissa:
 ```{.tuloste tiedosto="esimerkit/octave/01-kahvi.odotettu"}
 ```
 
-## Kenelle ja mitä tarvitaan
+## Esitiedot ja rajaus
 
 Tutoriaali on tarkoitettu insinööriopiskelijalle ja ohjelmoijalle, joka
 mallintaa fysikaalisia järjestelmiä, säätöä tai signaaleja. Derivaatta,
 integraali, osamurtohajotelma ja Taylorin polynomi oletetaan tutuiksi
 (taito *Differentiaali- ja integraalilaskenta*), samoin matriisit ja
 ominaisarvot (taito *Lineaarialgebra*). Työkalujen perusteet esitellään
-taidon *Matematiikan perusteet ohjelmallisesti* luvussa 2.
+taidossa *Matematiikan perusteet ohjelmallisesti*.
 
 Esimerkit tarvitsevat Python 3.12:n, SymPyn, NumPyn, SciPyn ja
 Matplotlibin sekä Maximan ja GNU Octaven. Paketin kehityskontissa

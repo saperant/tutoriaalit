@@ -24,6 +24,8 @@ niillä, ja ennen kaikkea, mitä siitä seuraa ohjelmoijalle:
 - **Luvut muistissa:** matriisien ja tensorien järjestys, askeleet ja
   välimuistin vaikutus laskennan nopeuteen.
 
+## Esitiedot ja rajaus
+
 Tutoriaali olettaa, että lukija osaa C:tä (taito *C-kieli*) ja
 Pythonin perusteet. C näyttää, mitä laitteisto tekee; Python ja NumPy
 näyttävät, miten samat ilmiöt näkyvät korkeammalla tasolla. Taito

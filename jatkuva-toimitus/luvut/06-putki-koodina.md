@@ -36,7 +36,7 @@ päivässä.
 | heräte | mikä käynnistää putken | `on` | `rules`, `workflow` |
 | työ | yksikkö, joka ajetaan yhdellä ajokoneella | `jobs` | työ ja `stage` |
 | riippuvuus | töiden järjestys | `needs` | `needs`, `stages` |
-| ajokone | kone tai säiliö, jossa työ ajetaan | `runs-on` | `tags`, `image` |
+| ajokone | kone tai kontti, jossa työ ajetaan | `runs-on` | `tags`, `image` |
 | artefakti | tiedosto, joka siirtyy työstä toiseen | `upload-artifact` | `artifacts` |
 | välimuisti | uudelleenkäytettävä välitulos | `actions/cache` | `cache` |
 | ympäristö | käyttöönoton kohde suojauksineen | `environment` | `environment` |
@@ -141,14 +141,14 @@ rakenneta mitään, mikä voi hajota.
 ## Välimuistit
 
 Välimuisti säästää työn, jonka tulos tiedetään jo: ladatut
-riippuvuudet, käännetyt välitulokset, säiliökuvan kerrokset. Oikein
+riippuvuudet, käännetyt välitulokset, konttikuvan kerrokset. Oikein
 toimiva välimuisti perustuu yhteen sääntöön: **avain lasketaan kaikesta,
 mistä tulos riippuu.**
 
 Riippuvuuksien välimuistin avain on lukitustiedoston tiiviste. Kun
 lukitustiedosto muuttuu, avain muuttuu, ja riippuvuudet haetaan
-uudelleen. Säiliökuvan kerroksen avain on rakennusohjeen rivi ja
-kaikki sitä edeltävät kerrokset (ks. *Säiliöt ja
+uudelleen. Konttikuvan kerroksen avain on rakennusohjeen rivi ja
+kaikki sitä edeltävät kerrokset (ks. *Kontit ja
 pilvi-infrastruktuuri*).
 
 Välimuistin kaksi vikaa ovat erihintaiset.
@@ -254,7 +254,7 @@ muuttuneiden pakettien kontit ja ajaa niiden testit kontin sisällä,
 jolloin varmistuu, että lukijan ympäristö ja putken ympäristö
 tuottavat saman tuloksen. Työ on matriisi, jonka alkiot putki laskee
 ajon aikana, ja yhden kontin epäonnistuminen ei keskeytä muita.
-Säiliökuvien kerrokset tallennetaan välimuistiin.
+Konttikuvien kerrokset tallennetaan välimuistiin.
 
 **Kompromissit.** Putki ei ole malliesimerkki joka suhteessa, ja
 puutteet ovat opettavaisia.

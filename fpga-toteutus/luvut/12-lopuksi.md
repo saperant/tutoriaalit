@@ -40,19 +40,19 @@
 | Bittivirta takaisin simulaatioon | 10 | vuo ei muuttanut toimintaa |
 | UART-virheenjäljitysydin | 11 | sisäinen tila näkyviin kortilla |
 
-## Mihin tästä
+## Jatkotaidot
 
-- **Suuremmat piirit.** Latticen ECP5 toimii samalla avoimella
-  ketjulla (`nextpnr-ecp5`, Project Trellis) ja tuo enemmän
-  logiikkaa, SERDES-lähetin-vastaanottimet ja DDR-muistiliitännät.
-  AMD:n ja Intelin piireille käytetään valmistajan työkaluja (Vivado,
-  Quartus); tämän tutoriaalin käsitteet siirtyvät niihin suoraan.
 - **Järjestelmät FPGA:lla.** Suoritin, väylä ja oheislaitteet samalle
   piirille: LiteX kokoaa ne valmiista osista, ja RISC-V-ydin mahtuu
   iCE40UP5K:hon. Taito *SoC-integraatio* käsittelee väylät ja
   osien liittämisen.
 - **ASIC.** FPGA on usein piirin prototyyppi. Taito *ASIC-toteutus*
   vie saman RTL:n standardisoluiksi ja valmistukseen.
+- **Suuremmat piirit.** Latticen ECP5 toimii samalla avoimella
+  ketjulla (`nextpnr-ecp5`, Project Trellis) ja tuo enemmän
+  logiikkaa, SERDES-lähetin-vastaanottimet ja DDR-muistiliitännät.
+  AMD:n ja Intelin piireille käytetään valmistajan työkaluja (Vivado,
+  Quartus); tämän tutoriaalin käsitteet siirtyvät niihin suoraan.
 - **Muut kuvauskielet.** Amaranth (Python), Chisel (Scala) ja
   SpinalHDL tuottavat Verilogia, joka kulkee saman vuon läpi.
 

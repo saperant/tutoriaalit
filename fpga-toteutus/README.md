@@ -73,6 +73,9 @@ Tarvittavat työkalut: Verilator, Yosys, nextpnr-ice40, IceStorm
 varten. Kuvien piirtämiseen tarvitaan lisäksi Matplotlib ja Graphviz.
 Kaikki ovat valmiina kehityskontissa `.devcontainer/fpga-toteutus`.
 
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
+
 ## Lisenssi
 
 CC BY-SA 4.0.

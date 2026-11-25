@@ -48,4 +48,7 @@ C++-esimerkki käyttää Ubuntun pakettia `libopencv-dev` (OpenCV 4.6) ja
 kääntäjiä GCC 14 ja Clang 20. Tarkistukseen tarvitaan ruff, mypy ja
 pytest (kehityskontissa `.devcontainer/konenako` valmiina).
 
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
+
 Lisenssi: CC BY-SA 4.0.

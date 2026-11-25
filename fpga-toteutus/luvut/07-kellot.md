@@ -90,8 +90,8 @@ on lukittunut, ja nollaus vapautetaan kelloon tahdistettuna:
 ```{.systemverilog tiedosto="esimerkit/07-pll/pll_ylin.sv" osa="nollaus"}
 ```
 
-Tahdistin on sama malli kuin taidon *RTL-suunnittelu* luvussa
-*Kellot ja nollaukset*: nollaus asetetaan asynkronisesti (`LOCK`
+Tahdistin on sama malli kuin taidon *RTL-suunnittelu
+SystemVerilogilla* luvussa *Kellot ja nollaukset*: nollaus asetetaan asynkronisesti (`LOCK`
 putoaa, tahdistin nollautuu heti) ja vapautetaan synkronisesti (kaksi
 kiikkua kellon tahdissa). Näin nollauksen vapautuminen ei koskaan osu
 kellon reunan lähelle, ja kaikki kiikut lähtevät liikkeelle samalla

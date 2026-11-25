@@ -50,7 +50,7 @@ säätää käsin. Esimerkki on pieni, mutta siinä on jo tutoriaalin
 työtapa: tunnettu syöte, menetelmä ja tarkistus tunnettua vastausta
 vasten.
 
-## Kenelle ja mitä tarvitaan
+## Esitiedot ja rajaus
 
 Lukija osaa Pythonin ja NumPyn (taito *Python työkaluohjelmointiin*)
 sekä signaalinkäsittelyn perusteet: konvoluution, näytteistyksen,
@@ -61,6 +61,17 @@ Lineaarialgebrasta tarvitaan matriisit, homogeeniset koordinaatit ja
 singulaariarvohajotelma (taito *Lineaarialgebra*), ja taidon
 *Renderöinnin perusteet* kamera- ja projektiomalli on tämän tutoriaalin
 kameraluvun käänteinen tehtävä.
+
+Tutoriaali ei kata neuroverkkojen opettamista, joka on oma alansa. Luku
+11 näyttää, miten klassinen konenäkö ja opetettu malli kohtaavat:
+esikäsittely, tulosten jälkikäsittely ja arviointi. Kolmiulotteinen
+rekonstruktio monesta kuvasta (*structure from motion*) ja SLAM
+mainitaan vain stereonäön jatkona. Grafiikkasuorittimella
+kiihdyttäminen on taidon *GPU-laskenta* aihe.
+
+## Tutoriaalin rakenne
+
+Kukin luku vastaa yhteen kysymykseen:
 
 | Luku | Kysymys |
 |------|---------|
@@ -123,12 +134,3 @@ ehdoilla ("yli 100 piirrettä"). Kehityskontissa
 Tutoriaalin kuvat piirtää skripti `kuvat/piirra.py` (`make kuvat`). Se
 ajaa testatut esimerkit ja kuvittaa niiden muuttujat, joten kuva näyttää
 täsmälleen sen, minkä esimerkki laskee.
-
-## Mitä tutoriaali ei kata
-
-Neuroverkkojen opettaminen on oma alansa. Luku 11 näyttää, miten
-klassinen konenäkö ja opetettu malli kohtaavat: esikäsittely,
-tulosten jälkikäsittely ja arviointi. Kolmiulotteinen rekonstruktio
-monesta kuvasta (*structure from motion*) ja SLAM mainitaan vain
-stereonäön jatkona. Grafiikkasuorittimella kiihdyttäminen on taidon
-*GPU-laskenta* aihe.

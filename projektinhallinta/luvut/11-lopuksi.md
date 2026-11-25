@@ -56,7 +56,7 @@ mitä ne ratkaisevat, tuottaa rituaaleja. Alan kirjallisuudessa on
 vähän kontrolloituja kokeita ja paljon kokemusta ja mielipiteitä, joten
 omat mittaukset ja kokeilut ovat usein paras käytettävissä oleva näyttö.
 
-## Mihin tästä jatketaan
+## Jatkotaidot
 
 - *Testivetoinen kehitys ja testisuunnittelu* tekee
   hyväksymiskriteereistä suoritettavia ja käsittelee testauksen

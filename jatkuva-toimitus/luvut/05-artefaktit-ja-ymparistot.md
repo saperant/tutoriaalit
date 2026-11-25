@@ -1,7 +1,7 @@
 # Artefaktit, versiointi ja ympäristöt
 
 Putken commit-vaihe tuottaa artefaktin: paketin, joka sisältää kaiken
-ohjelman ajamiseen tarvittavan. Se voi olla säiliökuva, asennuspaketti,
+ohjelman ajamiseen tarvittavan. Se voi olla konttikuva, asennuspaketti,
 JAR-tiedosto, staattisesti linkitetty binääri tai, kuten tämän
 tutoriaalin esimerkissä, tar-paketti. Tämä luku käsittelee artefaktin
 elinkaarta: miten se rakennetaan, tunnistetaan, viedään ympäristöstä
@@ -10,8 +10,8 @@ toiseen ja miten ympäristöjen erot pidetään sen ulkopuolella.
 ## Rakenna kerran
 
 Toimitusputken keskeinen sääntö on, että **artefakti rakennetaan kerran
-ja sama artefakti viedään jokaiseen ympäristöön**. Tutoriaali *Säiliöt
-ja pilvi-infrastruktuuri* esittää säännön säiliökuville. Peruste on
+ja sama artefakti viedään jokaiseen ympäristöön**. Tutoriaali *Kontit
+ja pilvi-infrastruktuuri* esittää säännön konttikuville. Peruste on
 yleinen.
 
 Jos testiympäristöön ja tuotantoon rakennetaan erikseen, niissä ajetaan
@@ -99,7 +99,7 @@ Kolme sääntöä pätee kumpaankin tapaan.
   `viite versio` lukee sen paketin mukana tulleesta tiedostosta. Kun
   tuotannossa on vika, ensimmäinen kysymys on, mikä versio siellä on.
 - **Julkaistua versiota ei käytetä uudelleen.** Liikkuva tunniste,
-  kuten säiliökuvien `latest`, osoittaa eri päivinä eri sisältöön,
+  kuten konttikuvien `latest`, osoittaa eri päivinä eri sisältöön,
   joten käyttöönotto ei ole toistettava eikä perumisen kohdetta
   tiedetä.
 
@@ -129,7 +129,7 @@ niissä eri tavoin vain siksi, että ympäristö antaa sille eri asetukset.
 Viimeiset kaksi riviä näyttävät perumisen: viallinen versio vaihtui
 takaisin edelliseen rakentamatta mitään.
 
-Sama rakenne toistuu suuremmassa mittakaavassa. Säiliöalustalla
+Sama rakenne toistuu suuremmassa mittakaavassa. Konttialustalla
 hakemistoa vastaa kuvan tiiviste ja linkkiä käyttöönoton kuvaus, joka
 kertoo, mitä kuvaa ajetaan. Peruminen on paluu edelliseen kuvaukseen.
 Olennaista on, että vanha versio on yhä saatavilla muuttumattomana.

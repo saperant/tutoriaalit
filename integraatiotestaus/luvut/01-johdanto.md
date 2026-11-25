@@ -29,9 +29,10 @@ avulla:
 8. sopimustestaus palvelujen välillä (luku 9),
 9. integraatiotestit CI:ssä (luku 10).
 
-## Mitä oletetaan
+## Esitiedot ja rajaus
 
-Lukija tuntee Pythonin ja pytestin perusteet (taito *Python-työkalut*:
+Lukija tuntee Pythonin ja pytestin perusteet (taito *Python
+työkaluohjelmointiin*:
 fixturet, parametrointi), SQL:n (taito *SQL ja relaatiotietokannat*:
 transaktiot, rajoitteet, indeksit) sekä kontit (taito *Kontit ja pilvi-infrastruktuuri*:
 kuvat, Dockerfile, verkot). Taustapalveluiden puolelta *Taustapalvelut*

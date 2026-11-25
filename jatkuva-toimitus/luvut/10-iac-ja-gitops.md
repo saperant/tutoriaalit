@@ -9,7 +9,7 @@ samojen käytäntöjen piiriin, ja GitOps on tapa järjestää sen
 käyttöönotto.
 
 Työkalut on esitelty muualla: Terraform ja Helm tutoriaalissa
-*Säiliöt ja pilvi-infrastruktuuri*, Ansible tutoriaalissa
+*Kontit ja pilvi-infrastruktuuri*, Ansible tutoriaalissa
 *Palvelinympäristöt*. Tämä luku käsittelee periaatteet, jotka ovat
 niille yhteiset.
 
@@ -90,7 +90,7 @@ tarkistus kertoo, jos näin ei tehty.
 
 Sama ajattelu ulottuu palvelimen sisältöön. *Muuttumaton
 infrastruktuuri* tarkoittaa, että käynnissä olevaa palvelinta tai
-säiliötä ei päivitetä paikallaan, vaan rakennetaan uusi kuva ja
+konttia ei päivitetä paikallaan, vaan rakennetaan uusi kuva ja
 korvataan vanha. Se on luvun 5 artefaktisääntö sovellettuna koneeseen.
 
 ## GitOps
@@ -131,7 +131,7 @@ digraph {
 Työntävässä mallissa putki ottaa yhteyden ympäristöön ja tekee
 muutoksen, kun repositorio muuttuu. Vetävässä mallissa ympäristössä
 ajetaan agenttia, joka lukee repositoriota ja korjaa erot. Tutoriaali
-*Säiliöt ja pilvi-infrastruktuuri* vertaa malleja Kubernetesin
+*Kontit ja pilvi-infrastruktuuri* vertaa malleja Kubernetesin
 kannalta (Argo CD, Flux). Erot ovat yleisiä.
 
 - **Tunnukset.** Työntävässä mallissa putkella on kirjoitusoikeus

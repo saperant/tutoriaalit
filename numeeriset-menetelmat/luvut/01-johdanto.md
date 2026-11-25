@@ -45,8 +45,8 @@ stabiilisuuden ja askeleen valinnan.
 Esimerkit kirjoitetaan Pythonilla, ja niissä käytetään kirjastoja NumPy
 (taulukot ja lineaarialgebra) ja SciPy (integrointi, optimointi,
 interpolointi, harvat matriisit ja differentiaaliyhtälöt). Kirjastojen
-perusteet esitellään taidon *Matematiikan perusteet ohjelmallisesti*
-luvussa 2.
+perusteet esitellään taidossa *Matematiikan perusteet
+ohjelmallisesti*.
 
 Rinnakkaistyökaluna on **GNU Octave**, avoimen lähdekoodin numeerisen
 laskennan ympäristö, jonka kieli on lähes sama kuin kaupallisen

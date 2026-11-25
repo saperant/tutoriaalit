@@ -13,9 +13,13 @@ viisi toteutusta läpäisevät **saman testisarjan**, joten erot ovat
 rakenteessa eivätkä käyttäytymisessä. Kun toteutukset luetaan rinnakkain,
 kehyksen oma sanasto asettuu yhteisten käsitteiden päälle.
 
+## Esitiedot ja rajaus
+
 Esitietona on taito *Web-sovellukset*: DOM, tila, komponentit, lomakkeet,
 efektit ja testaus on käyty siellä läpi Reactilla, eikä niitä toisteta.
-TypeScript ja HTML oletetaan samoin.
+TypeScript ja HTML oletetaan samoin (taidot *TypeScript* sekä *HTML ja
+CSS*). Tutoriaali rajautuu kehysten ytimeen; viimeinen luku luettelee,
+mitä jäi pois.
 
 ## Kirjasto vai kehys
 

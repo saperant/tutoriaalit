@@ -44,20 +44,20 @@ yhtäpitävyyksistä.
 | Rajoitettu optimi | `solve` Lagrangen ehdoille | `solve` | `minimize`, SLSQP |
 | Kaksoisintegraali | sisäkkäinen `integrate` | sisäkkäinen `integrate` | `integrate.dblquad` |
 
-## Mihin tästä jatketaan
+## Jatkotaidot
 
-- **Differentiaaliyhtälöt ja Laplace-muunnos** käyttää derivaattoja ja
+- *Differentiaaliyhtälöt ja Laplace-muunnos* käyttää derivaattoja ja
   integraaleja dynaamisten järjestelmien mallintamiseen: värähtelijät,
   sähköpiirit ja säätö.
-- **Numeeriset menetelmät** syventää tämän tutoriaalin numeerisia
+- *Numeeriset menetelmät* syventää tämän tutoriaalin numeerisia
   osuuksia: virhekertaluvut, adaptiiviset menetelmät, yhtälöryhmät ja
   optimointi.
-- **Analogiaelektroniikka** ja **Elektroniikan perusteet ja SPICE**
+- *Analogiaelektroniikka* ja *Elektroniikan perusteet ja SPICE*
   soveltavat derivaattaa ja integraalia kondensaattoreihin, keloihin ja
   vahvistimiin.
-- **Kompleksiluvut ja Fourier-analyysi** jatkaa sarjoista
+- *Kompleksiluvut ja Fourier-analyysi* jatkaa sarjoista
   Fourier-sarjoihin ja -muunnokseen.
-- **Todennäköisyys ja tilastot** käyttää integraaleja jatkuvien
+- *Todennäköisyys ja tilastot* käyttää integraaleja jatkuvien
   jakaumien käsittelyyn.
 
 ## Lähteet

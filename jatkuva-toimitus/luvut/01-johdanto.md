@@ -115,9 +115,9 @@ kuvaa näiden tutoriaalien oman toimitusputken sellaisena kuin se on.
 ## Esitiedot ja rajaus
 
 Esitietoina ovat *Testivetoinen kehitys ja testisuunnittelu* sekä
-*Säiliöt ja pilvi-infrastruktuuri*. Ensimmäinen siksi, että koko
+*Kontit ja pilvi-infrastruktuuri*. Ensimmäinen siksi, että koko
 aihe nojaa automaattisiin testeihin: putki on niin luotettava kuin sen
-testit. Jälkimmäinen siksi, että säiliökuva on nykyisin tavallisin
+testit. Jälkimmäinen siksi, että konttikuva on nykyisin tavallisin
 artefakti ja Kubernetes tavallinen käyttöönottokohde. Esimerkkien
 lukemiseen riittää Python ja Gitin peruskäyttö.
 
@@ -128,7 +128,7 @@ Niiden sisältöä ei toisteta, vaan niihin viitataan.
 |------------------------------------|-----------------------------------|
 | haarat, yhdistäminen, tagit, semanttinen versiointi | *Versionhallinta (Git)* |
 | CI-putki C- ja C++-projektille, toistettava käännös | *Käännösjärjestelmät, testaus ja CI* |
-| säiliökuvan putki, Helm, Terraform, Kubernetes-käyttöönotot | *Säiliöt ja pilvi-infrastruktuuri* |
+| konttikuvan putki, Helm, Terraform, Kubernetes-käyttöönotot | *Kontit ja pilvi-infrastruktuuri* |
 | salaisuudet, toimitusketjun turvallisuus, SBOM, allekirjoitukset | *Tietoturva kehitystyössä* |
 | palvelinten konfiguraationhallinta (Ansible) | *Palvelinympäristöt* |
 | integraatiotestit putkessa, migraatioiden testaus | *Integraatiotestaus ja Testcontainers* |

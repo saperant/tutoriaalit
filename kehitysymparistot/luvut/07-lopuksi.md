@@ -26,17 +26,17 @@ muutos eikä jonkun koneelle kertynyt salaisuus.
 ## Mitä jäi pois
 
 - **Dockerin käyttö:** kuvien rakentaminen, kerrokset, verkot ja
-  Compose (taito *Säiliöt ja pilvi-infrastruktuuri*).
+  Compose (taito *Kontit ja pilvi-infrastruktuuri*).
 - **Omien ominaisuuksien ja mallipohjien julkaisu**
   (`devcontainer features` ja `templates`).
 - **Codespacesin hallinta organisaatiossa:** esirakennukset, käytännöt
   ja kustannusten seuranta.
 - **Etäkehitys SSH:lla** ja muut VS Coden etäkäyttötavat.
 
-## Lähitaidot taitopuussa
+## Jatkotaidot
 
 - *Komentorivi ja Linux* on tämän taidon esitieto.
-- *Säiliöt ja pilvi-infrastruktuuri* opettaa kontit ja kuvat
+- *Kontit ja pilvi-infrastruktuuri* opettaa kontit ja kuvat
   perusteellisesti.
 - *Virtualisointi* selittää, miten kontin eristys ja virtuaalikone
   toimivat.

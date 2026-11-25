@@ -104,7 +104,7 @@ suuntaan parametrit vaikuttavat. Analyysit (yhdessä muuttuvat
 tiedostot, omistajuus, CODEOWNERS-kattavuus) toimivat sellaisinaan
 omaan repositorioon.
 
-## Mitä oletetaan ja mitä jätetään muualle
+## Esitiedot ja rajaus
 
 Esitietona on *Ohjelmistoprojektin hallinta*: Scrum, Kanban, virtaus,
 jonot ja Brooksin laki oletetaan tutuiksi. Esimerkkien lukemiseen

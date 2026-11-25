@@ -1,7 +1,8 @@
 # LSM-puut
 
 Relaatiotietokannat tallentavat datan tavallisesti B-puuhun, jota
-päivitetään paikallaan (*Edistyneet algoritmit*). Jokainen kirjoitus on
+päivitetään paikallaan (taito *Edistyneet
+algoritmit ja tietorakenteet*). Jokainen kirjoitus on
 satunnainen kirjoitus levyn sivulle. Cassandra, ScyllaDB, RocksDB,
 LevelDB ja monen muun tietokannan tallennuskerros käyttävät sen sijaan
 *LSM-puuta* (*log-structured merge tree*), jossa kirjoitukset ovat aina

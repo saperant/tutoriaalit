@@ -100,8 +100,9 @@ lähestyy eksponentiaalisesti tasapainoarvoa aikavakiolla $\tau = RC$.
 ```
 
 Logiikkapiirin tulo, jota RC-suodin ohjaa, vaihtaa tilaa noin $1{,}2\,\tau$
-jälkeen. Tämä on se viive, jonka *Elektroniikan perusteiden*
-kosketinvärähtelyn suodatus lisää painonapin signaaliin.
+jälkeen. Tämä on se viive, jonka kosketinvärähtelyn
+suodatus lisää painonapin signaaliin (taito *Elektroniikan perusteet
+ja SPICE*).
 
 ## Parametrit mittauksista
 

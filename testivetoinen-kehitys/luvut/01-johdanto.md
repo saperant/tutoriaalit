@@ -30,7 +30,7 @@ kattavuusprosentti ei kerro testien laadusta eikä mutaatiotestaus ole
 ilmaista. Jokaisessa luvussa kerrotaan, milloin menetelmä kannattaa ja
 milloin ei.
 
-## Mitä oletetaan
+## Esitiedot ja rajaus
 
 Lukija osaa Pythonin ja pytestin perusteet (taito *Python
 työkaluohjelmointiin*: testifunktiot, fixturet ja parametrointi) ja

@@ -55,7 +55,7 @@ Huomaa, että tarkistus kertoo vain, onko *tämä* tulos oikein. Se ei kerro,
 miksi virhe syntyi, eikä se korvaa ymmärrystä. Siksi jokaisessa luvussa
 lasketaan ensin ajatuksen tasolla ja vasta sitten koneella.
 
-## Kenelle ja mitä tarvitaan
+## Esitiedot ja rajaus
 
 Tutoriaali on tarkoitettu insinööriopintoja aloittavalle, lukion
 matematiikkaa kertaavalle ja ohjelmoijalle, joka tarvitsee matematiikkaa

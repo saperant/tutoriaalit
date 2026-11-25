@@ -3,7 +3,8 @@
 Kun suunnitelmassa on useampi kello, jokainen signaali kellosta toiseen
 on kellotusalueen ylitys (clock domain crossing, CDC). Tahdistinten
 teoria, metastabiilius ja rakenteet käsitellään taidon
-*RTL-suunnittelu* luvussa *Kellotusalueiden ylitys*. Tämä luku
+*RTL-suunnittelu SystemVerilogilla* luvussa *Kellotusalueiden
+ylitys*. Tämä luku
 näyttää, mitä ylitykselle tapahtuu FPGA-vuossa: mihin se syntetisoituu,
 mitä ajoitusraportti siitä kertoo ja mitä jää suunnittelijan
 vastuulle.

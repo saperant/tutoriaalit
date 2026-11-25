@@ -21,9 +21,8 @@ usean muuttujan funktioille. Jokainen asia tehdään kolmella tavalla:
    sudenkuoppansa.
 
 Työkalujen perusteet (symbolit, tarkat luvut, sievennys, Maximan eräajo
-ja kuvaajien piirtäminen) esitellään taidon *Matematiikan perusteet
-ohjelmallisesti* luvussa 2. Tässä tutoriaalissa niitä käytetään
-suoraan.
+ja kuvaajien piirtäminen) esitellään taidossa *Matematiikan perusteet
+ohjelmallisesti*. Tässä tutoriaalissa niitä käytetään suoraan.
 
 ## Ensimmäinen esimerkki: paikka, nopeus ja matka
 
@@ -59,7 +58,7 @@ merkitsevässä numerossa. Ero ei ole ohjelmointivirhe vaan menetelmän
 ominaisuus, ja luvussa 3 lasketaan, mistä se syntyy ja miten se
 pienennetään.
 
-## Kenelle ja mitä tarvitaan
+## Esitiedot ja rajaus
 
 Tutoriaali on tarkoitettu insinööri- ja tietotekniikan opiskelijalle
 sekä ohjelmoijalle, joka tarvitsee analyysia signaalinkäsittelyssä,

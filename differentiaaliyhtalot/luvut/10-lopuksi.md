@@ -42,15 +42,15 @@ Octaven `control`-paketti (Octave Forge) tarjoaa MATLABin Control System
 Toolboxin kaltaiset `tf`-, `step`- ja `bode`-funktiot. Sitä ei käytetä
 tässä tutoriaalissa, koska se ei kuulu Octaven peruspakettiin.
 
-## Mihin tästä jatketaan
+## Jatkotaidot
 
-- **Numeeriset menetelmät** analysoi ratkaisijoiden virheet,
+- *Numeeriset menetelmät* analysoi ratkaisijoiden virheet,
   kertaluvut, vakausalueet ja adaptiivisen askeleen.
-- **Analogiaelektroniikka** käyttää siirtofunktioita, navoja ja
+- *Analogiaelektroniikka* käyttää siirtofunktioita, navoja ja
   takaisinkytkentää vahvistimiin ja suodattimiin.
-- **Signaalit ja järjestelmät** ja **Digitaalinen signaalinkäsittely**
+- *Signaalit ja järjestelmät* ja *Digitaalinen signaalinkäsittely*
   käsittelevät samaa teoriaa diskreetissä ajassa Z-muunnoksella.
-- **Elektroniikan perusteet ja SPICE** simuloi tämän tutoriaalin RC- ja
+- *Elektroniikan perusteet ja SPICE* simuloi tämän tutoriaalin RC- ja
   RLC-piirejä piirisimulaattorilla.
 
 ## Lähteet

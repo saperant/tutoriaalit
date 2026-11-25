@@ -35,6 +35,8 @@ valittu. Myöskään suorituskyvyn mittaamista suurilla näkymillä,
 animaatioita ja mobiilisovelluksia (React Native ja vastaavat) ei
 käsitelty.
 
+## Jatkotaidot
+
 Tämän sarjan muista taidoista aihetta jatkavat *Web-sovellukset*
 (React-sovelluksen rakentaminen alusta loppuun, verkko ja testaus),
 *Web-sovellusten tietoturva*, *Testivetoinen kehitys ja

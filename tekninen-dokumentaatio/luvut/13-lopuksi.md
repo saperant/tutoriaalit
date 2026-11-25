@@ -19,7 +19,7 @@
 8. **Vähemmän ja oikein.** Väärä dokumentaatio on pahempi kuin
    puuttuva. Poista se, mitä et pysty ylläpitämään.
 
-## Lähitaidot taitopuussa
+## Jatkotaidot
 
 - *Versionhallinta (Git)*: julkaisut, semanttinen versiointi ja
   katselmointi, joihin dokumentaation elinkaari nojaa.

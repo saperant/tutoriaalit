@@ -48,6 +48,9 @@ cd esimerkit && python3 luku03/rakenteet.py
 
 Kehityskontti: `.devcontainer/nosql` (käyttää isännän Dockeria).
 
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
+
 ## Vastuu ja lisenssit
 
 Tutoriaali on lisensoitu CC BY-SA 4.0 -lisenssillä. Esimerkeissä

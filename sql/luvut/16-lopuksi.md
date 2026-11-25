@@ -60,6 +60,21 @@ Sovellus:
     raportteihin ja joukkomuutoksiin.
 25. Testit samalla tietokantajärjestelmällä kuin tuotanto.
 
+## Jatkotaidot
+
+Taitopuussa SQL on esitietona taidoille *Taustapalvelut*, jossa
+tietokantaa käytetään HTTP-rajapinnan takana, ja *Skaalautuvien
+järjestelmien suunnittelu*, jossa käsitellään replikointia, osittamista
+ja välimuisteja. Datan analysointiin SQL:ää käytetään myös
+tietovarastoissa ja DuckDB:n kaltaisissa työkaluissa.
+
+Aihetta jatkavat lisäksi *NoSQL-tietokannat* (avain–arvo-,
+dokumentti-, leveäsarake- ja graafikannat sekä LSM-puu B-puun
+vaihtoehtona), *Integraatiotestaus ja Testcontainers* (tietokantakoodin
+testaus oikealla palvelimella), *Web-sovellusten tietoturva* (injektiot
+laajemmin) ja *Edistyneet algoritmit ja tietorakenteet* (B-puun
+toteutus).
+
 ## Lähteet ja jatkolukeminen
 
 - **SQLiten dokumentaatio** (<https://sqlite.org/docs.html>) on tarkka
@@ -118,21 +133,6 @@ Sovellus:
 - **DuckDB** (<https://duckdb.org>) on SQLiten tapaan sulautettava
   mutta analytiikkaan tehty sarakepohjainen tietokanta. Se lukee
   suoraan CSV- ja Parquet-tiedostoja samalla SQL:llä.
-
-### Mihin tästä eteenpäin
-
-Taitopuussa SQL on esitietona taidoille *Taustapalvelut*, jossa
-tietokantaa käytetään HTTP-rajapinnan takana, ja *Skaalautuvien
-järjestelmien suunnittelu*, jossa käsitellään replikointia, osittamista
-ja välimuisteja. Datan analysointiin SQL:ää käytetään myös
-tietovarastoissa ja DuckDB:n kaltaisissa työkaluissa.
-
-Aihetta jatkavat lisäksi *NoSQL-tietokannat* (avain–arvo-,
-dokumentti-, leveäsarake- ja graafikannat sekä LSM-puu B-puun
-vaihtoehtona),
-*Integraatiotestaus ja Testcontainers* (tietokantakoodin testaus
-oikealla palvelimella), *Web-tietoturva* (injektiot laajemmin) ja
-*Edistyneet algoritmit ja tietorakenteet* (B-puun toteutus).
 
 ## Lisenssi
 

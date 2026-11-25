@@ -12,7 +12,7 @@ pikaopas:
 [integraatiotestaus-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/integraatiotestaus-pikaopas.pdf).
 
 Esitiedot: taidot *SQL ja relaatiotietokannat*, *Kontit ja pilvi-infrastruktuuri* ja
-*Python-työkalut*.
+*Python työkaluohjelmointiin*.
 
 ## Sisältö
 
@@ -52,5 +52,8 @@ Google-peilistä (`mirror.gcr.io`); peilin voi vaihtaa muuttujalla
 `TESTIKUVAT_PEILI`. Kehityskontti (`.devcontainer/integraatiotestaus`)
 käyttää isännän Docker-sokettia ja verkkoa, ja Python-paketit
 (testcontainers, SQLAlchemy, psycopg, redis, jsonschema) ovat valmiina.
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 Lisenssi: CC BY-SA 4.0.

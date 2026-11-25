@@ -172,7 +172,8 @@ että merkki on yhä oikealla rivillä (luku 8).
   sitä sen jälkeen näppäily kerrallaan. Sääntö on käyttöliittymän, ei
   kehyksen, ja siksi se on helppo toteuttaa samoin kaikissa.
 - **Validoi sama asia myös palvelimella.** Selaimen validointi on
-  käyttömukavuutta (taito *Web-tietoturva*).
+  käyttömukavuutta (taito *Web-sovellusten
+  tietoturva*).
 
 ## Itsearviointi
 

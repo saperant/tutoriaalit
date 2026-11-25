@@ -48,6 +48,9 @@ make kuvat    # piirtää kuvat/-hakemiston kuvat uudelleen (matplotlib)
 Kehityskontissa (`.devcontainer/numeeriset-menetelmat`) kaikki työkalut,
 myös GNU Octave, ovat valmiina.
 
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
+
 ## Lisenssi
 
 Teksti ja esimerkit: Creative Commons Nimeä–JaaSamoin 4.0 (CC BY-SA 4.0).

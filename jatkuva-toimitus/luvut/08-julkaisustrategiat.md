@@ -37,7 +37,7 @@ Julkaisutahti voi silti olla harva. Tavoite on, että julkaisu on
 
 ## Neljä tapaa vaihtaa versio
 
-Tutoriaali *Säiliöt ja pilvi-infrastruktuuri* esittelee
+Tutoriaali *Kontit ja pilvi-infrastruktuuri* esittelee
 käyttöönottostrategiat Kubernetesin välinein. Tässä niitä tarkastellaan
 periaatteina, jotka pätevät alustasta riippumatta.
 

@@ -45,4 +45,7 @@ make kuvat     # piirtää kuvat uudelleen (Matplotlib); kuvat ovat
                # versionhallinnassa
 ```
 
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
+
 Lisenssi: CC BY-SA 4.0.

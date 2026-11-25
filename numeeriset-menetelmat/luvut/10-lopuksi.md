@@ -52,20 +52,20 @@ Kielten suurin ero lukijalle on indeksointi: Octave ja MATLAB
 alkavat ykkösestä, ja kertolasku `*` on matriisitulo, kun taas NumPyssä
 alkioittainen tulo on `*` ja matriisitulo `@`.
 
-## Mihin tästä jatketaan
+## Jatkotaidot
 
-- **Differentiaaliyhtälöt ja Laplace-muunnos** soveltaa luvun 8
+- *Differentiaaliyhtälöt ja Laplace-muunnos* soveltaa luvun 8
   ratkaisijoita dynaamisten järjestelmien mallintamiseen.
-- **Suorituskyvyn analyysi ja optimointi** ja **GPU-laskenta**
+- *Suorituskyvyn analyysi ja optimointi* ja *GPU-laskenta*
   käsittelevät, miten numeerinen koodi saadaan nopeaksi: välimuistit,
   vektorointi, BLAS ja rinnakkaisuus.
-- **Lukujen esitys ja kiinteän pilkun aritmetiikka** ja **Digitaalinen
-  signaalinkäsittely** soveltavat virheanalyysiä lukuesityksiin, joissa
+- *Lukujen esitys ja kiinteän pilkun aritmetiikka* ja *Digitaalinen
+  signaalinkäsittely* soveltavat virheanalyysiä lukuesityksiin, joissa
   bittejä on vähemmän kuin liukuluvuissa.
-- **Analogiaelektroniikka** käyttää SPICE-simulointia, jonka ytimessä
+- *Analogiaelektroniikka* käyttää SPICE-simulointia, jonka ytimessä
   ovat tämän tutoriaalin Newtonin menetelmä, harvat yhtälöryhmät ja
   jäykät ratkaisijat.
-- **Konenäkö (OpenCV)** käyttää pienimmän neliösumman sovitusta, SVD:tä
+- *Konenäkö (OpenCV)* käyttää pienimmän neliösumman sovitusta, SVD:tä
   ja epälineaarista optimointia kameroiden kalibrointiin.
 
 ## Lähteet

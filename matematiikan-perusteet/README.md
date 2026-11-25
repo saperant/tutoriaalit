@@ -43,4 +43,7 @@ Esimerkit toimivat Python 3.12:lla ja uudemmilla, ja ne tarvitsevat
 SymPyn (1.14), NumPyn ja Matplotlibin. Maxima-skriptit tarvitsevat
 Maximan (Ubuntussa paketti `maxima`). Kehityskontissa kaikki on valmiina.
 
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
+
 Lisenssi: CC BY-SA 4.0.

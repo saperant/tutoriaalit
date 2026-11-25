@@ -32,7 +32,7 @@ kuviin: tunnettu testikuva, mitattu virhe ja tulos, joka toistuu.
 | arviointi | erillinen testijoukko käyttötilanteesta; sekaannusmatriisi |
 | testaus | synteettinen kuva tunnetulla vastauksella, toleranssit |
 
-## Lähitaidot taitopuussa
+## Jatkotaidot
 
 - *Signaalit ja järjestelmät* ja *Digitaalinen signaalinkäsittely*
   antavat suodatukselle ja näytteistykselle teorian, jota tässä

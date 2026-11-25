@@ -60,4 +60,7 @@ Graphviz, openapi-spec-validator, jsonschema, PyYAML, ruff, mypy,
 pytest ja GCC 14. Kehityskontissa
 (`.devcontainer/tekninen-dokumentaatio`) ne ovat valmiina.
 
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
+
 Lisenssi: CC BY-SA 4.0.

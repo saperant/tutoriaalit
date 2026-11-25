@@ -114,8 +114,8 @@ sallitun). Rajoitettujen tehtävien perusajatukset ovat:
   rajoitteen rikkoutuessa. Se on yksinkertainen, mutta suurilla
   sakkokertoimilla tehtävästä tulee huonokuntoinen.
 - **Lagrangen kertojat ja KKT-ehdot** yleistävät gradientin
-  nollakohdan rajoitetulle tehtävälle. Taidon *Differentiaali- ja
-  integraalilaskenta* luvussa 8 ne ratkaistiin pienelle tehtävälle.
+  nollakohdan rajoitetulle tehtävälle. Taidossa *Differentiaali- ja
+  integraalilaskenta* ne ratkaistiin pienelle tehtävälle.
 - **SQP** (sequential quadratic programming, SciPyn `SLSQP` ja
   `trust-constr`) ratkaisee joka kierroksella toisen asteen
   approksimaation lineaarisin rajoittein. Se on yleiskäyttöinen

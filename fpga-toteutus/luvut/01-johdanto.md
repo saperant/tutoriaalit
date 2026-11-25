@@ -8,10 +8,14 @@ kytkimelle, mitkä johtimet yhdistetään. Sama piiri voi olla tänään
 UART-ohjain ja huomenna videokooderi.
 
 Tämä tutoriaali vie RTL-kuvauksen FPGA:lle: synteesi, sijoittelu,
-reititys, ajoitusanalyysi ja bittivirta. Esitietona on taito
-*RTL-suunnittelu SystemVerilogilla*. Synteesin ja staattisen
-ajoitusanalyysin periaatteet standardisoluille käsitellään taidossa
-*ASIC-toteutus*; täällä keskitytään siihen, mikä on FPGA:lla toisin.
+reititys, ajoitusanalyysi ja bittivirta.
+
+## Esitiedot ja rajaus
+
+Esitietona on taito *RTL-suunnittelu SystemVerilogilla*. Synteesin ja
+staattisen ajoitusanalyysin periaatteet standardisoluille käsitellään
+taidossa *ASIC-toteutus*; täällä keskitytään siihen, mikä on FPGA:lla
+toisin.
 
 ## FPGA, ASIC vai mikrokontrolleri
 

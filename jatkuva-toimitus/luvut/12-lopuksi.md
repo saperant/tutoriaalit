@@ -105,11 +105,11 @@ soveltaen.
   ei ole. Putki, artefakti ja automaattinen käyttöönotto kannattavat
   silti, koska ne poistavat käsin tehtävät virheet.
 
-## Mihin tästä jatketaan
+## Jatkotaidot
 
 - *Tietoturva kehitystyössä* käsittelee putken ja toimitusketjun
   suojaamisen: salaisuudet, riippuvuudet, SBOM ja allekirjoitukset.
-- *Säiliöt ja pilvi-infrastruktuuri* näyttää putken, Helmin ja
+- *Kontit ja pilvi-infrastruktuuri* näyttää putken, Helmin ja
   Terraformin käytännössä.
 - *Skaalautuvien järjestelmien suunnittelu* käsittelee valvonnan,
   palvelutasotavoitteet ja virhebudjetin.

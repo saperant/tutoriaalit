@@ -60,3 +60,6 @@ make pdf      # rakentaa sql.pdf:n ja sql-pikaopas.pdf:n
 
 Riippuvuudet on lueteltu repositorion juuren README-tiedostossa.
 Kehityskontti: `.devcontainer/sql`.
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.

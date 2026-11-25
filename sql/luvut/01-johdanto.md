@@ -6,10 +6,17 @@ rakenne, haetaan ja muutetaan tietoja ja hallitaan transaktioita. SQL on
 miten se lasketaan. Tietokannan kyselyoptimoija valitsee
 suoritustavan, kuten käytettävät indeksit ja liitosjärjestyksen.
 
-Tutoriaali olettaa, että lukija osaa ohjelmoida (taito *Ohjelmoinnin
-perusteet*). Tavoitteena ei ole luetella syntaksia vaan opettaa, miten
+Tavoitteena ei ole luetella syntaksia vaan opettaa, miten
 ammattilaiset mallintavat tietoa, kirjoittavat oikein toimivia ja
 tehokkaita kyselyitä ja käyttävät tietokantaa sovelluksesta.
+
+## Esitiedot ja rajaus
+
+Tutoriaali olettaa, että lukija osaa ohjelmoida (taito *Ohjelmoinnin
+perusteet (Python)*); sovelluslukujen esimerkit ovat Pythonia. Muut kuin
+relaatiotietokannat käsittelee taito *NoSQL-tietokannat* ja
+tietokantakoodin testauksen oikealla palvelimella taito
+*Integraatiotestaus ja Testcontainers*.
 
 ## Historia ja standardit
 

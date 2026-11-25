@@ -113,7 +113,7 @@ ja sen avulla lauseke saadaan tarkaksi.
 ```
 
 Liukulukujen esitys ja pyöristys käsitellään perusteellisesti taidossa
-*Tietokonearitmetiikka*. Tässä riittää nyrkkisääntö: numeerinen
+*Miten tietokone laskee*. Tässä riittää nyrkkisääntö: numeerinen
 raja-arvon arvaus on kokeilu, ei todistus, ja kahden lähes yhtä suuren
 luvun erotus on epäilyttävä.
 

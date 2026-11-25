@@ -36,17 +36,17 @@ epäile tulosta, joka näyttää liian siistiltä tai liian sotkuiselta.
 | Kuvaaja | (`sp.plot`) | `plot2d` | `ax.plot`, `savefig` |
 | Eräajo | `python3 skripti.py` | `maxima -b skripti.mac` | `python3 skripti.py` |
 
-## Mihin tästä jatketaan
+## Jatkotaidot
 
-- **Differentiaali- ja integraalilaskenta** jatkaa suoraan funktioista:
+- *Differentiaali- ja integraalilaskenta* jatkaa suoraan funktioista:
   raja-arvo, derivaatta, integraali ja sarjat samoilla työkaluilla.
-- **Elektroniikan perusteet ja SPICE** käyttää yhtälöitä, eksponentti-
+- *Elektroniikan perusteet ja SPICE* käyttää yhtälöitä, eksponentti-
   funktiota ja trigonometriaa sähköpiirien laskentaan ja simulointiin.
-- **Lineaarialgebra** yleistää tason vektorit ja yhtälöparit matriiseiksi.
-- **Kompleksiluvut ja Fourier-analyysi** jatkaa harmonisesta
+- *Lineaarialgebra* yleistää tason vektorit ja yhtälöparit matriiseiksi.
+- *Kompleksiluvut ja Fourier-analyysi* jatkaa harmonisesta
   värähtelystä osoittimiin ja Fourier-sarjoihin.
-- **Numeeriset menetelmät** ja **Differentiaaliyhtälöt ja
-  Laplace-muunnos** käyttävät myös GNU Octavea.
+- *Numeeriset menetelmät* ja *Differentiaaliyhtälöt ja
+  Laplace-muunnos* käyttävät myös GNU Octavea.
 
 ## Lähteet
 

@@ -42,4 +42,7 @@ Dev Container -määrittelynä `.devcontainer/web-sovelluskehykset/`.
 `make testaa` tarkistaa rakenteen ja ajaa esimerkkiprojektin kaikki
 testit, `make pdf` rakentaa PDF:t.
 
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
+
 Lisenssi: CC BY-SA 4.0.

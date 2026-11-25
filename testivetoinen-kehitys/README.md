@@ -73,4 +73,7 @@ make pdf        # testivetoinen-kehitys.pdf ja pikaopas
 make kuvat      # piirtää kuvan kuvat/parit.png uudelleen
 ```
 
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
+
 Lisenssi: CC BY-SA 4.0.

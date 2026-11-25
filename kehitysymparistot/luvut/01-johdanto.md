@@ -52,10 +52,10 @@ käyttöjärjestelmää.
 Tämän tutoriaalin lukemiseen riittää tuo kuva: kontti on laatikko, jossa
 työkalut ovat valmiina, ja lähdekoodisi näkyy laatikon sisällä.
 Dockerin komentoja ei tarvitse osata. Kuvien rakentamisen ja konttien
-ajamisen opettaa taito *Säiliöt ja pilvi-infrastruktuuri*, ja eristyksen toteutuksen
+ajamisen opettaa taito *Kontit ja pilvi-infrastruktuuri*, ja eristyksen toteutuksen
 ytimessä taito *Virtualisointi*.
 
-## Mitä oletetaan
+## Esitiedot ja rajaus
 
 Osaat liikkua komentorivillä ja ajaa komentoja (taito *Komentorivi ja
 Linux*). Oman koneen kehityskontteihin tarvitset Dockerin tai muun

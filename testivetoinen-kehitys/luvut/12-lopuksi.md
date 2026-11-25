@@ -40,9 +40,6 @@ täydentävät toisiaan:
 
 ## Mitä jäi pois
 
-- **Integraatio- ja päästä päähän -testit.** Tämä tutoriaali pysyi
-  yksikkötason tekniikoissa. Testit oikeaa tietokantaa ja muita
-  palveluja vasten: taito *Integraatiotestaus ja Testcontainers*.
 - **Fuzzaus.** Ominaisuustestin sukulainen, jossa syötteitä ohjaa
   kattavuus ja väite on yleensä "ohjelma ei kaadu": taito
   *Haavoittuvuuksien analyysi ja torjunta*.
@@ -52,9 +49,15 @@ täydentävät toisiaan:
 - **Muodollinen todistaminen.** Ominaisuustesti kokeilee satoja
   syötteitä, todistus kattaa kaikki. Laitteistopuolella menetelmä on
   arkipäivää: taito *Laitteiston verifiointi*.
-- **Testien ajaminen toimitusputkessa:** mitä ajetaan milloin, miten
-  hitaat testit jaetaan ja miten epäonnistunut ajo pysäyttää toimituksen.
-  Tästä jatkaa taito *Jatkuva integraatio ja toimitus*.
+
+## Jatkotaidot
+
+- *Integraatiotestaus ja Testcontainers*: testit oikeaa tietokantaa ja
+  muita palveluja vasten. Tämä tutoriaali pysyi yksikkötason
+  tekniikoissa.
+- *Jatkuva integraatio ja toimitus*: testien ajaminen toimitusputkessa
+  eli mitä ajetaan milloin, miten hitaat testit jaetaan ja miten
+  epäonnistunut ajo pysäyttää toimituksen.
 
 ## Lähteet
 
