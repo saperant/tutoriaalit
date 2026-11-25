@@ -35,16 +35,21 @@ nRF54-kehityskortit (Cortex-M4 ja M33) sekä Raspberry Pi Pico ja Pico 2
 (Cortex-M0+ ja M33). Kahdessa ensimmäisessä on debug-sovitin mukana,
 Picolle tarvitaan erillinen, esimerkiksi Raspberry Pi Debug Probe.
 
-Seuraavat taidot jatkavat tästä:
+## Jatkotaidot
 
 - *Oheislaiteväylät*: UART, SPI, I2C, CAN ja DMA sekä ajurikerrosten
-  suunnittelu
+  suunnittelu; myös ulkoinen A/D-muunnin SPI-väylässä
 - *Reaaliaikakäyttöjärjestelmät*: säikeet, ajoitus, synkronointi ja
-  prioriteetti-inversio
+  prioriteetti-inversio; jatkaa luvun 5 PendSV:stä ja prosessipinosta
+  säikeenvaihtoon
+- *Digitaalinen signaalinkäsittely*: mitä ajastimen tahdittamilla
+  näytteillä tehdään
 - *Laiteohjelmiston takaisinmallinnus*: valmiin laiteohjelmiston
   purkaminen ja analyysi
 - *Sulautettujen järjestelmien tietoturva*: turvallinen käynnistys,
-  päivitykset ja debug-portin suojaus.
+  päivitykset ja debug-portin suojaus
+- *Sulautettu Linux*: kun laite on niin suuri, että siinä on
+  muistinhallintayksikkö ja käyttöjärjestelmä.
 
 ## Lähteet
 

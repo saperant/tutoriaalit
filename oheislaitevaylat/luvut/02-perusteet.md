@@ -74,7 +74,9 @@ lukea linjalta todellisen tilan ja huomata ristiriidan. I2C:n
 arbitraatio ja kellonvenytys sekä CANin dominantti ja resessiivinen
 taso perustuvat tähän. Hinta on nopeus. Laskeva reuna on nopea, koska
 transistori purkaa linjan kapasitanssin, mutta nouseva reuna on
-RC-käyrä, jonka vetovastus ja linjan kapasitanssi määräävät.
+RC-käyrä, jonka vetovastus ja linjan kapasitanssi määräävät. Lähtöasteen
+transistorit ja kolmitilalähtö porttitasolla ovat taidossa
+*Digitaalitekniikka*.
 
 ### Vetovastuksen mitoitus
 
@@ -91,7 +93,14 @@ R_{max} = \frac{t_r}{0{,}847 \cdot C_b}$$
 ```{.python tiedosto="esimerkit/python/avokollektori.py" osa="mitoitus"}
 ```
 
-Tuloste on edellisen tulosteen lopussa: pitkällä väylällä (suuri
+![SCL:n nouseva reuna Fast-moodissa 200 pF:n väylällä kolmella
+vetovastuksella. Katkoviivat ovat 30 %:n ja 70 %:n rajat, joiden väli
+saa kestää enintään 300 ns. Tavallinen 4,7 kΩ:n vastus on tälle
+väylälle liian suuri: linja ei ehdi ylös ennen kellon seuraavaa
+laskua.](kuvat/nousuaika.png){width=85%}
+
+Kuvan kaksi pienempää vastusta ovat taulukon rivin "Fast 400 kHz,
+200 pF" rajat. Pitkällä väylällä (suuri
 $C_b$) ja suurella nopeudella sallittu väli kapenee, ja Fast-moodin
 400 pF:n väylälle sitä ei 3 mA:n lähdöillä ole lainkaan. Ratkaisuja
 ovat lyhyempi väylä, vahvemmat lähdöt (Fast-mode Plus sallii 20 mA),
@@ -141,6 +150,10 @@ tarkemmin.
 | I2C | SCL, SDA | monipiste, monta isäntää | 7 bittiä | 100 kHz – 1 MHz | ACK tavuittain |
 | CAN | CANH, CANL | monipiste, kaikki tasavertaisia | 11 tai 29 bitin tunniste | 125 kbit/s – 1 Mbit/s (FD: 5–8) | CRC, ACK, virhelaskurit |
 | RS-485 | A, B (+maa) | monipiste | ylempi kerros | 9,6 kbit/s – 10 Mbit/s | ylempi kerros |
+| LIN | yksi johdin (+maa) | isäntä ja laitteet, enintään 16 solmua | 6 bitin tunniste | enintään 20 kbit/s | tarkistussumma |
+| 1-Wire | yksi johdin (+maa) | isäntä ja laitteet | 64 bitin laitetunnus | 16 kbit/s | CRC-8 tunnuksessa ja datassa |
+| I2S | SCK, WS, SD | lähetin ja vastaanotin | ei | näytetaajuus × bitit × kanavat | ei |
+| USB 2.0 | D+, D− | tähti, isäntä kyselee | 7 bitin osoite ja päätepiste | 1,5, 12 tai 480 Mbit/s | CRC, kuittaus, uudelleenlähetys |
 
 Taulukosta näkyy työnjako. SPI on nopein ja yksinkertaisin, mutta se
 ei tarkista mitään eikä kulje kauas. I2C säästää johtimia ja nastoja
@@ -149,6 +162,25 @@ häiriöiseen ympäristöön: autoon, työkoneeseen ja teollisuuteen. Sen
 laitteisto hoitaa arbitraation, kuittaukset, tarkistukset ja
 uudelleenlähetykset. UART ja RS-485 siirtävät tavuja, ja kaikki muu on
 protokollan asia (luku 3).
+
+Neljää viimeistä riviä ei käsitellä omissa luvuissaan, mutta niihin
+törmää heti oikeassa laitteessa. *LIN* on auton halpa aliväylä: UARTin
+kehys yhdellä johtimella, isäntä aloittaa jokaisen viestin katkolla ja
+tahdistustavulla. *1-Wire* syöttää laitteelle myös käyttövirran
+datajohdinta pitkin ja ajoittaa bitit pulssin pituudella;
+lämpötila-anturit ja tunnistepiirit käyttävät sitä. *I2S* on
+äänidatan synkroninen väylä: kello, sananvalinta (vasen tai oikea
+kanava) ja data, ei osoitteita eikä kuittauksia.
+
+*USB* on eri luokan väylä. Isäntä kyselee laitteita, ja laite kertoo
+kytkettäessä *kuvaajilla* (*descriptors*), mikä se on ja mitä
+päätepisteitä siinä on. Laiteluokat (sarjaportti CDC, näppäimistö HID,
+massamuisti) määrittelevät, mitä päätepisteissä liikkuu, joten
+isäntäkoneen valmis ajuri kelpaa. Linjaprotokollan hoitaa piirin
+USB-lohko, mutta kuvaajat, luokan pyynnöt ja tilakone tarvitsevat
+ohjelmistopinon, joka otetaan lähes aina valmiina (valmistajan
+kirjasto, TinyUSB tai käyttöjärjestelmän pino). Siksi USB:tä ei
+kirjoiteta rekisteritasolta kuten tämän tutoriaalin väyliä.
 
 ## Käytännössä
 
@@ -177,3 +209,5 @@ protokollan asia (luku 3).
 - Osaat kertoa, miksi differentiaalinen siirto kestää häiriöitä ja
   miksi pitkä väylä päätetään.
 - Osaat valita väylän tehtävään ja perustella valinnan.
+- Osaat kertoa, mihin LIN, 1-Wire ja I2S on tarkoitettu ja miksi USB
+  vaatii valmiin ohjelmistopinon.

@@ -42,11 +42,14 @@ VARIANTIT := 04-vuorottelu-ei 13-inversio-mutex 14-rms-ylikuorma
 # isäntäportilla.
 ISANTA    := 01-tehtavat 02-jakso 03-etuoikeutus 04-vuorottelu 08-jono \
              10-semafori 11-tapahtumat 12-ilmoitus 13-inversio \
-             14-rms \
+             14-rms 17-ajastimet \
              $(VARIANTIT)
 
+# Kirjan ajoituskaaviot, jotka tuotetaan testatuista tulosteista.
+KAAVIOT   := 13-inversio 13-inversio-mutex 14-rms 14-rms-ylikuorma
+
 TESTIT := $(ESIMERKIT:%=build/%.tulos) $(VARIANTIT:%=build/%.tulos) \
-          $(ISANTA:%=build/isanta/%.tulos)
+          $(ISANTA:%=build/isanta/%.tulos) $(KAAVIOT:%=build/%.kaavio)
 
 .PHONY: kaikki aja siivoa
 .SECONDARY:
@@ -96,6 +99,18 @@ build/isanta/%.tulos: build/isanta/% testit/%.odotettu
 	diff -u testit/$*.odotettu $@.tmp || { cat $@.virheet; false; }
 	mv $@.tmp $@
 # @loppu ajo
+
+# @alku kaaviot
+# Ajoituskaavio tuotetaan odotetusta tulosteesta ja verrataan kirjassa
+# näytettyyn tiedostoon kaaviot/<nimi>.json. Jos tuloste muuttuu,
+# kaavio on tuotettava uudelleen: python3 kaaviot/tee.py LAJI TULOSTE
+laji = $(if $(findstring inversio,$(1)),inversio,rms)
+
+build/%.kaavio: testit/%.odotettu kaaviot/%.json kaaviot/tee.py | build
+	python3 kaaviot/tee.py $(call laji,$*) $< > $@.tmp
+	diff -u kaaviot/$*.json $@.tmp
+	mv $@.tmp $@
+# @loppu kaaviot
 
 aja: build/$(E).elf
 	$(QEMU) -kernel $<

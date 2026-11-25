@@ -44,6 +44,7 @@ static void korkea(void *parametri) {
     tulosta("%3u korkea sai vaylan, odotti %u tikkia\n",
             xTaskGetTickCount(), xTaskGetTickCount() - alku);
     kide_kuormita(1);
+    tulosta("%3u korkea vapauttaa\n", xTaskGetTickCount());
     xSemaphoreGive(vayla);
     vTaskDelay(portMAX_DELAY);
 }
@@ -83,6 +84,7 @@ int main(void) {
     aikajana_lisaa(k);
     aikajana_lisaa(m);
     aikajana_lisaa(matala_kahva);
+    aikajana_seuraa_prioriteettia(matala_kahva);
     xTaskCreateStatic(valvoja, "valvoja", 256, NULL, 7, pinot[3], &tcb[3]);
     vTaskStartScheduler();
 }

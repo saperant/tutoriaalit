@@ -113,7 +113,7 @@ Pollaava lähetys pysäyttää ohjelman jokaisen tavun ajaksi: 115 200
 bit/s:n nopeudella yksi tavu kestää 87 µs, mikä on Cortex-M3:lla
 tuhansia käskyjä. Parempi tapa on kirjoittaa teksti renkaaseen ja antaa
 lähetyskeskeytyksen siirtää tavut lähettimeen. Rengaspuskuri on sama
-kuin paketin *Mikrokontrollerit* luvussa 7.
+kuin taidossa *Mikrokontrollerit ja bare-metal-ohjelmointi*.
 
 ```{.c tiedosto="esimerkit/02-lahetys/main.c" osa="keskeytys"}
 ```

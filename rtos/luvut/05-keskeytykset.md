@@ -42,6 +42,12 @@ koska käsittelijä ei peitä muita keskeytyksiä pitkään. Lisäksi
 käsittelytehtävän prioriteetti voidaan valita muiden tehtävien
 joukosta.
 
+Esimerkki käyttää merkinantoon *binäärisemaforia*, joka esitellään
+tarkemmin luvussa 7. Tässä riittää tietää kolme asiaa: semafori on
+joko tyhjä tai annettu, `xSemaphoreTake` jää odottamaan, kunnes joku
+antaa sen, ja antaja voi olla keskeytys (`xSemaphoreGiveFromISR`).
+Käsittelijä siis antaa semaforin, ja tehtävä herää ottamaan sen.
+
 ```{.c tiedosto="esimerkit/06-keskeytys/main.c" osa="isr"}
 ```
 

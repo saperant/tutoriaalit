@@ -44,10 +44,10 @@ painallus vaihtaa tilaa järjestyksessä pois, päällä ja vilkku; yli
 sekunnin painallus sammuttaa valon heti. Painikkeen kosketin värähtelee,
 joten raakanäytteet suodatetaan ensin.
 
-```{.c tiedosto="esimerkit/12-tilakone/tila.h" osa="suodin"}
+```{.c tiedosto="esimerkit/11-tilakone/tila.h" osa="suodin"}
 ```
 
-```{.c tiedosto="esimerkit/12-tilakone/tila.c" osa="suodin"}
+```{.c tiedosto="esimerkit/11-tilakone/tila.c" osa="suodin"}
 ```
 
 Suodin hyväksyy uuden tilan vasta, kun kolme peräkkäistä näytettä
@@ -55,10 +55,10 @@ kymmenen millisekunnin välein ovat samat. Mekaanisen kytkimen
 värähtely kestää tyypillisesti alle 10 millisekuntia, joten 30
 millisekuntia riittää, eikä ihminen huomaa viivettä.
 
-```{.c tiedosto="esimerkit/12-tilakone/tila.h" osa="valo"}
+```{.c tiedosto="esimerkit/11-tilakone/tila.h" osa="valo"}
 ```
 
-```{.c tiedosto="esimerkit/12-tilakone/tila.c" osa="kasittele"}
+```{.c tiedosto="esimerkit/11-tilakone/tila.c" osa="kasittele"}
 ```
 
 Alla oleva kuva näyttää tilakoneen siirtymät.
@@ -89,10 +89,10 @@ Testi kuvaa painikkeen raakanäytteet merkkijonona, yksi merkki
 kymmentä millisekuntia kohden. Sama suodin ja tilakone, jotka ajetaan
 laitteessa, käännetään tässä isäntäkoneen `cc`:llä.
 
-```{.c tiedosto="esimerkit/12-tilakone/isanta/testi.c" osa="testit"}
+```{.c tiedosto="esimerkit/11-tilakone/isanta/testi.c" osa="testit"}
 ```
 
-```{.tuloste tiedosto="esimerkit/testit/12-isanta.odotettu"}
+```{.tuloste tiedosto="esimerkit/testit/11-isanta.odotettu"}
 ```
 
 Testi löysi tätä kirjoitettaessa virheen: ensimmäisessä versiossa
@@ -115,27 +115,27 @@ Se lukee painikkeen raakatason (tässä simuloituna aikataulusta),
 syöttää sen suotimeen ja lisää jonoon painallus- ja vapautustapahtumat
 sekä joka tikillä tikkitapahtuman.
 
-```{.c tiedosto="esimerkit/12-tilakone/main.c" osa="painike"}
+```{.c tiedosto="esimerkit/11-tilakone/main.c" osa="painike"}
 ```
 
-```{.c tiedosto="esimerkit/12-tilakone/main.c" osa="isr"}
+```{.c tiedosto="esimerkit/11-tilakone/main.c" osa="isr"}
 ```
 
 Jono on sama yhden tuottajan ja yhden kuluttajan rengas kuin luvussa
 7, mutta alkiot ovat tapahtumia aikaleimoineen. Aikaleima otetaan
 keskeytyksessä, joten pääsilmukan viive ei vääristä sitä.
 
-```{.c tiedosto="esimerkit/12-tilakone/main.c" osa="jono"}
+```{.c tiedosto="esimerkit/11-tilakone/main.c" osa="jono"}
 ```
 
 Pääsilmukka ottaa tapahtuman jonosta, antaa sen tilakoneelle ja
 toteuttaa tilakoneen päätöksen ajurin kautta. Kun jono on tyhjä, se
 nukkuu luvun 8 kaavalla.
 
-```{.c tiedosto="esimerkit/12-tilakone/main.c" osa="main"}
+```{.c tiedosto="esimerkit/11-tilakone/main.c" osa="main"}
 ```
 
-```{.tuloste tiedosto="esimerkit/testit/12-tilakone.odotettu"}
+```{.tuloste tiedosto="esimerkit/testit/11-tilakone.odotettu"}
 ```
 
 Ensimmäinen painallus 200 millisekunnin kohdalla värähtelee, mutta

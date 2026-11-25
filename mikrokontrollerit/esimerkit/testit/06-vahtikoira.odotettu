@@ -1,0 +1,10 @@
+käynnistys 1: ruokinta tikkikeskeytyksessä
+  kierros 1 valmis
+  kierros 2 valmis
+  pääsilmukka on ollut jumissa 300 ms, vahtikoira ei lauennut
+käynnistys 2: ruokinta pääsilmukan lopussa
+  kierros 1 valmis
+  kierros 2 valmis
+  NMI: vahtikoira varoittaa, vaihe = lähetys
+käynnistys 3: vahtikoira resetoi, jumissa vaiheessa lähetys
+paluuarvo 0

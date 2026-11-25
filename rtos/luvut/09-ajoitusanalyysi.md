@@ -95,11 +95,20 @@ Vasteaika-analyysi löytää T3:lle vasteajan 10 ≤ 12, joten joukko pitää
 aikarajansa, ja ajo vahvistaa sen: havaittu pahin vasteaika on sama
 kuin analyysin. Aikajanalta näkyy, miksi: T3 saa ajaa vain niissä
 väleissä, jotka T1 ja T2 jättävät, ja sen ensimmäinen työ valmistuu
-hetkellä 10.
+hetkellä 10. Seuraava kaavio on tuotettu samasta tulosteesta. Siihen
+on lisätty tehtävän tila: viivoitettu alue tarkoittaa, että työ on
+julkaistu ja odottaa vuoroaan, joten viivoituksen alusta viimeisen
+ajojakson loppuun on työn vasteaika.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/14-rms.json" otsikko="Kriittinen hetki: kaikki kolme tehtävää julkaistaan hetkellä 0. Täytetty alue on ajoa, viivoitettu odotusta valmiina. T3:n ensimmäinen työ valmistuu hetkellä 10, ennen määräaikaa 12."}
+```
 
 Muunnelmassa T3 laskee neljä tikkiä ja sen jakso on 10:
 
 ```{.tuloste tiedosto="esimerkit/testit/14-rms-ylikuorma.odotettu"}
+```
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/14-rms-ylikuorma.json" otsikko="Ylikuormamuunnelma. T3:n ensimmäinen työ valmistuu hetkellä 11, määräajan 10 jälkeen, ja toinen työ hetkellä 22, kaksi tikkiä myöhässä. Alin rivi on ylhäällä, kun T3:lla on tekemätön työ, jonka määräaika on mennyt."}
 ```
 
 Käyttöaste 0,983 on alle yhden, joten prosessorissa on periaatteessa
@@ -113,6 +122,26 @@ joukon aikarajat, koska EDF:llä riittää U ≤ 1. Hinta on dynaaminen
 prioriteetti, jota yleiset RTOSit eivät tue, ja ylikuormassa EDF
 myöhästyttää helposti kaikkia tehtäviä, kun RMS myöhästyttää vain
 vähiten tärkeitä.
+
+## Estoaika
+
+Edellisen esimerkin tehtävät eivät jaa mitään, joten B~i~ on nolla.
+Luvun 8 inversioesimerkissä näin ei ole. Korkean tehtävän työ kestää
+yhden tikin (C = 1), ja matala pitää väylää enintään neljä tikkiä.
+Mutexilla ja prioriteetin periytyksellä korkean estoaika on pisin
+kriittinen osio, jossa vähemmän tärkeä tehtävä pitää sen tarvitsemaa
+resurssia, eli B = 4. Tärkeämpiä tehtäviä ei ole, joten
+
+$$R_\mathrm{korkea} = C + B = 1 + 4 = 5.$$
+
+Ajossa korkea pyysi väylää hetkellä 1 ja oli valmis hetkellä 5, eli
+havaittu vasteaika on 4. Se alittaa rajan, koska matala oli ehtinyt
+siirtää jo yhden tikin ennen pyyntöä; pahimmassa tapauksessa pyyntö
+tulee heti varauksen jälkeen. Binäärisemaforilla samaa laskelmaa ei
+voi tehdä: estoaikaan kuuluu silloin myös jokaisen keskitason
+tehtävän koko laskenta-aika, eikä sille ole ylärajaa, jota
+kriittisen osion pituus määräisi. Tämä on analyysin kannalta syy
+käyttää mutexia: estoaika on rajattu ja laskettavissa.
 
 ## Laskenta-ajat ja kustannukset
 
@@ -146,6 +175,8 @@ $\lceil (R_i + J_j) / T_j \rceil$.
 - **Pidä analyysi koodin rinnalla.** Esimerkin tapaan tehtäväjoukko
   voi olla yhdessä otsakkeessa, josta sekä ohjelma että analyysi
   lukevat arvonsa. Analyysi ajetaan uudelleen, kun jokin muuttuu.
+- **Laske estoaika jokaiselle jaetulle resurssille.** Pisin kriittinen
+  osio kuuluu jokaisen sitä tärkeämmän käyttäjän vasteaikaan.
 - **Mittaa laskenta-ajat jatkuvasti.** Ajoaikatilastot ja pahimpien
   vasteaikojen kirjaus tuotantolaitteessa paljastavat, jos oletukset
   eivät pidä.

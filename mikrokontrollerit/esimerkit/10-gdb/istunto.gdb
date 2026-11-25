@@ -1,5 +1,5 @@
 # gdb-istunto: ajetaan komennolla make (ks. Makefile) tai käsin:
-#   gdb-multiarch -q -batch -nx -x 11-gdb/istunto.gdb build/11-gdb.elf
+#   gdb-multiarch -q -batch -nx -x 10-gdb/istunto.gdb build/10-gdb.elf
 set pagination off
 set confirm off
 set width 0
@@ -8,7 +8,7 @@ set print entry-values no
 set filename-display basename
 # @alku yhteys
 # gdb käynnistää QEMU:n itse ja puhuu sille putken kautta.
-target remote | 11-gdb/qemu.sh build/11-gdb.elf
+target remote | 10-gdb/qemu.sh build/10-gdb.elf
 # @loppu yhteys
 # @alku alku
 echo --- resetin jälkeen\n

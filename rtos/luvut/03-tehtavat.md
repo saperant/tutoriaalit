@@ -18,6 +18,22 @@ heti, kun sitä tärkeämpi tulee valmiiksi.
 | odottaa (*Blocked*) | odottaa aikaa, jonoa, semaforia tai ilmoitusta | viivelistassa tai odotuslistassa |
 | keskeytetty (*Suspended*) | pois vuorontamisesta, kunnes toinen palauttaa | odottaa ilman aikarajaa |
 
+```{.dot otsikko="Tehtävän tilat ja siirtymät. Vain vuorontaja siirtää tehtävän ajoon; tehtävä itse voi vain jäädä odottamaan tai luovuttaa vuoronsa."}
+digraph {
+  rankdir=LR; nodesep=0.5; ranksep=0.9;
+  valmis [label="valmis"];
+  ajossa [label="ajossa", style="rounded,filled,bold"];
+  odottaa [label="odottaa"];
+  kesk [label="keskeytetty", style="rounded,dashed"];
+  valmis -> ajossa [label="vuorontaja valitsee:\ntärkein valmis"];
+  ajossa -> valmis [label="etuoikeutus,\naikaviipale, taskYIELD"];
+  ajossa -> odottaa [label="vTaskDelay, tyhjä jono,\nvarattu semafori"];
+  odottaa -> valmis [label="tikki, viesti, anto,\nilmoitus, aikaraja"];
+  ajossa -> kesk [label="vTaskSuspend", style=dashed];
+  kesk -> valmis [label="vTaskResume", style=dashed];
+}
+```
+
 Odottava tehtävä ei kuluta prosessoriaikaa. Tämä on RTOS-ohjelman
 tärkein ero pääsilmukkaan: sen sijaan, että koodi kysyisi jatkuvasti
 "onko dataa", tehtävä odottaa jonossa, ja ydin herättää sen, kun data

@@ -1,0 +1,17 @@
+main: IPSR=0 (Thread), CONTROL=0: etuoikeutettu, MSP
+  SVC: IPSR=11 (Handler), CONTROL=0: etuoikeutettu, MSP
+  SVC #1, EXC_RETURN=0xfffffff9, kehys MSP-pinossa
+  kehys: r0=10 r1=20 r2=30 r3=40, xPSR.T=1
+summa_svc(10, 20) = 30
+prosessi: IPSR=0 (Thread), CONTROL=2: etuoikeutettu, PSP
+  SVC: IPSR=11 (Handler), CONTROL=0: etuoikeutettu, MSP
+  SVC #1, EXC_RETURN=0xfffffffd, kehys PSP-pinossa
+  kehys: r0=1 r1=2 r2=30 r3=40, xPSR.T=1
+summa_svc(1, 2) = 3
+prosessi: IPSR=0 (Thread), CONTROL=3: ei-etuoikeutettu, PSP
+yritys palauttaa etuoikeus: CONTROL=3
+  SVC: IPSR=11 (Handler), CONTROL=1: etuoikeutettu, MSP
+  SVC #2, EXC_RETURN=0xfffffffd, kehys PSP-pinossa
+prosessi: IPSR=0 (Thread), CONTROL=2: etuoikeutettu, PSP
+main: IPSR=0 (Thread), CONTROL=0: etuoikeutettu, MSP
+paluuarvo 0

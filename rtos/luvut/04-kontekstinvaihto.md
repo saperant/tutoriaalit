@@ -10,8 +10,8 @@ ytimen ainoat assemblyrivit.
 
 ## Kaksi pinoa
 
-Cortex-M:ssä on kaksi pino-osoitinta (taito *Mikrokontrollerit*,
-luku 2): pääpino MSP, jota käytetään resetin jälkeen ja aina
+Cortex-M:ssä on kaksi pino-osoitinta (taito *Mikrokontrollerit ja
+bare-metal-ohjelmointi*): pääpino MSP, jota käytetään resetin jälkeen ja aina
 keskeytyksissä, sekä prosessipino PSP, jota Thread-tila käyttää, kun
 CONTROL-rekisterin SPSEL-bitti on 1. RTOS antaa jokaiselle tehtävälle
 oman PSP-pinon. Kun keskeytys tulee tehtävän aikana, laitteisto
@@ -41,6 +41,34 @@ myös r4–r11. PendSV-käsittelijä tekee sen ohjelmallisesti samaan
 pinoon. Tehtävän pinoon jää siis 16 sanan kehys, ja TCB:n pino-osoitin
 osoittaa sen alkuun.
 
+```{.dot otsikko="Kaksi tehtävää kontekstinvaihdon keskellä. A:n rekisterit on juuri tallennettu sen pinoon ja pino-osoitin TCB:hen; B:n kehys odottaa samassa muodossa palautusta."}
+digraph {
+  rankdir=LR; nodesep=0.5; ranksep=0.7;
+  node [shape=plaintext, fontsize=10];
+  tcba [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="#EEF1F2"><b>TCB A</b></td></tr>
+    <tr><td port="sp">pino_osoitin</td></tr>
+    <tr><td>prioriteetti, listasolmut …</td></tr></table>>];
+  pinoa [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="white">A:n pino: aiemmat kutsut</td></tr>
+    <tr><td bgcolor="#F1E3CC">xPSR, pc, lr, r12, r3–r0<br/>(laitteisto, 8 sanaa)</td></tr>
+    <tr><td bgcolor="#E4DCF0" port="ala">r11–r4<br/>(PendSV, 8 sanaa)</td></tr>
+    <tr><td bgcolor="white" style="dashed">vapaata</td></tr></table>>];
+  tcbb [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="#EEF1F2"><b>TCB B</b></td></tr>
+    <tr><td port="sp">pino_osoitin</td></tr>
+    <tr><td>prioriteetti, listasolmut …</td></tr></table>>];
+  pinob [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="white">B:n pino: aiemmat kutsut</td></tr>
+    <tr><td bgcolor="#F1E3CC">xPSR, pc, lr, r12, r3–r0</td></tr>
+    <tr><td bgcolor="#E4DCF0" port="ala">r11–r4</td></tr>
+    <tr><td bgcolor="white" style="dashed">vapaata</td></tr></table>>];
+  nyk [label="kide_nykyinen", shape=box, style="rounded,filled", fillcolor="#EEF1F2"];
+  tcba:sp -> pinoa:ala; tcbb:sp -> pinob:ala;
+  nyk -> tcba [label="ennen"]; nyk -> tcbb [label="jälkeen", style=dashed];
+}
+```
+
 Uudelle tehtävälle kehys rakennetaan valmiiksi, aivan kuin tehtävä
 olisi keskeytetty juuri ennen ensimmäistä käskyään. PC osoittaa
 tehtäväfunktioon, r0 on sen parametri, ja LR on funktio, johon
@@ -65,6 +93,16 @@ käsittelijä pyytää vaihtoa, PendSV ajetaan vasta, kun kaikki
 käsittelijät ovat valmiita, ja prosessori ketjuttaa sen suoraan
 viimeisen perään (*tail-chaining*). Toiseksi useampi pyyntö samassa
 keskeytysketjussa yhdistyy yhdeksi vaihdoksi.
+
+```{.ajoituskaavio otsikko="Tikistä tehtävänvaihtoon (periaate). SysTick herättää tärkeämmän tehtävän B ja pyytää vaihtoa; PendSV ajetaan ketjutettuna heti sen perään, ja poikkeuksesta palataan B:hen."}
+{"signal": [
+  {"name": "SysTick odottaa", "wave": "010.............."},
+  {"name": "PendSV odottaa", "wave": "0...1..0........."},
+  {"name": "suoritus", "wave": "2.3....4.....2...",
+   "data": ["tehtävä A", "SysTick: tikki, B valmiiksi", "PendSV: A talteen, B esiin", "tehtävä B"]},
+  {"name": "pino", "wave": "2.3..........2...", "data": ["PSP (A)", "MSP", "PSP (B)"]}
+], "config": {"hscale": 1.0}}
+```
 
 ```{.c tiedosto="esimerkit/kide/portti_cm3.c" osa="pendsv"}
 ```

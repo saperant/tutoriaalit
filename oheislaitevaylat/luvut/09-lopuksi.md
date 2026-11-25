@@ -33,6 +33,22 @@ sovittimella ja SocketCANilla (`candump`, `cansend`). Ensimmäinen
 kokeilu kannattaa tehdä kahdella mikrokontrollerilla pöydällä
 ennen kuin laite kytketään autoon tai koneeseen.
 
+## Jatkotaidot
+
+- *Reaaliaikakäyttöjärjestelmät*: ajuri tehtävien alla, jossa jono
+  tai ilmoitus on keskeytyksen ja sovelluksen rajapinta ja väylä
+  suojataan mutexilla
+- *Linux-laiteajurit*: samat väylät Linuxin ajurimallissa (I2C- ja
+  SPI-alijärjestelmät, laitepuu)
+- *Laiteohjelmiston takaisinmallinnus*: väyläliikenteen ja ajurien
+  tunnistaminen valmiista laitteesta
+- *Digitaalinen signaalinkäsittely*: mitä A/D-muuntimen näytteille
+  tehdään
+- *SoC-integraatio* ja *RTL-suunnittelu SystemVerilogilla*:
+  väylälohkojen toteutus logiikkana
+- *Tietoliikennetekniikka*: siirtotiet, kohina ja virheenkorjaus,
+  joiden varaan väylien fyysinen kerros rakentuu.
+
 ## Lähteet
 
 Väylien määrittelyt:

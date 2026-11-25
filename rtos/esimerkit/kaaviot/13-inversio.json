@@ -1,0 +1,58 @@
+{
+ "signal": [
+  {
+   "name": "tikki",
+   "wave": "=.=.=.=.=.=.=.",
+   "data": [
+    "0",
+    "2",
+    "4",
+    "6",
+    "8",
+    "10",
+    "12"
+   ]
+  },
+  {
+   "name": "korkea",
+   "wave": "l.........5l..",
+   "data": [
+    ""
+   ]
+  },
+  {
+   "name": "keski",
+   "wave": "l.5.....l.....",
+   "data": [
+    ""
+   ]
+  },
+  {
+   "name": "matala",
+   "wave": "5.l.....5.l...",
+   "data": [
+    "",
+    ""
+   ]
+  },
+  {},
+  {
+   "name": "väylän haltija",
+   "wave": "=.........=z..",
+   "data": [
+    "matala",
+    "korkea"
+   ]
+  },
+  {
+   "name": "matalan prioriteetti",
+   "wave": "=.............",
+   "data": [
+    "1"
+   ]
+  }
+ ],
+ "config": {
+  "hscale": 1.0
+ }
+}

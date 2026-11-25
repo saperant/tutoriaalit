@@ -91,8 +91,8 @@ Sarjaportin vastaanotto on jonon tyyppitapaus. Keskeytyskäsittelijä
 lukee tavut UART:sta ja lähettää ne jonoon `xQueueSendFromISR`illa.
 Komentotehtävä kokoaa niistä rivejä ja suorittaa komennot. Jos jono on
 täynnä, käsittelijä ei voi odottaa, joten tavu hukataan ja hukka
-lasketaan. Taidon *Mikrokontrollerit* luvun 7 rengaspuskuri teki
-saman ilman ydintä, mutta pääsilmukka joutui nukkumaan ja tarkistamaan
+lasketaan. Taidon *Mikrokontrollerit ja bare-metal-ohjelmointi*
+rengaspuskuri teki saman ilman ydintä, mutta pääsilmukka joutui nukkumaan ja tarkistamaan
 puskuria itse.
 
 ```{.c tiedosto="esimerkit/09-uart/main.c" osa="isr"}

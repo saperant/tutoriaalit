@@ -202,11 +202,74 @@ kutsukonvention mukaiset rekisterit. Käytännöt:
   voi palata ennen kuin linja laskee, ja keskeytys tulee turhaan
   uudelleen. Kuittaus alussa tai lukeminen takaisin estää tämän.
 
+## Järjestelmäkutsu SVC ja prosessipino
+
+Kaksi järjestelmäpoikkeusta on olemassa käyttöjärjestelmää varten.
+Bare-metal-ohjelma ei yleensä tarvitse kumpaakaan, mutta ne
+kannattaa tuntea, koska ne näyttävät poikkeusmallin kokonaisena ja
+koska jokainen reaaliaikakäyttöjärjestelmä on rakennettu niiden
+varaan.
+
 PendSV-poikkeusta ei aiheuta mikään laite; ohjelma laukaisee sen
 ICSR-rekisterin bitillä, ja sen prioriteetiksi asetetaan heikoin
 mahdollinen. Silloin se ajetaan vasta, kun kaikki muut käsittelijät
 ovat valmiita. Reaaliaikakäyttöjärjestelmät vaihtavat säiettä
-PendSV:ssä juuri tästä syystä.
+PendSV:ssä juuri tästä syystä (taito *Reaaliaikakäyttöjärjestelmät*).
+
+Käsky `svc #n` aiheuttaa poikkeuksen 11. Sitä käytetään
+järjestelmäkutsuna: ei-etuoikeutettu koodi pyytää ydintä tekemään
+jotain, mihin sillä itsellään ei ole oikeutta. Argumentit kulkevat
+rekistereissä, ja koska prosessori tallentaa ne poikkeuskehykseen
+(luku 2), käsittelijä löytää ne pinosta ja voi myös kirjoittaa
+paluuarvon kehyksen `r0`:aan.
+
+```{.c tiedosto="esimerkit/05-svc/main.c" osa="kutsu"}
+```
+
+Käsittelijän alku on kirjoitettava assemblynä, koska C-funktion
+prologi tallentaisi rekistereitä ja siirtäisi pino-osoitinta ennen
+kuin ehdimme lukea niitä. Kolme käskyä valitsee EXC_RETURNin bitin 2
+perusteella oikean pinon ja siirtyy C-funktioon, jolle kehys ja
+EXC_RETURN annetaan argumentteina. SVC-numero ei ole rekisterissä:
+se luetaan käskystä itsestään, joka on kaksi tavua ennen
+tallennettua paluuosoitetta.
+
+```{.c tiedosto="esimerkit/05-svc/main.c" osa="svc"}
+```
+
+Pinon vaihtaminen kesken C-funktion ei onnistu, koska kääntäjä
+tallentaa paluuosoitteen funktion alussa yhteen pinoon ja hakisi sen
+lopussa toisesta. Siksi siirtymä prosessipinoon (PSP) tehdään pienessä
+assembly-funktiossa, joka kutsuu C-funktiota uudessa pinossa ja palaa
+vanhaan:
+
+```{.c tiedosto="esimerkit/05-svc/main.c" osa="psp"}
+```
+
+Prosessipinossa ajettava funktio luopuu lopuksi etuoikeuksistaan ja
+yrittää palauttaa ne itse. Kirjoitus CONTROL-rekisteriin ei-
+etuoikeutetusta tilasta jää vaikutuksetta ilman virhettä, joten
+etuoikeudet palautetaan järjestelmäkutsulla `svc #2`:
+
+```{.c tiedosto="esimerkit/05-svc/main.c" osa="prosessi"}
+```
+
+```{.c tiedosto="esimerkit/05-svc/main.c" osa="main"}
+```
+
+Funktio `tila` on sama kuin luvun 2 esimerkissä: se tulostaa IPSR:n ja
+CONTROL-rekisterin tulkittuina.
+
+```{.tuloste tiedosto="esimerkit/testit/05-svc.odotettu"}
+```
+
+Tulosteesta näkyy koko malli. Käsittelijässä IPSR on 11 ja pino aina
+MSP, vaikka toisella ja kolmannella kerralla kehys tallennettiin
+PSP:hen: EXC_RETURN on silloin `0xfffffffd` eikä `0xfffffff9`.
+Handler-tilassa CONTROL.SPSEL luetaan aina nollana, ja nPRIV ei
+vaikuta, koska Handler-tila on aina etuoikeutettu. Kehyksestä luetut
+`r0`–`r3` ovat kutsujan argumentit, ja summa palasi kutsujalle
+kehyksen kautta.
 
 ## Käytännössä
 
@@ -232,3 +295,6 @@ PendSV:ssä juuri tästä syystä.
   BASEPRI:ä.
 - Osaat luetella hyvän keskeytyskäsittelijän säännöt ja sen, miksi
   syyn kuittaus on välttämätön.
+- Osaat toteuttaa järjestelmäkutsun SVC:llä niin, että argumentit ja
+  paluuarvo kulkevat kehyksen kautta, ja selittää, mihin PendSV:tä ja
+  prosessipinoa käytetään.

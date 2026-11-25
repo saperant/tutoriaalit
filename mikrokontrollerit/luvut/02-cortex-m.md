@@ -82,7 +82,7 @@ ja vaihtaa säiettä vaihtamalla PSP:n arvon, kun taas ydin ja
 keskeytykset käyttävät MSP:tä. Ei-etuoikeutettu koodi ei pääse
 ytimen ohjausrekistereihin (alue `0xE000E000` alkaen) eikä voi
 palauttaa itselleen etuoikeuksia: sen on pyydettävä niitä
-järjestelmäkutsulla.
+järjestelmäkutsulla (luku 5).
 
 ## Muistikartta
 
@@ -103,14 +103,25 @@ Ytimen yksityisen väylän (Private Peripheral Bus) tärkein osa on
 SysTick (`0xE000E010`), NVIC (`0xE000E100`), järjestelmän
 ohjauslohko SCB (`0xE000ED00`) ja muistinsuojausyksikkö MPU
 (`0xE000ED90`). Ne ovat samassa paikassa jokaisessa Cortex-M-piirissä.
-SCB:n ensimmäinen rekisteri CPUID kertoo, mikä ydin on kyseessä:
 
-```{.c tiedosto="esimerkit/02-rekisterit/main.c" osa="cpuid"}
+```{.dot otsikko="Cortex-M:n osoiteavaruus (ei mittakaavassa). Oikealla esimerkkien käyttämät osat."}
+digraph {
+  rankdir=LR; nodesep=0.25; ranksep=0.5;
+  node [shape=plaintext, fontsize=10];
+  kartta [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td align="right" border="0">0xE0000000</td><td bgcolor="#E4DCF0" port="ppb">PPB: ytimen rekisterit</td></tr>
+    <tr><td align="right" border="0">0x60000000</td><td bgcolor="white">ulkoinen muisti ja laitteet</td></tr>
+    <tr><td align="right" border="0">0x40000000</td><td bgcolor="#DCEBDD" port="per">oheislaitteet</td></tr>
+    <tr><td align="right" border="0">0x20000000</td><td bgcolor="#F1E3CC" port="ram">SRAM</td></tr>
+    <tr><td align="right" border="0">0x00000000</td><td bgcolor="#EEF1F2" port="code">Code: flash</td></tr>
+  </table>>];
+  scs [label="0xE000E000 SCS: SysTick, NVIC,\lSCB, MPU\l", shape=box, style=filled, fillcolor="#E4DCF0"];
+  laitteet [label="0x40000000 ajastimet\l0x40004000 UART0\l0x40008000 vahtikoira\l0x40028000 LEDit, painikkeet\l", shape=box, style=filled, fillcolor="#DCEBDD"];
+  ram [label="0x20000000 .data, .bss, .noinit, pino\l(64 KiB)\l", shape=box, style=filled, fillcolor="#F1E3CC"];
+  flash [label="0x00000000 vektoritaulu, koodi, vakiot\l(256 KiB)\l", shape=box, style=filled, fillcolor="#EEF1F2"];
+  kartta:ppb -> scs; kartta:per -> laitteet; kartta:ram -> ram; kartta:code -> flash;
+}
 ```
-
-Valmistajakoodi `0x41` on ARM, osanumero `0xc23` Cortex-M3. Oikeassa
-piirissä CPUID on hyvä tarkistaa käynnistyksessä, jos sama ohjelma
-on tarkoitettu usealle piirille.
 
 ## Poikkeukset
 
@@ -152,58 +163,54 @@ ladataan EXC_RETURN-arvo, prosessori tunnistaa sen ja purkaa kehyksen.
 ARMv8-M:ssä ja liukulukuyksikön kanssa arvoja on enemmän, mutta bitti
 2 kertoo aina, kummassa pinossa kehys on.
 
-## Järjestelmäkutsu SVC
+Kehys on aina samanmuotoinen, ja pino kasvaa alaspäin, joten
+käsittelijä löytää keskeytetyn ohjelman rekisterit kiinteistä
+siirtymistä pino-osoittimesta:
 
-Käsky `svc #n` aiheuttaa poikkeuksen 11. Sitä käytetään
-järjestelmäkutsuna: ei-etuoikeutettu koodi pyytää ydintä tekemään
-jotain, mihin sillä itsellään ei ole oikeutta. Argumentit kulkevat
-rekistereissä, ja koska prosessori tallentaa ne kehykseen,
-käsittelijä löytää ne pinosta ja voi myös kirjoittaa paluuarvon
-kehyksen `r0`:aan.
-
-```{.c tiedosto="esimerkit/02-rekisterit/main.c" osa="kutsu"}
+```{.dot otsikko="Poikkeuskehys: kahdeksan sanaa, jotka prosessori tallentaa keskeytetyn ohjelman pinoon"}
+digraph {
+  rankdir=LR; nodesep=0.3;
+  node [shape=plaintext, fontsize=10];
+  pino [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" align="right">suuret osoitteet</td><td bgcolor="white">keskeytetyn ohjelman pino</td><td border="0" align="left" port="ennen">SP ennen poikkeusta</td></tr>
+    <tr><td border="0" align="right">SP + 28</td><td bgcolor="#F1E3CC">xPSR</td><td border="0"></td></tr>
+    <tr><td border="0" align="right">SP + 24</td><td bgcolor="#F1E3CC">pc: mihin palataan</td><td border="0"></td></tr>
+    <tr><td border="0" align="right">SP + 20</td><td bgcolor="#F1E3CC">lr</td><td border="0"></td></tr>
+    <tr><td border="0" align="right">SP + 16</td><td bgcolor="#F1E3CC">r12</td><td border="0"></td></tr>
+    <tr><td border="0" align="right">SP + 12</td><td bgcolor="#F1E3CC">r3</td><td border="0"></td></tr>
+    <tr><td border="0" align="right">SP + 8</td><td bgcolor="#F1E3CC">r2</td><td border="0"></td></tr>
+    <tr><td border="0" align="right">SP + 4</td><td bgcolor="#F1E3CC">r1</td><td border="0"></td></tr>
+    <tr><td border="0" align="right">SP + 0</td><td bgcolor="#F1E3CC">r0</td><td border="0" align="left">SP käsittelijän alussa</td></tr>
+    <tr><td border="0" align="right">pienet osoitteet</td><td bgcolor="white" style="dashed">vapaata</td><td border="0"></td></tr>
+  </table>>];
+}
 ```
 
-Käsittelijän alku on kirjoitettava assemblynä, koska C-funktion
-prologi tallentaisi rekistereitä ja siirtäisi pino-osoitinta ennen
-kuin ehdimme lukea niitä. Kolme käskyä valitsee EXC_RETURNin bitin 2
-perusteella oikean pinon ja siirtyy C-funktioon, jolle kehys ja
-EXC_RETURN annetaan argumentteina. SVC-numero ei ole rekisterissä:
-se luetaan käskystä itsestään, joka on kaksi tavua ennen
-tallennettua paluuosoitetta.
+Poikkeuksista kaksi on tarkoitettu käyttöjärjestelmälle: SVCall on
+järjestelmäkutsu ja PendSV säikeenvaihdon paikka. Niihin sekä
+prosessipinoon ja etuoikeuksista luopumiseen palataan luvun 5 lopussa,
+kun vektoritaulu, rekisterikirjoitukset ja tavallinen keskeytys ovat
+tuttuja.
 
-```{.c tiedosto="esimerkit/02-rekisterit/main.c" osa="svc"}
-```
+## Esimerkki: ydin, vektoritaulu ja tila
 
-Pinon vaihtaminen kesken C-funktion ei onnistu, koska kääntäjä
-tallentaa paluuosoitteen funktion alussa yhteen pinoon ja hakisi sen
-lopussa toisesta. Siksi siirtymä prosessipinoon tehdään pienessä
-assembly-funktiossa, joka kutsuu C-funktiota uudessa pinossa ja palaa
-vanhaan:
+SCB:n ensimmäinen rekisteri CPUID kertoo, mikä ydin on kyseessä.
+Ohjelma tulostaa sen, vektoritaulun kaksi ensimmäistä sanaa ja lopuksi
+oman tilansa edellä näytetyllä funktiolla `tila`:
 
-```{.c tiedosto="esimerkit/02-rekisterit/main.c" osa="psp"}
-```
-
-Prosessipinossa ajettava funktio luopuu lopuksi etuoikeuksistaan ja
-yrittää palauttaa ne itse. Kirjoitus CONTROL-rekisteriin ei-
-etuoikeutetusta tilasta jää vaikutuksetta ilman virhettä, joten
-etuoikeudet palautetaan järjestelmäkutsulla `svc #2`:
-
-```{.c tiedosto="esimerkit/02-rekisterit/main.c" osa="prosessi"}
-```
-
-```{.c tiedosto="esimerkit/02-rekisterit/main.c" osa="main"}
+```{.c tiedosto="esimerkit/02-rekisterit/main.c" osa="cpuid"}
 ```
 
 ```{.tuloste tiedosto="esimerkit/testit/02-rekisterit.odotettu"}
 ```
 
-Tulosteesta näkyy koko malli: Handler-tilassa IPSR on 11 ja pino
-aina MSP, vaikka kehys tallennettiin PSP:hen. Handler-tilassa
-CONTROL.SPSEL luetaan aina nollana, ja nPRIV ei vaikuta, koska
-Handler-tila on aina etuoikeutettu. Vektoritaulun ensimmäinen sana on
-pinon alkuarvo eikä osoite, ja toinen, Reset_Handlerin osoite, on
-pariton.
+Valmistajakoodi `0x41` on ARM, osanumero `0xc23` Cortex-M3. Oikeassa
+piirissä CPUID on hyvä tarkistaa käynnistyksessä, jos sama ohjelma
+on tarkoitettu usealle piirille. Vektoritaulun ensimmäinen sana on
+pinon alkuarvo eikä käsittelijän osoite, ja toinen, Reset_Handlerin
+osoite, on pariton. Pääohjelma on Thread-tilassa, etuoikeutettu ja
+pääpinossa: IPSR on nolla ja CONTROL nolla. Luvussa 5 sama funktio
+kutsutaan poikkeuskäsittelijästä ja prosessipinosta.
 
 ## Käytännössä
 
@@ -231,5 +238,5 @@ pariton.
   Cortex-M:n muistikarttaan.
 - Osaat kuvata poikkeuksen alun ja lopun vaiheet ja tulkita
   EXC_RETURN-arvon.
-- Osaat toteuttaa järjestelmäkutsun SVC:llä niin, että argumentit ja
-  paluuarvo kulkevat kehyksen kautta.
+- Osaat lukea CPUID:n ja vektoritaulun alun ja kertoa, mitä kumpikin
+  sana vektoritaulun alussa tarkoittaa.

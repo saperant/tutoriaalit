@@ -26,9 +26,7 @@
 - **Testit kahdella tasolla.** Logiikka isännällä, ajoitus ja laitteet
   emulaattorissa tai laitteessa, ajot deterministisiksi.
 
-## Mihin tästä
-
-Tutoriaalin taidot jatkuvat taitopuussa:
+## Jatkotaidot
 
 - *Oheislaiteväylät*: UART, SPI, I2C, CAN ja DMA sekä ajurien
   rakenne, jossa RTOSin jonot ja ilmoitukset ovat ajurin ja sovelluksen
@@ -39,7 +37,10 @@ Tutoriaalin taidot jatkuvat taitopuussa:
   päivitykset ja tehtävien eristäminen MPU:lla
 - *Sulautettu Linux*: kun laitteessa on muistinhallintayksikkö ja
   ohjelmistoa on paljon, Linux ja sen reaaliaikalaajennus
-  (PREEMPT_RT) korvaavat RTOSin.
+  (PREEMPT_RT) korvaavat RTOSin
+- *Digitaalinen signaalinkäsittely*: reaaliaikainen näytteiden
+  käsittely, jossa tämän tutoriaalin määräajat ja jonot ovat
+  käytössä.
 
 ## Lähteet
 

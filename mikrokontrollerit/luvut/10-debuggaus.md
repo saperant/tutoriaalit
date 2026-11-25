@@ -67,14 +67,14 @@ muistiviittausta laitteistolla hidastamatta ohjelmaa.
 
 ## Istunto gdb:llä
 
-Esimerkki `11-gdb` laskee näytteiden keskiarvon, mutta tulos on
+Esimerkki `10-gdb` laskee näytteiden keskiarvon, mutta tulos on
 väärä. Virhe etsitään gdb-istunnolla, joka on kirjoitettu
 komentotiedostoksi, jotta se voidaan ajaa ja tarkistaa testinä.
 
-```{.c tiedosto="esimerkit/11-gdb/main.c" osa="keskiarvo"}
+```{.c tiedosto="esimerkit/10-gdb/main.c" osa="keskiarvo"}
 ```
 
-```{.tuloste tiedosto="esimerkit/testit/11-gdb.odotettu"}
+```{.tuloste tiedosto="esimerkit/testit/10-gdb.odotettu"}
 ```
 
 Ohjelma käännetään lipulla `-Og`. Lipulla `-Os` kääntäjä sijoittaa
@@ -84,10 +84,10 @@ odottamattomasti. `-Og` optimoi vain sen verran, ettei debuggaus kärsi.
 gdb käynnistää QEMU:n itse ja puhuu sille putken kautta, joten portteja
 ei tarvita:
 
-```{.sh tiedosto="esimerkit/11-gdb/qemu.sh"}
+```{.sh tiedosto="esimerkit/10-gdb/qemu.sh"}
 ```
 
-```{.gdb tiedosto="esimerkit/11-gdb/istunto.gdb" osa="yhteys"}
+```{.gdb tiedosto="esimerkit/10-gdb/istunto.gdb" osa="yhteys"}
 ```
 
 Ensin katsotaan tilaa resetin jälkeen. Prosessori on pysähtynyt
@@ -96,33 +96,33 @@ ensimmäinen sana, ja toinen sana on Reset_Handlerin osoite plus yksi
 eli Thumb-bitti. Viimeinen komento lukee CPUID-rekisterin suoraan
 muistista: gdb näkee koko osoiteavaruuden, myös oheislaitteet.
 
-```{.gdb tiedosto="esimerkit/11-gdb/istunto.gdb" osa="alku"}
+```{.gdb tiedosto="esimerkit/10-gdb/istunto.gdb" osa="alku"}
 ```
 
 Sitten katkopiste funktioon, kutsupino ja taulukon sisältö. Lauseke
 `taulukko[0]@n` näyttää osoittimen takaa `n` alkiota:
 
-```{.gdb tiedosto="esimerkit/11-gdb/istunto.gdb" osa="katko"}
+```{.gdb tiedosto="esimerkit/10-gdb/istunto.gdb" osa="katko"}
 ```
 
 Taulukko on kunnossa, joten vika on silmukassa. Ehdollinen katkopiste
 pysähtyy vain silmukan viimeisillä kierroksilla, ja `info symbol`
 kertoo, mitä muistissa on taulukon jälkeen:
 
-```{.gdb tiedosto="esimerkit/11-gdb/istunto.gdb" osa="ehto"}
+```{.gdb tiedosto="esimerkit/10-gdb/istunto.gdb" osa="ehto"}
 ```
 
 Lopuksi `finish` ajaa funktion loppuun ja näyttää paluuarvon,
 vahtipiste pysäyttää ohjelman, kun tulos tallennetaan, ja ohjelma
 ajetaan semihosting-lopetukseen asti:
 
-```{.gdb tiedosto="esimerkit/11-gdb/istunto.gdb" osa="finish"}
+```{.gdb tiedosto="esimerkit/10-gdb/istunto.gdb" osa="finish"}
 ```
 
-```{.gdb tiedosto="esimerkit/11-gdb/istunto.gdb" osa="watch"}
+```{.gdb tiedosto="esimerkit/10-gdb/istunto.gdb" osa="watch"}
 ```
 
-```{.tuloste tiedosto="esimerkit/testit/11-gdb-istunto.odotettu"}
+```{.tuloste tiedosto="esimerkit/testit/10-gdb-istunto.odotettu"}
 ```
 
 Silmukka käy läpi indeksin 8, joka on taulukon ulkopuolella, ja lukee

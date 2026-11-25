@@ -105,7 +105,7 @@ kymmenen kertaa (parillinen määrä, joten LED on taas pois), ja
 kuittaamaton keskeytys ajettiin tuhat kertaa yhden laukeamisen
 seurauksena.
 
-## PWM, kaappaus ja vahtikoira
+## PWM ja kaappaus
 
 Yleisajastimen vertailukanava vertaa laskuria rekisterin arvoon ja voi
 muuttaa nastan tilaa ilman ohjelmaa. Kun nasta nousee laskurin alussa
@@ -117,14 +117,142 @@ kun nastalla tapahtuu reuna, jolloin pulssin pituus tai taajuus
 mitataan kellojakson tarkkuudella ilman, että keskeytyksen viive
 vaikuttaa tulokseen.
 
+```{.ajoituskaavio otsikko="PWM ja kaappaus (periaate). Laskuri kiertää 0–7; lähtö on ylhäällä, kun laskuri on pienempi kuin vertailuarvo 3. Kaappausrekisteri tallentaa laskurin arvon tulon nousevalla reunalla."}
+{"signal": [
+  {"name": "kello", "wave": "p................"},
+  {"name": "laskuri", "wave": "=================",
+   "data": ["0","1","2","3","4","5","6","7","0","1","2","3","4","5","6","7","0"]},
+  {"name": "PWM-lähtö", "wave": "1..0....1..0....1"},
+  {},
+  {"name": "tulo", "wave": "0....1...0...1..."},
+  {"name": "kaappaus", "wave": "x....=.......=...", "data": ["5", "5"]}
+], "config": {"hscale": 0.8}}
+```
+
+Kuvan PWM:n pulssisuhde on 3/8. Tulon kaksi nousevaa reunaa kaapattiin
+samalla laskurin arvolla peräkkäisillä kierroksilla, joten tulon jakso
+on täsmälleen kahdeksan kelloa. Oikeassa ajastimessa laskurin
+pyörähdykset lasketaan mukaan ylivuotokeskeytyksessä, kun mitattava
+jakso on laskurin kierrosta pidempi. CMSDK:n ajastimessa ei ole
+vertailu- eikä kaappauskanavia, joten tätä ei voi ajaa emuloidulla
+kortilla; rekisterien nimet ja bitit ovat joka valmistajalla omansa.
+
+## Ajastin laukaisee A/D-muunnoksen
+
+Mikrokontrollerin oma A/D-muunnin (ADC) on tavallisesti
+*peräkkäisapproksimaatiomuunnin* (SAR). Se toimii kahdessa vaiheessa:
+näytteenottokondensaattori kytketään tuloon *näytteenottoajaksi*, ja
+sen jälkeen muunnin hakee jännitettä vastaavan luvun bitti kerrallaan.
+N-bittinen muunnin jakaa viitejännitteen $V_\mathrm{ref}$ 2^N^ portaaseen:
+
+$$\mathrm{koodi} = \left\lfloor \frac{V_\mathrm{in}}{V_\mathrm{ref}}
+\, 2^N \right\rfloor, \qquad
+t_\mathrm{muunnos} = t_\mathrm{näyte} + N \cdot t_\mathrm{ADC-kello}.$$
+
+12-bittisellä muuntimella ja 3,3 voltin viitteellä yksi porras on 0,8
+millivolttia. Tulos on suhteessa viitejännitteeseen, joten viitteen
+kohina ja ryömintä näkyvät suoraan mittauksessa. Jos mitattavan
+lähteen impedanssi on suuri, kondensaattori ei ehdi latautua lyhyessä
+näytteenottoajassa ja tulos jää liian pieneksi; näytteenottoaika
+valitaan rekisteristä lähteen mukaan.
+
+Signaalia mitattaessa tärkeintä on näytteiden *tasainen väli*. Jos
+muunnos käynnistetään ohjelmasta, esimerkiksi tikkikeskeytyksen
+käsittelijästä, näytteenottohetki heiluu keskeytyksen viiveen verran
+(luku 5), ja heilunta näkyy signaalissa kohinana. Siksi ajastin
+kytketään laukaisemaan muunnos suoraan laitteistossa: ajastimen
+tapahtuma käynnistää näytteenoton, ja ohjelma saa keskeytyksen vasta,
+kun tulos on valmis.
+
+```{.ajoituskaavio otsikko="Ajastimen laukaisema A/D-muunnos (periaate). Näytteenottohetki ei riipu siitä, milloin ohjelma ehtii lukea tuloksen."}
+{"signal": [
+  {"name": "ajastimen tapahtuma", "wave": "010.......10......"},
+  {"name": "muunnin", "wave": "2.3.4...2..3.4...2",
+   "data": ["lepo", "näyte", "muunnos", "lepo", "näyte", "muunnos", "lepo"]},
+  {"name": "valmis-keskeytys", "wave": "0.......10.......1"},
+  {"name": "tulosrekisteri", "wave": "x.......=........=", "data": ["n", "n+1"]},
+  {"name": "käsittelijä lukee", "wave": "0.........1.0....."}
+], "config": {"hscale": 0.8}}
+```
+
+Näytteenottotaajuuden on oltava yli kaksi kertaa signaalin suurin
+taajuus, ja sitä suuremmat taajuudet on suodatettava pois analogisesti
+ennen muunninta (laskostuminen, taito *Signaalit ja järjestelmät*).
+Hitaassa mittauksessa tarkkuutta saa lisää *ylinäytteistämällä*:
+neljän peräkkäisen näytteen keskiarvo antaa yhden lisäbitin, kunhan
+signaalissa on vähintään portaan verran kohinaa. Kun näytteitä tulee
+tuhansia sekunnissa, tulokset siirretään puskuriin DMA:lla eikä
+keskeytyksellä.
+
+Emuloidussa kortissa ei ole A/D-muunninta. Taidossa *Oheislaiteväylät*
+luetaan ulkoista muunninta SPI-väylän kautta emuloidusta piiristä, ja
+taito *Digitaalinen signaalinkäsittely* käsittelee näytteet, jotka
+tällainen keskeytys tuottaa.
+
+## Vahtikoira
+
 Vahtikoira on ajastin, joka resetoi piirin, jos ohjelma ei *ruoki*
-sitä määräajassa. Ruokinta kuuluu paikkaan, jossa ohjelma todistaa
-toimivansa, yleensä pääsilmukan loppuun sen jälkeen, kun jokainen
-tehtävä on raportoinut edistyneensä. Ruokinta ajastimen
-keskeytyksessä on yleinen virhe: keskeytys jatkuu, vaikka pääsilmukka
-olisi jumissa, eikä vahtikoira koskaan laukea. Ikkunoitu vahtikoira
-hylkää myös liian aikaisen ruokinnan, mikä paljastaa silmukan, joka
-ruokkii ja ohittaa muun työn.
+sitä määräajassa. Se on viimeinen suoja virheelle, jota ei osattu
+ennakoida: silmukka, joka odottaa ikuisesti, lukkiutunut tilakone tai
+häiriön sekoittama muisti. CMSDK:n vahtikoirassa on kaksi porrasta.
+Ensimmäinen aikaraja aiheuttaa keskeytyksen, joka on tällä kortilla
+kytketty NMI:hin, ja jos sitä ei kuitata, toinen aikaraja resetoi
+laitteen. Lukitusrekisteri estää karannutta ohjelmaa sammuttamasta
+vahtia vahingossa.
+
+```{.c tiedosto="esimerkit/yhteinen/mps2.h" osa="vahtikoira"}
+```
+
+```{.c tiedosto="esimerkit/06-vahtikoira/main.c" osa="vahti"}
+```
+
+Ratkaisevaa on, *missä* vahtia ruokitaan. Ruokinta kuuluu paikkaan,
+jossa ohjelma todistaa toimivansa, yleensä pääsilmukan loppuun sen
+jälkeen, kun jokainen tehtävä on edennyt. Esimerkin pääsilmukka mittaa
+ja lähettää, ja kolmannella kierroksella lähetys jää odottamaan
+kuittausta, jota ei tule:
+
+```{.c tiedosto="esimerkit/06-vahtikoira/main.c" osa="tyo"}
+```
+
+Yleinen virhe on ruokkia vahtia ajastimen keskeytyksessä, koska se on
+helppo paikka, joka ajetaan varmasti. Juuri siksi se on väärä:
+keskeytys jatkuu, vaikka pääsilmukka olisi jumissa, eikä vahtikoira
+koskaan laukea. Esimerkin tikkikäsittelijä tekee näin ensimmäisellä
+käynnistyksellä ja toteaa itse, että pääsilmukka on seissyt kolme
+aikarajaa:
+
+```{.c tiedosto="esimerkit/06-vahtikoira/main.c" osa="tikki"}
+```
+
+Varoituskeskeytys on viimeinen tilaisuus kirjata, missä ohjelma oli.
+Käsittelijä tallentaa vaiheen `.noinit`-alueelle (luku 3), joka säilyy
+resetin yli, ja jättää keskeytyksen kuittaamatta:
+
+```{.c tiedosto="esimerkit/06-vahtikoira/main.c" osa="nmi"}
+```
+
+```{.c tiedosto="esimerkit/06-vahtikoira/main.c" osa="main"}
+```
+
+```{.tuloste tiedosto="esimerkit/testit/06-vahtikoira.odotettu"}
+```
+
+Ensimmäisellä käynnistyksellä laite olisi jäänyt jumiin pysyvästi,
+vaikka vahtikoira oli päällä. Toisella vahti varoitti 100 millisekunnin
+ja resetoi 200 millisekunnin kuluttua viimeisestä ruokinnasta, ja
+kolmas käynnistys tietää syyn ja vaiheen. Oikeassa piirissä resetin
+syy luetaan lisäksi valmistajan tilarekisteristä, joka erottaa
+virrankytkennän, nastan, ohjelmallisen resetin ja vahtikoiran, ja
+kirjaus lähetetään eteenpäin, kun yhteys taas toimii (luku 9).
+Ikkunoitu vahtikoira hylkää myös liian aikaisen ruokinnan, mikä
+paljastaa silmukan, joka ruokkii ja ohittaa muun työn.
+
+Monissa piireissä vahtikoiraa ei voi pysäyttää käynnistyksen jälkeen,
+ja sillä on oma kellolähteensä, jotta se toimii, vaikka pääkello
+pysähtyisi. Emulaattorissa aikaraja kuluu virtuaaliajassa, joten
+testi ajetaan QEMU:n valitsimella `-icount`, joka sitoo ajan
+suoritettuihin käskyihin.
 
 ## Käytännössä
 
@@ -138,6 +266,8 @@ ruokkii ja ohittaa muun työn.
   sijaan.** Ne ovat tarkkoja riippumatta keskeytysten viiveestä.
 - **Ruoki vahtikoiraa vain todistetusta edistyksestä**, ei
   ajastimesta.
+- **Laukaise A/D-muunnos ajastimella**, kun mittaat signaalia, ja
+  valitse näytteenottoaika lähteen impedanssin mukaan.
 
 ## Itsearviointi
 
@@ -148,5 +278,8 @@ ruokkii ja ohittaa muun työn.
 - Osaat toteuttaa viiveen, joka nukkuu, ja kertoa sen tarkkuuden.
 - Osaat selittää, mitä tasoherkälle keskeytykselle tapahtuu, jos sitä
   ei kuitata.
-- Osaat kuvata PWM:n, kaappauksen ja vahtikoiran periaatteen ja
-  vahtikoiran oikean ruokintapaikan.
+- Osaat kuvata PWM:n ja kaappauksen periaatteen.
+- Osaat selittää, miksi A/D-muunnos laukaistaan ajastimella
+  laitteistossa, ja laskea muuntimen portaan koon ja muunnosajan.
+- Osaat ottaa vahtikoiran käyttöön, perustella ruokinnan paikan ja
+  tallentaa jumiutumisen syyn seuraavaa käynnistystä varten.

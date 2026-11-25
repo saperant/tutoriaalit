@@ -88,17 +88,18 @@ Reset: MSP ← [0], PC ← [4]. Reset_Handler: kopioi `.data`
 ```{.c tiedosto="esimerkit/06-ajastimet/main.c" osa="viive"}
 ```
 
-```{.c tiedosto="esimerkit/09-uni/main.c" osa="silmukka"}
+```{.c tiedosto="esimerkit/08-uni/main.c" osa="silmukka"}
 ```
 
 - SysTick LOAD = jakso − 1; aika `nyt - alku` (etumerkitön).
 - WFI herää odottavaan keskeytykseen myös PRIMASK = 1.
 - SCR: SLEEPDEEP, SLEEPONEXIT, SEVONPEND. Tikitön uni RTC:llä.
 - Vahtikoira: ruoki pääsilmukasta todistetun edistyksen jälkeen.
+- A/D-muunnos: laukaisu ajastimella; porras $V_\mathrm{ref}/2^N$.
 
 # Viat
 
-```{.c tiedosto="esimerkit/10-viat/main.c" osa="stub"}
+```{.c tiedosto="esimerkit/09-viat/main.c" osa="stub"}
 ```
 
 | Bitti (CFSR) | Syy |

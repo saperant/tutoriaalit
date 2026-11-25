@@ -120,9 +120,11 @@ Emulaattorissa on kaksi rajoitusta, jotka on hyvä tietää. QEMU:n PL081
 tekee koko siirron heti, kun kanava käynnistetään, joten siirto on
 valmis jo seuraavalla käskyllä. Oikea DMA kilpailee väylästä
 prosessorin kanssa ja valmistuu myöhemmin, joten ohjelma ei saa olettaa
-mitään siirron kestosta. Lisäksi QEMU 8.2:n `mps2-an505`-mallissa DMA:n
+mitään siirron kestosta. Lisäksi QEMU:n `mps2-an505`-mallissa DMA:n
 keskeytys ei päädy NVIC:iin: kanavan valmistumisbitti nousee, mutta
-mikään NVIC:n odottavien keskeytysten rekisterin bitti ei asetu.
+mikään NVIC:n odottavien keskeytysten rekisterin bitti ei asetu
+(tarkistettu QEMU-versiolla 8.2.2; uudempi versio voi käyttäytyä
+toisin).
 Esimerkki kutsuu siksi samaa käsittelyfunktiota odotussilmukasta, jota
 oikeassa ohjelmassa kutsuisi keskeytyskäsittelijä. Käsittelyn sisältö
 on molemmissa sama: tilan luku, kuittaus ja tiedon välitys

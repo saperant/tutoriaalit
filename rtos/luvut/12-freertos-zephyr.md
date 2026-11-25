@@ -3,7 +3,10 @@
 Kide opettaa, miten ydin toimii. Tuotantoon valitaan valmis ydin, jonka
 takana on vuosien käyttö, testaus, tuki ja usein sertifiointi. Tämä
 luku vertaa Kideä kahteen yleisimpään avoimen lähdekoodin RTOSiin ja
-kertoo, mitä niissä on enemmän.
+kertoo, mitä niissä on enemmän. Vertailu on tehty ytimien
+dokumentaation pohjalta: tämän tutoriaalin testit ajavat vain Kideä,
+ja ainoa tässä luvussa ajettu esimerkki on ohjelmistoajastin, joka on
+rakennettu Kiden päälle FreeRTOSin mallin mukaan.
 
 ## FreeRTOS
 
@@ -27,7 +30,7 @@ erot:
 | `xEventGroupSetBits`, `WaitBits` | samat, lisäksi `xEventGroupSync` | FromISR-versio viivästetty |
 | `xTaskNotifyGive`, `ulTaskNotifyTake` | samat, lisäksi `xTaskNotify` (bitit, arvo) ja useita indeksejä | |
 | `pvPortMalloc` (heap_1) | heap_1–heap_5 | |
-| ei | ohjelmistoajastimet (`xTimerCreate`) | ajetaan ajastinpalvelun tehtävässä |
+| ei | ohjelmistoajastimet (`xTimerCreate`) | ajetaan ajastinpalvelun tehtävässä; ks. seuraava osio |
 | ei | stream- ja message buffer | yhden kirjoittajan ja lukijan tavuvirta |
 | ei | SMP, MPU-portit, tikitön uni, jäljityskoukut | |
 
@@ -45,6 +48,66 @@ yksikkö), `ARM_CM4_MPU`, `ARM_CM33` (TrustZone) ja niin edelleen. Väärä
 portti toimii usein lähes oikein, esimerkiksi M4F-piirissä
 `ARM_CM3`-portti ei tallenna liukulukurekistereitä, ja liukulukuja
 käyttävät tehtävät sotkevat toistensa laskennan.
+
+## Ohjelmistoajastimet
+
+Taulukon puutteista yksi on niin yleinen työkalu, että se kannattaa
+katsoa tarkemmin. *Ohjelmistoajastin* kutsuu funktiota tietyn ajan
+kuluttua tai tasaisin välein ilman, että työlle tarvitaan oma
+tehtävä: protokollan aikakatkaisu, LEDin vilkutus, painikkeen
+värähtelyn suodatus. FreeRTOSissa ajastimet (`xTimerCreate`,
+`xTimerStart`) hoitaa yksi ytimen luoma tehtävä, *ajastinpalvelu*
+(*timer daemon*). `xTimerStart` ei käynnistä ajastinta itse vaan
+lähettää palvelulle komennon jonossa, ja palvelu nukkuu jonossa
+seuraavaan erääntymiseen asti.
+
+Kidessä ajastimia ei ole, mutta ne voi rakentaa sen jonon päälle
+samalla periaatteella. Esimerkin toteutus on noin viisikymmentä riviä:
+
+```{.c tiedosto="esimerkit/17-ajastimet/main.c" osa="tyypit"}
+```
+
+```{.c tiedosto="esimerkit/17-ajastimet/main.c" osa="kaynnista"}
+```
+
+```{.c tiedosto="esimerkit/17-ajastimet/main.c" osa="palvelu"}
+```
+
+Palvelun silmukassa on kaksi syytä herätä: jonoon tuli komento, tai
+odotuksen aikaraja täyttyi, jolloin lähin ajastin on erääntynyt.
+Jaksollisen ajastimen seuraava hetki lasketaan edellisestä
+erääntymisestä eikä nykyhetkestä, joten myöhästyminen ei kasaudu
+(sama asia kuin `vTaskDelayUntil`in ja `vTaskDelay`n ero luvussa 2).
+
+Takaisinkutsut ajetaan palvelun kontekstissa, sen pinossa ja sen
+prioriteetilla. Tästä seuraa kolme sääntöä, jotka esimerkki näyttää:
+
+```{.c tiedosto="esimerkit/17-ajastimet/main.c" osa="kutsut"}
+```
+
+```{.c tiedosto="esimerkit/17-ajastimet/main.c" osa="sovellus"}
+```
+
+```{.tuloste tiedosto="esimerkit/testit/17-ajastimet.odotettu"}
+```
+
+- **Takaisinkutsu ei saa odottaa eikä laskea pitkään.** Hidas
+  takaisinkutsu vei seitsemän tikkiä, ja sinä aikana erääntynyt vilkku
+  ajettiin kolme tikkiä myöhässä. Kaikki ajastimet jakavat yhden
+  tehtävän.
+- **Takaisinkutsu herättää, tehtävä tekee.** Aikakatkaisun
+  takaisinkutsu vain antaa ilmoituksen, ja sovellustehtävä käsittelee
+  tilanteen omalla prioriteetillaan ja omassa pinossaan.
+- **Palvelun prioriteetti on ajastimien tarkkuus.** Jokainen palvelua
+  tärkeämpi tehtävä viivästyttää takaisinkutsuja. FreeRTOSissa
+  prioriteetti on asetus `configTIMER_TASK_PRIORITY`, ja komentojonon
+  pituus `configTIMER_QUEUE_LENGTH`: jos jono on täynnä,
+  `xTimerStart` odottaa tai epäonnistuu kuten mikä tahansa lähetys.
+
+Ajastin ei korvaa jaksollista tehtävää, jolla on määräaika: sen
+ajoitus riippuu muista takaisinkutsuista, eikä sitä voi analysoida
+erikseen (luku 9). Tiukat jaksot tehdään omana tehtävänään tai
+laitteiston ajastimella.
 
 ## Zephyr
 
@@ -124,6 +187,9 @@ keskeytysprioriteetit ja valvottu pinonkäyttö.
 - **Pidä sovellus irti ytimen rajapinnasta**, jos ytimen vaihto on
   mahdollinen: ohut oma kerros tai CMSIS-RTOS2 tekee siirrosta
   helpomman.
+- **Pidä ajastimen takaisinkutsu lyhyenä** ja anna varsinainen työ
+  tehtävälle; aseta ajastinpalvelun prioriteetti sen mukaan, kuinka
+  tarkkoja ajastimien pitää olla.
 - **Muista prioriteettien suunta.** FreeRTOS: suurempi on tärkeämpi.
   Zephyr ja NVIC: pienempi on tärkeämpi.
 
@@ -131,6 +197,9 @@ keskeytysprioriteetit ja valvottu pinonkäyttö.
 
 - Osaat kertoa, mitä FreeRTOSissa on Kiden lisäksi ja mitä tärkeimmät
   asetukset tekevät.
+- Osaat selittää, miten ohjelmistoajastimet toimivat ajastinpalvelun
+  tehtävässä, ja mitä siitä seuraa takaisinkutsujen sisällölle ja
+  tarkkuudelle.
 - Osaat kääntää FreeRTOS-ohjelman käsitteet Zephyrin käsitteiksi ja
   muistaa prioriteettien eri suunnan.
 - Osaat valita ytimen tuotteen tarpeiden mukaan ja kertoa, mitä

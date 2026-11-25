@@ -1,5 +1,5 @@
 /* UART0-ajuri. Lähetys odottaa pollaamalla, että lähetysrekisteri
- * vapautuu; keskeytysohjattu vastaanotto on esimerkissä 08-rengas. */
+ * vapautuu; keskeytysohjattu vastaanotto on esimerkissä 07-rengas. */
 #include <stdarg.h>
 #include <stdint.h>
 

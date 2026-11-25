@@ -53,13 +53,26 @@ Binäärisemaforilla:
 ```{.tuloste tiedosto="esimerkit/testit/13-inversio.odotettu"}
 ```
 
+Aikajanan alin rivi näyttää matalan prioriteetin jokaisen tikin
+lopussa. Sama ajo kaaviona, joka on tuotettu yllä olevasta
+tulosteesta:
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/13-inversio.json" otsikko="Rajaton inversio binäärisemaforilla. Korkea pyytää väylää hetkellä 1, mutta keski ajaa kuusi tikkiä matalan edellä, ja korkea saa väylän vasta hetkellä 10."}
+```
+
+Semaforilla korkea odottaa yhdeksän tikkiä, joista kuusi on
+keskitason laskentaa. Matalan prioriteetti pysyy koko ajan yhtenä,
+joten keski, jonka prioriteetti on 2, ajaa sen ohi.
+
 Mutexilla:
 
 ```{.tuloste tiedosto="esimerkit/testit/13-inversio-mutex.odotettu"}
 ```
 
-Semaforilla korkea odottaa yhdeksän tikkiä, joista kuusi on
-keskitason laskentaa. Mutexilla matala perii korkean prioriteetin 3
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/13-inversio-mutex.json" otsikko="Sama mutexilla. Matala perii prioriteetin 3 hetkellä 1 ja ajaa siirtonsa loppuun; korkea saa väylän hetkellä 4, ja keski pääsee ajoon vasta sen jälkeen."}
+```
+
+Mutexilla matala perii korkean prioriteetin 3
 sillä hetkellä, kun korkea jää odottamaan. Keskitaso herää hetkellä 2
 mutta ei pääse ajoon, koska matala on nyt sitä tärkeämpi. Matala
 vapauttaa väylän hetkellä 4, palaa prioriteettiin 1, ja korkea saa

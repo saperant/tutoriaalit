@@ -5,7 +5,7 @@
 PYTHON    ?= python3
 ESIMERKIT := avokollektori uart_kehys uart_nopeus spi_moodit \
              spi_laitteet i2c_kaavio i2c_virheet can_kehys \
-             can_arbitraatio can_virheet can_ajoitus
+             can_arbitraatio can_virheet can_ajoitus can_isotp
 export PYTHONDONTWRITEBYTECODE := 1
 
 .PHONY: kaikki tarkista testit kaaviot siivoa $(ESIMERKIT)

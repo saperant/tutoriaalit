@@ -91,17 +91,54 @@ suoraan osoitin eikä arvo, jota pitäisi lukea.
 
 Oikean piirin käynnistyskoodissa on muutakin. Liukulukuyksikkö
 (Cortex-M4F, M7, M33) on sallittava CPACR-rekisterillä ennen ensimmäistä
-liukulukukäskyä, muuten käsky aiheuttaa UsageFaultin. Kellojärjestelmä
-nostetaan oletustaajuudelta (usein sisäinen 4–16 MHz:n RC-oskillaattori)
-käyttötaajuudelle, ja flashin odotustilat asetetaan ennen kellon
-nostamista. C++-ohjelmassa globaalien olioiden konstruktorit ajetaan
-kutsulla `__libc_init_array`. CMSIS-käytännössä tämä kaikki tehdään
-funktiossa `SystemInit`, jota Reset_Handler kutsuu ennen `main`ia.
+liukulukukäskyä, muuten käsky aiheuttaa UsageFaultin. C++-ohjelmassa
+globaalien olioiden konstruktorit ajetaan kutsulla
+`__libc_init_array`. CMSIS-käytännössä tämä kaikki tehdään funktiossa
+`SystemInit`, jota Reset_Handler kutsuu ennen `main`ia.
+
+Suurin puuttuva osa on kellojärjestelmä. Emuloidussa kortissa kello on
+kiinteä 25 MHz, mutta oikea piiri käynnistyy sisäisellä
+RC-oskillaattorilla (usein 4–16 MHz, tarkkuus prosentin luokkaa), ja
+ohjelma rakentaa siitä käyttökellon itse. Tyypillinen kellopuu näyttää
+tältä:
+
+```{.dot otsikko="Tyypillinen kellopuu (periaate). Ohjelma valitsee lähteen, kertoimet ja jakajat rekistereillä; jokaisella oheislaitteella on oma kellon sallintabittinsä."}
+digraph {
+  rankdir=LR; nodesep=0.22; ranksep=0.4;
+  node [fontsize=10];
+  rc [label="sisäinen RC\n8 MHz, ±1 %"];
+  kide [label="ulkoinen kide\n8 MHz, ±20 ppm"];
+  lse [label="kellokide\n32,768 kHz"];
+  pll [label="PLL\n× 9"];
+  mux [label="valitsin", shape=trapezium, orientation=270];
+  jak [label="väyläjakajat\n/1, /2"];
+  cpu [label="ydin, SysTick,\nmuisti: 72 MHz", style="rounded,filled,bold"];
+  per [label="oheislaitteet:\n36 tai 72 MHz", style="rounded,filled"];
+  rtc [label="RTC, matalan\ntehon ajastin", style="rounded,filled"];
+  rc -> mux; kide -> pll -> mux; kide -> mux [style=dashed];
+  mux -> cpu; mux -> jak;
+  jak -> per [label="sallinta-\nbitti"];
+  lse -> rtc [minlen=3];
+}
+```
+
+Kellon vaihdossa järjestys on tärkeä. Uuden lähteen on oltava
+käynnissä ja vakaa ennen kuin siihen vaihdetaan (kide ja PLL
+ilmoittavat valmiudestaan tilabitillä, ja käynnistyminen vie
+millisekunteja). Flashin odotustilat lisätään *ennen* taajuuden
+nostamista, koska flash ei ehdi vastata nopeammalle kellolle, ja
+vähennetään vasta laskemisen *jälkeen*. Lopuksi päivitetään kaikki,
+mikä riippuu taajuudesta: SysTickin jakso, UARTin jakaja ja
+ajastimien esijakajat. Kellopuuhun palataan kahdesti: luvussa 4
+oheislaitteen kello on sallittava ennen kuin sen rekistereihin voi
+kirjoittaa, ja luvussa 8 lepotilat eroavat juuri siinä, mitkä puun
+haarat ne pysäyttävät.
 
 ## Linkkeriskripti
 
 Linkkeriskripti kertoo, mitä muistia piirissä on ja mihin osiot
-sijoitetaan. Taito *Binäärit ja linkitys* esitteli skriptin rakenteen;
+sijoitetaan. Taito *Objektitiedostot, linkitys ja ABI* esitteli skriptin
+rakenteen;
 tässä keskitytään siihen, mitä mikrokontrolleri vaatii.
 
 ```{.ld tiedosto="esimerkit/yhteinen/laite.ld" osa="muisti"}

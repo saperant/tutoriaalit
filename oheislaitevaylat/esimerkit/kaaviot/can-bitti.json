@@ -1,0 +1,57 @@
+{
+ "signal": [
+  {
+   "name": "aikakvantti",
+   "wave": "================",
+   "data": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8"
+   ]
+  },
+  {
+   "name": "segmentti",
+   "wave": "==....=.==....=.",
+   "data": [
+    "SYNC",
+    "TSEG1",
+    "TSEG2",
+    "SYNC",
+    "TSEG1",
+    "TSEG2"
+   ]
+  },
+  {
+   "name": "bitti väylällä",
+   "wave": "=.......=.......",
+   "data": [
+    "bitti 1",
+    "bitti 2"
+   ]
+  },
+  {
+   "name": "luettu arvo",
+   "wave": "x.....=.x.....=.",
+   "data": [
+    "bitti 1",
+    "bitti 2"
+   ]
+  }
+ ],
+ "config": {
+  "hscale": 1.1
+ }
+}

@@ -4,3 +4,8 @@ NIMI    := mikrokontrollerit
 KIELI   := projekti
 RAKENNE := taito
 include ../yhteiset/paketti.mk
+
+# Luvun 8 periaatekuva; PNG on versionhallinnassa.
+.PHONY: kuvat
+kuvat:
+	python3 kuvat/piirra.py

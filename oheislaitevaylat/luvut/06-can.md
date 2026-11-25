@@ -8,7 +8,8 @@ solmuja. Väylällä ei ole isäntää. Kuka tahansa voi lähettää, kun
 väylä on vapaa, ja yhtäaikaisen lähetyksen ratkaisee arbitraatio,
 joka ei hukkaa yhtään bittiä. Laitteisto hoitaa kuittaukset,
 virheiden havaitsemisen ja uudelleenlähetykset. Ylemmät protokollat,
-kuten CANopen, J1939 ja ISO-TP, määrittelevät viestien merkityksen.
+kuten CANopen, J1939 ja ISO-TP, määrittelevät viestien merkityksen ja
+sen, miten kahdeksaa tavua pidempi viesti siirretään.
 
 QEMU:ssa ei ole CAN-väylää mikrokontrollerikortille, joten tämän
 luvun esimerkit ovat Python-malleja. Ne tuottavat kehyksen bitit
@@ -76,6 +77,13 @@ merkkinä.
 ```
 
 ```{.tuloste tiedosto="esimerkit/python/can_kehys.odotettu"}
+```
+
+Sama kehys linjalla. Kaavio on tuotettu mallista: väylän taso bitti
+bitiltä, kentät ja täytebittien paikat. Vastaanottaja on kuitannut
+kehyksen vetämällä ACK-paikan dominantiksi.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/can-kehys.json" otsikko="Datakehys 0x123, data 00 ff, yhteensä 65 bittiä. S = SOF, R = RTR, I = IDE, r = r0, e = erotin, A = ACK-paikka. Alin rivi on ylhäällä täytebitin kohdalla: jokainen seuraa viittä samanarvoista bittiä."}
 ```
 
 Datatavut `0x00` ja `0xFF` pakottavat täytebittejä: täytetty kehys on
@@ -188,6 +196,12 @@ suosittelee noin 87,5 %:n näytepistettä.
 ```{.tuloste tiedosto="esimerkit/python/can_ajoitus.odotettu"}
 ```
 
+Tulosteen ensimmäinen rivi kuvana: kahdeksan kvanttia bittiä kohti,
+ja arvo luetaan TSEG1:n ja TSEG2:n rajalla.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/can-bitti.json" otsikko="Kaksi bittiä aikakvantteina (8 MHz, 1 Mbit/s). Solmu tahdistuu reunaan SYNC-segmentissä ja lukee väylän TSEG1:n lopussa, tässä kohdassa 6/8 = 75 %."}
+```
+
 8 MHz:n kello riittää 1 Mbit/s:iin vain kahdeksalla kvantilla bittiä
 kohti, ja koska TSEG2 vaatii vähintään kaksi kvanttia, näytepiste jää
 75 %:iin. Siksi CAN-laitteissa käytetään yleensä 16, 20, 40 tai 80 MHz:n
@@ -196,6 +210,32 @@ lähelle samaa näytepistettä. Väylän pituus rajoittaa nopeutta, koska
 signaalin on ehdittävä väylän päästä päähän ja takaisin ennen
 näytepistettä. Nyrkkisääntö on noin 40 m 1 Mbit/s:n nopeudella,
 100 m 500 kbit/s:n ja 500 m 125 kbit/s:n nopeudella.
+
+## Pitkä viesti: ISO-TP
+
+Kahdeksan tavun raja on liian pieni esimerkiksi diagnostiikalle ja
+ohjelmistopäivityksille. Ylemmät protokollat ratkaisevat tämän
+pilkkomalla viestin. Autojen diagnostiikan kuljetuskerros ISO-TP
+(ISO 15765-2) käyttää datakentän ensimmäistä tavua kehyksen lajin ja
+järjestyksen kertomiseen:
+
+```{.python tiedosto="esimerkit/python/can_isotp.py" osa="pilko"}
+```
+
+```{.python tiedosto="esimerkit/python/can_isotp.py" osa="ajo"}
+```
+
+```{.tuloste tiedosto="esimerkit/python/can_isotp.odotettu"}
+```
+
+Ensimmäinen kehys kertoo koko viestin pituuden (`0x014` = 20) ja vie
+kuusi tavua. Vastaanottaja vastaa vuonohjauskehyksellä, jolla se voi
+myös hidastaa lähettäjää, ja loput tulevat numeroituina
+jatkokehyksinä. Järjestysnumero paljastaa kadonneen kehyksen, mutta
+uudelleenlähetys on sovelluksen asia: koko viesti lähetetään uudelleen.
+Kahdenkymmenen tavun siirto vei väylällä 411 bittiä, joista 160 on
+hyötykuormaa. CANopen ja J1939 pilkkovat pitkät viestit samalla
+periaatteella mutta omilla kehysmuodoillaan.
 
 ## CAN FD ja CAN XL
 
@@ -234,3 +274,5 @@ solmuja ei voi sekoittaa samalla väylällä ilman suunnittelua.
   milloin rikkinäinen solmu irtoaa väylästä.
 - Osaat laskea bitin ajoituksen annetulle kellolle ja nopeudelle ja
   perustella näytepisteen valinnan.
+- Osaat selittää, miten kahdeksaa tavua pidempi viesti pilkotaan
+  kehyksiksi ja mitä vuonohjauskehys ja järjestysnumero tekevät.

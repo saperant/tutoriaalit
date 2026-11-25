@@ -167,7 +167,8 @@ suoja.
 Laitteistoon perustuva suoja on parempi. **MPU** voi kieltää pääsyn
 32 tavun alueelle jokaisen pinon alla, jolloin ensimmäinen ylivuotava
 kirjoitus aiheuttaa MemManage-vian juuri siinä kohdassa (taito
-*Mikrokontrollerit*, luku 9). FreeRTOSin MPU-portit tekevät tämän.
+*Mikrokontrollerit ja bare-metal-ohjelmointi*). FreeRTOSin MPU-portit
+tekevät tämän.
 ARMv8-M-arkkitehtuurin (esimerkiksi Cortex-M33 ja M55) **PSPLIM**-rekisteri
 asettaa pinolle alarajan, jonka alittaminen on vika, ja RTOS päivittää
 sen jokaisessa vaihdossa.

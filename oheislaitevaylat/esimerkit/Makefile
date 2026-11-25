@@ -78,6 +78,8 @@ build/%.tulos: build/%.elf testit/%.odotettu
 	mv $@.tmp $@
 # @loppu ajo
 
+# Testattu QEMU 8.2.2:lla: sen mps2-an505-mallissa PL081:n keskeytys ei
+# näy NVIC:ssä, joten esimerkki pollaa valmistumisbittiä (ks. luku 7).
 build/07-dma.tulos: build/07-dma.elf testit/07-dma.odotettu
 	{ $(AIKARAJA) $(QEMU) -M mps2-an505 -kernel $<; \
 	  echo "paluuarvo $$?"; } > $@.tmp 2>&1

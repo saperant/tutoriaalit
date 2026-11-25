@@ -62,6 +62,28 @@ typedef struct {
 #define AJASTIN_CTRL_IRQEN (1u << 3)
 // @loppu ajastin
 
+// @alku vahtikoira
+/* CMSDK APB -vahtikoira. Ensimmäinen aikaraja aiheuttaa keskeytyksen
+ * (tällä kortilla NMI), toinen ilman ruokintaa resetoi laitteen. */
+typedef struct {
+    volatile uint32_t LOAD;    /* 0x000 aikaraja kellojaksoina */
+    volatile const uint32_t VALUE; /* 0x004 laskee alaspäin */
+    volatile uint32_t CTRL;    /* 0x008 bitti 0 INTEN, bitti 1 RESEN */
+    volatile uint32_t INTCLR;  /* 0x00C kirjoitus: kuittaus ja lataus */
+    volatile const uint32_t RIS; /* 0x010 raaka keskeytystila */
+    volatile const uint32_t MIS; /* 0x014 peitetty keskeytystila */
+    uint32_t varattu[762];
+    volatile uint32_t LOCK;    /* 0xC00 kirjoitussuoja */
+} vahtikoira_t;
+
+_Static_assert(offsetof(vahtikoira_t, LOCK) == 0xC00, "vahtikoira");
+
+#define VAHTIKOIRA ((vahtikoira_t *)0x40008000u)
+#define VAHTI_CTRL_INTEN (1u << 0)   /* laskuri ja keskeytys päälle */
+#define VAHTI_CTRL_RESEN (1u << 1)   /* toinen aikaraja resetoi */
+#define VAHTI_AVAIN      0x1ACCE551u /* LOCK: avaa rekisterit */
+// @loppu vahtikoira
+
 /* Keskeytyslinjat (mps2-an385). */
 enum {
     UART0RX_IRQn = 0,

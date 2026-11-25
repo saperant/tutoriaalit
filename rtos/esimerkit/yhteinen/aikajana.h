@@ -10,6 +10,9 @@
 
 /* Lisää tehtävän aikajanan riveille (enintään 8, lisäysjärjestys). */
 void aikajana_lisaa(TaskHandle_t tehtava);
+/* Lisää aikajanan alle rivin, joka näyttää tehtävän prioriteetin
+ * jokaisen tikin lopussa (prioriteetin periytys näkyviin). */
+void aikajana_seuraa_prioriteettia(TaskHandle_t tehtava);
 /* Tulostaa välin [0, loppu) tikit. */
 void aikajana_tulosta(TickType_t loppu);
 /* Tulostaa rivien tehtävien prioriteetin, ajoajan ja valintakerrat. */

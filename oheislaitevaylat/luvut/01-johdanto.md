@@ -27,15 +27,25 @@ Tämä tutoriaali käsittelee molempia:
 - **ajurikerroksia**: rajapinnat, virheiden käsittely ja aikarajat sekä
   ajurin testaus isäntäkoneella mallia vastaan.
 
+## Esitiedot ja rajaus
+
 Esitiedoiksi oletetaan taito *Mikrokontrollerit ja bare-metal-
 ohjelmointi*: Cortex-M:n muistikartta, käynnistyskoodi, muistiin
 kuvatut rekisterit ja `volatile`, keskeytykset ja NVIC sekä
 keskeytyksen ja pääohjelman yhteinen data. Niitä ei toisteta tässä.
-Taidot *Reaaliaikakäyttöjärjestelmät*, *Linux-ajurit* ja
-*Laiteohjelmiston takaisinmallinnus* jatkavat tästä. Digitaalisen
-logiikan puolelta väylät näkyvät taidoissa *RTL-suunnittelu* ja
-*SoC-integraatio*, ja siirtoteiden fysiikka taidossa
-*Tietoliikennetekniikka*.
+
+Tutoriaali käsittelee piirilevyn ja laitteen sisäisiä väyliä
+ohjelmoijan näkökulmasta. Rajauksen ulkopuolelle jäävät
+
+- USB ja Ethernet, joissa on oma protokollapinonsa; ne mainitaan
+  vertailussa luvussa 2 (verkot: taito *Tietoverkot*)
+- väylien toteutus logiikkana: *RTL-suunnittelu SystemVerilogilla* ja
+  *SoC-integraatio*;
+  kolmitila- ja avonielulähdöt porttitasolla: *Digitaalitekniikka*
+- siirtoteiden fysiikka, modulaatio ja virheenkorjaus:
+  *Tietoliikennetekniikka*
+- ajurit käyttöjärjestelmän alla: *Reaaliaikakäyttöjärjestelmät* ja
+  *Linux-laiteajurit*.
 
 ## Laboratorio
 
@@ -44,7 +54,8 @@ kanssa, mutta tutoriaalin esimerkit on tehty niin, että jokainen
 tuloste voidaan testata. Työkaluja on kaksi.
 
 **QEMU ja emuloidut laitteet.** Cortex-M-ohjelmat ajetaan QEMU:n
-`mps2-an385`-kortilla samoin kuin paketissa *Mikrokontrollerit*.
+`mps2-an385`-kortilla samoin kuin taidossa *Mikrokontrollerit ja
+bare-metal-ohjelmointi*.
 Kortilla on viisi CMSDK-UARTia, viisi ARM:n PL022-SPI-lohkoa ja neljä
 SBCon-lohkoa, joilla ohjelma ohjaa I2C-väylän linjoja itse. QEMU
 osaa kytkeä väyliin emuloituja laitteita komentoriviltä:

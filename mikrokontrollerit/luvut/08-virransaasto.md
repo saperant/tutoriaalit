@@ -69,20 +69,39 @@ keskeytykseen, vaikka PRIMASK estäisi sen käsittelyn. Tarkistus ja
 nukahtaminen tehdään keskeytykset kiellettyinä, ja ne sallitaan
 heräämisen jälkeen, jolloin odottanut käsittelijä ajetaan.
 
-```{.c tiedosto="esimerkit/09-uni/main.c" osa="silmukka"}
+```{.ajoituskaavio otsikko="Kadonnut herätys (periaate). Keskeytys osuu tarkistuksen ja WFI:n väliin: lippu on asetettu, mutta prosessori nukahtaa ja herää vasta seuraavaan keskeytykseen."}
+{"signal": [
+  {"name": "suoritus", "wave": "3....4.....3..2...|.3..",
+   "data": ["main: lippu == 0?", "käsittelijä: lippu = 1", "main: wfi", "uni", "main"]},
+  {"name": "lippu", "wave": "0......1..........|...."},
+  {"name": "seuraava keskeytys", "wave": "0.................|10.."}
+], "config": {"hscale": 0.85}}
+```
+
+```{.ajoituskaavio otsikko="Oikea nukahtaminen (periaate). Keskeytys jää odottamaan PRIMASKin taakse, WFI palaa heti ja käsittelijä ajetaan, kun keskeytykset sallitaan."}
+{"signal": [
+  {"name": "PRIMASK", "wave": "01..........0.........."},
+  {"name": "IRQ odottaa", "wave": "0....1......0.........."},
+  {"name": "suoritus", "wave": "23.....3....4.....2....",
+   "data": ["", "main: lippu == 0?", "main: wfi", "käsittelijä: lippu = 1", "main: työ"]},
+  {"name": "lippu", "wave": "0.............1........"}
+], "config": {"hscale": 0.85}}
+```
+
+```{.c tiedosto="esimerkit/08-uni/main.c" osa="silmukka"}
 ```
 
 Esimerkki näyttää molemmat tavat. Keskeytys laukaistaan
 ohjelmallisesti juuri tarkistuksen ja WFI:n väliin, ja yhden
 sekunnin päähän asetettu ajastin toimii varaherätyksenä:
 
-```{.c tiedosto="esimerkit/09-uni/main.c" osa="kadonnut"}
+```{.c tiedosto="esimerkit/08-uni/main.c" osa="kadonnut"}
 ```
 
-```{.c tiedosto="esimerkit/09-uni/main.c" osa="isr"}
+```{.c tiedosto="esimerkit/08-uni/main.c" osa="isr"}
 ```
 
-```{.tuloste tiedosto="esimerkit/testit/09-uni.odotettu"}
+```{.tuloste tiedosto="esimerkit/testit/08-uni.odotettu"}
 ```
 
 Väärä tapa heräsi vasta sekunnin päästä ajastimeen, vaikka tapahtuma
@@ -129,7 +148,24 @@ käyttävät siksi *tikitöntä* ajoitusta: ennen nukahtamista lasketaan,
 milloin seuraava ajastettu työ on, asetetaan matalan tehon ajastin tai
 RTC herättämään silloin, ja heräämisen jälkeen korjataan aikalaskuri
 nukutulla ajalla. FreeRTOS:n `configUSE_TICKLESS_IDLE` ja Zephyrin
-tikitön ydin tekevät tämän automaattisesti.
+tikitön ydin tekevät tämän automaattisesti. Taito
+*Reaaliaikakäyttöjärjestelmät* näyttää, mitä ydin laskee ennen
+nukahtamista.
+
+Seuraava kuva näyttää, miksi tämä kannattaa. Anturi mittaa kerran
+sekunnissa viiden millisekunnin ajan. Virrat ovat edellisen taulukon
+suuruusluokkia (ajo 5 mA, uni 1,5 mA, syvä uni 3 µA), eivät mittauksia.
+
+![Virrankulutus ajan funktiona kolmella tavalla odottaa (periaate,
+logaritminen asteikko); selitteessä keskivirta. Keskiarvon määrää
+odotusaika, ei mittaus.](kuvat/virta.png){width=85%}
+
+| Odotus | Keskivirta | 220 mAh:n nappiparisto kestää |
+|--------|------------|-------------------------------|
+| kiireinen odotus | 5,0 mA | 44 tuntia |
+| uni, tikki 1 ms | 1,5 mA | 6 vuorokautta |
+| syvä uni ja RTC-herätys | 28 µA | 11 kuukautta |
+
 
 ## Mittaaminen
 

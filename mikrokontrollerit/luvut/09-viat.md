@@ -40,22 +40,22 @@ Paikka on pinossa. Poikkeuksen alussa tallennettu kehys sisältää PC:n,
 joka osoittaa vian aiheuttaneeseen käskyyn, ja LR:n, joka kertoo,
 mistä funktio kutsuttiin. Käsittelijän on siis ensin löydettävä kehys,
 mikä tehdään samalla kolmen käskyn assemblyllä kuin SVC-käsittelijässä
-luvussa 2.
+luvussa 5.
 
-```{.c tiedosto="esimerkit/10-viat/main.c" osa="kehys"}
+```{.c tiedosto="esimerkit/09-viat/main.c" osa="kehys"}
 ```
 
-```{.c tiedosto="esimerkit/10-viat/main.c" osa="stub"}
+```{.c tiedosto="esimerkit/09-viat/main.c" osa="stub"}
 ```
 
 Kaikki neljä vikapoikkeusta ohjataan samaan koodiin aliaksilla.
 C-osa tulostaa poikkeuksen nimen IPSR:n perusteella, avaa CFSR:n bitit
 ja osoiterekisterit ja kuittaa tilabitit kirjoittamalla ne takaisin.
 
-```{.c tiedosto="esimerkit/10-viat/main.c" osa="bitit"}
+```{.c tiedosto="esimerkit/09-viat/main.c" osa="bitit"}
 ```
 
-```{.c tiedosto="esimerkit/10-viat/main.c" osa="kasittely"}
+```{.c tiedosto="esimerkit/09-viat/main.c" osa="kasittely"}
 ```
 
 Tämän esimerkin käsittelijä jatkaa ohjelmaa siirtämällä kehyksen
@@ -75,16 +75,16 @@ vertaamalla kehyksen PC:tä nimiön osoitteeseen. Oikeassa ohjelmassa
 sama tieto saadaan työkalulla: `arm-none-eabi-addr2line -e ohjelma.elf
 0x1234` kertoo osoitetta vastaavan tiedoston ja rivin.
 
-```{.c tiedosto="esimerkit/10-viat/main.c" osa="viat"}
+```{.c tiedosto="esimerkit/09-viat/main.c" osa="viat"}
 ```
 
 Seitsemäs vika tulee muistinsuojausyksiköstä MPU:sta, joka asetetaan
 luvun lopussa. Ajo:
 
-```{.c tiedosto="esimerkit/10-viat/main.c" osa="main"}
+```{.c tiedosto="esimerkit/09-viat/main.c" osa="main"}
 ```
 
-```{.tuloste tiedosto="esimerkit/testit/10-viat.odotettu"}
+```{.tuloste tiedosto="esimerkit/testit/09-viat.odotettu"}
 ```
 
 Tapaukset yksi kerrallaan:
@@ -142,7 +142,7 @@ tyypillisesti kahdeksan aluetta, joiden koko on kahden potenssi
 (vähintään 32 tavua) ja alku tasattu koon mukaan. ARMv8-M:ssä alue
 määritellään alku- ja loppuosoitteella 32 tavun tarkkuudella.
 
-```{.c tiedosto="esimerkit/10-viat/main.c" osa="mpu"}
+```{.c tiedosto="esimerkit/09-viat/main.c" osa="mpu"}
 ```
 
 PRIVDEFENA tarkoittaa, että etuoikeutettu koodi saa käyttää muuta

@@ -8,9 +8,9 @@ kuin Linux tai Windows, RTOS ei lupaa hyvää keskimääräistä läpäisyä
 vaan *ennustettavan* vasteajan: tärkein valmis tehtävä pääsee ajoon
 aina, ja ytimen omat toiminnot vievät tunnetun ajan.
 
-Pienimmät laitteet pärjäävät ilman käyttöjärjestelmää. Taidon
-*Mikrokontrollerit* luvussa 11 rakennettiin pääsilmukka, tapahtumajono
-ja tilakone. Malli toimii, kun kaikki työ on lyhyttä. Se murtuu, kun
+Pienimmät laitteet pärjäävät ilman käyttöjärjestelmää. Taidossa
+*Mikrokontrollerit ja bare-metal-ohjelmointi* rakennettiin pääsilmukka,
+tapahtumajono ja tilakone. Malli toimii, kun kaikki työ on lyhyttä. Se murtuu, kun
 mukaan tulee pitkä laskenta (salaus, suodatus, pakkaus) samaan aikaan
 kuin tiukka aikaraja (moottorin ohjaus, protokollan kuittaus):
 pääsilmukassa pitkä työ on pilkottava käsin palasiksi, ja jokainen
@@ -40,15 +40,25 @@ Tutoriaali käsittelee
 - **testausta isäntäkoneella** ja **FreeRTOSia ja Zephyria** käytännön
   ytiminä.
 
-Esitiedoiksi oletetaan taito *Mikrokontrollerit*: Cortex-M-
-arkkitehtuuri, vektoritaulu ja käynnistyskoodi, NVIC ja keskeytysten
-prioriteetit, PRIMASK ja BASEPRI sekä HardFault-analyysi. Siellä
-rakennettu käynnistyskoodi, linkkeriskripti ja UART-konsoli ovat tämän
+## Esitiedot ja rajaus
+
+Esitiedoiksi oletetaan taito *Mikrokontrollerit ja
+bare-metal-ohjelmointi*: Cortex-M-arkkitehtuuri, vektoritaulu ja
+käynnistyskoodi, NVIC ja keskeytysten prioriteetit, PRIMASK ja BASEPRI,
+SVC, PendSV ja prosessipino sekä HardFault-analyysi. Siellä rakennettu
+käynnistyskoodi, linkkeriskripti ja UART-konsoli ovat tämän
 tutoriaalin pohjana. Toinen esitieto on taito *Käyttöjärjestelmät*:
 prosessit ja säikeet, vuorontamisalgoritmit, synkronointi ja
 lukkiutuminen yleisellä tasolla. Tässä samat asiat tehdään ilman
 muistinhallintayksikköä, ilman ydintilan ja käyttäjätilan rajaa ja
 aikarajojen ehdoilla.
+
+Tutoriaali ei käsittele laiteajureita eikä väyliä (taito
+*Oheislaiteväylät*), ytimen ja tehtävien eristämistä hyökkääjää
+vastaan (*Sulautettujen järjestelmien tietoturva*) eikä Linuxin
+reaaliaikaominaisuuksia (*Sulautettu Linux*). Moniydinjärjestelmien
+vuorontaminen rajataan pois; lukkojen ja muistimallin yleinen teoria
+on taidossa *Rinnakkaisohjelmointi*.
 
 ## Kide: oma pieni ydin
 
@@ -58,8 +68,10 @@ tavallinen, miksi mutex ei saa olla keskeytyksessä tai miksi
 `vTaskDelay` ajelehtii. Tutoriaalin esimerkit ajetaan siksi omalla
 noin 1200 rivin (kommentteineen) opetusytimellä, jonka nimi on *Kide*. Sen rajapinta
 jäljittelee FreeRTOSia: funktioiden nimet, parametrit ja merkitykset
-ovat samat niiltä osin kuin ne on toteutettu, joten esimerkit
-kääntyvät pienin muutoksin myös FreeRTOSilla. Luku 12 kertoo erot.
+ovat samat niiltä osin kuin ne on toteutettu, joten esimerkkien
+tehtäväkoodi on FreeRTOS-ohjelmoijalle tuttua. Esimerkit ajetaan ja
+testataan kuitenkin vain Kidellä: oikeaa FreeRTOSia vasten niitä ei
+ole tässä käännetty. Luku 12 kertoo erot.
 
 | Tiedosto | Sisältö | FreeRTOSissa |
 |----------|---------|--------------|
@@ -82,7 +94,8 @@ on mukana.
 ## Laboratorio
 
 Esimerkit ajetaan QEMU-emulaattorin `mps2-an385`-koneessa (Cortex-M3,
-25 MHz), samassa kuin taidossa *Mikrokontrollerit*. Ajon lopuksi
+25 MHz), samassa kuin taidossa *Mikrokontrollerit ja
+bare-metal-ohjelmointi*. Ajon lopuksi
 ohjelma kertoo paluuarvonsa semihostingilla, ja testi vertaa
 tulosteen ja paluuarvon tallennettuun. Reaaliaikaesimerkkien tuloste
 riippuu siitä, missä kohdassa keskeytykset tulevat. Siksi QEMU
@@ -101,9 +114,13 @@ sekunnin murto-osan. Tiedostot:
 - `esimerkit/kide/`: ydin ja Cortex-M3:n portti
 - `esimerkit/isanta/`: isäntäportti (luku 11)
 - `esimerkit/yhteinen/`: käynnistyskoodi, linkkeriskripti ja konsoli
-  taidosta *Mikrokontrollerit* sekä aikajanan piirtäjä
+  taidosta *Mikrokontrollerit ja bare-metal-ohjelmointi* sekä
+  aikajanan piirtäjä
 - `esimerkit/NN-nimi/`: esimerkit ja `esimerkit/testit/`: niiden
-  odotetut tulosteet.
+  odotetut tulosteet
+- `esimerkit/kaaviot/`: lukujen 8 ja 9 ajoituskaaviot, jotka skripti
+  `tee.py` tuottaa odotetuista tulosteista. Testi vertaa ne
+  tallennettuihin, joten kirjan kuvat vastaavat ajoa.
 
 Komento `make` kääntää ja ajaa kaiken, `make aja E=01-tehtavat` yhden
 esimerkin. Tarvittavat työkalut ovat `gcc-arm-none-eabi`,

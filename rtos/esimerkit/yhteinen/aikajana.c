@@ -7,11 +7,16 @@
 static TaskHandle_t ajaja[AIKAJANA_TIKIT];   /* ajaja[i]: väli [i, i+1) */
 static TaskHandle_t rivit[RIVEJA];
 static unsigned riveja;
+static TaskHandle_t seurattu;                /* prioriteettirivi */
+static unsigned char prioriteetti[AIKAJANA_TIKIT];
 
 void vApplicationTickHook(void) {
     TickType_t i = xTaskGetTickCount() - 1u;
     if (i < AIKAJANA_TIKIT) {
         ajaja[i] = xTaskGetCurrentTaskHandle();
+        if (seurattu != NULL) {
+            prioriteetti[i] = (unsigned char)uxTaskPriorityGet(seurattu);
+        }
     }
 }
 
@@ -19,6 +24,10 @@ void aikajana_lisaa(TaskHandle_t tehtava) {
     if (riveja < RIVEJA) {
         rivit[riveja++] = tehtava;
     }
+}
+
+void aikajana_seuraa_prioriteettia(TaskHandle_t tehtava) {
+    seurattu = tehtava;
 }
 
 static void nimi(const char *teksti) {
@@ -54,6 +63,13 @@ void aikajana_tulosta(TickType_t loppu) {
             konsoli_merkki(ajaja[i] == rivit[r] ? '#' : '.');
         }
         konsoli_merkki('\n');
+    }
+    if (seurattu != NULL) {
+        nimi("prio");
+        for (TickType_t i = 0; i < loppu; i++) {
+            konsoli_merkki((char)('0' + prioriteetti[i] % 10));
+        }
+        tulosta("  (%s)\n", pcTaskGetName(seurattu));
     }
 }
 

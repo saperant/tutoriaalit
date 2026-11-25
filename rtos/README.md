@@ -28,20 +28,25 @@ ja pikaopas
 10. Muistinhallinta – heap_1–heap_5, muistipooli, pinon mitoitus ja
     ylivuoto
 11. Testaus isäntäkoneella – isäntäportti ja testitasot
-12. FreeRTOS ja Zephyr – vastaavuudet, muut ytimet, sertifiointi
-13. Lopuksi – nyrkkisäännöt ja lähteet
+12. FreeRTOS ja Zephyr – vastaavuudet, ohjelmistoajastimet, muut
+    ytimet, sertifiointi
+13. Lopuksi – nyrkkisäännöt, jatkotaidot ja lähteet
 
 ## Esimerkit
 
 `esimerkit/kide/` on ydin ja sen Cortex-M3-portti, `esimerkit/isanta/`
 isäntäportti (Linux, ucontext) ja `esimerkit/yhteinen/` käynnistyskoodi,
-linkkeriskripti ja konsoli taidosta *Mikrokontrollerit*.
+linkkeriskripti ja konsoli taidosta *Mikrokontrollerit ja
+bare-metal-ohjelmointi*.
 `esimerkit/NN-nimi/` ovat esimerkkiohjelmia QEMU:n
 `mps2-an385`-kortille. Jokaisen ohjelman tuloste ja paluuarvo verrataan
 tiedostoon `esimerkit/testit/<nimi>.odotettu`. QEMU ajetaan
 `-icount`-valitsimella, joten ajo on deterministinen. Laitteistoa
 käyttämättömät esimerkit käännetään lisäksi isäntäkoneelle
 sanitoijien kanssa ja verrataan samaan odotettuun tulosteeseen.
+Lukujen 8 ja 9 ajoituskaaviot (`esimerkit/kaaviot/*.json`) tuottaa
+`kaaviot/tee.py` odotetuista tulosteista, ja testi tarkistaa, että ne
+ovat ajan tasalla.
 
 ## Rakentaminen
 
@@ -51,5 +56,8 @@ make pdf      # tutoriaali ja pikaopas
 ```
 
 Tarvitaan `gcc-arm-none-eabi`, `libnewlib-arm-none-eabi`,
-`qemu-system-arm` ja isäntäkoneen C-kääntäjä; kehityskontissa
-(`.devcontainer/rtos`) ne ovat valmiina.
+`qemu-system-arm`, isäntäkoneen C-kääntäjä ja Python 3;
+kehityskontissa (`.devcontainer/rtos`) ne ovat valmiina.
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.

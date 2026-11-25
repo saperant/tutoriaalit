@@ -33,15 +33,24 @@ Tutoriaali käsittelee
 - **ohjelman rakennetta**: pääsilmukka, tapahtumajono ja tilakone,
   jonka logiikka testataan isäntäkoneella.
 
-Esitiedoiksi oletetaan C-kieli, tietokoneen rakenteen perusteet
-(rekisterit, muisti, pino, keskeytyksen idea, taito
-*Tietokonearkkitehtuuri*) sekä käännöksen ja linkityksen vaiheet
-(objektitiedostot, osiot, symbolit, taito *Binäärit ja linkitys*).
-Konekieltä ei tarvitse osata kirjoittaa, mutta sitä täytyy pystyä
-lukemaan, koska bare-metal-ohjelmassa muutama käsky on aina
-kirjoitettava assemblynä. Taidot *Oheislaiteväylät* (UART, SPI, I2C,
-DMA), *Reaaliaikakäyttöjärjestelmät* ja *Sulautettujen järjestelmien
-tietoturva* jatkavat tästä.
+## Esitiedot ja rajaus
+
+Esitiedoiksi oletetaan taidot *Tietokonearkkitehtuuri* (rekisterit,
+muisti, pino ja keskeytyksen idea) sekä *Objektitiedostot, linkitys ja
+ABI* (objektitiedostot, osiot, symbolit ja linkityksen vaiheet), ja
+niiden kautta *C-kieli* ja *Assembly*. Konekieltä ei tarvitse osata
+kirjoittaa, mutta sitä täytyy pystyä lukemaan, koska
+bare-metal-ohjelmassa muutama käsky on aina kirjoitettava assemblynä.
+C:n bittioperaatiot ja `volatile` kerrataan luvussa 4.
+
+Tutoriaali rajautuu ytimeen ja sen lähimpiin oheislaitteisiin. Muut
+aiheet ovat omissa taidoissaan:
+
+- sarjaväylät, DMA ja ajurikerrokset: *Oheislaiteväylät*
+- säikeet, vuoronnus ja synkronointi: *Reaaliaikakäyttöjärjestelmät*
+- turvallinen käynnistys, päivitykset ja debug-portin suojaus:
+  *Sulautettujen järjestelmien tietoturva*
+- portit, kiikut ja kolmitilalähdöt piiritasolla: *Digitaalitekniikka*.
 
 ## Laboratorio
 

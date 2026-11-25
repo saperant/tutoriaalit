@@ -14,7 +14,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from mallit.can import Kehys, arbitraatio, lahetettavat
+from mallit.can import (ACK_PAIKKA, DOMINANTTI, Kehys, arbitraatio,
+                        lahetettavat, tayta)
 from mallit.i2c import Isanta, Rekisterilaite, simuloi
 from mallit.spi import siirto
 from mallit.uart import Kehysmuoto, kehyksen_bitit
@@ -86,6 +87,67 @@ def can_arbitraatio() -> dict[str, Any]:
     return {"signal": signaalit, "config": {"hscale": 0.8}}
 
 
+def can_kehys() -> dict[str, Any]:
+    """Kokonainen datakehys 0x123, data 00 ff: kentät ja täytebitit.
+
+    Sama kehys kuin esimerkissä can_kehys.py. Yhden bitin kentillä on
+    lyhyet nimet: S = SOF, R = RTR, I = IDE, r = r0, e = erotin,
+    A = ACK-paikka.
+    """
+    kehys = Kehys(0x123, bytes([0x00, 0xFF]))
+    lyhyet = {"SOF": "S", "RTR": "R", "IDE": "I", "r0": "r"}
+    nimet: list[str] = []          # kentän nimi täyttämätöntä bittiä kohti
+    for nimi, kentta in kehys.kentat():
+        nimet += [lyhyet.get(nimi, nimi)] * len(kentta)
+    _, taytteet = tayta([b for _, k in kehys.kentat() for b in k])
+    linja = lahetettavat(kehys)
+    linja[ACK_PAIKKA] = DOMINANTTI   # vastaanottaja kuittaa
+    kentat: list[str] = []
+    for i in range(len(nimet) + len(taytteet)):
+        # Täytebitti kuuluu samaan kenttään kuin sitä edeltävä bitti.
+        kentat.append(kentat[-1] if i in taytteet
+                      else nimet[len(kentat) - sum(t < i for t in taytteet)])
+    kentat += ["e", "A", "e", *["EOF"] * 7]
+    aalto, data = "", []
+    for i, nimi in enumerate(kentat):
+        if i and nimi == kentat[i - 1] and nimi != "e":
+            aalto += "."
+        else:
+            aalto += "="
+            data.append(nimi)
+    tayte = [1 if i in taytteet else 0 for i in range(len(linja))]
+    return {"signal": [{"name": "väylä", "wave": aallot(linja)},
+                       {"name": "kenttä", "data": data, "wave": aalto},
+                       {"name": "täytebitti", "wave": aallot(tayte)}],
+            "config": {"hscale": 0.24}}
+
+
+def can_bitti() -> dict[str, Any]:
+    """Bitin jako aikakvantteihin: ensimmäinen rivi esimerkin
+    can_ajoitus.py testatusta tulosteesta (8 MHz, 1 Mbit/s)."""
+    rivi = Path(__file__).with_name("can_ajoitus.odotettu").read_text(
+        encoding="utf-8").splitlines()[1].split()
+    # Sarakkeet: kello, "MHz", nopeus, BRP, TQ, TSEG1, TSEG2, ...
+    kvantteja, tseg1, tseg2 = int(rivi[4]), int(rivi[5]), int(rivi[6])
+    if 1 + tseg1 + tseg2 != kvantteja:
+        raise ValueError("SYNC + TSEG1 + TSEG2 ei ole bitin pituus")
+    bitteja = 2
+    kvantit = [str(q + 1) for _ in range(bitteja) for q in range(kvantteja)]
+    segmentti = ("=" + "=" + "." * (tseg1 - 1) + "=" + "." * (tseg2 - 1))
+    # Arvo luetaan TSEG1:n lopussa: sitä ennen se on tuntematon.
+    nayte = "x" + "." * tseg1 + "=" + "." * (tseg2 - 1)
+    return {"signal": [
+        {"name": "aikakvantti", "wave": "=" * len(kvantit), "data": kvantit},
+        {"name": "segmentti", "wave": segmentti * bitteja,
+         "data": ["SYNC", "TSEG1", "TSEG2"] * bitteja},
+        {"name": "bitti väylällä",
+         "wave": ("=" + "." * (kvantteja - 1)) * bitteja,
+         "data": [f"bitti {i + 1}" for i in range(bitteja)]},
+        {"name": "luettu arvo", "wave": nayte * bitteja,
+         "data": [f"bitti {i + 1}" for i in range(bitteja)]},
+    ], "config": {"hscale": 1.1}}
+
+
 def aallot(bitit: list[int]) -> str:
     tulos = ""
     edellinen: int | None = None
@@ -100,6 +162,8 @@ KAAVIOT = {
     "spi-moodit": spi_moodit,
     "i2c-osoite": i2c_osoite,
     "can-arbitraatio": can_arbitraatio,
+    "can-kehys": can_kehys,
+    "can-bitti": can_bitti,
 }
 
 

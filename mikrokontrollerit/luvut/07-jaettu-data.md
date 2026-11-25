@@ -25,6 +25,15 @@ ei sitä, että mitään ei tapahdu niiden välissä.
 ```{.c tiedosto="esimerkit/07-kilpailu/main.c" osa="menetetty"}
 ```
 
+```{.ajoituskaavio otsikko="Kadonnut päivitys (periaate; arvot kuten esimerkissä). Keskeytys osuu luvun ja kirjoituksen väliin, ja pääohjelma kirjoittaa vanhaan arvoon perustuvan tuloksen sen päälle."}
+{"signal": [
+  {"name": "suoritus", "wave": "3..4....3....2..",
+   "data": ["main: luku", "käsittelijä: jaettu += 100", "main: +1, kirjoitus", "main"]},
+  {"name": "mainin kopio", "wave": "x.=..........x..", "data": ["0"]},
+  {"name": "jaettu", "wave": "=......=...=....", "data": ["0", "100", "1"]}
+], "config": {"hscale": 0.9}}
+```
+
 Käsittelijä lisää muuttujaan sata, mutta pääohjelma kirjoittaa
 päälle arvon, jonka se luki ennen keskeytystä. Sama ongelma koskee
 kaikkia luku–muutos–kirjoitus-operaatioita: lippujen asettamista
@@ -41,6 +50,16 @@ funktiota voi kutsua myös valmiiksi suojatusta kohdasta.
 ```
 
 ```{.c tiedosto="esimerkit/07-kilpailu/main.c" osa="kriittinen"}
+```
+
+```{.ajoituskaavio otsikko="Sama kriittisessä osiossa (periaate). Keskeytys jää odottamaan ja ajetaan vasta, kun pääohjelman luku–muutos–kirjoitus on valmis."}
+{"signal": [
+  {"name": "PRIMASK", "wave": "01............0......"},
+  {"name": "IRQ odottaa", "wave": "0...1.........0......"},
+  {"name": "suoritus", "wave": "2.3.....3.....4.....2",
+   "data": ["main", "main: luku", "main: +1, kirjoitus", "käsittelijä: += 100", "main"]},
+  {"name": "jaettu", "wave": "=............=.....=.", "data": ["0", "1", "101"]}
+], "config": {"hscale": 0.9}}
 ```
 
 Keskeytys, joka tulee kriittisen osion aikana, ei katoa: se jää
@@ -103,7 +122,9 @@ Yleisin jaetun datan rakenne on jono keskeytyksestä pääohjelmaan.
 Käsittelijä *tuottaa* (vastaanotettu tavu, mittaus, tapahtuma) ja
 pääohjelma *kuluttaa*. Kun tuottajia ja kuluttajia on kumpaakin
 täsmälleen yksi, rengaspuskuri ei tarvitse lukkoja: tuottaja muuttaa
-vain kirjoitusindeksiä ja kuluttaja vain lukuindeksiä.
+vain kirjoitusindeksiä ja kuluttaja vain lukuindeksiä. Sama rakenne
+kuljettaa näytteet keskeytyksestä käsittelyyn taidossa *Digitaalinen
+signaalinkäsittely*.
 
 ```{.c tiedosto="esimerkit/yhteinen/rengas.h" osa="rengas"}
 ```
@@ -129,26 +150,26 @@ tarkistuksen ja kuittauksen väliin osunut tavu jäisi vastaanottimeen
 ilman keskeytystä, eikä uusia tavuja enää tulisi. Esimerkki jäi
 kehitysvaiheessa jumiin juuri näin, kun testikone oli kuormitettu.
 
-```{.c tiedosto="esimerkit/08-rengas/main.c" osa="isr"}
+```{.c tiedosto="esimerkit/07-rengas/main.c" osa="isr"}
 ```
 
 Pääohjelma odottaa tavua nukkuen. Tarkistus ja WFI tehdään
 keskeytykset kiellettyinä, mikä selitetään tarkemmin luvussa 8.
 
-```{.c tiedosto="esimerkit/08-rengas/main.c" osa="hae"}
+```{.c tiedosto="esimerkit/07-rengas/main.c" osa="hae"}
 ```
 
-```{.c tiedosto="esimerkit/08-rengas/main.c" osa="main"}
+```{.c tiedosto="esimerkit/07-rengas/main.c" osa="main"}
 ```
 
-```{.c tiedosto="esimerkit/08-rengas/main.c" osa="komento"}
+```{.c tiedosto="esimerkit/07-rengas/main.c" osa="komento"}
 ```
 
-Syöte tulee tiedostosta `08-rengas/syote.txt`, jonka QEMU syöttää
-UART0:n vastaanottimeen. Käsin ajettaessa (`make aja E=08-rengas`)
+Syöte tulee tiedostosta `07-rengas/syote.txt`, jonka QEMU syöttää
+UART0:n vastaanottimeen. Käsin ajettaessa (`make aja E=07-rengas`)
 komennot kirjoitetaan päätteeseen.
 
-```{.tuloste tiedosto="esimerkit/testit/08-rengas.odotettu"}
+```{.tuloste tiedosto="esimerkit/testit/07-rengas.odotettu"}
 ```
 
 ## Käytännössä

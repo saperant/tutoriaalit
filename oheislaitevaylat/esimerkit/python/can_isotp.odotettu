@@ -1,0 +1,8 @@
+viesti 20 tavua: ABCDEFGHIJKLMNOPQRST
+  0x7e0 ensimmainen  10 14 41 42 43 44 45 46
+  0x7e8 vuonohjaus   30 00 0a
+  0x7e0 jatko        21 47 48 49 4a 4b 4c 4d
+  0x7e0 jatko        22 4e 4f 50 51 52 53 54
+koottu: ABCDEFGHIJKLMNOPQRST
+vaylalla 411 bittia, hyotykuormaa 160
+kehys katosi: odotettiin jatkokehysta 1, tuli 2
