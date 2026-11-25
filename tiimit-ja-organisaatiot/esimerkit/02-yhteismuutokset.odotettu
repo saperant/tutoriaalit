@@ -1,0 +1,10 @@
+useimmin yhdessä muuttuvat osat:
+  haku/api    haku/ui      25 kertaa, kytkentäaste 0.74
+  maksu/api   tilaus/api   23 kertaa, kytkentäaste 0.53
+  kori/api    kori/ui      22 kertaa, kytkentäaste 0.73
+  kori/api    kori/db      20 kertaa, kytkentäaste 0.65
+  tilaus/api  tilaus/db    20 kertaa, kytkentäaste 0.65
+  haku/api    haku/db      18 kertaa, kytkentäaste 0.60
+muutoksen vaatimat tiimit:
+  kerroksittain      usean tiimin muutoksia  66%, keskimäärin 1.91 tiimiä
+  ominaisuuksittain  usean tiimin muutoksia  29%, keskimäärin 1.56 tiimiä

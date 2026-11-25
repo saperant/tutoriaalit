@@ -1,0 +1,10 @@
+kerroksittain: 8/12 riippuvuutta ylittää tiimirajan
+  käyttöliittymätiimi -> rajapintatiimi
+  rajapintatiimi -> tietokantatiimi
+  tietokantatiimi -> -
+ominaisuuksittain: 4/12 riippuvuutta ylittää tiimirajan
+  hakutiimi -> -
+  maksutiimi -> tilaustiimi
+  ostotiimi -> hakutiimi
+  tilaustiimi -> maksutiimi, ostotiimi
+  sykli: maksutiimi <-> tilaustiimi

@@ -1,0 +1,15 @@
+ominaisuus  muutoksia  suurin tekijä
+haku              106  Aino 37%
+kori               99  Juho 49%
+tilaus            103  Minna 29%
+maksu              87  Pekka 55%
+osia, joilla on vain yksi tuntija: 8
+  haku/db: Aino
+  kori/api: Juho
+  kori/db: Juho
+  kori/ui: Juho
+  maksu/api: Pekka
+  maksu/db: Pekka
+  maksu/ui: Pekka
+  tilaus/api: Minna
+bussikerroin 3: Aino, Juho, Pekka

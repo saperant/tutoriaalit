@@ -162,7 +162,7 @@ flowchart LR
     jatkuva_toimitus["Jatkuva integraatio ja toimitus"]
     tekninen_dokumentaatio["✓ Tekninen dokumentaatio"]
     projektinhallinta["✓ Ohjelmistoprojektin hallinta"]
-    tiimit_ja_organisaatiot["Tiimit ja organisaatiomallit"]
+    tiimit_ja_organisaatiot["✓ Tiimit ja organisaatiomallit"]
   end
   komentorivi --> versionhallinta
   ohjelmoinnin_perusteet --> c_kieli
@@ -507,5 +507,5 @@ flowchart LR
 | Ohjelmistoprojektin hallinta | 5 | Versionhallinta (Git) | [valmis](../projektinhallinta/) |
 | Tekninen dokumentaatio | 4 | Python työkaluohjelmointiin, Versionhallinta (Git) | [valmis](../tekninen-dokumentaatio/) |
 | Testivetoinen kehitys ja testisuunnittelu | 5 | Python työkaluohjelmointiin, Versionhallinta (Git) | [valmis](../testivetoinen-kehitys/) |
-| Tiimit ja organisaatiomallit | 3 | Ohjelmistoprojektin hallinta | suunniteltu |
+| Tiimit ja organisaatiomallit | 3 | Ohjelmistoprojektin hallinta | [valmis](../tiimit-ja-organisaatiot/) |
 | Jatkuva integraatio ja toimitus | 5 | Säiliöt ja pilvi-infrastruktuuri, Testivetoinen kehitys ja testisuunnittelu | suunniteltu |

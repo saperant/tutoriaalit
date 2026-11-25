@@ -1,0 +1,19 @@
+{
+  "name": "Tiimit ja organisaatiomallit: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "git",
+      "PIP_PAKETIT": "matplotlib ruff mypy"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/tiimit-ja-organisaatiot/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python"
+      ]
+    }
+  }
+}

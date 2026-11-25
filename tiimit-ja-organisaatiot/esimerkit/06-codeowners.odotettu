@@ -1,0 +1,8 @@
+tiedostoja 16, ilman omistajaa 2:
+  infra/putki.yaml
+  infra/tietokanta.tf
+vain yhden henkilön varassa:
+  maksu/api.py @pekka
+  maksu/db.py @pekka
+säännöt, jotka eivät osu mihinkään:
+  /toimitus/

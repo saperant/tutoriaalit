@@ -1,0 +1,17 @@
+yhteistä työaikaa päivässä:
+  Helsinki  - Lontoo          6.0 h
+  Helsinki  - New York        1.0 h
+  Helsinki  - Bengaluru       4.5 h
+  Helsinki  - San Francisco   0.0 h
+  Lontoo    - New York        3.0 h
+  Lontoo    - Bengaluru       2.5 h
+  Lontoo    - San Francisco   0.0 h
+  New York  - Bengaluru       0.0 h
+  New York  - San Francisco   5.0 h
+  Bengaluru - San Francisco   0.0 h
+  Helsinki, Lontoo, New York: 1.0 h
+kysymyksen kiertoaika Helsingistä:  klo 9  klo 16
+  Lontoo                               3 h    17 h
+  Bengaluru                            1 h    17 h
+  New York                            24 h    17 h
+  San Francisco                       24 h    17 h

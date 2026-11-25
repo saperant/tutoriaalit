@@ -2268,6 +2268,7 @@ laajuus = 3
 testaus = "riippuvuus- ja omistajuusanalyysit Git-historiasta Pythonilla"
 roadmap = []
 amk = "Ohjelmistotuotannon johtaminen"
+tutoriaali = "tiimit-ja-organisaatiot"
 
 # ---------------------------------------------------------------------
 # Roolit

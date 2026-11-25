@@ -144,6 +144,7 @@ ne taitopuukartan sivustolla. Paikallisesti PDF rakennetaan komennolla
 | Tekninen dokumentaatio | [`tekninen-dokumentaatio/`](tekninen-dokumentaatio/) | [tekninen-dokumentaatio.pdf](https://saperant.github.io/tutoriaalit/materiaalit/tekninen-dokumentaatio.pdf) |
 | Web-sovelluskehykset ja niiden periaatteet | [`web-sovelluskehykset/`](web-sovelluskehykset/) | [web-sovelluskehykset.pdf](https://saperant.github.io/tutoriaalit/materiaalit/web-sovelluskehykset.pdf) |
 | Testivetoinen kehitys ja testisuunnittelu | [`testivetoinen-kehitys/`](testivetoinen-kehitys/) | [testivetoinen-kehitys.pdf](https://saperant.github.io/tutoriaalit/materiaalit/testivetoinen-kehitys.pdf) |
+| Tiimit ja organisaatiomallit | [`tiimit-ja-organisaatiot/`](tiimit-ja-organisaatiot/) | [tiimit-ja-organisaatiot.pdf](https://saperant.github.io/tutoriaalit/materiaalit/tiimit-ja-organisaatiot.pdf) |
 | Opintopolut (taitopuu) | [`opintopolut/`](opintopolut/) | [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf) |
 
 ## Periaatteet
