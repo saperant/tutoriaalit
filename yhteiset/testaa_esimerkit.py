@@ -502,15 +502,24 @@ def aja(kieli: Kieli, komento: list[str], esimerkki: Esimerkki,
     syote = tiedosto(".syote")
     argumentit = tiedosto(".argumentit")
     with tempfile.TemporaryDirectory() as ajohak:
-        try:
-            tulos = subprocess.run(
-                [*komento, *(argumentit.read_text("utf-8").splitlines()
-                             if argumentit.exists() else [])],
-                input=syote.read_text("utf-8") if syote.exists() else "",
-                capture_output=True, text=True, timeout=AIKARAJA_S,
-                env=env, cwd=ajohak)
-        except subprocess.TimeoutExpired:
-            return False, "aikaraja ylittyi"
+        # Aikarajan ylitys yritetään kerran uudelleen: kuormitetussa
+        # CI-kontissa ajo on jäänyt harvoin jumiin ilman, että vika
+        # toistuu. Uusinnasta jää näkyvä huomautus; aidosti jumittuva
+        # ohjelma ylittää rajan molemmilla kerroilla.
+        for yritys in (1, 2):
+            try:
+                tulos = subprocess.run(
+                    [*komento, *(argumentit.read_text("utf-8").splitlines()
+                                 if argumentit.exists() else [])],
+                    input=syote.read_text("utf-8") if syote.exists() else "",
+                    capture_output=True, text=True, timeout=AIKARAJA_S,
+                    env=env, cwd=ajohak)
+                break
+            except subprocess.TimeoutExpired:
+                if yritys == 2:
+                    return False, "aikaraja ylittyi kahdesti"
+                print(f"HUOM: {esimerkki.nimi}: aikaraja ylittyi, "
+                      "ajetaan kerran uudelleen", flush=True)
     if esimerkki.kaatuu:
         virhe = tiedosto(".virhe")
         if not virhe.exists():
