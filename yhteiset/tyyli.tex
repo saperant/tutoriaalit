@@ -114,6 +114,9 @@
 % Ohjelmien tulosteet päätteen näköisinä: tumma tausta ja otsikko.
 \newtcolorbox{tulostelaatikko}{breakable, enhanced jigsaw,
   colback=paatetausta, colframe=paatetausta, boxrule=0pt, arc=3pt,
+  % Tekstin väri laatikon asetuksena, jotta se säilyy myös sivun
+  % vaihtuessa kesken tulosteen.
+  colupper=paateteksti,
   left=8pt, right=6pt, top=13pt, bottom=5pt,
   before skip=6pt, after skip=8pt,
   overlay unbroken and first={\node[anchor=north west, inner sep=0pt,
