@@ -1,0 +1,9 @@
+fysikaalinen leveys 0.0490
+ruutuja/sivu  kulma  laskettu  ennuste  väärä D / oikea D
+          80    0.0    0.0493   0.0490         0.01
+          80   15.0    0.0689   0.0685         0.98
+          80   30.0    0.0828   0.0827         1.86
+          80   45.0    0.0883   0.0878         2.25
+         160   45.0    0.0715   0.0711         1.13
+         320   45.0    0.0613   0.0610         0.57
+keskeisdifferenssi, 80 ruutua, 45 astetta: leveys 0.0484, pienin pitoisuus -15.54

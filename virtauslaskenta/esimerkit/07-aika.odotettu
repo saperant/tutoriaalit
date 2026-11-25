@@ -1,0 +1,8 @@
+viite (AB2, dt = 0,002): 0.990
+kaavio     dt   Courant  dt / (2 nu / U²)  energia lopussa / alussa
+Euler   0.005     0.05           12.5              0.992
+Euler   0.010     0.10           25.0              0.997
+Euler   0.020     0.20           50.0             hajoaa
+AB2     0.020     0.20           50.0              0.990
+AB2     0.040     0.41          100.0              0.990
+AB2     0.080     0.81          200.0             hajoaa

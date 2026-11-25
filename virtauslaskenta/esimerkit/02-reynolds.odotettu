@@ -1,0 +1,8 @@
+virtaus                          Re      Ma  luonne
+bakteeri vedessä            6.0e-05 2.0e-08  viskositeetti hallitsee
+hunaja lusikasta            7.1e-02 3.3e-05  viskositeetti hallitsee
+voitelukalvo laakerissa     8.3e+00 3.3e-03  laminaari
+vesi hanasta                1.2e+04 6.8e-04  yleensä turbulentti
+tuuli talon ympärillä       5.3e+06 2.4e-02  yleensä turbulentti
+henkilöauto maantiellä      8.4e+06 8.2e-02  yleensä turbulentti
+matkustajakoneen siipi      3.3e+07 6.8e-01  yleensä turbulentti  (kokoonpuristuva)

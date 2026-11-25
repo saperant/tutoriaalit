@@ -1,0 +1,14 @@
+suurin divergenssi alle 1e-12: True
+liike-energia lopussa / alussa: 0.6705 (tarkka 0.6703)
+paikan kertaluku (aika-askel niin pieni, ettei se vaikuta)
+  ruutuja/sivu  suurin virhe  kertaluku
+             8      2.06e-03         -
+            16      5.23e-04      1.97
+            32      1.31e-04      1.99
+            64      3.28e-05      2.00
+ajan kertaluku (16 ruutua/sivu, erotus tiheimpään ajoon)
+  askelia   Euler  kertaluku     AB2  kertaluku
+       20  8.1e-04         -  3.4e-05         -
+       40  4.0e-04      1.01  8.5e-06      2.01
+       80  2.0e-04      1.02  2.1e-06      2.00
+      160  9.6e-05      1.04  5.3e-07      2.00

@@ -1,0 +1,14 @@
+vakioviskositeetti
+  tilavuuksia  suurin virhe m/s  suhde  voimatase
+           10          2.08e-02      -  toteutuu
+           20          5.21e-03   4.00  toteutuu
+           40          1.30e-03   4.00  toteutuu
+           80          3.26e-04   4.00  toteutuu
+  tilavuusvirta 194.5 mm²/s, leikkausjännitys liikkuvalla levyllä +2.00 kPa
+lämpenevä öljy
+  tilavuuksia  suurin virhe m/s  suhde  voimatase
+           10          7.26e-02      -  toteutuu
+           20          1.90e-02   3.82  toteutuu
+           40          4.85e-03   3.91  toteutuu
+           80          1.23e-03   3.96  toteutuu
+  tilavuusvirta 221.7 mm²/s, leikkausjännitys liikkuvalla levyllä +2.45 kPa

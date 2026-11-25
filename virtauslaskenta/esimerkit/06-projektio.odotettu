@@ -1,0 +1,4 @@
+suurin divergenssi ennen projektiota: 9.78
+suurin divergenssi projektion jälkeen alle 1e-10: True
+jäljelle jäi alkuperäinen pyörre (ero alle 1e-10): True
+liike-energia: koko 2.09068 = pyörre 1.84461 + gradienttiosa 0.24607

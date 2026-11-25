@@ -518,12 +518,15 @@ aiheet = [
   "advektio: vastavirtakaaviot ja numeerinen diffuusio",
   "paineen ja nopeuden kytkentä: projektiomenetelmä",
   "reunaehdot ja laskentaverkko",
-  "vertailu julkaistuun dataan ja turbulenssin mallinnus yleiskuvana",
+  "tarkistustehtävät: tarkat ratkaisut, taseet ja hilaekstrapolointi",
+  "turbulenssin mallinnus yleiskuvana",
+  "ratkaisijat ja suppeneminen",
 ]
 laajuus = 5
-testaus = "NumPy ja SciPy, vertailu analyyttisiin ratkaisuihin ja julkaistuun vertailudataan"
+testaus = "NumPy ja SciPy, vertailu analyyttisiin ratkaisuihin ja hilaekstrapolointiin"
 roadmap = []
 amk = "Virtauslaskenta (CFD)"
+tutoriaali = "virtauslaskenta"
 
 [[taito]]
 id = "tietorakenteet"

@@ -1,0 +1,9 @@
+tilavuuksia  askelia  suurin virhe m/s  virheiden suhde
+         50       25          1.10e-02                -
+        100      100          2.69e-03             4.09
+        200      400          6.69e-04             4.02
+        400     1600          1.67e-04             4.00
+neste (20 °C)   nu m²/s   rajakerros 1 s jälkeen
+ilma            1.5e-05       14.1 mm
+vesi            1.0e-06        3.6 mm
+glyseroli       1.1e-03      120.7 mm

@@ -1,0 +1,18 @@
+# Esimerkkien tarkistusasetukset (ruff ja mypy --strict).
+[project]
+name = "virtauslaskenta-esimerkit"
+version = "1.0.0"
+requires-python = ">=3.12"
+dependencies = ["numpy>=2.0", "scipy==1.18.1", "matplotlib>=3.8"]
+
+[tool.ruff]
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "UP", "SIM", "NPY"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+# Omat pienet kirjastot (luvut 3 ja 7), joita myöhemmät esimerkit käyttävät.
+mypy_path = "esimerkit/03-kuljetus:esimerkit/07-virta"
