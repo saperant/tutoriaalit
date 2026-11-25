@@ -1,0 +1,18 @@
+ehjä versio, virheitä 0,1 %
+  strategia      peruttu  askelia  uudelle  virheitä
+  kerralla            0%      1.0     1000       1.0
+  rullaava            0%     10.0     5500       5.4
+  sinivihreä          0%      1.0     1000       1.0
+  kanarialintu        0%      6.0     1900       1.9
+rikkinäinen versio, virheitä 5 %
+  strategia      peruttu  askelia  uudelle  virheitä
+  kerralla          100%      4.0     4000     199.5
+  rullaava          100%      2.1      222      11.2
+  sinivihreä        100%      1.0     1000      49.7
+  kanarialintu      100%      2.1      111       5.8
+hienovarainen vika, virheitä 0,6 %
+  strategia      peruttu  askelia  uudelle  virheitä
+  kerralla            0%      1.0     1000       6.0
+  rullaava            2%      9.9     5412      32.6
+  sinivihreä          0%      1.0     1000       6.0
+  kanarialintu        4%      5.9     1835      10.9

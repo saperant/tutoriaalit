@@ -1,0 +1,11 @@
+malli ja Git samaa mieltä: 12/12 (ristiriitaisia 5)
+
+60 tiedostoa, 100 riviä kussakin
+muutettuja rivejä päivässä: runkoon 20, haaraan 5
+haaran ikä  ristiriita  kohtia ka.
+       1 pv         5%        0.05
+       2 pv        17%        0.19
+       3 pv        37%        0.44
+       5 pv        71%        1.24
+       8 pv        96%        3.07
+      13 pv       100%        7.89

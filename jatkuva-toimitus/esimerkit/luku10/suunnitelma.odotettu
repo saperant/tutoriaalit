@@ -1,0 +1,11 @@
+käskevä skripti kahdesti: 6 palvelinta
+suunnitelma:
+  luo kuormantasaaja (portti=443)
+  luo tietokanta (koko=pieni, versio=16)
+  poista vanha-raportointi
+  muuta verkkopalvelu (kopioita: 1 -> 3, versio: 1.3.2 -> 1.4.0)
+suunnitelma toteutuksen jälkeen:
+  ei muutoksia
+ajautuma käsin tehdyn muutoksen jälkeen:
+  muuta kuormantasaaja (portti: 8443 -> 443)
+  muuta verkkopalvelu (kopioita: 6 -> 3)

@@ -1,0 +1,5 @@
+{
+  "tietokanta": {"koko": "pieni", "versio": 16},
+  "verkkopalvelu": {"kopioita": 3, "versio": "1.4.0"},
+  "kuormantasaaja": {"portti": 443}
+}

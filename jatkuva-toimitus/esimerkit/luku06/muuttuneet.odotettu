@@ -1,0 +1,10 @@
+raportit/kooste.py
+  testataan 1/5: raportit
+laskenta/alv.py
+  testataan 4/5: kayttoliittyma, laskenta, rajapinta, raportit
+tietokanta/skeema.sql, LUEMINUT.md
+  testataan 3/5: kayttoliittyma, rajapinta, tietokanta
+tyokalut/testaa.py
+  testataan 5/5: kayttoliittyma, laskenta, rajapinta, raportit, tietokanta
+LUEMINUT.md
+  testataan 0/5: -

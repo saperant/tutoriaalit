@@ -1,0 +1,11 @@
+epävakaita testejä, kukin pettää kerran 200 ajossa (0,5 %)
+ testejä  laskettu  simuloitu
+       1     99.5%      99.4%
+      10     95.1%      94.9%
+      50     77.8%      77.5%
+     100     60.6%      60.4%
+     300     22.2%      23.2%
+
+kolme yritystä, yksi onnistuminen riittää
+  50 epävakaata testiä: putki läpi 100.00%
+  oikea vika, joka näkyy 30 %:ssa ajoista: läpi 97%

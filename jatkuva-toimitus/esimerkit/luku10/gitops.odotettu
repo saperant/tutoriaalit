@@ -1,0 +1,14 @@
+täsmäytys (rungon kärki: Verkkopalvelu 1.4.0)
+  luo verkkopalvelu (kopioita=2, versio=1.4.0)
+täsmäytys (rungon kärki: Verkkopalvelu 1.4.0)
+  ei muutoksia
+täsmäytys (rungon kärki: Verkkopalvelu 1.4.0)
+  muuta verkkopalvelu (kopioita: 5 -> 2)
+täsmäytys (rungon kärki: Verkkopalvelu 1.5.0)
+  muuta verkkopalvelu (versio: 1.4.0 -> 1.5.0)
+täsmäytys (rungon kärki: Revert "Verkkopalvelu 1.5.0")
+  muuta verkkopalvelu (versio: 1.5.0 -> 1.4.0)
+historia:
+  Verkkopalvelu 1.4.0
+  Verkkopalvelu 1.5.0
+  Revert "Verkkopalvelu 1.5.0"

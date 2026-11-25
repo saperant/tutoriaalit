@@ -1,0 +1,10 @@
+ehjä muutos
+  aalto 1: testit ok, tyyli ok, tyypit ok
+  aalto 2: paketti ok
+  aalto 3: savutesti ok
+  putki: vihreä
+rikkinäinen muutos: kertoimet (7, 3, 2)
+  aalto 1: testit VIRHE, tyyli ok, tyypit ok
+  aalto 2: paketti ohitettu
+  aalto 3: savutesti ohitettu
+  putki: punainen, ensimmäinen virhe vaiheessa testit

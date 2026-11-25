@@ -2209,6 +2209,7 @@ laajuus = 5
 testaus = "paikallisesti ajettava putki, työnkulkujen skeematarkistus ja julkaisusimulaatiot"
 roadmap = ["devops"]
 amk = "DevOps-käytännöt"
+tutoriaali = "jatkuva-toimitus"
 
 [[taito]]
 id = "tekninen-dokumentaatio"

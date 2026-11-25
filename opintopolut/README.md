@@ -159,7 +159,7 @@ flowchart LR
   end
   subgraph tyotavat["Työtavat ja ohjelmistotuotanto"]
     testivetoinen_kehitys["✓ Testivetoinen kehitys ja testisuunnittelu"]
-    jatkuva_toimitus["Jatkuva integraatio ja toimitus"]
+    jatkuva_toimitus["✓ Jatkuva integraatio ja toimitus"]
     tekninen_dokumentaatio["✓ Tekninen dokumentaatio"]
     projektinhallinta["✓ Ohjelmistoprojektin hallinta"]
     tiimit_ja_organisaatiot["✓ Tiimit ja organisaatiomallit"]
@@ -511,4 +511,4 @@ flowchart LR
 | Tekninen dokumentaatio | 4 | Python työkaluohjelmointiin, Versionhallinta (Git) | [valmis](../tekninen-dokumentaatio/) |
 | Testivetoinen kehitys ja testisuunnittelu | 5 | Python työkaluohjelmointiin, Versionhallinta (Git) | [valmis](../testivetoinen-kehitys/) |
 | Tiimit ja organisaatiomallit | 3 | Ohjelmistoprojektin hallinta | [valmis](../tiimit-ja-organisaatiot/) |
-| Jatkuva integraatio ja toimitus | 5 | Kontit ja pilvi-infrastruktuuri, Testivetoinen kehitys ja testisuunnittelu | suunniteltu |
+| Jatkuva integraatio ja toimitus | 5 | Kontit ja pilvi-infrastruktuuri, Testivetoinen kehitys ja testisuunnittelu | [valmis](../jatkuva-toimitus/) |

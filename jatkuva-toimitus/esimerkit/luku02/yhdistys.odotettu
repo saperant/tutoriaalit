@@ -1,0 +1,9 @@
+eri tiedostot:
+  yhdistys: siisti
+  ohjelma yhdistyksen jälkeen: toimii
+sama rivi:
+  yhdistys: RISTIRIITA, ihmisen on ratkaistava
+uudelleennimeäminen ja uusi kutsu:
+  yhdistys: siisti
+  ohjelma yhdistyksen jälkeen: VIRHE
+  ImportError: cannot import name 'summa' from 'laskut'

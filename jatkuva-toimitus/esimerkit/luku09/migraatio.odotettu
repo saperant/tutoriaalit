@@ -1,0 +1,14 @@
+laajenna, siirrä, supista:
+  alku                        V1 ok
+  laajenna skeema             V1 ok
+  V2 käyttöön rullaten        V1 ok, V2 ok
+  V2 kaikkialla, täytä rivit  V2 ok
+  V3 käyttöön rullaten        V2 ok, V3 ok
+  V4 käyttöön rullaten        V3 ok, V4 ok
+  supista skeema              V4 ok
+kaikki kerralla, vanha versio vielä ajossa:
+  yksi migraatio              V1 VIRHE (OperationalError), V4 ok
+väärä järjestys: uusi lukija ennen täyttöä:
+  V3 ennen täyttöä            V1 ok, V3 PUUTTUU TIETOJA
+supistus liian aikaisin: V3 kirjoittaa vielä vanhaan:
+  V3 ja V4 ajossa             V3 VIRHE (OperationalError), V4 ok

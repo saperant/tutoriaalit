@@ -1,0 +1,79 @@
+# Sama putki GitHub Actions -työnkulkuna. Tiedosto tarkistetaan
+# skeemaa vasten, mutta sitä ei ajeta tämän tutoriaalin testeissä.
+# @alku ehdot
+name: Toimitusputki
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+# Rungon ajot peräkkäin: vanhempi ajo ei saa ottaa käyttöön
+# uudemman päälle.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+# @loppu ehdot
+
+# @alku tyot
+jobs:
+  # Commit-vaihe: nopeat tarkistukset rinnakkain, palaute minuuteissa.
+  tarkista:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        vaihe: [tyyli, tyypit, testit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r vaatimukset-kehitys.txt
+      - run: make ${{ matrix.vaihe }}
+
+  # Artefakti rakennetaan kerran ja tallennetaan.
+  paketti:
+    needs: tarkista
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - run: make paketti savutesti
+      - uses: actions/upload-artifact@v4
+        with:
+          name: viite
+          path: dist/viite-*.tar.gz
+          if-no-files-found: error
+
+  # Sama tiedosto viedään ensin testiin, sitten tuotantoon.
+  testi:
+    needs: paketti
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-24.04
+    environment: testi
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: viite
+      - run: ./ota-kayttoon.sh viite-*.tar.gz
+        env:
+          VIITE_YMPARISTO: testi
+
+  tuotanto:
+    needs: testi
+    runs-on: ubuntu-24.04
+    # Ympäristön suojaussääntö voi vaatia ihmisen hyväksynnän.
+    environment: tuotanto
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: viite
+      - run: ./ota-kayttoon.sh viite-*.tar.gz
+        env:
+          VIITE_YMPARISTO: tuotanto
+# @loppu tyot
