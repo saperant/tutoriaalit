@@ -3,7 +3,33 @@
 Siirtotie on fyysinen väylä, jota pitkin signaali kulkee: kuparijohdin,
 valokuitu tai radiotie. Jokainen vaimentaa signaalia ja vääristää sitä
 omalla tavallaan, ja nämä ominaisuudet ratkaisevat, kuinka pitkälle ja
-kuinka nopeasti dataa voi siirtää.
+kuinka nopeasti dataa voi siirtää. Vaimennukset ilmaistaan
+desibeleinä, joten luku alkaa niistä.
+
+## Desibelit
+
+Tietoliikenteessä tehot vaihtelevat kymmenien kertaluokkien välillä:
+lähetin voi syöttää 100 mW, ja vastaanotin kuulee 0,000 000 001 mW.
+Siksi tehot ja tehosuhteet ilmaistaan logaritmisesti desibeleinä.
+Tehosuhde $P_2/P_1$ on desibeleinä $10 \log_{10}(P_2/P_1)$, ja
+absoluuttinen taso milliwattiin verrattuna ilmaistaan yksikössä dBm.
+
+```{.python tiedosto="esimerkit/02-desibelit.py" osa="nyrkkisaannot"}
+```
+
+Desibelien etu on, että ketjun vahvistukset ja vaimennukset vain
+lasketaan yhteen. Siirtoketju lasketaan siksi aina desibeleinä:
+
+```{.python tiedosto="esimerkit/02-desibelit.py" osa="ketju"}
+```
+
+```{.tuloste tiedosto="esimerkit/02-desibelit.odotettu"}
+```
+
+Kaksi sudenkuoppaa: desibelejä ei voi summata, kun lasketaan yhteen
+*tehoja* (kaksi 0 dBm:n lähdettä on 3 dBm, ei 0 dBm), ja jännitteen
+tai virran suhde on $20 \log_{10}$, koska teho on verrannollinen
+jännitteen neliöön.
 
 ## Kupari: kierretty pari
 
@@ -25,6 +51,11 @@ kuluttaa energiaa suoraan taajuuteen verrannollisesti:
 
 ```{.tuloste tiedosto="esimerkit/02-kupari.odotettu"}
 ```
+
+![Kierretyn parin vaimennus taajuuden funktiona esimerkin mallilla.
+Vaimennus kasvaa aluksi taajuuden neliöjuuren mukaan, ja desibeleinä
+se on suoraan verrannollinen kaapelin
+pituuteen.](kuvat/kupari.png){width=72%}
 
 100 metrin kaapelista 100 MHz:n taajuudella pääsee perille vain
 prosentti tehosta. Tämä selittää Ethernet-standardien rakenteen:
@@ -84,6 +115,11 @@ taajuudella antennin vastaanottopinta-ala on pienempi.
 
 ```{.python tiedosto="esimerkit/02-radio.py" osa="fspl"}
 ```
+
+![Vapaan tilan vaimennus etäisyyden funktiona. Logaritmisella
+etäisyysakselilla käyrä on suora: jokainen etäisyyden
+kymmenkertaistus lisää 20 dB. Korkeampi taajuus siirtää suoraa
+ylöspäin.](kuvat/radio.png){width=72%}
 
 Sisätiloissa ja kaupungeissa signaali saapuu vastaanottimeen monta
 reittiä: suoraan ja heijastuneena seinistä. Eri reittien signaalit

@@ -16,13 +16,26 @@ muutetaan hallitusti koodina. Protokollien perusteet (Ethernet, ARP, IP,
 TCP, UDP, DNS, TLS) opetetaan taidossa *Tietoverkot*, ja tässä niihin
 viitataan.
 
-## Kenelle
+## Esitiedot ja rajaus
 
 Tutoriaali on tarkoitettu ylläpitäjälle, infrastruktuuri- ja
 DevOps-insinöörille sekä ohjelmistokehittäjälle, joka haluaa ymmärtää,
-mitä hänen palvelunsa alla tapahtuu. Esitietoina oletetaan protokollien
-perusteet ja komentorivin käyttö (*Komentorivi ja Linux*). Bash-skriptejä
-luetaan, mutta niitä ei tarvitse osata kirjoittaa.
+mitä hänen palvelunsa alla tapahtuu. Esitietona on taito *Tietoverkot*:
+kerrosmalli, Ethernet ja ARP, IP-osoitteet ja aliverkot, reititystaulu,
+NAT, TCP ja UDP, DHCP ja DNS sekä `ip`- ja `tcpdump`-komennot oletetaan
+tutuiksi, ja niistä kerrataan vain se, mitä suunnittelu tarvitsee.
+Bash-skriptejä luetaan, mutta niitä ei tarvitse osata kirjoittaa.
+
+Tutoriaalin ulkopuolelle jäävät:
+
+- siirtotiet, radiotekniikka ja jonoteoria (taito
+  *Tietoliikennetekniikka*)
+- palvelimet, tallennus ja konfiguraationhallinta (taito
+  *Palvelinympäristöt*)
+- konttien ja pilvialustojen verkot (taito *Kontit ja
+  pilvi-infrastruktuuri*)
+- palvelujen välinen todennus ja nollaluottamus (taito
+  *Palveluarkkitehtuurin tietoturva*).
 
 ## Laboratorio: verkot nimiavaruuksissa
 
@@ -95,6 +108,7 @@ palomuuri ja VPN-yhdyskäytävä.
 | RADIUS | FreeRADIUS, `radtest` |
 | VPN | WireGuard (`wg`) |
 | Valvonta | Net-SNMP, softflowd, nfcapd ja nfdump |
+| Kahdennus ja linkkien yhdistäminen (vain asetuksina) | keepalived, `ip link … type bond` |
 | Liikenteen kaappaus | `tcpdump`, Wireshark |
 
 Esimerkit ajetaan tutoriaalin kehityskontissa, jossa työkalut ovat
@@ -108,7 +122,8 @@ make -C verkkoinfrastruktuuri testaa
 
 Luvut etenevät verkon kerroksina: suunnittelu ja osoitteet, kytkentä,
 reititys, palomuurit, verkkopalvelut, palvelun laatu, langattomat verkot
-ja pääsynhallinta, etäyhteydet, valvonta ja lopuksi verkko koodina. Luvut
+ja pääsynhallinta, etäyhteydet, valvonta ja vianetsintä ja lopuksi
+verkko koodina. Luvut
 voi lukea myös erikseen. Jokaisen luvun lopussa on osio *Käytännössä*,
 joka kokoaa ammattilaisten käytännöt perusteluineen, ja *Itsearviointi*,
 jonka väitteistä näkee, voiko luvun ohittaa.

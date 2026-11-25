@@ -12,6 +12,8 @@
 | kohinataso | $-174$ dBm/Hz $+ 10\log_{10} B +$ kohinaluku |
 | linjakoodi | erota bitti- ja symbolinopeus; koodin hinta 3–25 % |
 | virheet | CRC havaitsee, FEC korjaa, lomitus hajottaa purskeet |
+| uudelleenlähetys | go-back-N $(1-p)/(1+kp)$, valikoiva toisto $1-p$ |
+| modulaatio | +2 bittiä symboliin vaatii noin 6 dB lisää SNR:ää |
 | multipleksointi | ortogonaalisuus erottaa; etuliite ja suojakaista maksavat |
 | viive | siirto + eteneminen + jono + käsittely; matka ei lyhene kaistalla |
 | ikkuna | vähintään kaistan ja kierrosajan tulo |
@@ -19,9 +21,10 @@
 | Ethernet | mitoita kehyksinä sekunnissa; anna päiden neuvotella |
 | solut | uudelleenkäyttö vaihtaa reunan laadun keskikapasiteettiin |
 | jonot | viive $\propto 1/(1-\rho)$; Littlen laki $L = \lambda W$ |
+| esto | Erlang B; suuri kanavaryhmä kestää suuremman käyttöasteen |
 | QoS | priorisoi vähän ja rajattua; rajoita reunalla |
 
-## Jatkotaidot taitopuussa
+## Jatkotaidot
 
 - *Digitaalinen tiedonsiirto* syventää modulaatiot, pulssinmuokkauksen,
   synkronoinnin ja kanavakoodauksen, ja *Ohjelmistoradio* toteuttaa ne

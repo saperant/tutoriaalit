@@ -29,6 +29,11 @@ kuitenkin vähintään nolla.
 ```{.tuloste tiedosto="esimerkit/11-mm1.odotettu"}
 ```
 
+![M/M/1-jonon keskimääräinen aika järjestelmässä kuormituksen
+funktiona. Käyrän polvi on 80–90 %:n kohdalla: sen jälkeen pienikin
+lisäkuorma kasvattaa viivettä
+jyrkästi.](kuvat/mm1.png){width=72%}
+
 Tärkein tulos on tekijä $1/(1-\rho)$: kun kuormitus nousee 50 %:sta
 90 %:iin, viive viisinkertaistuu, ja 99 %:ssa se on satakertainen.
 Jono, jonka kapasiteetti riittää keskimäärin, kasvaa silti pitkäksi,
@@ -38,6 +43,33 @@ vakaaseen jonoon jakaumista riippumatta: keskimääräinen määrä
 järjestelmässä on saapumisnopeus kertaa keskimääräinen viipymä. Sillä
 voi päätellä esimerkiksi tarvittavan säiepoolin koon tai puskurin
 koon mitatuista luvuista.
+
+## Estojärjestelmä: Erlang B
+
+Piirikytkentäisessä verkossa (luku Kytkentätavat ja viive) jonoa ei
+ole: jos kaikki kanavat ovat varattuja, yhteyspyyntö hylätään.
+Tarjottu kuorma mitataan **erlangeina**, saapumisnopeus kertaa
+keskimääräinen yhteyden kesto, ja **Erlang B** -kaava antaa
+todennäköisyyden, että pyyntö estyy. Kaava lasketaan rekursiolla
+kanava kerrallaan:
+
+```{.python tiedosto="esimerkit/11-erlang.py" osa="erlang"}
+```
+
+```{.python tiedosto="esimerkit/11-erlang.py" osa="simulaatio"}
+```
+
+```{.tuloste tiedosto="esimerkit/11-erlang.odotettu"}
+```
+
+30 kanavan yhteys (luvun Multipleksointi E1) kantaa 20 erlangin
+kuorman alle prosentin estolla, mutta 30 erlangin kuormalla joka
+kahdeksas puhelu estyy. Jälkimmäinen taulukko näyttää suuren
+järjestelmän edun: sadan kanavan ryhmää voi käyttää 83-prosenttisesti
+samalla estolla, jolla kymmenen kanavan ryhmä jää 44 %:iin. Sama
+mitoitus pätee kaikkeen, missä on kiinteä määrä paikkoja eikä jonoa:
+modeemipooleihin, lisensseihin ja yhteyspooliin, joka hylkää pyynnön
+odottamisen sijaan.
 
 ## Prioriteetit
 
@@ -76,11 +108,16 @@ pitkän ajan keskinopeus ei ylitä sovittua:
 ```{.tuloste tiedosto="esimerkit/11-token-bucket.odotettu"}
 ```
 
+![Rahakkeiden määrä ämpärissä esimerkin liikenteellä. Purske
+tyhjentää ämpärin kymmenessä paketissa, ja loput hylätään. Tasainen
+virta kuluttaa rahakkeita hitaammin kuin niitä kertyy, joten ämpäri
+täyttyy ja jokainen paketti pääsee läpi.](kuvat/ampari.png){width=100%}
+
 Purskeen kymmenen ensimmäistä pakettia mahtuvat ämpäriin, loput
 hylätään. Sovitun nopeuden alittava tasainen virta menee kokonaan
 läpi. Sama algoritmi on operaattorin liittymän nopeusrajoituksessa,
-Linuxin `tc`-liikenteenmuokkauksessa ja rajapintojen pyyntörajoissa
-(taito *Palveluarkkitehtuurit*). Ylimenevät paketit voidaan pudottaa,
+Linuxin `tc`-liikenteenmuokkauksessa (taito *Verkkoinfrastruktuuri*)
+ja rajapintojen pyyntörajoissa (taito *Palveluarkkitehtuurit*). Ylimenevät paketit voidaan pudottaa,
 viivästää jonoon (muokkaus, *shaping*) tai merkitä alempaan luokkaan.
 
 ## Palvelun laatu verkossa
@@ -91,7 +128,9 @@ luokkia ovat kiireellinen välitys puheelle (EF), varmistettu välitys
 liiketoimintadatalle (AF) ja best-effort kaikelle muulle. QoS toimii
 vain verkossa, jonka hallitset: julkisessa Internetissä merkintöjä ei
 yleensä noudateta. Langattomassa ja matkaviestinverkossa vastaavat
-mekanismit ovat Wi-Fin WMM-luokat ja 5G:n QoS-virrat.
+mekanismit ovat Wi-Fin WMM-luokat ja 5G:n QoS-virrat. Luokittelun,
+jonojen ja muotoilun asettaminen Linux-reitittimessä on taidossa
+*Verkkoinfrastruktuuri*.
 
 ## Käytännössä
 
@@ -114,5 +153,7 @@ mekanismit ovat Wi-Fin WMM-luokat ja 5G:n QoS-virrat.
 - Osaat simuloida jonon Lindleyn rekursiolla ja verrata tulosta
   kaavaan.
 - Osaat soveltaa Littlen lakia järjestelmän mitoitukseen.
+- Osaat laskea Erlang B -kaavalla eston todennäköisyyden ja selittää,
+  miksi suuri kanavaryhmä on tehokkaampi kuin monta pientä.
 - Osaat selittää prioriteettijonon, painotetun jonotuksen ja
   rahakkeen ämpärin toiminnan ja käyttökohteet.

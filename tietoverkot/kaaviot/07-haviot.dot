@@ -1,0 +1,30 @@
+digraph {
+  nodesep=1.6; ranksep=0.32;
+  node [shape=point, width=0.04, color="#5B6B70"];
+  edge [arrowhead=none, style=dashed, color="#B8C4C8"];
+  t0 [shape=box, width=1, label="asiakas"];
+  t0 -> t0_0 -> t0_1 -> t0_2 -> t0_3 -> t0_4 -> t0_5 -> t0_6 -> t0_7 -> t0_8 -> t0_9;
+  t1 [shape=box, width=1, label="palvelin"];
+  t1 -> t1_0 -> t1_1 -> t1_2 -> t1_3 -> t1_4 -> t1_5 -> t1_6 -> t1_7 -> t1_8 -> t1_9;
+  {rank=same; t0_0; t1_0;}
+  {rank=same; t0_1; t1_1;}
+  {rank=same; t0_2; t1_2;}
+  {rank=same; t0_3; t1_3;}
+  {rank=same; t0_4; t1_4;}
+  {rank=same; t0_5; t1_5;}
+  {rank=same; t0_6; t1_6;}
+  {rank=same; t0_7; t1_7;}
+  {rank=same; t0_8; t1_8;}
+  {rank=same; t0_9; t1_9;}
+  edge [style=solid, arrowhead=normal, color="#1F2A2E",
+        constraint=false];
+  t0_0 -> t1_1 [label="SYN"];
+  t1_1 -> t0_2 [label="SYN ACK"];
+  t0_2 -> t1_3 [label="ACK"];
+  t0_3 -> t1_4 [label="PSH ACK + 3 B (katoaa)", color="#B04848", fontcolor="#B04848", style=dashed, arrowhead=tee];
+  t0_4 -> t1_5 [label="PSH ACK + 3 B (uudelleen)"];
+  t1_5 -> t0_6 [label="PSH ACK + 3 B"];
+  t0_6 -> t1_7 [label="FIN ACK"];
+  t1_7 -> t0_8 [label="FIN ACK"];
+  t0_8 -> t1_9 [label="ACK"];
+}

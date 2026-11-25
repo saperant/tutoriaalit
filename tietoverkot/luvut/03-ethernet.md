@@ -81,7 +81,20 @@ verkot jaetaan VLANeilla ja reitittimillä pienempiin.
 
 Linuxin silta (*bridge*) on ohjelmistokytkin. Sitä käyttävät
 virtuaalikoneet, kontit ja Docker (`docker0`). Rakennetaan kolmen
-koneen verkko, jossa kytkin on oma nimiavaruutensa:
+koneen verkko, jossa kytkin on oma nimiavaruutensa.
+
+```{.dot otsikko="Siltalaboratorio: kolme konetta kytkimen porteissa. Kaikki ovat samassa aliverkossa 192.0.2.0/24."}
+graph {
+  rankdir=LR; nodesep=0.3; ranksep=0.9;
+  A [label="kone A\n192.0.2.1\n02:00:00:00:00:01"];
+  B [label="kone B\n192.0.2.2\n02:00:00:00:00:02"];
+  C [label="kone C\n192.0.2.3\n02:00:00:00:00:03"];
+  K [label="kytkin\nsilta br0"];
+  A -- K [label="portti1"];
+  B -- K [label="portti2"];
+  C -- K [label="portti3"];
+}
+```
 
 ```{.bash tiedosto="esimerkit/03-silta.sh" osa="kytkin"}
 ```

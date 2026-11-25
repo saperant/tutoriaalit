@@ -18,6 +18,20 @@ protokollasta ja yhteyksistä:
 ```{.c tiedosto="esimerkit/08-silmukka.c" osa="silmukka"}
 ```
 
+```{.dot otsikko="Reaktori. Kaikki herätteet ovat kuvaajia yhdessä epoll-joukossa. Silmukka odottaa yhdessä kohdassa ja kutsuu valmiin kuvaajan käsittelijää, joka ei saa jäädä odottamaan."}
+digraph {
+  rankdir=LR; nodesep=0.18; ranksep=0.5;
+  k [label="kuunteleva soketti"]; y [label="yhteyssoketit"];
+  t [label="timerfd"]; s [label="signalfd"];
+  e [label="epoll_wait", shape=ellipse];
+  hk [label="hyväksy yhteys"]; hy [label="lue, käsittele,\nkirjoita"];
+  ht [label="sulje joutilas"]; hs [label="aloita sammutus"];
+  k -> e; y -> e; t -> e; s -> e;
+  e -> hk; e -> hy; e -> ht; e -> hs;
+  hy -> e [style=dashed, constraint=false, label="takaisin odottamaan"];
+}
+```
+
 Tämä on *reaktori*-malli: ydin ilmoittaa valmiudesta, ja sovellus
 tekee varsinaisen I/O:n itse. Toinen malli on *proaktori*, jossa
 sovellus antaa ytimelle koko operaation (lue tähän puskuriin) ja saa
@@ -67,6 +81,18 @@ vastauksia, kunnes muisti loppuu. Sama periaate pätee kaikkialla, missä
 nopea tuottaja syöttää hidasta kuluttajaa: jono rajataan, ja täysi jono
 hidastaa tuottajaa.
 
+Soketin omat puskurit ovat ketjun osa. Ydin varaa jokaiselle
+soketille lähetys- ja vastaanottopuskurin, ja TCP ilmoittaa
+vastapuolelle ikkunana, paljonko vastaanottopuskuriin mahtuu. Linux
+mitoittaa puskurit itse yhteyden mukaan (`net.ipv4.tcp_rmem` ja
+`tcp_wmem`). Valitsimet `SO_SNDBUF` ja `SO_RCVBUF` kiinnittävät koon
+ja kytkevät automaattisen mitoituksen pois, joten niitä käytetään vain
+perustellusti: pienellä lähetyspuskurilla vastapaine alkaa aiemmin
+(esimerkki tekee näin, jotta `EPOLLOUT` näkyy), ja suuri
+vastaanottopuskuri auttaa nopealla, pitkäviiveisellä yhteydellä.
+Ohjelman oma puskuri tulee näiden lisäksi, joten muistinkulutusta
+arvioitaessa lasketaan kaikki kolme.
+
 Käsittelijät reagoivat kolmeen herätteeseen: uusi yhteys, soketin
 valmius ja joutilaisuusajastimen laukeaminen:
 
@@ -86,6 +112,36 @@ tahansa suuntaan. Muuten suuri, hitaasti etenevä lataus katkaistaisiin
 kesken. Ajastin torjuu myös luvussa 6 mainitun slowloris-hyökkäyksen:
 yhteys, joka ei etene, suljetaan, eikä se varaa muuta kuin
 tilarakenteen.
+
+## TLS tapahtumasilmukassa
+
+Tuotannossa soketin ja protokollan väliin tulee TLS-kirjasto (OpenSSL,
+BoringSSL, rustls). Kirjasto ei muuta tämän luvun rakennetta, mutta se
+muuttaa kolmea oletusta. Tässä ne kuvataan periaatteina; kutsut ovat
+kirjaston dokumentaatiossa, ja TLS:n kättely ja varmenteen tarkistus
+näytetään testattuna taidossa *Tietoverkot*.
+
+- **Luku voi vaatia kirjoituksen ja päinvastoin.** TLS-yhteys alkaa
+  kättelyllä, ja kirjasto voi joutua lähettämään omia viestejään kesken
+  sovelluksen luvun. Estämättömällä soketilla kirjaston luku- ja
+  kirjoitusfunktio palauttaa siksi tiedon, kumpaa valmiutta se odottaa
+  (OpenSSL:ssä `SSL_ERROR_WANT_READ` ja `SSL_ERROR_WANT_WRITE`), ja
+  silmukka tilaa `EPOLLIN`- tai `EPOLLOUT`-ilmoituksen sen mukaan, ei
+  sen mukaan, kumpaa funktiota kutsuttiin.
+- **Kirjastolla on oma puskuri.** Kirjasto lukee soketista kokonaisen
+  tietueen ja voi palauttaa siitä sovellukselle vain osan. Loppu on
+  kirjaston muistissa, eikä `epoll` tiedä siitä mitään. Lue siis
+  silmukassa, kunnes kirjasto ilmoittaa, ettei dataa ole
+  (reunaliipaisun sääntö luvusta 7 pätee tässä aina).
+- **Vastapuoli on todennettava.** Salaus ilman varmenteen ja nimen
+  tarkistusta suojaa vain salakuuntelulta, ei välimieheltä. Asiakkaan
+  on vaadittava varmenteen tarkistus ja kerrottava kirjastolle odotettu
+  palvelimen nimi; monessa kirjastossa nimen tarkistus ei ole oletuksena
+  päällä. Tarkistuksen virhe on pysyvä virhe, jota ei yritetä uudelleen.
+
+Aikarajat (luku 10) koskevat myös kättelyä: yhteys, joka on avattu
+mutta jonka kättely ei etene, suljetaan joutilaisuusajastimella kuten
+mikä tahansa muu.
 
 ## Takaisinkutsut ja niiden hinta
 
@@ -172,6 +228,8 @@ peittää matalan tason rajapinnan.
 
 ## Itsearviointi
 
+- Osaat kertoa, mitä TLS-kirjasto muuttaa tapahtumasilmukassa: valmiuden
+  suunta, kirjaston oma puskuri ja vastapuolen todennus.
 - Osaat rakentaa tapahtumasilmukan, joka kutsuu kuvaajiin
   rekisteröityjä käsittelijöitä, ja selittää reaktori- ja
   proaktorimallin eron.

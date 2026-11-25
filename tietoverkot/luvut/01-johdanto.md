@@ -15,7 +15,13 @@ osoitteenmuunnoksen (NAT), TCP:n ja UDP:n, DHCP:n, DNS:n ja mDNS:n,
 HTTP:n ja TLS:n sekä liikenteen analyysin. Painopiste on siinä, miten
 protokollat toimivat ja miten niiden toiminnan näkee omin silmin.
 
-Rajaukset:
+## Esitiedot ja rajaus
+
+Esitiedoksi riittää taito *Komentorivi ja Linux*. Python-esimerkit ovat
+lyhyitä ja kommentoituja; niiden lukemiseen riittää taito
+*Ohjelmoinnin perusteet*, eikä niitä tarvitse osata kirjoittaa itse.
+
+Tutoriaalin ulkopuolelle jäävät:
 
 - Verkkojen suunnittelu ja ylläpito, kuten VLANit, dynaamiset
   reitityskäytännöt (OSPF, BGP), palomuurit, palvelun laatu (QoS),
@@ -27,8 +33,9 @@ Rajaukset:
 - Siirtotiet, modulaatiot ja kanavanvaraus ovat taidon
   *Tietoliikennetekniikka* aiheita.
 
-Esitiedoksi riittää taito *Komentorivi ja Linux*. Python-esimerkkien
-lukemiseen riittää taito *Ohjelmoinnin perusteet*.
+Luvut etenevät kerroksittain alhaalta ylös: kerrosmalli, Ethernet, IP ja
+reititys, kuljetuskerros, verkon peruspalvelut (DHCP ja DNS), HTTP ja
+TLS. Viimeinen sisältöluku kokoaa työkalut vianetsinnän menetelmäksi.
 
 ## Kaksi tapaa oppia protokolla
 
@@ -77,7 +84,16 @@ ytimessä on IPv6-tuki:
 Ensimmäinen laboratorio: kaksi konetta ja niiden välinen kaapeli.
 Osoitteet `192.0.2.0/24` ovat dokumentaatiota varten varattuja (RFC 5737),
 eivätkä ne koskaan ole käytössä Internetissä. MAC-osoitteet asetetaan
-itse, jotta tulosteet ovat toistettavia:
+itse, jotta tulosteet ovat toistettavia.
+
+```{.dot otsikko="Ensimmäinen laboratorio: kaksi verkkonimiavaruutta ja niitä yhdistävä veth-pari"}
+graph {
+  rankdir=LR; nodesep=0.5;
+  A [label="kone A\neth0 192.0.2.1/24\n02:00:00:00:00:0a"];
+  B [label="kone B\neth0 192.0.2.2/24\n02:00:00:00:00:0b"];
+  A -- B [label="veth-pari"];
+}
+```
 
 ```{.bash tiedosto="esimerkit/01-laboratorio.sh" osa="luonti"}
 ```
@@ -125,3 +141,7 @@ tulosteita. Python-esimerkit tarkistetaan työkaluilla ruff ja mypy
 
 Esimerkit, joissa on komento `ip netns`, muuttavat koneen verkkoasetuksia
 vain omissa nimiavaruuksissaan. Isäntäkoneen verkkoon ne eivät koske.
+Myös kaikki kaappaukset tehdään näissä nimiavaruuksissa. Oikeassa
+verkossa liikennettä saa kaapata vain omassa verkossa tai verkon
+omistajan luvalla: muiden viestintä on luottamuksellista, ja sen
+luvaton kaappaaminen on rikos.

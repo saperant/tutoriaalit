@@ -29,6 +29,7 @@
 | Malli | Tarkoitus |
 |-------|-----------|
 | Pääsy–jakelu–runko, spine–leaf | rajattu vikaantumisalue, ennustettava kapasiteetti |
+| Kahdennettu yhdyskäytävä (VRRP), linkkien yhdistäminen (LACP) | laitteen tai kaapelin vika ei katkaise segmenttiä |
 | Segmentointi ja vyöhykkeet | tietoturvaraja, valvottavat virrat |
 | Hallintaverkko ja hyppykone | infrastruktuurin suojaaminen käyttäjäverkon vaarantuessa |
 | Tilallinen palomuuri, oletuksena esto | vain luetellut virrat |
@@ -36,13 +37,13 @@
 | Dynaaminen VLAN (802.1X + RADIUS) | pääsy käyttäjän ja laitteen mukaan, ei portin |
 | Kuvaus, generaattori, varmennus | toistettavat ja katselmoitavat muutokset |
 
-## Jatko taitopuussa
+## Jatkotaidot
 
 - *Palvelinympäristöt*: palvelimet, tallennus, varmuuskopiointi ja
   käyttäjähallinta tämän verkon päällä.
 - *Tietoliikennetekniikka*: siirtotiet, kanavanvaraus ja
   matkaviestinverkot fyysiseltä puolelta.
-- *Kontit ja pilvi*: verkot pilvessä ja konttiympäristöissä, joissa samat
+- *Kontit ja pilvi-infrastruktuuri*: verkot pilvessä ja konttiympäristöissä, joissa samat
   käsitteet ovat ohjelmallisia.
 - *Palveluarkkitehtuurin tietoturva*: nollaluottamus, palvelujen
   identiteetit ja segmentointi palvelutasolla.

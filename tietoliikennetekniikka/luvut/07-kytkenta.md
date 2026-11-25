@@ -46,6 +46,14 @@ Paketin viive linkillä on neljän osan summa:
 | jonoviive | odotus lähtöjonossa | kuormitus |
 | käsittelyviive | otsakkeen käsittely reitittimessä | laite (mikrosekunteja) |
 
+![Paketin kulku lähettäjältä reitittimen kautta vastaanottajalle
+(periaatekuva, ei mittakaavassa). Aika kulkee alaspäin. Kaistan
+korkeus on siirtoviive ja sen kaltevuus etenemisviive. Reititin
+lähettää paketin eteenpäin vasta, kun se on saapunut kokonaan,
+käsitelty ja päässyt jonon kärkeen.](kuvat/viive.png){width=75%}
+
+Esimerkki laskee osat kolmen linkin reitille:
+
 ```{.python tiedosto="esimerkit/07-viive.py" osa="viive"}
 ```
 
@@ -60,8 +68,9 @@ kuormituksen mukaan ja aiheuttaa viiveen vaihtelun (*jitter*).
 
 ## Kaistan ja viiveen tulo
 
-Kun lähettäjä odottaa kuittauksia, linjalla on matkalla korkeintaan
-ikkunan verran dataa kerrallaan. Jotta linkki pysyy täynnä, ikkunan on
+Liukuvan ikkunan protokollassa (luku Virheiden havaitseminen ja
+korjaus) linjalla on matkalla korkeintaan ikkunan verran
+kuittaamatonta dataa kerrallaan. Jotta linkki pysyy täynnä, ikkunan on
 oltava vähintään kaistan ja kierrosajan tulo (*bandwidth-delay
 product*, BDP):
 

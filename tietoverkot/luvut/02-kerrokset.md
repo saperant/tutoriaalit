@@ -27,10 +27,24 @@ kuljetuskerroksen UDP:n päällä.
 
 Lähetettäessä jokainen kerros lisää datan eteen oman otsakkeensa:
 
-```text
-| Ethernet 14 | IPv4 20 | UDP 8 | sovelluksen data      | FCS 4 |
-              |<-------------- IP-paketti ------------>|
-                        |<------ UDP-datagrammi ------>|
+```{.dot otsikko="Kapselointi: UDP-datagrammi IPv4-paketissa ja paketti Ethernet-kehyksessä. Luvut ovat otsakkeiden pituuksia tavuina."}
+digraph {
+  node [shape=plain, style=""];
+  k [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="6">
+    <tr><td bgcolor="#E3E7EA">Ethernet<br/>14</td>
+        <td bgcolor="#C9D1D6">IPv4<br/>20</td>
+        <td bgcolor="#AEBAC2">UDP<br/>8</td>
+        <td width="150">sovelluksen data</td>
+        <td bgcolor="#E3E7EA">FCS<br/>4</td></tr>
+    <tr><td border="0"></td>
+        <td colspan="3" bgcolor="#AEBAC2" cellpadding="3">UDP-datagrammi alkaa UDP-otsakkeesta</td>
+        <td border="0"></td></tr>
+    <tr><td border="0"></td>
+        <td colspan="3" bgcolor="#C9D1D6" cellpadding="3">IP-paketti</td>
+        <td border="0"></td></tr>
+    <tr><td colspan="5" bgcolor="#E3E7EA" cellpadding="3">Ethernet-kehys</td></tr>
+  </table>>];
+}
 ```
 
 Vastaanottaja purkaa kerrokset päinvastaisessa järjestyksessä. Kunkin
@@ -63,7 +77,10 @@ klassinen verkkokoodin bugi.
 ```{.python tiedosto="esimerkit/02-kehys.py" osa="rakennus"}
 ```
 
-Huomioita kentistä:
+Esimerkki käyttää kenttiä, jotka esitellään kunnolla vasta
+myöhemmin: IPv4-otsake käydään läpi luvuissa *IPv4 ja aliverkot* ja
+*Reititys ja NAT* ja portit luvussa *TCP, UDP ja portit*. Tässä
+riittää tunnistaa kerrokset ja nämä kolme kenttää:
 
 - **IPv4:n TTL** (*time to live*) on hyppyjen enimmäismäärä. Jokainen
   reititin vähentää sitä yhdellä ja hylkää paketin, kun arvo on nolla.

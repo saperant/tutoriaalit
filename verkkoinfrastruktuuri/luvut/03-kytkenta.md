@@ -8,15 +8,15 @@ laitteen tai päinvastoin päästää sen väärään verkkoon.
 
 ## Oppiminen ja välitys
 
-Kytkin oppii lähettäjien MAC-osoitteet: kun kehys tulee porttiin `p2`
-osoitteesta `02:…:02:01`, kytkin kirjaa välitystauluunsa (*forwarding
-database*, FDB), että tuo osoite on portin `p2` takana. Kehys, jonka
-kohdeosoite on taulussa, lähetetään vain oikeaan porttiin. Tuntemattomat
-kohteet, yleislähetykset ja ryhmälähetykset **tulvitetaan** kaikkiin
-muihin portteihin. Merkintä vanhenee, jos osoitteesta ei kuulu mitään
-(Linuxissa oletuksena 300 sekuntia).
+Kytkimen kolme sääntöä ovat tuttuja taidosta *Tietoverkot*: kytkin
+oppii lähettäjien MAC-osoitteet välitystauluunsa (*forwarding
+database*, FDB), välittää tunnetun kohteen vain sen porttiin ja
+**tulvittaa** tuntemattomat kohteet ja yleislähetykset kaikkiin muihin
+portteihin. Ylläpitäjälle välitystaulu on ennen kaikkea vianetsinnän
+työkalu, ja sen rajallisuus on hyökkäyspinta.
 
-Linuxin silta (*bridge*) on ohjelmistokytkin:
+Laboratoriossa kytkin on Linuxin silta (*bridge*), jonka porteissa on
+kolme isäntää:
 
 ```{.bash tiedosto="esimerkit/03-kytkin.sh" osa="silta"}
 ```
@@ -67,6 +67,18 @@ bridge vlan del dev up1 vid 1      # oletus-VLAN pois rungosta
 bridge vlan show
 ```
 
+```{.dot otsikko="Pääsy- ja runkoportit. Pääsyportin kehykset ovat merkitsemättömiä; rungossa jokaisessa kehyksessä on VLAN-tunnus, jonka perusteella vastaanottava kytkin ohjaa sen oikeaan VLANiin."}
+graph {
+  rankdir=LR; nodesep=0.25; ranksep=0.3;
+  t1 [label="työasema\nVLAN 20"]; p1 [label="puhelin\nVLAN 30"];
+  t2 [label="työasema\nVLAN 20"]; p2 [label="puhelin\nVLAN 30"];
+  k1 [label="kytkin 1"]; k2 [label="kytkin 2"];
+  t1 -- k1 [label="pääsy"]; p1 -- k1 [label="pääsy"];
+  k1 -- k2 [label="runko\n802.1Q: 20, 30", penwidth=2.2];
+  k2 -- t2 [label="pääsy"]; k2 -- p2 [label="pääsy"];
+}
+```
+
 Reitittimellä kunkin VLANin yhdyskäytävä on oma aliliitäntänsä
 (*router on a stick*) tai L3-kytkimen VLAN-liitäntä (SVI):
 
@@ -105,6 +117,19 @@ pää välittää. Kun yhteys katkeaa, estetty portti avautuu.
 
 Kolme kytkintä renkaassa:
 
+```{.dot otsikko="STP-laboratorion rengas ja sen tulos. Kytkin k1 on juuri. Yhteys k2–k3 pysyy varalla: kytkimen k3 portti on estetty."}
+graph {
+  nodesep=1.2; ranksep=0.7;
+  k1 [label="k1\nprioriteetti 4096\njuuri"];
+  k2 [label="k2\nprioriteetti 8192"];
+  k3 [label="k3\nprioriteetti 12288"];
+  k1 -- k2; k1 -- k3;
+  k2 -- k3 [style=dashed, color="#B04848", fontcolor="#B04848",
+            label="k3:n pää estetty"];
+  {rank=same; k2; k3}
+}
+```
+
 ```{.bash tiedosto="esimerkit/03-stp.sh" osa="stp"}
 ```
 
@@ -129,6 +154,38 @@ STP:n suojaukset kuuluvat jokaiseen pääsykytkimeen:
 - **Root Guard**: jakelukytkimen alaspäin olevista porteista ei
   hyväksytä parempaa juurta.
 
+## Linkkien yhdistäminen
+
+STP jättää rinnakkaiset yhteydet käyttämättä. Kun kahden kytkimen tai
+kytkimen ja palvelimen välille halutaan sekä lisää kaistaa että
+kahdennus, rinnakkaiset linkit yhdistetään yhdeksi loogiseksi
+yhteydeksi (*link aggregation*, LAG; IEEE 802.1AX). **LACP**-protokollalla
+päät sopivat, mitkä linkit kuuluvat nippuun, ja huomaavat, jos yksi
+niistä vikaantuu tai on kytketty väärin.
+
+Nippu ei ole silmukka, koska STP ja välitystaulu näkevät sen yhtenä
+porttina: nipusta saapunutta kehystä ei koskaan lähetetä takaisin saman
+nipun toiseen linkkiin. Lähtevä liikenne jaetaan linkeille tiivisteellä,
+joka lasketaan kehyksen osoitteista ja porteista. Saman yhteyden
+paketit kulkevat siksi aina samaa linkkiä ja pysyvät järjestyksessä.
+Seuraus on, ettei yksittäinen yhteys koskaan ylitä yhden linkin
+nopeutta: neljä gigabitin linkkiä palvelee monta käyttäjää hyvin mutta
+ei nopeuta yhtä varmuuskopiota.
+
+Tavallinen nippu päättyy kummassakin päässä yhteen laitteeseen. MLAG
+(valmistajakohtaisin nimin) sallii palvelimen nipun päättyä kahteen
+eri kytkimeen, jolloin myös kytkimen vika on katettu. Linuxissa
+nippu on `bond`-liitäntä; asetusta ei ajeta tutoriaalin testeissä:
+
+```text
+ip link add bond0 type bond mode 802.3ad lacp_rate fast \
+    xmit_hash_policy layer3+4
+ip link set eth0 down; ip link set eth0 master bond0
+ip link set eth1 down; ip link set eth1 master bond0
+ip link set bond0 up
+cat /proc/net/bonding/bond0        # LACP:n tila ja kumppani
+```
+
 ## L2-verkot reititetyn verkon yli: VXLAN
 
 Konesaleissa L2-alueita ei venytetä fyysisesti, vaan runko reititetään
@@ -136,6 +193,20 @@ Konesaleissa L2-alueita ei venytetä fyysisesti, vaan runko reititetään
 Ethernet-kehyksen UDP-pakettiin (portti 4789). Segmentin tunnus VNI on
 24-bittinen, joten segmenttejä voi olla 16 miljoonaa, kun VLANeja on
 4094. Tunnelin päätepiste on VTEP, tyypillisesti lehtikytkin.
+
+```{.dot otsikko="VXLAN-laboratorio. Lehtikytkimet l1 ja l2 ovat tunnelin päät (VTEP). Isännät h1 ja h2 ovat segmentissä 100 eri kytkimissä, h3 segmentissä 200."}
+graph {
+  rankdir=LR; nodesep=0.3; ranksep=0.35;
+  h1 [label="h1\n10.10.0.1\nVNI 100"];
+  l1 [label="l1 (VTEP)\n172.16.0.1"];
+  l2 [label="l2 (VTEP)\n172.16.0.2"];
+  h2 [label="h2\n10.10.0.2\nVNI 100"];
+  h3 [label="h3\n10.10.0.3\nVNI 200"];
+  h1 -- l1;
+  l1 -- l2 [label="reititetty runko\nVXLAN, UDP 4789", penwidth=2.2];
+  l2 -- h2; l2 -- h3;
+}
+```
 
 ```{.bash tiedosto="esimerkit/03-vxlan.sh" osa="vtep"}
 ```
@@ -174,5 +245,8 @@ sijainnit jaetaan BGP:llä (EVPN), jolloin tulvitusta ei tarvita.
   natiivin VLANin ja liian sallivien runkojen virheet.
 - Osaat selittää, miten STP valitsee juuren ja estää silmukan, ja
   ottaa käyttöön PortFastin, BPDU Guardin ja Root Guardin.
+- Osaat selittää, miksi yhdistetty linkki ei ole silmukka, miten
+  liikenne jakautuu sen linkeille ja mitä se tarkoittaa yksittäisen
+  yhteyden nopeudelle.
 - Osaat kertoa, miksi konesaleissa L2-segmentit kuljetetaan VXLANilla
   reititetyn rungon yli.

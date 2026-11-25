@@ -10,3 +10,5 @@ default via 192.0.2.1 dev eth0
 198.51.100.20 via 192.0.2.1 dev eth0 src 192.0.2.10 uid 0 
 192.0.2.0/24 dev lan proto kernel scope link src 192.0.2.1 
 198.51.100.0/24 dev wan proto kernel scope link src 198.51.100.1 
+4. TTL 1: reititin hylkää paketin ja ilmoittaa siitä
+From 192.0.2.1 icmp_seq=1 Time to live exceeded

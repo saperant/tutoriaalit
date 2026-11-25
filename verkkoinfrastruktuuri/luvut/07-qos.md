@@ -6,7 +6,11 @@ gigabitti kohtaa sadan megabitin internet-yhteyden, tai kymmenen
 palvelinta lähettää samaan porttiin. Silloin paketit jonottavat, ja
 jonon pituus näkyy viiveenä, viiveen vaihteluna ja lopulta
 pudotuksina. Palvelun laatu (*Quality of Service*, QoS) päättää,
-kenen paketit jonottavat ja kenen pudotetaan.
+kenen paketit jonottavat ja kenen pudotetaan. Miksi viive kasvaa
+jyrkästi kuormituksen lähestyessä sataa prosenttia ja miten
+prioriteettijono ja rahakkeen ämpäri toimivat, on selitetty taidossa
+*Tietoliikennetekniikka*. Tämä luku näyttää, miten samat mekanismit
+asetetaan reitittimeen.
 
 ## Mihin QoS:ää tarvitaan
 
@@ -49,6 +53,20 @@ taatun osuutensa (`rate`), ja vapaata kaistaa voi lainata ylärajaan asti
 (`ceil`). Prioriteetti ratkaisee, kuka lainaa ensin.
 
 ```{.bash tiedosto="esimerkit/07-qos.sh" osa="htb"}
+```
+
+```{.dot otsikko="Esimerkin HTB-luokkapuu. Luokat saavat taatun osuutensa ja voivat lainata vapaata kaistaa juuriluokan rajaan asti; puheluokka lainaa ensin."}
+digraph {
+  rankdir=TB; nodesep=0.5; ranksep=0.45;
+  q [label="qdisc 1: htb\noletusluokka 1:30"];
+  juuri [label="luokka 1:1\nrate 10 Mbit/s"];
+  puhe [label="luokka 1:10 (puhe)\nrate 2, ceil 10 Mbit/s\nprio 0"];
+  muu [label="luokka 1:30 (muu)\nrate 8, ceil 10 Mbit/s\nprio 1"];
+  suodin [label="suodin: DSCP EF", shape=note, fillcolor="#FFFFFF"];
+  q -> juuri; juuri -> puhe; juuri -> muu;
+  suodin -> puhe [style=dashed];
+  {rank=same; suodin; puhe; muu}
+}
 ```
 
 Juuriluokka on 10 Mbit/s, vaikka liitäntä olisi gigabitin, koska

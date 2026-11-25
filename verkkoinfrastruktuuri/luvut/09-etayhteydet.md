@@ -49,6 +49,19 @@ että kenen nimissä paketti saa tulla (*cryptokey routing*).
 ```{.tuloste tiedosto="esimerkit/09-wireguard.odotettu"}
 ```
 
+```{.dot otsikko="WireGuard-laboratorio: kahden toimipisteen yhdyskäytävät ja tunneli niiden välillä. Yhdyskäytävän gwa sallitut osoitteet vastapäälle ovat 10.2.0.0/24 ja gwb:n 10.1.0.0/24."}
+graph {
+  rankdir=LR; nodesep=0.4; ranksep=0.3;
+  ha [label="ha\n10.1.0.10"];
+  gwa [label="gwa\nlan 10.1.0.1/24\nwan 198.51.100.1"];
+  gwb [label="gwb\nwan 198.51.100.2\nlan 10.2.0.1/24"];
+  hb [label="hb\n10.2.0.10"];
+  ha -- gwa;
+  gwa -- gwb [label="WireGuard-tunneli\n(UDP 51820)", penwidth=2.2];
+  gwb -- hb;
+}
+```
+
 Laboratoriossa käytetään käyttäjätilan toteutusta `wireguard-go`, koska
 kaikkien testiympäristöjen ytimissä ei ole WireGuard-moduulia.
 Asetukset ovat samat kuin ytimen toteutuksessa, jota tuotannossa
@@ -105,6 +118,19 @@ yhteyttä käyttäjäverkosta saati internetistä. Ylläpitäjä yhdistää
 **hyppykoneelle** (*bastion*, *jump host*), joka on ainoa reitti
 hallintaverkkoon ja jonka kaikki istunnot kirjataan. Hyppykone ei
 reititä: sisäverkkoon pääsee vain sen SSH-palvelun kautta.
+
+```{.dot otsikko="Hyppykonelaboratorio. SSH-yhteys kohteeseen kulkee hyppykoneen läpi (ProxyJump), mutta salaus ulottuu ylläpitäjän koneelta palvelimelle asti."}
+digraph {
+  rankdir=LR; nodesep=0.4; ranksep=0.3;
+  y [label="ylläpitäjä\n192.0.2.50"];
+  h [label="hyppykone\n192.0.2.10 ja 10.80.0.1\nei reititä"];
+  p [label="palvelin\n10.80.0.20"];
+  y -> h [label="SSH"];
+  h -> p [label="välitetty yhteys"];
+  y -> p [label="päästä päähän salattu istunto", style=dashed,
+          constraint=false];
+}
+```
 
 ```{.bash tiedosto="esimerkit/09-hyppykone.sh" osa="palvelimet"}
 ```

@@ -77,6 +77,36 @@ uudelleenlähetyksen. Yksinkertaisin muoto on *pysähdy ja odota*
 (stop-and-wait ARQ): lähetä paketti, odota sen kuittausta ja lähetä
 uudelleen, jos kuittausta ei kuulu aikarajan sisällä.
 
+```{.dot otsikko="Pysähdy ja odota -protokollan kaksi vikatapausta. Kadonnut paketti ja kadonnut kuittaus näyttävät lähettäjälle samalta: aikaraja umpeutuu, ja paketti lähetetään uudelleen. Jälkimmäisessä vastaanottaja saa paketin kahdesti, joten sen on tunnistettava kaksoiskappale numerosta ja kuitattava se silti."}
+digraph {
+  nodesep=1.4; ranksep=0.3;
+  node [shape=point, width=0.04, color="#5B6B70"];
+  edge [arrowhead=none, style=dashed, color="#B8C4C8"];
+  t0 [shape=box, width=1.2, label="lähettäjä"];
+  t0 -> t0_0 -> t0_1 -> t0_2 -> t0_3 -> t0_4 -> t0_5 -> t0_6 -> t0_7 -> t0_8;
+  t1 [shape=box, width=1.2, label="vastaanottaja"];
+  t1 -> t1_0 -> t1_1 -> t1_2 -> t1_3 -> t1_4 -> t1_5 -> t1_6 -> t1_7 -> t1_8;
+  {rank=same; t0_0; t1_0;}
+  {rank=same; t0_1; t1_1;}
+  {rank=same; t0_2; t1_2;}
+  {rank=same; t0_3; t1_3;}
+  {rank=same; t0_4; t1_4;}
+  {rank=same; t0_5; t1_5;}
+  {rank=same; t0_6; t1_6;}
+  {rank=same; t0_7; t1_7;}
+  {rank=same; t0_8; t1_8;}
+  edge [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false];
+  t0_0 -> t1_1 [label="data 0"];
+  t1_1 -> t0_2 [label="kuittaus 0"];
+  t0_2 -> t1_3 [label="data 1 (katoaa)", color="#B04848", fontcolor="#B04848", style=dashed, arrowhead=tee];
+  t0_3 -> t1_4 [label="aikaraja: data 1 uudelleen"];
+  t1_4 -> t0_5 [label="kuittaus 1 (katoaa)", color="#B04848", fontcolor="#B04848", style=dashed, arrowhead=tee];
+  t0_5 -> t1_6 [label="aikaraja: data 1 uudelleen"];
+  t1_6 -> t0_7 [label="kaksoiskappale hylätään, kuittaus 1"];
+  t0_7 -> t1_8 [label="data 2"];
+}
+```
+
 Pakettimuoto koodataan tavuina eikä rakenteena (luku 5):
 
 ```{.c tiedosto="esimerkit/04-luotettava.c" osa="paketti"}
@@ -125,8 +155,9 @@ Pysähdy ja odota -protokolla on hidas: kaistasta käytetään vain yksi
 paketti kiertoaikaa kohden. TCP ja QUIC käyttävät *liukuvaa ikkunaa*,
 jossa monta pakettia on matkalla yhtä aikaa, sekä valikoivia
 kuittauksia, mitattuun kiertoaikaan perustuvaa aikarajaa ja
-ruuhkanhallintaa. Ennen kuin toteutat omaa luotettavaa protokollaa,
-mieti, riittäisikö TCP tai QUIC-kirjasto.
+ruuhkanhallintaa. Menetelmien tehokkuuden vertailu on taidossa
+*Tietoliikennetekniikka*. Ennen kuin toteutat omaa luotettavaa
+protokollaa, mieti, riittäisikö TCP tai QUIC-kirjasto.
 
 ## Käytännössä
 

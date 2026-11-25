@@ -56,7 +56,7 @@ def kysy(palvelin: str, nimi: str, tyyppi: str) -> None:
 
 
 # @alku mdns
-def mdns_sokeetti() -> socket.socket:
+def mdns_soketti() -> socket.socket:
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     s.bind(("", MDNS_PORTTI))
@@ -70,7 +70,7 @@ def mdns_sokeetti() -> socket.socket:
 
 def mdns_vastaa(nimi: str, osoite: str) -> None:
     """Vastaa yhteen kyselyyn omasta nimestä ja lopettaa."""
-    with mdns_sokeetti() as s:
+    with mdns_soketti() as s:
         while True:
             data, _ = s.recvfrom(4096)
             if pura_kysymys(data) == nimi:
@@ -83,7 +83,7 @@ def mdns_vastaa(nimi: str, osoite: str) -> None:
 
 
 def mdns_kysy(nimi: str) -> None:
-    with mdns_sokeetti() as s:
+    with mdns_soketti() as s:
         s.settimeout(2)
         s.sendto(kysely(nimi, "A", tunniste=0, rekursio=False),
                  (MDNS_RYHMA, MDNS_PORTTI))

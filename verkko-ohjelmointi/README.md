@@ -31,7 +31,8 @@ järjestelmät ja Reaaliaikaiset moninpelit.
 7. Moniasiakaspalvelimet: poll ja epoll – estämätön I/O, taso- ja
    reunaliipaisu, usea ydin
 8. Asynkroninen I/O – tapahtumasilmukka, ajastimet, lähtevän datan
-   puskurointi ja vastapaine, C++-korutiinit, io_uring
+   puskurointi ja vastapaine, TLS tapahtumasilmukassa, C++-korutiinit,
+   io_uring
 9. Etäproseduurikutsut – oma RPC putkituksella ja määräajoilla,
    gRPC ja Protocol Buffers, JSON-RPC
 10. Vikasietoisuus ja aikakatkaisut – `connect` määräajassa,
@@ -56,10 +57,14 @@ siemenellä, joten tulosteet ovat samat joka ajossa.
 ```text
 make testaa                 # rakenteen tarkistus ja esimerkit
 make pdf                    # tutoriaali ja pikaopas PDF:ksi
+make kuvat                  # piirtää kuvaajan uudelleen (Matplotlib)
 ```
 
 Kehityskontti: `.devcontainer/verkko-ohjelmointi` (mukana strace,
 netcat ja tcpdump).
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 ## Lisenssi
 

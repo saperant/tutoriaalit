@@ -64,3 +64,9 @@ ip -n "$A" route
 ip -n "$A" route get 198.51.100.20 | head -n 1
 ip -n "$R" route
 # @loppu vaiheet
+
+# @alku ttl
+echo "4. TTL 1: reititin hylkää paketin ja ilmoittaa siitä"
+ip netns exec "$A" ping -c 1 -W 1 -t 1 198.51.100.20 \
+    | grep -oE 'From .*exceeded' || true
+# @loppu ttl

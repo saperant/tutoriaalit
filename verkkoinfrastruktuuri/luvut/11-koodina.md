@@ -71,29 +71,8 @@ hallintajärjestelmiä, ja totuuden lähteenä NetBoxia tai
 versionhallintaa. Työkalua tärkeämpää on periaate: käsin tehty muutos
 tuotantolaitteeseen on poikkeus, joka kirjataan ja viedään kuvaukseen
 saman tien. Muuten seuraava koneellinen käyttöönotto kumoaa sen.
-
-## Vianetsinnän menetelmä
-
-Kun jokin ei toimi, edetään kerros kerrokselta ja varmennetaan jokainen
-oletus mittaamalla:
-
-1. **Fyysinen ja L2:** onko liitäntä ylhäällä (`ip -br link`), onko
-   osoite opittu kytkimen välitystauluun oikeaan VLANiin ja porttiin,
-   onko STP estänyt portin?
-2. **L3:** onko laitteella oikea osoite ja peite (`ip -br addr`),
-   löytyykö reitti kohteeseen ja takaisin (`ip route get`), vastaako
-   yhdyskäytävä (ARP-taulu)?
-3. **Suodatus:** pudottaako palomuuri (laskurit, `nft monitor trace`,
-   lokit)? Tarkista molemmat suunnat ja kaikki matkan palomuurit.
-4. **Palvelut:** saako laite DHCP:ltä oikeat tiedot, ratkeaako nimi,
-   kuunteleeko palvelu (`ss -ltn`)?
-5. **Kaappaa.** `tcpdump -ni <liitäntä> host <osoite>` matkan eri
-   kohdissa näyttää, mihin asti paketti pääsee. Missä paketti viimeksi
-   nähtiin, siellä on vika.
-
-Jokaisesta vaiheesta kirjataan havainto, ei oletusta. "Palomuuri on
-kunnossa" on oletus; "pudotuslaskuri ei kasvanut testin aikana" on
-havainto.
+Sama periaate palvelimille on taidossa *Palvelinympäristöt* ja
+pilvi-infrastruktuurille taidossa *Kontit ja pilvi-infrastruktuuri*.
 
 ## Käytännössä
 
@@ -106,9 +85,9 @@ havainto.
   kirjoitetaan testeiksi, jotka ajetaan jokaisen muutoksen jälkeen ja
   säännöllisesti muutenkin.
 - **Lue ennen kirjoitusta.** Automaatio aloitetaan tilan keräämisestä
-  ja vertailusta (*drift detection*); kirjoittaminen laitteisiin tulee
-  vasta, kun lukeminen on luotettavaa.
-- **Vianetsinnässä havaintoja, ei oletuksia,** ja kerros kerrallaan.
+  ja vertailusta kuvaukseen, jolloin asetusten ajautuminen (*drift*)
+  havaitaan; kirjoittaminen laitteisiin tulee vasta, kun lukeminen on
+  luotettavaa.
 
 ## Itsearviointi
 
@@ -118,5 +97,3 @@ havainto.
   virheelliset muutokset ennen käyttöönottoa.
 - Osaat järjestää verkkomuutoksen katselmoinnin, testauksen,
   käyttöönoton ja palautuksen.
-- Osaat edetä vianetsinnässä kerros kerrallaan ja todentaa jokaisen
-  oletuksen mittaamalla.

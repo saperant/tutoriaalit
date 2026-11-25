@@ -25,10 +25,80 @@ on yhteydessä jokaiseen runkokytkimeen, joten kahden palvelimen välillä
 on aina yhtä monta hyppyä, ja kaikki yhteydet ovat käytössä yhtä aikaa
 (ECMP) eikä STP estä niistä yhtäkään.
 
+```{.dot otsikko="Kampusverkon kolme kerrosta ja konesalin spine–leaf-rakenne. Jokainen kytkin on yhteydessä kahteen ylemmän kerroksen kytkimeen, joten yhden laitteen tai kaapelin vika ei katkaise yhteyttä."}
+graph {
+  rankdir=TB; nodesep=0.14; ranksep=0.45;
+  subgraph cluster_kampus {
+    label="kampus"; style=dashed; color="#B8C4C8";
+    c1 [label="runko"]; c2 [label="runko"];
+    d1 [label="jakelu"]; d2 [label="jakelu"];
+    a1 [label="pääsy"]; a2 [label="pääsy"]; a3 [label="pääsy"];
+    c1 -- d1; c1 -- d2; c2 -- d1; c2 -- d2;
+    d1 -- a1; d1 -- a2; d1 -- a3; d2 -- a1; d2 -- a2; d2 -- a3;
+  }
+  subgraph cluster_konesali {
+    label="konesali"; style=dashed; color="#B8C4C8";
+    s1 [label="spine"]; s2 [label="spine"];
+    l1 [label="leaf"]; l2 [label="leaf"]; l3 [label="leaf"]; l4 [label="leaf"];
+    s1 -- l1; s1 -- l2; s1 -- l3; s1 -- l4;
+    s2 -- l1; s2 -- l2; s2 -- l3; s2 -- l4;
+  }
+}
+```
+
 Kerrosten tärkein tehtävä on rajata **vikaantumisalue** (*failure
 domain*). L2-segmentti on yksi yleislähetysalue: silmukka, ARP-myrsky tai
 väärä DHCP-palvelin vaikuttaa koko segmenttiin. Siksi L2-alueet pidetään
 pieninä ja ne yhdistetään reitittämällä.
+
+## Kahdennettu yhdyskäytävä
+
+Kahdennettu jakelukerros ei vielä auta työasemaa: sillä on yksi
+oletusyhdyskäytävän osoite, ja jos sitä pitävä reititin vikaantuu,
+segmentti on eristyksissä, vaikka viereinen reititin toimisi.
+**VRRP** (*Virtual Router Redundancy Protocol*; valmistajakohtaisia
+vastineita ovat HSRP ja GLBP) ratkaisee tämän virtuaalisella
+osoitteella. Kaksi reititintä jakaa yhden IP-osoitteen ja siihen
+kuuluvan virtuaalisen MAC-osoitteen. Vain aktiivinen reititin vastaa
+niihin, ja se lähettää sekunnin välein ilmoituksen. Jos ilmoitukset
+lakkaavat, varalla oleva reititin ottaa osoitteen itselleen ja lähettää
+pyytämättömän ARP-vastauksen, jolloin kytkimet oppivat virtuaalisen
+MAC-osoitteen uuden portin. Työasemien asetukset eivät muutu, ja katko
+kestää muutaman sekunnin.
+
+```{.dot otsikko="Kahdennettu yhdyskäytävä. Työasemien oletusyhdyskäytävä on virtuaalinen osoite 10.20.0.1, joka on kerrallaan vain toisella reitittimellä."}
+graph {
+  rankdir=TB; nodesep=0.5; ranksep=0.5;
+  r1 [label="reititin 1\n10.20.0.2\naktiivinen: pitää osoitetta 10.20.0.1"];
+  r2 [label="reititin 2\n10.20.0.3\nvaralla: kuuntelee ilmoituksia"];
+  sw [label="kytkin, segmentti 10.20.0.0/23"];
+  h1 [label="työasema\nyhdyskäytävä 10.20.0.1"];
+  h2 [label="työasema\nyhdyskäytävä 10.20.0.1"];
+  r1 -- sw; r2 -- sw; sw -- h1; sw -- h2;
+  r1 -- r2 [style=dashed, label="VRRP-ilmoitukset", constraint=false];
+}
+```
+
+Linux-reitittimessä VRRP:n toteuttaa keepalived. Asetusta ei ajeta
+tutoriaalin testeissä; se näyttää, mitä kummallekin reitittimelle
+kerrotaan:
+
+```text
+vrrp_instance toimisto {
+    state BACKUP            # molemmat aloittavat varalla
+    interface eth0.20
+    virtual_router_id 20    # sama molemmilla reitittimillä
+    priority 150            # toisella 100: suurin voittaa
+    advert_int 1
+    virtual_ipaddress { 10.20.0.1/23 }
+}
+```
+
+Kahdennus on suunniteltava koko polulle. Jos aktiivisen reitittimen
+ylävirran yhteys katkeaa mutta laite itse toimii, se pitää osoitteen ja
+nielee liikenteen. Siksi prioriteetti sidotaan ylävirran liitännän tai
+reitin tilaan (*tracking*), ja vikatilanteet testataan irrottamalla
+kaapeleita ennen käyttöönottoa.
 
 ## Segmentointi
 
@@ -49,6 +119,23 @@ oman segmenttinsä ja ne palvelut, jotka sille on erikseen sallittu.
 Segmenttien välinen liikenne kulkee reitittimen tai palomuurin kautta,
 jossa sääntöjä voi valvoa ja kirjata. Hienojakoisin muoto on
 *mikrosegmentointi*, jossa jokaisella työkuormalla on omat sääntönsä.
+
+```{.dot otsikko="Taulukon sallitut liikennevirrat. Nuoli osoittaa yhteyden avaajasta kohteeseen; kaikki, mitä kuvassa ei ole, on estetty."}
+digraph {
+  rankdir=LR; nodesep=0.22; ranksep=0.9;
+  hyppy [label="ylläpidon\nhyppykone"];
+  hallinta [label="Hallinta"];
+  toimisto [label="Toimisto"]; puhelimet [label="Puhelimet"];
+  iot [label="IoT"]; vieraat [label="Vieraat"];
+  palvelimet [label="Palvelimet\n(mm. puhepalvelin,\nIoT:n hallintapalvelu)"];
+  internet [label="internet", shape=ellipse];
+  hyppy -> hallinta;
+  toimisto -> palvelimet; toimisto -> internet;
+  puhelimet -> palvelimet [label="vain puhepalvelin"];
+  iot -> palvelimet [label="vain hallintapalvelu"];
+  vieraat -> internet;
+}
+```
 
 ## Osoitesuunnitelma
 
@@ -121,6 +208,9 @@ Nautobot sekä versionhallinnassa oleva kuvaus.
 
 - Osaat selittää pääsy-, jakelu- ja runkokerroksen sekä spine–leaf-rakenteen
   tehtävät ja sen, miksi L2-alueet pidetään pieninä.
+- Osaat selittää, miten kahdennettu yhdyskäytävä (VRRP) siirtää
+  virtuaalisen osoitteen varareitittimelle ja miksi ylävirran tila on
+  otettava huomioon.
 - Osaat jakaa toimipisteen verkon segmentteihin luottamustason mukaan ja
   perustella, miksi hallintaverkko on erillään.
 - Osaat laatia hierarkkisen IPv4- ja IPv6-osoitesuunnitelman kasvuvaroineen

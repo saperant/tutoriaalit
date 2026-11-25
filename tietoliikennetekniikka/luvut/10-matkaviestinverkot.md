@@ -15,6 +15,28 @@ resurssiruudukko ajassa ja taajuudessa sekä pakettikytketty runkoverkko.
 | käyttäjädata | S-GW, P-GW | UPF | pakettien välitys Internetiin |
 | tilaajatiedot | HSS | UDM | tunnisteet ja avaimet |
 
+```{.dot otsikko="5G-verkon pääosat. Käyttäjän data (yhtenäinen viiva) kulkee tukiasemalta UPF:n kautta Internetiin; ohjaus (katkoviiva) kulkee erikseen."}
+digraph {
+  rankdir=TB; nodesep=0.5; ranksep=0.55;
+  udm [label="UDM\ntilaajatiedot"];
+  amf [label="AMF\nkirjautuminen,\nliikkuvuus"];
+  smf [label="SMF\nistunnot"];
+  ue [label="UE\npäätelaite"];
+  gnb [label="gNB\ntukiasema"];
+  upf [label="UPF\nkäyttäjädata"];
+  net [label="Internet", shape=ellipse];
+  {rank=same; udm; amf; smf}
+  {rank=same; ue; gnb; upf; net}
+  udm -> amf [style=dashed, dir=both];
+  amf -> smf [style=dashed, dir=both];
+  ue -> gnb [label="radio", dir=both];
+  gnb -> upf [dir=both];
+  upf -> net [dir=both];
+  amf -> gnb [style=dashed, dir=both];
+  smf -> upf [style=dashed, dir=both];
+}
+```
+
 5G:n runkoverkko on rakennettu palveluina, jotka kommunikoivat
 HTTP/2-rajapinnoilla, ja ohjaus (AMF, SMF) on erotettu käyttäjädatan
 välityksestä (UPF). Erottelu sallii UPF:n sijoittamisen lähelle
@@ -72,7 +94,16 @@ käytetään uudelleen toisissa soluissa. Solun keskellä signaali on
 vahva, mutta reunalla naapurisolujen samaa taajuutta käyttävät
 asemat häiritsevät. Uudelleenkäyttökerroin $N$ kertoo, kuinka moneen
 osaan taajuudet jaetaan, jotta samaa taajuutta käyttävät solut olisivat
-kauempana toisistaan:
+kauempana toisistaan.
+
+![Taajuuksien uudelleenkäyttö kuusikulmioruudukossa. Numero on solun
+taajuusryhmä, ja tummat solut käyttävät samaa taajuutta kuin
+keskimmäinen. Kertoimella 1 jokainen naapuri häiritsee; kertoimilla 3
+ja 7 samaa taajuutta käyttävät solut ovat kauempana, mutta kukin solu
+saa vain osan kaistasta.](kuvat/solut.png){width=100%}
+
+Esimerkki laskee signaalin ja häiriön suhteen (SINR) käyttäjälle
+solun keskellä ja kulmassa:
 
 ```{.python tiedosto="esimerkit/10-solut.py" osa="kuusikulmio"}
 ```

@@ -30,6 +30,11 @@ $S = G e^{-G}$:
 ```{.tuloste tiedosto="esimerkit/08-aloha.odotettu"}
 ```
 
+![ALOHAn läpäisy kuorman funktiona. Viivat ovat kaavat ja pisteet
+esimerkin simulaatioita. Huipun oikealla puolella lisäkuorma
+pienentää läpäisyä: yrityksiä on enemmän, mutta yhä useampi niistä
+törmää.](kuvat/aloha.png){width=72%}
+
 Simulaatio osuu teoriaan. Paras läpäisy on vain 18 % (puhdas) tai
 37 % (viipaloitu) kanavan kapasiteetista, ja liian suuri kuorma romahduttaa
 läpäisyn, koska lähes kaikki kehykset törmäävät.
@@ -70,6 +75,11 @@ kehyksen, ja pitkille kehyksille voidaan varata kanava ensin lyhyillä
 RTS- ja CTS-viesteillä, jotka myös piilotettu asema kuulee
 tukiasemalta. Wi-Fi 6 lisäsi päälle OFDMA:n, jolla tukiasema jakaa
 vuoroja itse matkaviestinverkkojen tapaan.
+
+![Piilotettu asema. A ja C kuulevat tukiaseman mutta eivät toisiaan,
+joten C voi aloittaa lähetyksen kesken A:n kehyksen. Kun A pyytää
+vuoroa (RTS) ja tukiasema vastaa (CTS), vastaus kuuluu myös C:lle, ja
+C pysyy hiljaa ilmoitetun ajan.](kuvat/piilotettu.png){width=70%}
 
 ## Hallittu pääsy: Token Ring ja TDMA
 

@@ -27,7 +27,7 @@ C++:lla Linuxin sokettirajapinnan päällä.
 - **Testaus:** paikalliset asiakas–palvelin-testit, vikojen injektointi
   ja vianetsinnän työkalut.
 
-## Esitiedot ja lähitaidot
+## Esitiedot ja rajaus
 
 Tutoriaali rakentuu kahden taidon päälle. *Tietoverkot* opettaa
 protokollat: IPv4 ja IPv6, portit, TCP:n kättelyn ja tilakoneen, UDP:n,
@@ -50,8 +50,6 @@ C ja C++ oletetaan tutuiksi taidoista *C-kieli* ja *Moderni C++*.
 *Rinnakkaisohjelmointi* käsittelee muistimallit ja lukottomat
 rakenteet; tässä säikeitä käytetään vain palvelimen rakennusaineena.
 
-## Rajaus
-
 Tutoriaali käsittelee soketteja suoraan käyttävää ohjelmointia:
 ensisijaisesti Linuxin rajapintaa, joka on POSIXin mukainen.
 Linux-kohtaiset laajennukset (`epoll`, `accept4`, `signalfd`,
@@ -62,8 +60,14 @@ ports, mutta rakenne on sama.
 Salausta ei toteuteta itse. Tuotannossa TCP-yhteyden päälle tulee TLS
 valmiilla kirjastolla (OpenSSL, BoringSSL, rustls), ja tässä opitut
 asiat – kehykset, aikakatkaisut, estämätön I/O – pätevät sellaisinaan
-TLS-yhteyden sisällä. HTTP ja kehykset kuuluvat taitoon
+TLS-yhteyden sisällä. Luku 8 kertoo, mitä TLS-kirjasto muuttaa
+tapahtumasilmukassa. HTTP ja kehykset kuuluvat taitoon
 *Taustapalvelut*.
+
+Luvut 2–5 käsittelevät yhtä yhteyttä (soketit, tavuvirta, UDP ja
+protokollan muoto), luvut 6–8 monen asiakkaan palvelemista ja luvut
+9–11 sitä, mitä yhteyksien päälle rakennetaan ja miten se pidetään
+toimivana: RPC, vikasietoisuus ja testaus.
 
 ## Esimerkit ja testaus
 

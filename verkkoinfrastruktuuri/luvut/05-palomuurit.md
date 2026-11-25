@@ -23,6 +23,27 @@ läpi kulkevat), `output` (laitteelta lähtevät), `prerouting` ja
 oletuspolitiikka (`policy drop`) ratkaisee paketit, joihin mikään sääntö
 ei osu.
 
+```{.dot otsikko="Paketin polku nftablesin koukkujen läpi. Reitittimen läpi kulkeva paketti käy koukuissa prerouting, forward ja postrouting. Laitteelle itselleen tuleva paketti päätyy koukun input kautta omille prosesseille, ja niiden lähettämät paketit lähtevät koukkujen output ja postrouting kautta."}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.28;
+  sisaan [label="sisään", shape=plain, style=""];
+  ulos [label="ulos", shape=plain, style=""];
+  pre [label="prerouting\n(DNAT)"];
+  reititys [label="reititys", shape=diamond, style="filled"];
+  fwd [label="forward\n(suodatus)"];
+  post [label="postrouting\n(SNAT)"];
+  inp [label="input\n(suodatus)"];
+  paik [label="omat\nprosessit", shape=ellipse];
+  out [label="output"];
+  sisaan -> pre -> reititys;
+  reititys -> fwd; fwd -> post; post -> ulos;
+  reititys -> inp;
+  inp -> paik -> out [constraint=false];
+  out -> post;
+  {rank=same; fwd; inp; paik; out}
+}
+```
+
 ## Vyöhykepalomuuri
 
 Reitittimellä on kolme vyöhykettä: lähiverkko (`lan`), palvelinverkko
@@ -34,6 +55,20 @@ Reitittimellä on kolme vyöhykettä: lähiverkko (`lan`), palvelinverkko
 | lan | dmz | kaikki |
 | wan | dmz | vain julkaistu verkkopalvelin, portti 80 |
 | dmz | lan | ei mitään |
+
+```{.dot otsikko="Vyöhykepalomuurin laboratorio. Nuolet ovat sallittuja virtoja: lähiverkosta kaikkialle, internetistä vain porttiohjauksen kautta verkkopalvelimelle. DMZ:sta lähiverkkoon ei ole nuolta."}
+digraph {
+  rankdir=LR; nodesep=0.45; ranksep=0.3;
+  lan [label="lan\ntyöasema\n10.0.10.20"];
+  pm [label="palomuuri\nwan 203.0.113.1"];
+  dmz [label="dmz\nverkkopalvelin\n10.0.20.80"];
+  wan [label="wan (internet)\n203.0.113.2", shape=ellipse];
+  lan -> pm [label="kaikki"];
+  pm -> wan [label="SNAT"];
+  pm -> dmz [label="lan: kaikki\nwan: DNAT, portti 80"];
+  wan -> pm [label="portti 80", style=dashed];
+}
+```
 
 Säännöt seuraavat taulukkoa:
 

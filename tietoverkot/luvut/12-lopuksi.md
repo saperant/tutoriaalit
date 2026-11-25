@@ -12,6 +12,7 @@
 5. **Paluusuunta unohtuu.** Reitti, NAT ja palomuuri on mietittävä
    molempiin suuntiin.
 6. **TCP on tavuvirta.** Kehystä viestit itse ja lue silmukassa.
+   Uudelleenlähetykset kertovat häviöstä polulla (`nstat`, `ss -ti`).
 7. **Kaikella verkossa on aikaraja.** Ilman sitä jumitus on vain ajan
    kysymys.
 8. **Älä oleta IPv4:ää**, äläkä yhtä osoitetta per nimi. Käytä
@@ -22,7 +23,7 @@
 11. **Jäsennä verkon data puolustavasti.** Se on hyökkääjän
     hallinnassa.
 
-## Mihin tästä eteenpäin
+## Jatkotaidot
 
 - *Verkkoinfrastruktuuri*: VLANit, dynaaminen reititys, palomuurit,
   QoS, WLAN, RADIUS ja VPN:t.
@@ -31,7 +32,7 @@
 - *Tietoturvan perusteet* ja *Kryptografia*: uhkat ja TLS:n
   rakennuspalikat.
 - *Tietoliikennetekniikka*: siirtotiet, kapasiteetti ja kanavanvaraus.
-- *Kontit ja pilvi* sekä *Hajautetut järjestelmät*: verkot konttien ja
+- *Kontit ja pilvi-infrastruktuuri* sekä *Hajautetut järjestelmät*: verkot konttien ja
   palveluiden välissä.
 
 ## Lähteet ja lisämateriaali

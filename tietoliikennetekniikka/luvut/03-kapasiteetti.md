@@ -42,7 +42,24 @@ SNR:n mukana: kaistan kaksinkertaistaminen kaksinkertaistaa
 kapasiteetin, mutta SNR:n kaksinkertaistaminen (+3 dB) lisää vain yhden
 bitin hertsiä kohti. Siksi uudet radiojärjestelmät hakevat lisää
 kaistaa (5G:n millimetriaallot, Wi-Fi 6E:n 6 GHz) ja rinnakkaisia
-kanavia (MIMO) eivätkä lisää tehoa.
+kanavia eivätkä lisää tehoa.
+
+![Shannonin kapasiteetti signaali-kohinasuhteen funktiona kahdella
+kaistanleveydellä. Merkityt pisteet ovat taulukon Wi-Fi-kanavat (5 ja
+25 dB). Suurella SNR:llä käyrä on lähes suora: jokainen 3 dB lisää
+yhden bitin sekunnissa hertsiä kohti.](kuvat/shannon.png){width=72%}
+
+Rinnakkaiset kanavat saadaan samalle taajuudelle usealla antennilla.
+**MIMO** (*multiple-input multiple-output*) lähettää eri datavirran
+jokaisesta lähetysantennista. Kun signaali kulkee antenniparien välillä
+eri reittejä (monitie-eteneminen, luku Siirtotiet), jokainen
+vastaanottoantenni kuulee virroista erilaisen yhdistelmän, ja
+vastaanotin ratkaisee virrat erilleen kuin yhtälöryhmän. Kapasiteetti
+kasvaa enimmillään antennimäärän mukaan (pienempi lähetys- ja
+vastaanottoantennien määristä) ilman lisäkaistaa tai lisätehoa. Hyöty
+edellyttää, että reitit todella eroavat toisistaan: avoimessa
+näköyhteydessä virtoja erottuu vähemmän kuin heijastusten täyttämässä
+huoneessa.
 
 ## Linkkibudjetti
 

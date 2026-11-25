@@ -45,7 +45,8 @@ tarkoittavat, että välityspalvelin ei saanut vastausta taustalta).
 HTTP/2:n virrat jakavat yhden TCP-yhteyden, joten yksi kadonnut paketti
 pysäyttää kaikki virrat (*head-of-line blocking*). HTTP/3 siirtää virrat
 QUICiin, joka toteuttaa luotettavuuden virroittain UDP:n päällä ja
-yhdistää kättelyn TLS 1.3:n kanssa. Semantiikka (metodit, otsakkeet,
+yhdistää kättelyn TLS 1.3:n kanssa, joten yhteys on valmis yhden
+edestakaisen viiveen jälkeen. Semantiikka (metodit, otsakkeet,
 tilakoodit) on kaikissa sama, joten sovellus ei yleensä huomaa versiota.
 
 ## TLS
@@ -68,6 +69,9 @@ TLS 1.3 -kättely lyhyesti:
 Kättely vie yhden edestakaisen viiveen; TCP:n kanssa yhteensä kaksi
 ennen ensimmäistä HTTP-pyyntöä. Algoritmit selitetään taidossa
 *Kryptografia*.
+
+```{.dot tiedosto="kaaviot/10-tls.dot" otsikko="TCP- ja TLS 1.3 -kättely. Ensimmäinen HTTP-pyyntö lähtee kahden edestakaisen viiveen jälkeen. ServerHellon jälkeen kaikki on salattua, myös palvelimen varmenne."}
+```
 
 Varmenneketju laboratoriossa: oma varmentaja allekirjoittaa palvelimen
 varmenteen, jonka *Subject Alternative Name* -laajennuksessa on nimi

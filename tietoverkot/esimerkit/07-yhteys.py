@@ -12,9 +12,9 @@ import time
 
 
 # @alku palvelin
-def palvelin(sokeetti: socket.socket) -> None:
+def palvelin(soketti: socket.socket) -> None:
     """Hyväksyy yhden yhteyden ja palauttaa viestin isoin kirjaimin."""
-    yhteys, _ = sokeetti.accept()
+    yhteys, _ = soketti.accept()
     with yhteys:
         while data := yhteys.recv(1024):
             yhteys.sendall(data.upper())
@@ -35,7 +35,7 @@ def asiakas(osoite: str, portti: int, viesti: str,
                                   source_address=("", lahdeportti)) as s:
         s.sendall(viesti.encode())
         return s.recv(1024).decode()
-    # with-lohkon lopussa sokeetti suljetaan, jolloin lähtee FIN.
+    # with-lohkon lopussa soketti suljetaan, jolloin lähtee FIN.
 
 
 def esittely() -> None:

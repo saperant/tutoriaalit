@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""Tuottaa kirjan sekvenssikaaviot testatuista tulosteista.
+"""Tuottaa kirjan sekvenssikaaviot, pääosin testatuista tulosteista.
 
 Käyttö:  python3 kaaviot/tee.py            kirjoittaa kaaviot/*.dot
          python3 kaaviot/tee.py --tarkista  vertaa tallennettuihin
 
 Kaavio piirretään samasta tulosteesta, jonka esimerkin testi vertaa,
 joten kaavion viestit ovat ne, jotka verkossa oikeasti kulkivat.
+TLS-kättelyn kaavio (10-tls.dot) on poikkeus: sen viestit on lueteltu
+tässä tiedostossa, koska salatusta kättelystä ei saa vastaavaa tulostetta.
 """
 
 import sys
@@ -14,8 +16,12 @@ from pathlib import Path
 JUURI = Path(__file__).resolve().parent.parent
 
 
-def sekvenssi(toimijat: list[str], viestit: list[tuple[str, str, str]]) -> str:
-    """Graphviz-sekvenssikaavio: elämänviivat ja vinot viestit."""
+Viesti = tuple[str, str, str] | tuple[str, str, str, str]
+
+
+def sekvenssi(toimijat: list[str], viestit: list[Viesti]) -> str:
+    """Graphviz-sekvenssikaavio: elämänviivat ja vinot viestit.
+    Viestin neljäs alkio on valinnainen Graphviz-attribuuttien lisäys."""
     n = len(viestit) + 1
     r = ["digraph {", "  nodesep=1.6; ranksep=0.32;",
          '  node [shape=point, width=0.04, color="#5B6B70"];',
@@ -30,16 +36,21 @@ def sekvenssi(toimijat: list[str], viestit: list[tuple[str, str, str]]) -> str:
     r.append('  edge [style=solid, arrowhead=normal, color="#1F2A2E",')
     r.append("        constraint=false];")
     nro = {t: k for k, t in enumerate(toimijat)}
-    for i, (a, b, nimi) in enumerate(viestit):
-        r.append(f'  t{nro[a]}_{i} -> t{nro[b]}_{i + 1} [label="{nimi}"];')
+    for i, (a, b, nimi, *lisa) in enumerate(viestit):
+        attribuutit = f'label="{nimi}"' + "".join(f", {x}" for x in lisa)
+        r.append(f"  t{nro[a]}_{i} -> t{nro[b]}_{i + 1} [{attribuutit}];")
     r.append("}")
     return "\n".join(r) + "\n"
 
 
-def tcp() -> str:
-    """07-kattely.odotettu: rivit 'asiakas > palvelin [S.] seq 0 ...'."""
-    viestit = []
-    tuloste = (JUURI / "esimerkit/07-kattely.odotettu").read_text("utf-8")
+KATOAA = 'color="#B04848", fontcolor="#B04848", style=dashed, arrowhead=tee'
+
+
+def tcp(tiedosto: str = "07-kattely.odotettu") -> str:
+    """Rivit 'asiakas > palvelin [S.] seq 0 ...'. Jos rivi on merkitty
+    uudelleenlähetykseksi, sitä edeltävä sama segmentti on kadonnut."""
+    viestit: list[Viesti] = []
+    tuloste = (JUURI / "esimerkit" / tiedosto).read_text("utf-8")
     for rivi in tuloste.splitlines():
         if " > " not in rivi:
             continue
@@ -50,11 +61,34 @@ def tcp() -> str:
         data = int(osat[osat.index("data") + 1])
         if data:
             nimi += f" + {data} B"
+        if rivi.endswith("uudelleenlähetys"):
+            a, b, edellinen = viestit[-1][:3]
+            viestit[-1] = (a, b, edellinen + " (katoaa)", KATOAA)
+            nimi += " (uudelleen)"
         viestit.append((lahettaja, vastaanottaja, nimi))
     return sekvenssi(["asiakas", "palvelin"], viestit)
 
 
-KAAVIOT = {"07-kattely.dot": tcp}
+def haviot() -> str:
+    return tcp("07-haviot.odotettu")
+
+
+def tls() -> str:
+    """TCP- ja TLS 1.3 -kättely ennen ensimmäistä HTTP-pyyntöä."""
+    tcp_vari = 'color="#5B6B70", fontcolor="#5B6B70"'
+    return sekvenssi(["asiakas", "palvelin"], [
+        ("asiakas", "palvelin", "TCP: SYN", tcp_vari),
+        ("palvelin", "asiakas", "TCP: SYN ACK", tcp_vari),
+        ("asiakas", "palvelin", "TCP: ACK", tcp_vari),
+        ("asiakas", "palvelin", "ClientHello (SNI)"),
+        ("palvelin", "asiakas", "ServerHello, varmenne, Finished"),
+        ("asiakas", "palvelin", "Finished + HTTP-pyyntö"),
+        ("palvelin", "asiakas", "HTTP-vastaus"),
+    ])
+
+
+KAAVIOT = {"07-kattely.dot": tcp, "07-haviot.dot": haviot,
+           "10-tls.dot": tls}
 
 
 def main() -> None:

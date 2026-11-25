@@ -2,7 +2,15 @@
 
 Verkkovika ratkeaa, kun nähdään, mitä langalla oikeasti kulkee.
 Kaappaus erottaa arvaukset tosiasioista: lähtikö kysely, tuliko vastaus,
-mitä siinä oli ja kuka sen lähetti.
+mitä siinä oli ja kuka sen lähetti. Luku esittelee kaappaustyökalut ja
+kaappaustiedoston muodon ja kokoaa sitten aiempien lukujen komennot
+vianetsinnän menetelmäksi.
+
+Kaappaus näyttää kaiken liitännän liikenteen, myös muiden viestit.
+Kaappaa siksi vain verkossa, jonka omistat tai jonka omistajalta sinulla
+on lupa, ja rajaa kaappaus selvitettävään vikaan. Viestinnän
+luottamuksellisuus on suojattu laissa. Tämän luvun kaappaukset tehdään
+omissa verkkonimiavaruuksissa.
 
 ## tcpdump ja suodattimet
 
@@ -71,7 +79,20 @@ Järjestelmällinen vianetsintä etenee alhaalta ylös ja rajaa vian:
 7. **Nimi**: `dig`, `getent hosts`.
 8. **Sovellus**: lokit, `curl -v`, kaappaus.
 
-Laboratoriossa on kolme tavallista vikaa:
+Laboratorion verkko on sama kuin luvussa *Reititys ja NAT*, mutta
+toisessa päässä on palvelin S:
+
+```{.dot otsikko="Vianetsintälaboratorio. Viat tehdään koneen A asetuksiin ja palvelimen S paluureittiin."}
+graph {
+  rankdir=LR; nodesep=0.5; ranksep=0.35;
+  A [label="kone A\neth0 192.0.2.10/24"];
+  R [label="reititin R\nlan 192.0.2.1/24\nwan 198.51.100.1/24"];
+  S [label="palvelin S\neth0 198.51.100.80/24"];
+  A -- R; R -- S;
+}
+```
+
+Siinä on kolme tavallista vikaa:
 
 ```{.bash tiedosto="esimerkit/11-vianetsinta.sh" osa="vika1"}
 ```

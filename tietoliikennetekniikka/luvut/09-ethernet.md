@@ -3,7 +3,10 @@
 Ethernet on edellisten lukujen ideoiden kokoelma: linjakoodaus,
 CRC, kanavanvaraus ja kehystys. Se on kasvanut 10 megabitistä
 800 gigabittiin säilyttäen saman kehysmuodon, minkä vuoksi
-kerran kirjoitettu verkkokoodi toimii yhä.
+kerran kirjoitettu verkkokoodi toimii yhä. Tämä luku katsoo Ethernetiä
+fyysisen kerroksen ja kehyksen mitoituksen kannalta. Kehyksen kentät,
+osoitteet ja kytkimen toiminta kuuluvat taitoon *Tietoverkot* ja
+VLANit ja kytkentäverkon suunnittelu taitoon *Verkkoinfrastruktuuri*.
 
 ## Nopeudet ja fyysiset kerrokset
 
@@ -15,7 +18,7 @@ kerran kirjoitettu verkkokoodi toimii yhä.
 | 10GBASE-T | 10 Gbit/s | 4 paria, 100 m (Cat 6A) | PAM16, LDPC |
 | 10GBASE-SR/LR | 10 Gbit/s | moni-/yksimuotokuitu | 64b/66b |
 | 100GBASE-LR4 | 100 Gbit/s | yksimuotokuitu | 4 aallonpituutta |
-| 400GBASE-DR4 | 400 Gbit/s | 4 yksimuotokuitua | PAM4, FEC |
+| 400GBASE-DR4 | 400 Gbit/s | 4 yksimuotokuituparia | PAM4, FEC |
 
 Standardin nimi kertoo rakenteen: nopeus, kantataajuuksinen siirto
 (BASE) ja siirtotie (T = kierretty pari, S/L = lyhyen tai pitkän

@@ -28,6 +28,7 @@ desibeleinä. Jännitesuhde: $20 \log_{10}$.
 | etenemisviive | matka / (2·10⁸ m/s) kuidussa |
 | BDP | kaista × kierrosaika |
 | ALOHA | puhdas $G e^{-2G}$ (max 18 %), viipaloitu $G e^{-G}$ (max 37 %) |
+| ARQ, kierros $k$ kehystä | go-back-N $(1-p)/(1+kp)$, valikoiva $1-p$ |
 | M/M/1 | $W = 1/(\mu - \lambda)$, $L = \rho/(1-\rho)$ |
 | Little | $L = \lambda W$ |
 | NR-numerologia | väli $15 \cdot 2^\mu$ kHz, aikaväli $1/2^\mu$ ms |

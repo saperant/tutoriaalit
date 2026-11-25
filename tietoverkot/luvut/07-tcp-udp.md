@@ -5,7 +5,9 @@ oikealle *ohjelmalle* ja päättää, millaisen palvelun sovellus saa.
 Ohjelman tunnistaa **portti**, 16-bittinen luku. Yhteyden yksilöi
 viisikko: protokolla, lähdeosoite, lähdeportti, kohdeosoite ja
 kohdeportti. Siksi sama palvelin voi palvella tuhansia asiakkaita
-samassa portissa.
+samassa portissa. Luku käy läpi portit, UDP:n ja TCP:n erot
+sovelluksen kannalta, TCP-yhteyden elinkaaren kaappauksesta, TCP:n
+luotettavuuden ja nopeudensäädön sekä MTU:n.
 
 ## Portit
 
@@ -111,8 +113,7 @@ kumpikin puoli lähettää oman FIN-viestinsä.
    numeron +1. Kättely maksaa yhden edestakaisen viiveen (RTT) ennen
    ensimmäistä datatavua; TLS lisää siihen omansa.
 2. **Data**: järjestysnumero kertoo tavun paikan virrassa, kuittaus
-   seuraavan odotetun tavun. Kadonnut segmentti lähetetään uudelleen,
-   kun kuittausta ei kuulu.
+   seuraavan odotetun tavun.
 3. **Lopetus**: kumpikin suunta suljetaan erikseen FIN-paketilla. FIN
    kuluttaa yhden järjestysnumeron, siksi kuittaus on 5 eikä 4.
 
@@ -122,11 +123,80 @@ joka avaa tuhansia lyhyitä yhteyksiä samaan kohteeseen, voi kuluttaa
 asiakasporttinsa loppuun. Yhteyksien uudelleenkäyttö (*connection
 pooling*, HTTP keep-alive) ratkaisee ongelman.
 
-Kaappauksesta jätettiin pois vuonhallinnan ikkuna ja optiot. Ikkuna
-kertoo, paljonko vastaanottaja voi puskuroida, ja ruuhkanhallinta
-(CUBIC, BBR) säätää lähetysnopeutta pakettihäviöiden ja viiveen
-perusteella. Niiden takia yksittäinen TCP-yhteys ei täytä nopeaa
-mutta pitkäviiveistä linkkiä ilman suuria puskureita.
+## Luotettavuus, vuonhallinta ja ruuhkanhallinta
+
+IP saa kadottaa paketteja, toimittaa ne väärässä järjestyksessä ja
+monistaa niitä. TCP rakentaa sen päälle luotettavan tavuvirran ja
+säätää samalla lähetysnopeutta kahdesta syystä: vastaanottajan ja
+verkon suojaksi.
+
+**Luotettavuus.** Lähettäjä säilyttää jokaisen segmentin, kunnes
+vastaanottaja on kuitannut sen. Jos kuittausta ei tule
+uudelleenlähetysajan (RTO, *retransmission timeout*) kuluessa,
+segmentti lähetetään uudelleen. Ydin mittaa kierrosaikaa jatkuvasti ja
+johtaa RTO:n siitä, joten aika mukautuu yhteyteen: lähiverkossa se on
+Linuxissa vähintään 200 ms, hitaalla yhteydellä sekunteja. Pitkässä
+siirrossa katoaminen huomataan nopeammin: jos kadonneen segmentin
+jälkeen saapuu muita, vastaanottaja toistaa saman kuittauksen, ja
+kolmas toisto käynnistää uudelleenlähetyksen heti (*fast
+retransmit*). SACK-optiolla vastaanottaja kertoo lisäksi, mitkä
+myöhemmät tavut se jo sai, jolloin vain puuttuvat lähetetään.
+
+Laboratoriossa palvelimen palomuurisääntö pudottaa ensimmäisen
+datasegmentin:
+
+```{.bash tiedosto="esimerkit/07-haviot.sh" osa="pudotus"}
+```
+
+```{.bash tiedosto="esimerkit/07-haviot.sh" osa="liikenne"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-haviot.odotettu"}
+```
+
+Sovellus ei huomannut mitään: vastaus `HEI` tuli perille, vain hieman
+myöhemmin. Kaappauksessa sama segmentti (`seq 1`, kolme tavua) lähtee
+kahdesti, ja ytimen laskuri `TcpRetransSegs` kasvoi yhdellä. Laskurin
+kasvu tuotantokoneessa (`nstat`, `ss -ti`) on ensimmäinen merkki
+pakettihäviöstä polulla.
+
+```{.dot tiedosto="kaaviot/07-haviot.dot" otsikko="Kadonnut segmentti ja sen uudelleenlähetys (kaavio on piirretty yllä olevasta kaappauksesta)"}
+```
+
+**Vuonhallinta** suojaa vastaanottajaa. Jokaisessa segmentissä
+vastaanottaja ilmoittaa **ikkunan**: montako tavua sen
+vastaanottopuskuriin vielä mahtuu. Lähettäjä ei pidä matkalla enempää
+kuittaamatonta dataa. Jos vastaanottava sovellus ei lue sokettiaan,
+puskuri täyttyy, ikkuna kutistuu nollaan ja lähettäjä pysähtyy,
+kunnes tilaa vapautuu. Hidas lukija hidastaa siis lähettäjää
+(vastapaine). Kättelyssä sovittu skaalauskerroin (*window scaling*)
+sallii 64 kilotavua suuremmat ikkunat, joita nopeat ja pitkäviiveiset
+yhteydet tarvitsevat.
+
+**Ruuhkanhallinta** suojaa verkkoa. Lähettäjä ei tiedä polun
+kapasiteettia, joten se etsii sen kokeilemalla. Sillä on oma
+**ruuhkaikkunansa**, ja matkalla saa olla dataa enintään pienempi
+kahdesta ikkunasta. Yhteys alkaa **hitaalla aloituksella**: ruuhkaikkuna
+on aluksi noin kymmenen segmenttiä ja kaksinkertaistuu jokaisella
+kierroksella. Kun raja löytyy, kasvu hidastuu tasaiseksi (**ruuhkan
+välttäminen**), ja kun paketti katoaa, ikkunaa pienennetään
+tuntuvasti. Algoritmeja on useita: Linuxin oletus CUBIC tulkitsee
+katoamisen ruuhkaksi, BBR mallintaa polun kaistaa ja viivettä.
+Periaate on kaikissa sama, ja siitä seuraa kolme asiaa, jotka näkyvät
+sovellukselle:
+
+- Uusi yhteys on aluksi hidas. Lyhyen siirron kesto määräytyy
+  kierrosten määrästä, ei linkin nopeudesta, mikä on yksi syy käyttää
+  yhteyksiä uudelleen.
+- Pakettihäviö hidastaa TCP:tä enemmän kuin kadonneiden pakettien
+  verran. Prosentin häviö langattomalla linkillä voi pudottaa
+  nopeuden murto-osaan.
+- Samaa pullonkaulaa käyttävät yhteydet jakavat kaistan keskenään
+  suunnilleen tasan, koska jokainen perääntyy häviöistä.
+
+Liukuvan ikkunan protokollien teoria ja ikkunan mitoitus kaistan ja
+viiveen tulosta ovat taidossa *Tietoliikennetekniikka*, ja soketin
+puskurit sovelluksen kannalta taidossa *Verkko-ohjelmointi*.
 
 ## MTU ja pilkkominen
 
@@ -181,6 +251,10 @@ suurimman segmenttikokonsa (MSS, tavallisesti MTU − 40).
 - Osaat vertailla TCP:tä ja UDP:tä ja perustella valinnan.
 - Osaat kuvata TCP:n kättelyn, järjestysnumerot ja lopetuksen
   kaappauksesta sekä `TIME_WAIT`-tilan seuraukset.
+- Osaat selittää, miten TCP havaitsee kadonneen segmentin, ja
+  tunnistaa uudelleenlähetyksen kaappauksesta ja ytimen laskureista.
+- Osaat erottaa vuonhallinnan ja ruuhkanhallinnan ja kertoa, miten
+  hidas aloitus ja pakettihäviö näkyvät sovelluksen nopeudessa.
 - Osaat selittää MTU:n, polun MTU:n selvityksen ja pilkkomisen sekä
   tunnistaa MTU-ongelman oireet.
 - Osaat kertoa, miksi TCP-sovelluksen on kehystettävä viestinsä itse.

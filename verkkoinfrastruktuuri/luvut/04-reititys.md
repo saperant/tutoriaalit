@@ -12,6 +12,17 @@ valitaan muunkin kuin kohdeosoitteen perusteella.
 
 Kaksi toimipistettä, joiden välillä on yksi yhteys:
 
+```{.dot otsikko="Staattisen reitityksen laboratorio"}
+graph {
+  rankdir=LR; nodesep=0.4; ranksep=0.35;
+  h1 [label="h1\n10.1.0.10/24"];
+  r1 [label="r1\nlan 10.1.0.1/24\n172.16.12.1/30"];
+  r2 [label="r2\n172.16.12.2/30\nlan 10.2.0.1/24"];
+  h2 [label="h2\n10.2.0.10/24"];
+  h1 -- r1; r1 -- r2; r2 -- h2;
+}
+```
+
 ```{.bash tiedosto="esimerkit/04-staattinen.sh" osa="reitit"}
 ```
 
@@ -50,7 +61,21 @@ algoritmilla. Muutos yhdessä paikassa leviää sekunneissa, ja reitit
 lasketaan uudelleen.
 
 Kolme reititintä renkaassa, kullakin oma lähiverkkonsa. BIRD-reititysdemoni
-ajaa OSPF:ää ja vie oppimansa reitit ytimen reititystauluun:
+ajaa OSPF:ää ja vie oppimansa reitit ytimen reititystauluun.
+
+```{.dot otsikko="OSPF-laboratorion rengas. Kaikkien yhteyksien kustannus on sama, joten r1 käyttää suoraa yhteyttä r2:n lähiverkkoon. Kun yhteys r1–r2 katkaistaan, ainoa polku kulkee r3:n kautta."}
+graph {
+  nodesep=1.3; ranksep=0.8;
+  r1 [label="r1\nlähiverkko 10.0.1.0/24"];
+  r2 [label="r2\nlähiverkko 10.0.2.0/24"];
+  r3 [label="r3\nlähiverkko 10.0.3.0/24"];
+  r1 -- r2 [label="172.16.12.0/30\nkatkaistaan", style=dashed,
+            color="#B04848", fontcolor="#B04848"];
+  r1 -- r3 [label="172.16.13.0/30"];
+  r2 -- r3 [label="172.16.23.0/30"];
+  {rank=same; r2; r3}
+}
+```
 
 ```{.bash tiedosto="esimerkit/04-ospf.sh" osa="bird"}
 ```
@@ -89,7 +114,18 @@ BGP on myös suurimpien internet-katkojen lähde: kun joku ilmoittaa
 vahingossa verkkoja, joita hän ei omista, liikenne ohjautuu väärään
 paikkaan (*route leak*, *hijack*). Siksi operaattori hyväksyy
 asiakkaaltaan vain sovitut etuliitteet. Esimerkissä asiakas ilmoittaa
-verkkonsa ja virheellisesti myös oletusreitin:
+verkkonsa ja virheellisesti myös oletusreitin.
+
+```{.dot otsikko="BGP-laboratorio: kaksi autonomista järjestelmää ja suodattimien paikat. Kumpikin pää suodattaa sekä lähettämänsä että vastaanottamansa ilmoitukset."}
+digraph {
+  rankdir=LR; nodesep=0.5; ranksep=0.3;
+  a [label="asiakas\nAS 65001\nvie vain omat verkot,\nei tuo mitään"];
+  o [label="operaattori\nAS 65002\ntuo vain lohkon\n203.0.113.0/24"];
+  a -> o [label="203.0.113.0/24: hyväksytään"];
+  a -> o [label="0.0.0.0/0: hylätään", style=dashed, color="#B04848",
+          fontcolor="#B04848"];
+}
+```
 
 ```{.bash tiedosto="esimerkit/04-bgp.sh" osa="asiakas"}
 ```

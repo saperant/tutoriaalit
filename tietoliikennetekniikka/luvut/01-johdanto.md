@@ -15,14 +15,23 @@ tai simuloidaan pienellä Python-ohjelmalla, ja tulosta verrataan
 teoriaan. Näin kaavoista tulee työkaluja, joilla arvioidaan, riittääkö
 yhteys, eikä vain muistettavia lausekkeita.
 
-## Kenelle ja mitä tarvitaan
+## Esitiedot ja rajaus
 
 Lukija tuntee tietoverkkojen kerrosmallin ja protokollat (taito
 *Tietoverkot*), todennäköisyyslaskennan perusteet (taito
 *Todennäköisyys ja tilastot*) sekä Pythonin ja NumPyn (taito
-*Python työkaluohjelmointiin*). Signaalinkäsittelyä ei edellytetä: modulaatiot ja
-synkronointi käsitellään syvällisemmin taidossa *Digitaalinen tiedonsiirto*, ja
-tässä niistä tarvitaan vain periaate.
+*Python työkaluohjelmointiin*). Signaalinkäsittelyä ei edellytetä.
+
+Tutoriaali pysyy linkin ja siirtotien tasolla. Sen ulkopuolelle jäävät:
+
+- modulaatioiden, pulssinmuokkauksen ja synkronoinnin toteutus (taito
+  *Digitaalinen tiedonsiirto*); tässä niistä esitetään periaate
+- protokollat verkkokerroksesta ylöspäin (taito *Tietoverkot*)
+- lähiverkon ja langattoman verkon suunnittelu ja laitteiden asetukset
+  (taito *Verkkoinfrastruktuuri*).
+
+Luvut etenevät siirtotiestä ylöspäin, ja jokainen vastaa yhteen
+kysymykseen:
 
 | Luku | Kysymys |
 |------|---------|
@@ -37,41 +46,19 @@ tässä niistä tarvitaan vain periaate.
 | Matkaviestinverkot | Miten 4G ja 5G jakavat radion? |
 | Jonot ja palvelun laatu | Miksi viive kasvaa kuormassa ja miten sitä hallitaan? |
 
-## Desibelit
-
-Tietoliikenteessä tehot vaihtelevat kymmenien kertaluokkien välillä:
-lähetin voi syöttää 100 mW, ja vastaanotin kuulee 0,000 000 001 mW.
-Siksi tehot ja tehosuhteet ilmaistaan logaritmisesti desibeleinä.
-Tehosuhde $P_2/P_1$ on desibeleinä $10 \log_{10}(P_2/P_1)$, ja
-absoluuttinen taso milliwattiin verrattuna ilmaistaan yksikössä dBm.
-
-```{.python tiedosto="esimerkit/01-desibelit.py" osa="nyrkkisaannot"}
-```
-
-Desibelien etu on, että ketjun vahvistukset ja vaimennukset vain
-lasketaan yhteen. Siirtoketju lasketaan siksi aina desibeleinä:
-
-```{.python tiedosto="esimerkit/01-desibelit.py" osa="ketju"}
-```
-
-```{.tuloste tiedosto="esimerkit/01-desibelit.odotettu"}
-```
-
-Kaksi sudenkuoppaa: desibelejä ei voi summata, kun lasketaan yhteen
-*tehoja* (kaksi 0 dBm:n lähdettä on 3 dBm, ei 0 dBm), ja jännitteen
-tai virran suhde on $20 \log_{10}$, koska teho on verrannollinen
-jännitteen neliöön.
-
 ## Esimerkit
 
 Esimerkit ovat Python 3.12 -ohjelmia, jotka käyttävät vain
-standardikirjastoa ja NumPya. Ne tarkistetaan työkaluilla ruff ja
+standardikirjastoa ja NumPya, ja ne ajetaan sellaisinaan, esimerkiksi
+`python3 esimerkit/03-shannon.py`. Ne tarkistetaan työkaluilla ruff ja
 mypy --strict, ja niiden tulostetta verrataan odotettuun. Simulaatiot
 käyttävät kiinteää satunnaislukusiementä, joten jokainen ajo tuottaa
 saman tuloksen, ja tulosta verrataan analyyttiseen arvoon aina kun se
 on mahdollista. Simulaatiot ovat tahallaan pieniä: ne mahtuvat sivulle
 ja valmistuvat sekunnissa, mutta niissä on samat ilmiöt kuin oikeissa
-järjestelmissä.
+järjestelmissä. Kirjan kuvaajat on piirretty samoilla ohjelmilla:
+`kuvat/piirra.py` lataa esimerkin ja piirtää sen funktioiden tulokset
+(`make kuvat`).
 
 Kertoimet ja raja-arvot ovat suuruusluokaltaan oikeita mutta
 pyöristettyjä. Kun lasket oikeaa linkkiä, käytä laitteen tietolehden ja

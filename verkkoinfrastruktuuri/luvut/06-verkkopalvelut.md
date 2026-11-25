@@ -7,14 +7,19 @@ asentimen ilman paikallista mediaa. Näiden palvelujen viat näkyvät
 käyttäjälle tavallisesti viestinä "verkko ei toimi", vaikka kaapelit
 ja reititys ovat kunnossa.
 
+Luvun laboratorio on yksi skripti, `06-dhcp.sh`, koska dnsmasq hoitaa
+kaikki kolme palvelua samassa prosessissa. Skripti etenee luvun
+järjestyksessä: palvelimen asetukset ja DHCP-asiakas (osiot `dnsmasq`
+ja `asiakas`), käynnistystiedoston haku TFTP:llä (`pxe`) ja nimikyselyt
+(`nimet`). Tuloste on luvun lopussa, ja kukin osio viittaa siihen.
+
 ## DHCP
 
-DHCP-asiakas lähettää yleislähetyksenä etsintäviestin (DISCOVER),
-palvelin tarjoaa osoitteen (OFFER), asiakas pyytää sitä (REQUEST) ja
-palvelin vahvistaa (ACK). Osoite on *vuokrattu* määräajaksi, jonka
-puolivälissä asiakas uusii vuokran. Tarjous sisältää myös optiot:
-yhdyskäytävä (3), nimipalvelimet (6), verkkotunnus (15),
-käynnistystiedosto (67) ja niin edelleen.
+DHCP:n neljä viestiä (DISCOVER, OFFER, REQUEST, ACK), vuokra ja
+viestin rakenne on käyty läpi taidossa *Tietoverkot*. Ylläpitäjän
+kannalta olennaista on, mitä palvelin jakaa ja kenelle: osoitealue,
+vuokra-aika, kiinteät varaukset ja optiot, kuten yhdyskäytävä (3),
+nimipalvelimet (6), verkkotunnus (15) ja käynnistystiedosto (67).
 
 dnsmasq on kevyt DHCP-, DNS- ja TFTP-palvelin, joka sopii pieniin
 verkkoihin, laboratorioihin ja sulautettuihin reitittimiin. Isommissa
@@ -30,8 +35,9 @@ jolle tiedot välitetään ympäristömuuttujina:
 ```{.bash tiedosto="esimerkit/06-dhcp.sh" osa="asiakas"}
 ```
 
-Tulostin saa aina saman osoitteen kiinteän varauksen ansiosta, ja
-asiakas saa osoitteen dynaamiselta alueelta. Varaus tehdään DHCP-palvelimelle eikä
+Tulosteen kaksi ensimmäistä lohkoa (`asiakas:` ja `tulostin:`)
+näyttävät tuloksen. Tulostin saa aina saman osoitteen kiinteän
+varauksen ansiosta, ja asiakas saa osoitteen dynaamiselta alueelta. Varaus tehdään DHCP-palvelimelle eikä
 laitteeseen käsin: osoite pysyy dokumentoituna yhdessä paikassa, ja
 laitteen vaihtuessa riittää päivittää MAC-osoite.
 
@@ -57,6 +63,10 @@ hakee varsinaisen asentimen nopeammin HTTP:llä.
 
 ```{.bash tiedosto="esimerkit/06-dhcp.sh" osa="pxe"}
 ```
+
+Asiakkaan tulosteen rivi `käynnistys:` näyttää DHCP:n kertoman
+palvelimen ja tiedoston, ja rivi `käynnistyslataimen sisältö` on
+TFTP:llä haettu tiedosto.
 
 TFTP:ssä ei ole todennusta eikä salausta, joten käynnistyspalvelu
 rajataan asennusverkkoon. UEFI-laitteissa käytetään mieluiten

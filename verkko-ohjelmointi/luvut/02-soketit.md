@@ -19,13 +19,37 @@ yhteyksiä (`accept`). *Asiakas* luo soketin ja yhdistää (`connect`).
 Kättelyn jälkeen kummallakin on yhdistetty soketti, jolla lähetetään
 (`send`) ja vastaanotetaan (`recv`), kunnes jompikumpi sulkee sen.
 
-| Vaihe | Palvelin | Asiakas |
-|---------------------|----------------------------|-------------------------|
-| luonti | `socket` | `socket` |
-| osoite | `bind` | (ydin valitsee) |
-| odotus | `listen`, `accept` | `connect` |
-| data | `recv`, `send` | `send`, `recv` |
-| lopetus | `close` | `shutdown`, `close` |
+```{.dot otsikko="Sokettikutsujen järjestys palvelimessa ja asiakkaassa. Katkoviivat näyttävät, mitkä kutsut kohtaavat verkossa: kolmivaiheinen kättely tapahtuu connect-kutsun aikana, ja accept palauttaa valmiin yhteyden."}
+digraph {
+  nodesep=1.9; ranksep=0.22;
+  node [fontname="DejaVu Sans Mono", fontsize=9];
+  ps [label="socket"]; pb [label="bind"]; pl [label="listen"];
+  pa [label="accept"]; pr [label="recv"]; pw [label="send"];
+  pc [label="recv palauttaa 0\nclose"];
+  as [label="socket"]; ac [label="connect"]; aw [label="send"];
+  ar [label="recv"]; ax [label="close"];
+  palvelin [shape=plain, style="", fontname="Inter", label="palvelin"];
+  asiakas [shape=plain, style="", fontname="Inter", label="asiakas"];
+  palvelin -> ps [style=invis]; asiakas -> as [style=invis];
+  ps -> pb -> pl -> pa -> pr -> pw -> pc;
+  as -> ac -> aw -> ar -> ax;
+  edge [style=dashed, constraint=false, fontname="Inter"];
+  ac -> pa [label="kättely: SYN, SYN ACK, ACK", dir=both];
+  aw -> pr [label="pyyntö"];
+  pw -> ar [label="vastaus"];
+  ax -> pc [label="FIN"];
+  {rank=same; palvelin; asiakas}
+  {rank=same; pa; ac}
+  {rank=same; pr; aw}
+  {rank=same; pw; ar}
+  {rank=same; pc; ax}
+}
+```
+
+Asiakas ei tarvitse `bind`-kutsua, koska ydin valitsee sille osoitteen
+ja portin. Sama rajapinta kattaa myös saman koneen prosessien väliset
+UNIX-soketit, joilla voi lisäksi siirtää avoimen tiedostokuvaajan
+prosessilta toiselle (`SCM_RIGHTS`, taito *Käyttöjärjestelmät*).
 
 ## Palvelin ja asiakas
 
@@ -164,6 +188,22 @@ lähettää RST-segmentin. Vastapuolen seuraava `recv` palauttaa virheen
 vastaanottopuskurissa on lukematonta dataa.
 
 ```{.c tiedosto="esimerkit/02-sulkeminen.c" osa="rst"}
+```
+
+```{.dot otsikko="Yhteyden kolme loppua ja se, miten kukin näkyy vastapuolen ohjelmalle"}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.45;
+  auki [label="yhteys auki"];
+  fin [label="shutdown(SHUT_WR) tai close:\nFIN datan perään"];
+  eof [label="vastapuoli:\nrecv palauttaa 0"];
+  rst [label="SO_LINGER 0 tai close,\nkun dataa on lukematta: RST"];
+  reset [label="vastapuoli:\nrecv palauttaa ECONNRESET"];
+  kirj [label="kirjoitus yhteyteen, jonka\nvastapuoli on sulkenut"];
+  epipe [label="ensimmäinen onnistuu,\nseuraava: EPIPE ja SIGPIPE"];
+  auki -> fin -> eof;
+  auki -> rst -> reset;
+  auki -> kirj -> epipe;
+}
 ```
 
 ```{.tuloste tiedosto="esimerkit/02-sulkeminen.odotettu"}

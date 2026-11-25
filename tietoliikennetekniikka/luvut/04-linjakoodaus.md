@@ -4,7 +4,9 @@ Bitit eivät kulje siirtotiellä sellaisinaan. Ne muutetaan
 signaalitasoiksi **linjakoodilla**, ja bittivirta jaetaan **kehyksiksi**,
 jotta vastaanotin tietää, mistä viesti alkaa ja mihin se loppuu.
 Molemmat ratkaisevat ongelman, jota bitti-ajattelussa ei näe:
-vastaanottimella ei ole lähettäjän kelloa.
+vastaanottimella ei ole lähettäjän kelloa. Luku etenee kahden tason
+koodeista usean tason symboleihin ja kantoaaltomodulaation
+periaatteeseen ja päättyy kehystykseen.
 
 ## Linjakoodit
 
@@ -25,6 +27,12 @@ Linjakoodit ratkaisevat ongelman eri hinnoin:
 - **4B5B** (100 Mbit/s Ethernet) korvaa neljän bitin ryhmän viiden
   bitin koodisanalla, jossa ei ole pitkiä nollajonoja, ja lähettää sen
   NRZI:llä. Hinta on 25 %.
+
+![Bittijono 00001101 neljällä linjakoodilla (esimerkin funktioilla
+piirrettynä). NRZ ja NRZI pysyvät nollajonon ajan tasaisina.
+Manchesterissa on tasonvaihto jokaisen bitin keskellä. 4B5B lähettää
+samassa ajassa kymmenen lyhyempää koodibittiä (ylärivi), joissa
+ykkösiä on tiheästi.](kuvat/linjakoodit.png){width=85%}
 
 ```{.python tiedosto="esimerkit/04-linjakoodit.py" osa="koodit"}
 ```
@@ -60,6 +68,10 @@ bitissä:
 ```{.python tiedosto="esimerkit/04-pam4.py" osa="pam4"}
 ```
 
+![Esimerkin bittijono PAM4-symboleina. Jokainen symboli kantaa kaksi
+bittiä, ja vierekkäisten tasojen bittiparit eroavat yhdellä
+bitillä.](kuvat/pam4.png){width=68%}
+
 ```{.python tiedosto="esimerkit/04-pam4.py" osa="virhe"}
 ```
 
@@ -70,6 +82,53 @@ Symbolinopeus puolittuu bittinopeuteen nähden, mutta tasojen väli
 pienenee kolmannekseen, joten sama kohina aiheuttaa enemmän virheitä
 (noin 9,5 dB huonompi SNR-vaatimus kuin kahdella tasolla). PAM4-linkit
 tarvitsevat siksi aina virheenkorjauksen (FEC).
+
+## Kantoaalto ja konstellaatio
+
+Tähänastiset koodit ovat **kantataajuisia**: signaali on jono
+jännitetasoja, ja se sopii kaapeliin. Radiossa, kaapelimodeemissa ja
+pitkän matkan kuidussa data siirretään **kantoaallolla**, sinimuotoisella
+signaalilla, jonka taajuus määrää, millä kaistalla lähetys kulkee.
+Bitit muuttavat kantoaallon amplitudia (ASK), vaihetta (PSK) tai
+molempia (QAM, *quadrature amplitude modulation*).
+
+Samantaajuinen kosini ja sini ovat ortogonaaliset, joten ne kantavat
+kaksi toisistaan riippumatonta amplitudia. Symboli on siksi piste
+tasossa: vaaka-akselilla on kosinikomponentin amplitudi (I) ja
+pystyakselilla sinikomponentin (Q). Käytössä olevien pisteiden joukko
+on **konstellaatio**. BPSK:ssa pisteitä on kaksi (yksi bitti), QPSK:ssa
+neljä (kaksi bittiä), ja $M$-QAM asettaa $M$ pistettä ruudukkoon. Kumpikin
+akseli on oma PAM-signaalinsa, ja tasot numeroidaan Gray-koodilla kuten
+PAM4:ssä:
+
+```{.python tiedosto="esimerkit/04-konstellaatio.py" osa="qam"}
+```
+
+Kanavan kohina siirtää vastaanotettua pistettä, ja vastaanotin
+päättää, mikä konstellaation piste on lähinnä:
+
+```{.python tiedosto="esimerkit/04-konstellaatio.py" osa="kanava"}
+```
+
+```{.tuloste tiedosto="esimerkit/04-konstellaatio.odotettu"}
+```
+
+Kun lähetysteho pidetään samana, pisteiden lisääminen tuo ne lähemmäs
+toisiaan. Jokainen kahden bitin lisäys noin puolittaa lyhimmän välin ja
+vaatii noin 6 dB paremman signaali-kohinasuhteen: 16-QAM tekee
+16 dB:ssä saman verran virheitä kuin 64-QAM 22 dB:ssä. Tämä on
+Shannonin kaavan logaritmi käytännössä.
+
+![QPSK, 16-QAM ja 64-QAM samalla lähetysteholla ja samalla kohinalla
+(SNR 16 dB). Tummat pisteet ovat lähetetyt symbolit bittikuvioineen,
+harmaat vastaanotetut. QPSK:n pilvet pysyvät kaukana toisistaan,
+64-QAM:n pilvet sulautuvat yhteen.](kuvat/konstellaatio.png){width=100%}
+
+Radio valitsee konstellaation mitatun signaalin mukaan (adaptiivinen
+modulaatio, luku Kanavan kapasiteetti): Wi-Fi ja 5G käyttävät
+tukiaseman lähellä 256- tai 1024-QAM:ia ja solun reunalla QPSK:ta.
+Modulaattorin ja vastaanottimen toteutus, pulssinmuokkaus ja
+synkronointi kuuluvat taitoon *Digitaalinen tiedonsiirto*.
 
 ## Kehystys
 
@@ -124,5 +183,7 @@ samaa ideaa tavuina (PPP:n tavutäyttö, COBS-koodaus sarjayhteyksillä).
   datanopeudesta.
 - Osaat selittää, miksi PAM4-tasot koodataan Gray-koodilla ja mitä
   neljä tasoa maksavat SNR:nä.
+- Osaat selittää, mitä konstellaation piste tarkoittaa, ja arvioida,
+  paljonko parempaa signaalia tiheämpi konstellaatio vaatii.
 - Osaat toteuttaa bittitäytön ja selittää, miten vastaanotin löytää
   kehyksen rajat.

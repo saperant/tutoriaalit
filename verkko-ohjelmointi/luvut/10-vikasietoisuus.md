@@ -116,6 +116,12 @@ jaksoon:
 ```{.tuloste tiedosto="esimerkit/10-uudelleenyritys.odotettu"}
 ```
 
+![Tuhannen asiakkaan neljännen yrityksen ajankohta. Ilman
+satunnaisuutta jokainen odottaa täsmälleen 100 + 200 + 400 + 800 ms
+ja palvelu saa kaikki yritykset samassa 50 millisekunnin jaksossa.
+Täysi satunnaisuus levittää saman kuorman puolentoista sekunnin
+ajalle.](kuvat/uudelleenyritys.png){width=80%}
+
 Ilman satunnaisuutta kaikki tuhat iskevät samalla hetkellä. Täysi
 satunnaisuus levittää ne niin, että pahimmassakin jaksossa on vain
 murto-osa. Muita tarpeellisia rajoja ovat yritysten enimmäismäärä,

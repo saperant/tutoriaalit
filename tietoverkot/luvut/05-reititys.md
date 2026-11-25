@@ -32,7 +32,17 @@ taulussa on yli miljoona reittiä, ja haku tehdään etuliitepuulla
 
 Reititin on kone, jolla on liitäntä kahdessa verkossa ja joka välittää
 paketteja niiden välillä. Linuxissa välitys kytketään päälle asetuksella
-`net.ipv4.ip_forward`:
+`net.ipv4.ip_forward`.
+
+```{.dot otsikko="Reitityslaboratorio: kaksi aliverkkoa ja reititin, jolla on liitäntä kummassakin"}
+graph {
+  rankdir=LR; nodesep=0.5; ranksep=0.35;
+  A [label="kone A\neth0 192.0.2.10/24"];
+  R [label="reititin R\nlan 192.0.2.1/24\nwan 198.51.100.1/24"];
+  B [label="kone B\neth0 198.51.100.20/24"];
+  A -- R; R -- B;
+}
+```
 
 ```{.bash tiedosto="esimerkit/05-reititin.sh" osa="verkko"}
 ```
@@ -40,7 +50,7 @@ paketteja niiden välillä. Linuxissa välitys kytketään päälle asetuksella
 ```{.bash tiedosto="esimerkit/05-reititin.sh" osa="vaiheet"}
 ```
 
-```{.tuloste tiedosto="esimerkit/05-reititin.odotettu"}
+```{.tuloste tiedosto="esimerkit/05-reititin.odotettu" asti="198.51.100.0/24 dev wan"}
 ```
 
 Kolme vaihetta kertovat, mitä reititykseen tarvitaan:
@@ -58,6 +68,46 @@ Vastauksen `ttl=63` kertoo, että paketti kulki yhden reitittimen läpi
 (Linux lähettää arvolla 64). `ip route get` näyttää, minkä reitin ydin
 valitsisi, ja on vianetsinnän tärkein komento. Reitit `proto kernel` ydin
 lisäsi itse, kun liitännälle annettiin osoite.
+
+## ICMP: verkon virheilmoitukset
+
+IP ei kuittaa paketteja eikä lähetä niitä uudelleen, mutta se kertoo
+ongelmista. **ICMP** (*Internet Control Message Protocol*) on IP:n
+oma ohjausprotokolla: reititin tai kohdekone lähettää ICMP-viestin
+paketin lähettäjälle, kun pakettia ei voitu toimittaa. Viesti kulkee
+tavallisena IP-pakettina (protokolla 1), ja sen mukana on alkuperäisen
+paketin alku, josta lähettäjän ydin tunnistaa, mitä yhteyttä virhe
+koskee.
+
+| Viesti | Lähettäjä ja syy | Missä näkyy |
+|--------|------------------|-------------|
+| Echo request ja reply | kysely ja kohteen vastaus | `ping` |
+| Destination unreachable: network, host | reititin: ei reittiä tai kohde ei vastaa | *No route to host* |
+| Destination unreachable: port | kohdekone: UDP-portissa ei kuuntelijaa | *Connection refused* (luku *TCP, UDP ja portit*) |
+| Destination unreachable: fragmentation needed | reititin: paketti ei mahdu linkkiin | polun MTU:n selvitys (luku *TCP, UDP ja portit*) |
+| Time exceeded | reititin: TTL kului nollaan | `tracepath`, `traceroute` |
+
+Viimeisen viestin saa esiin laboratoriossa lähettämällä paketin, jonka
+TTL on 1. Reititin R vähentää arvon nollaan, hylkää paketin ja
+ilmoittaa siitä:
+
+```{.bash tiedosto="esimerkit/05-reititin.sh" osa="ttl"}
+```
+
+```{.tuloste tiedosto="esimerkit/05-reititin.odotettu" alkaen="4. TTL 1"}
+```
+
+Ilmoituksen lähdeosoite on reitittimen osoite. Tähän perustuvat
+`tracepath` ja `traceroute`: ne lähettävät paketteja TTL-arvoilla 1,
+2, 3 ja niin edelleen, ja jokainen polun reititin paljastaa itsensä
+vuorollaan *Time exceeded* -viestillä. `tracepath` selvittää samalla
+polun MTU:n.
+
+ICMP:tä ei pidä estää palomuurissa kokonaan. Ilman *fragmentation
+needed* -viestejä suuret paketit katoavat hiljaa, ja ilman
+*unreachable*-viestejä jokainen virhe näkyy sovellukselle vasta
+aikakatkaisuna. IPv6:ssa ICMPv6 hoitaa lisäksi naapurien selvityksen
+(luku *IPv6*), joten sen estäminen katkaisee koko yhteyden.
 
 ## Staattinen ja dynaaminen reititys
 
@@ -142,4 +192,6 @@ NAT:n seuraukset ohjelmoijalle:
   miksi reitti, välitys ja paluureitti tarvitaan.
 - Osaat tulkita `ip route`- ja `ip route get` -komentojen tulosteet ja
   TTL-arvon.
+- Osaat nimetä ICMP:n tavallisimmat virheilmoitukset ja selittää, miten
+  `tracepath` löytää polun reitittimet.
 - Osaat selittää NAT:n toiminnan ja sen vaikutukset sovelluksiin.

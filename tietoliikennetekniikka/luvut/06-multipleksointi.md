@@ -17,6 +17,11 @@ radio- ja TV-asemat ovat FDM:ää. Valokuidussa sama periaate on
 tiheä WDM kuljettaa kymmeniä 100–800 Gbit/s:n kanavia yhdessä
 kuidussa.
 
+![Kolmen käyttäjän A, B ja C jako aika–taajuus-tasossa. TDM jakaa
+ajan, FDM taajuuden. OFDMA (luku Matkaviestinverkot) jakaa ruudukon
+molempiin suuntiin ja voi muuttaa jakoa tarpeen
+mukaan.](kuvat/kanavointi.png){width=100%}
+
 ```{.python tiedosto="esimerkit/06-tdm-fdm.py" osa="tdm"}
 ```
 
@@ -42,7 +47,16 @@ muunnoksella ja vastaanotin erottaa ne Fourier-muunnoksella.
 Jokaisen symbolin eteen kopioidaan sen loppuosa (**syklinen
 etuliite**), joka imee heijastukset ja tekee kanavasta jokaiselle
 alikantoaallolle yksinkertaisen kertoimen. Vastaanotin korjaa kanavan
-jakamalla jokaisen alikantoaallon arvon kanavan kertoimella:
+jakamalla jokaisen alikantoaallon arvon kanavan kertoimella.
+
+![Vasemmalla viiden vierekkäisen alikantoaallon spektrit: jokaisen
+huippu osuu kohtaan, jossa muiden spektri on nolla, joten ne eivät
+häiritse toisiaan, vaikka menevät päällekkäin. Oikealla yksi
+OFDM-symboli (64 näytettä) ja sen eteen kopioitu 16 näytteen
+etuliite.](kuvat/ofdm.png){width=100%}
+
+Esimerkki lähettää QPSK-symboleja 64 alikantoaallolla kanavassa, jossa
+on kaksi heijastusta:
 
 ```{.python tiedosto="esimerkit/06-ofdm.py" osa="ofdm"}
 ```

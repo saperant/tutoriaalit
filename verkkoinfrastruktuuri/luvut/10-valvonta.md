@@ -1,10 +1,11 @@
-# Valvonta
+# Valvonta ja vianetsintä
 
 Verkkoa, jota ei valvota, ylläpidetään käyttäjien valitusten
 perusteella. Valvonta vastaa kolmeen kysymykseen: toimiiko kaikki nyt
 (saatavuus), miten verkko voi (kuormat, virheet, trendit) ja mitä verkossa
 tapahtui (virrat ja tapahtumat vianetsintää ja tietoturvatutkintaa
-varten).
+varten). Luvun lopussa valvonnan tiedot ja aiempien lukujen työkalut
+kootaan vianetsinnän tarkistuslistaksi.
 
 ## Mitä valvotaan
 
@@ -90,6 +91,42 @@ ruuhkautunut, varayhteys on käytössä), eikä jokaista mahdollista syytä.
 Muut tiedot ovat näkymissä vianetsintää varten. Liian moni hälytys
 opettaa ohittamaan ne kaikki.
 
+## Vianetsintä verkon laitteissa
+
+Vianetsinnän perusmenetelmä on sama kuin taidossa *Tietoverkot*:
+edetään kerros kerrallaan linkistä sovellukseen ja varmennetaan
+jokainen oletus mittaamalla. Verkon ylläpitäjällä on lisäksi pääsy
+laitteisiin matkan varrella, ja jokainen tämän tutoriaalin luku toi
+oman tarkistuksensa:
+
+| Kerros | Kysymys | Mistä näkee |
+|--------|---------|-------------|
+| Kytkentä | onko osoite opittu oikeaan porttiin ja VLANiin? | `bridge fdb show`, `bridge vlan show` |
+| Kytkentä | onko STP estänyt portin, onko nipun linkki pudonnut? | `bridge link`, `/proc/net/bonding/bond0` |
+| Yhdyskäytävä | kumpi reititin pitää virtuaalista osoitetta? | `ip addr`, keepalivedin loki |
+| Reititys | onko naapuruus ylhäällä ja reitti opittu vai suodatettu? | `birdc show protocols`, `birdc show route` |
+| Suodatus | mikä sääntö pudottaa paketin? | sääntöjen laskurit, `nft monitor trace` |
+| Palvelun laatu | mihin luokkaan liikenne päätyy ja missä pudotetaan? | `tc -s class show` |
+| Verkkopalvelut | saiko laite vuokran, hyväksyikö RADIUS? | palvelinten lokit ja vuokrataulu |
+| VPN | milloin viimeisin kättely tehtiin, kattavatko sallitut osoitteet kohteen? | `wg show` |
+
+Palomuurin jäljitys on näistä vähiten tunnettu. Kun pakettiin
+asetetaan jäljitysmerkki, nftables raportoi jokaisen ketjun ja säännön,
+jonka läpi paketti kulkee, ja lopullisen ratkaisun:
+
+```text
+nft add rule inet suodatin prerouting ip saddr 10.0.10.20 meta nftrace set 1
+nft monitor trace
+```
+
+Kaksi tapaa säästää eniten aikaa. Aloita valvonnan tiedoista: milloin
+oire alkoi ja mikä muuttui juuri sitä ennen (versionhallinnan loki,
+kun verkko on koodina, luku *Verkko koodina*). Ja kirjaa jokaisesta
+vaiheesta havainto, ei oletusta: "palomuuri on kunnossa" on oletus,
+"pudotuslaskuri ei kasvanut testin aikana" on havainto. Kun paketti
+katoaa, kaappaus (`tcpdump`) matkan eri kohdissa näyttää, minkä kahden
+laitteen välissä.
+
 ## Käytännössä
 
 - **SNMPv3 authPriv tai telemetria, vain luku, vain hallintaverkossa.**
@@ -117,3 +154,6 @@ opettaa ohittamaan ne kaikki.
 - Osaat selittää virran käsitteen, kerätä NetFlow-tietoa ja lukea siitä
   koostetun raportin.
 - Osaat suunnitella hälytykset oireiden perusteella.
+- Osaat valita kytkennän, reitityksen, palomuurin, palvelun laadun ja
+  VPN:n vialle oikean tarkistuksen ja jäljittää paketin palomuurin
+  sääntöjen läpi.
