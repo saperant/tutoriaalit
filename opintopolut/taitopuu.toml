@@ -182,6 +182,7 @@ aiheet = [
   "esikääntäjä ja monen tiedoston ohjelmat",
   "tiedostot ja virheenkäsittely",
   "säikeet ja atomiset operaatiot",
+  "bittioperaatiot ja maskit",
 ]
 laajuus = 5
 testaus = "GCC ja Clang, AddressSanitizer ja UndefinedBehaviorSanitizer"
@@ -203,6 +204,7 @@ aiheet = [
   "mallit ja konseptit",
   "käännösaikainen laskenta",
   "virheenkäsittely ja rinnakkaisuus",
+  "viittaukset, luokat ja standardisäiliöt C-ohjelmoijalle",
 ]
 laajuus = 5
 testaus = "GCC ja Clang, sanitoijat"
@@ -285,6 +287,7 @@ aiheet = [
   "sanitoijat, kattavuus ja staattinen analyysi",
   "CI-putket (GitHub Actions)",
   "debuggaus gdb:llä",
+  "asennus (PREFIX, DESTDIR) ja sumutus",
 ]
 laajuus = 3
 testaus = "esimerkkiprojektit rakennetaan ja testataan CI:ssä"
@@ -349,9 +352,10 @@ aiheet = [
   "kannanvaihto ja ortogonaalisuus",
   "ominaisarvot",
   "homogeeniset koordinaatit",
+  "singulaariarvohajotelma",
 ]
 laajuus = 5
-testaus = "Python ja NumPy, pytest"
+testaus = "Python ja NumPy, tulosteiden vertailu"
 roadmap = ["game-developer"]
 amk = "Insinöörimatematiikka: lineaarialgebra"
 tutoriaali = "lineaarialgebra"
@@ -361,16 +365,17 @@ id = "signaalimatematiikka"
 nimi = "Kompleksiluvut ja Fourier-analyysi"
 alue = "matematiikka"
 kuvaus = "Signaalinkäsittelyn matemaattinen perusta: kompleksiluvut, sinimuotoiset signaalit ja taajuustaso."
-edellyttaa = ["lineaarialgebra"]
+edellyttaa = ["analyysi"]
 aiheet = [
   "kompleksiluvut ja Eulerin kaava",
   "sinimuotoiset signaalit ja osoitinesitys",
   "summat, sarjat ja integraalit signaaleille",
   "Fourier-sarja ja Fourier-muunnos",
   "konvoluutio",
+  "diskreetti Fourier-muunnos kannanvaihtona",
 ]
 laajuus = 5
-testaus = "Python ja NumPy, pytest"
+testaus = "Python ja NumPy, tulosteiden vertailu"
 roadmap = []
 amk = "Insinöörimatematiikka: kompleksiluvut ja muunnokset"
 tutoriaali = "signaalimatematiikka"
@@ -388,9 +393,10 @@ aiheet = [
   "normaalijakauma ja kohina",
   "Monte Carlo -menetelmät",
   "estimointi ja luottamusvälit",
+  "kovarianssi, korrelaatio ja regressio",
 ]
 laajuus = 3
-testaus = "Python ja NumPy, pytest (kiinteä satunnaissiemen)"
+testaus = "Python ja NumPy, tulosteiden vertailu (kiinteä satunnaissiemen)"
 roadmap = ["computer-science"]
 amk = "Todennäköisyyslaskenta ja tilastot"
 tutoriaali = "todennakoisyys"
@@ -420,7 +426,7 @@ id = "analyysi"
 nimi = "Differentiaali- ja integraalilaskenta"
 alue = "matematiikka"
 kuvaus = "Raja-arvot, derivaatat, integraalit ja sarjat yhden ja usean muuttujan funktioille sekä niiden insinöörisovellukset."
-edellyttaa = ["matematiikan-perusteet"]
+edellyttaa = ["matematiikan-perusteet", "lineaarialgebra"]
 aiheet = [
   "raja-arvo ja jatkuvuus",
   "derivaatta ja sen sovellukset: ääriarvot ja Newtonin menetelmä",
@@ -440,7 +446,7 @@ id = "differentiaaliyhtalot"
 nimi = "Differentiaaliyhtälöt ja Laplace-muunnos"
 alue = "matematiikka"
 kuvaus = "Dynaamisten järjestelmien mallintaminen differentiaaliyhtälöillä ja niiden ratkaiseminen analyyttisesti ja numeerisesti."
-edellyttaa = ["analyysi", "lineaarialgebra"]
+edellyttaa = ["analyysi"]
 aiheet = [
   "ensimmäisen kertaluvun yhtälöt ja mallintaminen",
   "lineaariset toisen kertaluvun yhtälöt ja värähtelijät",
@@ -460,7 +466,7 @@ id = "numeeriset-menetelmat"
 nimi = "Numeeriset menetelmät"
 alue = "matematiikka"
 kuvaus = "Laskennan virheet ja algoritmit, joilla yhtälöt, integraalit ja optimointitehtävät ratkaistaan tietokoneella."
-edellyttaa = ["analyysi", "lineaarialgebra"]
+edellyttaa = ["analyysi"]
 aiheet = [
   "pyöristysvirhe, katkaisuvirhe ja ehtoluku",
   "epälineaaristen yhtälöiden ratkaiseminen",
@@ -480,6 +486,44 @@ tutoriaali = "numeeriset-menetelmat"
 # ---------------------------------------------------------------------
 
 [[taito]]
+id = "fysikaalinen-mallinnus"
+nimi = "Fysikaalinen mallinnus ja simulointi"
+alue = "matematiikka"
+kuvaus = "Fysikaalisten ilmiöiden mallintaminen osittaisdifferentiaaliyhtälöillä ja niiden ratkaiseminen differenssi- ja elementtimenetelmällä."
+edellyttaa = ["numeeriset-menetelmat", "differentiaaliyhtalot"]
+aiheet = [
+  "säilymislait ja mallin johtaminen",
+  "lämpö-, aalto- ja Poissonin yhtälö",
+  "differenssimenetelmä, stabiilisuus ja CFL-ehto",
+  "elementtimenetelmä: heikko muoto, kokoaminen ja reunaehdot",
+  "laskentaverkot ja harvat yhtälöryhmät",
+  "verifiointi ja validointi: analyyttiset ratkaisut ja verkon tihennys",
+]
+laajuus = 5
+testaus = "NumPy, SciPy ja scikit-fem, vertailu analyyttisiin ratkaisuihin ja suppenemisnopeuteen"
+roadmap = []
+amk = "Elementtimenetelmä ja simulointi"
+
+[[taito]]
+id = "virtauslaskenta"
+nimi = "Virtauslaskenta"
+alue = "matematiikka"
+kuvaus = "Nesteiden ja kaasujen virtauksen laskenta: kontrollitilavuusmenetelmä, advektio ja kokoonpuristumaton Navier–Stokes."
+edellyttaa = ["fysikaalinen-mallinnus"]
+aiheet = [
+  "virtauksen yhtälöt ja dimensiottomat luvut",
+  "kontrollitilavuusmenetelmä ja säilyvyys",
+  "advektio: vastavirtakaaviot ja numeerinen diffuusio",
+  "paineen ja nopeuden kytkentä: projektiomenetelmä",
+  "reunaehdot ja laskentaverkko",
+  "vertailu julkaistuun dataan ja turbulenssin mallinnus yleiskuvana",
+]
+laajuus = 5
+testaus = "NumPy ja SciPy, vertailu analyyttisiin ratkaisuihin ja julkaistuun vertailudataan"
+roadmap = []
+amk = "Virtauslaskenta (CFD)"
+
+[[taito]]
 id = "tietorakenteet"
 nimi = "Tietorakenteet"
 alue = "algoritmit"
@@ -492,6 +536,7 @@ aiheet = [
   "binäärihakupuut",
   "keot ja prioriteettijonot",
   "graafien esitystavat",
+  "geneerisyys C:ssä",
 ]
 laajuus = 5
 testaus = "C, sanitoijat, satunnaistetut vertailutestit"
@@ -511,10 +556,11 @@ aiheet = [
   "rekursio sekä hajota ja hallitse",
   "ahneet algoritmit",
   "dynaaminen ohjelmointi",
-  "graafialgoritmit: BFS, DFS, Dijkstra, virittävät puut",
+  "graafialgoritmit: BFS, DFS, Dijkstra, Floyd–Warshall, virittävät puut ja vahvasti yhtenäiset komponentit",
+  "peruuttava haku ja karsinta",
 ]
 laajuus = 5
-testaus = "C ja C++, sanitoijat, vertailu tunnettuihin tuloksiin"
+testaus = "C, sanitoijat, vertailu tunnettuihin tuloksiin"
 roadmap = ["datastructures-and-algorithms", "computer-science"]
 amk = "Tietorakenteet ja algoritmit"
 tutoriaali = "algoritmit"
@@ -548,8 +594,8 @@ edellyttaa = ["algoritmit", "assembly", "funktionaalinen-ohjelmointi", "moderni-
 aiheet = [
   "selaus ja jäsennys (rekursiivinen laskeutuminen)",
   "abstrakti syntaksipuu ja semanttinen analyysi",
-  "välikieli ja SSA-muoto",
-  "optimoinnit",
+  "välikieli ja datavuoanalyysi",
+  "optimoinnit ja SSA-muoto",
   "koodingenerointi RISC-V:lle",
   "rekisterien varaus",
 ]
@@ -576,6 +622,8 @@ aiheet = [
   "kiikut, rekisterit ja laskurit",
   "tilakoneet",
   "ajoitus ja kellotus",
+  "kolmitila ja avoin nielu",
+  "siirrin ja kertoja",
 ]
 laajuus = 5
 testaus = "Python-mallit ja Verilator-simulaatiot"
@@ -596,6 +644,9 @@ aiheet = [
   "C:n rakenteet konekielenä",
   "x86-64 ja RISC-V rinnakkain",
   "SIMD-käskyjen perusteet",
+  "globaali data ja vakiot",
+  "pinosuoja",
+  "debuggeri käsky kerrallaan",
 ]
 laajuus = 5
 testaus = "GNU as, QEMU (RISC-V), natiivi x86-64"
@@ -617,6 +668,8 @@ aiheet = [
   "virtuaalimuisti ja MMU",
   "keskeytykset, DMA, väylät ja oheislaitteet",
   "moniydinsuorittimet, koherenssi ja NUMA",
+  "esihaku",
+  "superskalaarisuus ja rekisterien uudelleennimeäminen",
 ]
 laajuus = 5
 testaus = "C++-simulaattori RISC-V-osajoukolle, testiohjelmat"
@@ -637,6 +690,7 @@ aiheet = [
   "linkkeriskriptit ja muistikartat",
   "ohjelman lataus ja käynnistys",
   "ABI ja debug-tieto (DWARF)",
+  "säiekohtainen muisti (TLS)",
 ]
 laajuus = 3
 testaus = "GNU binutils, readelf- ja objdump-tulosteet"
@@ -657,6 +711,7 @@ aiheet = [
   "tiedostojärjestelmät, lohko- ja merkkilaitteet sekä I/O",
   "prosessien välinen kommunikaatio",
   "synkronointi ja lukkiutuminen",
+  "käyttäjät, oikeudet ja eristyksen mekanismit",
 ]
 laajuus = 5
 testaus = "C, POSIX-rajapinnat, sanitoijat"
@@ -677,6 +732,8 @@ aiheet = [
   "lukottomat tietorakenteet",
   "rinnakkaiset algoritmit ja työnjako",
   "ThreadSanitizer ja rinnakkaisuusvirheiden etsintä",
+  "OpenMP",
+  "mitattu nopeutus ja litmus-testit",
 ]
 laajuus = 5
 testaus = "C++, ThreadSanitizer"
@@ -697,9 +754,10 @@ aiheet = [
   "haarautumisen ennustus",
   "vektorointi ja SIMD",
   "roofline-malli",
+  "viiveen jakauma ja prosenttipisteet",
 ]
 laajuus = 3
-testaus = "C ja C++, toiminnallisuus testataan, mittaukset raportoidaan suuntaa-antavina"
+testaus = "C, toiminnallisuus testataan, mittaukset raportoidaan suuntaa-antavina"
 roadmap = ["cpp", "computer-science"]
 amk = "Ohjelmien optimointi"
 tutoriaali = "suorituskyky"
@@ -720,9 +778,11 @@ aiheet = [
   "kvantisointivirhe",
   "kiinteä pilkku vai liukuluku laitteistossa",
   "bittitarkat mallit C:llä ja Pythonilla",
+  "jako vakiolla",
+  "ylivuotovärähtely ja dither",
 ]
 laajuus = 3
-testaus = "C ja Python, bittitarkat vertailut"
+testaus = "C, Python ja SystemVerilog (Verilator), bittitarkat vertailut"
 roadmap = ["computer-science"]
 amk = "Digitaalinen signaalinkäsittely"
 tutoriaali = "kiintea-pilkku"
@@ -741,6 +801,8 @@ aiheet = [
   "kellot, resetit ja kellotasojen ylitykset",
   "synteesikelpoisuus ja koodaustyyli",
   "Verilog-2005-yhteensopivuus",
+  "paketit ja funktiot",
+  "kättely, vastapaine ja skid-puskuri",
 ]
 laajuus = 5
 testaus = "Verilator ja Icarus Verilog, itsetarkistavat testipenkit"
@@ -762,6 +824,8 @@ aiheet = [
   "generics ja generate-rakenteet",
   "testipenkit ja VHDL-2008:n parannukset",
   "vertailu SystemVerilogiin",
+  "muistit: RAM, ROM ja FIFO",
+  "cocotb",
 ]
 laajuus = 5
 testaus = "GHDL, itsetarkistavat testipenkit"
@@ -780,11 +844,11 @@ aiheet = [
   "rajoitettu satunnaistus ja toiminnallinen kattavuus",
   "SystemVerilog-väittämät (SVA)",
   "cocotb: testipenkit Pythonilla",
-  "formaali verifiointi (SymbiYosys)",
+  "formaali verifiointi: rajoitettu mallintarkistus ja induktio",
   "UVM:n käsitteet",
 ]
 laajuus = 5
-testaus = "Verilator, cocotb, SymbiYosys"
+testaus = "Verilator, cocotb, Yosys ja yosys-smtbmc (Z3)"
 roadmap = []
 amk = "Digitaalisuunnittelun syventävä opintojakso"
 tutoriaali = "verifiointi"
@@ -842,6 +906,8 @@ aiheet = [
   "laitteisto–ohjelmisto-jako",
   "pinta-ala- ja tehoarviot",
   "parametrien tutkiminen ja tulosten raportointi",
+  "pinta-alan hinta",
+  "faktorikoe",
 ]
 laajuus = 5
 testaus = "C++- ja SystemC-mallit, Python-analyysit"
@@ -861,6 +927,7 @@ aiheet = [
   "regressioajot ja tulosten seuranta",
   "rekisterikuvauksista generoitu koodi",
   "CI laitteistoprojekteille",
+  "lähdeluettelot ja aaltomuotojen (VCD) käsittely",
 ]
 laajuus = 3
 testaus = "Python, Tcl (tclsh), Yosys ja Verilator"
@@ -882,7 +949,7 @@ aiheet = [
   "C++-mallin ja tuotetun RTL:n verifiointi",
 ]
 laajuus = 5
-testaus = "avoimen lähdekoodin HLS-työkalu, Verilator"
+testaus = "oma opetustyökalu minihls, Verilator ja Yosys"
 roadmap = []
 amk = "FPGA-suunnittelun syventävä opintojakso"
 tutoriaali = "hls"
@@ -919,6 +986,7 @@ aiheet = [
   "vaihtovirta, impedanssi ja osoittimet",
   "diodit ja transistorit kytkimenä",
   "SPICE-simulointi (ngspice)",
+  "lineaarisäädin, lämpölaskenta ja logiikkatasot",
 ]
 laajuus = 5
 testaus = "ngspice eräajona, tulokset verrataan käsin laskettuihin Pythonilla"
@@ -939,6 +1007,8 @@ aiheet = [
   "takaisinkytkentä ja stabiilisuus",
   "AD- ja DA-muuntimet",
   "kohina ja signaalin eheys",
+  "differentiaalipari",
+  "vertailija ja hystereesi",
 ]
 laajuus = 5
 testaus = "ngspice eräajona, taajuusvasteet ja transientit verrataan malleihin"
@@ -955,7 +1025,7 @@ edellyttaa = ["soc-integraatio", "eda-skriptaus"]
 aiheet = [
   "rekisterikuvaukset SystemRDL:llä",
   "koodin, otsakkeiden ja dokumentaation generointi (PeakRDL)",
-  "IP-XACT (IEEE 1685): komponentit, väylärajapinnat ja muistikartat",
+  "IP-XACT (IEEE 1685): muistikartan vienti ja tuonti, komponentit ja väylärajapinnat käsitteinä",
   "CMSIS-SVD ja laitepuu ohjelmiston näkökulmasta",
   "UVM-rekisterimalli ja verifiointi",
   "yksi totuuden lähde työkaluketjussa",
@@ -999,10 +1069,11 @@ edellyttaa = ["signaalit-ja-jarjestelmat", "c-kieli"]
 aiheet = [
   "FIR-suodattimien suunnittelu ja ikkunointi",
   "IIR-suodattimet ja stabiilisuus",
-  "FFT ja spektrianalyysi",
+  "FFT, nopea konvoluutio ja Goertzel",
   "monitaajuuskäsittely: desimointi ja interpolointi",
   "adaptiiviset suodattimet (LMS)",
   "lohkopohjainen reaaliaikakäsittely C:llä",
+  "Hilbert-muunnin ja analyyttinen signaali",
 ]
 laajuus = 5
 testaus = "Python-referenssit ja C-toteutukset, numeeriset toleranssit"
@@ -1034,7 +1105,7 @@ tutoriaali = "tiedonsiirto"
 id = "sdr"
 nimi = "Ohjelmistoradio"
 alue = "signaalit"
-kuvaus = "Radiovastaanottimien ja -lähettimien toteutus ohjelmistolla IQ-näytteiden avulla."
+kuvaus = "Radiovastaanottimien toteutus ohjelmistolla IQ-näytteiden avulla; lähetin testisignaalien tuottajana."
 edellyttaa = ["tiedonsiirto"]
 aiheet = [
   "IQ-näytteet ja kompleksinen kantataajuus",
@@ -1067,6 +1138,8 @@ aiheet = [
   "ajastimet ja keskeytykset",
   "virransäästötilat",
   "debuggaus (SWD, gdb, QEMU)",
+  "vahtikoira",
+  "SVC ja prosessipino",
 ]
 laajuus = 5
 testaus = "arm-none-eabi-gcc, QEMU (Cortex-M)"
@@ -1087,6 +1160,7 @@ aiheet = [
   "CAN",
   "DMA",
   "ajurikerrosten suunnittelu",
+  "ISO-TP",
 ]
 laajuus = 3
 testaus = "QEMU ja emuloidut oheislaitteet, protokollamallit Pythonilla"
@@ -1106,10 +1180,11 @@ aiheet = [
   "prioriteetin inversio",
   "ajoitusanalyysi (RMS, vasteajat)",
   "muistinhallinta RTOSissa",
-  "FreeRTOS ja Zephyr",
+  "FreeRTOS ja Zephyr vertailuna",
+  "ohjelmistoajastimet",
 ]
 laajuus = 5
-testaus = "FreeRTOS: POSIX-portti ja QEMU"
+testaus = "oma opetusydin Kide: QEMU (Cortex-M3) ja isäntäportti"
 roadmap = []
 amk = "Reaaliaikajärjestelmät"
 tutoriaali = "rtos"
@@ -1125,11 +1200,12 @@ aiheet = [
   "käynnistysketju ja U-Boot",
   "ytimen konfigurointi",
   "laitepuu (device tree)",
-  "Buildroot ja Yocto",
+  "Buildroot ja Yocto periaatteina",
   "juuritiedostojärjestelmä ja palvelut",
+  "vianetsintä kohteessa",
 ]
 laajuus = 5
-testaus = "Buildroot ja QEMU, käynnistystestit"
+testaus = "QEMU: järjestelmä kootaan ytimestä ja omista ohjelmista; käynnistystestit ja gdb-istunto"
 roadmap = ["linux"]
 amk = "Sulautettu Linux"
 tutoriaali = "embedded-linux"
@@ -1147,6 +1223,7 @@ aiheet = [
   "keskeytykset ja DMA ytimessä",
   "I2C- ja SPI-ajurit",
   "sysfs, debugfs ja ytimen debuggaus",
+  "mmap merkkilaitteessa",
 ]
 laajuus = 5
 testaus = "QEMU: ajurit ladataan ja testataan käynnistetyssä järjestelmässä"
@@ -1163,7 +1240,7 @@ id = "tietoverkot"
 nimi = "Tietoverkot"
 alue = "hajautetut"
 kuvaus = "Internetin protokollapino ja verkkojen toiminta."
-edellyttaa = ["komentorivi"]
+edellyttaa = ["komentorivi", "ohjelmoinnin-perusteet"]
 aiheet = [
   "kerrosmallit (OSI, TCP/IP)",
   "Ethernet, ARP ja kytkentä",
@@ -1213,6 +1290,7 @@ aiheet = [
   "CAP ja PACELC",
   "hajautetut transaktiot",
   "testaus simuloimalla verkkovikoja",
+  "vuokrat ja aitausmerkit",
 ]
 laajuus = 5
 testaus = "C++-toteutukset deterministisessä verkkosimulaattorissa"
@@ -1235,7 +1313,7 @@ aiheet = [
   "monitorointi ja havaittavuus",
 ]
 laajuus = 5
-testaus = "säiliöissä ajettavat esimerkkijärjestelmät"
+testaus = "prosesseina ajettavat esimerkkijärjestelmät (HAProxy, Redis, PostgreSQL) ja simulaatiot"
 roadmap = ["system-design"]
 amk = "Ohjelmistoarkkitehtuurit"
 tutoriaali = "jarjestelmasuunnittelu"
@@ -1244,18 +1322,18 @@ tutoriaali = "jarjestelmasuunnittelu"
 id = "kontit-ja-pilvi"
 nimi = "Kontit ja pilvi-infrastruktuuri"
 alue = "hajautetut"
-kuvaus = "Palvelujen paketointi säiliöihin ja niiden ajaminen orkestroidussa ympäristössä."
+kuvaus = "Palvelujen paketointi kontteihin ja niiden ajaminen orkestroidussa ympäristössä."
 edellyttaa = ["tietoverkot"]
 aiheet = [
-  "säiliöt ja Docker",
-  "säiliökuvien rakentaminen",
+  "kontit ja Docker",
+  "konttikuvien rakentaminen",
   "Kubernetes: podit, palvelut, käyttöönotot ja konfiguraatio",
   "Helm ja GitOps",
   "infrastruktuuri koodina",
   "CI/CD-putket palveluille",
 ]
 laajuus = 5
-testaus = "säiliöt rakennetaan ja ajetaan CI:ssä"
+testaus = "kontit rakennetaan ja ajetaan CI:ssä"
 roadmap = ["docker", "kubernetes", "devops"]
 amk = "Pilvipalvelut / DevOps"
 tutoriaali = "kontit-ja-pilvi"
@@ -1318,6 +1396,7 @@ aiheet = [
   "resurssit ja synkronointi",
   "renderöintitekniikat: varjokartat, viivästetty varjostus",
   "suorituskyvyn analyysi",
+  "indeksoitu piirto",
 ]
 laajuus = 5
 testaus = "Mesa (llvmpipe, lavapipe) ilman näytönohjainta, kuvien vertailu"
@@ -1337,6 +1416,7 @@ aiheet = [
   "GPU:n muistihierarkia",
   "työn jako ja synkronointi",
   "suorituskyvyn mittaaminen",
+  "virran tiivistys ja naapurihaku",
 ]
 laajuus = 3
 testaus = "Vulkan-laskentavarjostimet (lavapipe), vertailu CPU-toteutukseen"
@@ -1373,7 +1453,7 @@ id = "tietoturvan-perusteet"
 nimi = "Tietoturvan perusteet"
 alue = "tietoturva"
 kuvaus = "Uhkamallinnus, kryptografian perusteet ja turvallinen ohjelmointi."
-edellyttaa = ["tietoverkot", "ohjelmoinnin-perusteet"]
+edellyttaa = ["tietoverkot"]
 aiheet = [
   "uhkamallinnus ja riskien arviointi",
   "luottamuksellisuus, eheys ja saatavuus",
@@ -1383,7 +1463,7 @@ aiheet = [
   "lainsäädäntö ja etiikka: GDPR, NIS2 ja CRA",
 ]
 laajuus = 3
-testaus = "C ja Python, sanitoijat"
+testaus = "Python, ruff (S-säännöt) ja mypy"
 roadmap = ["cyber-security"]
 amk = "Tietoturvan perusteet"
 tutoriaali = "tietoturvan-perusteet"
@@ -1395,7 +1475,7 @@ alue = "tietoturva"
 kuvaus = "Ohjelmien toiminnan selvittäminen konekielestä staattisin ja dynaamisin menetelmin."
 edellyttaa = ["binaarit-ja-linkitys", "kayttojarjestelmat", "tietoturvan-perusteet"]
 aiheet = [
-  "disassemblointi ja dekompilointi (Ghidra, objdump)",
+  "disassemblointi ja dekompilointi (objdump, radare2; Ghidra esitellään)",
   "kääntäjän tuottamien rakenteiden tunnistaminen",
   "C++-ohjelmien takaisinmallinnus",
   "dynaaminen analyysi (gdb, strace)",
@@ -1403,7 +1483,7 @@ aiheet = [
   "obfuskointi ja sen purkaminen",
 ]
 laajuus = 5
-testaus = "itse käännetyt kohdeohjelmat, skriptatut analyysit (Ghidra headless, gdb)"
+testaus = "itse käännetyt kohdeohjelmat, skriptatut analyysit (radare2, objdump, gdb)"
 roadmap = ["cyber-security"]
 amk = "Kyberturvallisuuden syventävä opintojakso"
 tutoriaali = "takaisinmallinnus"
@@ -1468,6 +1548,8 @@ aiheet = [
   "moduulit, crate-paketit ja Cargo",
   "säikeet, Send/Sync ja async",
   "unsafe ja C-rajapinta",
+  "makrot lyhyesti",
+  "dokumentaatio ja doctestit",
 ]
 laajuus = 5
 testaus = "rustc ja cargo test, Clippy varoitukset virheinä"
@@ -1489,6 +1571,8 @@ aiheet = [
   "paketit ja moduulit",
   "standardikirjaston net/http",
   "testaus ja vertailuajot go testillä",
+  "tiedostot ja komentoriviliput",
+  "dokumentaatiokommentit ja go doc",
 ]
 laajuus = 5
 testaus = "go vet ja go test"
@@ -1510,6 +1594,9 @@ aiheet = [
   "JVM: roskienkeruu ja JIT",
   "säikeet, virtuaalisäikeet ja java.util.concurrent",
   "Maven/Gradle ja JUnit",
+  "luokat, oliot ja periytyminen",
+  "tiedostot ja aika",
+  "Javadoc",
 ]
 laajuus = 5
 testaus = "javac -Xlint ja JUnit"
@@ -1530,6 +1617,8 @@ aiheet = [
   "kokoelmat ja funktionaalinen tyyli",
   "korutiinit ja Flow",
   "yhteiskäyttö Javan kanssa",
+  "jaettu tila ja kanavat",
+  "KDoc",
 ]
 laajuus = 3
 testaus = "kotlinc ja kotlin.test"
@@ -1541,7 +1630,7 @@ tutoriaali = "kotlin"
 id = "javascript"
 nimi = "JavaScript"
 alue = "kielet"
-kuvaus = "JavaScript selaimessa ja Nodessa: arvot ja oliot, sulkeumat, prototyypit, lupaukset ja tapahtumasilmukka."
+kuvaus = "JavaScript Node-ympäristössä: arvot ja oliot, sulkeumat, prototyypit, lupaukset ja tapahtumasilmukka."
 edellyttaa = ["ohjelmoinnin-perusteet"]
 aiheet = [
   "arvot, tyypit ja yhtäsuuruus",
@@ -1551,6 +1640,8 @@ aiheet = [
   "tapahtumasilmukka, lupaukset ja async/await",
   "ES-moduulit ja npm",
   "testaus (node:test)",
+  "päivämäärät ja säännölliset lausekkeet",
+  "JSDoc-tyypit ja dokumentaatio",
 ]
 laajuus = 5
 testaus = "Node.js, node:test ja tsc --checkJs (JSDoc-tyypit)"
@@ -1571,6 +1662,8 @@ aiheet = [
   "tyyppien johtaminen datasta",
   "tsconfig ja tiukka tila",
   "tyypit kirjastorajapinnoissa",
+  "varianssi",
+  "TSDoc ja siirtyminen JavaScriptistä",
 ]
 laajuus = 3
 testaus = "tsc --strict ja node:test"
@@ -1591,6 +1684,7 @@ aiheet = [
   "uplevel, upvar ja omat ohjausrakenteet",
   "virheet ja catch/try",
   "Tcl sovellusten sulautettuna komentotulkkina",
+  "taulukot (array)",
 ]
 laajuus = 2
 testaus = "tclsh ja tcltest"
@@ -1632,6 +1726,8 @@ aiheet = [
   "datan asettelu: rakenteiden taulukko vai taulukoiden rakenne",
   "käännösoptimoinnit: inline, LTO ja PGO",
   "mittaaminen: mikrovertailut ja perf",
+  "älykkäiden osoittimien hinta",
+  "muotoilu ja virrat",
 ]
 laajuus = 3
 testaus = "C++, toiminnallisuus testataan; mittaukset raportoidaan suuntaa-antavina"
@@ -1651,6 +1747,7 @@ aiheet = [
   "GCC:n inline-assembly ja sen rajoitteet",
   "kääntäjän sisäiset funktiot (intrinsics) ja SIMD",
   "milloin assemblyä ei kannata kirjoittaa",
+  "paikkariippumaton koodi",
 ]
 laajuus = 2
 testaus = "GCC, natiivi x86-64 ja QEMU (RISC-V)"
@@ -1671,6 +1768,7 @@ aiheet = [
   "GIL ja rinnakkaisuus kielten rajalla",
   "virheiden ja omistuksen välittäminen kielten välillä",
   "paketointi ja binäärijakelu (wheel)",
+  "takaisinkutsut ja virheenjäljitys rajan yli",
 ]
 laajuus = 3
 testaus = "Python ja pytest, käännetyt laajennukset"
@@ -1719,6 +1817,9 @@ aiheet = [
   "laatikkomalli, flexbox ja grid",
   "responsiivisuus ja mediakyselyt",
   "teemat ja muuttujat",
+  "typografia",
+  "asemointi ja pinoaminen",
+  "siirtymät ja animaatiot",
 ]
 laajuus = 3
 testaus = "Playwright: rakenne-, saavutettavuus- ja asettelutarkistukset"
@@ -1737,7 +1838,7 @@ aiheet = [
   "tilan hallinta ja komponentit",
   "fetch, REST ja virheiden käsittely",
   "reititys ja selaimen tallennus",
-  "kehykset (React, Vue) ja niiden periaatteet",
+  "React: komponentit, hookit ja efektit",
   "päästä päähän -testaus Playwrightilla",
   "tietoturva selaimessa: XSS, CSP ja CORS",
 ]
@@ -1756,10 +1857,11 @@ edellyttaa = ["java", "sql", "tietoverkot"]
 aiheet = [
   "HTTP ja REST-rajapintojen suunnittelu",
   "Spring Boot: riippuvuuksien injektointi ja konfiguraatio",
-  "tietokantaliitännät: JDBC, JPA ja migraatiot",
+  "tietokantaliitännät: JDBC, aggregaatit ja migraatiot; JPA vertailuna",
   "todennus ja valtuutus",
   "virheiden käsittely ja havaittavuus",
   "integraatiotestaus",
+  "toisen palvelun kutsuminen: aikarajat ja uudelleenyritykset",
 ]
 laajuus = 5
 testaus = "JUnit, Spring Boot -testit ja upotettu H2-tietokanta"
@@ -1780,9 +1882,10 @@ aiheet = [
   "verkko ja tallennus",
   "taustatyöt ja korutiinit",
   "testaus",
+  "intentit ja resurssit",
 ]
 laajuus = 5
-testaus = "Gradle, Lint, Robolectric ja Compose-testit JVM:llä"
+testaus = "Gradle, Lint, Robolectric, Compose-testit ja kuvakaappaukset (Roborazzi) JVM:llä"
 roadmap = ["android"]
 amk = "Mobiiliohjelmointi"
 tutoriaali = "android-sovellukset"
@@ -1822,6 +1925,7 @@ aiheet = [
   "kontit ytimen keinoin: nimiavaruudet, cgroups ja seccomp",
   "virtuaalikoneiden ja konttien eristys ja hinta",
   "tilannevedokset ja elävä siirto",
+  "muistin ja suorittimen ylivaraus",
 ]
 laajuus = 3
 testaus = "QEMU (TCG), unshare ja cgroups konttiympäristössä"
@@ -1846,7 +1950,7 @@ aiheet = [
   "verkon valvonta (SNMP, NetFlow)",
 ]
 laajuus = 5
-testaus = "Linuxin verkkonimiavaruudet (ip netns), nftables, dnsmasq ja FRRouting"
+testaus = "Linuxin verkkonimiavaruudet (ip netns), nftables, dnsmasq ja BIRD"
 roadmap = ["network-engineer"]
 amk = "Tietoverkkojen suunnittelu ja ylläpito"
 tutoriaali = "verkkoinfrastruktuuri"
@@ -1866,6 +1970,7 @@ aiheet = [
   "Ethernetin fyysinen kerros ja kehykset",
   "matkaviestinverkot: 4G ja 5G",
   "jonoteoria ja palvelun laatu",
+  "virheenkorjaus ja uudelleenlähetys (ARQ)",
 ]
 laajuus = 5
 testaus = "Python-simulaatiot (NumPy)"
@@ -1890,7 +1995,7 @@ aiheet = [
   "kokonaiskustannukset (TCO) ja kapasiteetin suunnittelu",
 ]
 laajuus = 5
-testaus = "Ansible ja Linux-palvelut konteissa, OpenLDAP, mdadm silmukkalaitteilla"
+testaus = "Ansible ja Linux-palvelut konteissa, OpenLDAP; tallennuksen ja palvelutasojen laskelmat Pythonilla"
 roadmap = ["devops", "linux"]
 amk = "Palvelinympäristöt"
 tutoriaali = "palvelinymparistot"
@@ -1933,9 +2038,12 @@ aiheet = [
   "sign-off: DRC, LVS ja tapeout",
   "kotelointi ja bondaus",
   "asynkroniset piirit lyhyesti",
+  "standardisolun rakenne ja Liberty",
+  "nollauksen vapautus (recovery ja removal)",
+  "parasiittien poiminta",
 ]
 laajuus = 5
-testaus = "Yosys, OpenSTA ja OpenROAD (SkyWater 130 nm PDK)"
+testaus = "Yosys ja Icarus Verilog omalla opetuskirjastolla sekä Python-opetusmallit (STA, DFT, sijoittelu, reititys, sign-off)"
 roadmap = []
 amk = "Mikropiirisuunnittelu"
 tutoriaali = "asic-toteutus"
@@ -1948,7 +2056,7 @@ kuvaus = "Järjestelmäpiirin kokoaminen: väylät, kytkentäverkot, valmiit IP-
 edellyttaa = ["rtl-suunnittelu", "tietokonearkkitehtuuri"]
 aiheet = [
   "SoC:n rakenne: suorittimet, väylät ja oheislaitteet",
-  "AMBA-väylät: AXI, AHB ja APB",
+  "AMBA-väylät: AXI (myös purskeet), AHB ja APB",
   "kytkentäverkot ja muistikartta",
   "valmiit IP-lohkot (hard ja soft IP) ja IP-XACT",
   "rekisterikuvaukset ja niistä generoitu koodi",
@@ -1966,20 +2074,21 @@ tutoriaali = "soc-integraatio"
 id = "peliohjelmointi"
 nimi = "Peliohjelmointi"
 alue = "grafiikka"
-kuvaus = "Pelien rakentaminen: pelisilmukka, 2D- ja 3D-grafiikka, pelin tila ja logiikka, fysiikka, resurssit ja pelimoottorien periaatteet."
+kuvaus = "Kaksiulotteisten pelien rakentaminen: pelisilmukka, 2D-grafiikka, pelin tila ja logiikka, törmäykset ja fysiikka, pelitekoäly, resurssit ja pelimoottorien periaatteet."
 edellyttaa = ["moderni-cpp", "lineaarialgebra"]
 aiheet = [
   "pelisilmukka ja kiinteä aika-askel",
   "2D-grafiikka: spritet, animaatiot ja kamerat",
-  "3D-pelin rakenne ja renderöinnin integrointi",
   "pelin tila, tilakoneet ja entiteettikomponenttijärjestelmä (ECS)",
-  "törmäykset ja fysiikka",
+  "törmäykset, törmäysvaste ja fysiikka",
   "syöte, ääni ja käyttöliittymä",
   "assetit ja resurssien hallinta",
   "pelimoottorit (Godot, Unity, Unreal) ja niiden periaatteet",
+  "pelitekoäly: tilakoneet ja reitinhaku (A*)",
+  "tallennus",
 ]
 laajuus = 5
-testaus = "C++ ja SDL3 ilman näyttöä, deterministiset simulaatiotestit"
+testaus = "C++ ja SDL2 ilman näyttöä, deterministiset simulaatiotestit"
 roadmap = ["game-developer"]
 amk = "Peliohjelmointi"
 tutoriaali = "peliohjelmointi"
@@ -1998,12 +2107,52 @@ aiheet = [
   "deterministinen lukitusaskel ja rollback",
   "palvelimen auktoriteetti ja huijaamisen esto",
   "pelipalvelinten skaalaus ja otteluiden muodostus",
+  "yhteys UDP:n päällä ja tikkien tahdistus",
 ]
 laajuus = 3
 testaus = "C++-simulaatiot keinotekoisella viiveellä ja pakettihäviöllä"
 roadmap = ["server-side-game-developer"]
 amk = "Verkkopeliohjelmointi"
 tutoriaali = "moninpelit"
+
+[[taito]]
+id = "peliohjelmointi-3d"
+nimi = "3D-peliohjelmointi"
+alue = "grafiikka"
+kuvaus = "Kolmiulotteisen pelin rakenne: orientaatiot ja muunnoshierarkia, kamerat, näkymägraafi, törmäykset, animaatio ja resurssit."
+edellyttaa = ["peliohjelmointi", "renderoinnin-perusteet"]
+aiheet = [
+  "kvaterniot ja muunnoshierarkia",
+  "kamerat: ensimmäinen ja kolmas persoona",
+  "näkymägraafi ja näkyvyyskarsinta",
+  "3D-törmäykset ja säteenheitto",
+  "luurankoanimaation perusteet",
+  "resurssit ja glTF",
+]
+laajuus = 5
+testaus = "C++, ohjelmistorenderöinti ilman näyttöä, deterministiset simulaatiotestit"
+roadmap = ["game-developer"]
+amk = "3D-peliohjelmointi"
+
+[[taito]]
+id = "pelifysiikka"
+nimi = "Pelifysiikka"
+alue = "grafiikka"
+kuvaus = "Reaaliaikainen fysiikkamoottori: jäykät kappaleet, rajoitteet, pehmeät kappaleet ja nesteiden perusteet kiinteässä aikabudjetissa."
+edellyttaa = ["peliohjelmointi-3d"]
+aiheet = [
+  "jäykän kappaleen dynamiikka ja hitaustensori",
+  "törmäysten ratkaisu peräkkäisillä impulsseilla",
+  "rajoitteet ja nivelet",
+  "pinot, lepo ja stabiilisuus",
+  "pehmeät kappaleet ja kangas: massa-jousi ja sijaintipohjainen dynamiikka",
+  "hiukkaset ja nesteiden perusteet",
+  "determinismi ja kiinteä aika-askel",
+]
+laajuus = 5
+testaus = "C++, deterministiset simulaatiotestit ja säilymislakien tarkistukset"
+roadmap = ["game-developer"]
+amk = "Pelifysiikka"
 
 [[taito]]
 id = "kryptografia"
@@ -2020,6 +2169,7 @@ aiheet = [
   "TLS 1.3 protokollana",
   "satunnaisuus, sivukanavat ja yleiset virheet",
   "kvanttiturvallinen kryptografia",
+  "turvallinen kanava: toisto ja järjestys",
 ]
 laajuus = 5
 testaus = "Python (cryptography, hashlib) ja OpenSSL-komentorivi"
@@ -2040,6 +2190,7 @@ aiheet = [
   "toimitusketjun turvallisuus: riippuvuudet, SBOM ja allekirjoitukset",
   "staattinen ja dynaaminen analyysi CI:ssä",
   "koodikatselmointi ja turvallinen julkaisuprosessi",
+  "haavoittuvuusilmoituksen käsittely",
 ]
 laajuus = 3
 testaus = "Git-koukut, salaisuusskannaus ja CI-putken tarkistukset"
@@ -2083,6 +2234,7 @@ aiheet = [
   "debug-porttien lukitus",
   "sivukanava- ja vikahyökkäykset",
   "standardit ja sääntely: IEC 62443, EN 18031 ja CRA",
+  "laitteen identiteetti taustajärjestelmälle",
 ]
 laajuus = 3
 testaus = "C ja QEMU, allekirjoitusten tarkistus"
@@ -2104,6 +2256,7 @@ aiheet = [
   "verkon segmentointi ja API-yhdyskäytävän suojaukset",
   "auditointilokit ja havainnointi",
   "tietoturvapoikkeamien käsittely",
+  "viestinvälityksen suojaus",
 ]
 laajuus = 3
 testaus = "Spring Boot ja mTLS testivarmenteilla"
@@ -2363,8 +2516,15 @@ valinnaiset = ["virtualisointi", "tietoliikennetekniikka", "turvallinen-kehitys"
 id = "peliohjelmoija"
 nimi = "Peliohjelmoija"
 kuvaus = "Toteuttaa pelien logiikkaa, grafiikkaa ja verkkopelaamista pelimoottoreilla ja ilman."
-tavoitteet = ["moninpelit"]
+tavoitteet = ["moninpelit", "pelifysiikka"]
 valinnaiset = ["gpu-ohjelmointi", "cpp-suorituskyky", "sateenseuranta"]
+
+[[rooli]]
+id = "simulointi"
+nimi = "Simulointiohjelmoija"
+kuvaus = "Mallintaa fysikaalisia ilmiöitä ja toteuttaa niiden numeerista laskentaa tutkimukseen ja tuotekehitykseen."
+tavoitteet = ["virtauslaskenta"]
+valinnaiset = ["gpu-laskenta", "rinnakkaisohjelmointi", "cpp-suorituskyky", "python-c-integraatio"]
 
 [[rooli]]
 id = "sovellusturvallisuus"

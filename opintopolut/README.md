@@ -5,7 +5,7 @@
 
 Tutoriaalit muodostavat taitopuun: jokainen tutoriaali on yksi taito, ja taidot rakentuvat toistensa päälle. Roolit ovat ammattiprofiileja, joiden polku kulkee puun läpi.
 
-Taitoja on 104, yhteensä noin 461 op. Valmis PDF: [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf). Taitopuun lähdetiedosto: [taitopuu.toml](taitopuu.toml).
+Taitoja on 108, yhteensä noin 481 op. Valmis PDF: [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf). Taitopuun lähdetiedosto: [taitopuu.toml](taitopuu.toml).
 
 ## Roolit
 
@@ -13,7 +13,7 @@ Taitoja on 104, yhteensä noin 461 op. Valmis PDF: [opintopolut.pdf](https://sap
 |-------|------------|--------:|---:|
 | Laitteistoarkkitehti | Arkkitehtuurin mallinnus ja suunnittelutilan tutkiminen, EDA-työkaluketjujen automatisointi, FPGA-toteutus, Laitteiston verifiointi | 26 | 108 |
 | Sulautettujen ohjelmistojen kehittäjä | Linux-laiteajurit, Reaaliaikakäyttöjärjestelmät | 17 | 72 |
-| Signaalinkäsittelyn ja ohjelmistoradion kehittäjä | Ohjelmistoradio | 13 | 61 |
+| Signaalinkäsittelyn ja ohjelmistoradion kehittäjä | Ohjelmistoradio | 15 | 71 |
 | Grafiikkaohjelmoija | GPU-laskenta, Säteenseuranta ja fysikaalinen valaistus | 19 | 87 |
 | Hajautettujen järjestelmien kehittäjä | Kontit ja pilvi-infrastruktuuri, Skaalautuvien järjestelmien suunnittelu | 18 | 88 |
 | Takaisinmallintaja ja tietoturva-analyytikko | Haavoittuvuuksien analyysi ja torjunta, Laiteohjelmiston takaisinmallinnus | 15 | 69 |
@@ -22,8 +22,9 @@ Taitoja on 104, yhteensä noin 461 op. Valmis PDF: [opintopolut.pdf](https://sap
 | Taustajärjestelmäkehittäjä | Kontit ja pilvi-infrastruktuuri, Taustapalvelut | 7 | 33 |
 | Mobiilikehittäjä (Android) | Android-sovellukset | 4 | 18 |
 | Digitaalisen piirisuunnittelun asiantuntija | ASIC-toteutus, Laitteiston verifiointi, SoC-integraatio | 13 | 63 |
-| Infrastruktuuri- ja ylläpitoasiantuntija | Palvelinympäristöt | 5 | 23 |
-| Peliohjelmoija | Reaaliaikaiset moninpelit | 14 | 66 |
+| Infrastruktuuri- ja ylläpitoasiantuntija | Palvelinympäristöt | 6 | 28 |
+| Peliohjelmoija | Pelifysiikka, Reaaliaikaiset moninpelit | 17 | 81 |
+| Simulointiohjelmoija | Virtauslaskenta | 8 | 40 |
 | Sovellusturvallisuuden asiantuntija | Palveluarkkitehtuurin tietoturva, Tietoturva kehitystyössä, Web-sovellusten tietoturva | 20 | 85 |
 | Elektroniikkasuunnittelija | Analogiaelektroniikka, FPGA-toteutus, Mikrokontrollerit ja bare-metal-ohjelmointi | 17 | 81 |
 | Tekninen vetäjä | Jatkuva integraatio ja toimitus, Tekninen dokumentaatio, Tiimit ja organisaatiomallit | 12 | 52 |
@@ -55,6 +56,8 @@ flowchart LR
     analyysi["✓ Differentiaali- ja integraalilaskenta"]
     differentiaaliyhtalot["✓ Differentiaaliyhtälöt ja Laplace-muunnos"]
     numeeriset_menetelmat["✓ Numeeriset menetelmät"]
+    fysikaalinen_mallinnus["Fysikaalinen mallinnus ja simulointi"]
+    virtauslaskenta["Virtauslaskenta"]
   end
   subgraph algoritmit["Algoritmit ja tietorakenteet"]
     tietorakenteet["✓ Tietorakenteet"]
@@ -122,6 +125,8 @@ flowchart LR
     konenako["✓ Konenäkö (OpenCV)"]
     peliohjelmointi["✓ Peliohjelmointi"]
     moninpelit["✓ Reaaliaikaiset moninpelit"]
+    peliohjelmointi_3d["3D-peliohjelmointi"]
+    pelifysiikka["Pelifysiikka"]
   end
   subgraph tietoturva["Tietoturva ja takaisinmallinnus"]
     tietoturvan_perusteet["✓ Tietoturvan perusteet"]
@@ -179,14 +184,16 @@ flowchart LR
   komentorivi --> kehitysymparistot
   ohjelmoinnin_perusteet --> diskreetti_matematiikka
   ohjelmoinnin_perusteet --> lineaarialgebra
-  lineaarialgebra --> signaalimatematiikka
+  analyysi --> signaalimatematiikka
   diskreetti_matematiikka --> todennakoisyys
   ohjelmoinnin_perusteet --> matematiikan_perusteet
   matematiikan_perusteet --> analyysi
+  lineaarialgebra --> analyysi
   analyysi --> differentiaaliyhtalot
-  lineaarialgebra --> differentiaaliyhtalot
   analyysi --> numeeriset_menetelmat
-  lineaarialgebra --> numeeriset_menetelmat
+  numeeriset_menetelmat --> fysikaalinen_mallinnus
+  differentiaaliyhtalot --> fysikaalinen_mallinnus
+  fysikaalinen_mallinnus --> virtauslaskenta
   c_kieli --> tietorakenteet
   diskreetti_matematiikka --> tietorakenteet
   tietorakenteet --> algoritmit
@@ -251,6 +258,7 @@ flowchart LR
   embedded_linux --> linux_ajurit
   oheislaitevaylat --> linux_ajurit
   komentorivi --> tietoverkot
+  ohjelmoinnin_perusteet --> tietoverkot
   tietoverkot --> verkko_ohjelmointi
   kayttojarjestelmat --> verkko_ohjelmointi
   verkko_ohjelmointi --> hajautetut_jarjestelmat
@@ -270,7 +278,6 @@ flowchart LR
   suorituskyky --> gpu_laskenta
   signaalit_ja_jarjestelmat --> konenako
   tietoverkot --> tietoturvan_perusteet
-  ohjelmoinnin_perusteet --> tietoturvan_perusteet
   binaarit_ja_linkitys --> takaisinmallinnus
   kayttojarjestelmat --> takaisinmallinnus
   tietoturvan_perusteet --> takaisinmallinnus
@@ -315,6 +322,9 @@ flowchart LR
   lineaarialgebra --> peliohjelmointi
   peliohjelmointi --> moninpelit
   verkko_ohjelmointi --> moninpelit
+  peliohjelmointi --> peliohjelmointi_3d
+  renderoinnin_perusteet --> peliohjelmointi_3d
+  peliohjelmointi_3d --> pelifysiikka
   tietoturvan_perusteet --> kryptografia
   diskreetti_matematiikka --> kryptografia
   python --> kryptografia
@@ -366,11 +376,13 @@ flowchart LR
 | Diskreetti matematiikka | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../diskreetti-matematiikka/) |
 | Lineaarialgebra | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../lineaarialgebra/) |
 | Matematiikan perusteet ohjelmallisesti | 5 | Ohjelmoinnin perusteet (Python) | [valmis](../matematiikan-perusteet/) |
-| Differentiaali- ja integraalilaskenta | 5 | Matematiikan perusteet ohjelmallisesti | [valmis](../analyysi/) |
-| Kompleksiluvut ja Fourier-analyysi | 5 | Lineaarialgebra | [valmis](../signaalimatematiikka/) |
+| Differentiaali- ja integraalilaskenta | 5 | Lineaarialgebra, Matematiikan perusteet ohjelmallisesti | [valmis](../analyysi/) |
 | Todennäköisyys ja tilastot | 3 | Diskreetti matematiikka | [valmis](../todennakoisyys/) |
-| Differentiaaliyhtälöt ja Laplace-muunnos | 5 | Differentiaali- ja integraalilaskenta, Lineaarialgebra | [valmis](../differentiaaliyhtalot/) |
-| Numeeriset menetelmät | 5 | Differentiaali- ja integraalilaskenta, Lineaarialgebra | [valmis](../numeeriset-menetelmat/) |
+| Differentiaaliyhtälöt ja Laplace-muunnos | 5 | Differentiaali- ja integraalilaskenta | [valmis](../differentiaaliyhtalot/) |
+| Kompleksiluvut ja Fourier-analyysi | 5 | Differentiaali- ja integraalilaskenta | [valmis](../signaalimatematiikka/) |
+| Numeeriset menetelmät | 5 | Differentiaali- ja integraalilaskenta | [valmis](../numeeriset-menetelmat/) |
+| Fysikaalinen mallinnus ja simulointi | 5 | Differentiaaliyhtälöt ja Laplace-muunnos, Numeeriset menetelmät | suunniteltu |
+| Virtauslaskenta | 5 | Fysikaalinen mallinnus ja simulointi | suunniteltu |
 
 ### Algoritmit ja tietorakenteet
 
@@ -408,10 +420,10 @@ flowchart LR
 | EDA-työkaluketjujen automatisointi | 3 | Käännösjärjestelmät, testaus ja CI, Python työkaluohjelmointiin, RTL-suunnittelu SystemVerilogilla, Tcl | [valmis](../eda-skriptaus/) |
 | FPGA-toteutus | 5 | RTL-suunnittelu SystemVerilogilla | [valmis](../fpga-toteutus/) |
 | Laitteiston verifiointi | 5 | Python työkaluohjelmointiin, RTL-suunnittelu SystemVerilogilla | [valmis](../verifiointi/) |
-| DSP-algoritmien laitteistototeutus | 5 | Digitaalinen signaalinkäsittely, FPGA-toteutus, Laitteiston verifiointi, Lukujen esitys ja kiinteän pilkun aritmetiikka | [valmis](../dsp-laitteisto/) |
 | Korkean tason mallinnus (SystemC/TLM) | 5 | Lukujen esitys ja kiinteän pilkun aritmetiikka, Moderni C++, Tietokonearkkitehtuuri | [valmis](../hlm-mallinnus/) |
 | SoC-integraatio | 5 | RTL-suunnittelu SystemVerilogilla, Tietokonearkkitehtuuri | [valmis](../soc-integraatio/) |
 | Arkkitehtuurin mallinnus ja suunnittelutilan tutkiminen | 5 | Korkean tason mallinnus (SystemC/TLM), Suorituskyvyn analyysi ja optimointi, Todennäköisyys ja tilastot | [valmis](../arkkitehtuurin-tutkiminen/) |
+| DSP-algoritmien laitteistototeutus | 5 | Digitaalinen signaalinkäsittely, FPGA-toteutus, Laitteiston verifiointi, Lukujen esitys ja kiinteän pilkun aritmetiikka | [valmis](../dsp-laitteisto/) |
 | Korkean tason synteesi | 5 | FPGA-toteutus, Korkean tason mallinnus (SystemC/TLM) | [valmis](../hls/) |
 | Laitteiston kuvausstandardit (SystemRDL, IP-XACT) | 5 | EDA-työkaluketjujen automatisointi, SoC-integraatio | [valmis](../kuvausstandardit/) |
 
@@ -438,7 +450,7 @@ flowchart LR
 
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
-| Tietoverkot | 5 | Komentorivi ja Linux | [valmis](../tietoverkot/) |
+| Tietoverkot | 5 | Komentorivi ja Linux, Ohjelmoinnin perusteet (Python) | [valmis](../tietoverkot/) |
 | Kontit ja pilvi-infrastruktuuri | 5 | Tietoverkot | [valmis](../kontit-ja-pilvi/) |
 | Verkkoinfrastruktuuri | 5 | Tietoverkot | [valmis](../verkkoinfrastruktuuri/) |
 | Palvelinympäristöt | 5 | Kontit ja pilvi-infrastruktuuri, Verkkoinfrastruktuuri | [valmis](../palvelinymparistot/) |
@@ -454,8 +466,10 @@ flowchart LR
 |-------|---:|------------|------|
 | Peliohjelmointi | 5 | Lineaarialgebra, Moderni C++ | [valmis](../peliohjelmointi/) |
 | Renderöinnin perusteet | 5 | Lineaarialgebra, Moderni C++ | [valmis](../renderoinnin-perusteet/) |
-| Konenäkö (OpenCV) | 5 | Signaalit ja järjestelmät | [valmis](../konenako/) |
+| 3D-peliohjelmointi | 5 | Peliohjelmointi, Renderöinnin perusteet | suunniteltu |
 | Säteenseuranta ja fysikaalinen valaistus | 5 | Algoritmit, Renderöinnin perusteet, Todennäköisyys ja tilastot | [valmis](../sateenseuranta/) |
+| Konenäkö (OpenCV) | 5 | Signaalit ja järjestelmät | [valmis](../konenako/) |
+| Pelifysiikka | 5 | 3D-peliohjelmointi | suunniteltu |
 | GPU-ohjelmointi: OpenGL ja Vulkan | 5 | Renderöinnin perusteet, Rinnakkaisohjelmointi | [valmis](../gpu-ohjelmointi/) |
 | Reaaliaikaiset moninpelit | 3 | Peliohjelmointi, Verkko-ohjelmointi | [valmis](../moninpelit/) |
 | GPU-laskenta | 3 | GPU-ohjelmointi: OpenGL ja Vulkan, Suorituskyvyn analyysi ja optimointi | [valmis](../gpu-laskenta/) |
@@ -464,7 +478,7 @@ flowchart LR
 
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
-| Tietoturvan perusteet | 3 | Ohjelmoinnin perusteet (Python), Tietoverkot | [valmis](../tietoturvan-perusteet/) |
+| Tietoturvan perusteet | 3 | Tietoverkot | [valmis](../tietoturvan-perusteet/) |
 | Kryptografia | 5 | Diskreetti matematiikka, Python, Tietoturvan perusteet | [valmis](../kryptografia/) |
 | Tietoturva kehitystyössä | 3 | Tietoturvan perusteet, Versionhallinta (Git) | [valmis](../turvallinen-kehitys/) |
 | Palveluarkkitehtuurin tietoturva | 3 | Kryptografia, Palveluarkkitehtuurit | [valmis](../palvelutietoturva/) |
