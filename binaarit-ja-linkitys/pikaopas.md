@@ -93,7 +93,7 @@ leveyssuuntaisesti. Ensimmäinen määrittely voittaa.
 
 Rekisteri omaan osioon:
 
-```{.c tiedosto="esimerkit/12-osiorekisteri/komento.h" osa="makro"}
+```{.c tiedosto="esimerkit/11-osiorekisteri/komento.h" osa="makro"}
 ```
 
 Versioskripti kahdelle versiolle:

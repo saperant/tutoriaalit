@@ -33,7 +33,7 @@ Aaltomuoto tulostetaan tekstinä, yksi merkki aikayksikköä kohden:
 ```
 
 Johdannon invertteriketju (luku 1) on tämän simulaattorin ensimmäinen
-esimerkki, ja luvun 6 summaimien viiveet mitattiin sillä.
+esimerkki.
 
 ## Hasardi
 
@@ -68,8 +68,41 @@ Hasardeja on muitakin. *Staattinen 0-hasardi* on ykköspiikki
 lähdössä, jonka pitäisi pysyä nollana. *Dynaaminen hasardi* syntyy,
 kun lähdön pitäisi vaihtua kerran mutta se vaihtuu kolmesti.
 Summaimen summabitit käyvät läpi monta väärää arvoa, kun muistibitti
-etenee: luvun 6 mittaus laski hetken, jolloin viimeinen niistä
-loppui.
+etenee.
+
+## Summaimen viive simuloituna
+
+Luvussa 6 summaimien viive arvioitiin laskemalla portit pisimmällä
+polulla. Simulaattorilla arvion voi mitata. Täyssummain rakennetaan
+viidestä portista ja ripple-carry-summain ketjuttamalla niitä:
+
+```{.python tiedosto="esimerkit/07-summaimet.py" osa="taysisummain"}
+```
+
+Lookahead-lohko laskee muistibitit kaksitasoisella AND–OR-logiikalla:
+
+```{.python tiedosto="esimerkit/07-summaimet.py" osa="cla"}
+```
+
+Mittaus käynnistää pahimman tapauksen: $a$ on pelkkiä ykkösiä ja
+$b_0$ nousee, jolloin muistibitti etenee koko summaimen läpi.
+*Asettumisaika* on hetki, jolloin viimeinen signaali muuttuu, kun
+jokaisen portin viive on yksi aikayksikkö:
+
+```{.python tiedosto="esimerkit/07-summaimet.py" osa="mittaus"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-summaimet.odotettu"}
+```
+
+![Summaimien asettumisaika porttisimulaattorilla mitattuna. Ripple-carry
+kasvaa suoraan bittimäärän mukana, ja lohkoittaisen lookaheadin
+kulmakerroin on neljäsosa siitä.](kuvat/summainviive.png){width=62%}
+
+Ripple-carry kasvaa $2n$:nä ja lohkoittainen lookahead noin $n/2$:na,
+kuten laskettiin. Ennen asettumista summabitit ovat vääriä: jokainen
+niistä vaihtuu, kun muistibitti saavuttaa sen. Summaimen lähtö on siis
+täynnä dynaamisia hasardeja, ja se on täysin normaalia.
 
 ## Miksi hasardit eivät yleensä haittaa
 

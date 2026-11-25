@@ -26,8 +26,7 @@ osumaa).
 
 Mooren koneessa tarvitaan neljä tilaa: S0 (ei mitään), S1 (nähty 1),
 S2 (nähty 10) ja S3 (nähty 101, lähtö 1). Mealyn koneessa riittää
-kolme, koska viimeinen 1 tuottaa lähdön suoraan siirtymällä. Tilakaavio
-kirjoitetaan tauluksi, josta jokainen siirtymä näkyy:
+kolme, koska viimeinen 1 tuottaa lähdön suoraan siirtymällä.
 
 ```{.dot otsikko="Mooren kone: lähtö on tilan ominaisuus (S3/1)"}
 digraph {
@@ -59,6 +58,7 @@ digraph {
 }
 ```
 
+Tilakaavio kirjoitetaan tauluksi, josta jokainen siirtymä näkyy:
 
 ```{.python tiedosto="esimerkit/10-tilakone.py" osa="taulut"}
 ```
@@ -141,7 +141,7 @@ seuraavaa reunaa: näin Mealy-lähtö näkyy samassa jaksossa.
   tauluna ennen koodausta. Taulu on myös testipenkin viitemalli.
 - **Kaksi lohkoa.** Tilarekisteri `always_ff`-lohkossa ja seuraavan
   tilan logiikka `always_comb`-lohkossa on luettava ja yleinen tyyli
-  (*RTL-suunnittelu*, luku 6).
+  (taito *RTL-suunnittelu SystemVerilogilla*).
 - **Moore lähtöihin, joita muut kellottavat.** Kun lähtö menee toiseen
   lohkoon tai piirin ulkopuolelle, Moore-lähtö (tai rekisteröity
   Mealy-lähtö) on turvallisempi, koska syötteen piikit eivät näy.

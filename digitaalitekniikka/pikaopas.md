@@ -27,7 +27,10 @@ subtitle: Pikaopas · portit, aritmetiikka, kiikut, tilakoneet ja ajoitus
 - NAND ja NOR ovat universaaleja: $\bar{a} = \overline{aa}$,
   $a + b = \overline{\bar{a}\,\bar{b}}$.
 - CMOS: pMOS-ylösveto ja nMOS-alasveto ovat duaalit (sarja ↔ rinnan).
-  Dynaaminen teho $P \approx \alpha C V^2 f$.
+  Dynaaminen teho $P \approx \alpha C V^2 f$; vuotovirta kuluu myös
+  levossa.
+- Kolmitila (Z) ja avoin nielu + ylösveto: monta lähettäjää samalla
+  johtimella. Piirin sisällä käytetään multiplekseriä.
 
 ```{.python tiedosto="esimerkit/qm.py" osa="yhdista"}
 ```
@@ -69,6 +72,8 @@ subtitle: Pikaopas · portit, aritmetiikka, kiikut, tilakoneet ja ajoitus
 
 - Asetusrike: hidasta kelloa tai lyhennä polkua. Pitorike: lisää
   viivettä, kello ei auta.
+- Kellon vino $t_{vino}$ kiristää kumpaakin ehtoa: lisää se asetusehdon
+  oikealle ja pitoehdon oikealle puolelle.
 - Liukuhihna: lyhyempi polku, suurempi latenssi, sama tai parempi
   läpäisy.
 

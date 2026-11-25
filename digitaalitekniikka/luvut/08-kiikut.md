@@ -11,6 +11,20 @@ SR-salpa on kaksi NOR-porttia, joiden lähdöt on kytketty toistensa
 tuloihin. S (set) asettaa lähdön Q ykköseksi, R (reset) nollaa sen.
 Kun molemmat ovat nollia, salpa pitää tilansa:
 
+```{.dot otsikko="SR-salpa: kummankin NOR-portin lähtö on toisen tulo"}
+digraph {
+  rankdir=LR; nodesep=0.5; ranksep=0.6;
+  R [shape=plaintext, style=""]; S [shape=plaintext, style=""];
+  Q [shape=plaintext, style=""]; Qn [shape=plaintext, style=""];
+  n1 [label="NOR", shape=box, style="rounded,filled"];
+  n2 [label="NOR", shape=box, style="rounded,filled"];
+  R -> n1; n1 -> Q;
+  S -> n2; n2 -> Qn;
+  n1 -> n2 [constraint=false, color="#6D4FA0"];
+  n2 -> n1 [constraint=false, color="#6D4FA0"];
+}
+```
+
 ```{.python tiedosto="esimerkit/08-sr-salpa.py" osa="salpa"}
 ```
 
@@ -18,6 +32,9 @@ Kun molemmat ovat nollia, salpa pitää tilansa:
 ```
 
 ```{.tuloste tiedosto="esimerkit/08-sr-salpa.odotettu"}
+```
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/08-sr-salpa.json" otsikko="SR-salpa simulaattorin tulosteesta: asetus, nollaus, kielletty syöte ja värähtely (ruutu on aikayksikkö)"}
 ```
 
 Asetus ja nollaus näkyvät kahden porttiviiveen jälkeen, ja tila säilyy,
@@ -61,16 +78,27 @@ Ero näkyy, kun syöte muuttuu kellon ollessa ylhäällä:
 ```{.tuloste tiedosto="esimerkit/08-kiikut.odotettu"}
 ```
 
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/08-kiikut.json" otsikko="Salpa ja kiikku samalla syötteellä (yksi ruutu on yksi tulosteen rivi eli viisi aikayksikköä)"}
+```
+
 Hetkellä 17 salpa on seurannut D:n nollaan, mutta kiikku pitää
 reunalla 10 näytteistämänsä ykkösen. Hetkellä 37 sama toistuu
 toisinpäin. Kiikku muuttuu vain reunalla (hetki 30), salpa koko ajan,
-kun kello on ylhäällä.
+kun kello on ylhäällä. Kaaviossa salvan rivi on kopio D:stä aina, kun
+kello on ylhäällä; kiikun rivi vaihtuu vain kellon nousun kohdalla.
 
 Tämä tekee kiikusta synkronisen suunnittelun perustan. Kun kaikki
 kiikut näytteistävät samalla reunalla, logiikalla on koko kellojakso
 aikaa laskea seuraava arvo, ja välitilat (luvun 7 piikit) eivät näy.
 Salvalla data voisi kulkea monen logiikkatason läpi saman
 kellopulssin aikana, mikä tekee ajoituksesta vaikean analysoida.
+
+Vanhoissa datalehdissä ja oppikirjoissa esiintyvät myös JK- ja
+T-kiikku. T-kiikku vaihtaa tilaansa, kun sen tulo on 1: se on D-kiikku,
+jonka edessä on XOR-portti ($d = q \oplus t$), ja sama rakenne löytyy
+luvun 9 laskurin jokaisesta bitistä. JK-kiikku yhdistää asetuksen,
+nollauksen ja vaihdon. Nykyisessä suunnittelussa niitä ei käytetä,
+koska synteesityökalu rakentaa kaiken D-kiikuista.
 
 ## Asetus- ja pitoaika
 
@@ -152,14 +180,15 @@ välitilaa kummassakaan tapauksessa.
 ```
 
 Monibittisten arvojen siirto kellotusalueelta toiselle on oma
-aiheensa (*RTL-suunnittelu*, kellotusalueiden ylitys).
+aiheensa (taito *RTL-suunnittelu SystemVerilogilla*, kellotusalueiden
+ylitys).
 
 ## Käytännössä
 
 - **Kiikut, ei salpoja.** Synkroninen suunnittelu käyttää reunaherkkiä
   kiikkuja. Salpa RTL-koodissa on yleensä virhe: puutteellinen `if`
-  tai `case` kombinatorisessa lohkossa päättelee salvan (*RTL-
-  suunnittelu*, luku 4).
+  tai `case` kombinatorisessa lohkossa päättelee salvan (taito
+  *RTL-suunnittelu SystemVerilogilla*).
 - **Jokainen asynkroninen syöte tahdistetaan.** Kaksi kiikkua peräkkäin
   ilman logiikkaa välissä. Toisen kiikun lähtöä saa käyttää.
 - **MTBF lasketaan, ei arvata.** Kriittisissä järjestelmissä

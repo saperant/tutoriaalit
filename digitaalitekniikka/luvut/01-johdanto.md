@@ -21,9 +21,24 @@ taitoihin:
   Tässä samat asiat nähdään laitteiston kannalta: miksi kahden
   komplementti on summaimelle helppo ja mistä ylivuotolippu tulee.
 
+## Esitiedot ja rajaus
+
 Esitietona on *Diskreetti matematiikka*: propositiologiikka, joukot ja
 induktio. Ohjelmointitaitoa tarvitaan sen verran, että Python-
 esimerkkien lukeminen onnistuu.
+
+Tutoriaali pysyy porttien ja rekisterien tasolla. Sen ulkopuolelle
+jäävät:
+
+- SystemVerilogin syntaksi ja synteesikelpoinen koodaustyyli, muistit,
+  FIFOt ja kellotusalueiden ylitys: taidot *RTL-suunnittelu
+  SystemVerilogilla* ja *RTL-suunnittelu VHDL:llä*
+- synteesi, sijoittelu ja ajoitusanalyysi oikeilla työkaluilla:
+  *FPGA-toteutus* ja *ASIC-toteutus*
+- transistorin sähköinen toiminta, jännitteet ja virrat: *Elektroniikan
+  perusteet ja SPICE*
+- liukuluvut, kertolaskun ja jakolaskun algoritmit sekä pyöristys:
+  *Miten tietokone laskee*.
 
 ## Abstraktiotasot
 

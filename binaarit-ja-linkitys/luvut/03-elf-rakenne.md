@@ -9,11 +9,30 @@ tietyillä oikeuksilla. Objektitiedostossa on vain osiot, jaetussa
 kirjastossa ja ohjelmassa molemmat, ja lataaja tarvitsee vain
 segmentit.
 
-```text
-  ELF-otsake
-  ohjelmaotsakkeet  ──► LOAD R   LOAD R E   LOAD R   LOAD RW
-  .text  .rodata  .data  .bss  .symtab  .strtab ...
-  osiotaulu         ──► jokaisen osion nimi, tyyppi, koko, sijainti
+```{.dot otsikko="ELF-tiedoston kaksi näkymää: osiotaulu jakaa tiedoston nimettyihin osioihin, ohjelmaotsakkeet kokoavat samat tavut segmenteiksi oikeuksien mukaan"}
+digraph {
+  rankdir=LR; nodesep=0.12; ranksep=0.9;
+  node [shape=box, style="filled", fontsize=10, height=0.3];
+  edge [arrowsize=0.6];
+  subgraph cluster_osiot {
+    label="linkkerin näkymä: osiot"; color="#B8C4C8"; fontsize=10;
+    text [label=".text", fillcolor="#E4DCF0"];
+    rodata [label=".rodata", fillcolor="#EEF1F2"];
+    data [label=".data", fillcolor="#F1E3CC"];
+    bss [label=".bss (ei tavuja tiedostossa)", fillcolor="#F1E3CC", style="filled,dashed"];
+    symtab [label=".symtab, .strtab", fillcolor="white"];
+  }
+  subgraph cluster_segmentit {
+    label="lataajan näkymä: segmentit"; color="#B8C4C8"; fontsize=10;
+    r0 [label="LOAD R: ELF-otsake, lataajan taulut", fillcolor="#EEF1F2"];
+    rx [label="LOAD R E", fillcolor="#E4DCF0"];
+    r1 [label="LOAD R", fillcolor="#EEF1F2"];
+    rw [label="LOAD RW (MemSiz > FileSiz)", fillcolor="#F1E3CC"];
+    ei [label="ei ladata muistiin", fillcolor="white", style="filled,dashed"];
+  }
+  text -> rx; rodata -> r1; data -> rw; bss -> rw; symtab -> ei;
+  r0 -> text [style=invis];
+}
 ```
 
 ## Mihin osioon muuttuja päätyy
@@ -22,7 +41,7 @@ Kääntäjä valitsee osion määrittelyn perusteella: onko kyse koodista,
 vakiosta, alustetusta vai nollalla alustetusta muuttujasta. Esimerkin
 tiedostossa on yksi kustakin:
 
-```{.c tiedosto="esimerkit/02-osiot/main.c" osa="muuttujat"}
+```{.c tiedosto="esimerkit/03-osiot/main.c" osa="muuttujat"}
 ```
 
 Symbolitaulusta (`objdump -t`) näkee kunkin symbolin osion. Funktion
@@ -30,7 +49,10 @@ sisäinen `static`-muuttuja saa kääntäjältä nimen, kuten
 `valimuisti.0`, koska samannimisiä voi olla useassa funktiossa;
 skripti poistaa päätteen:
 
-```{.bash tiedosto="esimerkit/02-osiot/aja.sh" osa="symbolit"}
+```{.bash tiedosto="esimerkit/03-osiot/aja.sh" osa="symbolit"}
+```
+
+```{.tuloste tiedosto="esimerkit/03-osiot/odotettu" alkaen="== symbolit ja osiot" asti="valimuisti"}
 ```
 
 Tavalliset osiot:
@@ -51,7 +73,10 @@ tiedostoa lainkaan, mutta jos sen ensimmäinen alkio alustettaisiin
 ykköseksi, koko taulukko siirtyisi `.data`-osioon ja tiedostoon.
 Osioiden nimet ja tyypit (`readelf -S`):
 
-```{.bash tiedosto="esimerkit/02-osiot/aja.sh" osa="osiot"}
+```{.bash tiedosto="esimerkit/03-osiot/aja.sh" osa="osiot"}
+```
+
+```{.tuloste tiedosto="esimerkit/03-osiot/odotettu" alkaen="== osiot (main.o)" asti=".rodata PROGBITS"}
 ```
 
 GCC jakaa osioita tarkemmin, kun siitä on hyötyä. `.text.startup`
@@ -72,10 +97,10 @@ luettavia ja kirjoitettavia. Ohjelmaotsakkeiden (`readelf -l`) lopussa
 on taulukko, joka kertoo, mitkä osiot kuuluvat kuhunkin segmenttiin.
 Skripti poimii siitä `LOAD`-segmentit:
 
-```{.bash tiedosto="esimerkit/02-osiot/aja.sh" osa="segmentit"}
+```{.bash tiedosto="esimerkit/03-osiot/aja.sh" osa="segmentit"}
 ```
 
-```{.tuloste tiedosto="esimerkit/02-osiot/odotettu"}
+```{.tuloste tiedosto="esimerkit/03-osiot/odotettu" alkaen="== segmentit"}
 ```
 
 Ensimmäinen pelkästään luettava segmentti sisältää ELF-otsakkeen ja

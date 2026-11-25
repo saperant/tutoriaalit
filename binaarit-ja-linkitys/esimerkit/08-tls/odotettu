@@ -1,0 +1,22 @@
+== osiot ja segmentti
+.tdata PROGBITS liput WAT
+.tbss NOBITS liput WAT
+TLS FileSiz 0x000004 MemSiz 0x000008
+== ohjelmassa: siirtymä säikeen osoittimesta (local-exec)
+R_X86_64_TPOFF32 askel
+R_X86_64_TPOFF32 kutsuja
+<kasvata>:
+    endbr64
+    mov    %fs:0x0,%eax
+    add    %fs:0x0,%eax
+    mov    %eax,%fs:0x0
+    ret
+== jaetussa kirjastossa: funktiokutsu (general-dynamic)
+R_X86_64_PLT32 __tls_get_addr
+R_X86_64_TLSGD askel
+R_X86_64_TLSGD kutsuja
+== kirjastossa, joka ladataan käynnistyksessä (initial-exec)
+R_X86_64_GOTTPOFF askel
+R_X86_64_GOTTPOFF kutsuja
+== ajo
+säie a: 3, säie b: 5, pääsäie: 1

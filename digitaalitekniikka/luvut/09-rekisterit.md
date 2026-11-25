@@ -18,24 +18,38 @@ Kun säännöt pätevät, piirin toimintaa voi tarkastella jakso kerrallaan:
 tila $s_{k+1} = f(s_k, x_k)$. Välitilat, hasardit ja viiveet eivät näy.
 Kaikki tämän luvun rakenteet noudattavat sääntöjä.
 
-## Rekisteri, jolla on sallinta ja nollaus
+## Sallinta, nollaus ja laskuri
 
 Kiikku näytteistää jokaisella reunalla. Jotta rekisteri voi myös
 *pitää* arvonsa, sen eteen laitetaan multiplekseri, joka valitsee
 uuden arvon tai vanhan (*sallinta*, enable). Nollaus on samanlainen
 multiplekseri, joka valitsee nollan.
 
-```{.systemverilog tiedosto="esimerkit/09-laskurit.sv" osa="laskuri"}
+```{.dot otsikko="Rekisteri, jolla on sallinta ja synkroninen nollaus: kaksi multiplekseriä kiikun edessä"}
+digraph {
+  rankdir=LR; nodesep=0.35; ranksep=0.45;
+  uusi [label="uusi arvo", shape=plaintext, style=""];
+  nolla [label="0", shape=plaintext, style=""];
+  q [label="q", shape=plaintext, style=""];
+  m1 [label="mux\nsallinta", shape=box, style="rounded,filled"];
+  m2 [label="mux\nnollaus", shape=box, style="rounded,filled"];
+  ff [label="kiikut\nclk", shape=box, style="filled"];
+  uusi -> m1; m1 -> m2; nolla -> m2; m2 -> ff; ff -> q;
+  ff -> m1 [label="vanha arvo", constraint=false, color="#6D4FA0"];
+}
 ```
 
-Laskuri on rekisteri, jonka seuraava arvo on nykyinen + 1. Summain on
-yksinkertaistettu: lisättävä on vakio, joten synteesi tekee siitä
-inkrementoijan, jossa on vain puolisummaimia.
+Esimerkkinä on *laskuri*: rekisteri, jonka uusi arvo on nykyinen + 1.
+Summain on yksinkertaistettu, koska lisättävä on vakio: synteesi tekee
+siitä inkrementoijan, jossa on vain puolisummaimia.
+
+```{.systemverilog tiedosto="esimerkit/09-laskurit.sv" osa="laskuri"}
+```
 
 Nollaus on tässä *synkroninen*: se tapahtuu kellon reunalla kuten mikä
 tahansa muu arvo. *Asynkroninen* nollaus vaikuttaa heti kellosta
 riippumatta. Kummallakin on paikkansa; valinta ja turvallinen
-vapautus käsitellään taidossa *RTL-suunnittelu*.
+vapautus käsitellään taidossa *RTL-suunnittelu SystemVerilogilla*.
 
 ## Siirtorekisteri
 

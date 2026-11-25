@@ -15,7 +15,7 @@ Adler-32 laskee kaksi summaa modulo 65521, joka on suurin lukua
 jokaisen tavun jälkeen. Tulos on `b`:n ja `a`:n yhdistelmä
 `(b << 16) | a`. Viitetoteutus C:llä on lyhyt ja ilmeinen:
 
-```{.c tiedosto="esimerkit/11-adler/main.c" osa="viite"}
+```{.c tiedosto="esimerkit/10-adler/main.c" osa="viite"}
 ```
 
 Viitetoteutus on tarkoituksella suoraviivainen eikä nopea. Sen tehtävä
@@ -23,7 +23,7 @@ on olla niin selvä, että sen oikeellisuus on helppo todeta lukemalla.
 
 ## Toteutus x86-64:llä
 
-```{.gnuassembler tiedosto="esimerkit/11-adler/x86.S"}
+```{.gnuassembler tiedosto="esimerkit/10-adler/x86.S"}
 ```
 
 Jakojäännös lasketaan `div`-käskyllä, joka jakaa `edx:eax`:n ja
@@ -34,7 +34,7 @@ joten pinokehystä ei tarvita.
 
 ## Toteutus RISC-V:llä
 
-```{.gnuassembler tiedosto="esimerkit/11-adler/rv.S"}
+```{.gnuassembler tiedosto="esimerkit/10-adler/rv.S"}
 ```
 
 `remu` laskee etumerkittömän jakojäännöksen suoraan. Funktion lopussa
@@ -52,10 +52,10 @@ vasta, kun kutsuja sattuu käyttämään ylimpiä bittejä. x86-64:llä ylimmät
 Pääohjelma vertaa assembly-toteutusta viitetoteutukseen tunnetuilla ja
 rajatapauksia koettelevilla syötteillä:
 
-```{.c tiedosto="esimerkit/11-adler/main.c"}
+```{.c tiedosto="esimerkit/10-adler/main.c"}
 ```
 
-```{.tuloste tiedosto="esimerkit/11-adler/odotettu"}
+```{.tuloste tiedosto="esimerkit/10-adler/odotettu"}
 ```
 
 Testisyötteet on valittu tarkoituksella:
@@ -88,23 +88,11 @@ nopeampi kuin yllä oleva käsin kirjoitettu `div`-versio.
 ## Debuggaus
 
 Kun assembly-funktio palauttaa väärän tuloksen, debuggeri näyttää
-rekisterit käsky kerrallaan. Natiivisti x86-64:llä:
-
-```text
-gdb ./build/11-adler/x86
-(gdb) break adler32
-(gdb) run
-(gdb) layout asm          # käskyt näkyviin
-(gdb) stepi               # yksi käsky
-(gdb) info registers r8 r9 rcx
-(gdb) x/16xb $rdi         # 16 tavua osoitteesta rdi
-```
-
-RISC-V-ohjelman voi debugata QEMU:n gdb-palvelimen kautta:
-`qemu-riscv64 -g 1234 ./ohjelma` ja toisessa ikkunassa
-`gdb-multiarch ./ohjelma` sekä `target remote :1234`. Komennot ovat
-samat. Rekisteriarvojen seuraaminen käsky kerrallaan ja vertaaminen
-viitetoteutuksen muuttujiin löytää useimmat virheet nopeasti.
+rekisterit käsky kerrallaan (luku 5). Tässä luonteva työtapa on
+pysähtyä funktion alkuun (`break adler32`), edetä `stepi`-komennolla
+ja seurata summia (`info registers r8 r9`) sekä syötettä
+(`x/16xb $rdi`). Rekisteriarvojen vertaaminen viitetoteutuksen
+muuttujiin kierros kierrokselta löytää useimmat virheet nopeasti.
 
 ## Käytännössä
 

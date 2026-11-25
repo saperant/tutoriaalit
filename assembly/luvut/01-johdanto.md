@@ -32,12 +32,22 @@ mikä on yhden arkkitehtuurin erityispiirre (liput, osoitusmuodot,
 käskyjen pituus). Tutoriaali ei opeta käskykantojen kaikkia käskyjä;
 täydelliset luettelot ovat valmistajien käsikirjoissa (luku Lopuksi).
 
-Esitiedoiksi oletetaan C-kieli (osoittimet, rakenteet ja
-kääntäminen) ja digitaalitekniikka (bitit, kahden komplementti ja
-rekisterit). Jatkotaitoja ovat *Tietokonearkkitehtuuri*, joka kertoo,
-miten suoritin käskyt toteuttaa, *Objektitiedostot, linkitys ja ABI*,
-*C ja assembly yhteen* (inline-assembly ja kääntäjän sisäiset
-funktiot) sekä *Takaisinmallinnus*.
+## Esitiedot ja rajaus
+
+Esitiedoiksi oletetaan taidot *C-kieli* (osoittimet, tietueet ja
+kääntäminen) ja *Digitaalitekniikka* (bitit, kahden komplementti ja
+rekisterit).
+
+Tutoriaalin ulkopuolelle jäävät:
+
+- suorittimen sisäinen toiminta (liukuhihna, välimuistit, hypyn
+  ennustus): taito *Tietokonearkkitehtuuri*
+- objektitiedostot, linkitys, relokaatiot ja dynaamiset kirjastot:
+  *Objektitiedostot, linkitys ja ABI*
+- inline-assembly ja kääntäjän sisäiset funktiot: *C ja assembly
+  yhteen*
+- ohjelmien analyysi ilman lähdekoodia: *Takaisinmallinnus*
+- muut käskykannat. AArch64 esitellään luvussa 7 vain vertailuna.
 
 ## Työkalut
 
@@ -153,8 +163,11 @@ kokoaja käyttää niitä automaattisesti (`952e` on `c.add`). `ret` on
 
 Luvut 2–5 käyvät läpi konekielen peruskäsitteet: rekisterit ja muistin,
 aritmetiikan ja liput, hypyt ja silmukat sekä pinon ja kutsukonventiot.
-Luku 6 lukee kääntäjän tuottamaa koodia, luku 7 vertaa käskykantoja
+Luvussa 5 on myös debuggerin käyttö käsky kerrallaan; siihen
+kannattaa tarttua heti, kun oma koodi kaatuu. Luku 6 lukee kääntäjän
+tuottamaa koodia, luku 7 vertaa käskykantoja
 saman algoritmin avulla ja luku 8 käyttää järjestelmäkutsuja ilman
 C-kirjastoa. Luku 9 esittelee SIMD-käskyt ja luku 10 kokoaa kaiken
 yhteen tarkistussumman toteutuksessa. Viimeisessä luvussa ovat nyrkkisäännöt
-ja lähteet.
+ja lähteet. Esimerkkihakemiston numero kertoo luvun: `05-pino` kuuluu
+lukuun 5.

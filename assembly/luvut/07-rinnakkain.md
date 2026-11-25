@@ -11,23 +11,23 @@ Lisäyslajittelu on lajittelualgoritmien sisäsilmukka: pienet
 taulukot lajitellaan sillä, ja monet nopeammat algoritmit (esimerkiksi
 introsort) vaihtavat siihen, kun osa on tarpeeksi pieni.
 
-```{.gnuassembler tiedosto="esimerkit/08-rinnakkain/x86.S" osa="lajittele"}
+```{.gnuassembler tiedosto="esimerkit/07-rinnakkain/x86.S" osa="lajittele"}
 ```
 
-```{.gnuassembler tiedosto="esimerkit/08-rinnakkain/rv.S" osa="lajittele"}
+```{.gnuassembler tiedosto="esimerkit/07-rinnakkain/rv.S" osa="lajittele"}
 ```
 
-```{.c tiedosto="esimerkit/08-rinnakkain/main.c"}
+```{.c tiedosto="esimerkit/07-rinnakkain/main.c"}
 ```
 
 x86-64:llä:
 
-```{.tuloste tiedosto="esimerkit/08-rinnakkain/odotettu-x86"}
+```{.tuloste tiedosto="esimerkit/07-rinnakkain/odotettu-x86"}
 ```
 
 RISC-V:llä:
 
-```{.tuloste tiedosto="esimerkit/08-rinnakkain/odotettu-rv"}
+```{.tuloste tiedosto="esimerkit/07-rinnakkain/odotettu-rv"}
 ```
 
 Funktion koko lasketaan symbolien `lajittele_loppu` ja `lajittele`
@@ -84,6 +84,15 @@ pienen pakollisen ytimen (RV64I) ja nimetyt laajennukset. Tavallinen
 Linux-järjestelmä käyttää profiilia RV64GC: I + M (kerto- ja jako) +
 A (atomiset) + F ja D (liukuluvut) + C (tiivistetyt) sekä Zicsr ja
 Zifencei.
+
+**Entä AArch64?** 64-bittinen Arm on käskykanta, jonka useimmat
+kohtaavat puhelimessa ja yhä useammin kannettavassa ja palvelimessa.
+Tämän tutoriaalin taidot siirtyvät siihen suoraan, sillä se on
+RISC-käskykanta: 31 yleisrekisteriä (`x0`–`x30`), kiinteät neljän
+tavun käskyt, muistia käsitellään lataus- ja tallennuskäskyillä ja
+paluuosoite on rekisterissä (`x30`) kuten RISC-V:llä. x86-64:n tapaan
+sillä on liput (N, Z, C, V) ja monipuolisemmat osoitusmuodot kuin
+RISC-V:llä. Muistimalli on heikko, kuten RISC-V:n.
 
 ## Kumpi on parempi?
 

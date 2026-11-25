@@ -8,6 +8,8 @@
 #   make paivita   kirjoittaa kaaviot/*.json uudelleen
 #   make siivoa    poistaa käännöstuotteet
 #
+# Kaavioita on kahta lajia. Tulosteesta tehtävät (TULOSTEISTA) muuntaa
+# kaaviot/tyokalut/tulosteesta.py esimerkin .odotettu-tiedostosta.
 # Simuloitavan kaavion kuvaus on tiedostossa kaaviot/<nimi>.kaavio: se on
 # SystemVerilog-kääre, joka instansioi esimerkin testipenkin, tuo
 # näytettävät signaalit omiksi johdoikseen ja kirjoittaa VCD-tiedoston.
@@ -19,7 +21,8 @@
 KAAVIOT := $(abspath ../../yhteiset/kaaviot.py)
 RAK     := build
 SIMULOIDUT := $(patsubst kaaviot/%.kaavio,%,$(wildcard kaaviot/*.kaavio))
-TARKISTUKSET := $(SIMULOIDUT:%=$(RAK)/%.ok) $(RAK)/07-hasardi.ok
+TULOSTEISTA := 07-hasardi 08-sr-salpa 08-kiikut
+TARKISTUKSET := $(SIMULOIDUT:%=$(RAK)/%.ok) $(TULOSTEISTA:%=$(RAK)/%.ok)
 
 .PHONY: kaikki paivita siivoa
 kaikki: $(TARKISTUKSET)
@@ -38,28 +41,21 @@ $(RAK)/%.json: kaaviot/%.kaavio $(wildcard *.sv */*.sv) $(KAAVIOT)
 	@python3 $(KAAVIOT) vcd $(RAK)/$*/kaavio.vcd \
 	    $$(sed -n 's#^// vcd: ##p' $<) > $@
 
-# Hasardikaavio tulee porttisimulaattorin tulosteesta (aikayksikkö per
-# merkki): alkuperäinen multiplekseri ja konsensustermillä korjattu lähtö.
-$(RAK)/07-hasardi.json: 07-hasardi.odotettu
+# Osa kaavioista tulee esimerkin testatusta tulosteesta: hasardi ja
+# SR-salpa porttisimulaattorin aaltomuodosta (aikayksikkö per merkki),
+# salvan ja kiikun vertailu testipenkin näytetaulukosta.
+$(TULOSTEISTA:%=$(RAK)/%.json): $(RAK)/%.json: %.odotettu \
+		kaaviot/tyokalut/tulosteesta.py
 	@mkdir -p $(RAK)
-	@python3 -c 'import json, sys; \
-	osat = open(sys.argv[1]).read().split("\n\n"); \
-	rivit = lambda o: dict(r.split() for r in o.splitlines()[1:]); \
-	a, k = rivit(osat[0]), rivit(osat[1]); \
-	aalto = lambda b: "".join(c if i == 0 or c != b[i - 1] else "." \
-	    for i, c in enumerate(b)); \
-	s = [{"name": n, "wave": aalto(a[n])} for n in ("s", "s_n", "t0", "t1")]; \
-	s += [{"name": "y", "wave": aalto(a["y"])}, \
-	      {"name": "y + ab", "wave": aalto(k["y"])}]; \
-	print(json.dumps({"signal": s}, ensure_ascii=False))' $< > $@
+	@python3 kaaviot/tyokalut/tulosteesta.py $* $< > $@
 
 $(RAK)/%.ok: $(RAK)/%.json kaaviot/%.json
 	@diff -u kaaviot/$*.json $< \
 	    || { echo "kaavio $* ei vastaa simulaatiota: make paivita"; exit 1; }
 	@touch $@
 
-paivita: $(SIMULOIDUT:%=$(RAK)/%.json) $(RAK)/07-hasardi.json
-	@for k in $(SIMULOIDUT) 07-hasardi; do \
+paivita: $(SIMULOIDUT:%=$(RAK)/%.json) $(TULOSTEISTA:%=$(RAK)/%.json)
+	@for k in $(SIMULOIDUT) $(TULOSTEISTA); do \
 	    cp $(RAK)/$$k.json kaaviot/$$k.json; done
 
 siivoa:

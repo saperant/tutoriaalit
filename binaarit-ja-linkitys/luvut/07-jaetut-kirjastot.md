@@ -14,10 +14,10 @@ Esimerkin kirjasto muuntaa lämpötiloja. Se asennetaan
 asennushakemiston rakenteeseen `lib/` ja `bin/`, kuten paketit
 yleensä:
 
-```{.c tiedosto="esimerkit/06-jaettu/yksikot.c"}
+```{.c tiedosto="esimerkit/07-jaettu/yksikot.c"}
 ```
 
-```{.bash tiedosto="esimerkit/06-jaettu/aja.sh" osa="rakennus"}
+```{.bash tiedosto="esimerkit/07-jaettu/aja.sh" osa="rakennus"}
 ```
 
 `-fPIC` kääntää paikkariippumatonta koodia (luku 8) ja `-shared`
@@ -26,7 +26,7 @@ linkittää jaetun kirjaston. Ohjelman linkityksessä `-L` kertoo
 riippuvuus dynaamiseen osioon (`readelf -d`) merkintänä `NEEDED`,
 mutta ei hakemistoa:
 
-```{.tuloste tiedosto="esimerkit/06-jaettu/odotettu"}
+```{.tuloste tiedosto="esimerkit/07-jaettu/odotettu" alkaen="== riippuvuudet" asti="libc.so.6"}
 ```
 
 ## Miksi kirjastoa ei löydy
@@ -34,7 +34,10 @@ mutta ei hakemistoa:
 `-L` vaikuttaa vain linkitykseen. Käynnistyksessä `ld.so` ei tiedä
 siitä mitään:
 
-```{.bash tiedosto="esimerkit/06-jaettu/aja.sh" osa="ilman"}
+```{.bash tiedosto="esimerkit/07-jaettu/aja.sh" osa="ilman"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-jaettu/odotettu" alkaen="== ajo ilman hakupolkua" asti="not found"}
 ```
 
 Virheilmoitus on kokonaisuudessaan `error while loading shared
@@ -59,7 +62,10 @@ annetaan polkuna eikä sillä ole sonamea (luku 9).
 
 **Ympäristömuuttuja** `LD_LIBRARY_PATH` sopii kehitykseen ja testeihin:
 
-```{.bash tiedosto="esimerkit/06-jaettu/aja.sh" osa="ymparisto"}
+```{.bash tiedosto="esimerkit/07-jaettu/aja.sh" osa="ymparisto"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-jaettu/odotettu" alkaen="== LD_LIBRARY_PATH" asti="yksikot 1.0"}
 ```
 
 Tuotannossa se on huono ratkaisu. Se vaikuttaa kaikkiin ohjelmiin,
@@ -74,7 +80,10 @@ hakemisto lisätään tiedostoon `/etc/ld.so.conf.d/oma.conf`, ja
 hakupolun ohjelmaan. Erikoismuuttuja `$ORIGIN` tarkoittaa ohjelman
 omaa hakemistoa, joten polku voi olla suhteellinen asennukseen:
 
-```{.bash tiedosto="esimerkit/06-jaettu/aja.sh" osa="runpath"}
+```{.bash tiedosto="esimerkit/07-jaettu/aja.sh" osa="runpath"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-jaettu/odotettu" alkaen="== RUNPATH ohjelman sijainnin mukaan"}
 ```
 
 `$ORIGIN/../lib` löytää kirjaston, vaikka koko asennushakemisto

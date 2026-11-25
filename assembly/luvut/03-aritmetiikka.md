@@ -55,7 +55,7 @@ ja etumerkillinen yhteenlasku ovat sama operaatio. Tulkinnan valitsee
 lippua lukeva käsky. `setc` kirjoittaa kantolipun tavuun, `seto`
 ylivuotolipun:
 
-```{.gnuassembler tiedosto="esimerkit/04-liput/x86.S" osa="lisaa"}
+```{.gnuassembler tiedosto="esimerkit/03-liput/x86.S" osa="lisaa"}
 ```
 
 `mov` ei muuta lippuja, joten tuloksen voi tallentaa ennen lipun
@@ -65,7 +65,7 @@ lukevan käskyn välittömässä läheisyydessä.
 RISC-V:ssä ei ole lippuja. Kantoluku ja ylivuoto lasketaan tuloksesta
 tavallisilla käskyillä:
 
-```{.gnuassembler tiedosto="esimerkit/04-liput/rv.S" osa="lisaa"}
+```{.gnuassembler tiedosto="esimerkit/03-liput/rv.S" osa="lisaa"}
 ```
 
 Etumerkitön yhteenlasku vuotaa yli täsmälleen silloin, kun tulos on
@@ -77,10 +77,10 @@ RISC-V:n suunnitteluvalinta: liput ovat piilotettu yhteinen tila, joka
 luo riippuvuuksia käskyjen välille ja vaikeuttaa käskyjen suorittamista
 eri järjestyksessä.
 
-```{.c tiedosto="esimerkit/04-liput/main.c"}
+```{.c tiedosto="esimerkit/03-liput/main.c"}
 ```
 
-```{.tuloste tiedosto="esimerkit/04-liput/odotettu"}
+```{.tuloste tiedosto="esimerkit/03-liput/odotettu"}
 ```
 
 C:ssä etumerkillinen ylivuoto on määrittelemätöntä käyttäytymistä,
@@ -100,10 +100,10 @@ CF:ää. RISC-V:llä vertailu tuottaa arvon 0 tai 1 rekisteriin: `slt`
 etumerkillisesti, `sltu` etumerkittömästi. Kolmitasoinen vertailu,
 kuten `strcmp`:n ja lajittelun vertailufunktion paluuarvo:
 
-```{.gnuassembler tiedosto="esimerkit/04-liput/x86.S" osa="vertaa"}
+```{.gnuassembler tiedosto="esimerkit/03-liput/x86.S" osa="vertaa"}
 ```
 
-```{.gnuassembler tiedosto="esimerkit/04-liput/rv.S" osa="vertaa"}
+```{.gnuassembler tiedosto="esimerkit/03-liput/rv.S" osa="vertaa"}
 ```
 
 Vertailun suunta on AT&T-syntaksissa helppo kääntää väärin:
@@ -118,9 +118,10 @@ aritmeettinen siirto, koska siirto pyöristää kohti miinus ääretöntä,
 mutta C:n jako pyöristää kohti nollaa. Siksi kääntäjä lisää ennen
 siirtoa korjaustermin, ja koodissa näkyy yllättävä `shr $63` tai
 `srli 63`. Kääntäjä korvaa myös jakolaskun vakiolla kertolaskulla
-"maagisella" käänteisluvulla, koska jako on kertolaskua kymmeniä
-kertoja hitaampi. Nämä muunnokset tunnistaa kääntäjän koodista, ja ne
-selittävät, miksi `x / 10` näkyy kertolaskuna.
+"maagisella" käänteisluvulla, koska jako on kertolaskua useita kertoja
+hitaampi, vanhemmilla suorittimilla kymmeniä kertoja. Nämä muunnokset
+tunnistaa kääntäjän koodista, ja ne selittävät, miksi `x / 10` näkyy
+kertolaskuna. Luvussa 6 molemmista on kääntäjän tuottama näyte.
 
 ## Käytännössä
 
@@ -136,8 +137,9 @@ selittävät, miksi `x / 10` näkyy kertolaskuna.
   Unohtunut `rdx` tuottaa väärän tuloksen tai kaatumisen (osamäärä ei
   mahdu).
 - **Hinnat.** Yhteen-, vähennys- ja bittioperaatiot ovat yhden
-  kellojakson käskyjä. Kertolasku kestää muutaman jakson, ja jako on
-  kymmenien jaksojen käsky, jota kääntäjät välttävät. Konekieltä
+  kellojakson käskyjä. Kertolasku kestää muutaman jakson. 64-bittinen
+  jako kestää uusimmilla suorittimilla 10–20 jaksoa ja vanhemmilla
+  kymmeniä, ja kääntäjät välttävät sitä. Konekieltä
   kirjoittaessa sama pätee: jakoa ei käytetä kuumassa silmukassa, jos
   sen voi välttää.
 - **RISC-V:n "liput" ovat tavallisia rekisterejä.** Kanto ja ylivuoto

@@ -43,10 +43,10 @@ jokainen uusi komento lisätään käsin. Linkkeri voi koota taulukon:
 jokainen tiedosto sijoittaa komennon kuvaajan samannimiseen osioon,
 ja linkkeri yhdistää samannimiset osiot peräkkäin.
 
-```{.c tiedosto="esimerkit/12-osiorekisteri/komento.h" osa="makro"}
+```{.c tiedosto="esimerkit/11-osiorekisteri/komento.h" osa="makro"}
 ```
 
-```{.c tiedosto="esimerkit/12-osiorekisteri/versio.c"}
+```{.c tiedosto="esimerkit/11-osiorekisteri/versio.c"}
 ```
 
 GNU-linkkeri määrittelee automaattisesti symbolit `__start_NIMI` ja
@@ -54,18 +54,18 @@ GNU-linkkeri määrittelee automaattisesti symbolit `__start_NIMI` ja
 C-tunniste. Ne ovat osion alku ja loppu, joten pääohjelma käy
 taulukon läpi tuntematta sen sisältöä:
 
-```{.c tiedosto="esimerkit/12-osiorekisteri/main.c" osa="rajat"}
+```{.c tiedosto="esimerkit/11-osiorekisteri/main.c" osa="rajat"}
 ```
 
-```{.bash tiedosto="esimerkit/12-osiorekisteri/aja.sh" osa="rakennus"}
+```{.bash tiedosto="esimerkit/11-osiorekisteri/aja.sh" osa="rakennus"}
 ```
 
 Linkkerikartta kertoo, mistä objektitiedostoista osio koottiin:
 
-```{.bash tiedosto="esimerkit/12-osiorekisteri/aja.sh" osa="kartta"}
+```{.bash tiedosto="esimerkit/11-osiorekisteri/aja.sh" osa="kartta"}
 ```
 
-```{.tuloste tiedosto="esimerkit/12-osiorekisteri/odotettu"}
+```{.tuloste tiedosto="esimerkit/11-osiorekisteri/odotettu"}
 ```
 
 Osion koko `0x20` on kaksi 16-tavuista kuvaajaa. Sama malli on
@@ -85,16 +85,16 @@ kohdasta ilman uudelleenkäännöstä. Kokonaista linkkeriskriptiä ei
 tarvita: `INSERT AFTER` liittää lyhyen skriptin oletusskriptin
 sisään.
 
-```{.text tiedosto="esimerkit/13-linkkeriskripti/kalibrointi.ld" osa="insert"}
+```{.text tiedosto="esimerkit/11-linkkeriskripti/kalibrointi.ld" osa="insert"}
 ```
 
-```{.c tiedosto="esimerkit/13-linkkeriskripti/anturi.c" osa="taulu"}
+```{.c tiedosto="esimerkit/11-linkkeriskripti/anturi.c" osa="taulu"}
 ```
 
-```{.c tiedosto="esimerkit/13-linkkeriskripti/anturi.c" osa="kaytto"}
+```{.c tiedosto="esimerkit/11-linkkeriskripti/anturi.c" osa="kaytto"}
 ```
 
-```{.bash tiedosto="esimerkit/13-linkkeriskripti/aja.sh" osa="anturi"}
+```{.bash tiedosto="esimerkit/11-linkkeriskripti/aja.sh" osa="anturi"}
 ```
 
 Skriptin määrittelemät symbolit ovat *osoitteita*, eivät muuttujia.
@@ -118,16 +118,16 @@ mikro-ohjaimessa, käynnistyslataimessa tai ytimessä, muistikartta
 määrätään itse. Linuxissa sama onnistuu ohjelmalla, joka ei käytä
 C-kirjastoa:
 
-```{.c tiedosto="esimerkit/13-linkkeriskripti/irrallinen.c" osa="irrallinen"}
+```{.c tiedosto="esimerkit/11-linkkeriskripti/irrallinen.c" osa="irrallinen"}
 ```
 
-```{.text tiedosto="esimerkit/13-linkkeriskripti/irrallinen.ld" osa="oma"}
+```{.text tiedosto="esimerkit/11-linkkeriskripti/irrallinen.ld" osa="oma"}
 ```
 
-```{.bash tiedosto="esimerkit/13-linkkeriskripti/aja.sh" osa="irrallinen"}
+```{.bash tiedosto="esimerkit/11-linkkeriskripti/aja.sh" osa="irrallinen"}
 ```
 
-```{.tuloste tiedosto="esimerkit/13-linkkeriskripti/odotettu"}
+```{.tuloste tiedosto="esimerkit/11-linkkeriskripti/odotettu"}
 ```
 
 Skripti sijoittaa koodin osoitteeseen `0x400000`, ja `ENTRY(_start)`
@@ -159,8 +159,31 @@ SECTIONS {
 }
 ```
 
-Tämä on jatkotaidon *Mikrokontrollerit* aihe; tässä riittää tunnistaa
-rakenne. Linkkeri tarkistaa alueiden koot ja ilmoittaa
+```{.dot otsikko="Alustetulla datalla on kaksi osoitetta: alkuarvot ladataan flash-muistiin (LMA), mutta ohjelma käyttää muuttujia RAM-muistista (VMA). Käynnistyskoodi kopioi ne."}
+digraph {
+  rankdir=LR; nodesep=0.5; ranksep=1.1;
+  node [shape=plaintext, style=""];
+  flash [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0"><b>FLASH</b> 0x08000000</td></tr>
+    <tr><td bgcolor="#E4DCF0" width="150">.vektorit</td></tr>
+    <tr><td bgcolor="#E4DCF0">.text</td></tr>
+    <tr><td bgcolor="#EEF1F2">.rodata</td></tr>
+    <tr><td bgcolor="#F1E3CC" port="d">.data:n alkuarvot<br/>_data_lahde</td></tr>
+  </table>>];
+  ram [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0"><b>RAM</b> 0x20000000</td></tr>
+    <tr><td bgcolor="#F1E3CC" width="150" port="d">.data<br/>_data_alku … _data_loppu</td></tr>
+    <tr><td port="b">.bss<br/>_bss_alku … _bss_loppu</td></tr>
+    <tr><td border="0"> </td></tr>
+  </table>>];
+  flash:d -> ram:d [label="käynnistyskoodi\nkopioi"];
+  nolla [label="käynnistyskoodi\nnollaa", fontsize=10];
+  nolla -> ram:b;
+}
+```
+
+Tämä on taidon *Mikrokontrollerit ja bare-metal-ohjelmointi* aihe;
+tässä riittää tunnistaa rakenne. Linkkeri tarkistaa alueiden koot ja ilmoittaa
 `region 'RAM' overflowed by 312 bytes`, kun ohjelma ei mahdu.
 
 ## Linkkerikartta

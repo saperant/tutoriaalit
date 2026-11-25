@@ -55,6 +55,15 @@ Kanoninen muoto tarvitsee neljä kolmen tulon AND-porttia; sievennetty
 kolme kahden tulon porttia. Enemmistöfunktio on muuten täyssummaimen
 muistibitti (luku 6).
 
+Saman voi tehdä nollariveistä. Jokaista riviä, jolla funktio on 0
+(*maxtermiä*), vastaa summatermi, joka on 0 vain sillä rivillä, ja
+termit yhdistetään AND-portilla. Tulos on *summien tulo* (product of
+sums, POS). Muodot ovat toistensa *duaaleja*: kun lausekkeessa
+vaihdetaan AND ja OR sekä 0 ja 1 keskenään, tosi laki pysyy totena.
+Lakitaulukon sarakkeet ovat tällaisia pareja, ja luvun 3 CMOS-portin
+ylös- ja alasvetoverkko ovat sama asia transistoreina. Kumpi muoto on
+pienempi, riippuu siitä, onko taulussa vähemmän ykkösiä vai nollia.
+
 ## Karnaugh-kartta
 
 Karnaugh-kartta on totuustaulu ruudukkona, jonka rivit ja sarakkeet
@@ -77,6 +86,10 @@ ryhmään, jos se suurentaa ryhmää:
 
 ```{.tuloste tiedosto="esimerkit/04-karnaugh.odotettu"}
 ```
+
+![Sama kartta ryhmineen. Ruudun nurkassa on sen numero. Ryhmä
+$\bar{b}c$ kiertää kartan ylä- ja alareunan yli, koska rivit 00 ja 10
+eroavat yhdessä bitissä.](kuvat/karnaugh.png){width=45%}
 
 Tulos $\bar{b}c + bd$ on kaksi kahden tulon AND-porttia ja yksi OR.
 Ilman yhdentekeviä rivejä tulos olisi $\bar{a}\bar{b}c + \bar{a}bd$:

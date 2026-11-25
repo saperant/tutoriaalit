@@ -22,33 +22,42 @@ Relokaatiossa on neljä tietoa:
 Esimerkin funktio `tilaa` kutsuu toisessa tiedostossa määriteltyä
 funktiota ja lukee toisessa tiedostossa määriteltyä muuttujaa:
 
-```{.c tiedosto="esimerkit/04-relokaatiot/varasto.c" osa="varasto"}
+```{.c tiedosto="esimerkit/05-relokaatiot/varasto.c" osa="varasto"}
 ```
 
-```{.c tiedosto="esimerkit/04-relokaatiot/main.c" osa="main"}
+```{.c tiedosto="esimerkit/05-relokaatiot/main.c" osa="main"}
 ```
 
 `objdump -dr` purkaa konekielen ja näyttää relokaatiot niiden
 kohdalla. Skripti poistaa tulosteesta osoitteet ja tavut ja korvaa
 linkityksen jälkeen vaihtelevat siirtymät merkinnällä `SIIRTYMA`:
 
-```{.bash tiedosto="esimerkit/04-relokaatiot/aja.sh" osa="ennen"}
+```{.bash tiedosto="esimerkit/05-relokaatiot/aja.sh" osa="ennen"}
 ```
 
-```{.bash tiedosto="esimerkit/04-relokaatiot/aja.sh" osa="relokaatiot"}
-```
-
-```{.bash tiedosto="esimerkit/04-relokaatiot/aja.sh" osa="jalkeen"}
-```
-
-```{.tuloste tiedosto="esimerkit/04-relokaatiot/odotettu"}
+```{.tuloste tiedosto="esimerkit/05-relokaatiot/odotettu" alkaen="== tilaa ennen linkitystä" asti="ret"}
 ```
 
 Ennen linkitystä `call`-käskyn kohde on nolla. `objdump` tulkitsee
 nollasiirtymän seuraavaksi käskyksi (`<tilaa+0x12>`), mikä on
 merkki täyttämättömästä paikasta. Samoin `add 0x0(%rip),%eax` lukee
-"jostain", ja relokaatio kertoo, mistä. Linkityksen jälkeen kutsu
-osoittaa funktioon `lisaa` ja lukuoperaatio muuttujaan `saldo`.
+"jostain", ja relokaatio kertoo, mistä. Samat relokaatiot saa
+taulukkona komennolla `readelf -r`:
+
+```{.bash tiedosto="esimerkit/05-relokaatiot/aja.sh" osa="relokaatiot"}
+```
+
+```{.tuloste tiedosto="esimerkit/05-relokaatiot/odotettu" alkaen="== relokaatiot (readelf" asti="R_X86_64_PC32 saldo"}
+```
+
+Linkityksen jälkeen kutsu osoittaa funktioon `lisaa` ja lukuoperaatio
+muuttujaan `saldo`:
+
+```{.bash tiedosto="esimerkit/05-relokaatiot/aja.sh" osa="jalkeen"}
+```
+
+```{.tuloste tiedosto="esimerkit/05-relokaatiot/odotettu" alkaen="== tilaa linkityksen jälkeen"}
+```
 
 ## Miten arvo lasketaan
 
@@ -59,6 +68,33 @@ etäisyyden *seuraavan* käskyn alusta kohteeseen. Relokaatio
 - `S` on symbolin lopullinen osoite,
 - `A` on lisäys (tässä `-4`),
 - `P` on paikan oma osoite.
+
+```{.dot otsikko="Kutsukäskyn tavut ennen ja jälkeen linkityksen. Relokaation paikka P on käskyn neljä viimeistä tavua."}
+digraph {
+  node [shape=plaintext, style=""];
+  k [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="6">
+    <tr><td border="0"></td>
+        <td border="0"><font point-size="9" color="#5B6B70">P − 1</font></td>
+        <td border="0" colspan="4"><font point-size="9" color="#5B6B70">P … P + 3</font></td>
+        <td border="0"><font point-size="9" color="#5B6B70">P + 4</font></td></tr>
+    <tr><td border="0" align="right">main.o</td>
+        <td bgcolor="#E4DCF0"><font face="DejaVu Sans Mono">e8</font></td>
+        <td bgcolor="#EEF1F2"><font face="DejaVu Sans Mono">00</font></td>
+        <td bgcolor="#EEF1F2"><font face="DejaVu Sans Mono">00</font></td>
+        <td bgcolor="#EEF1F2"><font face="DejaVu Sans Mono">00</font></td>
+        <td bgcolor="#EEF1F2"><font face="DejaVu Sans Mono">00</font></td>
+        <td>seuraava käsky</td></tr>
+    <tr><td border="0" align="right">ohjelma</td>
+        <td bgcolor="#E4DCF0"><font face="DejaVu Sans Mono">e8</font></td>
+        <td bgcolor="#F1E3CC" colspan="4">S − (P + 4), 32 bittiä</td>
+        <td>seuraava käsky</td></tr>
+    <tr><td border="0"></td>
+        <td border="0"><font point-size="9" color="#5B6B70">call</font></td>
+        <td border="0" colspan="4"><font point-size="9" color="#5B6B70">etäisyys kohteeseen</font></td>
+        <td border="0"><font point-size="9" color="#5B6B70">tästä etäisyys lasketaan</font></td></tr>
+  </table>>];
+}
+```
 
 Paikka on käskyn neljä viimeistä tavua, joten seuraava käsky alkaa
 osoitteesta `P + 4`. Lisäys `-4` korjaa tämän: `S - 4 - P = S - (P +

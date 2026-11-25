@@ -31,9 +31,30 @@ destruktorissa".
    `atexit`-käsittelijät ja destruktorit käänteisessä järjestyksessä,
    tyhjentää `stdio`-puskurit ja tekee järjestelmäkutsun `exit_group`.
 
+```{.dot otsikko="Käynnistysketju ja se, mitä kukin vaihe ELF-tiedostosta lukee"}
+digraph {
+  nodesep=0.45; ranksep=0.4;
+  node [shape=box, style="rounded,filled", fontsize=10];
+  ydin [label="ydin: execve\nLOAD, INTERP"];
+  ldso [label="ld.so\nNEEDED, relokaatiot,\nkirjastojen .init_array"];
+  start [label="_start (Scrt1.o)"];
+  libc [label="__libc_start_main\nohjelman .init_array"];
+  main [label="main", fillcolor="#F1E3CC"];
+  exit [label="exit\natexit, .fini_array"];
+  { rank=same; ydin; ldso; start; }
+  { rank=same; libc; main; exit; }
+  ydin -> ldso -> start;
+  start -> libc;
+  libc -> main -> exit;
+}
+```
+
 ## Lataaja ja aloituskohta
 
-```{.bash tiedosto="esimerkit/14-kaynnistys/aja.sh" osa="lataaja"}
+```{.bash tiedosto="esimerkit/12-kaynnistys/aja.sh" osa="lataaja"}
+```
+
+```{.tuloste tiedosto="esimerkit/12-kaynnistys/odotettu" alkaen="== lataaja ja aloituskohta" asti=".fini_array"}
 ```
 
 Ohjelman `INTERP`-otsake nimeää dynaamisen linkkerin. Polku on
@@ -70,16 +91,16 @@ C++-kääntäjä tekee saman globaalien olioiden konstruktoreille.
 Esimerkissä sekä jaetulla kirjastolla että ohjelmalla on
 alustuksia, ja ohjelma rekisteröi lisäksi `atexit`-käsittelijän:
 
-```{.c tiedosto="esimerkit/14-kaynnistys/kirjasto.c" osa="kirjasto"}
+```{.c tiedosto="esimerkit/12-kaynnistys/kirjasto.c" osa="kirjasto"}
 ```
 
-```{.c tiedosto="esimerkit/14-kaynnistys/main.c" osa="jarjestys"}
+```{.c tiedosto="esimerkit/12-kaynnistys/main.c" osa="jarjestys"}
 ```
 
-```{.bash tiedosto="esimerkit/14-kaynnistys/aja.sh" osa="jarjestys"}
+```{.bash tiedosto="esimerkit/12-kaynnistys/aja.sh" osa="jarjestys"}
 ```
 
-```{.tuloste tiedosto="esimerkit/14-kaynnistys/odotettu"}
+```{.tuloste tiedosto="esimerkit/12-kaynnistys/odotettu" alkaen="== alustusten järjestys" asti="8. kirjaston destruktori"}
 ```
 
 Järjestyksen säännöt:
@@ -112,7 +133,10 @@ ohjelmaotsakkeiden sijainti, aloitusosoite, suorittimen ominaisuudet
 ja satunnaislukujen siemen pinon suojaukselle. `LD_SHOW_AUXV=1`
 tulostaa sen; skripti poimii muutaman kentän ja peittää osoitteet:
 
-```{.bash tiedosto="esimerkit/14-kaynnistys/aja.sh" osa="auxv"}
+```{.bash tiedosto="esimerkit/12-kaynnistys/aja.sh" osa="auxv"}
+```
+
+```{.tuloste tiedosto="esimerkit/12-kaynnistys/odotettu" alkaen="== aputaulukko"}
 ```
 
 | Kenttä | Sisältö |

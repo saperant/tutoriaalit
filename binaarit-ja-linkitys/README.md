@@ -20,7 +20,7 @@ pikaopas
    kaksoismäärittely
 7. Jaetut kirjastot ja hakupolut – `NEEDED`, `RUNPATH`, `$ORIGIN`
 8. Paikkariippumaton koodi, GOT ja PLT – näkyvyys, laiska ja välitön
-   sidonta
+   sidonta, säiekohtaiset muuttujat (TLS)
 9. Kirjastojen versiointi – soname, ABI-rikot, symboliversiot
 10. Symbolien sidonta ajon aikana – törmäykset, `LD_PRELOAD`, `dlopen`
 11. Linkkeriskriptit ja muistikartat – osiorekisteri, `INSERT`, oma
@@ -40,10 +40,14 @@ make pdf      # rakentaa binaarit-ja-linkitys.pdf:n ja pikaoppaan
 ```
 
 Esimerkit tarvitsevat GCC 14:n (`gcc-14`, `g++-14`), GNU binutilsin
-ja ShellCheckin. Jokainen esimerkki on hakemisto `esimerkit/NN-nimi/`,
-jonka skripti `aja.sh` kääntää, linkittää ja tutkii tulokset;
-`esimerkit/testaa.sh` ajaa ne kaikki ja vertaa tulosteita. Kehityskontti
-on hakemistossa `.devcontainer/binaarit-ja-linkitys`.
+ja ShellCheckin. Jokainen esimerkki on hakemisto `esimerkit/NN-nimi/`
+(`NN` on luvun numero), jonka skripti `aja.sh` kääntää, linkittää ja
+tutkii tulokset; `esimerkit/testaa.sh` ajaa ne kaikki ja vertaa
+tulosteita. Kehityskontti on hakemistossa
+`.devcontainer/binaarit-ja-linkitys`.
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 ## Lisenssi
 

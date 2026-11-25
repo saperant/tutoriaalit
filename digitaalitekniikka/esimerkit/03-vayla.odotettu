@@ -1,0 +1,10 @@
+Kolmitilaväylä, ajurit A ja B (data, sallinta):
+  A=1 B=Z  ->  väylä 1
+  A=Z B=0  ->  väylä 0
+  A=Z B=Z  ->  väylä Z
+  A=1 B=0  ->  väylä X
+Avoin nielu ja ylösveto (I2C:n SDA):
+  A=1 B=1  ->  johdin 1
+  A=0 B=1  ->  johdin 0
+  A=1 B=0  ->  johdin 0
+  A=0 B=0  ->  johdin 0

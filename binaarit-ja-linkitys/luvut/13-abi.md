@@ -40,25 +40,63 @@ kääntäjä ei saa järjestää niitä uudelleen.
 
 Esimerkin viestirakenteessa on samat neljä kenttää kolmella tavalla:
 
-```{.c tiedosto="esimerkit/15-asettelu/viesti.h" osa="huono"}
+```{.c tiedosto="esimerkit/13-asettelu/viesti.h" osa="huono"}
 ```
 
-```{.c tiedosto="esimerkit/15-asettelu/viesti.h" osa="hyva"}
+```{.c tiedosto="esimerkit/13-asettelu/viesti.h" osa="hyva"}
 ```
 
-```{.c tiedosto="esimerkit/15-asettelu/viesti.h" osa="pakattu"}
+```{.c tiedosto="esimerkit/13-asettelu/viesti.h" osa="pakattu"}
 ```
 
 Ohjelma tulostaa koot, tasaukset ja siirtymät. GCC:n varoitus
 `-Wpadded` kertoo jokaisesta lisätystä täytteestä:
 
-```{.c tiedosto="esimerkit/15-asettelu/main.c" osa="tulostus"}
+```{.c tiedosto="esimerkit/13-asettelu/main.c" osa="tulostus"}
 ```
 
-```{.bash tiedosto="esimerkit/15-asettelu/aja.sh" osa="asettelu"}
+```{.bash tiedosto="esimerkit/13-asettelu/aja.sh" osa="asettelu"}
 ```
 
-```{.tuloste tiedosto="esimerkit/15-asettelu/odotettu"}
+```{.tuloste tiedosto="esimerkit/13-asettelu/odotettu"}
+```
+
+```{.dot otsikko="Samat neljä kenttää kolmella tavalla. Harmaat ruudut ovat täytettä; numerot ovat siirtymiä tavuina."}
+digraph {
+  ranksep=0.12;
+  node [shape=plaintext, style=""];
+  edge [style=invis];
+  a [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" align="left" colspan="6"><b>viesti_huono</b>, 24 tavua</td></tr>
+    <tr><td bgcolor="#E4DCF0" width="16">t</td>
+        <td bgcolor="#B8C4C8" width="112">täyte, 7 tavua</td>
+        <td bgcolor="#F1E3CC" width="128">aikaleima</td>
+        <td bgcolor="#E4DCF0" width="32">pit.</td>
+        <td bgcolor="#B8C4C8" width="32">2</td>
+        <td bgcolor="#F1E3CC" width="64">tarkiste</td></tr>
+    <tr><td border="0" align="left"><font point-size="8" color="#5B6B70">0</font></td><td border="0" align="left"><font point-size="8" color="#5B6B70">1</font></td><td border="0" align="left"><font point-size="8" color="#5B6B70">8</font></td><td border="0" align="left"><font point-size="8" color="#5B6B70">16</font></td><td border="0" align="left"><font point-size="8" color="#5B6B70">18</font></td><td border="0" align="left"><font point-size="8" color="#5B6B70">20</font></td></tr>
+  </table>>];
+  b [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" align="left" colspan="6"><b>viesti</b>, 16 tavua</td></tr>
+    <tr><td bgcolor="#F1E3CC" width="128">aikaleima</td>
+        <td bgcolor="#F1E3CC" width="64">tarkiste</td>
+        <td bgcolor="#E4DCF0" width="32">pit.</td>
+        <td bgcolor="#E4DCF0" width="16">t</td>
+        <td bgcolor="#EEF1F2" width="16">v</td>
+        <td border="0" width="128"></td></tr>
+    <tr><td border="0" align="left"><font point-size="8" color="#5B6B70">0</font></td><td border="0" align="left"><font point-size="8" color="#5B6B70">8</font></td><td border="0" align="left"><font point-size="8" color="#5B6B70">12</font></td><td border="0" align="left"><font point-size="8" color="#5B6B70">14</font></td><td border="0" align="left"><font point-size="8" color="#5B6B70">15</font></td><td border="0" align="left"></td></tr>
+  </table>>];
+  c [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" align="left" colspan="5"><b>viesti_levy</b> (packed), 15 tavua</td></tr>
+    <tr><td bgcolor="#E4DCF0" width="16">t</td>
+        <td bgcolor="#F1E3CC" width="128">aikaleima</td>
+        <td bgcolor="#E4DCF0" width="32">pit.</td>
+        <td bgcolor="#F1E3CC" width="64">tarkiste</td>
+        <td border="0" width="144"></td></tr>
+    <tr><td border="0" align="left"><font point-size="8" color="#5B6B70">0</font></td><td border="0" align="left"><font point-size="8" color="#5B6B70">1</font></td><td border="0" align="left"><font point-size="8" color="#5B6B70">9</font></td><td border="0" align="left"><font point-size="8" color="#5B6B70">11</font></td><td border="0" align="left"></td></tr>
+  </table>>];
+  a -> b -> c;
+}
 ```
 
 Kirjoitusjärjestyksessä 15 tavun tieto vie 24 tavua: 7 tavua täytettä
@@ -69,9 +107,11 @@ ABI-suunnittelun keino: kentän voi myöhemmin ottaa käyttöön ilman,
 että koko tai muiden kenttien siirtymät muuttuvat.
 
 `packed` poistaa täytteen, mutta hinta on suuri. Rakenteen tasaus on
-yksi, joten sen kentät ovat tasaamattomia. x86-64 lukee tasaamattoman
-kentän hitaammin, ja monet muut suorittimet eivät lue sitä lainkaan
-yhdellä käskyllä, joten kääntäjä tuottaa tavu kerrallaan luvun.
+yksi, joten sen kentät ovat tasaamattomia. Nykyinen x86-64 lukee
+tasaamattoman kentän yhtä nopeasti kuin tasatun, ellei kenttä ylitä
+välimuistirivin tai sivun rajaa, mutta monet muut suorittimet eivät
+lue sitä lainkaan yhdellä käskyllä, joten kääntäjä tuottaa tavu
+kerrallaan luvun.
 Pakatun kentän osoitetta ei saa välittää tavallisena osoittimena
 (`&v.aikaleima` on `uint64_t *`, joka lupaa tasauksen; GCC varoittaa
 `-Waddress-of-packed-member`). Pakattu rakenne sopii levy- ja
@@ -85,10 +125,10 @@ laiterekisterit), sen koko ja kenttien siirtymät kannattaa tarkistaa
 käännösaikana. Edellä `viesti.h` tarkistaa ne `_Static_assert`:lla.
 Kun joku lisää kentän keskelle, käännös pysähtyy:
 
-```{.c tiedosto="esimerkit/15-asettelu/rikki.c" osa="rikki"}
+```{.c tiedosto="esimerkit/13-asettelu/rikki.c" osa="rikki"}
 ```
 
-```{.bash tiedosto="esimerkit/15-asettelu/aja.sh" osa="tarkistus"}
+```{.bash tiedosto="esimerkit/13-asettelu/aja.sh" osa="tarkistus"}
 ```
 
 Tarkistus tekee ABI-muutoksesta tietoisen päätöksen. Sama muutos ilman
@@ -117,13 +157,13 @@ alustoilla Windowsia lukuun ottamatta.
 Esimerkin suodinkirjasto on kirjoitettu C++:lla ja tarjoaa
 C-rajapinnan. Otsake kelpaa molemmille kielille:
 
-```{.cpp tiedosto="esimerkit/16-cpp-nimet/suodin.hpp" osa="otsake"}
+```{.cpp tiedosto="esimerkit/13-cpp-nimet/suodin.hpp" osa="otsake"}
 ```
 
-```{.cpp tiedosto="esimerkit/16-cpp-nimet/suodin.cpp" osa="cpp"}
+```{.cpp tiedosto="esimerkit/13-cpp-nimet/suodin.cpp" osa="cpp"}
 ```
 
-```{.bash tiedosto="esimerkit/16-cpp-nimet/aja.sh" osa="nimet"}
+```{.bash tiedosto="esimerkit/13-cpp-nimet/aja.sh" osa="nimet"}
 ```
 
 Nimen `_ZN6suodin9keskiarvoEPKdm` osat: `_Z` aloittaa koristellun
@@ -137,22 +177,22 @@ C-ohjelma voi kutsua C-rajapintaa, ja C++-kääntäjä linkittää
 kokonaisuuden, koska se lisää C++:n standardikirjaston
 (`libstdc++`) ja poikkeusten tuen:
 
-```{.c tiedosto="esimerkit/16-cpp-nimet/main.c"}
+```{.c tiedosto="esimerkit/13-cpp-nimet/main.c"}
 ```
 
-```{.bash tiedosto="esimerkit/16-cpp-nimet/aja.sh" osa="linkitys"}
+```{.bash tiedosto="esimerkit/13-cpp-nimet/aja.sh" osa="linkitys"}
 ```
 
 Jos otsakkeesta puuttuu `extern "C"`, C++-käännös koristelee
 nimen, ja C-ohjelma etsii koristelematonta:
 
-```{.cpp tiedosto="esimerkit/16-cpp-nimet/unohtunut.hpp"}
+```{.cpp tiedosto="esimerkit/13-cpp-nimet/unohtunut.hpp"}
 ```
 
-```{.bash tiedosto="esimerkit/16-cpp-nimet/aja.sh" osa="unohtui"}
+```{.bash tiedosto="esimerkit/13-cpp-nimet/aja.sh" osa="unohtui"}
 ```
 
-```{.tuloste tiedosto="esimerkit/16-cpp-nimet/odotettu"}
+```{.tuloste tiedosto="esimerkit/13-cpp-nimet/odotettu"}
 ```
 
 Virheilmoitus `undefined reference to 'suodin_keskiarvo'`, kun

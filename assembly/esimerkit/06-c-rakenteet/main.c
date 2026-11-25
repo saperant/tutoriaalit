@@ -17,6 +17,14 @@ double tilauksen_arvo(const struct tilaus *t);
 long tilauksen_asiakas(const struct tilaus *t);
 long laske(int op, long a, long b);
 long listan_summa(const struct solmu *s);
+unsigned long kymmenesosa(unsigned long x);
+long kahdeksasosa(long x);
+long valita(long x);
+
+// valita() kutsuu tätä häntäkutsuna.
+long tarkista(long x) {
+    return x < 0 ? -x : x;
+}
 
 int main(void) {
     const long t[] = {5, 7, -2, 10};
@@ -29,5 +37,9 @@ int main(void) {
     }
     struct solmu c = {30, 0}, b = {20, &c}, a = {10, &b};
     printf("listan_summa: %ld\n", listan_summa(&a));
+    printf("kymmenesosa(1234567) = %lu\n", kymmenesosa(1234567));
+    printf("kahdeksasosa(-17) = %ld, kahdeksasosa(17) = %ld\n",
+           kahdeksasosa(-17), kahdeksasosa(17));
+    printf("valita(-20) = %ld\n", valita(-20));
     return 0;
 }

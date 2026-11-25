@@ -19,19 +19,19 @@ tapahtuva törmäys ja tarkoituksellinen korvaaminen.
 Kuvakirjasto ja äänikirjasto ovat eri tekijöiden, ja kummassakin on
 sisäinen apufunktio `tarkista`, joka jäi vahingossa julkiseksi:
 
-```{.c tiedosto="esimerkit/11-tormays/kuva.c" osa="kuva"}
+```{.c tiedosto="esimerkit/10-tormays/kuva.c" osa="kuva"}
 ```
 
-```{.c tiedosto="esimerkit/11-tormays/aani.c"}
+```{.c tiedosto="esimerkit/10-tormays/aani.c"}
 ```
 
-```{.c tiedosto="esimerkit/11-tormays/main.c"}
+```{.c tiedosto="esimerkit/10-tormays/main.c"}
 ```
 
-```{.bash tiedosto="esimerkit/11-tormays/aja.sh" osa="tormays"}
+```{.bash tiedosto="esimerkit/10-tormays/aja.sh" osa="tormays"}
 ```
 
-```{.tuloste tiedosto="esimerkit/11-tormays/odotettu"}
+```{.tuloste tiedosto="esimerkit/10-tormays/odotettu"}
 ```
 
 Molemmat kirjastot linkittyvät ilman varoitusta, ja ohjelma toimii
@@ -44,10 +44,10 @@ juuri se mahdollistaa korvaamisen.
 Korjaus on piilottaa sisäinen funktio (luku 8), jolloin kirjaston oma
 viittaus sidotaan suoraan omaan määrittelyyn:
 
-```{.c tiedosto="esimerkit/11-tormays/aani-piilo.c" osa="piilo"}
+```{.c tiedosto="esimerkit/10-tormays/aani-piilo.c" osa="piilo"}
 ```
 
-```{.bash tiedosto="esimerkit/11-tormays/aja.sh" osa="korjattu"}
+```{.bash tiedosto="esimerkit/10-tormays/aja.sh" osa="korjattu"}
 ```
 
 Ohjelmaa ei tarvinnut linkittää uudelleen. Korjatun kirjaston

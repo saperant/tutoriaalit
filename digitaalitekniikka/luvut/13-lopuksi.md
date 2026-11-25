@@ -26,6 +26,7 @@
 | Gray-koodi | välitilat luettaessa toisen kellon tahdissa | 2, 9 |
 | Yhdentekevät arvot | pienempi logiikka | 4 |
 | Kelvollisuusbitti | onko data merkityksellistä | 5 |
+| Avoin nielu ja ylösveto | monta lähettäjää yhdellä johtimella | 3 |
 | Generoi ja välitä | nopea muistibitti | 6 |
 | Konsensustermi | staattinen hasardi | 7 |
 | Kahden kiikun tahdistin | metastabiilisuus | 8 |
@@ -34,19 +35,23 @@
 | Liukuhihna | pitkä kriittinen polku | 11 |
 | Datapolku ja ohjaus erikseen | suuren piirin jäsentäminen | 12 |
 
-## Mihin tästä
+## Jatkotaidot
 
-- **RTL-suunnittelu SystemVerilogilla** ja **RTL-suunnittelu
-  VHDL:llä**: tämän tutoriaalin rakenteet synteesikelpoisena koodina,
-  muistit ja FIFOt, nollaukset ja kellotusalueiden ylitys.
-- **Assembly** ja **Tietokonearkkitehtuuri**: käskykanta, liukuhihna,
+- *RTL-suunnittelu SystemVerilogilla* ja *RTL-suunnittelu VHDL:llä*:
+  tämän tutoriaalin rakenteet synteesikelpoisena koodina, muistit ja
+  FIFOt, nollaukset ja kellotusalueiden ylitys.
+- *Assembly* ja *Tietokonearkkitehtuuri*: käskykanta, liukuhihna,
   välimuistit ja virtuaalimuisti luvun 12 datapolun jatkeena.
-- **Miten tietokone laskee**: kokonaisluku- ja liukulukuaritmetiikka
-  ohjelmoijan näkökulmasta.
-- **Kiinteän pilkun aritmetiikka**: luvut ja pyöristys
+- *Miten tietokone laskee*: kokonaisluku- ja liukulukuaritmetiikka
+  ohjelmoijan näkökulmasta, kertolaskun ja jakolaskun algoritmit.
+- *Lukujen esitys ja kiinteän pilkun aritmetiikka*: luvut ja pyöristys
   signaalinkäsittelyn laitteistossa.
-- **FPGA-toteutus** ja **ASIC-toteutus**: synteesi, sijoittelu ja
+- *FPGA-toteutus* ja *ASIC-toteutus*: synteesi, sijoittelu ja
   ajoitusanalyysi oikeilla työkaluilla.
+- *Elektroniikan perusteet ja SPICE*: transistori ja portti
+  sähköisenä piirinä.
+- *Oheislaiteväylät*: avoin nielu ja siirtorekisteri käytännön
+  väylissä (I2C, SPI, UART).
 
 ## Lähteet ja lisälukemista
 

@@ -1,0 +1,5 @@
+laskuri aluksi 100, kutsuja 0
+seuraava() = 102
+laskuri lopuksi 102, kutsuja 2
+alkuluvut: 2 3 5 7 11
+vakio = 0x123456789abcdef0

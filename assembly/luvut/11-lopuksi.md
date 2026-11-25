@@ -30,6 +30,10 @@
 | Tietueen kenttä | `8(%rdi)` | `8(a0)` |
 | Taulukon alkio | `(%rdi,%rsi,8)` | `slli` + `add` + `ld` |
 | Hyppytaulu | `jmp *%rax` + `.rodata` | `jr` + `.rodata` |
+| Globaali data | `nimi(%rip)` | `la` + `ld`/`sd` |
+| Jako vakiolla | suuri vakio + `mul` + `shr` | `mulhu` + `srli` tai `divu` |
+| Häntäkutsu | `jmp funktio` lopussa | `tail funktio` |
+| Pinosuoja | `%fs:40` … `__stack_chk_fail` | `__stack_chk_guard` … `__stack_chk_fail` |
 | Silmukka | taaksepäin hyppäävä `jne` | taaksepäin hyppäävä `bne` |
 | Kehys | `push %rbx` … `pop %rbx` | `addi sp, sp, -16`, `sd`/`ld` |
 | Järjestelmäkutsu | `syscall` | `ecall` |
@@ -42,16 +46,19 @@ sivulle.
 
 ## Jatkotaidot
 
-- **Tietokonearkkitehtuuri**: miten suoritin käskyt toteuttaa:
+- *Tietokonearkkitehtuuri*: miten suoritin käskyt toteuttaa:
   liukuhihna, välimuistit ja ennustus.
-- **Objektitiedostot, linkitys ja ABI**: symbolit, relokaatiot,
-  `.eh_frame` ja ohjelman lataus.
-- **C ja assembly yhteen**: inline-assembly, kääntäjän sisäiset
+- *Objektitiedostot, linkitys ja ABI*: symbolit, relokaatiot, GOT ja
+  PLT, `.eh_frame` ja ohjelman lataus.
+- *C ja assembly yhteen*: inline-assembly, kääntäjän sisäiset
   funktiot ja SIMD C:stä.
-- **Takaisinmallinnus**: ohjelmien analyysi konekielestä ilman
+- *Takaisinmallinnus*: ohjelmien analyysi konekielestä ilman
   lähdekoodia.
-- **Kääntäjätekniikka**: koodingenerointi RISC-V:lle ja rekisterien
+- *Haavoittuvuuksien analyysi ja torjunta*: muistivirheet, pinosuoja
+  ja muut suojaukset.
+- *Kääntäjätekniikka*: koodingenerointi RISC-V:lle ja rekisterien
   varaus.
+- *Rinnakkaisohjelmointi*: muistimallit ja atomiset operaatiot.
 
 ## Lähteet
 

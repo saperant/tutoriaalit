@@ -36,10 +36,10 @@ Lehtifunktio, joka käyttää vain kutsujan tallennettavia rekistereitä,
 ei tarvitse kehystä. Muuten tallenna säilytettävät rekisterit ja
 pidä pino tasattuna:
 
-```{.gnuassembler tiedosto="esimerkit/06-pino/x86.S" osa="kertoma"}
+```{.gnuassembler tiedosto="esimerkit/05-pino/x86.S" osa="kertoma"}
 ```
 
-```{.gnuassembler tiedosto="esimerkit/06-pino/rv.S" osa="kertoma"}
+```{.gnuassembler tiedosto="esimerkit/05-pino/rv.S" osa="kertoma"}
 ```
 
 # Rekisterit

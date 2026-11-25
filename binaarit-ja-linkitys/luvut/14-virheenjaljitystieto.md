@@ -17,10 +17,10 @@ tiedostoonsa ennen jakelua.
 Esimerkin ohjelma kaatuu, kun sille annetaan argumentti: tyhjän jonon
 alkiot ovat `NULL`.
 
-```{.c tiedosto="esimerkit/17-virheenjaljitys/jono.c"}
+```{.c tiedosto="esimerkit/14-virheenjaljitys/jono.c"}
 ```
 
-```{.bash tiedosto="esimerkit/17-virheenjaljitys/aja.sh" osa="kaanto"}
+```{.bash tiedosto="esimerkit/14-virheenjaljitys/aja.sh" osa="kaanto"}
 ```
 
 DWARF jakautuu osioihin:
@@ -53,7 +53,7 @@ avulla, eikä `strip` poista sitä.
 
 ## Osoitteesta riviksi
 
-```{.bash tiedosto="esimerkit/17-virheenjaljitys/aja.sh" osa="kaatuminen"}
+```{.bash tiedosto="esimerkit/14-virheenjaljitys/aja.sh" osa="kaatuminen"}
 ```
 
 Paluuarvo 139 on 128 + signaalin numero 11 (`SIGSEGV`). Kaatumisesta
@@ -82,10 +82,10 @@ Jakelut ja tuotantoasennukset riisuvat sen ohjelmasta mutta
 säilyttävät sen erillisessä tiedostossa, joka asennetaan tarvittaessa
 (Debianin `-dbgsym`-paketit) tai haetaan verkosta (`debuginfod`):
 
-```{.bash tiedosto="esimerkit/17-virheenjaljitys/aja.sh" osa="erillinen"}
+```{.bash tiedosto="esimerkit/14-virheenjaljitys/aja.sh" osa="erillinen"}
 ```
 
-```{.tuloste tiedosto="esimerkit/17-virheenjaljitys/odotettu"}
+```{.tuloste tiedosto="esimerkit/14-virheenjaljitys/odotettu"}
 ```
 
 Vaiheet:

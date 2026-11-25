@@ -24,7 +24,7 @@ Näkyvyys ratkaisee, näkyykö se jaetun kirjaston ulkopuolelle (luku 8).
 Esimerkin lokikirjasto numeroi rivit ja kirjoittaa ne kohteeseen,
 jonka sovellus voi halutessaan korvata:
 
-```{.c tiedosto="esimerkit/03-symbolit/loki.c" osa="loki"}
+```{.c tiedosto="esimerkit/04-symbolit/loki.c" osa="loki"}
 ```
 
 `static` tekee sekä muuttujasta `rivinro` että funktiosta `muotoile`
@@ -37,13 +37,13 @@ upottamasta funktiota, jotta se näkyy symbolitaulussa.
 Heikko symboli (`weak`) on oletus, jonka vahva määrittely korvaa.
 Sovellus antaa oman kohteensa tavallisena funktiona:
 
-```{.c tiedosto="esimerkit/03-symbolit/oma_kohde.c" osa="oma"}
+```{.c tiedosto="esimerkit/04-symbolit/oma_kohde.c" osa="oma"}
 ```
 
-```{.bash tiedosto="esimerkit/03-symbolit/aja.sh" osa="linkitys"}
+```{.bash tiedosto="esimerkit/04-symbolit/aja.sh" osa="linkitys"}
 ```
 
-```{.tuloste tiedosto="esimerkit/03-symbolit/odotettu"}
+```{.tuloste tiedosto="esimerkit/04-symbolit/odotettu"}
 ```
 
 Pienet kirjaimet `t` ja `b` ovat paikallisia symboleita, isot
@@ -76,6 +76,17 @@ __attribute__((weak));`) saa arvon nolla, jos määrittelyä ei ole,
 joten koodi voi tarkistaa `if (f) f();`. *Kirjastojen sisäinen
 yhteensopivuus*: glibc määrittelee monet funktiot heikkoina
 aliaksina sisäisille nimille.
+
+C++:ssa heikot symbolit ovat arkea, vaikka niitä ei kirjoiteta itse.
+`inline`-funktio, mallin instanssi ja luokan virtuaalitaulu käännetään
+jokaiseen käännösyksikköön, joka niitä käyttää, koska kääntäjä ei
+tiedä, mikä muu tiedosto tekee saman. Määrittelyt ovat heikkoja (`nm`
+näyttää `W` ja `V`), ja jokainen on omassa *COMDAT-ryhmässään*:
+linkkeri pitää samannimisistä ryhmistä yhden ja hylkää muut. Tämä
+toimii, kun kaikki kopiot ovat samat, minkä C++:n *yhden määrittelyn
+sääntö* (ODR) vaatii. Linkkeri ei tarkista sitä. Jos kaksi tiedostoa
+määrittelee samannimisen `inline`-funktion eri sisällöllä, toinen
+katoaa hiljaa, ja se, kumpi jää, riippuu linkitysjärjestyksestä.
 
 > Heikko symboli jaetussa kirjastossa ei toimi kuten
 > objektitiedostossa. Dynaaminen linkkeri ei oletuksena tee eroa

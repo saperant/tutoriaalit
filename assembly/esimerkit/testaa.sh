@@ -13,9 +13,10 @@
 # Hakemiston *-kaatuu/ ohjelman on päätyttävä virheeseen (esimerkki
 # yleisestä virheestä).
 # Hakemisto *-tavut/ tarkistaa käskyjen konekielisen koodauksen
-# (objdump). Hakemiston *-c-rakenteet/ C-tiedostoista käännetään
-# assembly-näytteet (*-x86.s, *-rv.s), joiden on vastattava
+# (objdump). Hakemistojen *-c-rakenteet/ ja *-naytteet/ C-tiedostoista
+# käännetään assembly-näytteet (*-x86.s, *-rv.s), joiden on vastattava
 # versionhallinnassa olevia; --naytteet kirjoittaa ne uudelleen.
+# Hakemiston tiedosto liput lisää näytteiden kääntäjävalitsimia.
 set -euo pipefail
 cd "$(dirname "$0")"
 
@@ -80,12 +81,18 @@ for hak in [0-9][0-9]-*/; do
             if [[ $ark == x86 ]]; then cc=$CC_X86 od=objdump
             else cc=$CC_RV od=$OBJDUMP_RV; fi
             "$cc" -c -o "build/$hak/$ark.o" "$hak/$ark.S"
+            # Disassemblerin omat rivinloppukommentit (# osoite <symboli>)
+            # jätetään pois: linkittämättömässä tiedostossa ne
+            # johtavat harhaan.
             "$od" -d "build/$hak/$ark.o" | tail -n +7 |
-                sed -E 's/\t/    /g; s/ +$//' > "build/$hak/$ark.txt"
+                sed -E 's/\t/    /g; s/ +# .*$//; s/ +$//' \
+                > "build/$hak/$ark.txt"
             vertaa "$hak ($ark)" "$hak/odotettu-$ark" "build/$hak/$ark.txt"
         done
         continue ;;
-    *-c-rakenteet)
+    *-c-rakenteet | *-naytteet)
+        lisaliput=()
+        [[ -f $hak/liput ]] && read -ra lisaliput < "$hak/liput"
         for c in "$hak"/*.c; do
             nimi=$(basename "$c" .c)
             [[ $nimi == main ]] && continue
@@ -95,7 +102,8 @@ for hak in [0-9][0-9]-*/; do
                 cc=$CC_X86 lisa=()
                 [[ $v == rv ]] && cc=$CC_RV
                 [[ $v == x86-O0 ]] && lisa=(-O0)
-                "$cc" "${NAYTE[@]}" "${lisa[@]}" -o - "$c" | siisti \
+                "$cc" "${NAYTE[@]}" "${lisaliput[@]}" "${lisa[@]}" \
+                    -o - "$c" | siisti \
                     > "build/$hak/$nimi-$v.s"
                 if ((kirjoita_naytteet)); then
                     cp "build/$hak/$nimi-$v.s" "$hak/$nimi-$v.s"

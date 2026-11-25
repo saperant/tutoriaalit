@@ -75,16 +75,23 @@ def analyysi(portit: list[Portti]) -> tuple[int, list[str], int]:
 # @loppu sta
 
 
-def raportti(nimi: str, portit: list[Portti]) -> None:
+# @alku raportti
+def raportti(nimi: str, portit: list[Portti], vino: int = 0) -> None:
+    """Vino on pahin tapaus kumpaankin suuntaan: asetusehdossa kello
+    tulee vastaanottajalle aikaisin, pitoehdossa myöhään."""
     viive, polku, lyhin = analyysi(portit)
-    jakso = T_CQ + viive + T_SETUP
+    jakso = T_CQ + viive + T_SETUP + vino
     print(f"{nimi}:")
     print(f"  kriittinen polku {viive} ps: " + " → ".join(polku[:4])
           + " … " + " → ".join(polku[-3:]))
-    print(f"  jakso >= {T_CQ} + {viive} + {T_SETUP} = {jakso} ps"
+    lisa = f" + {vino}" if vino else ""
+    print(f"  jakso >= {T_CQ} + {viive} + {T_SETUP}{lisa} = {jakso} ps"
           f"  =>  f_max = {1e6 / jakso:.0f} MHz")
-    pito = T_CQ + lyhin - T_HOLD
-    print(f"  pitoajan marginaali {T_CQ} + {lyhin} - {T_HOLD} = {pito} ps")
+    pito = T_CQ + lyhin - T_HOLD - vino
+    lisa = f" - {vino}" if vino else ""
+    print(f"  pitoajan marginaali {T_CQ} + {lyhin} - {T_HOLD}{lisa}"
+          f" = {pito} ps")
+# @loppu raportti
 
 
 def main() -> None:
@@ -94,6 +101,10 @@ def main() -> None:
     # erillinen kahdeksan bitin ketju; latenssi kasvaa yhteen jaksoon.
     raportti("sama kahtena liukuhihnavaiheena", summain(8, alku=8))
     # @loppu vertailu
+    # @alku vino
+    raportti("sama, kellon vino 50 ps", summain(8, alku=8), vino=50)
+    raportti("sama, kellon vino 100 ps", summain(8, alku=8), vino=100)
+    # @loppu vino
 
 
 if __name__ == "__main__":

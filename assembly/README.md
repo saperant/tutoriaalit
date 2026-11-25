@@ -12,21 +12,21 @@ pikaopas
 1. Johdanto – miksi konekieltä, työkalut, AT&T- ja Intel-syntaksi,
    ensimmäinen ohjelma ja sen tavut
 2. Rekisterit, muisti ja osoitusmuodot – rekisterien osat,
-   tavujärjestys, tietueiden kentät
+   tavujärjestys, globaali data ja vakiot, tietueiden kentät
 3. Aritmetiikka ja liput – kantoluku ja ylivuoto, etumerkki, siirrot,
    jakolasku
 4. Hypyt, ehdot ja silmukat – vertailut, välitarkistus, ehdollinen
    siirto
-5. Pino ja kutsukonventiot – System V AMD64 ja RISC-V psABI, pinon
-   tasaus, takaisinkutsut
+5. Pino ja kutsukonventiot – System V AMD64 ja RISC-V psABI, pinokehys,
+   pinon tasaus, takaisinkutsut, debuggeri käsky kerrallaan, pinosuoja
 6. C-rakenteet konekielenä – `-O0` ja `-O2`, taulukot, tietueet,
-   `switch`-hyppytaulu, linkitetty lista
+   `switch`-hyppytaulu, linkitetty lista, jako vakiolla, häntäkutsu
 7. x86-64 ja RISC-V rinnakkain – sama algoritmi, CISC ja RISC,
    muistimallit
 8. Järjestelmäkutsut ilman C-kirjastoa – `syscall` ja `ecall`, `_start`
 9. SIMD-käskyjen perusteet – SSE2, AVX2 ja RISC-V:n vektorilaajennus
 10. Kokonainen esimerkki: Adler-32 – viitetoteutus, testivektorit,
-    debuggaus
+    optimointi
 11. Lopuksi – nyrkkisäännöt, mallit, jatkotaidot, lähteet
 
 ## Rakentaminen
@@ -39,4 +39,8 @@ make pdf      # rakentaa assembly.pdf:n ja pikaoppaan
 Esimerkit tarvitsevat GCC 14:n, RISC-V-ristikääntäjän
 (`gcc-riscv64-linux-gnu`, `libc6-dev-riscv64-cross`) ja QEMU:n
 käyttäjätilan emulaattorin (`qemu-user`). Kehityskontti on
-hakemistossa `.devcontainer/assembly/`.
+hakemistossa `.devcontainer/assembly/`. Esimerkkihakemiston numero
+kertoo luvun.
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.

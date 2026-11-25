@@ -13,13 +13,16 @@ Esimerkin tilastokirjastossa on kolme funktiota kolmessa tiedostossa.
 `hajonta` käyttää funktiota `keskiarvo`, joten jäsenten välillä on
 riippuvuus:
 
-```{.c tiedosto="esimerkit/05-arkisto/tilasto.h"}
+```{.c tiedosto="esimerkit/06-arkisto/tilasto.h"}
 ```
 
-```{.c tiedosto="esimerkit/05-arkisto/hajonta.c"}
+```{.c tiedosto="esimerkit/06-arkisto/hajonta.c"}
 ```
 
-```{.bash tiedosto="esimerkit/05-arkisto/aja.sh" osa="arkisto"}
+```{.bash tiedosto="esimerkit/06-arkisto/aja.sh" osa="arkisto"}
+```
+
+```{.tuloste tiedosto="esimerkit/06-arkisto/odotettu" asti="mediaani.o"}
 ```
 
 `ar`:n valitsimet: `r` lisää tai korvaa jäsenet, `c` luo arkiston
@@ -36,19 +39,28 @@ ratkaisemattoman symbolin, ja jatkaa eteenpäin. Arkistoon ei palata.
 Jos kirjasto on ennen ohjelmaa, mitään ei vielä puutu, eikä
 arkistosta oteta mitään:
 
-```{.bash tiedosto="esimerkit/05-arkisto/aja.sh" osa="vaara"}
+```{.bash tiedosto="esimerkit/06-arkisto/aja.sh" osa="vaara"}
 ```
 
-```{.bash tiedosto="esimerkit/05-arkisto/aja.sh" osa="oikein"}
+```{.tuloste tiedosto="esimerkit/06-arkisto/odotettu" alkaen="== kirjasto ennen ohjelmaa" asti="keskiarvo"}
+```
+
+Kun kirjasto on ohjelman jälkeen, puuttuvat symbolit ovat jo
+tiedossa, ja linkitys onnistuu:
+
+```{.bash tiedosto="esimerkit/06-arkisto/aja.sh" osa="oikein"}
+```
+
+```{.tuloste tiedosto="esimerkit/06-arkisto/odotettu" alkaen="== kirjasto ohjelman jälkeen" asti="keskiarvo 20.86"}
 ```
 
 Linkkerikartta (`-Map`) kertoo, mitkä jäsenet otettiin ja minkä
 viittauksen vuoksi:
 
-```{.bash tiedosto="esimerkit/05-arkisto/aja.sh" osa="jasenet"}
+```{.bash tiedosto="esimerkit/06-arkisto/aja.sh" osa="jasenet"}
 ```
 
-```{.tuloste tiedosto="esimerkit/05-arkisto/odotettu"}
+```{.tuloste tiedosto="esimerkit/06-arkisto/odotettu" alkaen="== arkistosta mukaan otetut" asti="T keskiarvo"}
 ```
 
 `main.o` tarvitsee symbolit `keskiarvo` ja `hajonta`, joten kaksi
@@ -102,13 +114,16 @@ kaikki jäsenet, tai suora viittaus jäseneen.
 Kun sama globaali symboli määritellään vahvasti kahdessa
 objektitiedostossa, linkkeri ei voi valita:
 
-```{.c tiedosto="esimerkit/05-arkisto/versio_a.c"}
+```{.c tiedosto="esimerkit/06-arkisto/versio_a.c"}
 ```
 
-```{.c tiedosto="esimerkit/05-arkisto/versio_b.c"}
+```{.c tiedosto="esimerkit/06-arkisto/versio_b.c"}
 ```
 
-```{.bash tiedosto="esimerkit/05-arkisto/aja.sh" osa="kaksois"}
+```{.bash tiedosto="esimerkit/06-arkisto/aja.sh" osa="kaksois"}
+```
+
+```{.tuloste tiedosto="esimerkit/06-arkisto/odotettu" alkaen="== kaksi määrittelyä"}
 ```
 
 Tämä koodi linkittyi ennen GCC 10:tä, koska alustavat määrittelyt
@@ -128,6 +143,15 @@ Ohjelman toiminta riippuu siis siitä, mitä funktioita käytetään.
 | käynnistys | nopea, ei lataajaa | kirjastojen haku ja sidonta |
 | optimointi | linkitysaikainen optimointi (LTO) koko ohjelmalle | rajapinta pysäyttää LTO:n |
 | lisenssi | LGPL vaatii uudelleenlinkitettävyyden | LGPL täyttyy helposti |
+
+Linkitysaikainen optimointi (`-flto`) muuttaa sen, mitä
+objektitiedostossa on. Koodin tilalla on kääntäjän välikieltä osioissa
+`.gnu.lto_*`, ja konekieli tuotetaan vasta linkityksessä, kun koko
+ohjelma on näkyvissä. `objdump -d` ei siksi näytä tällaisesta
+tiedostosta mitään, ja `nm` ja `ar` tarvitsevat kääntäjän
+liitännäisen nähdäkseen symbolit: jos ne eivät löydä sitä itse,
+käytetään kääreitä `gcc-nm` ja `gcc-ar`. Vaikutus nopeuteen mitataan
+taidossa *Suorituskyvyn analyysi ja optimointi*.
 
 Täysin staattinen ohjelma (`-static`) ei tarvitse edes C-kirjastoa
 ajossa, mikä sopii kontteihin ja pelastustyökaluihin. glibc ei

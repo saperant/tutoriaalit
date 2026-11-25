@@ -1,0 +1,8 @@
+0000000000000000 <osoitus>:
+   0:    48 8b 05 00 00 00 00     mov    0x0(%rip),%rax
+   7:    48 8d 3d 00 00 00 00     lea    0x0(%rip),%rdi
+   e:    b8 05 00 00 00           mov    $0x5,%eax
+  13:    48 c7 c0 ff ff ff ff     mov    $0xffffffffffffffff,%rax
+  1a:    48 b8 f0 de bc 9a 78     movabs $0x123456789abcdef0,%rax
+  21:    56 34 12
+  24:    c3                       ret

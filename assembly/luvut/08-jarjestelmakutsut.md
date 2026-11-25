@@ -37,20 +37,20 @@ Ohjelma lukee syötettä, muuttaa ASCII-pienaakkoset isoiksi ja
 kirjoittaa tuloksen. Se on klassinen Unix-suodin, kuten `tr a-z A-Z`,
 ilman C-kirjastoa:
 
-```{.gnuassembler tiedosto="esimerkit/09-kaiku/x86.S" osa="silmukka"}
+```{.gnuassembler tiedosto="esimerkit/08-kaiku/x86.S" osa="silmukka"}
 ```
 
-```{.gnuassembler tiedosto="esimerkit/09-kaiku/rv.S" osa="silmukka"}
+```{.gnuassembler tiedosto="esimerkit/08-kaiku/rv.S" osa="silmukka"}
 ```
 
 Syöte:
 
-```{.tuloste tiedosto="esimerkit/09-kaiku/syote"}
+```{.tuloste tiedosto="esimerkit/08-kaiku/syote"}
 ```
 
 Tuloste:
 
-```{.tuloste tiedosto="esimerkit/09-kaiku/odotettu"}
+```{.tuloste tiedosto="esimerkit/08-kaiku/odotettu"}
 ```
 
 Silmukka lukee enintään 64 tavua kerrallaan, joten pitkä rivi luetaan
@@ -73,6 +73,20 @@ argumenttien määrä, argumentit ja ympäristömuuttujat (`argc`, `argv`,
 käynnistyskoodissa (`crt1.o`), joka alustaa kirjaston, kutsuu `main`:ia
 ja välittää sen paluuarvon `exit`:lle.
 
+```{.dot otsikko="Pino, kun ydin hyppää symboliin _start. Jokainen ruutu on 8 tavua; osoitteet kasvavat ylöspäin."}
+digraph {
+  node [shape=plaintext, style=""];
+  p [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td bgcolor="#EEF1F2" width="170">merkkijonot ja aputaulukko</td><td border="0"></td></tr>
+    <tr><td>NULL</td><td border="0" align="left">envp päättyy</td></tr>
+    <tr><td bgcolor="#F1E3CC">envp[0], envp[1], …</td><td border="0" align="left">ympäristömuuttujien osoitteet</td></tr>
+    <tr><td>NULL</td><td border="0" align="left">argv päättyy</td></tr>
+    <tr><td bgcolor="#E4DCF0">argv[0], argv[1], …</td><td border="0" align="left">argumenttien osoitteet</td></tr>
+    <tr><td bgcolor="#E4DCF0">argc</td><td border="0" align="left">← rsp / sp</td></tr>
+  </table>>];
+}
+```
+
 Esimerkissä on kaksi yksinkertaistusta. Ensinnäkin `write` voi
 kirjoittaa vähemmän kuin pyydettiin, esimerkiksi kun putki on täynnä
 tai kutsu keskeytyy signaaliin. Oikea ohjelma kirjoittaa silmukassa,
@@ -87,7 +101,7 @@ koodia), mutta siltä puuttuu paljon:
 
 - **Puskurointi.** `printf` ja `fwrite` keräävät tulosteen puskuriin ja
   kutsuvat `write`:a harvoin. Jokainen järjestelmäkutsu maksaa satoja
-  kellojaksoja kontekstin vaihtoon. Esimerkin 64 tavun puskuri on
+  kellojaksoja siirtymään ytimeen ja takaisin. Esimerkin 64 tavun puskuri on
   tarkoituksella pieni, jotta paloittelu näkyy. Todellinen suodin
   käyttäisi kymmenien kilotavujen puskuria.
 - **Virheiden käsittely ja `errno`.** Kirjasto muuntaa negatiiviset

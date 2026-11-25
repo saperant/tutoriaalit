@@ -68,8 +68,8 @@ Jos bittejä luetaan juuri muutoksen aikana, lukija voi nähdä minkä
 tahansa välitilan, esimerkiksi 111 tai 000. Gray-koodissa välitilaa ei
 ole: luettu arvo on joko vanha tai uusi. Siksi Gray-koodia käytetään
 kiertoasentoanturien koodilevyissä ja asynkronisen FIFO-puskurin
-osoittimissa, jotka luetaan toisen kellon tahdissa (*RTL-suunnittelu*,
-kellotusalueiden ylitys). Karnaugh-kartta (luku 4) käyttää samaa
+osoittimissa, jotka luetaan toisen kellon tahdissa (taito
+*RTL-suunnittelu SystemVerilogilla*, kellotusalueiden ylitys). Karnaugh-kartta (luku 4) käyttää samaa
 järjestystä.
 
 **BCD** (binary-coded decimal) koodaa jokaisen kymmenjärjestelmän

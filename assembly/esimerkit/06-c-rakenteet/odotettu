@@ -9,3 +9,6 @@ laske(5, 12, 5) = 9
 laske(6, 12, 5) = 384
 laske(7, 12, 5) = 0
 listan_summa: 60
+kymmenesosa(1234567) = 123456
+kahdeksasosa(-17) = -2, kahdeksasosa(17) = 2
+valita(-20) = 39

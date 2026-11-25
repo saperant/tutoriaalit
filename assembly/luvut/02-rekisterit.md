@@ -32,6 +32,28 @@ jotka periytyvät 8- ja 16-bittisiltä edeltäjiltä:
 | `rdi` | `edi` | `di` | `dil` |
 | `r8` | `r8d` | `r8w` | `r8b` |
 
+Nimet ovat saman rekisterin osia, eivät eri rekistereitä:
+
+```{.dot otsikko="Rekisterin rax osat. Sama kuvio toistuu muissa yleisrekistereissä."}
+digraph {
+  node [shape=plaintext, style=""];
+  r [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td colspan="4" bgcolor="#E4DCF0">rax: 64 bittiä</td></tr>
+    <tr><td border="0" width="170"></td>
+        <td colspan="3" bgcolor="#E4DCF0">eax: 32 bittiä</td></tr>
+    <tr><td border="0"></td><td border="0" width="90"></td>
+        <td colspan="2" bgcolor="#E4DCF0">ax: 16 bittiä</td></tr>
+    <tr><td border="0"></td><td border="0"></td>
+        <td bgcolor="#F1E3CC" width="48">ah</td>
+        <td bgcolor="#E4DCF0" width="48">al</td></tr>
+    <tr><td border="0"><font point-size="9" color="#5B6B70">bitit 63–32</font></td>
+        <td border="0"><font point-size="9" color="#5B6B70">31–16</font></td>
+        <td border="0"><font point-size="9" color="#5B6B70">15–8</font></td>
+        <td border="0"><font point-size="9" color="#5B6B70">7–0</font></td></tr>
+  </table>>];
+}
+```
+
 ## Rekisterin leveys
 
 Kun käsky kirjoittaa rekisterin osaan, mitä tapahtuu muille biteille?
@@ -72,6 +94,12 @@ bitteihin lainkaan. Siksi tavun lukemiseen käytetään `movzbl`
 (laajenna nollilla) tai `movsbl` (laajenna etumerkillä) koko
 rekisteriin. Muuten ylimpiin bitteihin jäisi vanhaa roskaa.
 
+| Kirjoitus | Rekisterin ylemmät bitit |
+|-----------|--------------------------|
+| x86-64, 32 bittiä (`eax`) | nollataan |
+| x86-64, 8 tai 16 bittiä (`al`, `ax`) | säilyvät ennallaan |
+| RISC-V, W-käsky (`addw`) | bitin 31 kopioita (etumerkin laajennus) |
+
 ## Tavujärjestys
 
 Muisti on tavutaulukko. Monitavuinen arvo, kuten 32-bittinen
@@ -83,6 +111,22 @@ pienimmässä osoitteessa. `tavu`-funktio lukee sanan tavun `i`:
 ```
 
 ```{.gnuassembler tiedosto="esimerkit/02-rekisterit/rv.S" osa="tavu"}
+```
+
+```{.dot otsikko="Luku 0x11223344 muistissa osoitteessa p: vähiten merkitsevä tavu ensin"}
+digraph {
+  node [shape=plaintext, style=""];
+  m [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="6">
+    <tr><td border="0"><font point-size="9" color="#5B6B70">p</font></td>
+        <td border="0"><font point-size="9" color="#5B6B70">p+1</font></td>
+        <td border="0"><font point-size="9" color="#5B6B70">p+2</font></td>
+        <td border="0"><font point-size="9" color="#5B6B70">p+3</font></td></tr>
+    <tr><td bgcolor="#E4DCF0" width="44"><font face="DejaVu Sans Mono">44</font></td>
+        <td bgcolor="#E4DCF0" width="44"><font face="DejaVu Sans Mono">33</font></td>
+        <td bgcolor="#E4DCF0" width="44"><font face="DejaVu Sans Mono">22</font></td>
+        <td bgcolor="#E4DCF0" width="44"><font face="DejaVu Sans Mono">11</font></td></tr>
+  </table>>];
+}
 ```
 
 Tulosteessa tavut ovat järjestyksessä `44 33 22 11`. Tavujärjestys
@@ -104,10 +148,10 @@ taulukon alkion, jonka koko on 1–8 tavua. RISC-V:n ainoa muoto on
 `siirtymä(kanta)`: kanta-rekisteri plus 12-bittinen vakio. Indeksin
 kertominen ja lisääminen tehdään erillisillä käskyillä:
 
-```{.gnuassembler tiedosto="esimerkit/03-osoitus/x86.S" osa="hae"}
+```{.gnuassembler tiedosto="esimerkit/02-osoitus/x86.S" osa="hae"}
 ```
 
-```{.gnuassembler tiedosto="esimerkit/03-osoitus/rv.S" osa="hae"}
+```{.gnuassembler tiedosto="esimerkit/02-osoitus/rv.S" osa="hae"}
 ```
 
 Ero on tyypillinen: x86-64 tekee yhdellä pitkällä käskyllä sen, mihin
@@ -119,6 +163,94 @@ ja RISC-V-suoritin voi yhdistää peräkkäisiä käskyjä (*macro-op fusion*).
 Kääntäjä käyttää sitä myös tavalliseen laskentaan: `lea (%rdi,%rdi,2),
 %rax` laskee `3 * rdi` yhdellä käskyllä muuttamatta lippuja.
 
+## Globaali data ja vakiot
+
+Tähän asti data on tullut funktion argumentteina. Ohjelman omat
+muuttujat ja taulukot sijoitetaan *osioihin*, jotka kokoaja valitsee
+direktiivillä:
+
+| Osio | Sisältö | Direktiivejä |
+|------|---------|--------------|
+| `.text` | käskyt | |
+| `.rodata` | vakiot ja taulukot, vain luku | `.quad`, `.long`, `.byte`, `.ascii`, `.asciz` |
+| `.data` | alustetut muuttujat | samat |
+| `.bss` | nollilla alustetut muuttujat | `.zero N` (ei vie tilaa tiedostossa) |
+
+```{.gnuassembler tiedosto="esimerkit/02-data/x86.S" osa="osiot"}
+```
+
+Käsky ei voi sisältää datan 64-bittistä osoitetta sellaisenaan, koska
+ohjelma ladataan joka ajolla eri osoitteeseen (taito
+*Objektitiedostot, linkitys ja ABI*). x86-64 osoittaa globaalia dataa
+*käskyosoittimen suhteen*: `laskuri(%rip)` tarkoittaa "tämän käskyn
+lopusta niin ja niin monta tavua eteenpäin". Etäisyys käskystä dataan
+on sama, ladattiinpa ohjelma mihin tahansa, ja linkkeri kirjoittaa sen
+käskyyn:
+
+```{.gnuassembler tiedosto="esimerkit/02-data/x86.S" osa="seuraava"}
+```
+
+```{.gnuassembler tiedosto="esimerkit/02-data/x86.S" osa="alkuluku"}
+```
+
+RISC-V:n käskyyn mahtuu vain 12-bittinen vakio, joten osoite haetaan
+ensin rekisteriin pseudokäskyllä `la` (*load address*) ja muistia
+käsitellään sen kautta:
+
+```{.gnuassembler tiedosto="esimerkit/02-data/rv.S" osa="seuraava"}
+```
+
+```{.gnuassembler tiedosto="esimerkit/02-data/rv.S" osa="alkuluku"}
+```
+
+Sama rajoitus koskee vakioita. x86-64:n `movabs` kantaa 64-bittisen
+vakion käskyn sisällä (kymmenen tavua). RISC-V:n `li` (*load
+immediate*) on pseudokäsky, jonka kokoaja purkaa niin moneksi käskyksi
+kuin vakio vaatii:
+
+```{.gnuassembler tiedosto="esimerkit/02-data/x86.S" osa="vakio"}
+```
+
+```{.gnuassembler tiedosto="esimerkit/02-data/rv.S" osa="vakio"}
+```
+
+```{.c tiedosto="esimerkit/02-data/main.c"}
+```
+
+```{.tuloste tiedosto="esimerkit/02-data/odotettu"}
+```
+
+Disassembly näyttää, miksi nämä pseudokäskyt ja osoitusmuodot on hyvä
+tunnistaa. x86-64:llä siirtymä on käskyn neljässä viimeisessä tavussa
+(objektitiedostossa vielä nollina):
+
+```{.gnuassembler tiedosto="esimerkit/02-data-tavut/x86.S"}
+```
+
+```{.tuloste tiedosto="esimerkit/02-data-tavut/odotettu-x86"}
+```
+
+RISC-V:llä sama näkyy käskypareina:
+
+```{.gnuassembler tiedosto="esimerkit/02-data-tavut/rv.S"}
+```
+
+```{.tuloste tiedosto="esimerkit/02-data-tavut/odotettu-rv"}
+```
+
+- `lla` on kaksi käskyä: `auipc` laskee osoitteen ylimmät bitit
+  käskyosoittimesta ja `addi` lisää alimmat 12 bittiä. Objektitiedostossa
+  siirtymät ovat vielä nollia, joten disassembleri näyttää `addi`:n
+  nimellä `mv`.
+- `la` tekee saman, mutta paikkariippumattomassa koodissa (Ubuntun
+  kääntäjän oletus) se lukee osoitteen taulukosta (`auipc` + `ld`).
+  Tämä GOT-taulu käsitellään taidossa *Objektitiedostot, linkitys ja
+  ABI*.
+- `li` on yksi käsky, kun vakio mahtuu 12 bittiin, `lui` + `addiw`,
+  kun se mahtuu 32 bittiin, ja 64-bittiselle vakiolle siirtojen ja
+  lisäysten ketju. Kääntäjä sijoittaa suuret vakiot siksi usein
+  `.rodata`-osioon ja lataa ne muistista.
+
 ## Tietueet muistissa
 
 Tietueen kenttä on vakiosiirtymä tietueen alusta. Kääntäjä sijoittaa
@@ -127,16 +259,31 @@ kokonsa mukaisella rajalla (*alignment*). Assemblyssä siirtymät
 kirjoitetaan käsin, joten C-puolen asettelu kannattaa lukita
 `_Static_assert`-tarkistuksilla:
 
-```{.c tiedosto="esimerkit/03-osoitus/main.c" osa="tuote"}
+```{.c tiedosto="esimerkit/02-osoitus/main.c" osa="tuote"}
 ```
 
-```{.gnuassembler tiedosto="esimerkit/03-osoitus/x86.S" osa="arvo"}
+```{.dot otsikko="Tietueen tuote asettelu: kentän siirtymä on sen etäisyys tietueen alusta tavuina"}
+digraph {
+  node [shape=plaintext, style=""];
+  t [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="6">
+    <tr><td border="0" align="left"><font point-size="9" color="#5B6B70">0</font></td>
+        <td border="0" align="left"><font point-size="9" color="#5B6B70">4</font></td>
+        <td border="0" align="left"><font point-size="9" color="#5B6B70">8</font></td>
+        <td border="0" align="right"><font point-size="9" color="#5B6B70">16</font></td></tr>
+    <tr><td bgcolor="#E4DCF0" width="90">koodi<br/>4 tavua</td>
+        <td bgcolor="#F1E3CC" width="90">maara<br/>4 tavua</td>
+        <td bgcolor="#E4DCF0" width="180" colspan="2">hinta_snt<br/>8 tavua</td></tr>
+  </table>>];
+}
 ```
 
-```{.gnuassembler tiedosto="esimerkit/03-osoitus/rv.S" osa="arvo"}
+```{.gnuassembler tiedosto="esimerkit/02-osoitus/x86.S" osa="arvo"}
 ```
 
-```{.tuloste tiedosto="esimerkit/03-osoitus/odotettu"}
+```{.gnuassembler tiedosto="esimerkit/02-osoitus/rv.S" osa="arvo"}
+```
+
+```{.tuloste tiedosto="esimerkit/02-osoitus/odotettu"}
 ```
 
 Silmukka siirtää osoitinta tietueen koon (16 tavua) kerrallaan ja
@@ -160,6 +307,10 @@ RISC-V:n `lw` laajentaa etumerkillä aina, ja `lwu` nollilla.
   mihin tulkintaan koodi luottaa.
 - **Tavujärjestys rajapinnoissa.** Muunna data tunnettuun järjestykseen
   rajapinnassa (verkko, tiedosto), älä keskellä laskentaa.
+- **Vakiot `.rodata`-osioon, nollat `.bss`-osioon.** Vain luettava
+  data on suojattu kirjoituksilta ja jaetaan prosessien kesken, ja
+  `.bss` ei kasvata ohjelmatiedostoa. Kirjoitettavaa globaalia tilaa
+  kannattaa välttää assemblyssä samasta syystä kuin C:ssä.
 - **`lea` ei ole muistikäsky.** Se laskee osoitteen kaavalla.
   Kääntäjän tuottamassa koodissa se on usein yhteen- ja kertolasku.
 
@@ -175,3 +326,8 @@ RISC-V:n `lw` laajentaa etumerkillä aina, ja `lwu` nollilla.
   assemblyssä.
 - Osaat selittää little-endian-tavujärjestyksen ja sen, missä se
   näkyy.
+- Osaat sijoittaa datan osioihin `.rodata`, `.data` ja `.bss` ja
+  osoittaa sitä käskyosoittimen suhteen (x86-64) tai `la`-käskyllä
+  (RISC-V).
+- Osaat kertoa, miksi RISC-V:n `li` ja `la` purkautuvat useaksi
+  käskyksi.

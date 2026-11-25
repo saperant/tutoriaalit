@@ -32,10 +32,10 @@ Samaa numeroa voi käyttää uudelleen joka funktiossa.
 `strlen` on yksinkertaisin hyödyllinen silmukka: etsi nollatavu ja
 palauta etäisyys alusta.
 
-```{.gnuassembler tiedosto="esimerkit/05-ehdot/x86.S" osa="pituus"}
+```{.gnuassembler tiedosto="esimerkit/04-ehdot/x86.S" osa="pituus"}
 ```
 
-```{.gnuassembler tiedosto="esimerkit/05-ehdot/rv.S" osa="pituus"}
+```{.gnuassembler tiedosto="esimerkit/04-ehdot/rv.S" osa="pituus"}
 ```
 
 Rakenne vastaa C:n `while`-silmukkaa: ehto testataan ennen runkoa, ja
@@ -45,10 +45,10 @@ lopussa (`do`-`while`), ja tarkistaa ensimmäisen kierroksen erikseen
 (*loop rotation*). Silloin kierrosta kohden on vain yksi hyppy. Sen
 tunnistaa luvun 6 kääntäjän koodista.
 
-```{.c tiedosto="esimerkit/05-ehdot/main.c"}
+```{.c tiedosto="esimerkit/04-ehdot/main.c"}
 ```
 
-```{.tuloste tiedosto="esimerkit/05-ehdot/odotettu"}
+```{.tuloste tiedosto="esimerkit/04-ehdot/odotettu"}
 ```
 
 Tavu luetaan nollilla laajentaen (`lbu`). x86-64 vertaa muistissa
@@ -64,7 +64,7 @@ maksaa nykysuorittimella noin 15–20 kellojaksoa. Satunnaiseen dataan
 perustuvat haarat arvataan usein väärin. Silloin hypyn voi korvata
 *ehdollisella siirrolla*, joka valitsee arvon ilman hyppyä:
 
-```{.gnuassembler tiedosto="esimerkit/05-ehdot/x86.S" osa="rajaa"}
+```{.gnuassembler tiedosto="esimerkit/04-ehdot/x86.S" osa="rajaa"}
 ```
 
 `cmovl` kopioi lähteen kohteeseen vain, jos ehto `l` on tosi.
@@ -72,7 +72,7 @@ Suoritettavien käskyjen virta on aina sama, joten arvattavaa ei ole.
 Perus-RISC-V:ssä ehdollista siirtoa ei ole, joten rajaus tehdään
 hypyillä:
 
-```{.gnuassembler tiedosto="esimerkit/05-ehdot/rv.S" osa="rajaa"}
+```{.gnuassembler tiedosto="esimerkit/04-ehdot/rv.S" osa="rajaa"}
 ```
 
 `ble` on pseudokäsky (`bge` operandit vaihdettuina). Uudemmat

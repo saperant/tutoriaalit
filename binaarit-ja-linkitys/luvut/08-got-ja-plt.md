@@ -22,19 +22,26 @@ kohti; jokainen hyppää GOT:ssa olevaan osoitteeseen.
 Esimerkin mittauskirjasto laskee kutsunsa ja pyöristää tuloksen
 apufunktiolla:
 
-```{.c tiedosto="esimerkit/07-got-plt/mittari.c" osa="mittari"}
+```{.c tiedosto="esimerkit/08-got-plt/mittari.c" osa="mittari"}
 ```
 
 Kun tiedosto käännetään valitsimella `-fPIC`, relokaatiot näyttävät,
 miten kääntäjä viittaa omaan muuttujaansa ja funktioonsa:
 
-```{.bash tiedosto="esimerkit/07-got-plt/aja.sh" osa="pic"}
+```{.bash tiedosto="esimerkit/08-got-plt/aja.sh" osa="pic"}
 ```
 
-```{.bash tiedosto="esimerkit/07-got-plt/aja.sh" osa="nakyvyys"}
+```{.tuloste tiedosto="esimerkit/08-got-plt/odotettu" alkaen="== relokaatiot -fPIC-objektissa" asti="pyorista"}
 ```
 
-```{.tuloste tiedosto="esimerkit/07-got-plt/odotettu"}
+Sama näkyy konekielestä. Skripti rakentaa kirjaston kahdesti, ensin
+oletusnäkyvyydellä ja sitten piilotetuilla symboleilla (seuraava
+osio), ja tulostaa funktion `mittaa` kummastakin:
+
+```{.bash tiedosto="esimerkit/08-got-plt/aja.sh" osa="nakyvyys"}
+```
+
+```{.tuloste tiedosto="esimerkit/08-got-plt/odotettu" alkaen="== mittaa kirjastossa" asti="ret"}
 ```
 
 Tulos voi yllättää: `kutsuja` ja `pyorista` ovat *samassa
@@ -106,21 +113,68 @@ todellisen osoitteen GOT:n paikkaan. Sen jälkeen jokainen kutsu on
 epäsuora hyppy: yksi lisämuistiviittaus kutsua kohti, jonka
 haarautumisennustin oppii nopeasti.
 
+```{.dot otsikko="Kutsu jaettuun kirjastoon, kun GOT on täytetty (välitön sidonta tai toinen kutsu). Koodisivut ovat muuttumattomia; vain GOT on dataa."}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.5;
+  node [shape=box, style="filled", fontsize=10];
+  subgraph cluster_ohjelma {
+    label="ohjelma"; color="#B8C4C8"; fontsize=10;
+    kutsu [label="main:\ncall mittaa@plt", fillcolor="#E4DCF0"];
+    plt [label="PLT: mittaa@plt\njmp *GOT[mittaa]", fillcolor="#E4DCF0"];
+    got [label="GOT[mittaa]\n= funktion osoite", fillcolor="#F1E3CC"];
+  }
+  subgraph cluster_kirjasto {
+    label="libmittari.so"; color="#B8C4C8"; fontsize=10;
+    f [label="mittaa:\n…\nret", fillcolor="#E4DCF0"];
+  }
+  kutsu -> plt [label="1"];
+  plt -> got [label="2: lue", style=dashed];
+  plt -> f [label="3: hyppy"];
+}
+```
+
 *Laiska sidonta* (*lazy binding*) lykkää osoitteen ratkaisemista
 ensimmäiseen kutsuun. GOT:n paikassa on aluksi osoite takaisin
 PLT:hen, josta hypätään lataajan ratkaisijaan (`_dl_runtime_resolve`).
 Ratkaisija etsii symbolin, kirjoittaa osoitteen GOT:iin ja hyppää
-funktioon. Seuraavat kutsut menevät suoraan. Esimerkin ohjelma
+funktioon. Seuraavat kutsut menevät suoraan.
+
+```{.dot otsikko="Laiskan sidonnan ensimmäinen kutsu: GOT:n paikka osoittaa aluksi takaisin PLT:hen, ja lataajan ratkaisija korjaa sen"}
+digraph {
+  nodesep=0.5; ranksep=0.35;
+  node [shape=box, style="filled", fontsize=10];
+  kutsu [label="main: call mittaa@plt", fillcolor="#E4DCF0"];
+  plt [label="PLT: mittaa@plt\njmp *GOT[mittaa]", fillcolor="#E4DCF0"];
+  got [label="GOT[mittaa]\naluksi: PLT:n ratkaisukoodi", fillcolor="#F1E3CC"];
+  plt0 [label="PLT:n ratkaisukoodi\npush symbolin numero, jmp ratkaisijaan", fillcolor="#E4DCF0"];
+  ratk [label="ld.so: _dl_runtime_resolve", fillcolor="#EEF1F2"];
+  f [label="libmittari.so: mittaa", fillcolor="#E4DCF0"];
+  kutsu -> plt [label=" 1"];
+  plt -> plt0 [label=" 3"];
+  plt0 -> ratk [label=" 4"];
+  ratk -> f [label=" 6: hyppy"];
+  { rank=same; plt; got; }
+  plt -> got [label="2: lue", style=dashed];
+  ratk -> got [label=" 5: kirjoita osoite", style=dashed, constraint=false];
+}
+```
+ Esimerkin ohjelma
 kirjoittaa merkkirivit ennen ja jälkeen ensimmäisen kutsun, ja
 `LD_DEBUG=bindings` näyttää, milloin `mittaa` sidottiin:
 
-```{.c tiedosto="esimerkit/07-got-plt/main.c"}
+```{.c tiedosto="esimerkit/08-got-plt/main.c"}
 ```
 
-```{.bash tiedosto="esimerkit/07-got-plt/aja.sh" osa="oletus"}
+```{.bash tiedosto="esimerkit/08-got-plt/aja.sh" osa="oletus"}
 ```
 
-```{.bash tiedosto="esimerkit/07-got-plt/aja.sh" osa="laiska"}
+```{.tuloste tiedosto="esimerkit/08-got-plt/odotettu" alkaen="== oletus: sidonta käynnistyksessä" asti="ensimmäisen kutsun jälkeen"}
+```
+
+```{.bash tiedosto="esimerkit/08-got-plt/aja.sh" osa="laiska"}
+```
+
+```{.tuloste tiedosto="esimerkit/08-got-plt/odotettu" alkaen="== laiska sidonta"}
 ```
 
 Ubuntun GCC linkittää oletuksena valitsimella `-z now`: lippu
@@ -142,6 +196,90 @@ Valitsin `-fno-plt` poistaa PLT:n kokonaan: kääntäjä tuottaa
 kutsukohtaan `call *mittaa@GOTPCREL(%rip)`. Tämä säästää yhden
 hypyn mutta vaatii välittömän sidonnan.
 
+GOT:n kautta kulkee myös *epäsuora funktio* (IFUNC, `nm`:n kirjain
+`i`). Sen symboli ei osoita funktioon vaan valitsijaan, jonka lataaja
+ajaa sidonnan yhteydessä ja joka palauttaa toteutuksen osoitteen.
+glibc valitsee näin funktioille `memcpy` ja `strlen` suorittimen
+tukeman SIMD-version, eikä kutsuja huomaa eroa.
+
+## Säiekohtaiset muuttujat
+
+Säiekohtainen muuttuja (`_Thread_local`, C++:n `thread_local`) on
+olemassa kerran jokaista säiettä kohti. `errno` on tällainen, samoin
+monen kirjaston sisäinen tila. Se ei voi olla osiossa `.data`, koska
+`.data`:sta on prosessissa yksi kopio, joten sille on omat osionsa ja
+oma tapansa laskea osoite:
+
+```{.c tiedosto="esimerkit/08-tls/laskuri.c" osa="laskuri"}
+```
+
+```{.bash tiedosto="esimerkit/08-tls/aja.sh" osa="osiot"}
+```
+
+```{.tuloste tiedosto="esimerkit/08-tls/odotettu" alkaen="== osiot ja segmentti" asti="TLS FileSiz"}
+```
+
+Osiot `.tdata` ja `.tbss` vastaavat osioita `.data` ja `.bss`, ja
+lippu `T` merkitsee ne säiekohtaisiksi. Linkkeri kokoaa ne
+ohjelmaotsakkeeseen `TLS`. Se on *malli*: kun säie luodaan, lataaja
+tai säiekirjasto varaa säikeelle `MemSiz` tavua ja kopioi alkuun
+`FileSiz` tavua alkuarvoja. x86-64:llä rekisteri `fs` osoittaa
+säikeen omaan alueeseen.
+
+Miten koodi löytää muuttujan, riippuu siitä, mitä kääntäjä tietää.
+Ohjelman omassa koodissa muuttujan etäisyys säikeen osoittimesta on
+linkitysaikainen vakio (*local-exec*-malli), ja luku on yksi käsky:
+
+```{.bash tiedosto="esimerkit/08-tls/aja.sh" osa="ohjelma"}
+```
+
+```{.tuloste tiedosto="esimerkit/08-tls/odotettu" alkaen="== ohjelmassa" asti="ret"}
+```
+
+Jaetun kirjaston koodi ei tiedä, mihin kohtaan säikeen aluetta
+kirjaston muuttujat sijoittuvat, eikä edes, onko kirjasto ladattu
+`dlopen`:lla kesken ajon. Yleisessä tapauksessa (*general-dynamic*)
+se kysyy osoitteen funktiolta `__tls_get_addr`:
+
+```{.bash tiedosto="esimerkit/08-tls/aja.sh" osa="kirjasto"}
+```
+
+```{.tuloste tiedosto="esimerkit/08-tls/odotettu" alkaen="== jaetussa kirjastossa" asti="TLSGD kutsuja"}
+```
+
+Jos kirjasto ladataan aina ohjelman käynnistyksessä, etäisyys on
+lataajan tiedossa ja se voidaan lukea GOT:sta (*initial-exec*).
+Kääntäjälle tämä luvataan valitsimella tai attribuutilla
+`tls_model`:
+
+```{.bash tiedosto="esimerkit/08-tls/aja.sh" osa="initial"}
+```
+
+```{.tuloste tiedosto="esimerkit/08-tls/odotettu" alkaen="== kirjastossa, joka ladataan" asti="GOTTPOFF kutsuja"}
+```
+
+| Malli | Relokaatio | Hinta | Käyttö |
+|-------|------------|-------|--------|
+| local-exec | `TPOFF32` | yksi käsky | ohjelman oma muuttuja |
+| initial-exec | `GOTTPOFF` | lataus GOT:sta | kirjasto, jota ei ladata `dlopen`:lla |
+| general-dynamic | `TLSGD` + `__tls_get_addr` | funktiokutsu | mikä tahansa jaettu kirjasto |
+
+Linkkeri osaa keventää mallia, kun se näkee lopputuloksen: ohjelmaan
+linkitetty general-dynamic-koodi muutetaan local-exec-muotoon.
+Ohjelma, jossa kaksi säiettä ja pääsäie kasvattavat laskuria,
+tulostaa kolme toisistaan riippumatonta arvoa:
+
+```{.c tiedosto="esimerkit/08-tls/main.c" osa="saie"}
+```
+
+```{.tuloste tiedosto="esimerkit/08-tls/odotettu" alkaen="== ajo"}
+```
+
+Kun `objdump -dr` näyttää relokaation, jonka nimessä on `TLS` tai
+`TPOFF`, tai käskyn, joka osoittaa `%fs`:n kautta, kyse on
+säiekohtaisesta muuttujasta. Luvun 12 aputaulukon satunnaisluvuista
+tehty pinosuojan vertailuarvo luetaan samalla tavalla (`%fs:0x28`).
+
 ## Käytännössä
 
 - **Käännä kirjastot `-fvisibility=hidden`:llä** ja merkitse rajapinta
@@ -153,6 +291,10 @@ hypyn mutta vaatii välittömän sidonnan.
 - **Älä käytä `-Bsymbolic`:ia sokeasti.** Se nopeuttaa kirjastoa
   mutta estää symbolien korvaamisen, jota muistinhallintakirjastot ja
   kääreet tarvitsevat. Näkyvyys on tarkempi keino.
+- **Säiekohtainen muuttuja kirjastossa maksaa funktiokutsun.** Jos
+  kirjastoa ei ladata `dlopen`:lla, `-ftls-model=initial-exec`
+  poistaa kutsun. Kuumassa silmukassa osoite kannattaa hakea kerran
+  paikalliseen osoittimeen.
 - **Mittaa ennen kuin poistat PLT:n.** `-fno-plt` ja
   linkitysaikainen optimointi auttavat vain kuumissa kutsupoluissa.
 
@@ -166,3 +308,6 @@ hypyn mutta vaatii välittömän sidonnan.
   tunnistaa niiden vaikutuksen konekielestä.
 - Osaat kertoa, miksi täysi RELRO edellyttää välitöntä sidontaa ja
   miten sen tarkistaa.
+- Osaat selittää, mihin säiekohtainen muuttuja sijoitetaan
+  (`.tdata`, `.tbss`, `TLS`-otsake) ja miksi jaettu kirjasto hakee sen
+  osoitteen eri tavalla kuin ohjelma.

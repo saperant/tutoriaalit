@@ -14,14 +14,34 @@ reunaa:
 
 $$T \geq t_{cq} + t_{logiikka,max} + t_{su}$$
 
+```{.ajoituskaavio otsikko="Asetusehto: lähettävältä reunalta vastaanottavalle. Jakson on katettava kiikun viive, logiikan viive ja asetusaika; loppu on marginaalia."}
+{"signal": [
+  {"name": "clk", "wave": "lh......l......h."},
+  {"name": "A:n lähtö", "wave": "=..=.............", "data": ["vanha", "uusi"]},
+  {"name": "B:n tulo", "wave": "=.........=......", "data": ["vanha", "uusi"]},
+  {"name": "jakso T", "wave": "z2.3......4..5.z.", "data": ["t_cq", "t_logiikka", "vara", "t_su"]}
+], "config": {"hscale": 0.75}}
+```
+
 Pisin tällainen polku on *kriittinen polku*, ja se määrää suurimman
-kellotaajuuden $f_{max} = 1/T_{min}$.
+kellotaajuuden $f_{max} = 1/T_{min}$. Aika, joka jaksosta jää yli, on
+*marginaali* (*slack*); negatiivinen marginaali on asetusrike.
 
 Toinen ehto koskee lyhintä polkua. B näytteistää vanhan arvon samalla
 reunalla, jolla A muuttuu. Uusi arvo ei saa ehtiä B:hen ennen kuin
 pitoaika $t_h$ on kulunut:
 
 $$t_{cq} + t_{logiikka,min} \geq t_h$$
+
+```{.ajoituskaavio otsikko="Pitoehto: sama reuna molemmissa kiikuissa. Uusi arvo saa tulla B:n tuloon vasta pitoajan jälkeen."}
+{"signal": [
+  {"name": "clk", "wave": "l..h........"},
+  {"name": "A:n lähtö", "wave": "=....=......", "data": ["vanha", "uusi"]},
+  {"name": "B:n tulo", "wave": "=......=....", "data": ["vanha", "uusi"]},
+  {"name": "polku", "wave": "z..2.3.z....", "data": ["t_cq", "t_min"]},
+  {"name": "B:n ikkuna", "wave": "z..4.5.z....", "data": ["t_h", "vara"]}
+], "config": {"hscale": 0.75}}
+```
 
 Asetusehto riippuu kellojaksosta, pitoehto ei. Asetusrikkeen voi
 korjata hidastamalla kelloa; pitorikettä ei voi, vaan piiriin on
@@ -51,7 +71,7 @@ välissä:
 ```{.python tiedosto="esimerkit/11-ajoitus.py" osa="vertailu"}
 ```
 
-```{.tuloste tiedosto="esimerkit/11-ajoitus.odotettu"}
+```{.tuloste tiedosto="esimerkit/11-ajoitus.odotettu" rivit="1-8"}
 ```
 
 Kriittinen polku alkaa bitistä 0, kulkee muistibittien ketjun läpi ja
@@ -71,6 +91,29 @@ välissä on rekisteri: alaosa lasketaan ensimmäisessä jaksossa, yläosa
 ja sen muistibitti toisessa. Polku puolittuu ja kellotaajuus lähes
 kaksinkertaistuu (704 → 1282 MHz).
 
+```{.dot otsikko="Summain yhdessä jaksossa ja kahtena liukuhihnavaiheena. Välirekisteri kuljettaa alaosan summan, muistibitin ja yläosan syötteet seuraavaan jaksoon."}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.4;
+  node [shape=box, style="rounded,filled"];
+  subgraph cluster_jalkeen {
+    label="jälkeen: 700 ps kummassakin vaiheessa"; color="#B8C4C8";
+    p1 [label="rekisteri\na, b", style="filled"];
+    ala [label="summain\nbitit 0–7"];
+    p2 [label="välirekisteri\ns[7:0], c8,\na[15:8], b[15:8]", style="filled"];
+    yla [label="summain\nbitit 8–15"];
+    p3 [label="rekisteri\nsumma", style="filled"];
+    p1 -> ala -> p2 -> yla -> p3;
+  }
+  subgraph cluster_ennen {
+    label="ennen: 1340 ps logiikkaa rekisterien välissä"; color="#B8C4C8";
+    r1 [label="rekisteri\na, b", style="filled"];
+    s16 [label="summain\nbitit 0–15"];
+    r2 [label="rekisteri\nsumma", style="filled"];
+    r1 -> s16 -> r2;
+  }
+}
+```
+
 Hinta on *latenssi*: yksittäinen summa valmistuu kahdessa jaksossa
 yhden sijaan. *Läpäisy* sen sijaan kasvaa: uusi summa voi alkaa joka
 jakso. Liukuhihnoitus kannattaa, kun laskentaa on paljon peräkkäin
@@ -89,9 +132,27 @@ syötteet ja alaosan tulos viivästettyinä) kuuluvat toteutukseen.
 Todellisuudessa kello ei saavu kaikkiin kiikkuihin samaan aikaan. Ero
 on *kellon vino* (clock skew), ja jakso jaksolta vaihteleva epätarkkuus
 on *värinä* (jitter). Jos kello saapuu B:hen myöhemmin kuin A:han,
-asetusehtoon jää enemmän aikaa mutta pitoehto tiukkenee. Siksi
-kellopuu suunnitellaan erikseen niin, että vino on pieni, ja
-ajoitusanalyysi ottaa sen huomioon.
+asetusehtoon jää enemmän aikaa mutta pitoehto tiukkenee; jos se saapuu
+aikaisemmin, käy päinvastoin. Kun suuntaa ei tunneta, vino
+$t_{vino}$ kiristää molempia ehtoja:
+
+$$T \geq t_{cq} + t_{logiikka,max} + t_{su} + t_{vino}
+\qquad
+t_{cq} + t_{logiikka,min} \geq t_h + t_{vino}$$
+
+Esimerkin liukuhihnoitettu summain kestää 50 pikosekunnin vinon, mutta
+sadalla pitomarginaali on jo negatiivinen:
+
+```{.python tiedosto="esimerkit/11-ajoitus.py" osa="vino"}
+```
+
+```{.tuloste tiedosto="esimerkit/11-ajoitus.odotettu" alkaen="sama, kellon vino 50 ps"}
+```
+
+Asetusehdossa vino maksaa vain taajuutta (1282 → 1136 MHz).
+Pitoehdossa se rikkoo piirin, koska lyhin polku on yhden XOR-portin
+mittainen. Siksi kellopuu suunnitellaan erikseen niin, että vino on
+pieni, ja ajoitusanalyysi ottaa sen huomioon molemmissa ehdoissa.
 
 ## Käytännössä
 
@@ -112,7 +173,8 @@ ajoitusanalyysi ottaa sen huomioon.
 ## Itsearviointi
 
 - Osaat kirjoittaa asetus- ja pitoehdon ja laskea suurimman
-  kellotaajuuden.
+  kellotaajuuden ja marginaalin.
+- Osaat kertoa, miten kellon vino vaikuttaa kumpaankin ehtoon.
 - Osaat selittää, miksi pitorike on vakavampi kuin asetusrike.
 - Osaat kuvata staattisen ajoitusanalyysin periaatteen ja käsitteet
   false path ja multicycle path.

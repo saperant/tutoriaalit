@@ -27,9 +27,36 @@ Yksinkertaisin $n$-bittinen summain on $n$ täyssummainta ketjussa:
 ```{.systemverilog tiedosto="esimerkit/06-summain/rca.sv" osa="rca"}
 ```
 
+```{.dot otsikko="Neljän bitin ripple-carry-summain: muistibitti kulkee ketjuna bitistä 0 bittiin 3"}
+digraph {
+  rankdir=RL; nodesep=0.3; ranksep=0.45;
+  node [shape=plaintext, style=""];
+  fa0 [label=<<table border="0" cellborder="0" cellspacing="2">
+    <tr><td>a0 b0</td></tr>
+    <tr><td border="1" bgcolor="#E4DCF0" cellpadding="6">täyssummain</td></tr>
+    <tr><td>s0</td></tr></table>>];
+  fa1 [label=<<table border="0" cellborder="0" cellspacing="2">
+    <tr><td>a1 b1</td></tr>
+    <tr><td border="1" bgcolor="#E4DCF0" cellpadding="6">täyssummain</td></tr>
+    <tr><td>s1</td></tr></table>>];
+  fa2 [label=<<table border="0" cellborder="0" cellspacing="2">
+    <tr><td>a2 b2</td></tr>
+    <tr><td border="1" bgcolor="#E4DCF0" cellpadding="6">täyssummain</td></tr>
+    <tr><td>s2</td></tr></table>>];
+  fa3 [label=<<table border="0" cellborder="0" cellspacing="2">
+    <tr><td>a3 b3</td></tr>
+    <tr><td border="1" bgcolor="#E4DCF0" cellpadding="6">täyssummain</td></tr>
+    <tr><td>s3</td></tr></table>>];
+  c0 [label="c0"]; c4 [label="c4"];
+  c0 -> fa0; fa0 -> fa1 [label="c1"]; fa1 -> fa2 [label="c2"];
+  fa2 -> fa3 [label="c3"]; fa3 -> c4;
+}
+```
+
 Ketju on pieni, mutta muistibitti kulkee pahimmillaan kaikkien bittien
 läpi. Jokainen täyssummain lisää muistipolulle kaksi porttiviivettä
-(AND ja OR), joten viive kasvaa lineaarisesti: 64-bittinen summain on
+(AND ja OR), joten viive kasvaa lineaarisesti: $n$-bittisen summaimen
+muistipolku on noin $2n$ porttiviivettä, ja 64-bittinen summain on
 16 kertaa hitaampi kuin 4-bittinen.
 
 ## Carry-lookahead
@@ -57,27 +84,20 @@ syötteillä:
 ```{.tuloste tiedosto="esimerkit/06-summain.odotettu"}
 ```
 
-## Viiveet simuloituina
+## Viive laskettuna
 
-Kumpi on nopeampi ja paljonko? Luvun 7 porttisimulaattori rakentaa
-molemmat porttitasolla ja mittaa pahimman tapauksen asettumisajan,
-kun jokaisen portin viive on yksi aikayksikkö:
+Kumpi on nopeampi ja paljonko? Karkean arvion saa laskemalla portit
+pisimmällä polulla. Ripple-carry-summaimessa muistibitti kulkee
+kahden portin läpi bittiä kohden, eli $2n$ porttiviivettä.
+Lohkoittaisessa lookaheadissa muistibitti ylittää neljän bitin lohkon
+kahdessa porttiviiveessä, joten viive on noin $n/2$ ja muutama
+porttiviive lohkon sisällä. Luvussa 7 sama mitataan
+porttisimulaattorilla, ja tulos vastaa arviota.
 
-```{.python tiedosto="esimerkit/06-summaimet.py" osa="cla"}
-```
-
-```{.python tiedosto="esimerkit/06-summaimet.py" osa="mittaus"}
-```
-
-```{.tuloste tiedosto="esimerkit/06-summaimet.odotettu"}
-```
-
-Ripple-carry kasvaa $2n$:nä, lohkoittainen lookahead noin $n/2$:na:
-lohkon läpi muistibitti kulkee kahdessa porttiviiveessä neljän bitin
-sijaan. Nopeammat rakenteet (Kogge–Stone, Brent–Kung) järjestävät
-generoi- ja välitä-termit puuksi, jolloin viive kasvaa
-logaritmisesti. Synteesityökalu valitsee rakenteen ajoitusvaatimuksen
-mukaan: kun kello on hidas, se tekee pienen ripple-carry-summaimen.
+Nopeammat rakenteet (Kogge–Stone, Brent–Kung) järjestävät generoi- ja
+välitä-termit puuksi, jolloin viive kasvaa logaritmisesti.
+Synteesityökalu valitsee rakenteen ajoitusvaatimuksen mukaan: kun
+kello on hidas, se tekee pienen ripple-carry-summaimen.
 
 ## ALU ja tilaliput
 
@@ -117,6 +137,41 @@ tavoin: 7 + 1 = 1000 on etumerkittömänä 8 (C = 0, oikein) mutta
 etumerkillisenä −8 (V = 1, ylivuoto). Laitteisto laskee kummankin
 lipun aina; ohjelma valitsee, kumpaa se katsoo.
 
+## Siirrin ja kertoja
+
+Kaksi muuta aritmetiikan lohkoa rakentuu suoraan luvun 5
+multipleksereistä ja tämän luvun summaimista.
+
+*Siirrin* (*barrel shifter*) siirtää sanaa valitun määrän bittejä
+yhdessä jaksossa. Siirtomäärän jokainen bitti ohjaa yhtä
+multiplekserikerrosta: ensimmäinen kerros siirtää yhden bitin tai ei
+mitään, toinen kaksi, kolmas neljä. $n$-bittinen siirrin tarvitsee
+$\log_2 n$ kerrosta, ja viive on sama kaikilla siirtomäärillä:
+
+```{.systemverilog tiedosto="esimerkit/06-siirrin.sv" osa="siirrin"}
+```
+
+*Kertoja* tekee saman kuin kertolasku kynällä ja paperilla. Kertojan
+jokainen bitti valitsee AND-porteilla, otetaanko siirretty kerrottava
+mukaan (*osatulo*), ja osatulot lasketaan yhteen. $n$-bittisessä
+taulukkokertojassa on $n^2$ AND-porttia ja $n - 1$ summainriviä, joten
+se on sekä suuri että hidas: 32-bittinen kertoja on suorittimen
+suurimpia kombinaatiolohkoja.
+
+```{.systemverilog tiedosto="esimerkit/06-siirrin.sv" osa="kertoja"}
+```
+
+```{.systemverilog tiedosto="esimerkit/06-siirrin.sv" osa="testipenkki"}
+```
+
+```{.tuloste tiedosto="esimerkit/06-siirrin.odotettu"}
+```
+
+Oikeat kertojat laskevat osatulot yhteen puuna (Wallace, Dadda) ja
+puolittavat osatulojen määrän Boothin koodauksella. Jakolasku on
+iteratiivinen eikä mahdu yhteen kombinaatiolohkoon samalla tavalla;
+algoritmit käsitellään taidossa *Miten tietokone laskee*.
+
 ## Käytännössä
 
 - **Kirjoita `a + b`, älä summainta.** RTL-kuvauksessa summa kirjoitetaan
@@ -129,6 +184,10 @@ lipun aina; ohjelma valitsee, kumpaa se katsoo.
 - **Leveys kasvaa yhdellä bitillä.** Kahden $n$-bittisen luvun summa
   tarvitsee $n+1$ bittiä. Jos ylimääräistä bittiä ei säilytetä,
   ylivuoto on hiljainen.
+- **Siirto vakiolla on ilmaista, kertolasku ei.** Siirto vakiomäärällä
+  on pelkkää johdotusta. Kertoja sen sijaan on suuri: FPGA:ssa käytetään
+  valmiita kertojalohkoja, ja leveä kertolasku liukuhihnoitetaan
+  (luku 11).
 - **Liput ovat sopimus.** Lipun merkitys (erityisesti C vähennyksessä)
   vaihtelee arkkitehtuureittain. Tarkista dokumentaatio ennen kuin
   kirjoitat vertailuja assemblyllä.
@@ -140,5 +199,7 @@ lipun aina; ohjelma valitsee, kumpaa se katsoo.
 - Osaat selittää, miksi ripple-carry-summaimen viive kasvaa lineaarisesti
   ja miten carry-lookahead lyhentää sitä ja millä hinnalla.
 - Osaat toteuttaa vähennyksen summaimella.
+- Osaat selittää siirtimen multiplekserikerroksina ja kertojan
+  osatuloina ja summainriveinä.
 - Osaat laskea ALUn liput N, Z, C ja V ja tulkita ne etumerkittömälle
   ja etumerkilliselle laskulle.

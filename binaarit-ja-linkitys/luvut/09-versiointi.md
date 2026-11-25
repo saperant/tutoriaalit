@@ -28,22 +28,22 @@ kehityksessä, ja jakelut pakkaavat sen kehityspakettiin (`-dev`).
 
 Esimerkin kirjasto täyttää asetusrakenteen oletusarvoilla:
 
-```{.c tiedosto="esimerkit/08-soname/v1/asetukset.h"}
+```{.c tiedosto="esimerkit/09-soname/v1/asetukset.h"}
 ```
 
-```{.c tiedosto="esimerkit/08-soname/asetukset.c"}
+```{.c tiedosto="esimerkit/09-soname/asetukset.c"}
 ```
 
 Skriptin apufunktio `kirjasto` kääntää kirjaston annetulla otsakkeella
 ja versiolla ja asettaa sonamen:
 
-```{.bash tiedosto="esimerkit/08-soname/aja.sh" osa="v1"}
+```{.bash tiedosto="esimerkit/09-soname/aja.sh" osa="v1"}
 ```
 
 Yhteensopiva korjausversio 1.1 vaihtaa vain linkin kohteen. Ohjelmaa
 ei linkitetä uudelleen:
 
-```{.bash tiedosto="esimerkit/08-soname/aja.sh" osa="v11"}
+```{.bash tiedosto="esimerkit/09-soname/aja.sh" osa="v11"}
 ```
 
 ## Kun ABI muuttuu
@@ -52,24 +52,24 @@ Versiossa 2 rakenteen kenttien järjestys vaihtui. Muutos näyttää
 harmittomalta: lähdekoodi, joka käyttää kenttiä nimillä, kääntyy
 ennallaan.
 
-```{.c tiedosto="esimerkit/08-soname/v2/asetukset.h"}
+```{.c tiedosto="esimerkit/09-soname/v2/asetukset.h"}
 ```
 
 Jos kehittäjä unohtaa vaihtaa sonamen, vanha ohjelma lataa uuden
 kirjaston, ja kirjasto kirjoittaa kentät eri järjestyksessä kuin
 ohjelma ne lukee:
 
-```{.bash tiedosto="esimerkit/08-soname/aja.sh" osa="rikki"}
+```{.bash tiedosto="esimerkit/09-soname/aja.sh" osa="rikki"}
 ```
 
 Oikein tehtynä uusi versio saa uuden sonamen. Molemmat versiot ovat
 asennettuina rinnakkain, vanhat ohjelmat käyttävät versiota 1 ja
 uudet versiota 2:
 
-```{.bash tiedosto="esimerkit/08-soname/aja.sh" osa="oikein"}
+```{.bash tiedosto="esimerkit/09-soname/aja.sh" osa="oikein"}
 ```
 
-```{.tuloste tiedosto="esimerkit/08-soname/odotettu"}
+```{.tuloste tiedosto="esimerkit/09-soname/odotettu"}
 ```
 
 Virheellinen tulos (`nopeus 5 mm/s, tarkkuus 120 um`) ei kaada

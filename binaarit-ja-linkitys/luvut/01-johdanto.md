@@ -43,7 +43,7 @@ Windowsin PE/COFF ratkaisevat samat ongelmat eri nimillä.
 | 5 | Relokaatiot | paikat, jotka linkkeri täyttää |
 | 6 | Staattinen linkitys | arkistot, järjestys, kaksoismäärittely |
 | 7 | Jaetut kirjastot | hakupolut, `RUNPATH`, `$ORIGIN` |
-| 8 | Paikkariippumaton koodi | GOT, PLT, näkyvyys, sidonta |
+| 8 | Paikkariippumaton koodi | GOT, PLT, näkyvyys, sidonta, säiekohtainen muisti |
 | 9 | Kirjastojen versiointi | soname, symboliversiot |
 | 10 | Symbolien sidonta ajossa | törmäykset, `LD_PRELOAD` |
 | 11 | Linkkeriskriptit | omat osiot, muistikartta, rekisteri |
@@ -56,27 +56,33 @@ Luvut 2–6 käsittelevät yhtä objektitiedostoa ja sen linkittämistä
 ohjelmaksi, luvut 7–10 jaettuja kirjastoja ja luvut 11–14 linkityksen
 hallintaa, käynnistystä ja binäärirajapintaa.
 
-## Esitiedot ja jatkotaidot
+## Esitiedot ja rajaus
 
-Esitiedoiksi oletetaan *Assembly*: rekisterit, kutsukonventio, pino ja
-x86-64:n osoitusmuodot, koska konekielen lukeminen on tämän
-tutoriaalin perustyökalu. C-kielen osoittimet, rakenteet ja erillinen
-kääntäminen oletetaan tutuiksi. Rinnakkainen taito *Rakennus ja
-testaus* käsittelee samaa aihetta rakennusjärjestelmän näkökulmasta
-(Make, CMake, riippuvuudet); tämä tutoriaali kertoo, mitä
-rakennusjärjestelmän ajamat komennot tekevät.
+Esitiedoksi oletetaan taito *Assembly*: rekisterit, kutsukonventio,
+pino ja x86-64:n osoitusmuodot, koska konekielen lukeminen on tämän
+tutoriaalin perustyökalu. Sen mukana oletetaan tutuiksi C-kielen
+osoittimet, rakenteet ja erillinen kääntäminen.
 
-Jatkotaitoja ovat *Mikrokontrollerit* (linkkeriskriptit ja
-käynnistyskoodi ilman käyttöjärjestelmää), *Takaisinmallinnus*
-(binäärien lukeminen ilman lähdekoodia) ja *Haavoittuvuudet*
-(muistiturvallisuus, suojaukset kuten RELRO, PIE ja pinon suojaus).
+Tutoriaalin ulkopuolelle jäävät:
+
+- rakennusjärjestelmät (Make, CMake, riippuvuudet): taito
+  *Käännösjärjestelmät, testaus ja CI*. Tämä tutoriaali kertoo, mitä
+  rakennusjärjestelmän ajamat komennot tekevät.
+- mikro-ohjaimen muistikartta ja käynnistyskoodi ilman
+  käyttöjärjestelmää: *Mikrokontrollerit ja bare-metal-ohjelmointi*.
+  Linkkeriskriptien perusteet ovat luvussa 11.
+- binäärien lukeminen ilman lähdekoodia: *Takaisinmallinnus*
+- muistivirheiden hyödyntäminen ja suojausten yksityiskohdat:
+  *Haavoittuvuuksien analyysi ja torjunta*. Suojaukset (RELRO, PIE,
+  pinon oikeudet) esitellään siellä, missä ne näkyvät ELF-tiedostossa.
+- muut tiedostomuodot (Mach-O, PE/COFF) ja muut arkkitehtuurit.
 
 ## Työkalut ja esimerkit
 
 Esimerkit on tehty Ubuntu 24.04:llä: GCC 14, binutils 2.42 ja glibc
 2.39. Kehityskontti (`.devcontainer/binaarit-ja-linkitys`) sisältää
 samat työkalut. Jokainen esimerkki on hakemisto `esimerkit/NN-nimi/`,
-jossa on lähdekoodi ja skripti `aja.sh`. Skripti kääntää, linkittää,
+jossa on lähdekoodi ja skripti `aja.sh`; numero `NN` on luvun numero. Skripti kääntää, linkittää,
 tutkii tulokset ja ajaa ohjelmat; tutoriaalissa näytetyt komennot ja
 tulosteet ovat näistä skripteistä. Tulosteet ovat sellaisenaan
 tiedostoissa `odotettu`, ja testi vertaa jokaista ajoa niihin:

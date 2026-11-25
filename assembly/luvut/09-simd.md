@@ -30,14 +30,39 @@ toteutuksesta, ja sama ohjelma toimii kaikilla pituuksilla. Käsky
 
 Skalaariversio laskee yhden alkion kerrallaan:
 
-```{.gnuassembler tiedosto="esimerkit/10-simd/x86.S" osa="skalaari"}
+```{.gnuassembler tiedosto="esimerkit/09-simd/x86.S" osa="skalaari"}
 ```
 
 SSE2-versio pitää neljää osasummaa yhdessä `xmm`-rekisterissä. Silmukan
 jälkeen osasummat lasketaan yhteen *horisontaalisesti*: puoliskot
 vaihdetaan keskenään (`pshufd`) ja lasketaan yhteen kahdesti:
 
-```{.gnuassembler tiedosto="esimerkit/10-simd/x86.S" osa="sse2"}
+```{.gnuassembler tiedosto="esimerkit/09-simd/x86.S" osa="sse2"}
+```
+
+```{.dot otsikko="Horisontaalinen summa: neljän kaistan osasummat s3…s0 yhdeksi luvuksi kahdella vaihdolla ja kahdella yhteenlaskulla"}
+digraph {
+  node [shape=plaintext, style=""];
+  h [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="right">osasummat, xmm0</td>
+        <td bgcolor="#E4DCF0" width="70">s3</td><td bgcolor="#E4DCF0" width="70">s2</td>
+        <td bgcolor="#E4DCF0" width="70">s1</td><td bgcolor="#E4DCF0" width="70">s0</td></tr>
+    <tr><td border="0" align="right">pshufd $0x4e → xmm1</td>
+        <td bgcolor="#F1E3CC">s1</td><td bgcolor="#F1E3CC">s0</td>
+        <td bgcolor="#F1E3CC">s3</td><td bgcolor="#F1E3CC">s2</td></tr>
+    <tr><td border="0" align="right">paddd → xmm0</td>
+        <td bgcolor="#E4DCF0">s3+s1</td><td bgcolor="#E4DCF0">s2+s0</td>
+        <td bgcolor="#E4DCF0">s1+s3</td><td bgcolor="#E4DCF0">s0+s2</td></tr>
+    <tr><td border="0" align="right">pshufd $0xb1 → xmm1</td>
+        <td bgcolor="#F1E3CC">s2+s0</td><td bgcolor="#F1E3CC">s3+s1</td>
+        <td bgcolor="#F1E3CC">s0+s2</td><td bgcolor="#F1E3CC">s1+s3</td></tr>
+    <tr><td border="0" align="right">paddd → xmm0</td>
+        <td bgcolor="#E4DCF0">summa</td><td bgcolor="#E4DCF0">summa</td>
+        <td bgcolor="#E4DCF0">summa</td><td bgcolor="#E4DCF0"><b>summa</b></td></tr>
+    <tr><td border="0"></td><td border="0"></td><td border="0"></td><td border="0"></td>
+        <td border="0"><font point-size="9" color="#5B6B70">movd lukee<br/>alimman kaistan</font></td></tr>
+  </table>>];
+}
 ```
 
 `movdqu` lataa 16 tavua kohdistamattomasta osoitteesta. Kohdistettu
@@ -45,7 +70,7 @@ vaihdetaan keskenään (`pshufd`) ja lasketaan yhteen kahdesti:
 luvun 5 pinon tasauksessa. AVX2-versio tekee saman kahdeksalla
 kaistalla, ja `vpaddd` voi lukea muistioperandin suoraan:
 
-```{.gnuassembler tiedosto="esimerkit/10-simd/x86.S" osa="avx2"}
+```{.gnuassembler tiedosto="esimerkit/09-simd/x86.S" osa="avx2"}
 ```
 
 `vzeroupper` nollaa `ymm`-rekisterien ylemmät puoliskot ennen paluuta.
@@ -60,7 +85,7 @@ e32, m1` pyytää käsittelemään jäljellä olevat `a1` alkiota
 rekisteriin. Viimeinen, vajaa kierros käsitellään samalla koodilla.
 Erillistä hännän käsittelyä ei tarvita:
 
-```{.gnuassembler tiedosto="esimerkit/10-simd/rv.S" osa="rvv"}
+```{.gnuassembler tiedosto="esimerkit/09-simd/rv.S" osa="rvv"}
 ```
 
 Valitsin `tu` (*tail undisturbed*) säilyttää käsittelemättömät kaistat,
@@ -76,17 +101,17 @@ AVX2 ei ole kaikissa x86-64-suorittimissa, ja tukemattoman käskyn
 suoritus kaataa ohjelman (`SIGILL`). Pääohjelma tarkistaa tuen ennen
 käyttöä:
 
-```{.c tiedosto="esimerkit/10-simd/main.c"}
+```{.c tiedosto="esimerkit/09-simd/main.c"}
 ```
 
 x86-64:llä:
 
-```{.tuloste tiedosto="esimerkit/10-simd/odotettu-x86"}
+```{.tuloste tiedosto="esimerkit/09-simd/odotettu-x86"}
 ```
 
 RISC-V:llä:
 
-```{.tuloste tiedosto="esimerkit/10-simd/odotettu-rv"}
+```{.tuloste tiedosto="esimerkit/09-simd/odotettu-rv"}
 ```
 
 `__builtin_cpu_supports` lukee CPUID-käskyn tiedot. Kirjastot, kuten

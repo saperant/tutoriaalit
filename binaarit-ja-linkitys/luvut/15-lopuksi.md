@@ -38,21 +38,26 @@
 | `undefined symbol` käynnistyksessä | kirjaston ABI muuttui | `nm -D --defined-only libx.so` |
 | väärät arvot päivityksen jälkeen | rakenteen asettelu muuttui | `abidiff vanha.so uusi.so` |
 | väärä funktio kutsutaan | symbolitörmäys | `LD_DEBUG=bindings` |
+| C++: väärä `inline`-funktio tai malli, ei virhettä | kaksi eri määrittelyä samalla nimellä (ODR) | `nm -C -A *.o \| grep ' W '` |
 | `No such file or directory`, tiedosto on | `INTERP`-polku puuttuu | `readelf -l ohjelma` |
 | `relocation ... recompile with -fPIC` | ei-PIC-objekti kirjastossa | käännä `-fPIC`:llä |
 | `region 'RAM' overflowed` | ohjelma ei mahdu | `-Wl,-Map`, `size` |
 
 ## Jatkotaidot
 
-- **Mikrokontrollerit**: linkkeriskriptit muistialueineen,
-  käynnistyskoodi, joka kopioi `.data`:n ja nollaa `.bss`:n,
-  keskeytysvektorit heikkoina symboleina.
-- **Takaisinmallinnus**: riisuttujen binäärien lukeminen, PLT:n ja
-  GOT:n kautta tunnistetut kirjastokutsut, Ghidra ja radare2.
-- **Haavoittuvuudet**: GOT:n ylikirjoitus, ROP-ketjut ja niiden
+- *Mikrokontrollerit ja bare-metal-ohjelmointi*: linkkeriskriptit
+  muistialueineen, käynnistyskoodi, joka kopioi `.data`:n ja nollaa
+  `.bss`:n, keskeytysvektorit heikkoina symboleina.
+- *Takaisinmallinnus*: riisuttujen binäärien lukeminen, PLT:n ja
+  GOT:n kautta tunnistetut kirjastokutsut.
+- *Haavoittuvuuksien analyysi ja torjunta*: muistivirheet ja niiden
   suojaukset: ASLR ja PIE, RELRO, pinon suojaus, CET.
-- **Rakennus ja testaus**: tämän tutoriaalin komennot
+- *Käännösjärjestelmät, testaus ja CI*: tämän tutoriaalin komennot
   rakennusjärjestelmän kautta, CMaken näkyvyys- ja `RPATH`-asetukset.
+- *C ja assembly yhteen* ja *Python ja C/C++ yhteen*: ABI kielten
+  välisenä rajapintana.
+- *Suorituskyvyn analyysi ja optimointi*: linkitysaikainen optimointi
+  ja profiiliohjattu optimointi mitattuina.
 
 ## Lähteet
 

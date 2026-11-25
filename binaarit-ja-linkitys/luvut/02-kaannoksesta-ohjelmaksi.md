@@ -11,6 +11,25 @@ mutta `gcc` on *ohjain*, joka ajaa neljä ohjelmaa peräkkäin:
 4. **Linkkeri** (`collect2` ja `ld`) yhdistää objektitiedostot,
    C-kirjaston ja käynnistyskoodin ohjelmaksi.
 
+```{.dot otsikko="Lähdetiedostosta ohjelmaksi: jokainen käännösyksikkö kulkee kolme ensimmäistä vaihetta erikseen, ja linkkeri yhdistää tulokset"}
+digraph {
+  rankdir=LR; nodesep=0.25; ranksep=0.4;
+  node [shape=box, style="filled", fontsize=10];
+  c [label="main.c\n+ otsakkeet", fillcolor="white"];
+  i [label="main.i", fillcolor="white"];
+  s [label="main.s", fillcolor="white"];
+  o [label="main.o", fillcolor="#E4DCF0"];
+  o2 [label="laskin.o", fillcolor="#E4DCF0"];
+  lib [label="libc, crt*.o", fillcolor="#EEF1F2"];
+  ohj [label="laskin", fillcolor="#F1E3CC"];
+  c -> i [label="esikäsittelijä"];
+  i -> s [label="kääntäjä"];
+  s -> o [label="kokoaja"];
+  o -> ohj [label="linkkeri"];
+  o2 -> ohj; lib -> ohj;
+}
+```
+
 Valitsin `-v` näyttää ohjaimen ajamat komennot, ja `-save-temps`
 jättää välitulokset (`.i`, `.s`, `.o`) talteen. Rakennusjärjestelmät
 erottavat vaiheet: jokainen lähdetiedosto käännetään erikseen
@@ -24,18 +43,18 @@ Esimerkissä on laskin, joka laskee tilauksen loppusumman sentteinä.
 Laskentafunktio on omassa tiedostossaan, ja otsake esittelee sen
 muille:
 
-```{.c tiedosto="esimerkit/01-kaanto/laskin.h"}
+```{.c tiedosto="esimerkit/02-kaanto/laskin.h"}
 ```
 
-```{.c tiedosto="esimerkit/01-kaanto/laskin.c" osa="laskin"}
+```{.c tiedosto="esimerkit/02-kaanto/laskin.c" osa="laskin"}
 ```
 
-```{.c tiedosto="esimerkit/01-kaanto/main.c"}
+```{.c tiedosto="esimerkit/02-kaanto/main.c"}
 ```
 
 Käännös ja linkitys erikseen:
 
-```{.bash tiedosto="esimerkit/01-kaanto/aja.sh" osa="vaiheet"}
+```{.bash tiedosto="esimerkit/02-kaanto/aja.sh" osa="vaiheet"}
 ```
 
 Kun `main.c` käännetään, kääntäjä tietää otsakkeen ansiosta funktion
@@ -45,7 +64,7 @@ osoite täytetään myöhemmin. Linkkeri löytää symbolin tiedostosta
 `laskin.o` ja täyttää osoitteen. Ennen linkitystä kumpikin
 objektitiedosto on keskeneräinen:
 
-```{.tuloste tiedosto="esimerkit/01-kaanto/odotettu"}
+```{.tuloste tiedosto="esimerkit/02-kaanto/odotettu"}
 ```
 
 `nm`:n kirjain kertoo symbolin tyypin: `T` on määritelty koodiosiossa
@@ -71,7 +90,7 @@ osoitteet.
 Sekä objektitiedosto että valmis ohjelma ovat ELF-tiedostoja. Ne
 erottaa *ELF-otsakkeen* kenttä `Type`:
 
-```{.bash tiedosto="esimerkit/01-kaanto/aja.sh" osa="tyypit"}
+```{.bash tiedosto="esimerkit/02-kaanto/aja.sh" osa="tyypit"}
 ```
 
 Tiedostotyyppejä on neljä:
