@@ -11,12 +11,17 @@ export ANDROID_HOME
 GRADLE := ./gradlew --no-daemon --console=plain -q
 
 .PHONY: kaikki testit siivoa
+# Jos testi epäonnistuu, sen virheilmoitus näytetään JUnitin raportista
+# (-q piilottaisi Gradlen oman testilokin).
+RAPORTIT := app/build/test-results/testDebugUnitTest
+NAYTA_VIRHEET := { grep -h -A25 '<failure' $(RAPORTIT)/*.xml; exit 1; }
+
 kaikki:
 	$(GRADLE) assembleDebug assembleDebugAndroidTest lintDebug \
-	    testDebugUnitTest
+	    testDebugUnitTest || $(NAYTA_VIRHEET)
 
 testit:
-	$(GRADLE) testDebugUnitTest
+	$(GRADLE) testDebugUnitTest || $(NAYTA_VIRHEET)
 
 # Käännöstuotteet jäävät välimuistiksi; ne eivät kuulu repositorioon.
 siivoa:
