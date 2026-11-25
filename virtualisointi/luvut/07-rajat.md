@@ -62,7 +62,9 @@ rajaa ja antaa sille mahdollisuuden reagoida.
 
 Perinteisessä Unixissa root saa kaiken ja muut eivät mitään.
 **Kyvyt** (capabilities) pilkkovat rootin oikeudet noin 40 osaan, joita
-voi antaa ja poistaa erikseen:
+voi antaa ja poistaa erikseen. Käyttäjätunnisteet, oikeuksien tarkistus
+ja kykyjen perusteet esiteltiin taidossa *Käyttöjärjestelmät*; tässä
+katsotaan, miten konttiajoympäristö käyttää niitä:
 
 | Kyky | Sallii |
 |------|--------|

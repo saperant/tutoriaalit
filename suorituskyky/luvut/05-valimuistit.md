@@ -69,6 +69,11 @@ ja aika puolittuu jokaisella kaksinkertaistuksella:
 ```{.tuloste tiedosto="esimerkit/tulokset/05-askel.txt"}
 ```
 
+![Kierroksen aika askeleen funktiona (sama data kuin tulosteessa).
+Katkoviiva näyttää, miten aika laskisi, jos se riippuisi vain
+päivitysten määrästä. Askeleeseen 16 asti jokainen rivi on yhä
+haettava muistista.](kuvat/askel.png){width=76%}
+
 Askeleilla 1–16 aika laskee vain noin puoleen, vaikka työ vähenee
 kuudestoistaosaan: ohjelma on muistirajoitteinen, ja muistista
 siirretty data on sama. Askeleesta 16 alkaen aika puolittuu jokaisella
@@ -107,10 +112,17 @@ Kun työjoukon kokoa kasvatetaan, viive nousee portaittain:
 ```{.tuloste tiedosto="esimerkit/tulokset/05-latenssi.txt"}
 ```
 
+![Latauksen viive työjoukon koon funktiona (sama data kuin
+tulosteessa). Pystyviivat ovat kirjoittajan koneen L1- ja
+L2-välimuistin koot.](kuvat/latenssi.png){width=76%}
+
 16 KiB mahtuu L1-välimuistiin, ja lataus kestää alle kaksi
 nanosekuntia eli noin neljä jaksoa. 64 KiB–1 MiB on L2:ssa
 (noin 10–20 ns), muutama megatavu jaetussa L3:ssa ja kymmenet
-megatavut keskusmuistissa (150–200 ns). Muistihuti maksaa siis
+megatavut keskusmuistissa (150–200 ns). Viimeisen rivin pienempi luku
+ei ole uusi porras vaan mittauksen vaihtelua: jaetulla koneella
+keskusmuistin viive muuttuu ajosta toiseen kymmeniä prosentteja muun
+kuorman ja sivujen sijoittelun mukaan. Muistihuti maksaa siis
 satoja jaksoja, joiden aikana suoritin voisi tehdä tuhat käskyä.
 Satunnainen saanti suureen tietorakenteeseen, kuten linkitettyyn
 listaan, hajautustauluun tai puuhun, maksaa tämän hinnan jokaisella

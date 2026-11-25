@@ -62,7 +62,7 @@ jälkeen on epäjärjestyksessä suorittava RISC-ydin. Lelumalli purusta:
 ```{.cpp tiedosto="esimerkit/12-mikrooperaatiot.cpp" osa="taulu"}
 ```
 
-```{.tuloste tiedosto="esimerkit/12-mikrooperaatiot.odotettu"}
+```{.tuloste tiedosto="esimerkit/12-mikrooperaatiot.odotettu" rivit="1-10"}
 ```
 
 Muistioperandi tuottaa erillisen latauksen, ja muistikohde lisäksi
@@ -91,7 +91,10 @@ Sama taulukon summaus x86:lla ja RISC-V:llä:
 ```{.cpp tiedosto="esimerkit/12-mikrooperaatiot.cpp" osa="silmukka"}
 ```
 
-Tulosteen lopussa: kumpikin käyttää neljä käskyä kierrosta kohden.
+```{.tuloste tiedosto="esimerkit/12-mikrooperaatiot.odotettu" rivit="12-14"}
+```
+
+Kumpikin käyttää neljä käskyä kierrosta kohden.
 x86-koodi on puolet lyhyempi (8 tavua 16:n sijaan), mutta µop:eja on
 yhtä monta kuin RISC-V:n käskyjä. x86 hyötyy skaalatusta
 indeksiosoitteesta (`[esi+ecx*4]`), RISC-V osoittimen kasvatuksesta.

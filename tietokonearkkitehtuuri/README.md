@@ -13,7 +13,8 @@ pikaopas: [tietokonearkkitehtuuri-pikaopas.pdf](https://saperant.github.io/tutor
 
 ## Sisältö
 
-1. Johdanto – rautalaki, Amdahl, simulaattorin rakenne, testiohjelmat
+1. Johdanto – rautalaki, Amdahl, teho ja energia, simulaattorin
+   rakenne, testiohjelmat
 2. Käskykanta – lataa–talleta, RISC-V:n laajennukset, R/I/S/B/U/J-
    koodaus ja purku, pseudokäskyt
 3. Datapolku ja ohjaus – yksijaksoinen datapolku, ohjaussignaalit,
@@ -23,7 +24,7 @@ pikaopas: [tietokonearkkitehtuuri-pikaopas.pdf](https://saperant.github.io/tutor
 5. Haarautumisen ennustus – staattiset, 1- ja 2-bittiset, gshare,
    BTB ja paluuosoitepino; tarkkuus ja CPI mitattuina
 6. Välimuistit – osoitteen jako, suora kuvaus ja joukkoassosiatiivisuus,
-   korvauspolitiikat, 3C
+   korvauspolitiikat, 3C, esihaku
 7. Kirjoitus ja muistihierarkia – WB/WT, AMAT, silmukoiden järjestys,
    DRAM ja kaista
 8. Virtuaalimuisti ja MMU – Sv32-sivutaulun kävely, Sv39, sivuvirheet,
@@ -40,7 +41,7 @@ pikaopas: [tietokonearkkitehtuuri-pikaopas.pdf](https://saperant.github.io/tutor
 
 ## Esimerkit
 
-Hakemistossa `esimerkit/` on 17 C++23-esimerkkiä. Ne rakentuvat
+Hakemistossa `esimerkit/` on 19 C++23-esimerkkiä. Ne rakentuvat
 yhteisen simulaattorin varaan (`esimerkit/yhteinen/`): RV32I-osajoukon
 kokoaja ja purkaja, käskytason simulaattori, jälkiohjattu
 liukuhihnamalli ennustimineen ja parametrisoitava välimuistimalli.
@@ -55,7 +56,12 @@ make pdf                   # PDF:t
 ```
 
 Kehityskontissa (`.devcontainer/tietokonearkkitehtuuri`) ovat
-kääntäjät.
+kääntäjät. Kuvaajat piirretään esimerkkien testatuista tulosteista
+komennolla `make kuvat` (vaatii Matplotlibin); valmiit kuvat ovat
+hakemistossa `kuvat/`.
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 ## Lisenssi
 

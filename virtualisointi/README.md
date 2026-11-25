@@ -16,8 +16,9 @@ ja pikaopas
 2. Hypervisorit ja virtualisoinnin teoria – tyypit, Popekin ja
    Goldbergin ehdot, lelusuoritin, binäärikäännös, paravirtualisointi
 3. Laitteistotuki – VMX, VMCS, VM exitin syyt, varjotaulut ja EPT,
-   kaksiulotteinen sivutaulukävely
-4. KVM ja QEMU – pienin hypervisor KVM-rajapinnalla, QMP, qcow2
+   kaksiulotteinen sivutaulukävely, muistin ylivaraus
+4. KVM ja QEMU – pienin hypervisor KVM-rajapinnalla, vCPU säikeenä,
+   QMP, qcow2
 5. I/O-virtualisointi – emuloitu laite, virtqueue, vhost, IOMMU ja
    VFIO, SR-IOV
 6. Kontit: nimiavaruudet ja minikontti – unshare, nsenter, overlay,
@@ -40,10 +41,15 @@ tarvittaessa `sudo -n`:llä.
 `esimerkit/Makefile` ajaa valinnaiset esimerkit: KVM-rajapinnan
 esimerkki ajetaan, jos `/dev/kvm` on käytettävissä, ja cgroup-esimerkki,
 jos cgroup-tiedostojärjestelmään voi kirjoittaa. Muuten ne ohitetaan
-ilmoituksella.
+ilmoituksella. Kehityskontissa KVM-esimerkin saa ajoon antamalla
+kontille laitteen (`--device /dev/kvm`); cgroup-esimerkki ajetaan
+isäntäkoneella pääkäyttäjänä.
 
 Kehityskontissa (`.devcontainer/virtualisointi`) on QEMU ja muut
 työkalut sekä oikeudet `SYS_ADMIN`, rajoittamaton seccomp ja
 AppArmor, koska kontin sisällä luodaan nimiavaruuksia ja liitoksia.
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 Lisenssi: CC BY-SA 4.0.

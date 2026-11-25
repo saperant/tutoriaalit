@@ -9,3 +9,8 @@ testaa: tarkista-kaaviot
 .PHONY: tarkista-kaaviot
 tarkista-kaaviot:
 	@python3 kaaviot/tee.py --tarkista
+
+# Kuvaajat piirretään esimerkkien .odotettu-tiedostoista; kuvat commitoidaan.
+.PHONY: kuvat
+kuvat:
+	python3 kuvat/piirra.py kuvat

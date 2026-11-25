@@ -31,6 +31,49 @@ verkkonsa ja konenimensä. Rajat tulevat ytimen mekanismeista:
 nimiavaruuksista (mitä prosessi näkee), cgroupeista (paljonko se saa
 käyttää), kyvyistä ja seccompista (mitä se saa tehdä).
 
+```{.dot otsikko="Neljä eristyksen tasoa kerrospinoina. Punainen rivi on raja, jonka läpi eristetty koodi puhuu etuoikeutetulle koodille; harmaat kerrokset ovat isännän. gVisor ja mikro-VM esitellään luvussa 8"}
+digraph {
+  rankdir=TB; nodesep=0.25; ranksep=0.15;
+  node [shape=plaintext, fontsize=9];
+  k [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0"><b>kontti</b></td></tr>
+    <tr><td>sovellus</td></tr>
+    <tr><td bgcolor="#f3c8c8">raja: ~350 järjestelmäkutsua</td></tr>
+    <tr><td bgcolor="#d9d9d9">isännän ydin</td></tr>
+    <tr><td bgcolor="#d9d9d9">rauta</td></tr></table>>];
+  g [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0"><b>gVisor</b></td></tr>
+    <tr><td>sovellus</td></tr>
+    <tr><td bgcolor="#f3c8c8">raja: Sentryn toteuttamat kutsut</td></tr>
+    <tr><td>Sentry: ydin käyttäjätilassa</td></tr>
+    <tr><td bgcolor="#f3c8c8">raja: kymmeniä isännän kutsuja</td></tr>
+    <tr><td bgcolor="#d9d9d9">isännän ydin</td></tr>
+    <tr><td bgcolor="#d9d9d9">rauta</td></tr></table>>];
+  m [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0"><b>mikro-VM</b></td></tr>
+    <tr><td>sovellus</td></tr>
+    <tr><td>vieraan ydin</td></tr>
+    <tr><td bgcolor="#f3c8c8">raja: VM exitit, muutama virtio-laite</td></tr>
+    <tr><td>suppea VMM (Firecracker)</td></tr>
+    <tr><td bgcolor="#d9d9d9">isännän ydin ja KVM</td></tr>
+    <tr><td bgcolor="#d9d9d9">rauta (VT-x, EPT)</td></tr></table>>];
+  v [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0"><b>virtuaalikone</b></td></tr>
+    <tr><td>sovellus</td></tr>
+    <tr><td>vieraan ydin</td></tr>
+    <tr><td bgcolor="#f3c8c8">raja: VM exitit, koko emuloitu PC</td></tr>
+    <tr><td>QEMU: laitemalli</td></tr>
+    <tr><td bgcolor="#d9d9d9">isännän ydin ja KVM</td></tr>
+    <tr><td bgcolor="#d9d9d9">rauta (VT-x, EPT)</td></tr></table>>];
+  {rank=same; k; g}
+  {rank=same; m; v}
+  k -> m [style=invis];
+  g -> v [style=invis];
+}
+```
+
+Kuvan kaksi ääripäätä rinnakkain:
+
 | | Virtuaalikone | Kontti |
 |---|---|---|
 | Eristyksen raja | laitteisto (VT-x, EPT, IOMMU) | ytimen tietorakenteet |
@@ -83,8 +126,21 @@ Esimerkit eivät tarvitse laitteistotukea. QEMU käyttää
 ohjelmallista **TCG**-käännöstä (Tiny Code Generator), joka toimii
 missä tahansa ja tuottaa saman tuloksen joka kerta. Oikeassa käytössä
 QEMU:lle annetaan `-accel kvm`, jolloin vieraan koodi suoritetaan
-suoraan suorittimella. KVM-rajapintaa käyttävä esimerkki (luku 4)
-ajetaan vain, jos laite `/dev/kvm` on käytettävissä.
+suoraan suorittimella.
+
+Kaksi esimerkkiä tarvitsee ympäristöltä enemmän, ja ne ovat siksi
+hakemistossa `esimerkit/valinnaiset/`. `make testaa` ajaa ne, jos
+ympäristö sallii, ja muuten tulostaa rivin "ajo ohitetaan":
+
+| Esimerkki | Tarvitsee | Miten sen saa ajettua |
+|-----------|-----------|-----------------------|
+| `kvm/kvm.c` (luku 4) | laitteen `/dev/kvm` | Linux-isäntäkoneella, jonka suoritin tukee virtualisointia; kehityskontille `--device /dev/kvm` |
+| `cgroups/pids.sh` (luku 7) | kirjoitettavan cgroup-puun | isäntäkoneella pääkäyttäjänä; tavallisessa kontissa cgroup-puu on vain luettava |
+
+Kehityskontissa ja CI:ssä nämä kaksi yleensä ohitetaan. Niiden
+tulosteet tekstissä ovat isäntäkoneella ajetuista ajoista, eikä testi
+suojaa niitä vanhenemiselta samalla tavalla kuin muita. Komento
+`make -C esimerkit` ajaa ne erikseen.
 
 ## Ensimmäinen virtuaalikone
 
@@ -147,8 +203,16 @@ tutoriaalin punainen lanka.
 9. Tilannevedokset ja siirto
 10. Lopuksi – nyrkkisäännöt ja lähteet
 
+## Esitiedot ja rajaus
+
 Esitietona on taito *Käyttöjärjestelmät*: prosessit,
-järjestelmäkutsut, virtuaalimuisti ja keskeytykset oletetaan
-tutuiksi. Taito *Kontit ja pilvi-infrastruktuuri* jatkaa tästä konttien käyttöön
-(Docker, Kubernetes) ja taito *Palvelinympäristöt*
-virtualisointialustojen ylläpitoon.
+järjestelmäkutsut, virtuaalimuisti, keskeytykset sekä käyttäjät,
+oikeudet ja kyvyt oletetaan tutuiksi. Esimerkit ovat C:tä, Bashia ja
+Pythonia; C++:aa ei tarvita. Sivutaulujen ja suojaustasojen
+laitteistopuoli on taidossa *Tietokonearkkitehtuuri*, joka on
+*Käyttöjärjestelmien* esitieto.
+
+Tutoriaali käsittelee mekanismit, ei tuotteiden käyttöä. Taito
+*Kontit ja pilvi-infrastruktuuri* jatkaa tästä konttien käyttöön
+(Docker, konttikuvien rakentaminen, Kubernetes) ja taito
+*Palvelinympäristöt* virtualisointialustojen ylläpitoon.

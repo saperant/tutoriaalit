@@ -12,21 +12,24 @@ Valmiit dokumentit:
 ja pikaopas
 [suorituskyky-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/suorituskyky-pikaopas.pdf).
 
-Esitiedot: Tietokonearkkitehtuuri (välimuistit, liukuhihna,
-haarautumisen ennustus) ja Algoritmit (vaativuusanalyysi).
-Jatkotaidot: C++:n suorituskyky, GPU-laskenta ja Arkkitehtuurin
-tutkiminen.
+Esitiedot: *Tietokonearkkitehtuuri* (välimuistit, liukuhihna,
+haarautumisen ennustus) ja *Algoritmit* (vaativuusanalyysi).
+Jatkotaidot: *C++:n suorituskyky*, *Rinnakkaisohjelmointi*,
+*GPU-laskenta* ja *Arkkitehtuurin mallinnus ja suunnittelutilan
+tutkiminen*.
 
 ## Sisältö
 
 1. Johdanto – optimointisykli, piilotettu neliöllinen silmukka,
    esimerkkien kaksi tilaa
 2. Mittaaminen – seinäkello ja prosessiaika, toistot, mediaani ja
-   MAD, lämmittely, kääntäjän poistama mitattava
+   MAD, viiveen jakauma ja prosenttipisteet, lämmittely, kääntäjän
+   poistama mitattava, regressiotestit
 3. Mallit – Amdahlin laki, laskentaintensiteetti, roofline-malli ja
    oman koneen katto
 4. Profilointi – gprof, Callgrind, oma ja kumulatiivinen kustannus,
-   perf ja laitteistolaskurit, liekkikuvaajat
+   perf ja laitteistolaskurit, liekkikuvaajat, odottavan ohjelman
+   tutkiminen (strace)
 5. Välimuistit käytännössä – läpikäyntijärjestys, välimuistirivi,
    viive työjoukon koon mukaan, esihaku ja TLB
 6. Datan asettelu ja lohkominen – AoS ja SoA, rakenteen täyte, väärä
@@ -56,7 +59,11 @@ Jokainen optimoitu versio testataan perusversiota vastaan. Argumentilla
 ja kääntäjän raportit ja tarkistaa niiden deterministisistä luvuista
 tekstin väitteet: hutien, väärien ennusteiden ja kutsujen määrät.
 Ajoitukset tulostetaan mutta niitä ei verrata. Kirjassa näytetyt
-mittaustulokset ovat hakemistossa `esimerkit/tulokset/`.
+mittaustulokset ovat hakemistossa `esimerkit/tulokset/`, ja kuvaajat
+piirretään niistä (`make kuvat`, vaatii Matplotlibin; valmiit kuvat
+ovat hakemistossa `kuvat/`). Luvun 4 kutsupuu tuotetaan Callgrindin
+tallennetusta tulosteesta (`kaaviot/tee.py`), ja testi tarkistaa, että
+kaavio vastaa sitä.
 
 ```text
 make testaa                   # rakenne, esimerkit ja tarkistukset
@@ -64,10 +71,15 @@ make pdf                      # tutoriaali ja pikaopas PDF:ksi
 make -C esimerkit tarkista    # Valgrind- ja kääntäjätarkistukset
 make -C esimerkit mittaa      # ajoitusmittaukset
 make -C esimerkit tulokset    # kirjan tulosteet omalla koneella
+make kuvat                    # kuvaajat tuloksista
 ```
 
-Tarvittavat työkalut: GCC 14, Clang 20, Valgrind, binutils (gprof,
-objdump, size) ja Python 3. Kehityskontti: `.devcontainer/suorituskyky`.
+Tarvittavat työkalut: GCC 14, Clang 20, Valgrind, strace, binutils
+(gprof, objdump, size) ja Python 3. Kehityskontti:
+`.devcontainer/suorituskyky`.
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 ## Lisenssi
 

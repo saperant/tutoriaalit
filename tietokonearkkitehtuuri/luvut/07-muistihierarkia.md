@@ -32,7 +32,7 @@ Esimerkki laskee muistiliikenteen tavuina kolmella yhdistelmällä:
 ```{.cpp tiedosto="esimerkit/07-kirjoitus.cpp" osa="politiikat"}
 ```
 
-```{.tuloste tiedosto="esimerkit/07-kirjoitus.odotettu"}
+```{.tuloste tiedosto="esimerkit/07-kirjoitus.odotettu" rivit="1-4"}
 ```
 
 Mikään politiikka ei voita aina:
@@ -82,7 +82,10 @@ viitteistä menee keskusmuistiin.
 ```{.cpp tiedosto="esimerkit/07-kirjoitus.cpp" osa="amat"}
 ```
 
-Tulokset ovat edellisen tulosteen lopussa:
+```{.tuloste tiedosto="esimerkit/07-kirjoitus.odotettu" rivit="6-9"}
+```
+
+Tulosten tulkinta:
 
 - `summa`: L1 hutii joka neljännellä viitteellä (16 tavun lohko, 4 tavun
   sanat), ja L2:n paikallinen hutisuhde on sama 25 %, koska data
@@ -141,7 +144,7 @@ eikä suurempaa välimuistia voi ostaa. Ratkaisuja:
   pienissä osamatriiseissa, jotka mahtuvat välimuistiin. Jokainen
   ladattu lohko käytetään monta kertaa ennen syrjäytystä. Kaikki
   tehokkaat BLAS-kirjastot toimivat näin, ja sama ajatus on GPU:iden
-  jaetun muistin käytössä (taito *GPU-ohjelmointi*).
+  jaetun muistin käytössä (taito *GPU-laskenta*).
 - **Täyte** (*padding*): rivin pituus, joka ei ole kahden potenssi,
   hajauttaa sarakkeen alkiot eri joukkoihin.
 
@@ -164,6 +167,16 @@ aikana ja pitävät kirjaa keskeneräisistä huteista MSHR-rekistereissä
 (luku 11) tuottaa riippumattomia huteja rinnakkain. Tätä kutsutaan
 **muistitason rinnakkaisuudeksi** (MLP). Osoitinjahti tuhoaa sen,
 koska seuraava osoite selviää vasta edellisen hudin jälkeen.
+
+DRAM-solu on pieni kondensaattori, ja sen varaus voi kääntyä
+kosmisen säteilyn tai viereisten rivien toistuvan lukemisen
+(*rowhammer*) vuoksi. Palvelimien muisti on siksi **ECC-muistia**:
+jokaisen 64 bitin sanan rinnalle tallennetaan 8 tarkistusbittiä, joilla
+muistiohjain korjaa yhden bitin virheen ja havaitsee kahden bitin
+virheen (SEC-DED, Hamming-koodin laajennus). Korjaus tapahtuu lukiessa
+ilman, että ohjelma huomaa mitään, ja käyttöjärjestelmä saa virheestä
+ilmoituksen. Koodin periaate käydään läpi taidossa
+*Tietoliikennetekniikka*.
 
 ## Käytännössä
 
@@ -194,3 +207,4 @@ koska seuraava osoite selviää vasta edellisen hudin jälkeen.
 - Osaat selittää, miksi sarakkeittainen läpikäynti voi pudottaa
   osumasuhteen nollaan, ja korjata sen silmukoiden vaihdolla,
   lohkomisella tai täytteellä.
+- Osaat kertoa, mitä ECC-muisti korjaa ja mitä se vain havaitsee.

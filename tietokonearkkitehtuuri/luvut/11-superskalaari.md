@@ -24,7 +24,38 @@ Epäjärjestyksessä suorittava (*out-of-order*, OoO) ydin noutaa ja purkaa
 käskyt järjestyksessä, mutta lähettää ne suoritukseen heti, kun niiden
 operandit ovat valmiit, ohjelmajärjestyksestä riippumatta. Tulokset
 kuitenkin vahvistetaan (*commit*, *retire*) taas järjestyksessä, joten
-ulospäin kaikki näyttää yhä järjestyksessä tapahtuvalta. Rakenteet:
+ulospäin kaikki näyttää yhä järjestyksessä tapahtuvalta.
+
+```{.dot otsikko="Epäjärjestyksessä suorittavan ytimen rakenne. Alku- ja loppupää etenevät ohjelmajärjestyksessä, keskiosa datan valmistumisen järjestyksessä. Katkoviiva: nimeäminen varaa käskylle paikan ROB:sta. Pisteviiva: väärä ennuste tyhjentää nuoremmat käskyt ja ohjaa noudon uudelleen"}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.14;
+  edge [fontsize=8];
+  node [fontsize=9, margin="0.04,0.03", width=0.3, height=0.3];
+  subgraph cluster_etu {
+    label="järjestyksessä"; fontsize=8; style="rounded,dashed"; margin=6;
+    N [label="nouto,\nennustin"]; P [label="purku"];
+    R [label="nimeä-\nminen"];
+  }
+  subgraph cluster_ooo {
+    label="epäjärjestyksessä"; fontsize=8; style="rounded,filled"; fillcolor="#f3e6c8"; margin=6;
+    Q [label="liikkeelle-\nlähtöjono"];
+    X [label="suoritus-\nyksiköt"];
+    L [label="lataus- ja\ntalletusjonot"];
+    {rank=same; X; L}
+  }
+  subgraph cluster_pois {
+    label="järjestyksessä"; fontsize=8; style="rounded,dashed"; margin=6;
+    ROB [label="ROB:\npoisto"];
+  }
+  N -> P -> R -> Q -> X -> ROB;
+  R -> ROB [constraint=false, style=dashed];
+  X -> Q [label="herätys", constraint=false];
+  X -> L [dir=both];
+  ROB -> N [constraint=false, style=dotted];
+}
+```
+
+Rakenteet:
 
 1. **Uudelleennimeäminen** (*register renaming*). Arkkitehtuurisia
    rekistereitä on 32, mutta fyysisiä satoja. Jokainen kirjoitus saa uuden
@@ -51,6 +82,33 @@ virheellinen käsky on vanhin, kaikki sitä nuoremmat hylätään ja
 nimeämistaulu palautetaan. Tarkat poikkeukset (luku 9) seuraavat
 järjestyksessä tapahtuvasta poistosta.
 
+Uudelleennimeämisen näkee parhaiten esimerkistä. Nimeäjä käy käskyt
+läpi järjestyksessä, lukee lähteiden fyysiset rekisterit
+nimeämistaulusta ja antaa jokaiselle kohteelle uuden:
+
+```{.cpp tiedosto="esimerkit/11-nimeaminen.cpp" osa="nimeaminen"}
+```
+
+Esimerkki nimeää `summa`-ohjelman summaussilmukan kaksi kierrosta ja
+laskee riippuvuudet ennen ja jälkeen:
+
+```{.tuloste tiedosto="esimerkit/11-nimeaminen.odotettu"}
+```
+
+Arkkitehtuurisilla nimillä toinen kierros ei voi alkaa ennen kuin
+ensimmäinen on lukenut `t2`:n ja `t1`:n, koska se kirjoittaa samoihin
+rekistereihin: ikkunassa on 8 WAR- ja 6 WAW-riippuvuutta. Fyysisillä
+nimillä jokainen rekisteri kirjoitetaan täsmälleen kerran, joten
+jäljelle jäävät vain 11 aitoa RAW-riippuvuutta. Niistäkin kierrosten
+välinen ketju on lyhyt: toisen kierroksen `slli` tarvitsee vain
+`addi`:n tuloksen `p36`, joten kierrosten lataukset voivat olla
+liikkeellä yhtä aikaa. Ainoa kierroksesta toiseen kulkeva pitkä ketju
+on summa `a0` (`p10` → `p35` → `p40`).
+
+Vanha fyysinen rekisteri vapautuu vasta, kun sen korvannut käsky on
+poistunut ROB:sta: siihen asti poikkeus tai väärä ennuste voi vaatia
+vanhan arvon takaisin.
+
 Robert Tomasulo kehitti dynaamisen ajoituksen IBM System/360 Model 91:n
 liukulukuyksikköön 1967. Laajaan käyttöön se tuli vasta 1990-luvulla
 (Pentium Pro, MIPS R10000, Alpha 21264), kun transistoreita riitti ROB:n
@@ -72,6 +130,11 @@ Leveys on käskyjä jaksossa, ikkuna uudelleenjärjestyspuskurin koko:
 
 ```{.tuloste tiedosto="esimerkit/11-ilp.odotettu"}
 ```
+
+![IPC ydinkokoonpanon mukaan (sama data kuin taulukossa). Punaiset
+merkit näyttävät, mihin neljän levyinen ydin 128 käskyn ikkunalla
+putoaa ilman uudelleennimeämistä ja kaksibittisellä
+ennustimella.](kuvat/ipc.png){width=80%}
 
 Tulosten tulkinta:
 
@@ -171,6 +234,8 @@ maksavat suorituskykyä, ja niiden yksityiskohdat käsitellään taidossa
   yksinään nosta IPC:tä.
 - Osaat kuvata uudelleennimeämisen, liikkeellelähtöjonon ja ROB:n
   tehtävät ja sen, miten ne yhdessä säilyttävät tarkat poikkeukset.
+- Osaat nimetä lyhyen käskyjonon uudelleen ja osoittaa, mitkä WAR- ja
+  WAW-riippuvuudet katoavat ja mitkä RAW-riippuvuudet jäävät.
 - Osaat tulkita ILP-rajatutkimuksen tuloksia: ikkunan, nimeämisen ja
   ennustuksen vaikutus.
 - Osaat selittää, miten spekulatiivinen suoritus vuotaa tietoa

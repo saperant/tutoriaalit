@@ -37,13 +37,32 @@ Välimuisti on taulukko rivejä. Jokaisella rivillä on lohkon data,
 **tagi** (mistä osoitteesta lohko on) ja kelpoisuusbitti. Osoite
 jaetaan kolmeen kenttään:
 
-```text
- 31                         ...                          0
-+--------------------------+----------------+-------------+
-|           tagi           |    indeksi     |  siirtymä   |
-+--------------------------+----------------+-------------+
-                              log2(joukot)    log2(lohko)
+```{.dot otsikko="Kaksitiinen joukkoassosiatiivinen välimuisti: indeksi valitsee joukon, joukon teiden tagit verrataan rinnakkain osoitteen tagiin, ja osunut tie antaa datan"}
+digraph {
+  rankdir=TB; nodesep=0.35; ranksep=0.38;
+  edge [fontsize=8];
+  node [shape=record];
+  os [label="{osoite|{<t>tagi|<i>indeksi|<s>siirtymä}}"];
+  t0 [label="{tie 0, joukko i|{<t>V + tagi|<d>lohkon data}}"];
+  t1 [label="{tie 1, joukko i|{<t>V + tagi|<d>lohkon data}}"];
+  v0 [label="=", shape=circle, width=0.3, fixedsize=true];
+  v1 [label="=", shape=circle, width=0.3, fixedsize=true];
+  mux [label="valitaan osunut tie", shape=invtrapezium];
+  ulos [label="tavu suorittimelle\n(tai huti)", shape=box];
+  os:i -> t0 [label="valitsee joukon"];
+  os:i -> t1;
+  os:t -> v0; os:t -> v1;
+  t0:t -> v0; t1:t -> v1;
+  v0 -> mux [label="osuma 0"]; v1 -> mux [label="osuma 1"];
+  t0:d -> mux; t1:d -> mux;
+  mux -> ulos;
+  os:s -> ulos [label="valitsee tavun", style=dashed, constraint=false];
+}
 ```
+
+Kenttien leveydet seuraavat välimuistin mitoista: siirtymässä on
+$\log_2(\text{lohkon koko})$ bittiä, indeksissä
+$\log_2(\text{joukkojen määrä})$ bittiä, ja loput ovat tagia.
 
 - **Siirtymä** kertoo tavun paikan lohkossa.
 - **Indeksi** valitsee joukon (*set*), johon lohko voi sijoittua.
@@ -75,7 +94,7 @@ kuvatussa välimuistissa, jossa on 16 tavun lohkot ja siis 16 riviä:
 ```{.cpp tiedosto="esimerkit/06-rakenne.cpp" osa="kentat"}
 ```
 
-```{.tuloste tiedosto="esimerkit/06-rakenne.odotettu"}
+```{.tuloste tiedosto="esimerkit/06-rakenne.odotettu" rivit="1-9"}
 ```
 
 Ensimmäiset rivit näyttävät tilallisen paikallisuuden: 0x100 hutii ja
@@ -89,10 +108,17 @@ kuvauksen pahin heikkous.
 ## Koko ja lohkokoko
 
 Saman esimerkin toinen osa ajaa matriisitulon 3 900 datamuistiviitettä
-eri kokoisten ja eri lohkokokoisten välimuistien läpi (tuloste yllä):
+eri kokoisten ja eri lohkokokoisten välimuistien läpi:
 
 ```{.cpp tiedosto="esimerkit/06-rakenne.cpp" osa="koko"}
 ```
+
+```{.tuloste tiedosto="esimerkit/06-rakenne.odotettu" rivit="11-17"}
+```
+
+![Osumasuhde lohkokoon funktiona suoraan kuvatussa välimuistissa
+(sama data kuin taulukossa). Pienessä välimuistissa käyrä kääntyy
+laskuun, kun lohko kasvaa yli 16 tavun.](kuvat/osumasuhde.png){width=72%}
 
 Matriiseja on kolme 576 tavun kappaletta, yhteensä 1 728 tavua.
 Havainnot:
@@ -128,7 +154,7 @@ valittava uhri. Yleiset **korvauspolitiikat**:
 ```{.cpp tiedosto="esimerkit/06-assosiatiivisuus.cpp" osa="tiet"}
 ```
 
-```{.tuloste tiedosto="esimerkit/06-assosiatiivisuus.odotettu"}
+```{.tuloste tiedosto="esimerkit/06-assosiatiivisuus.odotettu" rivit="1-12"}
 ```
 
 512 tavun välimuistissa kaksi tietä nostaa osumasuhteen 84 %:sta 88 %:iin,
@@ -163,7 +189,10 @@ samankokoista täysin assosiatiivista LRU-välimuistia:
 ```{.cpp tiedosto="esimerkit/06-assosiatiivisuus.cpp" osa="kolme_c"}
 ```
 
-Tuloste on edellisen taulukon jatkona. Pakollisia huteja on aina 108:
+```{.tuloste tiedosto="esimerkit/06-assosiatiivisuus.odotettu" rivit="14-26"}
+```
+
+Pakollisia huteja on aina 108:
 kolme 576 tavun matriisia on 108 lohkoa. 2 KiB:n välimuistissa ne ovat
 ainoat. 256 tavun suoraan kuvatussa välimuistissa ristiriitahuteja on
 enemmän kuin kapasiteettihuteja, ja neljä tietä poistaa niistä
@@ -175,6 +204,44 @@ yli kolme kertaa välimuistin kokoinen.
 täysin assosiatiivinen LRU-vertailukohta (edellisen taulukon LRU-ilmiö).
 Silloin ristiriitahutien määrä olisi negatiivinen, ja simulaattori
 pyöristää sen nollaan. 3C on siis selittävä malli, ei tarkka mittaus.
+
+## Esihaku
+
+Pakollisia huteja ei voi poistaa välimuistin rakenteella, mutta ne voi
+ennakoida. **Esihakija** (*prefetcher*) seuraa viitteitä ja tuo
+todennäköisesti seuraavaksi tarvittavat lohkot välimuistiin ennen kuin
+ohjelma pyytää niitä. Yksinkertaisin on seuraavan lohkon esihakija:
+
+```{.cpp tiedosto="esimerkit/06-esihaku.cpp" osa="esihaku"}
+```
+
+Kolme ohjelmaa 256 tavun kaksitiisessä välimuistissa ilman esihakua ja
+sen kanssa:
+
+```{.tuloste tiedosto="esimerkit/06-esihaku.odotettu"}
+```
+
+- `summa` käy taulukon läpi peräkkäin. Sadasta hudista jää kaksi, ja
+  98 esihakua sadasta osui tarpeeseen. Tämä selittää, miksi peräkkäinen
+  läpikäynti on oikealla koneella nopeampi kuin pelkkä osumasuhde
+  ennustaa: pakollisetkin hudit katoavat.
+- `matriisi` *huononee*. Sisäsilmukka kulkee toista matriisia
+  sarakkeittain 48 tavun askelin, joten seuraava lohko on väärä arvaus,
+  ja pienessä välimuistissa turha lohko syrjäyttää hyödyllisen. Yli
+  2 000 esihausta vain 295 käytettiin.
+- `lista` hyötyy osittain, koska sen 64 solmua ovat pienellä alueella
+  ja lista palaa viereiseen lohkoon usein ennen kuin esihaettu lohko on
+  syrjäytynyt. Osuma on sattumaa, ei esihakijan ansiota: suuressa
+  rakenteessa seuraava solmu on harvoin naapurilohkossa.
+
+Oikeat esihakijat ovat siksi valikoivampia. **Askelesihakija** (*stride
+prefetcher*) seuraa kunkin latauskäskyn peräkkäisten osoitteiden
+erotusta ja hakee etukäteen vasta, kun sama askel on toistunut; se
+löytäisi matriisin 48 tavun askeleen. **Virtaesihakija** tunnistaa
+nousevan tai laskevan lohkojonon ja kulkee sen edellä usean lohkon
+päässä, jotta data ehtii perille ennen käyttöä. Väärä esihaku maksaa
+kaistaa ja voi syrjäyttää hyödyllistä dataa, joten esihakijat mittaavat
+omaa osumatarkkuuttaan ja hiljenevät, kun arvaukset eivät osu.
 
 ## Käytännössä
 
@@ -189,10 +256,10 @@ pyöristää sen nollaan. 3C on siis selittävä malli, ei tarkka mittaus.
 - **Mittaa, älä arvaa.** `perf stat -e cache-references,cache-misses`,
   `perf c2c` ja Valgrindin `cachegrind` (joka on simulaattori kuten
   tämänkin luvun malli) kertovat, missä hudit syntyvät.
-- **Esihaku piilottaa pakolliset hudit.** Laitteisto tunnistaa
-  peräkkäiset ja vakioaskeleiset viitekuviot ja hakee seuraavat lohkot
-  etukäteen. Osoitinjahti (linkitetty lista, puu) ei ole ennustettava,
-  ja siksi se on hidas: jokainen solmu on mahdollinen DRAM-huti.
+- **Kirjoita esihakijalle.** Peräkkäinen ja vakioaskeleinen läpikäynti
+  on esihakijalle ilmaista. Osoitinjahti (linkitetty lista, puu) ei ole
+  ennustettava, ja siksi se on hidas: jokainen solmu on mahdollinen
+  DRAM-huti.
 
 ## Itsearviointi
 
@@ -202,3 +269,5 @@ pyöristää sen nollaan. 3C on siis selittävä malli, ei tarkka mittaus.
   kaksitiisessä LRU-välimuistissa.
 - Osaat luokitella hudit 3C-mallilla ja kertoa, mikä muutos auttaa
   kuhunkin lajiin.
+- Osaat selittää, milloin seuraavan lohkon esihaku poistaa hudit ja
+  milloin se lisää niitä.

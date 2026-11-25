@@ -113,6 +113,12 @@ int main(int argc, char **argv)
         }
         return 0;
     }
+    // --kerran TAPA: yksi kirjoitustapa kerran (strace-tarkistusta varten).
+    if (argc > 2 && strcmp(argv[1], "--kerran") == 0) {
+        Tila t = {atoi(argv[2]), 0};
+        aja(&t);
+        return 0;
+    }
     // @alku testi
     printf("%d rivia\n", RIVEJA);
     Kohde a = {tilapaistiedosto(), 0};

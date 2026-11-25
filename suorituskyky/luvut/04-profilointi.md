@@ -76,6 +76,9 @@ käskyt ja kaikkien sen kutsumien funktioiden käskyt:
 ```{.tuloste tiedosto="esimerkit/tulokset/tarkista-callgrind.txt"}
 ```
 
+```{.dot tiedosto="kaaviot/04-kutsupuu.dot" otsikko="Sama tuloste kutsupuuna: solmun luku on kumulatiivinen osuus käskyistä ja nuolen paksuus kutsun osuus. Yli kolmanneksen vievät funktiot on korostettu"}
+```
+
 Kuva on nyt toinen. Lineaarinen haku vie noin puolet käskyistä, mutta
 `sscanf` vie lähes saman verran, ja sen sisällä lähes kaikki menee
 `strlen`-funktioon. glibcin `sscanf` käsittelee merkkijonoa kuin
@@ -183,14 +186,56 @@ piirretään *liekkikuvaaja* (engl. flame graph, Brendan Gregg): jokainen
 pino on pystysuora torni, jonka alimpana on `main`, ja jokaisen
 funktion leveys on sen osuus näytteistä. Leveät tornit ovat kuumia
 polkuja, ja tasaiset huiput ovat funktioita, jotka kuluttavat aikaa
-itse. Kuvaaja tehdään esimerkiksi komennolla `perf script` ja
-FlameGraph-skripteillä tai suoraan työkaluilla kuten Hotspot ja
-Firefox Profiler.
+itse. Callgrind-osion kutsupuu on sama tieto toisin päin piirrettynä:
+liekkikuvaajassa `main` olisi koko leveyden levyinen pohja, sen päällä
+`laske_hidas` ja sen päällä rinnakkain kaksi lähes yhtä leveää tornia,
+joiden huipuilla ovat `strlen` ja `strcmp`. Kuvaaja tehdään
+esimerkiksi komennolla `perf script` ja FlameGraph-skripteillä tai
+suoraan työkaluilla kuten Hotspot ja Firefox Profiler.
 
 Pinojen keräämiseen tarvitaan joko kehysosoitin (`-fno-omit-frame-pointer`)
 tai DWARF-tiedot (`perf record --call-graph dwarf`). Monet jakelut
 kääntävät nykyään kirjastonsakin kehysosoittimin juuri profiloinnin
 takia.
+
+## Kun ohjelma odottaa
+
+Edellä kuvatut profiloijat näkevät ajan, jonka ohjelma viettää
+suorittimella. Jos seinäkelloaika on paljon prosessiaikaa suurempi
+(luku 2), ohjelma odottaa: levyä, verkkoa, lukkoa tai vuoroaan
+suorittimelle. Näytteistävä profiili näyttää silloin tyhjää, koska
+nukkuva säie ei tuota näytteitä.
+
+Ensimmäinen työkalu on `strace`, joka näyttää ohjelman
+järjestelmäkutsut. `strace -c` laskee ne ja niissä kuluneen ajan,
+`strace -T` näyttää jokaisen kutsun keston. Makefile laskee luvun 10
+kirjoitusesimerkin `write`-kutsut kahdella kirjoitustavalla:
+
+```{.makefile tiedosto="esimerkit/Makefile" osa="strace"}
+```
+
+```{.tuloste tiedosto="esimerkit/tulokset/tarkista-jarjestelmakutsut.txt"}
+```
+
+Sata tuhatta kutsua, joista jokainen käy ytimessä, on vastaus
+kysymykseen "missä aika kuluu", vaikka mikään käyttäjätilan funktio ei
+ole kuuma. Luku 10 korjaa tämän puskuroinnilla. Jäljitys hidastaa
+ohjelmaa moninkertaisesti, joten `strace` kertoo kutsujen määrän ja
+järjestyksen luotettavasti mutta kestot vain suuntaa-antavasti.
+
+Muut työkalut samaan kysymykseen:
+
+| Työkalu | Mitä näyttää |
+|------------------|--------------------------------------------------|
+| `strace -c`, `strace -T` | Järjestelmäkutsujen määrät ja kestot |
+| `perf trace` | Sama pienemmällä hidastuksella |
+| `perf sched timehist` | Kuinka kauan säie odotti vuoroaan suorittimelle |
+| off-CPU-liekkikuvaaja | Kutsupinot painotettuina odotusajalla, ei suoritinajalla |
+| `/proc/PID/status`, `pidstat -w` | Vapaaehtoiset ja pakotetut kontekstinvaihdot |
+
+Paljon vapaaehtoisia kontekstinvaihtoja tarkoittaa, että ohjelma
+nukahtaa itse (I/O, lukot); paljon pakotettuja, että se kilpailee
+suorittimesta muiden kanssa.
 
 ## Käytännössä
 
@@ -209,6 +254,8 @@ takia.
   optimointeja profiili näyttää eri pullonkaulat kuin tuotannossa.
 - **Profiloi todellisella syötteellä.** Pieni testisyöte ei paljasta
   neliöllistä kasvua.
+- **Jos suoritinprofiili on tyhjä, katso odotusta.** Vertaa
+  seinäkelloa prosessiaikaan ja laske järjestelmäkutsut (`strace -c`).
 
 ## Itsearviointi
 
@@ -220,3 +267,6 @@ takia.
 - Osaat lukea `perf stat` -tulosteesta IPC:n ja hutien määrät ja
   päätellä niistä seuraavan askeleen.
 - Osaat selittää, miten liekkikuvaaja luetaan.
+- Osaat selvittää `strace`lla, mihin järjestelmäkutsuihin odottava
+  ohjelma käyttää aikansa, ja nimetä työkalun vuorontajan viiveen
+  tutkimiseen.

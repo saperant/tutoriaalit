@@ -17,19 +17,44 @@ käsitelty taidossa *Digitaalitekniikka*. Tässä ne oletetaan valmiiksi.
 Kaikki käskyt kulkevat saman reitin, vaikka jokainen ei käytä jokaista
 osaa:
 
-```{.dot otsikko="Yksijaksoinen datapolku"}
+```{.dot otsikko="Yksijaksoinen datapolku. Suluissa ja multipleksereissä ovat ohjaussignaalit, jotka ohjausyksikkö asettaa opcoden perusteella"}
 digraph {
-  rankdir=LR; nodesep=0.3; ranksep=0.35;
+  rankdir=LR; nodesep=0.22; ranksep=0.2;
   edge [fontsize=8];
-  PC; IM [label="käsky-\nmuisti"]; purku [label="purku\n+ imm"];
-  RF [label="rekisteri-\ntiedosto"]; ALU [shape=invtrapezium];
-  DM [label="data-\nmuisti"];
-  PC -> IM -> purku -> RF -> ALU -> DM;
-  DM -> RF [label="takaisinkirjoitus", constraint=false, style=dashed];
-  ALU -> PC [label="PC+4 / haaran kohde", constraint=false,
-             style=dashed];
+  node [fontsize=9, margin="0.04,0.03", width=0.3, height=0.3];
+  MP [label="mux\nha, hy", shape=box];
+  PC;
+  P4 [label="+4", shape=circle, fixedsize=true, width=0.32];
+  HS [label="+", shape=circle, fixedsize=true, width=0.32];
+  IM [label="käsky-\nmuisti"];
+  OHJ [label="ohjaus-\nyksikkö", shape=box, style=dashed];
+  PU [label="purku\n+ imm"];
+  RF [label="rekisteri-\ntiedosto\n(rk)"];
+  MA [label="mux\na", shape=box];
+  MB [label="mux\nb", shape=box];
+  ALU [label="ALU\n(alu)", shape=invtrapezium];
+  DM [label="data-\nmuisti\n(ml, mk)"];
+  MW [label="mux\nwb", shape=box];
+  MP -> PC -> IM -> PU -> RF;
+  IM -> OHJ [label="opcode", style=dotted];
+  RF -> MA [label="rs1"]; RF -> MB [label="rs2"];
+  PU -> MB [label="imm"];
+  PC -> MA [constraint=false];
+  MA -> ALU; MB -> ALU;
+  ALU -> DM [label="osoite"];
+  RF -> DM [label="rs2", constraint=false];
+  DM -> MW; ALU -> MW;
+  PC -> P4; P4 -> MW [label="PC+4"];
+  PC -> HS; PU -> HS [label="imm", constraint=false];
+  P4 -> MP [constraint=false]; HS -> MP [label="haaran kohde", constraint=false];
+  ALU -> MP [label="hypyn kohde", constraint=false, style=dashed];
+  MW -> RF [label="rd", constraint=false, style=dashed];
 }
 ```
+
+Kuvasta on jätetty pois A-operandin kolmas vaihtoehto (vakio nolla,
+jota `lui` käyttää) ja ohjausyksikön johtimet multiplekserien
+valintoihin. Käsky kulkee kuvan läpi viidessä vaiheessa:
 
 1. **Nouto** (IF): ohjelmalaskuri osoittaa käskymuistiin, käsky luetaan.
 2. **Purku** (ID): kentät erotetaan, rekisteritiedostosta luetaan rs1 ja
@@ -57,7 +82,7 @@ Signaalit taulukkona:
 ```{.cpp tiedosto="esimerkit/03-ohjaus.cpp" osa="taulu"}
 ```
 
-```{.tuloste tiedosto="esimerkit/03-ohjaus.odotettu"}
+```{.tuloste tiedosto="esimerkit/03-ohjaus.odotettu" rivit="1-10"}
 ```
 
 Lyhenteet: `rk` rekisteriin kirjoitus, `a` ALU:n A-operandi (rs1, pc tai
@@ -137,9 +162,11 @@ on 220 ps (200 ps vaihe ja 20 ps vaiherekisterien ylimääräinen viive):
 ```{.cpp tiedosto="esimerkit/03-ohjaus.cpp" osa="vertailu"}
 ```
 
-Tuloste on edellä signaalitaulukon jatkona. Monijaksoinen CPI on noin
-4, ja koska jakso on neljäsosa, ajat ovat lähes samat kuin
-yksijaksoisessa. Monijaksoisuus ei siis yksinään nopeuta paljoa: se
+```{.tuloste tiedosto="esimerkit/03-ohjaus.odotettu" rivit="12-18"}
+```
+
+Monijaksoinen CPI on noin 4, ja koska jakso on neljäsosa, ajat ovat
+lähes samat kuin yksijaksoisessa. Monijaksoisuus ei siis yksinään nopeuta paljoa: se
 voittaa vain, jos sekoituksessa on paljon lyhyitä käskyjä (haaroja) tai
 jos jotkin käskyt ovat hyvin pitkiä (kerto- ja jakolasku, liukuluvut),
 jolloin yksijaksoinen joutuisi venyttämään jokaisen jakson niiden

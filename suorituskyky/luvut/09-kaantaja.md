@@ -18,7 +18,11 @@ optimoinnilla sekä profiiliohjattu optimointi.
 | `-Os`, `-Oz` | Pieni koodi | Sulautetut, käskyvälimuisti |
 | `-Ofast` | `-O3` ja `-ffast-math` | Vain, kun liukulukusemantiikka saa muuttua |
 
-Luvun 11 sumennusohjelman viimeinen vaihe käännettynä eri tasoilla:
+Tasojen ero näkyy parhaiten laskentaytimessä. Esimerkkinä on luvun 11
+tapaustutkimuksen laatikkosumennus, jossa kuvan jokainen pikseli
+korvataan ympäristönsä keskiarvolla. Tässä riittää tietää, että sen
+viimeinen vaihe on kaksi sisäkkäistä silmukkaa kokonaislukutaulukoiden
+yli. Sama lähdekoodi käännettynä eri tasoilla:
 
 ```{.makefile tiedosto="esimerkit/Makefile" osa="tasot"}
 ```

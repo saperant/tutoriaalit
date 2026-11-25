@@ -79,8 +79,8 @@ luettavuuden mukaan.
 ## Väärä jakaminen
 
 Monisäikeisessä ohjelmassa rivin koko vaikuttaa toisellakin tavalla.
-Välimuistin koherenssi pitää kirjaa riveistä, ei muuttujista
-(Tietokonearkkitehtuuri, luku 10). Jos kaksi säiettä kirjoittaa kahteen
+Välimuistin koherenssi pitää kirjaa riveistä, ei muuttujista (taito
+*Tietokonearkkitehtuuri*). Jos kaksi säiettä kirjoittaa kahteen
 eri muuttujaan samalla rivillä, rivi siirtyy ytimeltä toiselle jokaisen
 kirjoituksen jälkeen, vaikka säikeet eivät jaa dataa:
 

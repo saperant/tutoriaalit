@@ -29,15 +29,22 @@
 13. Käskykanta on sopimus, mikroarkkitehtuuri toteutus. Optimoi
     mikroarkkitehtuurille, mutta luota vain sopimukseen.
 
-## Mihin seuraavaksi
+## Jatkotaidot
 
+- *Käyttöjärjestelmät*: mitä ydin tekee tässä kuvatuilla
+  mekanismeilla: sivutaulut, ansat, keskeytykset ja kontekstinvaihto.
+- *Suorituskyvyn analyysi ja optimointi*: samat ilmiöt (välimuistit,
+  ennustus, vektorointi) mitattuina oikealla laitteistolla ja
+  ohjelmoijan keinot vaikuttaa niihin.
+- *Rinnakkaisohjelmointi*: säikeet, lukot ja atomiset operaatiot
+  koherenssin ja muistimallin päällä.
 - *RTL-suunnittelu SystemVerilogilla*: tämän tutoriaalin datapolku ja
   liukuhihna synteesikelpoisena laitteistona. Jälkiohjattu malli on
-  hyvä viitemalli RTL:n verifioinnille (*Verifiointi*).
+  hyvä viitemalli RTL:n verifioinnille (*Laitteiston verifiointi*).
 - *SoC-integraatio*: väylät, keskeytysohjaimet ja oheislaitteet
   järjestelmäpiirin tasolla.
-- *GPU-ohjelmointi*: suoritin, joka uhraa yksittäisen säikeen viiveen
-  läpäisyn hyväksi.
+- *GPU-ohjelmointi: OpenGL ja Vulkan* ja *GPU-laskenta*: suoritin, joka
+  uhraa yksittäisen säikeen viiveen läpäisyn hyväksi.
 - *C ja assembly yhteen* ja *Objektitiedostot, linkitys ja ABI*: miten
   kääntäjän tuottama koodi käyttää tässä kuvattuja rakenteita.
 

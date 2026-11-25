@@ -73,15 +73,18 @@ kannattaa optimoida, koska jokainen ydin hyötyy siitä.
 
 ## Jatkotaidot
 
-- **C++:n suorituskyky**: siirtosemantiikka, kopiot, allokaattorit,
+- *C++:n suorituskyky*: siirtosemantiikka, kopiot, allokaattorit,
   mallien ja `constexpr`-laskennan hinnat sekä standardikirjaston
   säiliöiden valinta.
-- **GPU-laskenta**: tuhansien säikeiden laskenta, muistihierarkia
+- *Rinnakkaisohjelmointi*: säikeet, synkronointi, väärän jakamisen
+  mittaaminen ja rinnakkaiset algoritmit.
+- *GPU-laskenta*: tuhansien säikeiden laskenta, muistihierarkia
   näytönohjaimessa ja roofline-malli GPU:lle.
-- **Arkkitehtuurin tutkiminen**: suorittimen mikroarkkitehtuurin
-  mittaaminen ja mallintaminen, laitteistolaskurit ja simulaattorit.
-- **Rinnakkaisohjelmointi**: säikeet, synkronointi ja rinnakkaiset
-  algoritmit.
+- *Arkkitehtuurin mallinnus ja suunnittelutilan tutkiminen*:
+  suorittimen mikroarkkitehtuurin mittaaminen ja mallintaminen,
+  laitteistolaskurit ja simulaattorit.
+- *Skaalautuvien järjestelmien suunnittelu*: viive, läpäisy ja
+  häntälatenssi usean koneen järjestelmässä.
 
 ## Lähteet
 

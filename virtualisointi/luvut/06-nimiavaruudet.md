@@ -109,6 +109,34 @@ kirjoitettavaan kerrokseen (upperdir). Kun kontti poistetaan, ylin
 kerros poistetaan, ja kuva on koskematon. Sama kuva palvelee kaikkia
 kontteja, kuten qcow2-peruskuva palveli virtuaalikoneita.
 
+```{.dot otsikko="Sama ajatus kahdella tasolla: vain luettavat jaetut kerrokset (harmaat) alla ja kirjoitettava kerros päällä. Overlay toimii tiedostojen tasolla, qcow2 levylohkojen"}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.1;
+  node [shape=plaintext, fontsize=9];
+  o [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0"><b>kontti: overlay</b></td></tr>
+    <tr><td bgcolor="#f3e6c8">kontin näkemä juuri</td></tr>
+    <tr><td>upperdir: kontin muutokset</td></tr>
+    <tr><td bgcolor="#d9d9d9">lowerdir: kuvan kerros 2</td></tr>
+    <tr><td bgcolor="#d9d9d9">lowerdir: kuvan kerros 1</td></tr></table>>];
+  q [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0"><b>virtuaalikone: qcow2</b></td></tr>
+    <tr><td bgcolor="#f3e6c8">vieraan näkemä levy</td></tr>
+    <tr><td>kerros: koneen muutokset</td></tr>
+    <tr><td bgcolor="#d9d9d9">peruskuva</td></tr></table>>];
+  o -> q [style=invis];
+}
+```
+
+Jaettavassa muodossa (OCI-kuva) jokainen kerros on tar-paketti, joka
+nimetään sisältönsä tiivisteellä. **Manifesti** luettelee kuvan
+kerrokset tiivisteineen ja viittaa asetustiedostoon, jossa ovat
+käynnistettävä komento ja ympäristömuuttujat. Koska nimi on sisällön
+tiiviste, sama kerros tallennetaan ja ladataan vain kerran, vaikka
+kymmenen kuvaa rakentuisi sen päälle, ja muuttunut kerros huomataan
+heti. Kuvien rakentaminen ja jakelu ovat taidon *Kontit ja
+pilvi-infrastruktuuri* aihe.
+
 ## Minikontti
 
 Seuraava skripti kokoaa kontin ilman konttityökaluja. Kontin "kuva" on
@@ -145,7 +173,8 @@ oikeuksien karsiminen, jotka ovat seuraavan luvun aihe.
 ## PID 1 kontissa
 
 Kontin ensimmäisellä prosessilla on kaksi tehtävää, joista tavallinen
-ohjelma ei tiedä:
+ohjelma ei tiedä (orvot ja zombit yleisesti: taito
+*Käyttöjärjestelmät*):
 
 - **Orvot.** Kun prosessin vanhempi päättyy, PID 1 perii sen ja sen
   on kerättävä sen paluuarvo (`wait`). Muuten nimiavaruuteen kertyy

@@ -2,3 +2,10 @@ suoraan raudalla   tuloste: 0   | IF lopussa 1 | ansoja 0
 trap-and-emulate   tuloste: 1   | IF lopussa 0 | ansoja 3
 binaarikaannos     tuloste: 0   | IF lopussa 1 | ansoja 5
 laitteistotuki     tuloste: 0   | IF lopussa 1 | ansoja 2
+
+kasky     trap-and-emulate  binaarikaannos  laitteistotuki
+CLI       hypervisor        hypervisor      vieras
+LUEIF     vieras, VAARIN    hypervisor      vieras
+OUT       hypervisor        hypervisor      hypervisor
+ASETAIF   vieras, VAARIN    hypervisor      vieras
+HLT       hypervisor        hypervisor      hypervisor

@@ -148,7 +148,42 @@ ohjelma nopeutuu enintään $1/0{,}6 \approx 1{,}67$-kertaisesti. Laki
 muistuttaa, että optimointi kannattaa kohdistaa siihen, mihin aika
 oikeasti kuluu, ja että nopeutuksella on yläraja.
 
-## Esitiedot ja rajaukset
+## Teho ja energia
+
+Rautalaki kertoo ajan, mutta nykyisen suorittimen suunnittelua rajoittaa
+yhtä usein teho. CMOS-piirin tehonkulutus on kahden osan summa:
+
+$$
+P \approx \alpha C V^2 f + V I_\text{vuoto}.
+$$
+
+Ensimmäinen termi on **dynaaminen teho**: jokainen tilanvaihto lataa
+tai purkaa kapasitanssin $C$, $\alpha$ on jaksossa vaihtuvien solmujen
+osuus, $V$ käyttöjännite ja $f$ kellotaajuus. Toinen on **vuototeho**,
+joka kuluu, vaikka piiri ei tee mitään (taito *Digitaalitekniikka*).
+Kolme seurausta ohjaa kaikkea, mitä tässä tutoriaalissa rakennetaan:
+
+- **Jännite ratkaisee.** Dynaaminen teho riippuu jännitteestä
+  neliöllisesti ja taajuudesta lineaarisesti. Koska korkeampi taajuus
+  vaatii korkeamman jännitteen, teho kasvaa taajuuden mukana lähes
+  kuutiollisesti. Tähän pysähtyi kellotaajuuksien kasvu 2000-luvun
+  alussa (luku 4), ja tästä seuraa moniytimisyys (luku 10).
+- **Teho ja energia ovat eri asioita.** Teho (wattia) määrää
+  jäähdytyksen ja virransyötön, energia (joulea) akun keston ja
+  sähkölaskun. Tehtävän energia on teho kertaa aika: suoritin, joka
+  tekee työn nopeasti ja nukahtaa, voi kuluttaa vähemmän energiaa kuin
+  hitaampi ja vähätehoisempi.
+- **Suorituskyky wattia kohden on mittari.** Epäjärjestyssuoritus
+  (luku 11) nopeuttaa ohjelmaa, mutta sen jonot ja spekulaatio kuluttavat
+  energiaa myös työhön, joka hylätään. Siksi samassa piirissä on usein
+  suuria ja pieniä ytimiä, ja siksi palvelinsalin ja puhelimen
+  suorittimet päätyvät erilaisiin ratkaisuihin samasta käskykannasta.
+
+Simulaattori ei mallinna tehoa, mutta sen laskemat suureet (käskyt,
+jaksot, hudit, väylätapahtumat) ovat juuri niitä, joihin energia
+kuluu.
+
+## Esitiedot ja rajaus
 
 Tutoriaali olettaa, että lukija tuntee:
 
@@ -156,8 +191,11 @@ Tutoriaali olettaa, että lukija tuntee:
   ajoitus. Datapolku rakennetaan näistä palikoista.
 - *Assembly*: rekisterit, lataukset ja talletukset, haarat, kutsut ja
   pino. RISC-V-assemblyä luetaan sujuvasti.
-- *Moderni C++*: esimerkit ovat C++23:a (`std::print`, `std::format`,
-  `constexpr`, nimetyt alustimet).
+
+Esimerkit ovat C++23:a. Simulaattorin lukemiseen riittää C-tausta ja
+valmius lukea luokkia ja `std::vector`ia; käytetyt piirteet
+(`std::print`, `std::format`, `constexpr`, nimetyt alustimet) esitellään
+taidossa *Moderni C++*.
 
 Seuraavat aiheet on rajattu pois, koska niille on oma taitonsa:
 
@@ -167,7 +205,7 @@ Seuraavat aiheet on rajattu pois, koska niille on oma taitonsa:
   oheislaitteet piirin suunnittelijan näkökulmasta.
 - *RTL-suunnittelu SystemVerilogilla*: datapolun toteutus
   synteesikelpoisena laitteistona.
-- *GPU-ohjelmointi*: datarinnakkaiset suorittimet.
+- *GPU-laskenta*: datarinnakkaiset suorittimet.
 
 Tämä tutoriaali katsoo samoja asioita arkkitehdin silmin: mitä rakenne
 tekee, miksi se on olemassa ja mitä se maksaa.

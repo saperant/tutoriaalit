@@ -1,0 +1,19 @@
+nimeämistaulu ennen:   t0=p5 t1=p6 t2=p7 s0=p8 s1=p9 a0=p10
+käsky                 lukee     kirjoittaa
+slli t2, t0, 2        p5        t2 -> p32
+add t2, s0, t2        p8 p32    t2 -> p33
+lw t1, 0(t2)          p33       t1 -> p34
+add a0, a0, t1        p10 p34   a0 -> p35
+addi t0, t0, 1        p5        t0 -> p36
+blt t0, s1, 0x38      p36 p9    -
+slli t2, t0, 2        p36       t2 -> p37
+add t2, s0, t2        p8 p37    t2 -> p38
+lw t1, 0(t2)          p38       t1 -> p39
+add a0, a0, t1        p35 p39   a0 -> p40
+addi t0, t0, 1        p36       t0 -> p41
+blt t0, s1, 0x38      p41 p9    -
+nimeämistaulu jälkeen: t0=p41 t1=p39 t2=p38 s0=p8 s1=p9 a0=p40
+
+riippuvuudet               RAW  WAR  WAW
+arkkitehtuuriset nimet      11    8    6
+fyysiset nimet              11    0    0

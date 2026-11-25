@@ -41,21 +41,13 @@ prosessi käyttäisi vain muutamaa sivua. Siksi sivutaulu on puu.
 ## Sv32
 
 RISC-V:n 32-bittinen sivutus Sv32 jakaa osoitteen kahteen 10-bittiseen
-VPN-kenttään ja 12-bittiseen siirtymään:
-
-```text
- 31          22 21          12 11              0
-+--------------+--------------+-----------------+
-|    VPN[1]    |    VPN[0]    |     siirtymä    |
-+--------------+--------------+-----------------+
-```
-
+VPN-kenttään (bitit 31–22 ja 21–12) ja 12-bittiseen siirtymään.
 Juuritaulun fyysinen osoite on CSR-rekisterissä `satp`. VPN[1]
 valitsee juuritaulusta alkion (PTE, *page table entry*). Jos alkiossa
 R, W ja X ovat kaikki nollia, se osoittaa seuraavan tason tauluun,
 josta VPN[0] valitsee lopullisen alkion. Jos taas R tai X on asetettu,
 alkio on **lehti** jo ensimmäisellä tasolla: se kuvaa 4 MiB:n
-**megasivun**. Alkion muoto ja apufunktiot:
+**megasivun**.
 
 ```{.dot otsikko="Sv32:n kaksitasoinen osoitteenmuunnos"}
 digraph {
@@ -76,6 +68,8 @@ digraph {
 }
 ```
 
+Alkion muoto ja apufunktiot:
+
 ```{.cpp tiedosto="esimerkit/08-sivutus.cpp" osa="pte"}
 ```
 
@@ -94,7 +88,7 @@ viitettä:
 ```{.cpp tiedosto="esimerkit/08-sivutus.cpp" osa="kartta"}
 ```
 
-```{.tuloste tiedosto="esimerkit/08-sivutus.odotettu"}
+```{.tuloste tiedosto="esimerkit/08-sivutus.odotettu" rivit="1-20"}
 ```
 
 Käskyn nouto koodisivulta ja talletus datasivulle kävelevät kaksi tasoa.
@@ -129,7 +123,10 @@ käyttäjälle ja yläosa ytimelle.
 ```{.cpp tiedosto="esimerkit/08-sivutus.cpp" osa="sv39"}
 ```
 
-Tuloste on edellisen jatkona. Sv48 ja Sv57 lisäävät neljännen ja
+```{.tuloste tiedosto="esimerkit/08-sivutus.odotettu" rivit="21-23"}
+```
+
+Sv48 ja Sv57 lisäävät neljännen ja
 viidennen tason (vastaavasti x86-64:n nelitasoinen ja viisitasoinen
 sivutus). Jokainen taso pidentää kävelyä yhdellä muistiviitteellä.
 Sv39:ssä lehti voi olla myös 2 MiB:n tai 1 GiB:n sivu.

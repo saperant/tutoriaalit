@@ -85,6 +85,9 @@ haarakäskyä ohjelmissa on ja kuinka usein ne toteutuvat:
 ```{.tuloste tiedosto="esimerkit/05-ennustimet.odotettu"}
 ```
 
+![Ennustimien tarkkuus ohjelmittain (tulosteen ensimmäinen taulukko).
+Katkoviiva on kolikonheiton taso.](kuvat/ennustimet.png){width=80%}
+
 Tulosten tulkinta:
 
 - **Silmukat ovat helppoja.** `summa`- ja `lista`-ohjelmissa melkein
@@ -104,9 +107,12 @@ Tulosten tulkinta:
 ## Korrelaatio ja globaali historia
 
 `fib`-ohjelmassa on vain yksi haara, `blt a0, t0, pieni`, ja se toteutuu
-täsmälleen puolet kerroista. Mikään edellä mainittu ennustin ei pääse
-50 %:a pidemmälle, koska haaran oma historia ei kerro mitään: suunta
-riippuu rekursion syvyydestä.
+täsmälleen puolet kerroista. Staattiset ennusteet ja kaksibittinen
+laskuri jäävät 50 %:iin, koska haaran oma historia ei kerro juuri
+mitään: suunta riippuu rekursion syvyydestä. Yksibittinen ennustin
+pääsee 62 %:iin, koska se ennustaa edellisen suunnan ja rekursiopuussa
+sama suunta toistuu hieman useammin kuin vaihtuu. Sekin on kaukana
+silmukkaohjelmien 97–99 %:sta.
 
 Haarojen suunnat kuitenkin *korreloivat* keskenään. Rekursiopuussa
 lehteä (toteutuva haara) seuraa usein toinen lehti tai sisäsolmu

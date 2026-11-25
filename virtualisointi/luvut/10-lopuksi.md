@@ -26,7 +26,7 @@
 9. **Vedos ei ole varmuuskopio.** Varmuuskopio on toisessa paikassa ja
    sen palautus on testattu.
 
-## Mihin tästä eteenpäin
+## Jatkotaidot
 
 - *Kontit ja pilvi-infrastruktuuri*: Docker, konttikuvien rakentaminen ja Kubernetes.
 - *Palvelinympäristöt*: virtualisointialustojen ylläpito, tallennus ja

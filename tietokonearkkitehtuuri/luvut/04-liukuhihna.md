@@ -92,7 +92,7 @@ edellisen tulosta, kunnes se on kirjoitettu rekisteritiedostoon:
 ```{.ajoituskaavio tiedosto="kaaviot/04-kytkenta-pois.json" otsikko="Silmukan kierros ilman eteenpäinkytkentää: 21 jaksoa"}
 ```
 
-Kytkennän kanssa ainoa pysähdys on latauksen jälkeen (luku *Latauksen
+Kytkennän kanssa ainoa pysähdys on latauksen jälkeen (osio *Latauksen
 käyttö*), ja seuraava kierros alkaa haaran jälkeen:
 
 ```{.ajoituskaavio tiedosto="kaaviot/04-kytkenta-paalla.json" otsikko="Sama kierros eteenpäinkytkennän kanssa: 14 jaksoa"}
@@ -100,8 +100,41 @@ käyttö*), ja seuraava kierros alkaa haaran jälkeen:
 
 Eteenpäinkytkentä (*forwarding*, *bypassing*) vie tuloksen suoraan
 ALU:n ulostulosta seuraavan käskyn ALU:n sisäänmenoon, ohi
-rekisteritiedoston. Laitteistossa se on kaksi multiplekseriä ALU:n
-eteen ja vertailijat, jotka tarkistavat, onko EX/MEM- tai
+rekisteritiedoston. Liukuhihnoitetussa datapolussa vaiheiden välissä
+ovat **vaiherekisterit**, jotka on nimetty viereisten vaiheiden mukaan
+(IF/ID, ID/EX, EX/MEM, MEM/WB). Ne kuljettavat käskyn datan ja
+ohjaussignaalit vaiheesta seuraavaan:
+
+```{.dot otsikko="Viisivaiheinen liukuhihna: vaiherekisterit (harmaat), eteenpäinkytkennän kaksi polkua (punaiset) ja pysäytys latauksen jälkeen (katkoviivat)"}
+digraph {
+  rankdir=LR; nodesep=0.25; ranksep=0.12;
+  edge [fontsize=8];
+  node [fontsize=9, margin="0.04,0.03", width=0.3, height=0.3];
+  PC [label="PC"];
+  IM [label="käsky-\nmuisti"];
+  r1 [label="IF/\nID", shape=box, style="filled", fillcolor="#d9d9d9", height=1.1, width=0.2];
+  RF [label="purku,\nrekisterit"];
+  HD [label="riippuvuuden\ntunnistus", shape=box, style=dashed];
+  r2 [label="ID/\nEX", shape=box, style="filled", fillcolor="#d9d9d9", height=1.1, width=0.2];
+  MX [label="mux", shape=box];
+  ALU [shape=invtrapezium];
+  r3 [label="EX/\nMEM", shape=box, style="filled", fillcolor="#d9d9d9", height=1.1, width=0.2];
+  DM [label="data-\nmuisti"];
+  r4 [label="MEM/\nWB", shape=box, style="filled", fillcolor="#d9d9d9", height=1.1, width=0.2];
+  PC -> IM -> r1 -> RF -> r2 -> MX -> ALU -> r3 -> DM -> r4;
+  r3 -> MX [label="edellisen\ntulos", constraint=false, color="#b03030", fontcolor="#b03030"];
+  r4 -> MX [label="kahden\ntakaa", constraint=false, color="#b03030", fontcolor="#b03030"];
+  r4 -> RF [label="takaisin-\nkirjoitus", constraint=false, style=dashed];
+  r1 -> HD [style=dotted]; r2 -> HD [style=dotted, constraint=false];
+  HD -> PC [label="pidä", constraint=false, style=dashed];
+  HD -> r1 [label="pidä", constraint=false, style=dashed];
+  HD -> r2 [label="kupla", style=dashed];
+  {rank=same; RF; HD}
+}
+```
+
+Kytkentä on kaksi multiplekseriä ALU:n edessä (kuvassa yhtenä) ja
+vertailijat, jotka tarkistavat, onko EX/MEM- tai
 MEM/WB-vaiherekisterissä oleva rd sama kuin EX-vaiheen käskyn rs1 tai
 rs2:
 
@@ -128,7 +161,8 @@ luvussa 5.
 Latauksen tulos on valmis vasta MEM-vaiheen lopussa, kun seuraava käsky
 on jo EX-vaiheessa. Kytkentä ei voi viedä arvoa ajassa taaksepäin, joten
 *load–use*-riippuvuus maksaa yhden jakson silloinkin. Laitteistossa
-riippuvuuden havaitsee *hazard detection unit* ID-vaiheessa: jos
+riippuvuuden havaitsee edellisen kuvan riippuvuuden tunnistus (*hazard
+detection unit*) ID-vaiheessa: jos
 ID/EX-rekisterissä on lataus, jonka rd on purettavan käskyn rs1 tai rs2,
 PC:n ja IF/ID-rekisterin päivitys estetään yhdeksi jaksoksi ja EX:ään
 syötetään kupla (nop).

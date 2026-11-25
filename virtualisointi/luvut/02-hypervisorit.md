@@ -83,7 +83,13 @@ Hypervisor ajaa vieraan ytimen käyttäjätilassa ja pitää yllä vieraan
 Vieraana on ytimen pätkä, joka kieltää keskeytykset, lukee lipun ja
 palauttaa keskeytykset. Tulokset neljällä tavalla:
 
-```{.tuloste tiedosto="esimerkit/02-lelukone.odotettu"}
+```{.tuloste tiedosto="esimerkit/02-lelukone.odotettu" rivit="1-4"}
+```
+
+Ohjelman toinen taulukko näyttää, kuka kunkin käskyn suorittaa:
+hypervisor ansan kautta vai vieras itse.
+
+```{.tuloste tiedosto="esimerkit/02-lelukone.odotettu" rivit="6-11"}
 ```
 
 Pelkkä trap-and-emulate epäonnistuu kahdesti. `LUEIF` lukee isännän
@@ -103,7 +109,8 @@ eivät koske hypervisorin tilaa.
 ```{.c tiedosto="esimerkit/02-lelukone.c" osa="kaannos"}
 ```
 
-Tulos on oikea, mutta ansoja tulee enemmän (5). Oikeissa toteutuksissa
+Tulos on oikea, mutta ansoja tulee enemmän (5): taulukon
+keskimmäisessä sarakkeessa hypervisor käsittelee jokaisen käskyn. Oikeissa toteutuksissa
 käännetty koodi tallennetaan välimuistiin, ja suurin osa
 korvatuista käskyistä emuloidaan suoraan käännetyssä koodissa ilman
 ansaa. Menetelmä on monimutkainen mutta toimi x86:lla ennen
@@ -128,7 +135,9 @@ lisäsivät suorittimiin vuosina 2005–2006. Suorittimella on erillinen
 **vierastila**, jossa vieraalla on oma kopio rekistereistä, myös
 keskeytyslipusta. `CLI` ja `LUEIF` toimivat vieraan omaa tilaa vasten
 ilman ansaa, ja vain hypervisorin valitsemat tapahtumat (tässä I/O ja
-`HLT`) aiheuttavat **VM exitin**. Tulos on oikea, ja ansoja on vähiten.
+`HLT`) aiheuttavat **VM exitin**. Tulos on oikea, ja ansoja on vähiten:
+taulukon oikeassa sarakkeessa vieras suorittaa itse kaiken paitsi
+I/O:n ja pysäytyksen.
 Luku 3 käsittelee mekanismin tarkemmin.
 
 ## Käytännössä

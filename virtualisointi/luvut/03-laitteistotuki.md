@@ -55,6 +55,21 @@ osoitteeksi** (GPA). Vieraan fyysinen muisti on kuitenkin isännän
 muistia jossain muualla, eli **isännän fyysisessä osoitteessa** (HPA).
 Muunnoksia tarvitaan kaksi.
 
+```{.dot otsikko="Kolme osoiteavaruutta ja kaksi muunnosta. Varjosivutaulu on oikotie, jonka hypervisor rakentaa ohjelmallisesti"}
+digraph {
+  rankdir=LR; nodesep=0.35; ranksep=0.3;
+  edge [fontsize=8];
+  node [fontsize=9];
+  gva [label="GVA\nvieraan\nvirtuaaliosoite"];
+  gpa [label="GPA\nvieraan\nfyysinen osoite"];
+  hpa [label="HPA\nisännän\nfyysinen osoite"];
+  gva -> gpa [label="vieraan\nsivutaulu\n(vieraan ydin)"];
+  gpa -> hpa [label="EPT / NPT\n(hypervisor)"];
+  gva -> hpa [label="varjosivutaulu",
+              style=dashed, constraint=false];
+}
+```
+
 **Varjosivutaulut** (shadow page tables) olivat ratkaisu ennen
 laitteistotukea. Hypervisor rakentaa vieraan taulujen rinnalle omat
 taulut, joissa GVA kuvautuu suoraan HPA:ksi, ja asettaa ne suorittimen
@@ -87,12 +102,76 @@ Vieraan kävelyssä jokaisen tason osoite käännetään ensin EPT:llä:
 ```{.tuloste tiedosto="esimerkit/03-sivutaulut.odotettu"}
 ```
 
+```{.dot otsikko="Kävelyn 24 muistiviittausta suoritusjärjestyksessä, kun kummassakin taulussa on neljä tasoa. Jokainen vieraan taulun alkio (oikea sarake) on vieraan fyysisessä osoitteessa, joka on ensin käännettävä EPT:n neljän tason läpi"}
+digraph {
+  node [shape=plaintext, fontsize=9];
+  t [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0"></td><td colspan="4" bgcolor="#d9d9d9">EPT:n tasot (GPA → HPA)</td><td bgcolor="#f3e6c8">vieraan taulun alkio</td></tr>
+    <tr><td border="0"></td><td>4</td><td>3</td><td>2</td><td>1</td><td border="0"></td></tr>
+    <tr><td align="left">vieraan taso 4 (juuri)</td><td>1</td><td>2</td><td>3</td><td>4</td><td bgcolor="#f3e6c8">5</td></tr>
+    <tr><td align="left">vieraan taso 3</td><td>6</td><td>7</td><td>8</td><td>9</td><td bgcolor="#f3e6c8">10</td></tr>
+    <tr><td align="left">vieraan taso 2</td><td>11</td><td>12</td><td>13</td><td>14</td><td bgcolor="#f3e6c8">15</td></tr>
+    <tr><td align="left">vieraan taso 1</td><td>16</td><td>17</td><td>18</td><td>19</td><td bgcolor="#f3e6c8">20</td></tr>
+    <tr><td align="left">datasivun GPA</td><td>21</td><td>22</td><td>23</td><td>24</td><td border="0">→ data</td></tr>
+  </table>>];
+}
+```
+
 Kun vieraan taulussa on $n$ tasoa ja EPT:ssä $m$, kävely vaatii
 pahimmillaan $(n+1)(m+1)-1$ viittausta: neljällä tasolla 24 eikä 4.
 Viisitasoisella sivutuksella lukema on 35. Siksi virtuaalikoneet
 hyötyvät suurista sivuista (2 MiB ja 1 GiB) enemmän kuin
 tavalliset ohjelmat: suuri sivu poistaa tason sekä vieraan taulusta
 että EPT:stä, ja TLB kattaa enemmän muistia.
+
+## Muistin ylivaraus
+
+EPT tekee vieraan muistista isännälle tavallista virtuaalimuistia, ja
+siksi hypervisor voi luvata vieraille yhteensä enemmän muistia kuin
+koneessa on (*memory overcommit*). Useimmat vieraat eivät käytä koko
+muistiaan yhtä aikaa. Kun muisti käy vähiin, hypervisorilla on kolme
+keinoa, pehmeimmästä kovimpaan:
+
+- **Ilmapalloajuri** (*balloon driver*, virtio-balloon). Vieraassa
+  ajettava ajuri varaa vieraan ytimeltä sivuja ja kertoo
+  hypervisorille, mitkä sivut se sai. Hypervisor vapauttaa niiden
+  taustalla olevan isännän muistin. Vieraan oma ydin päättää, mistä
+  se luopuu (ensin välimuisteista), joten keino on yhteistyötä eikä
+  pakkoa.
+- **Sivujen yhdistäminen** (KSM, *kernel samepage merging*). Isännän
+  ydin etsii sisällöltään samat sivut ja kuvaa ne yhteen fyysiseen
+  sivuun kopioi kirjoitettaessa -periaatteella. Kun kymmenen vierasta
+  ajaa samaa käyttöjärjestelmää, säästö on suuri. Hinta on sivukanava:
+  kirjoitus yhdistettyyn sivuun on hitaampi, joten vieras voi
+  mittaamalla päätellä, onko toisella vieraalla sama sivu. Eri
+  asiakkaiden koneiden välillä KSM pidetään siksi pois päältä.
+- **Isännän heittovaihto.** Isäntä voi siirtää vieraan sivuja levylle
+  vieraan tietämättä. Tämä on viimeinen keino, koska isäntä ei tiedä,
+  mitkä sivut ovat vieraalle tärkeitä, ja vieras voi itse yrittää
+  siirtää levylle sivun, jonka isäntä on jo siirtänyt: sivu luetaan
+  levyltä vain, jotta se voidaan kirjoittaa sinne uudelleen.
+
+Ylivaraus sopii ympäristöihin, joissa tiheys on tärkeämpää kuin
+tasainen vasteaika (kehitys, testaus, työpöydät). Viiveherkille
+tuotantokuormille muisti varataan kiinteästi ja isännän suurista
+sivuista, jolloin mikään yllä olevista ei osu niihin.
+
+## Muut arkkitehtuurit
+
+Tämä luku käyttää Intelin nimiä, mutta rakenne on kaikissa nykyisissä
+arkkitehtuureissa sama: oma suoritustila hypervisorille, vieraan tila
+muistirakenteessa ja toinen osoitteenmuunnoksen taso.
+
+| | Hypervisorin tila | Vieraan tila | Toinen muunnostaso |
+|---|---|---|---|
+| Intel VT-x | VMX root | VMX non-root, VMCS | EPT |
+| AMD-V | isäntätila | vierastila, VMCB | NPT |
+| Arm (AArch64) | EL2 | EL1 ja EL0 | stage 2 -muunnos |
+| RISC-V (H-laajennus) | HS-tila | VS- ja VU-tilat | G-vaiheen muunnos (`hgatp`) |
+
+RISC-V:n nimet jatkavat taidon *Tietokonearkkitehtuuri* M-, S- ja
+U-tasoja: H-laajennus tekee S-tilasta hypervisorin tilan (HS) ja lisää
+sen alle vieraan virtuaalisen S- ja U-tilan.
 
 ## TLB ja vaihdot
 
@@ -147,5 +226,7 @@ mutta sen hinta on selvästi suurempi kuin yhden tason.
   hinnan.
 - Osaat verrata varjosivutauluja ja EPT:tä ja laskea kaksiulotteisen
   sivutaulukävelyn muistiviittaukset.
+- Osaat selittää ilmapalloajurin, sivujen yhdistämisen ja isännän
+  heittovaihdon erot ja sen, miksi KSM on sivukanava.
 - Osaat perustella, miksi suuret sivut ja VPID parantavat
   virtuaalikoneen suorituskykyä.

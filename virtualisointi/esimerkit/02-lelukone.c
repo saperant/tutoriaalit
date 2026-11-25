@@ -135,6 +135,34 @@ static void kaanna(struct kasky *kohde)
 }
 // @loppu kaannos
 
+// @alku jalki
+// Kuka suorittaa kunkin käskyn: vieras itse vai hypervisor ansan
+// kautta. Sensitiivinen käsky, joka ei aiheuta ansaa eikä ole vieraan
+// omassa tilassa, toimii isännän tilaa vasten: tulos on väärä.
+static const char *kasittelija(struct kasky alkup, struct kasky ajettava,
+                               bool vt)
+{
+    struct kone k = {.keskeytykset = true, .vierastila = vt};
+    if (askel(&k, ajettava) == ANSA_TAPAHTUI)     // ansa tai VM exit
+        return "hypervisor";
+    bool sensitiivinen = alkup.koodi == LUEIF || alkup.koodi == ASETAIF;
+    return sensitiivinen && !vt ? "vieras, VAARIN" : "vieras";
+}
+
+static void jalki(const struct kasky *kaannetty)
+{
+    static const char *const nimet[] = {"LOAD", "CLI", "STI", "LUEIF",
+                                        "ASETAIF", "OUT", "HLT", "ANSA"};
+    printf("\n%-9s %-17s %-15s %s\n", "kasky", "trap-and-emulate",
+           "binaarikaannos", "laitteistotuki");
+    for (size_t pc = 0; pc < PITUUS; pc++)
+        printf("%-9s %-17s %-15s %s\n", nimet[vieras[pc].koodi],
+               kasittelija(vieras[pc], vieras[pc], false),
+               kasittelija(vieras[pc], kaannetty[pc], false),
+               kasittelija(vieras[pc], vieras[pc], true));
+}
+// @loppu jalki
+
 static void raportti(struct tulos t)
 {
     printf("   | IF lopussa %d | ansoja %d\n", t.keskeytykset, t.ansoja);
@@ -153,5 +181,6 @@ int main(void)
     raportti(hypervisor(kaannetty, false));
     printf("%-18s tuloste:", "laitteistotuki");
     raportti(hypervisor(vieras, true));
+    jalki(kaannetty);
     return 0;
 }

@@ -8,6 +8,8 @@ suorituskykyä mitataan luotettavasti, miten pullonkaula löydetään ja
 miten ohjelma kirjoitetaan laitteiston ehdoilla: välimuistit,
 haarautumisen ennustus, vektorikäskyt ja kääntäjän optimoinnit.
 
+## Esitiedot ja rajaus
+
 Esitietoina ovat *Tietokonearkkitehtuuri* ja *Algoritmit*.
 Arkkitehtuurin tutoriaali rakensi välimuistin, liukuhihnan ja
 haarautumisen ennustimen simulaattorissa; tässä samat ilmiöt
@@ -17,7 +19,11 @@ välimuistitemppu ei pelasta neliöllistä algoritmia, kun syöte kasvaa.
 Esimerkit on kirjoitettu C23:lla, koska C näyttää muistin ja käskyjen
 hinnan suoraan. C++:n omat kysymykset (siirto, allokaattorit,
 mallit) käsitellään taidossa *C++:n suorituskyky* ja näytönohjaimet
-taidossa *GPU-laskenta*.
+taidossa *GPU-laskenta*. Tutoriaali rajautuu yhden ytimen
+suorituskykyyn: säikeet, lukot ja rinnakkaiset algoritmit ovat taidossa
+*Rinnakkaisohjelmointi*, ja palvelun kapasiteetti ja häntälatenssi
+järjestelmän tasolla taidossa *Skaalautuvien järjestelmien
+suunnittelu*.
 
 ## Mittaa, älä arvaa
 

@@ -62,17 +62,17 @@ Lähde pysäytetään, ja sen tila kirjoitetaan siirtovirtana tiedostoon.
 Oikeassa siirrossa virta kulkee TCP-yhteyttä pitkin
 (`tcp:kohde:4444`):
 
-```{.python tiedosto="esimerkit/08-siirto.py" osa="lahde"}
+```{.python tiedosto="esimerkit/09-siirto.py" osa="lahde"}
 ```
 
 Kohde käynnistetään samalla vieraalla ja valitsimella `-incoming`. Se
 lukee tilan, jää pysäytetyksi ja jatkaa komennolla `cont`. Vasta nyt
 sarjaporttiin kirjoitetaan merkki:
 
-```{.python tiedosto="esimerkit/08-siirto.py" osa="kohde"}
+```{.python tiedosto="esimerkit/09-siirto.py" osa="kohde"}
 ```
 
-```{.tuloste tiedosto="esimerkit/08-siirto.odotettu"}
+```{.tuloste tiedosto="esimerkit/09-siirto.odotettu"}
 ```
 
 Kohde ei käynnistänyt vierasta alusta: se ei tulostanut A-riviä

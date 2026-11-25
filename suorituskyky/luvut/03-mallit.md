@@ -110,6 +110,12 @@ täynnä. Kirjoittajan koneella tulos oli tämä:
 ```{.tuloste tiedosto="esimerkit/tulokset/03-roofline.txt"}
 ```
 
+![Roofline-malli molemmille koneille. Yhtenäinen viiva on esimerkkikone
+(100 GFLOP/s, 20 GB/s), katkoviiva kirjoittajan koneen yksi ydin
+skalaarikoodilla. Vinoneliö on harjanne, ympyrät ovat tulosteiden
+ytimet. Polynomi on esimerkkikoneessa muistikaton ja mitatussa
+koneessa laskentakaton alla.](kuvat/roofline.png){width=80%}
+
 Yhden ytimen skalaarikoodin huippu on muutama GFLOP/s, ja harjanne
 on tässä alle 1 FLOP/B: skalaarikoodilla polynomikin on
 laskentarajoitteinen. Sama ydin pystyy kuitenkin AVX-512-käskyillä

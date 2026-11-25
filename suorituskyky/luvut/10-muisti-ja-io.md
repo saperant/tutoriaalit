@@ -103,7 +103,8 @@ virralla, jonka kirjoitusfunktion ohjelma antaa itse:
 ```{.tuloste tiedosto="esimerkit/10-puskurointi.odotettu"}
 ```
 
-Sama miljoona tavua kirjoitettiin 100 000, 133 tai 17 kutsulla.
+Sama miljoona tavua kirjoitettiin 100 000, 133 tai 17 kutsulla. Luvun
+4 `strace`-tarkistus laski samat luvut ohjelman ulkopuolelta.
 glibcin oletuspuskuri on 8 KiB tällaiselle virralle (tiedostolle
 yleensä tiedostojärjestelmän lohkon koko). Mittaus:
 

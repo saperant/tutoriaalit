@@ -55,7 +55,8 @@ bin/lokit: $(LOKIT) | bin
 # Deterministiset tarkistukset
 
 TARKISTUKSET := lapikaynti matriisitulo hiukkaset haarat gprof callgrind \
-                puskuroitu sumennus vektorointi konekoodi lto pgo
+                puskuroitu sumennus vektorointi konekoodi lto pgo \
+                jarjestelmakutsut
 
 tarkista: $(addprefix tarkista-,$(TARKISTUKSET))
 	@echo "OK: tarkistukset"
@@ -194,6 +195,28 @@ tarkista-pgo: bin/lokit bin/lokit-pgo
 	@bin/lokit --aja nopea 50000 3000 > bin/pgo-ei.txt
 	@bin/lokit-pgo --aja nopea 50000 3000 > bin/pgo-kylla.txt
 	@diff bin/pgo-ei.txt bin/pgo-kylla.txt && echo "  samat"
+
+# @alku strace
+# strace -c laskee järjestelmäkutsut. Tapa 0 kirjoittaa rivin
+# kerrallaan, tapa 1 stdio-puskurin kautta. Jäljitys vaatii
+# ptrace-oikeuden; jos sitä ei ole, tarkistus ohitetaan.
+WRITET = awk '$$NF == "write" { print $$4 }' bin/strace-$(1).txt
+
+tarkista-jarjestelmakutsut: bin/10-puskurointi
+	@echo "== strace -c: write-kutsut, 100000 rivia =="
+	@if ! strace -c -o /dev/null true 2> /dev/null; then \
+	    echo "  OHITETTU: strace ei saa jaljittaa tassa ymparistossa"; \
+	else \
+	    for tapa in 0 1; do \
+	        strace -c -e trace=write -o bin/strace-$$tapa.txt \
+	            bin/10-puskurointi --kerran $$tapa || exit 1; \
+	    done; \
+	    printf '  %-22s %7s write-kutsua\n' \
+	        "write / rivi" "$$($(call WRITET,0))" \
+	        "stdio, oletuspuskuri" "$$($(call WRITET,1))"; \
+	    test "$$($(call WRITET,0))" -gt $$((100 * $$($(call WRITET,1)))); \
+	fi
+# @loppu strace
 
 # ---------------------------------------------------------------------
 # Ajoitusmittaukset (suuntaa-antavia)

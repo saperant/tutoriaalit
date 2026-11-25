@@ -11,8 +11,9 @@ Tämä luku käsittelee, miten laitteisto pitää jaetun muistin
 yhtäpitävänä ja mitä se maksaa.
 
 Rinnakkaisohjelmoinnin työkalut (säikeet, lukot, atomiset muuttujat)
-käydään läpi taidossa *Moderni C++*. Tässä katsotaan, mitä niiden alla
-tapahtuu.
+sekä muistimallit ja väärä jakaminen ohjelmoijan näkökulmasta käydään
+läpi taidossa *Rinnakkaisohjelmointi*. Tässä katsotaan, mitä niiden
+alla laitteistossa tapahtuu.
 
 ## Koherenssiongelma
 
@@ -86,7 +87,7 @@ Kolmen ytimen viitesarja samaan lohkoon:
 ```{.cpp tiedosto="esimerkit/10-mesi.cpp" osa="jono"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-mesi.odotettu"}
+```{.tuloste tiedosto="esimerkit/10-mesi.odotettu" rivit="1-8"}
 ```
 
 Ensimmäinen lukija saa E-tilan, koska muilla ei ole kopiota. Kun ydin 1
@@ -106,7 +107,9 @@ E-tilassa ydin tietää olevansa ainoa, ja kirjoitus on paikallinen:
 ```{.cpp tiedosto="esimerkit/10-mesi.cpp" osa="msi"}
 ```
 
-Tuloste näkyy edellä: 200 väylätapahtumaa MSI:llä, 100 MESI:llä.
+```{.tuloste tiedosto="esimerkit/10-mesi.odotettu" rivit="9-10"}
+```
+
 Useimmat lohkot ovat yksityisiä (pino, säikeen omat muuttujat), joten
 ero on suuri. AMD:n MOESI lisää O-tilan (*owned*), jossa likainen lohko
 voidaan jakaa ilman takaisinkirjoitusta, ja Intelin MESIF F-tilan
@@ -122,6 +125,9 @@ kirjoituksella. Tämä on **väärä jakaminen** (*false sharing*):
 ```{.cpp tiedosto="esimerkit/10-mesi.cpp" osa="vaara"}
 ```
 
+```{.tuloste tiedosto="esimerkit/10-mesi.odotettu" rivit="11-12"}
+```
+
 Kun laskurit ovat 4 tavun päässä toisistaan, 2 000 kasvatusta tuottaa
 lähes 4 000 väylätapahtumaa, 2 000 mitätöintiä ja 2 000
 takaisinkirjoitusta. Kun ne ovat eri lohkoissa, väylää tarvitaan vain
@@ -132,7 +138,8 @@ vaikka ohjelmassa ei ole yhtään jaettua muuttujaa.
 Korjaus on sijoittaa säikeiden kuumat muuttujat eri lohkoihin:
 `alignas(std::hardware_destructive_interference_size)` C++:ssa, tai
 kerätä säiekohtaiset tulokset paikallisiin muuttujiin ja yhdistää ne
-lopuksi.
+lopuksi. Ilmiön mittaaminen oikealla laitteistolla on taidossa
+*Rinnakkaisohjelmointi*.
 
 ## Hakemistot
 
@@ -185,7 +192,8 @@ kielen muistimallia: C++:n `std::atomic` oletusjärjestyksellä
 (`memory_order_seq_cst`) antaa SC:n kaikilla alustoilla, ja kääntäjä
 lisää tarvittavat aidat. Tietokilpailu (*data race*) ilman atomisia
 operaatioita on sen sijaan määrittelemätöntä käytöstä juuri siksi, että
-laitteisto ei lupaa mitään.
+laitteisto ei lupaa mitään. Kielen muistimalli ja heikompien
+järjestysten käyttö käydään läpi taidossa *Rinnakkaisohjelmointi*.
 
 ## NUMA
 
@@ -216,7 +224,7 @@ solmujen välillä pomppivat lohkot.
   jaettu kirjoitettava lohko on sarjallistava kohta.
 - **Erota kuumat muuttujat.** Säiekohtaiset laskurit, jonon pää ja häntä
   sekä lukot omiin lohkoihinsa. Mittaa `perf c2c`:llä.
-- **Lukkiutuva laskuri ei skaalaudu.** `fetch_add` yhteen muuttujaan
+- **Jaettu atominen laskuri ei skaalaudu.** `fetch_add` yhteen muuttujaan
   sadalta ytimeltä on yhtä nopea kuin yhdeltä ytimeltä, tai hitaampi.
   Käytä säiekohtaisia osasummia.
 - **Amdahl rajoittaa.** Jos 5 % työstä on sarjallista, edes ääretön

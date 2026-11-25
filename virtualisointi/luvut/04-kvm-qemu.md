@@ -19,10 +19,63 @@ crosvm, joissa QEMU:n laaja laitemalli on korvattu suppealla.
 | Hallinta | QEMU:n QMP | käynnistys, pysäytys, vedokset, siirto |
 | libvirt | hallintapalvelu | koneiden määrittely ja elinkaari (`virsh`) |
 
+```{.dot otsikko="Yksi VM exit: KVM käsittelee useimmat itse; vain laitemallia tarvitsevat palaavat QEMU:n vCPU-säikeelle, joka kutsuu sen jälkeen KVM_RUN-ioctl:ää uudelleen. vhost käsittelee virtio-jonon ytimessä ilman QEMU:ta (luku 5)"}
+digraph {
+  rankdir=TB; nodesep=0.3; ranksep=0.4;
+  edge [fontsize=8];
+  node [fontsize=9];
+  subgraph cluster_vieras {
+    label="vieras (VMX non-root)"; fontsize=9; style="rounded,filled"; fillcolor="#f3e6c8";
+    V [label="vieraan ydin\nja sovellukset"];
+  }
+  subgraph cluster_qemu {
+    label="QEMU-prosessi"; fontsize=9; style="rounded,dashed";
+    T [label="vCPU-säie:\nKVM_RUN-silmukka"];
+    L [label="laitemalli:\nlevy, verkko"];
+  }
+  subgraph cluster_ydin {
+    label="isännän ydin"; fontsize=9; style="rounded,filled"; fillcolor="#d9d9d9";
+    K [label="KVM"];
+    H [label="vhost"];
+  }
+  T -> K [label="KVM_RUN"];
+  K -> V [label="VM entry"];
+  V -> K [label="VM exit"];
+  K -> T [label="exit, jota KVM\nei käsittele"];
+  T -> L [label="I/O-exit"];
+  V -> H [label="virtqueue", style=dashed];
+}
+```
+
 Isännän näkökulmasta virtuaalikone on tavallinen prosessi, ja sen
 vCPU:t ovat säikeitä. Ne näkyvät `top`-komennossa, isännän vuorontaja
 ajaa niitä, ja cgroupit (luku 7) rajoittavat niitä kuten mitä tahansa
 prosessia.
+
+## vCPU on säie
+
+Koska vCPU on isännän säie, kaikki, mitä vuorontaja tekee säikeille,
+tapahtuu myös virtuaaliselle suorittimelle:
+
+- **Ylivaraus.** Isännässä voi olla enemmän vCPU:ita kuin ytimiä.
+  Tämä toimii, koska useimmat vieraat ovat enimmäkseen jouten: jouten
+  oleva vieras suorittaa `hlt`-käskyn, siitä tulee VM exit, ja
+  vCPU-säie nukkuu, kunnes vieraalle tulee keskeytys.
+- **Varastettu aika** (*steal time*). Kun vCPU olisi valmis ajoon
+  mutta isäntä ajaa jotain muuta, vieraan kello käy ja työ seisoo.
+  KVM kertoo vieraalle, paljonko aikaa meni näin, ja se näkyy vieraan
+  `top`-komennossa sarakkeessa `st`. Korkea `st` tarkoittaa, että
+  isäntä on ylivarattu; vieraan sisältä asiaa ei voi korjata.
+- **Lukon haltijan keskeytyminen.** Jos isäntä siirtää sivuun vCPU:n,
+  joka pitää vieraan ytimen pyörivää lukkoa, vieraan muut vCPU:t
+  pyörivät turhaan odottamassa lukkoa, jonka haltija ei ole ajossa.
+  Suoritin havaitsee pitkän pyörimisen ja palauttaa vuoron
+  hypervisorille (*pause-loop exiting*), ja paravirtualisoitu lukko
+  antaa vieraan luovuttaa vuoronsa itse.
+- **Kiinnitys.** Viiveherkän vieraan vCPU:t sidotaan omiin fyysisiin
+  ytimiinsä (libvirtin `vcpupin`), ja vieraan muisti varataan samasta
+  NUMA-solmusta. Silloin ylivarausta ei ole, ja varastettu aika on
+  nolla.
 
 ## KVM-rajapinta
 
@@ -157,6 +210,8 @@ käyttöjärjestelmäkuvat ja CI-ajojen pohjat toimivat näin.
 
 - Osaat kuvata KVM:n ja QEMU:n työnjaon ja sen, miksi
   virtuaalikone näkyy isännälle prosessina.
+- Osaat selittää, mitä varastettu aika kertoo ja miksi lukon haltijan
+  keskeytyminen hidastaa moniytimistä vierasta.
 - Osaat kertoa KVM-rajapinnan vaiheet: virtuaalikone, muistialue, vCPU
   ja `KVM_RUN`-silmukka exitin käsittelyineen.
 - Osaat käynnistää QEMU:n tärkeimmillä valitsimilla ja ohjata sitä

@@ -9,7 +9,9 @@ käynnistysajassa, muistissa ja I/O:ssa.
 ## Raja ja hyökkäyspinta
 
 Eristyksen vahvuus riippuu siitä, kuinka suuren rajapinnan läpi
-eristetty koodi pääsee käsiksi etuoikeutettuun koodiin:
+eristetty koodi pääsee käsiksi etuoikeutettuun koodiin. Johdannon
+kerroskuva näytti rajat pinoina; tässä samat tasot rajapinnan koon
+mukaan:
 
 | Taso | Raja | Rajapinta isäntään | Esimerkkejä |
 |------|------|--------------------|-------------|

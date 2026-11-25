@@ -77,6 +77,43 @@ tyypillinen ajo kestää. Raportissa kannattaa kertoa molemmat sekä
 hajonta. Jos kahden version mediaanien ero on pienempi kuin hajonta,
 eroa ei ole osoitettu.
 
+## Jakauma ja häntä
+
+Edellä toistettiin *samaa* mittausta, ja hajonta oli häiriötä. Palvelun
+pyynnöissä hajonta on itse tulos: jokainen pyyntö on eri käyttäjän
+kokemus, ja hitaimmat pyynnöt ovat ne, jotka huomataan. Viive
+(*latency*) raportoidaan siksi **prosenttipisteinä**: p50 on mediaani,
+p95 arvo, jonka alle jää 95 % pyynnöistä, ja p99 se, jonka ylittää
+joka sadas pyyntö.
+
+```{.c tiedosto="esimerkit/02-jakauma.c" osa="prosenttipiste"}
+```
+
+Esimerkissä on kaksi simuloitua palvelua, joiden keskimääräinen viive
+on sama:
+
+```{.c tiedosto="esimerkit/02-jakauma.c" osa="palvelut"}
+```
+
+```{.tuloste tiedosto="esimerkit/02-jakauma.odotettu"}
+```
+
+Keskiarvo ja **läpäisy** (*throughput*, pyyntöä sekunnissa) ovat
+lähes samat, ja hännällisen palvelun mediaani on jopa parempi. Silti
+joka viideskymmenes sen käyttäjä odottaa 16 millisekuntia, ja sen
+näkee vasta p99:stä. Kolme sääntöä seuraa tästä:
+
+- **Viive ja läpäisy ovat eri mittareita.** Läpäisy kertoo, paljonko
+  työtä valmistuu; viive kertoo, mitä yksittäinen pyyntö kokee.
+  Eräajoa optimoidaan läpäisylle, vuorovaikutteista palvelua hännälle.
+- **Keskiarvoa ei raportoida yksin.** Se peittää hännän, ja
+  prosenttipisteitä ei voi laskea keskiarvoista jälkikäteen: tallenna
+  jakauma (histogrammi), älä tunnuslukua.
+- **Häntä kertautuu.** Jos sivun lataus tekee 20 tällaista pyyntöä,
+  ainakin yksi niistä osuu hitaaseen polkuun kolmanneksessa latauksista
+  ($1 - 0{,}98^{20} \approx 0{,}33$). Tätä käsittelee taito
+  *Skaalautuvien järjestelmien suunnittelu*.
+
 ## Lämmittely
 
 Ensimmäinen ajo on erityinen. Koodi ja data eivät ole välimuisteissa,
@@ -172,6 +209,17 @@ jakavat saman fyysisen koneen. Silloin tarvitaan enemmän toistoja,
 mediaaneja ja deterministisiä mittareita, kuten Valgrindin
 käskymääriä (luku 4).
 
+Sama pätee jatkuvaan integraatioon. Suorituskyvyn **regressiotesti**
+vertaa jokaista muutosta talletettuun lähtötasoon ja hälyttää, kun
+kynnys ylittyy. Jaetulla CI-koneella kellonaika heiluu kymmeniä
+prosentteja, joten kynnys joko päästää oikeat hidastumiset läpi tai
+hälyttää turhaan. Deterministinen mittari ei heilu: tämän paketin
+`esimerkit/Makefile` tarkistaa Cachegrindin laskemista käskyistä ja
+hudeista suhteita ("sarakkeittain vähintään neljä kertaa enemmän
+huteja"), ja sama tarkistus menee läpi tai kaatuu jokaisella koneella
+samoin. Ajoitukset ajetaan erikseen hiljaisella koneella, ja niiden
+kehitystä seurataan aikasarjana.
+
 ## Käytännössä
 
 - **Mittaa seinäkelloa `CLOCK_MONOTONIC`-kellolla**, ja vertaa
@@ -184,7 +232,10 @@ käskymääriä (luku 4).
 - **Mittaa sama asia aina samalla tavalla** ennen muutosta ja sen
   jälkeen: sama syöte, sama kone, samat liput.
 - **Säilytä mittausohjelma.** Kun koodi muuttuu vuoden päästä, sama
-  mittaus kertoo, palasiko hitaus.
+  mittaus kertoo, palasiko hitaus. CI:ssä vertaa deterministisiä
+  lukuja, älä kellonaikoja.
+- **Raportoi palvelun viive prosenttipisteinä** (p50, p95, p99) ja
+  läpäisy erikseen.
 
 ## Itsearviointi
 
@@ -192,6 +243,11 @@ käskymääriä (luku 4).
   niiden ero kertoo.
 - Osaat perustella, miksi mediaani on keskiarvoa parempi aikojen
   tunnusluku, ja laskea MAD-arvon.
+- Osaat laskea prosenttipisteet viivejakaumasta ja selittää, miksi
+  kaksi palvelua, joilla on sama keskiarvo ja läpäisy, voivat tuntua
+  käyttäjästä erilaisilta.
+- Osaat perustella, miksi CI:n suorituskykytarkistus kannattaa tehdä
+  deterministisistä luvuista.
 - Osaat kirjoittaa mittauksen, josta kääntäjä ei poista mitattavaa
   laskentaa.
 - Osaat selittää, miksi ensimmäinen ajo on muita hitaampi ja milloin

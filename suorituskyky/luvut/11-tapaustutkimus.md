@@ -92,6 +92,11 @@ $2048 \times 2048$ -kuvalle kirjoittajan koneella:
 ```{.tuloste tiedosto="esimerkit/tulokset/11-sumennus.txt"}
 ```
 
+![Vaiheet rinnakkain logaritmisella asteikolla (samat luvut kuin
+tulosteissa). Vaihe 3 vähentää käskyjä mutta kasvattaa L1-hudit
+kaksikymmenkertaisiksi, joten aika ei juuri lyhene; vaihe 4 poistaa
+hudit.](kuvat/sumennus.png){width=92%}
+
 Algoritmiset muutokset (vaiheet 2 ja 3) toivat suurimman osan
 nopeudesta, ja muistin käyttötavan muutos (vaihe 4) vielä
 kuusinkertaisen lisän. Yhteensä sumennus nopeutui kymmeniä kertoja,

@@ -1,0 +1,21 @@
+digraph {
+  rankdir=TB; nodesep=0.3; ranksep=0.35;
+  node [fontsize=9];
+  "main" [label="main\n100,0 %"];
+  "laske_hidas" [label="laske_hidas\n95,1 %", style="rounded,filled", fillcolor="#f3e6c8"];
+  "tuota_loki" [label="tuota_loki\n4,8 %"];
+  "jasenna_sscanf" [label="jasenna_sscanf\n45,1 %", style="rounded,filled", fillcolor="#f3e6c8"];
+  "etsi_lineaarisesti" [label="etsi_lineaarisesti\n49,4 %", style="rounded,filled", fillcolor="#f3e6c8"];
+  "__isoc23_sscanf" [label="sscanf\n45,1 %", style="rounded,filled", fillcolor="#f3e6c8"];
+  "__strlen_avx2" [label="strlen\n38,3 %", style="rounded,filled", fillcolor="#f3e6c8"];
+  "__vfscanf_internal" [label="vfscanf (jäsennys)\n6,6 %"];
+  "__strcmp_avx2" [label="strcmp\n34,7 %", style="rounded,filled", fillcolor="#f3e6c8"];
+  "main" -> "laske_hidas" [penwidth=7.9];
+  "main" -> "tuota_loki" [penwidth=0.6];
+  "laske_hidas" -> "jasenna_sscanf" [penwidth=3.8];
+  "laske_hidas" -> "etsi_lineaarisesti" [penwidth=4.1];
+  "jasenna_sscanf" -> "__isoc23_sscanf" [penwidth=3.8];
+  "__isoc23_sscanf" -> "__strlen_avx2" [penwidth=3.2];
+  "__isoc23_sscanf" -> "__vfscanf_internal" [penwidth=0.6];
+  "etsi_lineaarisesti" -> "__strcmp_avx2" [penwidth=2.9];
+}
