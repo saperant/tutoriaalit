@@ -1,0 +1,6 @@
+React:
+<ul><li>Varaa kokoushuone</li><li>Tilaa kahvit</li></ul>
+Vue:
+<ul><li>Varaa kokoushuone</li><li>Tilaa kahvit</li></ul>
+Tila selaimelle:
+<script type="application/json" id="tila">[1,2]</script>

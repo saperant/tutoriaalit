@@ -1,0 +1,32 @@
+<header class="ylapalkki">
+  <h1>Tehtävät</h1>
+  <app-yhteenveto />
+</header>
+<main>
+  <app-lisayslomake />
+  <app-suodatin-valinta [(arvo)]="suodatin" />
+  @switch (tila.lataus()) {
+    @case ("ladataan") {
+      <p class="tila">Ladataan tehtäviä…</p>
+    }
+    @case ("virhe") {
+      <p class="virhe" role="alert">Tehtävien lataus epäonnistui.</p>
+      <button type="button" (click)="tila.lataa()">Yritä uudelleen</button>
+    }
+    @default {
+      @if (nakyvat().length === 0) {
+        <p class="tila">Ei näytettäviä tehtäviä.</p>
+      } @else {
+        <ul class="tehtavat" aria-label="Tehtävät">
+          @for (t of nakyvat(); track t.id) {
+            <li app-tehtava-rivi [tehtava]="t"
+                (vaihda)="tila.vaihda(t.id)"
+                (poista)="tila.poista(t.id)"></li>
+          }
+        </ul>
+      }
+      <button type="button" [disabled]="!valmiita()"
+              (click)="tila.poistaValmiit()">Poista valmiit</button>
+    }
+  }
+</main>

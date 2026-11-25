@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "cli": {
+    "analytics": false,
+    "cache": {
+      "enabled": false
+    }
+  },
+  "projects": {
+    "tehtavat": {
+      "projectType": "application",
+      "root": "angular",
+      "sourceRoot": "angular/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "angular/src/main.ts",
+            "index": "angular/src/index.html",
+            "tsConfig": "angular/tsconfig.json",
+            "outputPath": {
+              "base": "dist/angular",
+              "browser": ""
+            },
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "yhteinen/julkinen"
+              }
+            ],
+            "styles": [
+              "yhteinen/tyyli.css",
+              "angular/src/isannat.css"
+            ],
+            "extractLicenses": false
+          }
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "buildTarget": "tehtavat:build"
+          }
+        }
+      }
+    }
+  }
+}

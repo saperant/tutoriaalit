@@ -2169,6 +2169,7 @@ laajuus = 5
 testaus = "sama Playwright-testisarja jokaista toteutusta vasten"
 roadmap = ["frontend", "react"]
 amk = "Web-ohjelmointi (jatkokurssi)"
+tutoriaali = "web-sovelluskehykset"
 
 [[taito]]
 id = "testivetoinen-kehitys"

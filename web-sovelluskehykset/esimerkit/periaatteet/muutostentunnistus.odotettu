@@ -1,0 +1,15 @@
+Ensimmäinen piirto:
+  tarkistettu 3 sidosta, päivitetty 3
+    yhteenveto = "avoimia 1"
+    lista = "Varaa kokoushuone, Lähetä esityslista"
+    suodatin = "kaikki"
+Suodatin päälle:
+  tarkistettu 3 sidosta, päivitetty 2
+    lista = "Varaa kokoushuone"
+    suodatin = "avoimet"
+Merkitään ensimmäinen valmiiksi:
+  tarkistettu 3 sidosta, päivitetty 2
+    yhteenveto = "avoimia 0"
+    lista = ""
+Hiiri liikkuu (tila ei muutu):
+  tarkistettu 3 sidosta, päivitetty 0

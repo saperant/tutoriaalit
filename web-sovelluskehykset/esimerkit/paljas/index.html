@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tehtävät</title>
+  </head>
+  <body>
+    <header class="ylapalkki">
+      <h1>Tehtävät</h1>
+      <p class="yhteenveto" role="status"></p>
+    </header>
+    <main>
+      <form class="lisays" novalidate aria-label="Uusi tehtävä">
+        <label for="nimi">Tehtävä</label>
+        <input id="nimi" name="nimi" autocomplete="off"
+               aria-invalid="false" aria-describedby="nimi-virhe">
+        <label for="kiire">Kiireellisyys</label>
+        <select id="kiire" name="kiire">
+          <option value="tavallinen">Tavallinen</option>
+          <option value="kiireellinen">Kiireellinen</option>
+        </select>
+        <button type="submit">Lisää</button>
+        <p id="nimi-virhe" class="virhe" role="alert"></p>
+      </form>
+      <fieldset class="suodatin">
+        <legend>Näytä</legend>
+        <label><input type="radio" name="suodatin" value="kaikki" checked>
+          Kaikki</label>
+        <label><input type="radio" name="suodatin" value="avoimet">
+          Avoimet</label>
+        <label><input type="radio" name="suodatin" value="valmiit">
+          Valmiit</label>
+      </fieldset>
+    </main>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

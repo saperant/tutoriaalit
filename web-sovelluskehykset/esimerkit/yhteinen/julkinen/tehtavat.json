@@ -1,0 +1,8 @@
+[
+  { "id": 1, "nimi": "Varaa kokoushuone", "kiire": "kiireellinen",
+    "valmis": false },
+  { "id": 2, "nimi": "Lähetä esityslista", "kiire": "tavallinen",
+    "valmis": true },
+  { "id": 3, "nimi": "Tilaa kahvit", "kiire": "tavallinen",
+    "valmis": false }
+]

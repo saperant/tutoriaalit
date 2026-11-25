@@ -1,0 +1,23 @@
+{
+  "name": "Web-sovelluskehykset: esimerkit",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      "LISAPAKETIT": "fonts-dejavu-core",
+      "NODEJS": "24.22.3",
+      "PLAYWRIGHT": "1.63.0"
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/web-sovelluskehykset/esimerkit",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "Angular.ng-template",
+        "Vue.volar",
+        "svelte.svelte-vscode",
+        "ms-playwright.playwright"
+      ]
+    }
+  }
+}

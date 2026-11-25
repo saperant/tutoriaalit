@@ -1,0 +1,10 @@
+<fieldset class="suodatin">
+  <legend>Näytä</legend>
+  @for (s of suodattimet; track s.arvo) {
+    <label>
+      <input type="radio" name="suodatin" [value]="s.arvo"
+             [checked]="arvo() === s.arvo" (change)="arvo.set(s.arvo)">
+      {{ s.nimi }}
+    </label>
+  }
+</fieldset>

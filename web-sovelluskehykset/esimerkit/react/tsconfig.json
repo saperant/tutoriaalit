@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.perus.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "erasableSyntaxOnly": true,
+    "types": ["vite/client"]
+  },
+  "include": ["src", "../yhteinen/logiikka.ts"]
+}

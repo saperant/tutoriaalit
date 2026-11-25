@@ -1,0 +1,7 @@
+toteutus  koodirivit   JS (kt)  gzip (kt)
+paljas           181        4.5        2.0
+react            195      225.2       69.8
+vue              171       74.4       28.8
+angular          213      198.9       61.7
+svelte           144       59.4       22.7
+yhteinen          92   (kehyksestä riippumaton logiikka)

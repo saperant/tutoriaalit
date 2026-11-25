@@ -1,0 +1,6 @@
+/* Angularin komponentilla on aina isäntäelementti (esim.
+   <app-yhteenveto>). display: contents poistaa sen asettelusta, jolloin
+   yhteinen tyyli toimii kuten muissa toteutuksissa. */
+app-juuri, app-yhteenveto, app-lisayslomake, app-suodatin-valinta {
+  display: contents;
+}

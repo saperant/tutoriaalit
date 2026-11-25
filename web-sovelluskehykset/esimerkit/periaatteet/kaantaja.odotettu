@@ -1,0 +1,21 @@
+// tuotettu koodi
+  const t1 = teksti(tila.nimi);
+  teksti(": ");
+  const t3 = teksti(tila.maara);
+  teksti(" kpl, yhteensä ");
+  const t5 = teksti(tila.maara * tila.hinta);
+  teksti(" e");
+  return function paivita(muuttunut) {
+    if (muuttunut === "nimi") {
+      t1.data = tila.nimi;
+    }
+    if (muuttunut === "maara") {
+      t3.data = tila.maara;
+      t5.data = tila.maara * tila.hinta;
+    }
+    if (muuttunut === "hinta") {
+      t5.data = tila.maara * tila.hinta;
+    }
+  };
+Kahvi: 2 kpl, yhteensä 8 e
+Kahvi: 3 kpl, yhteensä 12 e

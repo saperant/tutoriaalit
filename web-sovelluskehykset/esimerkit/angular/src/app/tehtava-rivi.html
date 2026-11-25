@@ -1,0 +1,10 @@
+<label>
+  <input type="checkbox" [checked]="tehtava().valmis"
+         (change)="vaihda.emit()">
+  <span>{{ tehtava().nimi }}</span>
+</label>
+@if (tehtava().kiire === "kiireellinen") {
+  <span class="merkki">kiireellinen</span>
+}
+<button type="button" [attr.aria-label]="'Poista ' + tehtava().nimi"
+        (click)="poista.emit()">Poista</button>

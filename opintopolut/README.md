@@ -155,7 +155,7 @@ flowchart LR
     android_sovellukset["✓ Android-sovellukset"]
     integraatiotestaus["✓ Integraatiotestaus ja Testcontainers"]
     nosql["✓ NoSQL-tietokannat"]
-    web_sovelluskehykset["Web-sovelluskehykset ja niiden periaatteet"]
+    web_sovelluskehykset["✓ Web-sovelluskehykset ja niiden periaatteet"]
   end
   subgraph tyotavat["Työtavat ja ohjelmistotuotanto"]
     testivetoinen_kehitys["Testivetoinen kehitys ja testisuunnittelu"]
@@ -498,7 +498,7 @@ flowchart LR
 | Integraatiotestaus ja Testcontainers | 5 | Python työkaluohjelmointiin, SQL ja relaatiotietokannat, Säiliöt ja pilvi-infrastruktuuri | [valmis](../integraatiotestaus/) |
 | NoSQL-tietokannat | 5 | SQL ja relaatiotietokannat, Säiliöt ja pilvi-infrastruktuuri | [valmis](../nosql/) |
 | Web-sovellukset | 5 | HTML ja CSS, Tietoverkot, TypeScript | [valmis](../web-sovellukset/) |
-| Web-sovelluskehykset ja niiden periaatteet | 5 | Web-sovellukset | suunniteltu |
+| Web-sovelluskehykset ja niiden periaatteet | 5 | Web-sovellukset | [valmis](../web-sovelluskehykset/) |
 
 ### Työtavat ja ohjelmistotuotanto
 

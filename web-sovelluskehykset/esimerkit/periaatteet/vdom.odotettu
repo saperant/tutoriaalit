@@ -1,0 +1,10 @@
+Merkitään kolmas valmiiksi: DOM-operaatioita 1
+  aseta ul/li#3 class="tehtava valmis"
+Poistetaan ensimmäinen, ilman avaimia: DOM-operaatioita 5
+  aseta ul/0 class="tehtava valmis"
+  teksti ul/0/0 = "Lähetä esityslista"
+  aseta ul/1 class="tehtava"
+  teksti ul/1/0 = "Tilaa kahvit"
+  poista ul/2
+Poistetaan ensimmäinen, avaimilla: DOM-operaatioita 1
+  poista ul/li#1

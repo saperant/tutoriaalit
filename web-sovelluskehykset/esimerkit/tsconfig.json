@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.perus.json",
+  "compilerOptions": {
+    "erasableSyntaxOnly": true,
+    "types": ["node"]
+  },
+  "include": ["periaatteet", "yhteinen", "e2e", "tyokalut",
+              "playwright.config.ts"]
+}
