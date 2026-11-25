@@ -1,4 +1,4 @@
-#include "../01-rajapinta/funktio.h"
+#include "../02-rajapinta/funktio.h"
     .text
 # @alku vahti
 # long vahdi(long (*f)(long), long x, unsigned *muuttuneet)

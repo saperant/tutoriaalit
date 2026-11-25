@@ -8,7 +8,7 @@ huomaamatta: vektori kasvaessaan, merkkijono pidentyessään ja
 solmusäiliö jokaista alkiota kohden. Yleiset keinot, kuten areenat ja
 sivuvirheet, käsitellään taidossa *Suorituskyvyn analyysi ja
 optimointi*. Tässä luvussa mitataan standardikirjaston omat
-varaukset ja keinot vähentää niitä.
+varaukset ja keinot vähentää niitä sekä älykkäiden osoittimien hinta.
 
 ## `reserve`
 
@@ -49,6 +49,22 @@ tyhjentää kierrosten välillä.
 `std::string` on 32 tavun olio, jossa on osoitin, pituus ja joko
 kapasiteetti tai sisäinen puskuri. Lyhyt merkkijono tallennetaan
 olion sisään ilman varausta (engl. small string optimization, SSO):
+
+```{.dot otsikko="libstdc++:n `std::string` kahdessa tilassa (periaatekuva). Lyhyen merkkijonon osoitin osoittaa olion omaan puskuriin; pitkän merkkijonon merkit ovat keossa, ja samassa kohdassa oliota on kapasiteetti."}
+digraph {
+  rankdir=TB; nodesep=0.6; ranksep=0.45;
+  node [shape=plain, style=""];
+  lyhyt [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left" colspan="3"><i>"tunniste" (8 merkkiä): ei varausta</i></td></tr>
+    <tr><td port="p" bgcolor="#EEF1F6">osoitin (8)</td><td bgcolor="#EEF1F6">pituus 8 (8)</td><td port="b" bgcolor="#F3E2C7">puskuri: tunniste\\0 (16)</td></tr></table>>];
+  pitka [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left" colspan="3"><i>24 merkkiä: yksi varaus</i></td></tr>
+    <tr><td port="p" bgcolor="#EEF1F6">osoitin (8)</td><td bgcolor="#EEF1F6">pituus 24 (8)</td><td bgcolor="#EEF1F6">kapasiteetti 24 (8) + käyttämätön (8)</td></tr></table>>];
+  keko [shape=box, style="rounded,filled", fillcolor="#FFFFFF", label="keko: 25 tavua"];
+  lyhyt:p:s -> lyhyt:b:s;
+  pitka:p:s -> keko;
+}
+```
 
 ```{.cpp tiedosto="esimerkit/06-sso.cpp" osa="sso"}
 ```
@@ -143,13 +159,55 @@ vaihdettava strategia. Omaa allokaattoria kannattaa käyttää, kun
 virtuaalikutsukin on liikaa tai kun allokaattorin pitää kantaa tietoa,
 kuten NUMA-solmua tai jaetun muistin osoitetta.
 
+## Älykkäiden osoittimien hinta
+
+`std::unique_ptr` on osoittimen kokoinen, ja sen käyttö kääntyy samaksi
+koodiksi kuin paljas osoitin ja `delete`. `std::shared_ptr` maksaa
+kolmessa kohdassa: se on kahden osoittimen kokoinen, se tarvitsee
+*ohjauslohkon* (viitelaskurit ja poistaja), ja jokainen kopio päivittää
+laskuria atomisesti.
+
+```{.cpp tiedosto="esimerkit/06-osoittimet.cpp" osa="luonti"}
+```
+
+Kalleinta on huomaamaton kopio. Funktio, joka ottaa `shared_ptr`in
+arvona, ottaa osuuden omistuksesta, vaikka se vain lukisi oliota:
+
+```{.cpp tiedosto="esimerkit/06-osoittimet.cpp" osa="valitys"}
+```
+
+```{.cpp tiedosto="esimerkit/06-osoittimet.cpp" osa="testi"}
+```
+
+```{.tuloste tiedosto="esimerkit/06-osoittimet.odotettu"}
+```
+
+```{.makefile tiedosto="esimerkit/Makefile" osa="osoittimet"}
+```
+
+```{.tuloste tiedosto="esimerkit/tulokset/tarkista-osoittimet.txt"}
+```
+
+Arvona välitys tekee neljä kertaa niin monta käskyä kuin viittaus, ja
+käskymäärä aliarvioi eron: laskurin kasvatus ja vähennys ovat atomisia
+operaatioita, ja jos sama osoitin kopioidaan usean säikeen kuumassa
+silmukassa, laskurin välimuistirivi kiertää ytimeltä toiselle (ks.
+*Rinnakkaisohjelmointi*). Rajapinnan sääntö seuraa suoraan mittauksesta:
+funktio, joka vain käyttää oliota, ottaa `const T&`:n tai `T*`:n;
+`shared_ptr` arvona kuuluu funktiolle, joka säilyttää osoittimen.
+
+`unique_ptr`in nollakustannuksella on kaksi rajaa. Oma poistaja, jolla
+on tilaa (esimerkiksi funktio-osoitin), kasvattaa olion kokoa; tilaton
+poistaja, kuten lambda ilman sieppauksia, ei kasvata. Lisäksi Itaniumin
+ABI:ssa `unique_ptr` välitetään arvona muistin kautta eikä
+rekisterissä, koska sillä on purkaja, joten arvona otettu `unique_ptr`
+on hieman paljasta osoitinta kalliimpi parametri.
+
 ## Muut keinot
 
 - **Varaajan vaihto.** jemalloc, tcmalloc ja mimalloc ovat glibc:n
   varaajaa nopeampia monisäikeisissä ohjelmissa, ja ne otetaan käyttöön
   linkittämällä tai `LD_PRELOAD`illa ilman koodimuutoksia.
-- **`std::make_shared`** varaa olion ja viitelaskurin yhdellä
-  varauksella, `std::shared_ptr<T>(new T)` kahdella.
 - **Solmujen siirto** (`extract` ja `insert` C++17:stä alkaen) siirtää
   alkion kartasta toiseen varaamatta.
 - **`std::array` ja `std::inplace_vector`** (C++26) säilyttävät alkiot
@@ -167,6 +225,9 @@ kuten NUMA-solmua tai jaetun muistin osoitetta.
 - **`pmr` ja monotoninen resurssi** lyhytikäiselle työlle, jonka
   kaikki tulokset hylätään kerralla, kuten pyynnön käsittely tai
   jäsennys.
+- **`shared_ptr` vain jaettuun omistukseen.** Luo se
+  `make_shared`illa, välitä lukijoille viittaus olioon ja kopioi
+  osoitin vain, kun kopio todella säilytetään.
 - **Poolit solmusäiliöille**, joista lisätään ja poistetaan paljon.
   Vielä parempi on usein vaihtaa solmusäiliö vektoriin (luku 8).
 
@@ -176,6 +237,9 @@ kuten NUMA-solmua tai jaetun muistin osoitetta.
   vähentää ne `reserve`lla.
 - Osaat selittää lyhyen merkkijonon optimoinnin ja sen rajan
   libstdc++:ssa ja libc++:ssa.
+- Osaat kertoa, mitä `shared_ptr` maksaa luotaessa ja kopioitaessa, ja
+  valita funktion parametrin tyypin sen mukaan, säilyttääkö funktio
+  osoittimen.
 - Osaat käyttää `monotonic_buffer_resource`- ja
   `unsynchronized_pool_resource`-resursseja ja kirjoittaa oman
   muistiresurssin.

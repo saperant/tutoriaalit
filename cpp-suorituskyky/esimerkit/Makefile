@@ -51,7 +51,7 @@ bin/%: %.cpp $(OTSAKKEET) | bin
 # Deterministiset tarkistukset
 
 TARKISTUKSET := poistettu kuviot devirtualisointi funktiot poikkeukset \
-                soa sailiot lto constexpr otsakkeet muotoilu sanat
+                osoittimet soa sailiot lto constexpr otsakkeet muotoilu sanat
 
 tarkista: $(addprefix tarkista-,$(TARKISTUKSET))
 	@echo "OK: tarkistukset"
@@ -69,8 +69,9 @@ tarkista-poistettu: bin/02-poistettu
 tarkista-kuviot: bin/03-kuviot
 	@echo "== Kaskyja kuviota kohden, 1000 kuviota =="
 	@$(KASKYT) --toistot 20 --per 1000 bin/03-kuviot \
-	    virtuaali variant avoin final crtp \
-	    --suhde virtuaali final 1.5 --suhde avoin final 1.2
+	    virtuaali variant avoin final crtp dynamic_cast \
+	    --suhde virtuaali final 1.5 --suhde avoin final 1.2 \
+	    --suhde dynamic_cast virtuaali 2
 
 # @alku devirtualisointi
 tarkista-devirtualisointi: bin/03-kuviot
@@ -83,6 +84,13 @@ tarkista-devirtualisointi: bin/03-kuviot
 	@grep -qE 'call +\*' bin/avoin.s
 	@! grep -q call bin/final.s
 # @loppu devirtualisointi
+
+# @alku osoittimet
+tarkista-osoittimet: bin/06-osoittimet
+	@echo "== Kaskyja kutsua kohden =="
+	@$(KASKYT) --toistot 1000 bin/06-osoittimet arvona viitteena oliosta \
+	    --suhde arvona viitteena 2
+# @loppu osoittimet
 
 tarkista-funktiot: bin/04-funktiot
 	@echo "== Kaskyja alkiota kohden, 1000 alkiota =="

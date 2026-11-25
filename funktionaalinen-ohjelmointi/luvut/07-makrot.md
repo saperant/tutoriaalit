@@ -39,6 +39,21 @@ makrot ennen ohjelman kääntämistä, joten makron käyttö ei maksa ajon
 aikana mitään. `define-syntax-rule` määrittelee makron yhdellä
 hahmolla ja mallilla.
 
+```{.dot otsikko="Lähdekoodin vaiheet Racketissa. Makrot ajetaan laajennusvaiheessa, ja niiden tuloksen näkee komennolla `raco expand`."}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.45;
+  teksti [label="lähdeteksti", fillcolor="#FFFFFF"];
+  lukija [label="lukija\n(read)"];
+  laaj [label="laajennus\n(makrot)", fillcolor="#F3E2C7"];
+  kaanto [label="käännös"];
+  ajo [label="ajo"];
+  teksti -> lukija;
+  lukija -> laaj [label="S-lausekkeet"];
+  laaj -> kaanto [label="ydinkieli"];
+  kaanto -> ajo [label="konekoodi"];
+}
+```
+
 Makrolla voi tehdä kaksi asiaa, joihin funktio ei pysty: se voi
 **viivästää tai estää arvioinnin** ja **nähdä argumenttinsa koodina**.
 Alla `varmista` tulostaa epäonnistuneen ehdon lähdekoodin:
@@ -83,6 +98,18 @@ ja kunkin tilan siirtymät.
 ```
 
 ```{.scheme tiedosto="esimerkit/07-tilakone.rkt" osa="kaytto"}
+```
+
+```{.dot otsikko="Kuvauksen `ovi` tilakone. Kuvauksen jokainen rivi on tila ja jokainen sulkupari yksi kaari."}
+digraph {
+  rankdir=LR; nodesep=0.4; ranksep=0.7;
+  node [shape=ellipse];
+  kiinni; auki; lukossa;
+  kiinni -> auki [label="avaa"];
+  auki -> kiinni [label="sulje"];
+  kiinni -> lukossa [label="lukitse"];
+  lukossa -> kiinni [label="avaa-lukko"];
+}
 ```
 
 ```{.tuloste tiedosto="esimerkit/07-tilakone.odotettu"}

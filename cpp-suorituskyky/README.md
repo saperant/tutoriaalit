@@ -6,7 +6,7 @@ maksavat ja miten hinta mitataan: virtuaalikutsut ja devirtualisointi,
 muistinvaraukset (`reserve`, lyhyen merkkijonon optimointi, `std::pmr`,
 oma allokaattori), siirrot ja kopioiden poisto, datan asettelu ja
 säiliöt, sisällyttäminen, LTO, PGO ja käännösaikainen laskenta sekä
-mikrovertailut ja perf. Lopuksi sanojen esiintymien laskenta
+muotoilun ja virtojen hinta. Lopuksi sanojen esiintymien laskenta
 nopeutetaan vaihe vaiheelta.
 Valmiit dokumentit:
 [cpp-suorituskyky.pdf](https://saperant.github.io/tutoriaalit/materiaalit/cpp-suorituskyky.pdf)
@@ -22,23 +22,26 @@ välimuistit, kääntäjän optimoinnit).
 1. Johdanto – nollakustannusperiaate, huomaamaton kopio, kolme
    mittaria ja esimerkkien kolme tilaa
 2. Mittaaminen C++:ssa – kääntäjän poistama mittaus, `pida` ja
-   `piilota`, mittauskehys, varauslaskuri, käskyt operaatiota kohden
+   `piilota`, mittauskehys, varauslaskuri, käskyt operaatiota kohden,
+   mikrovertailun sudenkuopat ja kalibrointi, Google Benchmark, perf
 3. Virtuaalikutsut – virtuaalitaulu, spekulatiivinen devirtualisointi,
-   `final`, `std::variant` ja CRTP
+   `final`, `std::variant`, CRTP ja `dynamic_cast`
 4. Funktiot arvoina ja tyyppien pyyhintä – malliparametri,
    funktio-osoitin, `std::function`, `std::any`, pienen olion puskuri
 5. Poikkeukset ja `noexcept` – nollakustannusmalli, heittämisen hinta,
    `std::expected`, siirto vektorin kasvaessa
-6. Muistinvaraukset – `reserve`, SSO, `std::pmr`, oma allokaattori
+6. Muistinvaraukset – `reserve`, SSO, `std::pmr`, oma allokaattori,
+   älykkäiden osoittimien hinta
 7. Siirrot ja kopioiden poisto – paluuarvot, `return std::move`,
    `emplace`, näkymät, elinaika
 8. Datan asettelu – täyte, `[[no_unique_address]]`,
    `std::vector<bool>`, AoS ja SoA, säiliöt
 9. Käännös – `inline` ja ODR, LTO, PGO, `consteval`, otsakkeiden hinta
-10. Mikrovertailut ja perf – sudenkuopat, kalibrointi, luvun
-    muotoilun kuusi tapaa, Google Benchmark, laitteistolaskurit
+10. Muotoilu ja virrat – luvun muotoilun kuusi tapaa, `std::endl`,
+    `sync_with_stdio`
 11. Tapaustutkimus – sanojen esiintymät neljässä vaiheessa
-12. Lopuksi – hintojen yhteenveto, nyrkkisäännöt ja lähteet
+12. Lopuksi – hintojen yhteenveto, nyrkkisäännöt, jatkotaidot ja
+    lähteet
 
 ## Esimerkit
 
@@ -67,10 +70,19 @@ make pdf                      # tutoriaali ja pikaopas PDF:ksi
 make -C esimerkit tarkista    # Cachegrind- ja konekoodin tarkistukset
 make -C esimerkit mittaa      # ajoitusmittaukset
 make -C esimerkit tulokset    # kirjan tulosteet omalla koneella
+make kuvat                    # kuvaajat tulostiedostoista (Matplotlib)
 ```
+
+Kuvaajat (`kuvat/*.png`) piirretään skriptillä `kuvat/piirra.py`
+samoista tulostiedostoista, jotka kirjassa näytetään tulosteina. Kun
+mittaukset ajetaan uudelleen, aja ensin `make -C esimerkit tulokset`
+hiljaisella koneella ja sitten `make kuvat`.
 
 Tarvittavat työkalut: GCC 14, Clang 20, Valgrind, binutils (objdump,
 nm) ja Python 3. Kehityskontti: `.devcontainer/cpp-suorituskyky`.
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 ## Lisenssi
 

@@ -8,10 +8,6 @@ muuttumaton data, hahmontunnistus, laiskat iteraattorit, makrot ja
 tulkit. Ne on helpointa oppia kielessä, jossa ne ovat perusasioita eivätkä
 myöhemmin lisättyjä ominaisuuksia.
 
-Tutoriaali olettaa taidon *Ohjelmoinnin perusteet*: lukija osaa
-muuttujat, ehdot, silmukat, funktiot ja tavalliset tietorakenteet
-jossakin kielessä. Racketia ei tarvitse osata entuudestaan.
-
 ## Miksi Lisp ja miksi Racket
 
 John McCarthy kehitti Lispin vuonna 1958 tekoälytutkimuksen kieleksi.
@@ -49,14 +45,20 @@ Clojure (JVM), Common Lisp ja Emacs Lisp. Funktionaalisia tuotantokieliä
 ovat myös Haskell, OCaml, F#, Elixir ja Scala. Tässä tutoriaalissa
 opittu siirtyy niihin suoraan.
 
-## Mitä tutoriaali ei ole
+## Esitiedot ja rajaus
+
+Tutoriaali olettaa taidon *Ohjelmoinnin perusteet (Python)*: lukija
+osaa muuttujat, ehdot, silmukat, funktiot ja tavalliset tietorakenteet
+jossakin kielessä. Racketia ei tarvitse osata entuudestaan.
 
 Tutoriaali ei ole kattava Racket-opas eikä tyyppiteorian johdanto.
 Staattisesti tyypitettyä funktionaalista ohjelmointia (Haskell, OCaml,
 Typed Racket) käsitellään vain viittauksina. Jokaisen luvun
 *Käytännössä*-osio kertoo, missä sama malli näkyy Pythonissa,
 JavaScriptissä, Javassa, C++:ssa tai Rustissa, sillä niissä lukija mallia
-todennäköisimmin käyttää.
+todennäköisimmin käyttää. Kielten omat keinot ovat kielipaketeissa
+(*Rust*, *Java*, *Kotlin*, *JavaScript*, *Python*), ja rekursiivisten
+algoritmien analyysi on taidossa *Algoritmit*.
 
 ## Työkalut
 
@@ -77,7 +79,11 @@ DrRacket on aloittelijalle helpoin ympäristö: se näyttää virheen kohdan
 ja tarjoaa askeltavan suorittajan sekä makrojen tarkastelijan. VS
 Codessa on Magic Racket -laajennus. Emacsissa vastaava on racket-mode.
 Tämän tutoriaalin esimerkit on testattu Racketin versiolla 8.10.
-Kehityskontti sisältää saman version (ks. `README.md`).
+Kehityskontti sisältää saman version (ks. `README.md`). Esimerkit ovat
+hakemistossa `esimerkit/` luvun numerolla nimettyinä: yksittäinen
+esimerkki ajetaan komennolla `racket esimerkit/03-puu.rkt`, ja jos
+esimerkillä on syötetiedosto, se annetaan vakiosyötteenä
+(`racket esimerkit/01-sanat.rkt < esimerkit/01-sanat.syote`).
 
 ## Ensimmäinen ohjelma
 
@@ -114,8 +120,8 @@ Lyhyt lukuohje syntaksiin:
 - `;` aloittaa kommentin. `#lang racket` valitsee tiedoston kielen.
 
 Funktio `for/fold` kokoaa tuloksen silmukassa ilman sijoitusta. Funktio
-`hash-update` palauttaa *uuden* taulun eikä muuta vanhaa. Luku 4
-käsittelee molemmat.
+`hash-update` palauttaa *uuden* taulun eikä muuta vanhaa. `for`-muodot
+käsitellään luvussa 4 ja hajautustaulut luvussa 5.
 
 ## Tutoriaalin rakenne
 
@@ -130,7 +136,7 @@ käsittelee molemmat.
 | 8 | Laiska laskenta | virrat, lupaukset ja generaattorit |
 | 9 | Tila ja ohjelman rakenne | funktionaalinen ydin, imperatiivinen kuori |
 | 10 | Oma tulkki | `eval` ja `apply`, ympäristöt |
-| 11 | Lopuksi | nyrkkisäännöt ja lähteet |
+| 11 | Lopuksi | nyrkkisäännöt, jatkotaidot ja lähteet |
 
 Luku 10 valmistaa taitoon *Kääntäjätekniikka*. Luvut 4, 5 ja 8 ovat
 eniten käytössä valtavirran kielissä.

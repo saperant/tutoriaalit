@@ -67,12 +67,87 @@ kautta. `.L`-alkuiset ja numeroidut nimiöt (`1:`, viittaukset `1b` ja
 silmukoissa ja haaroissa. Numeronimiöt sopivat erityisesti makroihin,
 koska sama numero saa esiintyä monta kertaa.
 
+Symbolien sidonta, näkyvyys ja linkitystaulut käsitellään
+perusteellisesti taidossa *Objektitiedostot, linkitys ja ABI*; tässä
+riittää tietää, mitkä direktiivit assembly-tiedostoon kuuluvat.
+
 Assembly-funktiolla ei ole automaattisia osioita kuten C-koodilla.
 `.text` valitsee koodiosion; vakiotaulukot kuuluvat osioon
 `.section .rodata`, kirjoitettava data osioon `.data` ja nollattu data
 osioon `.bss`. Vakiotaulukon sijoittaminen `.text`-osioon toimii,
 mutta haittaa välimuisteja ja estää tietoturvakovennuksia, jotka
 olettavat koodin ja datan olevan erillään.
+
+## Data ja kutsut paikkariippumattomassa koodissa
+
+Tähän asti esimerkit on linkitetty staattisesti, jolloin jokaisella
+symbolilla on kiinteä osoite. Nykyisten jakelujen kääntäjät tuottavat
+kuitenkin oletuksena *paikkariippumattoman ohjelman* (PIE), jonka
+lataaja sijoittaa satunnaiseen osoitteeseen, ja jaettu kirjasto on aina
+paikkariippumaton. Sellaisessa koodissa käsky ei saa sisältää symbolin
+absoluuttista osoitetta. Kääntäjä hoitaa asian C-koodissa itse;
+assemblyssä se on kirjoittajan vastuulla, ja virhe tulee vastaan heti,
+kun `.S`-tiedosto viittaa globaaliin muuttujaan.
+
+Esimerkin assembly-funktio kasvattaa C:n globaalia muuttujaa ja kutsuu
+C-funktiota:
+
+```{.c tiedosto="esimerkit/03-paikkariippumaton/laskuri.h" osa="rajapinta"}
+```
+
+```{.gnuassembler tiedosto="esimerkit/03-paikkariippumaton/x86.S" osa="funktio"}
+```
+
+```{.gnuassembler tiedosto="esimerkit/03-paikkariippumaton/rv.S" osa="funktio"}
+```
+
+Makrolla `ABSOLUUTTINEN` valittu muoto on se, jonka kirjoittaa
+ensimmäiseksi: `laskuri` operandina tarkoittaa symbolin absoluuttista
+osoitetta. Staattisessa ohjelmassa se toimii. Oletuskäännöksessä
+linkkeri hylkää sen:
+
+```{.bash tiedosto="esimerkit/03-paikkariippumaton/tarkistus.sh" osa="absoluuttinen"}
+```
+
+```{.tuloste tiedosto="esimerkit/03-paikkariippumaton/tarkistus.odotettu" rivit="4-5"}
+```
+
+Oikea muoto laskee osoitteen suhteessa käskyosoittimeen, jolloin se
+pätee, minne tahansa ohjelma ladataan:
+
+| Tarve | x86-64 | RISC-V |
+|-------|--------|--------|
+| oman ohjelman tai kirjaston data | `symboli(%rip)` | `lla rek, symboli` |
+| data, joka voi olla toisessa kirjastossa | `symboli@GOTPCREL(%rip)` ja lataus osoittimen kautta | `la rek, symboli` |
+| funktiokutsu | `call f@PLT`, `jmp f@PLT` | `call f`, `tail f` |
+
+RISC-V:n `la` on pseudokäsky, jonka purkautuminen riippuu
+käännöstavasta: paikkariippumattomassa käännöksessä se hakee osoitteen
+globaalista osoitetaulusta (GOT), muuten se laskee sen suoraan.
+`lla` laskee aina suoraan. x86-64:llä nykyinen kokoaja tuottaa
+`call f`-käskystäkin linkitystaulun kautta kulkevan relokaation, mutta
+`@PLT` kannattaa kirjoittaa näkyviin. Oikean version relokaatiot
+näyttävät, mitä kokoaja pyytää linkkeriltä:
+
+```{.bash tiedosto="esimerkit/03-paikkariippumaton/tarkistus.sh" osa="relokaatiot"}
+```
+
+```{.tuloste tiedosto="esimerkit/03-paikkariippumaton/tarkistus.odotettu" rivit="6-"}
+```
+
+`PC32` ja `PCREL` ovat käskyosoitinsuhteellisia, ja `PLT32` ja
+`CALL_PLT` antavat linkkerin valita suoran kutsun tai linkitystaulun.
+Sama ohjelma linkittyy nyt paikkariippumattomaksi ja toimii
+kummallakin arkkitehtuurilla:
+
+```{.bash tiedosto="esimerkit/03-paikkariippumaton/tarkistus.sh" osa="pie"}
+```
+
+```{.tuloste tiedosto="esimerkit/03-paikkariippumaton/tarkistus.odotettu" rivit="1-3"}
+```
+
+GOT:n ja PLT:n rakenne ja laiska sidonta ovat taidon
+*Objektitiedostot, linkitys ja ABI* asiaa.
 
 ## Pinon suoritusoikeus
 
@@ -122,33 +197,51 @@ funktion kutsua. x86-64:llä funktion alussa CFA on `rsp + 8`, koska
 paluuosoite on rekisterissä `ra`. Jokaisen pino-osoitinta muuttavan
 käskyn jälkeen tulee direktiivi, joka kertoo uuden etäisyyden.
 
+```{.dot otsikko="Alla olevan x86-64-funktion `kutsu_kautta` kehys käsky käskyltä. CFA pysyy paikallaan, ja direktiivit kertovat, kuinka kaukana `rsp` siitä kulloinkin on ja mihin `rbx` tallennettiin. Purkaja löytää paluuosoitteen aina kohdasta CFA − 8."}
+digraph {
+  rankdir=LR; nodesep=0.5; ranksep=0.5;
+  node [shape=plain, style=""];
+  a [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" colspan="2" align="left"><i>funktion alussa</i></td></tr>
+    <tr><td bgcolor="#FFFFFF">kutsujan kehys</td><td border="0" align="left">← CFA</td></tr>
+    <tr><td bgcolor="#EEF1F6">paluuosoite</td><td border="0" align="left">← rsp (CFA = rsp + 8)</td></tr>
+    <tr><td border="0"> </td><td border="0"></td></tr></table>>];
+  b [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" colspan="2" align="left"><i>push %rbx jälkeen</i></td></tr>
+    <tr><td bgcolor="#FFFFFF">kutsujan kehys</td><td border="0" align="left">← CFA</td></tr>
+    <tr><td bgcolor="#EEF1F6">paluuosoite</td><td border="0" align="left">CFA − 8</td></tr>
+    <tr><td bgcolor="#F3E2C7">vanha rbx</td><td border="0" align="left">← rsp (CFA = rsp + 16); rbx: CFA − 16</td></tr></table>>];
+  a -> b [label="push %rbx"];
+}
+```
+
 Esimerkissä C-funktio kutsuu assembly-funktiota, joka kutsuu takaisin
 C-funktiota. Sisin funktio purkaa pinon libgcc:n funktiolla
 `_Unwind_Backtrace`, samalla koneistolla, jota C++:n poikkeukset
 käyttävät, ja tunnistaa kunkin kehyksen funktion alkuosoitteesta:
 
-```{.c tiedosto="esimerkit/04-pinonpurku/main.c" osa="purku"}
+```{.c tiedosto="esimerkit/03-pinonpurku/main.c" osa="purku"}
 ```
 
 Assembly-funktio on kirjoitettu niin, että CFI-direktiivit voi kytkeä
 pois makrolla:
 
-```{.gnuassembler tiedosto="esimerkit/04-pinonpurku/x86.S" osa="kutsu"}
+```{.gnuassembler tiedosto="esimerkit/03-pinonpurku/x86.S" osa="kutsu"}
 ```
 
-```{.gnuassembler tiedosto="esimerkit/04-pinonpurku/rv.S" osa="kutsu"}
+```{.gnuassembler tiedosto="esimerkit/03-pinonpurku/rv.S" osa="kutsu"}
 ```
 
 Direktiivien kanssa (`-DCFI`) purku etenee `main`iin asti
 kummallakin arkkitehtuurilla:
 
-```{.tuloste tiedosto="esimerkit/04-pinonpurku/odotettu"}
+```{.tuloste tiedosto="esimerkit/03-pinonpurku/odotettu"}
 ```
 
 Ilman niitä purkaja ei löydä `kutsu_kautta`-funktion paluuosoitteelle
 purkutietoja ja pysähtyy:
 
-```{.tuloste tiedosto="esimerkit/04-pinonpurku/tarkistus.odotettu"}
+```{.tuloste tiedosto="esimerkit/03-pinonpurku/tarkistus.odotettu"}
 ```
 
 Toinen `syvin`-rivi on purkajan viimeinen, epäonnistunut askel: se ei
@@ -164,7 +257,8 @@ pino-osoitinta, riittävät `.cfi_startproc` ja `.cfi_endproc`, koska
 oletussäännöt kuvaavat juuri funktion alun tilan. Direktiivien
 oikeellisuuden voi tarkistaa komennolla `readelf --debug-dump=frames`
 tai askeltamalla funktion läpi `gdb`:ssä ja kokeilemalla komentoa `bt`
-jokaisessa kohdassa.
+jokaisessa kohdassa. Osion `.eh_frame` rakenne ja purkajan toiminta
+ovat taidossa *Objektitiedostot, linkitys ja ABI*.
 
 ## Kokoaminen käännösjärjestelmässä
 
@@ -206,6 +300,10 @@ ABI-valitsimet ja käyttää samaa kokoajaa kuin C-koodi.
   debuggerit ja profiloijat pysähtyvät assembly-funktioon. GCC:n
   tuottama `gcc -S` -tuloste on hyvä malli: kirjoita vastaava
   C-funktio ja katso, mitkä direktiivit kääntäjä tuottaa.
+- **Ei absoluuttisia osoitteita.** Data `symboli(%rip)`- tai
+  `lla`-muodossa ja kutsut `@PLT`- tai `call`-muodossa; käännä
+  assembly myös ilman `-static`-valitsinta, jotta linkkeri tarkistaa
+  asian.
 - **Piilota sisäiset symbolit.** Kirjaston sisäiset apufunktiot ovat
   `.hidden`; paikalliset hyppykohteet ovat `.L`- tai numeronimiöitä.
 - **Valitse toteutus käännösjärjestelmässä, ei lähteessä.** Kullekin
@@ -214,6 +312,9 @@ ABI-valitsimet ja käyttää samaa kokoajaa kuin C-koodi.
 
 ## Itsearviointi
 
+- Osaat viitata assemblystä globaaliin dataan ja kutsua C-funktiota
+  niin, että koodi kelpaa paikkariippumattomaan ohjelmaan, ja tulkita
+  linkkerin virheilmoituksen, kun se ei kelpaa.
 - Osaat selittää `.S`- ja `.s`-tiedostojen eron ja tunnistaa puuttuvan
   esikääntäjän virheilmoituksesta.
 - Osaat hallita symbolin näkyvyyttä direktiiveillä `.globl`,

@@ -1,0 +1,4 @@
+Fatal Python error: Segmentation fault
+  File "kaatuu.py", line 9 in nollaa_puskuri
+  File "kaatuu.py", line 13 in kasittele_tiedosto
+  File "kaatuu.py", line 18 in <module>

@@ -19,10 +19,11 @@ perusteet, SIMD-käskyjen perusajatus), jonka asioita ei toisteta.
    laajennus ja `char`in etumerkki, rekisterivahti, säilyvien
    rekisterien ja pinon tasauksen rikkomisen seuraukset
 3. Assembly-tiedostot projektissa – `.S` ja `.s`, symbolien
-   näkyvyys, `.note.GNU-stack`, CFI-direktiivit ja pinonpurku,
+   näkyvyys, data ja kutsut paikkariippumattomassa koodissa,
+   `.note.GNU-stack`, CFI-direktiivit ja pinonpurku,
    käännösjärjestelmät
 4. Inline-assembly – tulosteet, syötteet, rajoitteet, sotkettavat,
-   `volatile`; puuttuva `"memory"` ja `&` `-O2`:lla
+   `volatile`; puuttuva `"memory"` ja `&` `-O2`:lla, punainen vyöhyke
 5. Kääntäjän sisäiset funktiot ja SIMD – `__builtin_*`, SSE2 ja
    RISC-V:n vektorilaajennus, testaus skalaariversiota vastaan,
    automaattinen vektorointi
@@ -43,4 +44,8 @@ make pdf      # rakentaa c-asm-integraatio.pdf:n ja pikaoppaan
 Esimerkit tarvitsevat GCC 14:n, RISC-V-ristikääntäjän
 (`gcc-riscv64-linux-gnu`, `libc6-dev-riscv64-cross`) ja QEMU:n
 käyttäjätilan emulaattorit (`qemu-user`). Kehityskontti on
-hakemistossa `.devcontainer/c-asm-integraatio/`.
+hakemistossa `.devcontainer/c-asm-integraatio/`. Esimerkkihakemiston
+nimen numero on luvun numero.
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.

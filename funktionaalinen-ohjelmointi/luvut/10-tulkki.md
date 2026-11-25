@@ -45,6 +45,41 @@ ympäristöön. Primitiivit käärivät Racketin funktiot.
 ```{.scheme tiedosto="esimerkit/10-tulkki/tulkki.rkt" osa="arvot"}
 ```
 
+```{.dot otsikko="Ympäristöt, kun luvun lopun ohjelma arvioi lauseketta `((lisaaja 5) 10)` (periaatekuva). Kutsu `(lisaaja 5)` loi kehyksen, jossa `n` on 5, ja palautti sulkeuman, joka osoittaa siihen. Sulkeuman kutsu loi kehyksen `x`:lle. Runko `(+ x n)` löytää `x`:n omasta kehyksestään, `n`:n sulkeuman kehyksestä ja `+`:n globaalista."}
+digraph {
+  rankdir=BT; nodesep=0.9; ranksep=0.55;
+  node [shape=plain, style=""];
+  g [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left" colspan="2"><i>globaali kehys</i></td></tr>
+    <tr><td bgcolor="#EEF1F6">+</td><td bgcolor="#EEF1F6">primitiivi</td></tr>
+    <tr><td bgcolor="#EEF1F6">lisaaja</td><td bgcolor="#EEF1F6">sulkeuma →</td></tr></table>>];
+  s1 [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left" colspan="2"><i>sulkeuma: lisaaja</i></td></tr>
+    <tr><td bgcolor="#FFFFFF">parametrit</td><td bgcolor="#FFFFFF">(n)</td></tr>
+    <tr><td bgcolor="#FFFFFF">runko</td><td bgcolor="#FFFFFF">(lambda (x) (+ x n))</td></tr></table>>];
+  k1 [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left" colspan="2"><i>kehys: kutsu (lisaaja 5)</i></td></tr>
+    <tr><td bgcolor="#EEF1F6">n</td><td bgcolor="#EEF1F6">5</td></tr></table>>];
+  s2 [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left" colspan="2"><i>sulkeuma: kutsun (lisaaja 5) arvo</i></td></tr>
+    <tr><td bgcolor="#FFFFFF">parametrit</td><td bgcolor="#FFFFFF">(x)</td></tr>
+    <tr><td bgcolor="#FFFFFF">runko</td><td bgcolor="#FFFFFF">(+ x n)</td></tr></table>>];
+  k2 [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left" colspan="2"><i>kehys: kutsu ((lisaaja 5) 10)</i></td></tr>
+    <tr><td bgcolor="#EEF1F6">x</td><td bgcolor="#EEF1F6">10</td></tr></table>>];
+  { rank=same; g -> s1 [label="lisaaja"]; }
+  s1 -> g [label="ymp", constraint=false];
+  k1 -> g [label="vanhempi"];
+  { rank=same; k1; s2; }
+  s2 -> k1 [label="ymp", constraint=false];
+  k2 -> k1 [label="vanhempi"];
+}
+```
+
+Nimen haku etenee kehyksestä vanhempaan, kunnes nimi löytyy. Kuvasta
+näkyy myös, miksi `n` säilyy: kutsun `(lisaaja 5)` kehys ei katoa
+kutsun päättyessä, koska palautettu sulkeuma osoittaa siihen.
+
 ## eval ja apply
 
 Tulkin ydin on kaksi toisiaan kutsuvaa funktiota. `arvioi` (*eval*)

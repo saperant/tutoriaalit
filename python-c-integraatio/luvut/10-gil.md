@@ -18,7 +18,7 @@ säikeiden kanssa, mihin puhdas Python ei pysty.
 Esimerkkifunktio odottaa, että toinen säie asettaa lipun. Lippu
 asetetaan Python-säikeestä, joten se tarvitsee lukon:
 
-```{.cpp tiedosto="esimerkit/09-gil/rinnakkain.cpp" osa="odotus"}
+```{.cpp tiedosto="esimerkit/10-gil/rinnakkain.cpp" osa="odotus"}
 ```
 
 `py::gil_scoped_release` on RAII-olio. Muodostin vapauttaa lukon ja
@@ -26,7 +26,21 @@ purkaja ottaa sen takaisin, myös poikkeuksen sattuessa. nanobindissa
 sama on `nb::gil_scoped_release`, ja C-API:ssa makroparit
 `Py_BEGIN_ALLOW_THREADS` ja `Py_END_ALLOW_THREADS`.
 
-```{.python tiedosto="esimerkit/09-gil/main.py" osa="odotus"}
+```{.python tiedosto="esimerkit/10-gil/main.py" osa="odotus"}
+```
+
+```{.ajoituskaavio otsikko="Kaksi koetta aikajanalla (periaatekuva, ei mittakaavassa: ensimmäisen kokeen odotus kestää 500 ms:n aikarajaan asti). Alin rivi kertoo, kummalla säikeellä tulkkilukko on; viivoitus tarkoittaa, että lukko on vapaa tai säie on päättynyt."}
+{"signal": [
+  ["lukko varattuna",
+   {"name": "pääsäie", "wave": "=.......=..", "data": ["C++: odota_lippua, aikaraja", "False"]},
+   {"name": "asettaja", "wave": "=.=.....=..", "data": ["nukkuu", "odottaa lukkoa", "asettaa"]},
+   {"name": "lukko", "wave": "=.......=..", "data": ["pääsäie", "asettaja"]}],
+  {},
+  ["lukko vapautettuna",
+   {"name": "pääsäie", "wave": "=....=.....", "data": ["C++: odota_lippua", "True"]},
+   {"name": "asettaja", "wave": "=.=..x.....", "data": ["nukkuu", "asettaa"]},
+   {"name": "lukko", "wave": "x.=..=.....", "data": ["asettaja", "pääsäie"]}]
+]}
 ```
 
 Ensimmäisessä kokeessa C++ odotti lukko varattuna. Asettajasäie
@@ -47,10 +61,10 @@ C++-säikeet eivät tarvitse lukkoa, kunhan ne käsittelevät vain
 C++-dataa. NumPy-taulukon muisti on tavallista muistia, joten sen
 osoite luetaan lukon kanssa, ja itse lasku tehdään ilman:
 
-```{.cpp tiedosto="esimerkit/09-gil/rinnakkain.cpp" osa="saikeet"}
+```{.cpp tiedosto="esimerkit/10-gil/rinnakkain.cpp" osa="saikeet"}
 ```
 
-```{.python tiedosto="esimerkit/09-gil/main.py" osa="saikeet"}
+```{.python tiedosto="esimerkit/10-gil/main.py" osa="saikeet"}
 ```
 
 `std::jthread` liittyy säikeeseensä purkajassaan, joten lohkon
@@ -74,13 +88,13 @@ Kun C++-säie kutsuu Python-funktiota, sen on ensin otettava lukko.
 `py::gil_scoped_acquire` tekee sen ja luo säikeelle tarvittaessa
 Pythonin säietilan:
 
-```{.cpp tiedosto="esimerkit/09-gil/rinnakkain.cpp" osa="takaisinkutsu"}
+```{.cpp tiedosto="esimerkit/10-gil/rinnakkain.cpp" osa="takaisinkutsu"}
 ```
 
-```{.python tiedosto="esimerkit/09-gil/main.py" osa="takaisinkutsu"}
+```{.python tiedosto="esimerkit/10-gil/main.py" osa="takaisinkutsu"}
 ```
 
-```{.tuloste tiedosto="esimerkit/09-gil/main.odotettu"}
+```{.tuloste tiedosto="esimerkit/10-gil/main.odotettu"}
 ```
 
 Kutsuja vapauttaa lukon ennen kuin odottaa taustasäiettä. Jos se

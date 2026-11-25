@@ -15,6 +15,9 @@ ohjelmassa:
 | Osoittimien seuraaminen | `std::map`, `std::list`, `unique_ptr`-vektori | yhtenäinen data, SoA |
 | Näkymätön funktio | runko toisessa käännösyksikössä | otsake, LTO |
 | Virta | `<<`, `>>`, `std::stringstream` | `std::to_chars`, `std::format` |
+| Puskurin tyhjennys | `std::endl` silmukassa | `'\n'`, tyhjennys kerran |
+| Jaettu omistus | `shared_ptr` arvona parametrina | `const T&`, `make_shared` |
+| Tyypin kysyminen | `dynamic_cast` kuumassa silmukassa | virtuaalifunktio, `std::variant` |
 
 ## Nyrkkisäännöt
 

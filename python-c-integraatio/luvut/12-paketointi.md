@@ -91,7 +91,7 @@ rakenne nanobindilla näyttäisi tältä:
 ```text
 # pyproject.toml
 [build-system]
-requires = ["scikit-build-core>=0.10", "nanobind>=2.0"]
+requires = ["scikit-build-core>=0.10", "nanobind>=3.1"]
 build-backend = "scikit_build_core.build"
 
 [project]
@@ -161,7 +161,7 @@ test-command = "pytest {project}/testit"
 
 ## Vakaa ABI
 
-Vakaan ABI:n (luku 10) avulla yksi pyörä alustaa kohden riittää
+Vakaan ABI:n (luku 11) avulla yksi pyörä alustaa kohden riittää
 kaikille Python-versioille tietystä versiosta alkaen. Tunniste
 `cp312-abi3` tarkoittaa, että pyörä toimii Python 3.12:ssa ja
 kaikissa uudemmissa 3.x-versioissa. Rakennusmatriisi kutistuu

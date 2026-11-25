@@ -1,7 +1,6 @@
-// Mikrovertailu: kokonaisluku merkkijonoksi kuudella tavalla.
+// Muotoilun hinta: kokonaisluku merkkijonoksi kuudella tavalla.
 #include <array>
 #include <charconv>
-#include <chrono>
 #include <cstdio>
 #include <format>
 #include <sstream>
@@ -78,24 +77,12 @@ constexpr std::array<Nimetty, 6> tavat{{
 // @loppu kierros
 
 // @alku vertailu
-// Google Benchmarkin tapaan: toistomäärä kasvatetaan, kunnes yksi
-// mittaus kestää vähintään 20 ms, jolloin kellon tarkkuus ja kutsun
-// hinta eivät vääristä tulosta. Tuloksena nanosekuntia kutsua kohden.
+// Nanosekuntia kutsua kohden: kalibroitu mittaus (mittari.hpp) ajaa
+// kierrosta, jossa on tuhat kutsua.
 double ns_per_kutsu(Tapa tapa)
 {
-    using Kello = std::chrono::steady_clock;
-    long toistot = 1;
-    while (true) {
-        auto alku = Kello::now();
-        for (long i = 0; i < toistot; ++i) {
-            mittari::pida(kierros(tapa));
-        }
-        std::chrono::duration<double, std::nano> d = Kello::now() - alku;
-        if (d.count() > 20e6) {
-            return d.count() / static_cast<double>(toistot * 1000);
-        }
-        toistot *= 2;
-    }
+    return mittari::ns_per_toisto([&] { mittari::pida(kierros(tapa)); })
+           / 1000.0;
 }
 // @loppu vertailu
 

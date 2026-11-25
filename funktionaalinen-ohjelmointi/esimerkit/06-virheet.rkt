@@ -11,6 +11,23 @@
 (displayln (map jasenna-portti '("8080" "http" "70000")))
 ;; @loppu arvona
 
+;; @alku ketju
+;; Peräkkäiset vaiheet, joista jokainen voi epäonnistua. `and` palauttaa
+;; ensimmäisen #f:n tai viimeisen arvon, joten ketju katkeaa itsestään
+;; eikä sisäkkäisiä ehtoja tarvita.
+(define (portti-asetuksista asetukset avain)
+  (let* ([teksti (hash-ref asetukset avain #f)]            ; ei avainta?
+         [osat   (and teksti (string-split teksti ":"))]
+         [portti (and osat (= (length osat) 2)             ; väärä muoto?
+                      (jasenna-portti (second osat)))])    ; ei portti?
+    portti))
+
+(define asetukset (hash "api" "localhost:8080" "loki" "localhost"
+                        "kanta" "db:kanta"))
+(displayln (for/list ([a (in-list '("api" "loki" "kanta" "posti"))])
+             (portti-asetuksista asetukset a)))
+;; @loppu ketju
+
 ;; @alku oma
 ;; Oma poikkeustyyppi periytyy exn:fail-tyypistä ja kantaa lisätietoa.
 (struct exn:fail:asetus exn:fail (rivi))

@@ -60,6 +60,27 @@ rakennetta.
 on turvallista, koska listoja ei muuteta. Etuun lisääminen on siksi
 O(1), kun taas loppuun lisääminen (`append`) kopioi koko listan.
 
+```{.dot otsikko="Laatikko–osoitin-kaavio esimerkin listoista. Jokainen pari on kaksi lokeroa: `car` osoittaa alkioon ja `cdr` loppulistaan. `lisatty` on yksi uusi pari, jonka `cdr` osoittaa vanhaan listaan."}
+digraph {
+  rankdir=LR; nodesep=0.35; ranksep=0.45;
+  node [shape=plain, style=""];
+  nimi1 [label=<<i>lisatty</i>>];
+  nimi2 [label=<<i>kaupungit</i>>];
+  p0 [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="6"><tr><td port="a" bgcolor="#EEF1F6">car</td><td port="d" bgcolor="#EEF1F6">cdr</td></tr></table>>];
+  p1 [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="6"><tr><td port="a" bgcolor="#FFFFFF">car</td><td port="d" bgcolor="#FFFFFF">cdr</td></tr></table>>];
+  p2 [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="6"><tr><td port="a" bgcolor="#FFFFFF">car</td><td port="d" bgcolor="#FFFFFF">cdr</td></tr></table>>];
+  p3 [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="6"><tr><td port="a" bgcolor="#FFFFFF">car</td><td port="d" bgcolor="#FFFFFF">cdr</td></tr></table>>];
+  tyhja [label="'()"];
+  e [label="\"Espoo\""]; o [label="\"Oulu\""]; t [label="\"Tampere\""]; u [label="\"Turku\""];
+  { rank=same; nimi1 -> p0 [minlen=1]; e; }
+  { rank=same; nimi2 -> p1 [minlen=1]; o; }
+  { rank=same; p2; t; }
+  { rank=same; p3; u; }
+  p0:d:c -> p1:a:w; p1:d:c -> p2:a:w; p2:d:c -> p3:a:w; p3:d:c -> tyhja;
+  p0:a:s -> e; p1:a:s -> o; p2:a:s -> t; p3:a:s -> u;
+}
+```
+
 ### Lainaus
 
 `quote` eli lyhyesti `'` estää arvioinnin. `'(maito 5)` ei kutsu

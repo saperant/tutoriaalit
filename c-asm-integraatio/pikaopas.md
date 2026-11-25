@@ -18,12 +18,12 @@ Ensin C ja `gcc -O2 -S`, sitten sisäiset funktiot, viimeisenä assembly.
 Iso `.S` ajetaan esikääntäjän läpi (`__ASSEMBLER__` määritelty),
 pieni `.s` ei. Yhteinen otsake C:lle ja assemblylle:
 
-```{.c tiedosto="esimerkit/01-rajapinta/funktio.h" osa="makrot"}
+```{.c tiedosto="esimerkit/02-rajapinta/funktio.h" osa="makrot"}
 ```
 
 Funktio, joka tallentaa rekisterin, CFI:n kanssa:
 
-```{.gnuassembler tiedosto="esimerkit/04-pinonpurku/x86.S" osa="kutsu"}
+```{.gnuassembler tiedosto="esimerkit/03-pinonpurku/x86.S" osa="kutsu"}
 ```
 
 | Direktiivi | Merkitys |
@@ -43,6 +43,8 @@ Funktio, joka tallentaa rekisterin, CFI:n kanssa:
 | Pino ennen `call` | `rsp` 16:lla jaollinen | `sp` aina 16:lla jaollinen |
 | Alle 64 b argumentti | yläbitit määrittelemättömät | laajennettu tyypin mukaan |
 | `char` | etumerkillinen | etumerkitön |
+| Paikkariippumaton data ja kutsu | `sym(%rip)`, `call f@PLT` | `lla`, `call f` |
+| Vaihtuva-argumenttinen kutsu | `al` = vektorirekisterien määrä | – |
 | Epäsuoran kutsun kohde (CET) | `endbr64` (`_CET_ENDBR`) | – |
 
 # Inline-assembly
@@ -67,9 +69,10 @@ __asm__ [volatile] ("pohja %[x], %1"
 
 Virheet näkyvät vasta optimoidessa: puuttuva `"memory"` → vanha arvo,
 puuttuva `&` → syöte ylikirjoittuu, puuttuva `volatile` → lause
-poistuu. Testaa `-O2`:lla ja `-O3`:lla.
+poistuu, `push` x86-64:n lehtifunktiossa → punainen vyöhyke
+ylikirjoittuu. Testaa `-O2`:lla ja `-O3`:lla.
 
-```{.c tiedosto="esimerkit/05-inline/main.c" osa="muisti"}
+```{.c tiedosto="esimerkit/04-inline/main.c" osa="muisti"}
 ```
 
 # Sisäiset funktiot
@@ -88,7 +91,7 @@ etumerkilliset, `epu8` etumerkittömät, `ps`/`pd` float/double,
 8 b etumerkitön, LMUL 1; `__riscv_vsetvl_e8m1(n)` antaa kierroksen
 pituuden.
 
-```{.c tiedosto="esimerkit/08-simd/simd.c" osa="rvv"}
+```{.c tiedosto="esimerkit/05-simd/simd.c" osa="rvv"}
 ```
 
 # Ajonaikainen valinta
@@ -100,7 +103,7 @@ pituuden.
 | Automaattiset versiot | `target_clones("avx2", "default")` | ei GCC 13:ssa |
 | Testaus | `qemu-x86_64 -cpu Nehalem` / `Haswell-noTSX` | `QEMU_CPU=rv64,v=true` |
 
-```{.c tiedosto="esimerkit/09-ominaisuudet/laske.c" osa="ifunc"}
+```{.c tiedosto="esimerkit/06-ominaisuudet/laske.c" osa="ifunc"}
 ```
 
 # Tarkistukset

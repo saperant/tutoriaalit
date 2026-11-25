@@ -1,4 +1,4 @@
-#include "../01-rajapinta/funktio.h"
+#include "../02-rajapinta/funktio.h"
     .text
 FUNKTIO(kolminkertaista)
     slli t0, a0, 1

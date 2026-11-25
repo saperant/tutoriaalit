@@ -90,6 +90,20 @@ Racketissa on kaksi tapaa ilmaista epäonnistuminen:
 ```{.scheme tiedosto="esimerkit/06-virheet.rkt" osa="arvona"}
 ```
 
+Kun epäonnistuvia vaiheita on monta peräkkäin, jokaisen tuloksen
+tarkistaminen erikseen tuottaa sisäkkäisiä ehtoja. `and` ketjuttaa
+vaiheet: se palauttaa ensimmäisen `#f`:n tai viimeisen arvon, joten
+ensimmäinen epäonnistuminen ohittaa loput.
+
+```{.scheme tiedosto="esimerkit/06-virheet.rkt" osa="ketju"}
+```
+
+Sama ajatus on monen kielen syntaksissa: Rustin `?`-operaattori,
+Kotlinin ja JavaScriptin `?.` sekä Javan `Optional.map` ja `flatMap`
+jatkavat ketjua vain, jos edellinen vaihe onnistui. Yleinen nimi
+rakenteelle "arvo tai epäonnistuminen, ja tapa ketjuttaa niitä" on
+*monadi*; nimeä tärkeämpää on tunnistaa malli.
+
 Oma poikkeustyyppi periytetään `exn:fail`-tyypistä. Se voi kantaa
 lisätietoa, kuten rivinumeron:
 
@@ -102,7 +116,9 @@ lisätietoa, kuten rivinumeron:
 ```{.tuloste tiedosto="esimerkit/06-virheet.odotettu"}
 ```
 
-`with-handlers` ottaa kiinni vain predikaatin hyväksymät poikkeukset.
+Tulosteen toinen rivi on ketjun tulos neljälle avaimelle: vain
+ensimmäinen läpäisee kaikki vaiheet. `with-handlers` ottaa kiinni vain
+predikaatin hyväksymät poikkeukset.
 `exn:fail?` sieppaa kaikki tavalliset virheet mutta ei käyttäjän
 keskeytystä (`exn:break`), ja niin pitääkin olla.
 
@@ -139,5 +155,7 @@ keskeytystä (`exn:break`), ja niin pitääkin olla.
   sopimusrikkomuksen syyllisen.
 - Osaat päättää, ilmaistaanko epäonnistuminen paluuarvona vai
   poikkeuksena, ja määritellä oman poikkeustyypin.
+- Osaat ketjuttaa peräkkäiset epäonnistuvat vaiheet ilman sisäkkäisiä
+  ehtoja ja tunnistat saman mallin muiden kielten syntaksista.
 - Osaat selittää, miksi kahden listan jono on tasoitetusti O(1) ja miksi
   sen vanhat versiot pysyvät käyttökelpoisina.

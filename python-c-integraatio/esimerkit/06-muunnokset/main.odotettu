@@ -3,3 +3,7 @@ laskurit kasvatuksen jälkeen: [2, 3, 4]
 elossa: 2 | tulos: 30.0
 ketju poistettu, vaihe yhä käytössä: 8.0
 kaikki vapautettu, elossa: 0
+ylityksiä: 2 [12.0, 15.0]
+poikkeus kulki C++:n läpi: liian suuri arvo: 11.0
+suodatettu summa: 12.0
+puuttuva metodi: Tried to call pure virtual function "Suodin::kasittele"

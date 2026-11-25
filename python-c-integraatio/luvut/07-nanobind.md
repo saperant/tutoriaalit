@@ -51,7 +51,7 @@ ei löydy muunninta.
   `nb_combined.cpp` (luku 3:n säännöt). Oikeissa projekteissa sen
   tekee CMake-funktio `nanobind_add_module`.
 - **Vakaa ABI ja vapaasäikeinen tulkki** ovat tuettuja
-  rakennusvalitsimina (`STABLE_ABI`, `FREE_THREADED`), ks. luvut 9
+  rakennusvalitsimina (`STABLE_ABI`, `FREE_THREADED`), ks. luvut 10
   ja 12.
 
 ## Vertailu
@@ -71,7 +71,7 @@ kolme kertaa nopeampi, koska pybind11 käy jokaisessa kutsussa läpi
 yleisemmän ylikuormitusten ja muunnosten koneiston. Ero näkyy vain,
 kun kutsuja on paljon ja jokainen tekee vähän työtä, kuten tässä.
 Kun yksi kutsu käsittelee kokonaisen taulukon, sidontakirjaston osuus
-katoaa (luku 11).
+katoaa (luku 9).
 
 Molemmat moduulit toimivat samassa tulkissa, mutta ne eivät tunne
 toistensa tyyppejä: `mittari.Tilasto`a ei voi antaa nanobind-funktiolle.

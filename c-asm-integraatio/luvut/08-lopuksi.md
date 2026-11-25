@@ -18,13 +18,6 @@
    emuloidulla prosessorilla.
 6. **Pidä C-versio.** Se on viite, varapolku ja mittatikku.
 
-## Pikaopas
-
-Paketin pikaopas (`c-asm-integraatio-pikaopas.pdf`) kokoaa
-inline-assemblyn rajoitteet, sotkettavat, tärkeimmät sisäiset
-funktiot, assembly-tiedoston kehyksen ja ajonaikaisen tunnistuksen
-kahdelle sivulle.
-
 ## Jatkotaidot
 
 - **Objektitiedostot, linkitys ja ABI**: relokaatiot, PLT ja GOT,
@@ -32,11 +25,11 @@ kahdelle sivulle.
 - **Tietokonearkkitehtuuri**: miksi jakolasku on hidas, mitä
   vektoriyksiköt tekevät ja miten liukuhihna vaikuttaa käskyjen
   ajoitukseen.
-- **Suorituskyvyn mittaaminen**: `perf`, laitteistolaskurit ja
-  mikrobenchmarkien sudenkuopat.
+- **Suorituskyvyn analyysi ja optimointi**: `perf`, laitteistolaskurit
+  ja mikrovertailujen sudenkuopat.
 - **Takaisinmallinnus**: kääntäjän tuottaman koodin tunnistaminen ilman
   lähdekoodia.
-- **Käyttöjärjestelmän ydin**: kontekstinvaihto, keskeytykset ja
+- **Käyttöjärjestelmät**: kontekstinvaihto, keskeytykset ja
   etuoikeutetut käskyt, joissa assemblyä todella tarvitaan.
 
 ## Lähteet

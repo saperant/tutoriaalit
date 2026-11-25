@@ -1,4 +1,4 @@
-#include "../01-rajapinta/funktio.h"
+#include "../02-rajapinta/funktio.h"
     .text
 # @alku kutsu
 # long kutsu_kautta(long (*f)(long), long x): kutsuu f(x).

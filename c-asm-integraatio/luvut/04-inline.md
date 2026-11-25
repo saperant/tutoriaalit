@@ -56,14 +56,14 @@ Yksinkertaisin tapaus: yksi rekisteri, joka on sekä syöte että
 tuloste, ja toinen, joka on pelkkä syöte. Nimetyt operandit tekevät
 pohjasta luettavan:
 
-```{.c tiedosto="esimerkit/05-inline/main.c" osa="lisaa"}
+```{.c tiedosto="esimerkit/04-inline/main.c" osa="lisaa"}
 ```
 
 `"i"`-rajoite kirjoittaa vakion käskyyn välittömänä arvona. Kääntäjä
 lisää x86-64:llä `$`-merkin itse, joten sama C-lauseke kelpaa
 kummallekin syntaksille:
 
-```{.c tiedosto="esimerkit/05-inline/main.c" osa="vakio"}
+```{.c tiedosto="esimerkit/04-inline/main.c" osa="vakio"}
 ```
 
 Jos lauseke ei ole käännösaikainen vakio, käännös epäonnistuu. Jos vakio
@@ -75,10 +75,10 @@ Muistioperandi annetaan rajoitteella `m`. x86-64:n käskyt voivat
 käsitellä muistia suoraan, RISC-V:n eivät, joten RISC-V-versio
 tarvitsee aputulosteen väliarvolle:
 
-```{.c tiedosto="esimerkit/05-inline/main.c" osa="muisti"}
+```{.c tiedosto="esimerkit/04-inline/main.c" osa="muisti"}
 ```
 
-```{.tuloste tiedosto="esimerkit/05-inline/odotettu"}
+```{.tuloste tiedosto="esimerkit/04-inline/odotettu"}
 ```
 
 Aputulosteen voisi korvata sotkettavalla rekisterillä (`: "t0"`), mutta
@@ -107,13 +107,13 @@ ei käytetä, lauseen saa poistaa, ja kahdesta samanlaisesta lauseesta
 saa jättää toisen pois. `volatile` kieltää tämän. Lause, jolla ei ole
 tulosteita lainkaan, on automaattisesti `volatile`.
 
-```{.c tiedosto="esimerkit/05-inline/main.c" osa="poisto"}
+```{.c tiedosto="esimerkit/04-inline/main.c" osa="poisto"}
 ```
 
-```{.bash tiedosto="esimerkit/05-inline/tarkistus.sh" osa="kaskyt"}
+```{.bash tiedosto="esimerkit/04-inline/tarkistus.sh" osa="kaskyt"}
 ```
 
-```{.tuloste tiedosto="esimerkit/05-inline/tarkistus.odotettu"}
+```{.tuloste tiedosto="esimerkit/04-inline/tarkistus.odotettu"}
 ```
 
 Ilman `volatile`-sanaa funktiosta jäi jäljelle vain `ret` (ja
@@ -131,16 +131,16 @@ hajottavat ohjelman `-O2`:lla. Ensimmäisessä asm-lause kirjoittaa
 muistiin osoittimen kautta, mutta kertoo kääntäjälle vain, että se
 lukee osoittimen arvon:
 
-```{.c tiedosto="esimerkit/06-inline-virheet/main.c" osa="muisti"}
+```{.c tiedosto="esimerkit/04-inline-virheet/main.c" osa="muisti"}
 ```
 
 Toisessa tuloste kirjoitetaan ensimmäisellä käskyllä, ennen kuin
 viimeinen syöte on luettu, mutta tulosteelta puuttuu `&`:
 
-```{.c tiedosto="esimerkit/06-inline-virheet/main.c" osa="aikainen"}
+```{.c tiedosto="esimerkit/04-inline-virheet/main.c" osa="aikainen"}
 ```
 
-```{.tuloste tiedosto="esimerkit/06-inline-virheet/odotettu"}
+```{.tuloste tiedosto="esimerkit/04-inline-virheet/odotettu"}
 ```
 
 Ensimmäisessä tapauksessa kääntäjä tietää, että `x` on 1, eikä sen
@@ -154,10 +154,10 @@ Toisessa tapauksessa ilman `&`-merkkiä kääntäjä saa olettaa, että
 tuloste kirjoitetaan vasta, kun kaikki syötteet on luettu, ja antaa
 sille saman rekisterin kuin syötteelle `b`. Purettu koodi näyttää sen:
 
-```{.bash tiedosto="esimerkit/06-inline-virheet/tarkistus.sh" osa="purettu"}
+```{.bash tiedosto="esimerkit/04-inline-virheet/tarkistus.sh" osa="purettu"}
 ```
 
-```{.tuloste tiedosto="esimerkit/06-inline-virheet/tarkistus.odotettu"}
+```{.tuloste tiedosto="esimerkit/04-inline-virheet/tarkistus.odotettu"}
 ```
 
 Tuloste ja `b` ovat kumpikin `rdi`:ssä, joten `mov %rsi, %rdi`
@@ -167,6 +167,52 @@ antaa oikeat tulokset, koska ilman optimointia kääntäjä lataa
 syötteet muistista eri rekistereihin, eikä virhe pääse näkyviin. Siksi
 inline-assembly testataan aina samalla optimointitasolla kuin
 tuotantokoodi, mieluiten useammalla.
+
+## Kolmas virhe: punainen vyöhyke
+
+x86-64:n kutsusopimus antaa funktiolle 128 tavua pino-osoittimen
+*alapuolelta* käytettäväksi siirtämättä osoitinta (*red zone*).
+Lehtifunktio, joka ei kutsu muita funktioita, pitää paikalliset
+muuttujansa siellä ja säästää kaksi käskyä. Kääntäjä ei tiedä, että
+asm-lause käyttää pinoa, joten `push` asm-lauseen sisällä kirjoittaa
+suoraan näiden muuttujien päälle:
+
+```{.c tiedosto="esimerkit/04-punainen-vyohyke/main.c" osa="rikki"}
+```
+
+```{.bash tiedosto="esimerkit/04-punainen-vyohyke/tarkistus.sh" osa="purettu"}
+```
+
+```{.tuloste tiedosto="esimerkit/04-punainen-vyohyke/tarkistus.odotettu" asti="ret"}
+```
+
+Muuttuja on osoitteessa `-0x8(%rsp)`, ja `pushf` kirjoittaa
+lippurekisterin täsmälleen samaan paikkaan. Kuten luvun muutkin virheet,
+tämä näkyy vain optimoituna ja vain lehtifunktiossa. Sotkettavien
+luettelossa vyöhykettä ei voi GCC 14:ssä mainita, joten asm-lauseen on
+itse siirryttävä vyöhykkeen ohi ennen työntöä:
+
+```{.c tiedosto="esimerkit/04-punainen-vyohyke/main.c" osa="ohitus"}
+```
+
+```{.tuloste tiedosto="esimerkit/04-punainen-vyohyke/odotettu"}
+```
+
+Sama koskee `call`-käskyä asm-lauseessa, koska sekin työntää
+paluuosoitteen pinoon. Koodi, jonka keskeytys voi katkaista samalla
+pinolla, ei voi käyttää vyöhykettä lainkaan. Siksi Linuxin ydin ja
+useimmat sulautetut ohjelmat käännetään valitsimella `-mno-red-zone`,
+jolla kääntäjä siirtää pino-osoitinta aina:
+
+```{.bash tiedosto="esimerkit/04-punainen-vyohyke/tarkistus.sh" osa="ilman"}
+```
+
+```{.tuloste tiedosto="esimerkit/04-punainen-vyohyke/tarkistus.odotettu" alkaen="-mno-red-zone"}
+```
+
+RISC-V:n kutsusopimuksessa punaista vyöhykettä ei ole: pino-osoittimen
+alapuolinen muisti ei kuulu funktiolle, joten esimerkki on vain
+x86-64:lle.
 
 ## Muita keinoja
 
@@ -193,6 +239,9 @@ tuotantokoodi, mieluiten useammalla.
   sotkettava, jokainen luettu tai kirjoitettu muistipaikka operandi tai
   `"memory"`, jokainen ennenaikaisesti kirjoitettu tuloste `&`.
   Kääntäjä ei tarkista mitään näistä.
+- **Älä käytä pinoa asm-lauseessa.** `push`, `pop` ja `call`
+  kirjoittavat x86-64:llä punaiselle vyöhykkeelle. Jos pinoa on pakko
+  käyttää, siirry ensin 128 tavua vyöhykkeen ohi.
 - **Kääri lause `static inline` -funktioon**, jolla on kuvaava nimi ja
   tyypitetyt parametrit, kuten esimerkeissä. Silloin rajoitteet
   kirjoitetaan ja tarkistetaan kerran.
@@ -205,6 +254,8 @@ tuotantokoodi, mieluiten useammalla.
 
 ## Itsearviointi
 
+- Osaat selittää, mikä punainen vyöhyke on ja miksi asm-lause ei saa
+  työntää pinoon x86-64:n lehtifunktiossa ilman varotoimia.
 - Osaat kirjoittaa laajennetun inline-assemblyn tulosteineen,
   syötteineen ja sotkettavineen ja käyttää nimettyjä operandeja.
 - Osaat valita rajoitteen (`r`, `m`, `i`, `+r`, `=&r`, kiinteä

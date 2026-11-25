@@ -1,4 +1,4 @@
-#include "../01-rajapinta/funktio.h"
+#include "../02-rajapinta/funktio.h"
     .text
 FUNKTIO(kolminkertaista)
     lea (%rdi,%rdi,2), %rax

@@ -11,7 +11,7 @@ subtitle: Pikaopas · abstraktiot, poikkeukset, varaukset, siirrot, asettelu ja 
 - Mittaa `-O2`/`-O3`, ei sanitoijia. 0 ms = kääntäjä poisti työn.
 - Varauslaskuri: korvaa `operator new` yhdessä käännösyksikössä.
 - Käskyt operaatiota kohden: Cachegrind toistoilla 0 ja K, erotus / K.
-- Mikrovertailu: kalibroi toistot (≥ 10 ms), vaihteleva syöte,
+- Mikrovertailu: kalibroi toistot (≥ 20 ms), vaihteleva syöte,
   vahvista koko ohjelmalla. Kirjastot: Google Benchmark, nanobench.
 
 ```text
@@ -34,6 +34,9 @@ perf stat -e cycles,instructions,branch-misses ./a.out
 | tyhjä purkaja | ei siirtoa lainkaan | ei purkajaa |
 | `std::map`, `std::list` | varaus ja huti per alkio | vektori, `flat_map` |
 | `std::ostringstream` | lokaali, virtuaalikutsut | `std::to_chars` |
+| `std::endl` silmukassa | tyhjennys joka rivillä | `'\n'` |
+| `shared_ptr` arvona | atominen laskuri ×2 | `const T&` |
+| `dynamic_cast` | ~160 käskyä | virtuaalifunktio |
 | funktio toisessa `.cpp` | ei sisällytystä | otsake, LTO |
 
 # Virtuaalikutsut ja funktiot

@@ -1,0 +1,11 @@
+x86 DYN (Position-Independent Executable file)
+x86 laskuri 42, tulos 84
+rv  laskuri 42, tulos 84
+x86 relocation R_X86_64_32S against laskuri can not be used
+rv  relocation R_RISCV_HI20 against laskuri can not be used
+x86 R_X86_64_PC32 laskuri
+x86 R_X86_64_PC32 laskuri
+x86 R_X86_64_PLT32 tuplaa
+rv  R_RISCV_PCREL_HI20 laskuri
+rv  R_RISCV_PCREL_LO12_I .L0
+rv  R_RISCV_CALL_PLT tuplaa

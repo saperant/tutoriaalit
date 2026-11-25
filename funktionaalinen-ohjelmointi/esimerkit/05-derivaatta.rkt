@@ -1,6 +1,7 @@
 #lang racket
 ;; Symbolinen derivointi: lausekepuu on tavallinen lista, ja match purkaa
 ;; sen. Sama rakenne toistuu kääntäjissä (AST-muunnokset).
+(provide d)
 
 ;; @alku derivoi
 ;; Lauseke: luku, muuttuja tai (+ a b), (* a b), (expt a n).
@@ -40,9 +41,10 @@
 ;; @loppu sievenna
 
 ;; @alku kaytto
-(for ([f (in-list '((+ (* 3 x) 5)
-                    (* x y)
-                    (expt x 3)
-                    (* (expt x 2) (+ x 1))))])
-  (printf "d/dx ~a = ~a\n" f (d f 'x)))
+(module+ main
+  (for ([f (in-list '((+ (* 3 x) 5)
+                      (* x y)
+                      (expt x 3)
+                      (* (expt x 2) (+ x 1))))])
+    (printf "d/dx ~a = ~a\n" f (d f 'x))))
 ;; @loppu kaytto

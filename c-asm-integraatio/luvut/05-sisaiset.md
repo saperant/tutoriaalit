@@ -21,30 +21,40 @@ toimivat normaalisti. Sisäisiä funktioita on kahta lajia:
 Tavallisimmat bittioperaatiot ovat C:llä hankalia kirjoittaa ja
 suorittimilla yksi käsky:
 
-```{.c tiedosto="esimerkit/07-builtinit/bitit.c" osa="bitit"}
+```{.c tiedosto="esimerkit/05-builtinit/bitit.c" osa="bitit"}
 ```
 
-```{.tuloste tiedosto="esimerkit/07-builtinit/odotettu"}
+```{.tuloste tiedosto="esimerkit/05-builtinit/odotettu"}
 ```
 
-| Funktio | Merkitys | Huomio |
-|---------|----------|--------|
-| `__builtin_popcountll(x)` | ykkösbittien määrä | |
-| `__builtin_ctzll(x)` | nollat alimmasta bitistä alkaen | määrittelemätön, kun `x == 0` |
-| `__builtin_clzll(x)` | nollat ylimmästä bitistä alkaen | määrittelemätön, kun `x == 0` |
-| `__builtin_bswap64(x)` | tavujärjestyksen kääntö | myös 16 ja 32 bittiä |
-| `__builtin_add_overflow(a, b, &t)` | yhteenlasku ja ylivuototieto | kaikille kokonaislukutyypeille |
-| `__builtin_expect(e, v)` | `e`:n todennäköinen arvo on `v` | vaikuttaa vain koodin järjestykseen |
-| `__builtin_unreachable()` | tähän ei koskaan tulla | väärin käytettynä määrittelemätön käytös |
+| Funktio | Merkitys | Huomio | C23:n vastine |
+|---------|----------|--------|---------------|
+| `__builtin_popcountll(x)` | ykkösbittien määrä | | `stdc_count_ones(x)` |
+| `__builtin_ctzll(x)` | nollat alimmasta bitistä alkaen | määrittelemätön, kun `x == 0` | `stdc_trailing_zeros(x)` |
+| `__builtin_clzll(x)` | nollat ylimmästä bitistä alkaen | määrittelemätön, kun `x == 0` | `stdc_leading_zeros(x)` |
+| `__builtin_bswap64(x)` | tavujärjestyksen kääntö | myös 16 ja 32 bittiä | – |
+| `__builtin_add_overflow(a, b, &t)` | yhteenlasku ja ylivuototieto | kaikille kokonaislukutyypeille | `ckd_add(&t, a, b)` |
+| `__builtin_expect(e, v)` | `e`:n todennäköinen arvo on `v` | vaikuttaa vain koodin järjestykseen | – |
+| `__builtin_unreachable()` | tähän ei koskaan tulla | väärin käytettynä määrittelemätön käytös | `unreachable()` |
+
+C23 toi osalle näistä standardinimet: bittifunktiot otsakkeessa
+`<stdbit.h>`, tarkistettu aritmetiikka otsakkeessa `<stdckdint.h>` ja
+`unreachable()` otsakkeessa `<stddef.h>`. Standardin bittifunktiot
+ovat tyyppigeneerisiä ja määriteltyjä myös nollalle
+(`stdc_trailing_zeros(0ul)` on 64), joten uudessa koodissa ne ovat
+turvallisempi valinta. `__builtin_*`-muotoja tarvitaan yhä, kun koodin
+pitää kääntyä vanhemmalla kääntäjällä tai C-kirjastolla: tämän
+tutoriaalin RISC-V-ristikääntäjässä (GCC 13) otsaketta
+`<stdckdint.h>` ei vielä ole.
 
 Sisäinen funktio ei lupaa yhtä käskyä. Se lupaa oikean tuloksen ja
 parhaan toteutuksen, jonka kääntäjä *kohdeprosessorille* tuntee. Kohde
 valitaan valitsimilla `-march` ja `-m`, ja ero on suuri:
 
-```{.bash tiedosto="esimerkit/07-builtinit/tarkistus.sh" osa="kohteet"}
+```{.bash tiedosto="esimerkit/05-builtinit/tarkistus.sh" osa="kohteet"}
 ```
 
-```{.tuloste tiedosto="esimerkit/07-builtinit/tarkistus.odotettu"}
+```{.tuloste tiedosto="esimerkit/05-builtinit/tarkistus.odotettu"}
 ```
 
 Perustason x86-64 (vuoden 2003 AMD64) ei sisällä `popcnt`-käskyä, joten
@@ -62,7 +72,7 @@ tavujen kääntö (`rev8`) ovat yksittäisiä käskyjä.
 haara siirretään pois kuumasta polusta, jolloin yleinen tapaus suoritetaan
 ilman hyppyä ja vie vähemmän välimuistia:
 
-```{.c tiedosto="esimerkit/07-builtinit/bitit.c" osa="odotus"}
+```{.c tiedosto="esimerkit/05-builtinit/bitit.c" osa="odotus"}
 ```
 
 Linuxin `likely`- ja `unlikely`-makrot ovat juuri tämä. C++20
@@ -99,7 +109,26 @@ SIMD-versio vertaa 16 tavua kerralla. SSE2 kuuluu x86-64:n
 perustasoon, joten tätä versiota ei tarvitse suojata ajonaikaisella
 tunnistuksella:
 
-```{.c tiedosto="esimerkit/08-simd/simd.c" osa="sse2"}
+```{.c tiedosto="esimerkit/05-simd/simd.c" osa="sse2"}
+```
+
+```{.dot otsikko="Yksi silmukan kierros, kun haetaan merkkiä `a` (periaatekuva). Vertailu tekee jokaisesta tavusta `FF`:n tai `00`:n, `movemask` poimii tavujen ylimmät bitit yhdeksi luvuksi, ja ykkösbittien määrä on osumien määrä."}
+digraph {
+  rankdir=TB; nodesep=0.2; ranksep=0.35;
+  node [shape=plain, style=""];
+  v [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" align="left" colspan="8"><i>v: 16 tavua muistista (8 ensimmäistä)</i></td></tr>
+    <tr><td bgcolor="#FFFFFF">b</td><td bgcolor="#F3E2C7">a</td><td bgcolor="#FFFFFF">n</td><td bgcolor="#F3E2C7">a</td><td bgcolor="#FFFFFF">n</td><td bgcolor="#F3E2C7">a</td><td bgcolor="#FFFFFF">a…</td><td bgcolor="#FFFFFF">…</td></tr></table>>];
+  y [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" align="left" colspan="8"><i>yhtasuuret = cmpeq(v, haettava)</i></td></tr>
+    <tr><td bgcolor="#FFFFFF">00</td><td bgcolor="#F3E2C7">FF</td><td bgcolor="#FFFFFF">00</td><td bgcolor="#F3E2C7">FF</td><td bgcolor="#FFFFFF">00</td><td bgcolor="#F3E2C7">FF</td><td bgcolor="#FFFFFF">…</td><td bgcolor="#FFFFFF">…</td></tr></table>>];
+  m [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" align="left"><i>maski = movemask(yhtasuuret)</i></td></tr>
+    <tr><td bgcolor="#EEF1F6">bitit 0–5: 0 1 0 1 0 1 … (bitti i = tavu i)</td></tr></table>>];
+  p [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td bgcolor="#EEF1F6">m += popcount(maski)</td></tr></table>>];
+  v -> y -> m -> p;
+}
 ```
 
 Vertailu tuottaa jokaiseen tavuun joko `0xFF` tai `0`, ja
@@ -113,7 +142,7 @@ RISC-V:n vektoriversiossa erillistä loppuosaa ei tarvita. `vsetvl`
 kertoo jokaisella kierroksella, montako alkiota käsitellään: täysi
 vektori tai jäljellä oleva määrä, jos se on pienempi.
 
-```{.c tiedosto="esimerkit/08-simd/simd.c" osa="rvv"}
+```{.c tiedosto="esimerkit/05-simd/simd.c" osa="rvv"}
 ```
 
 RISC-V-versio käännetään valitsimella `-march=rv64gcv`, joka sallii
@@ -128,10 +157,10 @@ leveyden monikertoja. Siksi testi käy läpi kaikki pituudet ja kaikki
 alkukohdat vertailuversiota vastaan, ei vain muutamaa "tavallista"
 syötettä:
 
-```{.c tiedosto="esimerkit/08-simd/main.c" osa="vertailu"}
+```{.c tiedosto="esimerkit/05-simd/main.c" osa="vertailu"}
 ```
 
-```{.tuloste tiedosto="esimerkit/08-simd/odotettu"}
+```{.tuloste tiedosto="esimerkit/05-simd/odotettu"}
 ```
 
 Vertailuversio on samassa ohjelmassa, ja se on merkitty
@@ -146,10 +175,10 @@ GCC vektoroi silmukoita automaattisesti, ja skalaariversio on juuri
 sellainen silmukka, jonka se tunnistaa. Tarkistus kääntää sen eri
 tasoilla ja laskee vektorikäskyt:
 
-```{.bash tiedosto="esimerkit/08-simd/tarkistus.sh" osa="automaattinen"}
+```{.bash tiedosto="esimerkit/05-simd/tarkistus.sh" osa="automaattinen"}
 ```
 
-```{.tuloste tiedosto="esimerkit/08-simd/tarkistus.odotettu"}
+```{.tuloste tiedosto="esimerkit/05-simd/tarkistus.odotettu"}
 ```
 
 Tulos on opettavainen kahdella tavalla. GCC 14 vektoroi x86-64:llä

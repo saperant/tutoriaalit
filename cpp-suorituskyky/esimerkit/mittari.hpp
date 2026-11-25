@@ -80,6 +80,30 @@ Tilasto mittaa(F&& f, int toistot)
 }
 // @loppu mittaa
 
+// @alku kalibroi
+// Google Benchmarkin tapaan: toistomäärä kaksinkertaistetaan, kunnes
+// yksi mittaus kestää vähintään 20 ms, jolloin kellon tarkkuus ja
+// kutsun hinta eivät vääristä tulosta. Palauttaa nanosekunnit toistoa
+// kohden.
+template <typename F>
+double ns_per_toisto(F&& f)
+{
+    using Kello = std::chrono::steady_clock;
+    long toistot = 1;
+    while (true) {
+        auto alku = Kello::now();
+        for (long i = 0; i < toistot; ++i) {
+            f();
+        }
+        std::chrono::duration<double, std::nano> d = Kello::now() - alku;
+        if (d.count() > 20e6) {
+            return d.count() / static_cast<double>(toistot);
+        }
+        toistot *= 2;
+    }
+}
+// @loppu kalibroi
+
 // Tulostaa mittausrivin ja suhteen vertailuaikaan, jos se on annettu.
 inline void tulosta(std::string_view nimi, Tilasto t, double vertailu = 0)
 {

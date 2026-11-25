@@ -38,6 +38,22 @@ kuljetetaan **kertymässä** eli akkumulaattorissa.
 ```{.scheme tiedosto="esimerkit/03-summa.rkt" osa="hanta"}
 ```
 
+Eron näkee, kun laskenta kirjoitetaan auki askel kerrallaan. Esimerkki
+`03-jaljitys.rkt` tulostaa saman summan molemmilla tavoilla.
+Tavallisessa rekursiossa lauseke ensin kasvaa, koska jokainen taso
+jättää yhteenlaskun odottamaan, ja kutistuu vasta, kun perustapaus on
+saavutettu. Häntärekursiossa rivi pysyy samankokoisena: koko tila on
+argumenteissa.
+
+```{.tuloste tiedosto="esimerkit/03-jaljitys.odotettu"}
+```
+
+Jäljittävä versio saa kesken olevan työn parametrina, jotta sen voi
+tulostaa. Tavallisesti saman tiedon säilyttää kutsupino:
+
+```{.scheme tiedosto="esimerkit/03-jaljitys.rkt" osa="tavallinen"}
+```
+
 **Nimetty `let`** on Racketin tavallisin silmukka. `(let silmukka
 ([xs lista] ...) ...)` määrittelee paikallisen funktion `silmukka` ja
 kutsuu sitä heti alkuarvoilla.
@@ -92,6 +108,17 @@ eksponentiaalisesti. Fibonaccin lukujen suora määritelmä laskee
 ```{.tuloste tiedosto="esimerkit/03-fib.odotettu"}
 ```
 
+Kutsupuusta näkee, mistä kutsujen määrä tulee. Puu on piirretty
+ohjelmalla `03-kutsupuu.rkt`, joka käy kutsut läpi samassa
+järjestyksessä kuin `fib` ja merkitsee harmaalla ne, joiden argumentti
+on jo kertaalleen laskettu:
+
+```{.dot tiedosto="esimerkit/03-kutsupuu.odotettu" otsikko="`(fib 5)`:n kutsupuu. Viidestätoista kutsusta yhdeksän laskee arvon, joka on jo laskettu."}
+```
+
+```{.scheme tiedosto="esimerkit/03-kutsupuu.rkt" osa="puu"}
+```
+
 Korjauksia on kaksi. Iteratiivinen versio kuljettaa kahta edellistä
 arvoa kertymissä. Muistaminen (*memoization*, luku 9) säilyttää
 rekursiivisen muodon ja tallentaa lasketut tulokset. Molemmat ovat
@@ -128,6 +155,8 @@ dynaamisen ohjelmoinnin muotoja (taito *Algoritmit*).
   määritelmän mukaan: haara kutakin tapausta kohti.
 - Osaat muuttaa tavallisen rekursion häntärekursioksi kertymän avulla
   ja kirjoittaa sen nimetyllä `let`-lausekkeella.
+- Osaat kirjoittaa pienen kutsun laskennan auki askel askeleelta ja
+  näyttää siitä, kasvaako odottavien laskujen määrä.
 - Osaat selittää, milloin rekursio on turvallinen Pythonissa, Javassa
   tai C:ssä ja milloin se pitää kirjoittaa silmukaksi.
 - Osaat tunnistaa eksponentiaalisen puurekursion ja korjata sen

@@ -16,10 +16,10 @@ kun GCC kokoaa `.S`-päätteisen tiedoston (iso S), se ajaa sen ensin
 C:n esikääntäjän läpi ja määrittelee makron `__ASSEMBLER__`. Otsake
 voi siis tarjota C:lle prototyypit ja assemblylle makrot:
 
-```{.c tiedosto="esimerkit/01-rajapinta/funktio.h" osa="prototyyppi"}
+```{.c tiedosto="esimerkit/02-rajapinta/funktio.h" osa="prototyyppi"}
 ```
 
-```{.c tiedosto="esimerkit/01-rajapinta/funktio.h" osa="makrot"}
+```{.c tiedosto="esimerkit/02-rajapinta/funktio.h" osa="makrot"}
 ```
 
 Makrot hoitavat jokaisen funktion vakiokehyksen: `.globl` tekee
@@ -31,10 +31,10 @@ seuraavassa luvussa.
 
 Toteutus laskee tavun esiintymät nollaan päättyvässä merkkijonossa:
 
-```{.gnuassembler tiedosto="esimerkit/01-rajapinta/x86.S" osa="laske"}
+```{.gnuassembler tiedosto="esimerkit/02-rajapinta/x86.S" osa="laske"}
 ```
 
-```{.gnuassembler tiedosto="esimerkit/01-rajapinta/rv.S" osa="laske"}
+```{.gnuassembler tiedosto="esimerkit/02-rajapinta/rv.S" osa="laske"}
 ```
 
 Funktio käyttää vain rekistereitä, jotka kutsuja on joka tapauksessa
@@ -48,10 +48,10 @@ Assembly-funktiolle kirjoitetaan aina C-viitetoteutus, ja testit
 vertaavat niitä toisiinsa. Viite on helppo lukea ja todeta oikeaksi;
 assemblyä ei ole.
 
-```{.c tiedosto="esimerkit/01-rajapinta/main.c" osa="testit"}
+```{.c tiedosto="esimerkit/02-rajapinta/main.c" osa="testit"}
 ```
 
-```{.tuloste tiedosto="esimerkit/01-rajapinta/odotettu"}
+```{.tuloste tiedosto="esimerkit/02-rajapinta/odotettu"}
 ```
 
 Viimeinen tapaus on valittu tarkoituksella. C:n `char` on x86-64:llä
@@ -70,10 +70,10 @@ näkyy vasta ensimmäisellä ääkkösellä.
 
 Symbolitaulusta voi tarkistaa, että makrot tekivät tehtävänsä:
 
-```{.bash tiedosto="esimerkit/01-rajapinta/tarkistus.sh" osa="symbolit"}
+```{.bash tiedosto="esimerkit/02-rajapinta/tarkistus.sh" osa="symbolit"}
 ```
 
-```{.tuloste tiedosto="esimerkit/01-rajapinta/tarkistus.odotettu"}
+```{.tuloste tiedosto="esimerkit/02-rajapinta/tarkistus.odotettu"}
 ```
 
 Ilman `.type`-direktiiviä tyyppi olisi `NOTYPE` ja ilman `.size`-direktiiviä
@@ -89,6 +89,22 @@ ennalleen: x86-64:llä `rbx`, `rbp` ja `r12`–`r15`, RISC-V:llä
 `s0`–`s11`. Kääntäjä sijoittaa muuttujat, joita tarvitaan kutsun
 jälkeen, mieluiten näihin rekistereihin, koska silloin sen ei tarvitse
 tallentaa niitä pinoon jokaisen kutsun ympärillä.
+
+```{.dot otsikko="Kokonaislukurekisterien roolit kutsussa. Tummennetut säilyvät kutsun yli: kutsuttu funktio saa käyttää niitä vain, jos se palauttaa vanhan arvon."}
+digraph {
+  rankdir=TB; nodesep=0.2; ranksep=0.25;
+  node [shape=plain, style=""];
+  x [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" align="left" colspan="4"><i>x86-64 (System V)</i></td></tr>
+    <tr><td bgcolor="#FFFFFF">argumentit</td><td bgcolor="#FFFFFF">rdi rsi rdx rcx r8 r9</td><td bgcolor="#FFFFFF">paluuarvo</td><td bgcolor="#FFFFFF">rax (rdx)</td></tr>
+    <tr><td bgcolor="#FFFFFF">muut sotkettavat</td><td bgcolor="#FFFFFF">r10 r11</td><td bgcolor="#C9D6E8">säilyvät</td><td bgcolor="#C9D6E8">rbx rbp r12–r15, rsp</td></tr></table>>];
+  r [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" align="left" colspan="4"><i>RISC-V (LP64D)</i></td></tr>
+    <tr><td bgcolor="#FFFFFF">argumentit</td><td bgcolor="#FFFFFF">a0–a7</td><td bgcolor="#FFFFFF">paluuarvo</td><td bgcolor="#FFFFFF">a0 (a1)</td></tr>
+    <tr><td bgcolor="#FFFFFF">muut sotkettavat</td><td bgcolor="#FFFFFF">t0–t6, ra</td><td bgcolor="#C9D6E8">säilyvät</td><td bgcolor="#C9D6E8">s0–s11, sp</td></tr></table>>];
+  x -> r [style=invis];
+}
+```
 
 Sopimuksen noudattamista voi testata *rekisterivahdilla*: funktiolla,
 joka täyttää kaikki säilyvät rekisterit tunnetuilla arvoilla, kutsuu
@@ -110,6 +126,30 @@ rekisterit ennen kuin täyttää ne ja palauttaa ne lopuksi. x86-64:llä
 seitsemäs `push` on tasausta varten. Funktioon tultaessa pino on 8
 tavua sivussa 16:n rajasta (paluuosoite), ja seitsemän 8 tavun
 työntöä tuo sen takaisin rajalle ennen `call`-käskyä.
+
+```{.dot otsikko="Pino funktiossa `vahdi` juuri ennen kutsua. Pino kasvaa alaspäin, ja jokainen ruutu on 8 tavua. x86-64:llä `call` työnsi paluuosoitteen, joten 16 tavun rajalle päästään parittomalla määrällä työntöjä. RISC-V:llä paluuosoite on rekisterissä `ra`, ja kehys varataan kerralla 16:lla jaollisena."}
+digraph {
+  rankdir=LR; nodesep=0.5; ranksep=0.4;
+  node [shape=plain, style=""];
+  x [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" colspan="2" align="left"><i>x86-64</i></td></tr>
+    <tr><td bgcolor="#FFFFFF">paluuosoite</td><td border="0" align="left">← rsp funktion alussa (16n + 8)</td></tr>
+    <tr><td bgcolor="#EEF1F6">rbx</td><td border="0" align="left">1. työntö: raja</td></tr>
+    <tr><td bgcolor="#EEF1F6">rbp</td><td border="0"></td></tr>
+    <tr><td bgcolor="#EEF1F6">r12</td><td border="0" align="left">3. työntö: raja</td></tr>
+    <tr><td bgcolor="#EEF1F6">r13</td><td border="0"></td></tr>
+    <tr><td bgcolor="#EEF1F6">r14</td><td border="0" align="left">5. työntö: raja</td></tr>
+    <tr><td bgcolor="#EEF1F6">r15</td><td border="0"></td></tr>
+    <tr><td bgcolor="#F3E2C7">rdx (muuttuneet)</td><td border="0" align="left">← rsp ennen call-käskyä: 7. työntö, raja</td></tr></table>>];
+  r [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4">
+    <tr><td border="0" colspan="2" align="left"><i>RISC-V</i></td></tr>
+    <tr><td bgcolor="#FFFFFF">kutsujan kehys</td><td border="0" align="left">← sp funktion alussa (16n)</td></tr>
+    <tr><td bgcolor="#EEF1F6">ra</td><td border="0" align="left">104(sp)</td></tr>
+    <tr><td bgcolor="#EEF1F6">s0 … s11</td><td border="0" align="left">96(sp) … 8(sp)</td></tr>
+    <tr><td bgcolor="#F3E2C7">a2 (muuttuneet)</td><td border="0" align="left">← sp = alku − 112 (16n)</td></tr></table>>];
+  x -> r [style=invis];
+}
+```
 
 Testattavina on kaksi funktiota, jotka käyttävät säilyvää rekisteriä.
 Toinen tallentaa sen, toinen ei:
@@ -176,6 +216,13 @@ tarkista `sp`:n tasausta lainkaan, joten siellä rikkomus näkyy
 tyypillisesti vasta väärin tasattuina atomisina operaatioina tai
 toisten kirjastojen virheinä.
 
+Vaihtuva-argumenttisen C-funktion, kuten `printf`in, kutsussa on
+x86-64:llä vielä yksi lupaus: rekisterin `al` on kerrottava, montako
+vektorirekisteriä argumentteihin käytettiin (yläraja riittää). Kun
+liukulukuargumentteja ei ole, ennen kutsua tarvitaan `xor %eax, %eax`.
+Unohdus toimii usein sattumalta, koska `rax`:ssä on pieni luku.
+RISC-V:llä vastaavaa rekisteriä ei ole.
+
 ## Käytännössä
 
 - **Kirjoita prototyyppi ensin ja dokumentoi rekisterit.** Jokaisen
@@ -199,6 +246,8 @@ toisten kirjastojen virheinä.
 - **Tarkista tasaus jokaisessa kutsussa.** Laske työnnöt ja
   pinovaraukset funktion alusta `call`-käskyyn. x86-64:llä parittoman
   määrän 8 tavun työntöjä jälkeen pino on rajalla.
+- **Nollaa `eax` ennen `printf`-kutsua** ja muita
+  vaihtuva-argumenttisia funktioita x86-64:llä.
 
 ## Itsearviointi
 

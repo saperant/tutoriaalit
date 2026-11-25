@@ -1,0 +1,9 @@
+liput_rikki, -O2:
+    mov %rdi,-0x8(%rsp)
+    pushf
+    pop %rax
+    mov -0x8(%rsp),%rax
+    ret
+-mno-red-zone:
+työntö vyöhykkeelle: 5 -> 5
+vyöhykkeen ohi:      5 -> 5

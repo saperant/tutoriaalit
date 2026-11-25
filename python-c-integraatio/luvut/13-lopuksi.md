@@ -63,7 +63,7 @@
   **PEP 600** (manylinux), **PEP 703** (vapaasäikeinen CPython) ja
   **PEP 384** (vakaa ABI): <https://peps.python.org>.
 
-## Mihin tästä eteenpäin
+## Jatkotaidot
 
 Taito *C++:n suorituskyky* jatkaa siitä, mihin tämä tutoriaali
 jättää: kun silmukka on siirretty C++:aan, sen nopeus riippuu
@@ -73,11 +73,3 @@ välimuisteista, vektorikäskyistä ja muistin asettelusta. Taito
 *Käännösjärjestelmät, testaus ja CI* käsittelee CMakea ja CI-putkia,
 joissa pyörät rakennetaan, ja taito *Objektitiedostot, linkitys ja
 ABI* sitä, mitä jaetun kirjaston latauksessa tapahtuu.
-
-## Lisenssi
-
-Tämä tutoriaali ja sen esimerkkikoodit on lisensoitu Creative Commons
-Nimeä–JaaSamoin 4.0 Kansainvälinen -lisenssillä (CC BY-SA 4.0,
-<https://creativecommons.org/licenses/by-sa/4.0/deed.fi>). Teosta saa
-kopioida, levittää ja muokata, kunhan alkuperäinen lähde mainitaan ja
-muokatut versiot jaetaan samalla lisenssillä.

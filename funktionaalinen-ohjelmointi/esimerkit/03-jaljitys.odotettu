@@ -1,0 +1,15 @@
+tavallinen rekursio:
+(summa '(1 2 3))
+(+ 1 (summa '(2 3)))
+(+ 1 (+ 2 (summa '(3))))
+(+ 1 (+ 2 (+ 3 (summa '()))))
+(+ 1 (+ 2 (+ 3 0)))
+(+ 1 (+ 2 3))
+(+ 1 5)
+6
+häntärekursio:
+(kierros '(1 2 3) 0)
+(kierros '(2 3) 1)
+(kierros '(3) 3)
+(kierros '() 6)
+6

@@ -53,6 +53,8 @@ Käskyt jäsennystä kohden tuhannella rivillä:
 ```{.tuloste tiedosto="esimerkit/tulokset/05-jasennys.txt"}
 ```
 
+![Käskyt jäsennystä kohden. Asteikko on logaritminen: epäonnistuva poikkeuspolku on kaksi kertaluokkaa muita kalliimpi.](kuvat/poikkeukset.png){width=68%}
+
 Onnistuvalla polulla tavat ovat yhtä nopeita: poikkeusversio on jopa
 hieman nopeampi, koska paluuarvo on pelkkä `int` eikä kutsujan tarvitse
 tarkistaa mitään. Epäonnistuvalla polulla jokainen heitto maksaa noin

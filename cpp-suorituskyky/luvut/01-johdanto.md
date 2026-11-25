@@ -18,6 +18,20 @@ opetetaan taidossa *Suorituskyvyn analyysi ja optimointi*, ja tässä
 niihin viitataan. Kielen perusteet, kuten siirtosemantiikka, RAII,
 mallit ja rangesit, ovat taidossa *Moderni C++*.
 
+## Esitiedot ja rajaus
+
+Esitiedot ovat taidot *Moderni C++* (siirtosemantiikka, RAII, mallit,
+älykkäät osoittimet, standardikirjaston säiliöt) ja *Suorituskyvyn
+analyysi ja optimointi* (mittaamisen tilastot, profilointi, välimuistit
+ja kääntäjän optimointitasot).
+
+Tutoriaali ei käsittele rinnakkaisuuden hintoja (lukot, atomiset
+operaatiot, väärä jakaminen); ne ovat taidossa *Rinnakkaisohjelmointi*.
+Vektorointi ja SIMD ovat taidossa *Suorituskyvyn analyysi ja
+optimointi* ja käsin kirjoitettu konekieli taidossa *C ja assembly
+yhteen*. Algoritmin valinta ratkaisee usein enemmän kuin mikään tässä
+mitattu hinta; se on taitojen *Algoritmit* ja *Tietorakenteet* asia.
+
 ## Huomaamaton kopio
 
 Seuraava funktio laskee nimien yhteispituuden. Se näyttää harmittomalta:
@@ -66,11 +80,10 @@ tutoriaali käyttää kolmea mittaria, joista kaksi on deterministisiä:
 | Käskyt ja hudit | Valgrind Cachegrind | tehdyn työn määrä | samalla käännöksellä |
 | Aika | `steady_clock` | kokonaisvaikutus | ei |
 
-Muistinvarausten määrä riippuu vain koodista ja standardikirjaston
-toteutuksesta: GCC ja Clang käyttävät tässä samaa libstdc++:aa, joten
-luvut ovat samat. Cachegrind laskee suoritetut käskyt ja simuloi
-välimuistin, joten sen tulokset eivät riipu koneen kuormasta. Aika on
-lopullinen totuus, mutta vain samalla koneella toistettuna.
+Kaksi ensimmäistä eivät riipu koneen kuormasta, joten esimerkkien
+testit voivat tarkistaa niistä tekstin väitteet. Aika on lopullinen
+totuus, mutta vain samalla koneella toistettuna. Luku 2 rakentaa
+mittarit ja kertoo niiden rajat.
 
 ## Esimerkit
 
@@ -104,7 +117,8 @@ make -C esimerkit tulokset    # kirjan tulosteet omalla koneella
 Johdannon jälkeen luvut etenevät näin:
 
 2. **Mittaaminen C++:ssa**: kääntäjän poistama mittaus, sen estäminen,
-   varauslaskuri ja Cachegrind.
+   varauslaskuri ja Cachegrind, mikrovertailun sudenkuopat, toistojen
+   kalibrointi, Google Benchmark ja laitteistolaskurit (`perf`).
 3. **Virtuaalikutsut**: virtuaalitaulu, devirtualisointi, `final`,
    `std::variant` ja CRTP.
 4. **Funktiot arvoina ja tyyppien pyyhintä**: malliparametri,
@@ -112,19 +126,18 @@ Johdannon jälkeen luvut etenevät näin:
 5. **Poikkeukset ja `noexcept`**: nollakustannusmalli, heittämisen
    hinta, `std::expected` ja siirto vektorin kasvaessa.
 6. **Muistinvaraukset**: `reserve`, lyhyen merkkijonon optimointi,
-   `std::pmr` ja oma allokaattori.
+   `std::pmr`, oma allokaattori ja älykkäiden osoittimien hinta.
 7. **Siirrot ja kopioiden poisto**: paluuarvot, `emplace`, näkymät ja
    elinaikojen sudenkuopat.
 8. **Datan asettelu**: täyte ja tasaus, `std::vector<bool>`, AoS ja
    SoA sekä solmupohjaiset ja litteät säiliöt.
 9. **Käännös**: `inline` ja ODR, LTO ja PGO, käännösaikainen laskenta
    ja otsakkeiden hinta.
-10. **Mikrovertailut ja perf**: mittauksen sudenkuopat, toistojen
-    kalibrointi, Google Benchmark ja laitteistolaskurit.
+10. **Muotoilu ja virrat**: kokonaisluku merkkijonoksi kuudella
+    tavalla, `std::endl` ja virtojen oletusten hinta.
 11. **Tapaustutkimus**: sanojen esiintymien laskenta neljässä vaiheessa.
 12. **Lopuksi**: hintojen yhteenveto, nyrkkisäännöt, jatkotaidot ja
     lähteet.
 
-Esitiedot ovat *Moderni C++* ja *Suorituskyvyn analyysi ja
-optimointi*. Rinnakkaisuuden hinnat (lukot, atomiset operaatiot,
-väärä jakaminen) käsitellään taidossa *Rinnakkaisohjelmointi*.
+Mittaustulokset näytetään sekä tulosteina että kuvaajina. Kuvaajat
+piirretään samoista tulostiedostoista (`make kuvat`).

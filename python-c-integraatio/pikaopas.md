@@ -102,7 +102,7 @@ moniperintää; vuodot raportoidaan tulkin sulkeutuessa.
 
 # GIL
 
-```{.cpp tiedosto="esimerkit/09-gil/rinnakkain.cpp" osa="takaisinkutsu"}
+```{.cpp tiedosto="esimerkit/10-gil/rinnakkain.cpp" osa="takaisinkutsu"}
 ```
 
 - `py::gil_scoped_release`: pitkä lasku, I/O, odotus. **Ei

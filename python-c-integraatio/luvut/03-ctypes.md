@@ -171,7 +171,7 @@ vakiokirjastoon, joten tämä tutoriaali ei käytä sitä esimerkeissä.
 - **Pidä takaisinkutsun kääre elossa** niin kauan kuin C voi kutsua
   sitä. Tallenna se olion attribuuttiin, jos kirjasto säilyttää
   osoitinta.
-- **`ctypes` vapauttaa tulkkilukon** jokaisen kutsun ajaksi (luku 9),
+- **`ctypes` vapauttaa tulkkilukon** jokaisen kutsun ajaksi (luku 10),
   joten pitkä C-kutsu ei estä muita Python-säikeitä. Kutsun oma
   hinta on silti mikrosekunnin luokkaa, joten tuhansia pieniä kutsuja
   silmukassa ei kannata tehdä.

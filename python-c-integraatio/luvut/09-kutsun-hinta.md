@@ -6,13 +6,15 @@ C++-arvoiksi, kutsuu funktion, muuntaa paluuarvon uudeksi
 Python-olioksi ja käsittelee mahdolliset poikkeukset. Tämä vie
 kymmenistä satoihin nanosekunteihin, mikä on enemmän kuin moni
 yksinkertainen lasku itse. Laajennuksen nopeus riippuu siksi ennen
-kaikkea siitä, kuinka paljon työtä yksi kutsu tekee.
+kaikkea siitä, kuinka paljon työtä yksi kutsu tekee. Edelliset luvut
+viittasivat tähän hintaan monta kertaa; nyt, kun käytössä ovat sekä
+listamuunnokset (luku 6) että NumPy-taulukot (luku 8), se mitataan.
 
 ## Kolme rajapintaa samalle laskulle
 
 Sama lasku, alkioiden neliöt, on kirjoitettu kolmella tavalla:
 
-```{.cpp tiedosto="esimerkit/11-hinta/hinta.cpp" osa="rajapinnat"}
+```{.cpp tiedosto="esimerkit/09-hinta/hinta.cpp" osa="rajapinnat"}
 ```
 
 - **Alkio kerrallaan:** yksi kutsu jokaista lukua kohden.
@@ -25,16 +27,16 @@ Sama lasku, alkioiden neliöt, on kirjoitettu kolmella tavalla:
 Mittaus ajaa jokaisen 200 000 alkiolle ja vertaa puhtaaseen
 Python-listakoosteeseen:
 
-```{.python tiedosto="esimerkit/11-hinta/main.py" osa="mittaus"}
+```{.python tiedosto="esimerkit/09-hinta/main.py" osa="mittaus"}
 ```
 
 Tuloste sisältää vain väitteet, jotka pätevät väljin marginaalein
 kaikilla koneilla:
 
-```{.python tiedosto="esimerkit/11-hinta/main.py" osa="tulos"}
+```{.python tiedosto="esimerkit/09-hinta/main.py" osa="tulos"}
 ```
 
-```{.tuloste tiedosto="esimerkit/11-hinta/main.odotettu"}
+```{.tuloste tiedosto="esimerkit/09-hinta/main.odotettu"}
 ```
 
 Esimerkin koneella suhdeluvut olivat suunnilleen seuraavat:
@@ -73,7 +75,7 @@ dataa, mieluiten taulukkona, ja tehtävä koko työ yhdellä kutsulla.
 Kun erä on suuri, kutsun kiinteä hinta katoaa, ja sidontakirjaston
 valinnalla (luku 7) ei ole merkitystä. Kun kutsuja on paljon pakosta,
 esimerkiksi tapahtumapohjaisessa rajapinnassa, nanobind tai
-`METH_FASTCALL`-tyyppinen kevyt sidonta auttaa.
+`METH_FASTCALL`-tyyppinen kevyt sidonta (luku 11) auttaa.
 
 ## Mittaaminen
 

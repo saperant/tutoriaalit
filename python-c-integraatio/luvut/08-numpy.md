@@ -17,6 +17,18 @@ siirrytään 4 tavua, sarakkeesta seuraavaan 1 tavu. Viipale
 jonka muoto on (3, 2) ja askeleet (4, 2). Transpoosi vaihtaa vain
 askelten järjestyksen.
 
+```{.dot otsikko="Kolme kuvausta samaan 12 tavuun. Jokaisessa solussa on sen alkion indeksi, joka kyseisessä tavussa sijaitsee; tyhjä solu ei kuulu kuvaukseen. Alkion (i, j) siirtymä on aina i · askel~0~ + j · askel~1~."}
+digraph {
+  rankdir=TB; nodesep=0.2; ranksep=0.2;
+  node [shape=plain, style=""];
+  m [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4"><tr><td border="0" align="left" colspan="12"><i>muisti: 12 tavua, siirtymät 0–11</i></td></tr><tr><td width="34" height="22" fixedsize="true" bgcolor="#EEF1F6">0</td><td width="34" height="22" fixedsize="true" bgcolor="#EEF1F6">1</td><td width="34" height="22" fixedsize="true" bgcolor="#EEF1F6">2</td><td width="34" height="22" fixedsize="true" bgcolor="#EEF1F6">3</td><td width="34" height="22" fixedsize="true" bgcolor="#EEF1F6">4</td><td width="34" height="22" fixedsize="true" bgcolor="#EEF1F6">5</td><td width="34" height="22" fixedsize="true" bgcolor="#EEF1F6">6</td><td width="34" height="22" fixedsize="true" bgcolor="#EEF1F6">7</td><td width="34" height="22" fixedsize="true" bgcolor="#EEF1F6">8</td><td width="34" height="22" fixedsize="true" bgcolor="#EEF1F6">9</td><td width="34" height="22" fixedsize="true" bgcolor="#EEF1F6">10</td><td width="34" height="22" fixedsize="true" bgcolor="#EEF1F6">11</td></tr></table>>];
+  a [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4"><tr><td border="0" align="left" colspan="12"><i>k: muoto (3, 4), askeleet (4, 1); solussa indeksi (rivi, sarake)</i></td></tr><tr><td width="34" height="22" fixedsize="true" bgcolor="#F3E2C7">0,0</td><td width="34" height="22" fixedsize="true" bgcolor="#F3E2C7">0,1</td><td width="34" height="22" fixedsize="true" bgcolor="#F3E2C7">0,2</td><td width="34" height="22" fixedsize="true" bgcolor="#F3E2C7">0,3</td><td width="34" height="22" fixedsize="true" bgcolor="#FFFFFF">1,0</td><td width="34" height="22" fixedsize="true" bgcolor="#FFFFFF">1,1</td><td width="34" height="22" fixedsize="true" bgcolor="#FFFFFF">1,2</td><td width="34" height="22" fixedsize="true" bgcolor="#FFFFFF">1,3</td><td width="34" height="22" fixedsize="true" bgcolor="#F3E2C7">2,0</td><td width="34" height="22" fixedsize="true" bgcolor="#F3E2C7">2,1</td><td width="34" height="22" fixedsize="true" bgcolor="#F3E2C7">2,2</td><td width="34" height="22" fixedsize="true" bgcolor="#F3E2C7">2,3</td></tr></table>>];
+  v [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4"><tr><td border="0" align="left" colspan="12"><i>k[:, ::2]: muoto (3, 2), askeleet (4, 2)</i></td></tr><tr><td width="34" height="22" fixedsize="true" bgcolor="#F3E2C7">0,0</td><td width="34" height="22" fixedsize="true" bgcolor="#FFFFFF"> </td><td width="34" height="22" fixedsize="true" bgcolor="#F3E2C7">0,1</td><td width="34" height="22" fixedsize="true" bgcolor="#FFFFFF"> </td><td width="34" height="22" fixedsize="true" bgcolor="#F3E2C7">1,0</td><td width="34" height="22" fixedsize="true" bgcolor="#FFFFFF"> </td><td width="34" height="22" fixedsize="true" bgcolor="#F3E2C7">1,1</td><td width="34" height="22" fixedsize="true" bgcolor="#FFFFFF"> </td><td width="34" height="22" fixedsize="true" bgcolor="#F3E2C7">2,0</td><td width="34" height="22" fixedsize="true" bgcolor="#FFFFFF"> </td><td width="34" height="22" fixedsize="true" bgcolor="#F3E2C7">2,1</td><td width="34" height="22" fixedsize="true" bgcolor="#FFFFFF"> </td></tr></table>>];
+  t [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4"><tr><td border="0" align="left" colspan="12"><i>k.T: muoto (4, 3), askeleet (1, 4)</i></td></tr><tr><td width="34" height="22" fixedsize="true" bgcolor="#F3E2C7">0,0</td><td width="34" height="22" fixedsize="true" bgcolor="#FFFFFF">1,0</td><td width="34" height="22" fixedsize="true" bgcolor="#F3E2C7">2,0</td><td width="34" height="22" fixedsize="true" bgcolor="#FFFFFF">3,0</td><td width="34" height="22" fixedsize="true" bgcolor="#F3E2C7">0,1</td><td width="34" height="22" fixedsize="true" bgcolor="#FFFFFF">1,1</td><td width="34" height="22" fixedsize="true" bgcolor="#F3E2C7">2,1</td><td width="34" height="22" fixedsize="true" bgcolor="#FFFFFF">3,1</td><td width="34" height="22" fixedsize="true" bgcolor="#F3E2C7">0,2</td><td width="34" height="22" fixedsize="true" bgcolor="#FFFFFF">1,2</td><td width="34" height="22" fixedsize="true" bgcolor="#F3E2C7">2,2</td><td width="34" height="22" fixedsize="true" bgcolor="#FFFFFF">3,2</td></tr></table>>];
+  m -> a -> v -> t [style=invis];
+}
+```
+
 Taulukko on *C-yhtenäinen* (*C-contiguous*), jos sen alkiot ovat
 muistissa peräkkäin rivi kerrallaan, ja *Fortran-yhtenäinen*, jos
 sarake kerrallaan. Viipaleet ja transpoosit eivät yleensä ole
@@ -97,6 +109,20 @@ taulukko osoittaa sen muistiin. Sidonta välittää perusolioksi
 Python-olion itse (`itse`), joka sisältää `Kehys`-olion:
 
 ```{.python tiedosto="esimerkit/08-numpy/main.py" osa="puskuri"}
+```
+
+```{.dot otsikko="Kuka pitää muistin elossa. Taulukko ei omista dataansa, mutta sen perusolio on `Kehys`-olion sisältävä Python-olio, joten muisti säilyy, kunnes viimeinen taulukko on poistettu."}
+digraph {
+  rankdir=LR; nodesep=0.4; ranksep=0.6;
+  nimi [shape=plain, style="", label=<<i>taulukko (Python-nimi)</i>>];
+  arr [label="numpy.ndarray\nowndata = False"];
+  olio [label="Python-olio,\njossa Kehys"];
+  muisti [label="Kehyksen puskuri\n(C++:n muisti)", fillcolor="#F3E2C7"];
+  nimi -> arr;
+  arr -> olio [label="base: viite"];
+  arr -> muisti [label="data: osoitin", style=dashed];
+  olio -> muisti [label="omistaa"];
+}
 ```
 
 Python kirjoitti C++:n muistiin, ja C++ näki muutoksen. `owndata` on

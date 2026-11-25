@@ -16,6 +16,23 @@ tasataan omaan tasaukseensa. Väärä järjestys jättää aukkoja:
 ```{.cpp tiedosto="esimerkit/08-asettelu.cpp" osa="tayte"}
 ```
 
+```{.dot otsikko="Rakenteiden `Huono` ja `Hyva` tavut. Jokainen ruutu on yksi tavu, ja harmaat ruudut ovat täytettä: 17 tavua vastaan yksi."}
+digraph {
+  rankdir=TB; nodesep=0.2; ranksep=0.25;
+  node [shape=plain, style=""];
+  huono [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="3">
+    <tr><td border="0" align="left" colspan="16"><i>Huono: 32 tavua</i></td></tr>
+    <tr><td bgcolor="#F3E2C7">a</td><td bgcolor="#E3E6EA" colspan="7">täyte 7</td><td bgcolor="#EEF1F6" colspan="8">saldo (8)</td></tr>
+    <tr><td bgcolor="#F3E2C7">s</td><td bgcolor="#E3E6EA" colspan="3">täyte 3</td><td bgcolor="#EEF1F6" colspan="4">tunnus (4)</td><td bgcolor="#F3E2C7">l</td><td bgcolor="#E3E6EA" colspan="7">täyte 7</td></tr>
+    <tr><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td></tr></table>>];
+  hyva [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="3">
+    <tr><td border="0" align="left" colspan="16"><i>Hyva: 16 tavua</i></td></tr>
+    <tr><td bgcolor="#EEF1F6" colspan="8">saldo (8)</td><td bgcolor="#EEF1F6" colspan="4">tunnus (4)</td><td bgcolor="#F3E2C7">a</td><td bgcolor="#F3E2C7">s</td><td bgcolor="#F3E2C7">l</td><td bgcolor="#E3E6EA">t</td></tr>
+    <tr><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td><td border="0" width="16"></td></tr></table>>];
+  huono -> hyva [style=invis];
+}
+```
+
 Sääntö on järjestää jäsenet suurimmasta tasauksesta pienimpään.
 `static_assert` koon kanssa on halpa vakuutus, joka hälyttää, kun joku
 lisää jäsenen väärään kohtaan. Kääntäjän `-Wpadded` varoittaa jokaisesta
@@ -90,6 +107,8 @@ kirjoitustavan:
 ```{.tuloste tiedosto="esimerkit/tulokset/08-soa.txt"}
 ```
 
+![AoS ja SoA: käskyt, L1-hudit ja aika. SoA tekee enemmän käskyjä mutta vähemmän huteja, ja aika seuraa huteja.](kuvat/soa.png){width=92%}
+
 L1-hutia on AoS-asettelussa 88/64 ≈ 1,4 hiukkasta kohden, kuten
 rivin koosta voi laskea, ja SoA-asettelussa 16/64 = 0,25. Käskyjä SoA
 tekee tässä enemmän, koska GCC ei vektoroinut `zip`-silmukkaa, mutta
@@ -137,6 +156,8 @@ puun 20 000 solmua eivät. Miljoonalla avaimella ero näkyy ajassa:
 
 ```{.tuloste tiedosto="esimerkit/tulokset/08-sailiot.txt"}
 ```
+
+![Haku kolmesta säiliöstä: käskyt, hudit ja aika. Järjestetty vektori (litea) tekee eniten käskyjä mutta ei yhtään viimeisen tason hutia; puu (map) häviää hudeissa.](kuvat/sailiot.png){width=92%}
 
 Hajautustaulu on hakuun nopein, koska se tekee keskimäärin yhden
 hyppäyksen. libstdc++:n `std::unordered_map` on kuitenkin

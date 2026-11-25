@@ -14,13 +14,13 @@ kertolasku vie kolme. Jako vakiolla voidaan korvata kertolaskulla
 vakion "käänteisluvulla" ja siirrolla. Käsin kirjoittaja tuskin
 muistaa oikeaa vakiota; kääntäjä laskee sen jokaiselle jakajalle:
 
-```{.c tiedosto="esimerkit/10-kaantaja/main.c" osa="jako"}
+```{.c tiedosto="esimerkit/07-kaantaja/main.c" osa="jako"}
 ```
 
-```{.bash tiedosto="esimerkit/10-kaantaja/tarkistus.sh" osa="pura"}
+```{.bash tiedosto="esimerkit/07-kaantaja/tarkistus.sh" osa="pura"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-kaantaja/tarkistus.odotettu"}
+```{.tuloste tiedosto="esimerkit/07-kaantaja/tarkistus.odotettu"}
 ```
 
 x86-64-versiossa ei ole jakokäskyä lainkaan. `0xcccccccccccccccd` on
@@ -39,10 +39,10 @@ prosessorille.
 Toinen syy näkyy tulosteen loppuosassa. Sama yhteenlasku on kirjoitettu
 C:nä ja inline-assemblynä, ja molemmat saavat vakioargumentit:
 
-```{.c tiedosto="esimerkit/10-kaantaja/main.c" osa="musta"}
+```{.c tiedosto="esimerkit/07-kaantaja/main.c" osa="musta"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-kaantaja/odotettu"}
+```{.tuloste tiedosto="esimerkit/07-kaantaja/odotettu"}
 ```
 
 C-versiosta jäi jäljelle `mov $0x2a, %eax` (42): kääntäjä laski
@@ -93,6 +93,15 @@ Asiat, joita C ei voi ilmaista, ovat assemblyn varsinainen käyttöalue:
 | Keskeytysten ja poikkeusten sisääntulo | `.S`-tiedosto |
 | Vakioaikainen kryptografia, jossa kääntäjä ei saa lisätä haaroja | `.S`-tiedosto tai sisäiset funktiot |
 | Mitatusti kuuma silmukka, jota kääntäjä ei saa tehokkaaksi | ensin sisäiset funktiot, sitten `.S` |
+
+```{.dot otsikko="Portaat suorituskykyongelmassa. Seuraavalle portaalle siirrytään vain, jos mittaus osoittaa, ettei edellinen riitä."}
+digraph {
+  rankdir=LR; nodesep=0.25; ranksep=0.35;
+  c [label="C"]; lue [label="lue kääntäjän\nkoodi"]; vek [label="vektoroitava C\n(restrict, yksinkertainen\nsilmukka)"];
+  sis [label="sisäiset\nfunktiot"]; inl [label="inline-\nassembly", fillcolor="#F3E2C7"]; s [label=".S-tiedosto", fillcolor="#F3E2C7"];
+  c -> lue -> vek -> sis -> inl -> s [label="mittaa"];
+}
+```
 
 Viimeinen rivi on ainoa suorituskykyperuste, ja siihenkin edetään
 vaiheittain: ensin C ja kääntäjän tuottaman koodin lukeminen, sitten

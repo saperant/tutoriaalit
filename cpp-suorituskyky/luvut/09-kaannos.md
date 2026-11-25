@@ -51,6 +51,26 @@ varoittaa monista tällaisista (`-Wodr`), samoin AddressSanitizerin
 kääntäjän välikielen ja optimoi linkityksessä koko ohjelman kerralla.
 Toisen käännösyksikön funktio voidaan silloin sisällyttää:
 
+```{.dot otsikko="Mitä optimoija näkee. Ilman LTO:ta jokainen käännösyksikkö optimoidaan erikseen, ja toisen yksikön funktio on pelkkä kutsu. LTO:ssa optimointi tehdään linkityksessä, jolloin koko ohjelma on näkyvissä."}
+digraph {
+  rankdir=LR; nodesep=0.25; ranksep=0.45;
+  subgraph cluster_ei {
+    label="ilman LTO:ta"; color="#C9CED6"; style=rounded;
+    a1 [label="a.cpp", fillcolor="#FFFFFF"]; b1 [label="b.cpp", fillcolor="#FFFFFF"];
+    oa1 [label="optimointi\n→ a.o"]; ob1 [label="optimointi\n→ b.o"];
+    l1 [label="linkitys:\nkutsut jäävät"];
+    a1 -> oa1 -> l1; b1 -> ob1 -> l1;
+  }
+  subgraph cluster_lto {
+    label="-flto"; color="#C9CED6"; style=rounded;
+    a2 [label="a.cpp", fillcolor="#FFFFFF"]; b2 [label="b.cpp", fillcolor="#FFFFFF"];
+    oa2 [label="välikieli\n→ a.o"]; ob2 [label="välikieli\n→ b.o"];
+    l2 [label="linkitys:\nkoko ohjelman\noptimointi", fillcolor="#F3E2C7"];
+    a2 -> oa2 -> l2; b2 -> ob2 -> l2;
+  }
+}
+```
+
 ```{.makefile tiedosto="esimerkit/Makefile" osa="lto"}
 ```
 

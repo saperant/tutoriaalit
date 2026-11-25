@@ -20,6 +20,25 @@ määrittelee taulun rakenteen.
 ```{.cpp tiedosto="esimerkit/03-kuviot.cpp" osa="hierarkia"}
 ```
 
+```{.dot otsikko="Virtuaalikutsun polku: olion alussa on osoitin luokan virtuaalitauluun, ja taulussa on funktion osoite. Kutsu tekee kaksi latausta ja epäsuoran hypyn."}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.6;
+  node [shape=plain, style=""];
+  k [label=<<i>k (Kuvio*)</i>>];
+  olio [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left"><i>Ympyra-olio (16 tavua)</i></td></tr>
+    <tr><td port="v" bgcolor="#EEF1F6">vptr</td></tr>
+    <tr><td bgcolor="#FFFFFF">r_</td></tr></table>>];
+  taulu [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left"><i>Ympyran virtuaalitaulu</i></td></tr>
+    <tr><td bgcolor="#EEF1F6">purkaja</td></tr>
+    <tr><td bgcolor="#EEF1F6">purkaja (delete)</td></tr>
+    <tr><td port="f" bgcolor="#F3E2C7">pinta_ala</td></tr></table>>];
+  koodi [shape=box, style="rounded,filled", fillcolor="#FFFFFF", label="Ympyra::pinta_ala\n(konekoodi)"];
+  k -> olio:v:w; olio:v:e -> taulu:f:w [label="1. lataus"]; taulu:f:e -> koodi [label="2. lataus\nja hyppy"];
+}
+```
+
 Sekalainen joukko kuvioita säilytetään osoittimina, ja summa kutsuu
 virtuaalifunktiota:
 
@@ -35,6 +54,23 @@ Kolme hintaa kertyy:
    kutsu tallentaa ja palauttaa rekisterit kutsukonvention mukaan.
 3. **Osoittimien seuraaminen.** Jokainen olio on omassa
    varauksessaan, mahdollisesti eri puolilla kekoa.
+
+```{.dot otsikko="Sama joukko kahdella asettelulla (periaatekuva). Osoitinvektorin alkiot osoittavat erillisiin varauksiin; varianttivektorissa arvot ovat peräkkäin, ja jokaisessa alkiossa on tyyppitunniste."}
+digraph {
+  rankdir=TB; nodesep=0.3; ranksep=0.5;
+  node [shape=plain, style=""];
+  v1 [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left" colspan="4"><i>vector&lt;unique_ptr&lt;Kuvio&gt;&gt;</i></td></tr>
+    <tr><td port="a" bgcolor="#EEF1F6">ptr</td><td port="b" bgcolor="#EEF1F6">ptr</td><td port="c" bgcolor="#EEF1F6">ptr</td><td bgcolor="#EEF1F6">…</td></tr></table>>];
+  o1 [shape=box, style="rounded,filled", fillcolor="#FFFFFF", label="Ympyra"];
+  o2 [shape=box, style="rounded,filled", fillcolor="#FFFFFF", label="Suorakulmio"];
+  o3 [shape=box, style="rounded,filled", fillcolor="#FFFFFF", label="Ympyra"];
+  v1:a:s -> o2; v1:b:s -> o1; v1:c:s -> o3;
+  v2 [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5">
+    <tr><td border="0" align="left" colspan="4"><i>vector&lt;variant&lt;YmpyraArvo, SuorakulmioArvo&gt;&gt;</i></td></tr>
+    <tr><td bgcolor="#F3E2C7">tunniste 0 | r</td><td bgcolor="#F3E2C7">tunniste 1 | l, k</td><td bgcolor="#F3E2C7">tunniste 0 | r</td><td bgcolor="#F3E2C7">…</td></tr></table>>];
+}
+```
 
 ## Devirtualisointi ja `final`
 
@@ -114,6 +150,8 @@ Käskyt kuviota kohden ja ajat miljoonalle kuviolle:
 ```{.tuloste tiedosto="esimerkit/tulokset/03-kuviot.txt"}
 ```
 
+![Käskyt kuviota kohden ja aika miljoonalle kuviolle. Käskymäärät ovat lähellä toisiaan, ajat eivät.](kuvat/kuviot.png){width=92%}
+
 Käskymäärien erot ovat pieniä, mutta aikojen erot suuria. Sekalaisen
 joukon virtuaalikutsu ja `std::variant` häviävät pelkille ympyröille
 moninkertaisesti, koska tyyppi vaihtelee satunnaisesti ja haarojen tai
@@ -130,6 +168,22 @@ muutama kertolasku. Kuumassa silmukassa, jossa jokaiselle alkiolle
 tehdään pieni operaatio, ratkaisu on järjestää data tyypeittäin:
 erilliset vektorit ympyröille ja suorakulmioille poistavat sekä
 ajonaikaisen valinnan että väärät ennustukset (ks. luku 8).
+
+### `dynamic_cast` ja tyyppitiedot
+
+Virtuaalitaulussa on myös osoitin luokan ajonaikaiseen tyyppitietoon
+(RTTI), jota `dynamic_cast` ja `typeid` käyttävät. Muunnos alaluokkaan
+ei ole yksi lataus vaan kirjastofunktion kutsu, joka vertaa olion
+tyyppitietoa kohdetyyppiin ja kulkee tarvittaessa luokkahierarkiaa:
+
+```{.cpp tiedosto="esimerkit/03-kuviot.cpp" osa="rtti"}
+```
+
+Yllä olevan tulosteen rivi `dynamic_cast` on tämän funktion hinta:
+noin 160 käskyä kuviota kohden, kun virtuaalikutsu teki 14. Jos tyyppiä
+kysytään kuumassa silmukassa, kysymys kannattaa muuttaa
+virtuaalifunktioksi tai siirtyä `std::variant`iin, jossa tyyppi on
+tunniste eikä hierarkian haku.
 
 ## Käytännössä
 
@@ -150,6 +204,8 @@ ajonaikaisen valinnan että väärät ennustukset (ks. luku 8).
 
 ## Itsearviointi
 
+- Osaat selittää, miksi `dynamic_cast` maksaa moninkertaisesti
+  virtuaalikutsuun verrattuna, ja korvata sen kuumassa silmukassa.
 - Osaat selittää virtuaalikutsun kolme hintaa: epäsuora hyppy, estetty
   sisällyttäminen ja osoittimien seuraaminen.
 - Osaat lukea konekoodista spekulatiivisen devirtualisoinnin ja

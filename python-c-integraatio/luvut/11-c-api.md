@@ -7,6 +7,7 @@ yhteenlaskuun, on C-funktio. Tässä luvussa kirjoitetaan pieni
 laajennus suoraan C-API:lla. Tavoite ei ole, että laajennukset
 kirjoitettaisiin näin, vaan että ymmärretään, mitä sidontakirjastot
 tekevät, ja osataan lukea C-API:a käyttävää koodia ja sen virheitä.
+Luvun lopussa käydään läpi, miten kaatunut tulkki tutkitaan.
 
 ## Viitelaskenta
 
@@ -37,7 +38,7 @@ muualla.
 
 Funktio laskee minkä tahansa iteroitavan summan:
 
-```{.c tiedosto="esimerkit/10-c-api/raaka.c" osa="summa"}
+```{.c tiedosto="esimerkit/11-c-api/raaka.c" osa="summa"}
 ```
 
 Virheet käsitellään C-API:ssa kahdella tavalla yhtä aikaa: funktio
@@ -61,7 +62,7 @@ jolloin poikkeus etenee Pythoniin.
 
 Toinen funktio palauttaa listan ensimmäisen alkion:
 
-```{.c tiedosto="esimerkit/10-c-api/raaka.c" osa="ensimmainen"}
+```{.c tiedosto="esimerkit/11-c-api/raaka.c" osa="ensimmainen"}
 ```
 
 `PyList_GET_ITEM` lainaa viitteen, mutta funktion paluuarvon on oltava
@@ -75,17 +76,17 @@ Testi kutsuu funktiota satatuhatta kertaa ja vertaa viitemäärän
 ennen ja jälkeen. `sys.getrefcount` palauttaa olion viitemäärän
 (yhden enemmän, koska argumentti on itsekin viite):
 
-```{.python tiedosto="esimerkit/10-c-api/main.py" osa="viitteet"}
+```{.python tiedosto="esimerkit/11-c-api/main.py" osa="viitteet"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-c-api/main.odotettu"}
+```{.tuloste tiedosto="esimerkit/11-c-api/main.odotettu"}
 ```
 
 Viitemäärän vertailu on yksinkertainen ja tehokas tapa testata
 C-API-koodia. Vuoto kasvattaa määrää, ylimääräinen vapautus pienentää
 sitä, ja silmukka tekee pienestäkin virheestä näkyvän.
 
-Vapaasäikeisessä Pythonissa (luku 9) lainatut viitteet ovat
+Vapaasäikeisessä Pythonissa (luku 10) lainatut viitteet ovat
 vaarallisempia: toinen säie voi poistaa alkion listasta ja vapauttaa
 sen, kun lainattua osoitinta vielä käytetään. Python 3.13 lisäsi
 siksi funktioita, jotka palauttavat uuden viitteen, kuten
@@ -96,7 +97,7 @@ siksi funktioita, jotka palauttavat uuden viitteen, kuten
 Moduuli on taulukko funktioita ja kuvaus, jonka alustusfunktio
 `PyInit_<nimi>` antaa tulkille:
 
-```{.c tiedosto="esimerkit/10-c-api/raaka.c" osa="moduuli"}
+```{.c tiedosto="esimerkit/11-c-api/raaka.c" osa="moduuli"}
 ```
 
 `METH_O` kertoo, että funktio ottaa täsmälleen yhden argumentin.
@@ -145,6 +146,48 @@ Rajoitettu API ei sisällä esimerkin `PyList_GET_ITEM`- ja
 vaan niiden funktioversiot (`PyList_GetItem`, `PyList_Size`).
 Funktiokutsu on hieman hitaampi, ja se on vakaan ABI:n hinta.
 
+## Kun tulkki kaatuu
+
+Natiivikoodin virhe ei nosta poikkeusta vaan päättää koko prosessin,
+ja oletuksena ainoa tuloste on kuoren `Segmentation fault`. Kolme
+työkalua kertoo, mistä kaatuminen johtui.
+
+**`faulthandler`** on vakiokirjaston moduuli, joka asentaa
+signaalinkäsittelijän ja tulostaa kaatuessa Python-kutsupinon. Se
+otetaan käyttöön valitsimella `-X faulthandler`, ympäristömuuttujalla
+`PYTHONFAULTHANDLER=1` tai kutsulla `faulthandler.enable()`; pytest
+ottaa sen käyttöön itse. Esimerkissä natiivikoodi kirjoittaa
+osoitteeseen nolla:
+
+```{.python tiedosto="esimerkit/11-c-api/kaatuu.py" osa="kaatuu"}
+```
+
+```{.makefile tiedosto="esimerkit/Makefile" osa="kaatuminen"}
+```
+
+```{.tuloste tiedosto="esimerkit/11-c-api/kaatuu.odotettu"}
+```
+
+Pino kertoo, mikä Python-rivi kutsui natiivikoodia, mutta ei sitä,
+missä natiivikoodin kohdassa virhe on. Se on aina ensimmäinen askel,
+koska se ei vaadi mitään valmisteluja ja toimii myös tuotannossa.
+
+**`gdb`** näyttää natiivipuolen. Laajennus käännetään
+virheenjäljitystiedoin (`-g`), ja ohjelma ajetaan komennolla
+`gdb --args python3 main.py`. Kaatumisen jälkeen `bt` näyttää
+C-kutsupinon. CPythonin mukana tulee gdb-laajennus (Debianissa ja
+Ubuntussa paketti `python3-dbg`), joka lisää komennot `py-bt`
+(Python-pino samasta prosessista) ja `py-print` (Python-muuttujan
+arvo), joten kummankin kielen pinon näkee samassa istunnossa.
+
+**Sanitoijat ja Valgrind** löytävät virheen, joka ei kaada ohjelmaa
+heti: vapautetun muistin käytön, puskurin ylityksen ja väärän
+viitelaskennan seuraukset. AddressSanitizerin käyttö laajennuksessa on
+luvussa 6. Valgrind toimii ilman uudelleenkäännöstä, kun tulkin oma
+muistinvaraaja ohitetaan: `PYTHONMALLOC=malloc valgrind python3
+main.py`. Ilman muuttujaa tulkin pienten olioiden varaaja peittää
+virheet ja tuottaa vääriä hälytyksiä.
+
 ## Käytännössä
 
 - **Älä kirjoita laajennuksia raa'alla C-API:lla**, jos pybind11 tai
@@ -160,6 +203,9 @@ Funktiokutsu on hieman hitaampi, ja se on vakaan ABI:n hinta.
 - **Testaa viitemäärä silmukassa** `sys.getrefcount`illa, ja aja
   testit Pythonin debug-käännöksellä (`python3-dbg`), joka tarkistaa
   viitelaskureita jatkuvasti.
+- **`faulthandler` päälle testeissä ja palveluissa.** Kaatuneen
+  tulkin Python-pino on ensimmäinen johtolanka; `gdb` ja `py-bt`
+  kertovat loput.
 - **Sudenkuoppa:** lainattu viite olioon, jonka joku muu voi
   vapauttaa välissä. Mikä tahansa Python-kutsu voi ajaa Python-koodia
   (`__del__`, `__eq__`) ja muuttaa listaa, josta viite lainattiin.
@@ -167,6 +213,8 @@ Funktiokutsu on hieman hitaampi, ja se on vakaan ABI:n hinta.
 
 ## Itsearviointi
 
+- Osaat selvittää kaatuneesta tulkista Python-pinon `faulthandler`illa
+  ja tiedät, milloin tarvitaan `gdb`, sanitoija tai Valgrind.
 - Osaat erottaa uuden ja lainatun viitteen ja käsitellä kummankin
   oikein.
 - Osaat käsitellä C-API:n virheet: virhetila, erikoisarvo ja siivous

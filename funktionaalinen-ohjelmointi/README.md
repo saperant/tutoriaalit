@@ -15,7 +15,8 @@ pikaopas
 1. Johdanto – Lispin historia ja perintö, Racket, työkalut
 2. Lausekkeet ja listat – arviointisäännöt, tarkat luvut, parit,
    lainaus, yhtäsuuruus
-3. Rekursio – rakenteellinen rekursio, häntäkutsut, puurekursio
+3. Rekursio – rakenteellinen rekursio, häntäkutsut ja laskennan
+   jäljitys, puurekursio ja kutsupuu
 4. Korkeamman asteen funktiot ja sulkeumat – map/filter/fold,
    funktiotehtaat, oliot sulkeumina, `for`-koosteet
 5. Muuttumaton data ja hahmontunnistus – `struct`, `match`,
@@ -29,7 +30,7 @@ pikaopas
 9. Tila ja ohjelman rakenne – muistaminen, parametrit, funktionaalinen
    ydin ja imperatiivinen kuori
 10. Oma tulkki – ympäristöt, `eval` ja `apply`, sokerin purku
-11. Lopuksi – nyrkkisäännöt, lähteet
+11. Lopuksi – nyrkkisäännöt, jatkotaidot, lähteet
 
 ## Rakentaminen
 
@@ -43,6 +44,9 @@ jossa on Racket. Yksittäinen esimerkki ajetaan komennolla
 `racket esimerkit/03-puu.rkt` ja syötteelliset esimerkiksi
 `racket esimerkit/01-sanat.rkt < esimerkit/01-sanat.syote`.
 
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
+
 ## Lisenssi
 
-CC BY-SA 4.0. Ks. tutoriaalin viimeinen luku.
+CC BY-SA 4.0. Ks. repositorion juuren `LICENSE`.

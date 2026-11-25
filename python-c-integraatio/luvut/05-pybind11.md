@@ -4,7 +4,7 @@
 tavallisen moduulin: `import mittari` etsii hakupolulta tiedoston
 `mittari.cpython-312-x86_64-linux-gnu.so` ja kutsuu sen
 alustusfunktiota `PyInit_mittari`. Alustusfunktio luo moduuliolion,
-funktiot ja luokat Pythonin C-API:lla (luku 10).
+funktiot ja luokat Pythonin C-API:lla (luku 11).
 
 pybind11 on otsakekirjasto, joka kirjoittaa tämän koodin C++-mallien
 avulla. Sidonta on yksi rivi funktiota kohden: pybind11 päättelee
@@ -105,6 +105,11 @@ nanobind tuottaa tynkätiedostot itse (`nanobind.stubgen`). Tuotettu
 tiedosto kannattaa tarkistaa, koska C++-tyypin vastine ei aina ole
 paras Python-tyyppi: `std::vector<double>`-argumentti hyväksyy minkä
 tahansa jonon, mutta tuotettu tynkä voi sanoa `list[float]`.
+
+Sidontojen ohjetekstit (`def`in merkkijonoargumentti) ja
+tynkätiedosto ovat myös laajennusmoduulin rajapintadokumentaation
+lähde: Sphinxin `autodoc` tuo käännetyn moduulin ja lukee ne kuten
+Python-moduulin docstringit (taito *Tekninen dokumentaatio*).
 
 ## Kääntäminen
 

@@ -52,6 +52,20 @@ private:
 }
 // @loppu virtuaali
 
+// @alku rtti
+// Tyypin kysyminen ajon aikana: dynamic_cast vertaa olion tyyppitietoa
+// kohdetyyppiin kirjastofunktiossa (__dynamic_cast).
+[[gnu::noinline]] std::size_t ympyroita_cast(
+    std::span<const std::unique_ptr<Kuvio>> kuviot)
+{
+    std::size_t n = 0;
+    for (const auto& k : kuviot) {
+        n += dynamic_cast<const Ympyra*>(k.get()) != nullptr;
+    }
+    return n;
+}
+// @loppu rtti
+
 // @alku final
 // Ilman final-merkintää Ympyra-viittaus voi osoittaa aliluokkaan, joka
 // korvaa pinta_ala-funktion, joten kutsu on yhä virtuaalinen.
@@ -183,6 +197,8 @@ void valitse(std::string_view tapa, const Aineisto& a, Toimi toimi)
 {
     if (tapa == "virtuaali") {
         toimi([&] { mittari::pida(summa_virtuaali(a.osoittimet)); });
+    } else if (tapa == "dynamic_cast") {
+        toimi([&] { mittari::pida(ympyroita_cast(a.osoittimet)); });
     } else if (tapa == "variant") {
         toimi([&] { mittari::pida(summa_variant(a.arvot)); });
     } else if (tapa == "avoin") {
@@ -231,5 +247,7 @@ int main(int argc, char** argv)
                 a.varaukset_osoittimet, a.varaukset_arvot);
     std::printf("koot: Ympyra %zu, KuvioArvo %zu tavua\n", sizeof(Ympyra),
                 sizeof(KuvioArvo));
+    std::printf("ympyroita (dynamic_cast): %zu\n",
+                ympyroita_cast(a.osoittimet));
     // @loppu testi
 }

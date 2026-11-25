@@ -1,0 +1,3 @@
+varauksia: make_unique 1, shared_ptr(new) 2, make_shared 1
+koot: T* 8, unique_ptr 8, shared_ptr 16 tavua
+summa 9, viitteita ennen 1 ja jalkeen 1

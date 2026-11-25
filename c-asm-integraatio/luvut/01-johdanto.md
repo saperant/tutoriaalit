@@ -58,10 +58,19 @@ RISC-V:n vektorilaajennus (V) on käytössä yhdessä esimerkissä, ja
 QEMU emuloi sitä ympäristömuuttujalla
 `QEMU_CPU=rv64,v=true,vlen=128,vext_spec=v1.0`.
 
+AArch64 (64-bittinen Arm) on rajattu pois, kuten taidossa *Assembly*,
+vaikka käsin kirjoitettua SIMD-koodia tehdään sille paljon. Tämän
+tutoriaalin asiat siirtyvät sille sellaisinaan, kun nimet vaihtaa:
+kutsun yli säilyvät rekisterit ovat `x19`–`x28` (sekä kehysosoitin
+`x29` ja vektorirekisterien `v8`–`v15` alaosat), sisäiset funktiot
+ovat otsakkeessa `<arm_neon.h>` ja ominaisuudet kysytään ytimeltä
+kutsulla `getauxval(AT_HWCAP)`.
+
 ## Esimerkit ja työkalut
 
 Esimerkit ovat hakemistossa `esimerkit/`, kukin omassa
-alihakemistossaan. Hakemistossa voi olla C-lähteitä, x86-64-toteutus
+alihakemistossaan, jonka nimen numero on luvun numero (esimerkiksi
+`03-pinonpurku` kuuluu lukuun 3). Hakemistossa voi olla C-lähteitä, x86-64-toteutus
 `x86.S`, RISC-V-toteutus `rv.S`, odotettu tuloste sekä tarkistus
 (`tarkistus.sh`), joka tutkii tuotettua koodia `objdump`- tai
 `readelf`-työkalulla. Komento `make` hakemistossa `esimerkit/` kääntää
@@ -71,7 +80,7 @@ ja vertaa tulosteita odotettuihin:
 ```text
 $ cd esimerkit
 $ make
-OK: 10 esimerkkiä x86-64:llä ja RISC-V:llä
+OK: 12 esimerkkiä x86-64:llä ja RISC-V:llä
 ```
 
 Optimointi on valittu tarkoituksella. Monet tämän tutoriaalin
@@ -81,7 +90,9 @@ uudelleen. Tuotantokoodi käännetään optimoiden, joten esimerkitkin
 käännetään.
 
 Ohjelmat linkitetään staattisesti (`-static`), jotta QEMU ei tarvitse
-RISC-V-version jaettuja kirjastoja. Kehityskontissa
+RISC-V-version jaettuja kirjastoja. Luvun 3 esimerkki
+`03-paikkariippumaton` linkitetään myös ilman tätä valitsinta, koska
+kääntäjän oletus on paikkariippumaton ohjelma. Kehityskontissa
 (`.devcontainer/c-asm-integraatio`) kaikki työkalut ovat valmiina.
 Tärkeimmät komennot:
 
@@ -96,4 +107,7 @@ Tärkeimmät komennot:
 
 Kääntäjän tuottamaa koodia kannattaa tutkia myös Compiler Explorerissa
 (godbolt.org), joka näyttää lähderivin ja sen käskyt rinnakkain monella
-kääntäjällä ja arkkitehtuurilla.
+kääntäjällä ja arkkitehtuurilla. Paketin pikaopas
+(`c-asm-integraatio-pikaopas.pdf`) kokoaa inline-assemblyn rajoitteet,
+sotkettavat, tärkeimmät sisäiset funktiot, assembly-tiedoston kehyksen
+ja ajonaikaisen tunnistuksen kolmelle sivulle.

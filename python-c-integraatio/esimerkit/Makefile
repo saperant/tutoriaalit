@@ -32,7 +32,7 @@ CXXFLAGS := -O2 -std=c++20 -fPIC -fvisibility=hidden $(VAROITUKSET)
 # @loppu liput
 
 KIRJASTOT := $(B)/libtarkistus.so $(B)/libsuodatin.so
-PYBIND11  := mittari muunnos kuva rinnakkain hinta
+PYBIND11  := mittari muunnos takaisin kuva rinnakkain hinta
 NANOBIND  := tilasto_nb kuva_nb
 MODUULIT  := $(KIRJASTOT) $(PYBIND11:%=$(B)/%$(EXT)) \
              $(NANOBIND:%=$(B)/%$(EXT)) $(B)/raaka$(EXT)
@@ -40,9 +40,9 @@ MODUULIT  := $(KIRJASTOT) $(PYBIND11:%=$(B)/%$(EXT)) \
 vpath %.cpp $(wildcard [0-9]*)
 ESIMERKIT := $(sort $(patsubst %/main.py,%,$(wildcard */main.py)))
 
-.PHONY: kaikki tarkista $(ESIMERKIT) paketti siivoa
+.PHONY: kaikki tarkista $(ESIMERKIT) kaatuminen paketti siivoa
 
-kaikki: tarkista $(ESIMERKIT) paketti
+kaikki: tarkista $(ESIMERKIT) kaatuminen paketti
 
 $(B):
 	mkdir -p $@
@@ -67,7 +67,7 @@ $(B)/nanobind.o: | $(B)
 $(NANOBIND:%=$(B)/%$(EXT)): $(B)/%$(EXT): %.cpp $(B)/nanobind.o
 	$(CXX) $(CXXFLAGS) $(NBINC) $(PYINC) -shared $^ -o $@
 
-$(B)/raaka$(EXT): 10-c-api/raaka.c | $(B)
+$(B)/raaka$(EXT): 11-c-api/raaka.c | $(B)
 	$(CC) $(CFLAGS) $(PYINC) -shared $< -o $@
 # @loppu saannot
 
@@ -80,6 +80,18 @@ $(ESIMERKIT): $(MODUULIT)
 	cd $@ && mypy --strict --no-error-summary --cache-dir=/dev/null main.py
 	cd $@ && PYTHONPATH=../$(B) $(PYTHON) main.py 2>/dev/null \
 	    | diff -u main.odotettu -
+
+# @alku kaatuminen
+# Kaatuva ohjelma: prosessin on päätyttävä signaaliin, ja faulthandlerin
+# on näytettävä Python-pino. Polut ja säikeen tunniste karsitaan pois.
+kaatuminen: | $(B)
+	cd 11-c-api && mypy --strict --no-error-summary \
+	    --cache-dir=/dev/null kaatuu.py
+	cd 11-c-api && ! $(PYTHON) -X faulthandler kaatuu.py \
+	    2> ../$(B)/kaatuu.txt
+	grep -E '^Fatal Python error|^  File ' $(B)/kaatuu.txt \
+	    | sed -E 's|"[^"]*/|"|' | diff -u 11-c-api/kaatuu.odotettu -
+# @loppu kaatuminen
 
 # @alku paketti
 paketti:

@@ -76,6 +76,8 @@ taulu ei saa elää tekstiä pidempään.
 ```{.tuloste tiedosto="esimerkit/tulokset/11-sanat.txt"}
 ```
 
+![Neljä vaihetta kolmella mittarilla. Varaukset ja käskyt on laskettu deterministisesti; ajan pylväissä jana on hajonta (mediaanin absoluuttinen poikkeama).](kuvat/sanat.png){width=95%}
+
 Varausten määrä kertoo tarinan: vaihe 2 tekee niitä eniten, koska
 jokainen haku rakentaa avaimen, vaikka se on muuten nopeampi kuin
 vaihe 1. Vaihe 3 tekee suunnilleen yhtä monta varausta kuin vaihe 1, nyt vain

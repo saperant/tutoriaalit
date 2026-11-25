@@ -6,7 +6,8 @@ kopion, tai se *antaa viitteen* C++-olioon, joka on jo Python-olion
 sisällä. Kumpi tapahtuu, riippuu tyypistä, ja ero näkyy sekä
 nopeudessa että käytöksessä. Kääntäen, kun C++ palauttaa osoittimen
 tai viittauksen, on päätettävä, kuka omistaa olion ja kuinka kauan se
-elää.
+elää. Luvun lopussa suunta käännetään: C++ kutsuu Python-funktiota ja
+Python-luokka toteuttaa C++-rajapinnan.
 
 ## Kopio vai viite
 
@@ -18,9 +19,29 @@ Kaksi lähes samanlaista funktiota muuttavat argumenttinsa paikallaan:
 ```{.python tiedosto="esimerkit/06-muunnokset/main.py" osa="kopio"}
 ```
 
-Ensimmäiset kaksi riviä tulosteessa näyttävät eron:
+Tuloste näyttää eron:
 
-```{.tuloste tiedosto="esimerkit/06-muunnokset/main.odotettu"}
+```{.tuloste tiedosto="esimerkit/06-muunnokset/main.odotettu" rivit="1-2"}
+```
+
+```{.dot otsikko="Miksi lista ei muuttunut. Automaattinen muunnos rakentaa listasta väliaikaisen vektorin, ja funktio muuttaa sitä. Läpinäkymätön tyyppi on Python-olio, jonka sisällä C++-vektori on, joten funktio saa viittauksen samaan vektoriin."}
+digraph {
+  rankdir=LR; nodesep=0.35; ranksep=0.55;
+  subgraph cluster_a {
+    label="tuplaa(arvot): automaattinen muunnos"; color="#C9CED6"; style=rounded;
+    lista [label="Python-lista\n[1.0, 2.0, 3.0]", fillcolor="#FFFFFF"];
+    vali [label="väliaikainen\nstd::vector<double>", style="rounded,dashed,filled"];
+    f1 [label="tuplaa(vector&)"];
+    lista -> vali [label="kopio alkio\nkerrallaan"];
+    f1 -> vali [label="muuttaa"];
+  }
+  subgraph cluster_b {
+    label="kasvata(laskurit): läpinäkymätön tyyppi"; color="#C9CED6"; style=rounded;
+    olio [label="Python-olio Laskurit,\nsisällä std::vector<int64_t>", fillcolor="#F3E2C7"];
+    f2 [label="kasvata(vector&)"];
+    f2 -> olio [label="muuttaa\nsamaa vektoria"];
+  }
+}
 ```
 
 `tuplaa` muutti listaa, mutta Python-lista pysyi ennallaan. Otsake
@@ -33,7 +54,7 @@ Automaattinen muunnos on oikea valinta pienille arvoille ja
 argumenteille, joita funktio vain lukee. Sen hinta on lineaarinen
 datan koon suhteen, ja jokainen alkio muunnetaan erikseen
 Python-oliosta. Miljoonan alkion lista muunnetaan miljoonalla
-tyyppitarkistuksella joka kutsussa (luku 11).
+tyyppitarkistuksella joka kutsussa (luku 9).
 
 `Laskurit` on *läpinäkymätön* tyyppi. `PYBIND11_MAKE_OPAQUE` kieltää
 automaattisen muunnoksen, ja `py::bind_vector` luo Python-luokan, joka
@@ -98,7 +119,26 @@ vapautetaan vasta ketjun jälkeen.
 ```{.python tiedosto="esimerkit/06-muunnokset/main.py" osa="elinaika"}
 ```
 
-Tulosteen kolme viimeistä riviä näyttävät, että väliaikaiset vaiheet
+```{.tuloste tiedosto="esimerkit/06-muunnokset/main.odotettu" rivit="3-5"}
+```
+
+```{.dot otsikko="Viitteet Python-olioiden välillä esimerkissä. `keep_alive<1, 2>` lisää viitteen ketjusta kumpaankin vaiheeseen, ja `reference_internal` viitteen palautetusta vaiheesta ketjuun. C++:n omat osoittimet (katkoviiva) eivät pidä mitään elossa."}
+digraph {
+  rankdir=LR; nodesep=0.4; ranksep=0.7;
+  eka [shape=plain, style="", label=<<i>eka (Python-nimi)</i>>];
+  ketju [label="Ketju\n(Python-olio)"];
+  v1 [label="Vahvistus(2.0)"];
+  v2 [label="Vahvistus(10.0)"];
+  eka -> v1;
+  ketju -> v1 [label="keep_alive"];
+  ketju -> v2 [label="keep_alive"];
+  v1 -> ketju [label="reference_internal", constraint=false];
+  ketju -> v1 [style=dashed, label="C++: osoitin", fontcolor="#6B7280"];
+  ketju -> v2 [style=dashed];
+}
+```
+
+Tuloste näyttää, että väliaikaiset vaiheet
 pysyivät elossa (`elossa: 2`), vaiheen viittaus piti ketjun ja sen
 kautta vaiheet elossa vielä `del ketju`:n jälkeen, ja kaikki
 vapautettiin, kun viimeinen viite katosi. `elossa`-laskuri on
@@ -123,6 +163,79 @@ siirtää omistuksen Pythonille. pybind11 3:n `py::smart_holder`
 takaisin C++:lle `std::unique_ptr`-argumenttina. Raakaosoittimet ja
 viittaukset tarvitsevat aina politiikan ja usein `keep_alive`n.
 
+## Python-koodi C++:n kutsumana
+
+Tähän asti Python on kutsunut C++:aa. Usein suunta on myös toinen:
+C++-kirjasto ilmoittaa tapahtumasta takaisinkutsulla, tai sen rajapinta
+on abstrakti luokka, jonka toteutus halutaan kirjoittaa Pythonilla.
+Kummassakin tapauksessa C++ pitää hallussaan Python-oliota, joten
+tämän luvun kysymys, kuka pitää kenet elossa, kääntyy toisin päin.
+
+### Tallennettu takaisinkutsu
+
+Otsake `<pybind11/functional.h>` muuntaa Python-kutsuttavan
+`std::function`-olioksi. Kääre omistaa viitteen Python-funktioon,
+joten funktio elää niin kauan kuin `std::function`, tässä hälyttimen
+jäsenenä:
+
+```{.cpp tiedosto="esimerkit/06-muunnokset/takaisin.cpp" osa="funktio"}
+```
+
+```{.python tiedosto="esimerkit/06-muunnokset/main.py" osa="takaisinkutsu"}
+```
+
+```{.tuloste tiedosto="esimerkit/06-muunnokset/main.odotettu" rivit="6-7"}
+```
+
+Sidottu metodi `ylitykset.append` pitää listan elossa, ja hälytin
+pitää metodin. Toinen rivi näyttää virhepolun: takaisinkutsun nostama
+Python-poikkeus muuttuu C++-poikkeukseksi `py::error_already_set`,
+kulkee C++-koodin läpi ja palaa kutsujalle alkuperäisenä
+`ValueError`ina. C++-koodin on siksi oltava poikkeusturvallista
+(RAII), vaikka se itse ei heittäisi mitään. Viitteestä voi myös syntyä
+kehä: jos takaisinkutsu viittaa hälyttimeen itseensä, kumpikaan ei
+vapaudu, koska Pythonin roskienkeruu ei näe `std::function`in sisään.
+Kehä katkaistaan asettamalla käsittelijä tyhjäksi tai käyttämällä
+heikkoa viitettä (`weakref`).
+
+Jokainen takaisinkutsu on kielten rajan ylitys C++:sta Pythoniin ja
+maksaa saman kuin kutsu toiseen suuntaan (luku 9). Jos C++ kutsuu
+funktiota omasta säikeestään, sen on ensin otettava tulkkilukko
+(luku 10).
+
+### Virtuaalifunktion ylikirjoitus Pythonista
+
+Kun C++-rajapinta on abstrakti luokka, Python-luokka voi periä sen.
+C++:n virtuaalitaulu ei kuitenkaan tiedä Python-metodeista, joten
+väliin tarvitaan *trampoliiniluokka*, joka ylikirjoittaa jokaisen
+virtuaalifunktion ja ohjaa kutsun Python-oliolle:
+
+```{.cpp tiedosto="esimerkit/06-muunnokset/takaisin.cpp" osa="trampoliini"}
+```
+
+```{.cpp tiedosto="esimerkit/06-muunnokset/takaisin.cpp" osa="sidonta"}
+```
+
+```{.python tiedosto="esimerkit/06-muunnokset/main.py" osa="periva"}
+```
+
+```{.python tiedosto="esimerkit/06-muunnokset/main.py" osa="trampoliini"}
+```
+
+```{.tuloste tiedosto="esimerkit/06-muunnokset/main.odotettu" rivit="8-9"}
+```
+
+`summa_suodatettuna` on tavallinen C++-funktio, joka kutsuu
+virtuaalifunktiota. Kun argumentti on Python-luokan olio, kutsu
+päätyy trampoliinin kautta Python-metodiin. Makro
+`PYBIND11_OVERRIDE_PURE` etsii metodin Python-oliosta ja nostaa
+virheen, jos sitä ei ole; `PYBIND11_OVERRIDE` kutsuisi silloin
+C++-kantaluokan toteutusta. Jos Python-luokka määrittelee oman
+`__init__`-metodin, sen on kutsuttava `super().__init__()`, jotta
+C++-osa oliosta rakentuu. nanobindissa vastaavat välineet ovat
+`nb::callable`, otsake `<nanobind/stl/function.h>` ja makrot
+`NB_TRAMPOLINE` ja `NB_OVERRIDE_PURE`.
+
 ## Käytännössä
 
 - **Automaattinen muunnos kopioi.** `std::vector`, `std::map` ja
@@ -135,6 +248,9 @@ viittaukset tarvitsevat aina politiikan ja usein `keep_alive`n.
   muuhun: mieti, kuka omistaa, ja kirjoita politiikka näkyviin.
 - **Säilötty osoitin: `keep_alive`.** Jokainen metodi, joka tallentaa
   argumenttinsa osoittimen, tarvitsee sen.
+- **Tallennettu takaisinkutsu omistaa viitteen.** Varo kehää, jossa
+  takaisinkutsu viittaa olioon, joka säilyttää sen, ja muista, että
+  Python-poikkeus kulkee C++-koodin läpi.
 - **Testaa elinajat laskurilla** ja aja testit AddressSanitizerin
   kanssa. Elinaikavirhe ei näy tavallisessa testiajossa.
 - **Sudenkuoppa:** `PYBIND11_MAKE_OPAQUE` eri tavalla eri
@@ -148,5 +264,9 @@ viittaukset tarvitsevat aina politiikan ja usein `keep_alive`n.
 - Osaat valita paluuarvopolitiikan osoittimelle ja viittaukselle.
 - Osaat sitoa olioiden elinajat `keep_alive`lla ja
   `reference_internal`illa ja testata ne.
+- Osaat välittää Python-funktion C++:lle takaisinkutsuksi ja kertoa,
+  kuka pitää sen elossa ja mitä sen nostamalle poikkeukselle tapahtuu.
+- Osaat toteuttaa C++:n abstraktin rajapinnan Python-luokalla
+  trampoliinin avulla.
 - Osaat valita `shared_ptr`-, `unique_ptr`- ja raakaosoitinsidonnan
   välillä omistajuuden mukaan.

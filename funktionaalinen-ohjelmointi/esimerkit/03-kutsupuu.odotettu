@@ -1,0 +1,32 @@
+digraph {
+  rankdir=TB; nodesep=0.25; ranksep=0.35;
+  k0 [label="fib 5"];
+  k1 [label="fib 4"];
+  k2 [label="fib 3"];
+  k3 [label="fib 2"];
+  k4 [label="fib 1"];
+  k3 -> k4;
+  k5 [label="fib 0"];
+  k3 -> k5;
+  k2 -> k3;
+  k6 [label="fib 1", fillcolor="#E3E6EA", fontcolor="#6B7280"];
+  k2 -> k6;
+  k1 -> k2;
+  k7 [label="fib 2", fillcolor="#E3E6EA", fontcolor="#6B7280"];
+  k8 [label="fib 1", fillcolor="#E3E6EA", fontcolor="#6B7280"];
+  k7 -> k8;
+  k9 [label="fib 0", fillcolor="#E3E6EA", fontcolor="#6B7280"];
+  k7 -> k9;
+  k1 -> k7;
+  k0 -> k1;
+  k10 [label="fib 3", fillcolor="#E3E6EA", fontcolor="#6B7280"];
+  k11 [label="fib 2", fillcolor="#E3E6EA", fontcolor="#6B7280"];
+  k12 [label="fib 1", fillcolor="#E3E6EA", fontcolor="#6B7280"];
+  k11 -> k12;
+  k13 [label="fib 0", fillcolor="#E3E6EA", fontcolor="#6B7280"];
+  k11 -> k13;
+  k10 -> k11;
+  k14 [label="fib 1", fillcolor="#E3E6EA", fontcolor="#6B7280"];
+  k10 -> k14;
+  k0 -> k10;
+}

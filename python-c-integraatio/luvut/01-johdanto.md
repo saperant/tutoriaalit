@@ -15,11 +15,20 @@ muistia, väärä omistaja vapauttaa muistin kahdesti, ja huomaamaton
 kopio syö koko nopeushyödyn. Siksi jokaisen luvun keskiössä on
 kysymys siitä, kuka omistaa minkäkin datan ja kuinka kauan.
 
+## Esitiedot ja rajaus
+
 Esitietona ovat taidot *Python työkaluohjelmointiin* (NumPy,
 paketointi, pytest) ja *Moderni C++* (luokat, RAII, `std::vector`,
 `std::span`) sekä C-kielen perusteet: osoittimet, `malloc`/`free` ja
-`errno`. Jaetut kirjastot, symbolien näkyvyys ja ABI on käsitelty
-tarkemmin taidossa *Objektitiedostot, linkitys ja ABI*.
+`errno`.
+
+Tutoriaali käsittelee Pythonin laajentamista natiivikoodilla. Toinen
+suunta, Python-tulkin upottaminen C++-ohjelmaan
+(`py::scoped_interpreter`), on rajattu pois. Jaetut kirjastot,
+symbolien näkyvyys ja ABI on käsitelty tarkemmin taidossa
+*Objektitiedostot, linkitys ja ABI*, C++-koodin oma nopeus taidossa
+*C++:n suorituskyky* ja profiloinnin menetelmät taidossa
+*Suorituskyvyn analyysi ja optimointi*.
 
 ## Milloin kielten rajaa tarvitaan
 
@@ -106,9 +115,10 @@ Luvut 3–4 käyttävät C-kirjastoa `ctypes`illä ja suunnittelevat C++:lle
 C-rajapinnan, joka kestää kielten rajan. Luvut 5–7 kirjoittavat
 laajennusmoduuleja pybind11:llä ja nanobindilla: funktiot, luokat,
 poikkeukset, tyyppimuunnokset ja elinajat. Luku 8 käsittelee
-NumPy-taulukoita ilman kopioita ja luku 9 tulkkilukkoa ja säikeitä.
-Luku 10 kurkistaa Pythonin C-API:in ja viitelaskentaan, luku 11
-mittaa kutsun hinnan ja luku 12 paketoi laajennuksen jaettavaksi
+NumPy-taulukoita ilman kopioita, ja luku 9 mittaa kutsun hinnan ja
+perustelee paketin tärkeimmän suunnittelusäännön. Luku 10 käsittelee
+tulkkilukkoa ja säikeitä, luku 11 kurkistaa Pythonin C-API:in ja
+viitelaskentaan ja luku 12 paketoi laajennuksen jaettavaksi
 pyöräksi. Jokainen luku päättyy osioihin *Käytännössä* ja
 *Itsearviointi*. Jos osaat itsearvioinnin asiat, voit siirtyä
 seuraavaan lukuun.

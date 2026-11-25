@@ -19,7 +19,7 @@ x86-64:n käsky `cpuid` palauttaa ominaisuusbitit rekistereissä `eax`,
 joskus `ecx`:n arvolla (*alalehti*). Käskyn operandit ovat kiinteissä
 rekistereissä, joten se on tyypillinen inline-assemblyn käyttökohde:
 
-```{.c tiedosto="esimerkit/09-ominaisuudet/tunnistus.c" osa="cpuid"}
+```{.c tiedosto="esimerkit/06-ominaisuudet/tunnistus.c" osa="cpuid"}
 ```
 
 Pelkkä AVX2-bitti ei riitä. AVX-käskyjen 256-bittiset `ymm`-rekisterit
@@ -44,7 +44,7 @@ Funktion attribuutti `target("avx2")` sallii AVX2-käskyt vain siinä
 funktiossa. Muu ohjelma käännetään edelleen perustasolle, ja
 AVX2:n sisäisiä funktioita saa kutsua vain tällaisesta funktiosta:
 
-```{.c tiedosto="esimerkit/09-ominaisuudet/laske.c" osa="avx2"}
+```{.c tiedosto="esimerkit/06-ominaisuudet/laske.c" osa="avx2"}
 ```
 
 Funktiota ei saa kutsua ennen tunnistusta. Jos sitä kutsutaan
@@ -63,7 +63,30 @@ kutsua. Linuxin ELF-alustoilla on parempi keino, *ifunc*
 (*indirect function*): symboli, jonka osoitteen ratkaisee
 valitsijafunktio, kun ohjelma ladataan:
 
-```{.c tiedosto="esimerkit/09-ominaisuudet/laske.c" osa="ifunc"}
+```{.c tiedosto="esimerkit/06-ominaisuudet/laske.c" osa="ifunc"}
+```
+
+```{.dot otsikko="ifunc-symbolin elinkaari. Valinta tehdään kerran latauksessa; sen jälkeen jokainen kutsu menee linkitystaulun kautta suoraan valittuun toteutukseen."}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.5;
+  subgraph cluster_lataus {
+    label="ohjelman lataus (kerran)"; color="#C9CED6"; style=rounded;
+    lataaja [label="dynaaminen linkkeri\n(tai käynnistyskoodi)"];
+    valitsija [label="valitse_laske()\ncpuid, XCR0", fillcolor="#F3E2C7"];
+    taulu [label="linkitystaulun\npaikka: laske", fillcolor="#FFFFFF"];
+    lataaja -> valitsija [label="kutsuu"];
+    valitsija -> taulu [label="osoite"];
+  }
+  subgraph cluster_ajo {
+    label="ajon aikana (joka kutsu)"; color="#C9CED6"; style=rounded;
+    kutsu [label="laske(t, n, c)"];
+    avx2 [label="laske_avx2"];
+    perus [label="laske_perus", fillcolor="#FFFFFF", style="rounded,dashed"];
+  }
+  kutsu -> taulu [label="epäsuora hyppy"];
+  taulu -> avx2;
+  taulu -> perus [style=dashed];
+}
 ```
 
 Dynaaminen linkkeri kutsuu valitsijaa kerran ja kirjoittaa sen
@@ -89,16 +112,16 @@ saman toteutuksen, ja toinen polku jää testaamatta. Siksi esimerkin
 ohjelma ei kerro, kumpi toteutus valittiin, vaan vain sen, että
 tunnistustavat ovat samaa mieltä ja tulos on oikein:
 
-```{.tuloste tiedosto="esimerkit/09-ominaisuudet/odotettu"}
+```{.tuloste tiedosto="esimerkit/06-ominaisuudet/odotettu"}
 ```
 
 Molemmat polut testataan ajamalla sama ohjelma QEMU:n x86-64-emulaattorissa
 kahdella prosessorimallilla:
 
-```{.bash tiedosto="esimerkit/09-ominaisuudet/tarkistus.sh" osa="mallit"}
+```{.bash tiedosto="esimerkit/06-ominaisuudet/tarkistus.sh" osa="mallit"}
 ```
 
-```{.tuloste tiedosto="esimerkit/09-ominaisuudet/tarkistus.odotettu"}
+```{.tuloste tiedosto="esimerkit/06-ominaisuudet/tarkistus.odotettu"}
 ```
 
 Nehalem (2008) ei tue AVX:ää, Haswell (2013) tukee AVX2:ta. Mallin

@@ -35,6 +35,18 @@ Virta voi siksi olla ääretön:
 ```{.scheme tiedosto="esimerkit/08-virrat.rkt" osa="luvut"}
 ```
 
+```{.dot otsikko="Virta `luonnolliset` sen jälkeen, kun siitä on luettu kaksi alkiota (periaatekuva). Lasketut parit pysyvät muistissa, ja ketjun pää on lupaus, joka tietää, miten seuraava pari lasketaan."}
+digraph {
+  rankdir=LR; nodesep=0.35; ranksep=0.45;
+  node [shape=plain, style=""];
+  nimi [label=<<i>luonnolliset</i>>];
+  p0 [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="6"><tr><td bgcolor="#EEF1F6">0</td><td port="d" bgcolor="#EEF1F6">loppu</td></tr></table>>];
+  p1 [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="6"><tr><td bgcolor="#EEF1F6">1</td><td port="d" bgcolor="#EEF1F6">loppu</td></tr></table>>];
+  l [shape=box, style="rounded,dashed", label="lupaus:\n(luvut-alkaen 2)\nei vielä laskettu"];
+  nimi -> p0; p0:d:c -> p1; p1:d:c -> l;
+}
+```
+
 Virroille on samat työkalut kuin listoille (`stream-map`,
 `stream-filter`, `stream-ref`). Eratostheneen seula on virtana
 kirjaimellisesti määritelmänsä: alkuluvut ovat ensimmäinen luku ja

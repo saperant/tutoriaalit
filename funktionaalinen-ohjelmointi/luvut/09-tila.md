@@ -68,6 +68,26 @@ ohjelmoinnin tärkein arkkitehtuurimalli (*functional core, imperative
 shell*). Ydin on tilakone: se saa nykyisen tilan ja syötteen ja palauttaa
 uuden tilan ja tulosteen.
 
+```{.dot otsikko="Ydin ja kuori esimerkissä `09-kuori.rkt`. Kaikki I/O on kuoressa; ydin on funktio, jonka tulos riippuu vain argumenteista."}
+digraph {
+  rankdir=LR; nodesep=0.35; ranksep=0.5;
+  syote [label="syöte", fillcolor="#FFFFFF"];
+  tuloste [label="tuloste", fillcolor="#FFFFFF"];
+  subgraph cluster_kuori {
+    label="kuori (I/O)"; color="#C9CED6"; style=rounded;
+    lue [label="lue komento"];
+    tulosta [label="tulosta viesti"];
+    subgraph cluster_ydin {
+      label="ydin (puhdas)"; color="#C9CED6"; style="rounded,filled"; fillcolor="#F7F1E5";
+      ydin [label="kasittele:\n(tilit, komento) →\n(tilit′, viesti)", fillcolor="#F3E2C7"];
+    }
+  }
+  syote -> lue; lue -> ydin [label="komento"]; ydin -> tulosta [label="viesti"];
+  tulosta -> tuloste;
+  ydin -> ydin [label="tilit′ seuraavalle\nkierrokselle"];
+}
+```
+
 ```{.scheme tiedosto="esimerkit/09-kuori.rkt" osa="ydin"}
 ```
 
@@ -102,7 +122,7 @@ tapahtumalokista (*event sourcing*).
   on rajaton. Muuten muistaminen on muistivuoto.
 - **Parametreja vastaavat valtavirrassa säiekohtaiset muuttujat ja
   kontekstit.** Pythonin `contextvars`, Javan `ThreadLocal` ja
-  `ScopedValue` (Java 21), Go:n `context.Context` ja Reactin
+  `ScopedValue` (esikatselu Java 21:ssä, valmis 25:ssä), Go:n `context.Context` ja Reactin
   `Context` ratkaisevat saman ongelman. Go välittää kontekstin
   eksplisiittisenä argumenttina, jolloin riippuvuus näkyy.
 - **Muuttuvuus on hyväksyttävää, kun se on paikallista.** Funktio, joka
