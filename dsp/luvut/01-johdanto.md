@@ -58,6 +58,18 @@ $(N-1)/2$ verran, joten vertailussa ulostuloa siirretään saman verran.
 ```{.tuloste tiedosto="esimerkit/01-ensimmainen.odotettu"}
 ```
 
+![Signaali ennen suodinta ja sen jälkeen, vasemmalla 20 millisekunnin
+ote ja oikealla spektri. 2,5 kHz:n häiriö ja estokaistan kohina
+putoavat noin 60 dB; päästökaistan kohina jää.](kuvat/ensimmainen.png){width=95%}
+
+Tulos kannattaa myös kuunnella. Ohjelman viimeinen osa kirjoittaa
+signaalin äänitiedostoiksi `ennen.wav` ja `jalkeen.wav`: ensimmäisessä
+440 Hz:n sävelen päällä kuuluu kimeä vihellys ja kohina, jälkimmäisessä
+sävel ja vaimea suhina.
+
+```{.python tiedosto="esimerkit/01-ensimmainen.py" osa="aani"}
+```
+
 Suodin täyttää vaatimukset: aaltoilu on paljon alle 0,1 dB:n ja
 vaimennus hieman yli 60 dB. Signaali–kohinasuhde paranee 4,8 dB:stä
 16,4 dB:iin. Parannus ei ole suurempi, koska osa kohinasta on
@@ -65,7 +77,7 @@ päästökaistalla, eikä mikään lineaarinen suodin poista sitä
 vahingoittamatta signaalia. Vaatimus on siis kirjoitettava sen mukaan,
 mitä suotimella voi saavuttaa.
 
-## Kenelle ja mitä tarvitaan
+## Esitiedot ja rajaus
 
 Lukija tuntee Z-muunnoksen, navat ja nollat, taajuusvasteen, DFT:n,
 ikkunat ja vuotamisen sekä lohkokäsittelyn tilan (taito *Signaalit ja
@@ -73,6 +85,13 @@ järjestelmät*, jonka luvut ovat tämän suoria edeltäjiä). C-kielestä
 tarvitaan osoittimet, rakenteet ja taulukot (taito *C-kieli*). Kiinteän
 pilkun Q-formaatit, pyöristys ja saturaatio esitellään taidossa *Lukujen
 esitys ja kiinteän pilkun aritmetiikka*; tässä niitä käytetään.
+
+Spektrianalyysi (ikkunat, vuotaminen, Welchin menetelmä) on edeltävässä
+taidossa, eikä sitä toisteta. Modulaatiot ja vastaanottimet ovat
+taidoissa *Digitaalinen tiedonsiirto* ja *Ohjelmistoradio*, ja
+suotimien toteutus laitteistona taidossa *DSP-algoritmien
+laitteistototeutus*. Esimerkit ajetaan komennolla `make testaa` tai
+yksitellen, esimerkiksi `python3 esimerkit/01-ensimmainen.py`.
 
 | Luku | Kysymys |
 |-------------------------|--------------------------------------------------|
@@ -82,7 +101,7 @@ esitys ja kiinteän pilkun aritmetiikka*; tässä niitä käytetään.
 | FIR-suodin C:llä | Miten suodatus tehdään lohkoittain ilman muistinvarausta? |
 | IIR-suunnittelu | Miten analogisesta prototyypistä tehdään digitaalinen? |
 | IIR-toteutus | Miksi toisen asteen lohkot, ja mitä kvantisointi tekee? |
-| FFT | Miten FFT toimii, ja milloin konvoluutio kannattaa tehdä FFT:llä? |
+| FFT, nopea konvoluutio ja Goertzel | Miten FFT toimii, ja milloin konvoluutio kannattaa tehdä FFT:llä? |
 | Monitaajuuskäsittely | Miten näytetaajuutta vaihdetaan tehokkaasti? |
 | Adaptiiviset suotimet | Miten suodin oppii kertoimensa itse? |
 | Reaaliaikakäsittely | Mitä reaaliaika vaatii koodilta, ja miten se testataan? |

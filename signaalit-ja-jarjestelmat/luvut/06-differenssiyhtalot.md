@@ -124,6 +124,11 @@ näytettä kohti.
 ```{.tuloste tiedosto="esimerkit/06-resonaattori.odotettu"}
 ```
 
+![Vasemmalla eksponentiaalisen liukuvan keskiarvon askelvaste kolmella
+aikavakiolla; pisteviiva on 63 prosentin taso, joka saavutetaan ajassa
+$\tau$. Oikealla resonaattorin impulssivaste: säde $r$ ratkaisee,
+vaimeneeko, säilyykö vai kasvaako värähtely.](kuvat/ema.png){width=95%}
+
 Kun $r < 1$, värähtely vaimenee, ja mitä lähempänä ykköstä $r$ on, sitä
 pidempään se soi ja sitä kapeampi on resonanssi. Kun $r = 1$,
 värähtely jatkuu muuttumattomana: suodin on **oskillaattori**, ja

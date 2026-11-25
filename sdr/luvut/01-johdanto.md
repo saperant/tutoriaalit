@@ -31,10 +31,28 @@ Tyypillisen SDR-vastaanottimen laitteisto on suoramuunnosvastaanotin
    samalla taajuudella $f_s$, ja näytteet kulkevat USB:llä
    tietokoneelle.
 
+```{.dot otsikko="Suoramuunnosvastaanotin. Ylärivi on laitteisto, alarivi ohjelmisto, jota tämä tutoriaali käsittelee."}
+digraph sdr {
+  rankdir=TB; nodesep=0.3; ranksep=0.35;
+  node [shape=box, fontsize=10];
+  antenni [label="antenni", shape=plaintext];
+  lna [label="LNA ja\nkaistanpäästö"];
+  sekoitin [label="IQ-sekoitin\n(oskillaattori fc)"];
+  adc [label="alipäästö ja\nADC (fs), USB"];
+  luku [label="IQ-näytteet"];
+  kanava [label="kanavan\nvalinta"];
+  ilmaisin [label="ilmaisin"];
+  ulos [label="ääni\ntai bitit", shape=plaintext];
+  { rank=same; antenni -> lna -> sekoitin -> adc; }
+  adc -> luku;
+  { rank=same; ulos -> ilmaisin -> kanava -> luku [dir=back]; }
+}
+```
+
 Kompleksinen näyte $z[n] = I[n] + iQ[n]$ kuvaa kaistaa
 $f_c - f_s/2 \ldots f_c + f_s/2$. Negatiiviset taajuudet ovat
 keskitaajuuden alapuolella olevia signaaleja, eivät peilikuvia
-(*Digitaalinen tiedonsiirto*, luku 2). Laitteiston epäideaalisuudet
+(taito *Digitaalinen tiedonsiirto*). Laitteiston epäideaalisuudet
 näkyvät suoraan näytteissä: tasakomponentti, haarojen epätasapaino,
 kiteen taajuusvirhe ja 8 bitin kvantisointi. Ne käsitellään
 luvuissa 2 ja 3.
@@ -87,7 +105,7 @@ Vahvan aseman kaista on noin 210 kHz, mikä vastaa FM-yleisradion
 asema on 20 dB vahvaa heikompi, mutta erottuu silti selvästi: 8
 bitin näytteillä dynamiikka-alue riittää tähän (luku 2).
 
-## Tutoriaalin rakenne
+## Esitiedot ja rajaus
 
 | Luku | Aihe |
 |------|------|
@@ -109,8 +127,16 @@ tutoriaalissa niitä ei johdeta uudelleen, vaan niistä kootaan
 toimivia vastaanottimia ja niihin lisätään oikean radion
 käytännöt.
 
+Lähetin on mukana vain tallenteiden tuottajana: lähetinketjun omat
+kysymykset (spektrimaski, tehovahvistin, D/A-muunnos) rajataan pois.
+Radiotekniikka antenneineen ja etenemismalleineen on taidossa
+*Tietoliikennetekniikka*, ja vastaanottimen toteutus FPGA:lla taidossa
+*DSP-algoritmien laitteistototeutus*.
+
 Esimerkit tarvitsevat Python 3.12:n, NumPyn ja SciPyn. C++-esimerkit
 käännetään C++23:lla (GCC 14 tai Clang 20). Jokainen esimerkki
 ajetaan testeissä kiinteällä satunnaissiemenellä, ja tulostetta
 verrataan tallennettuun. Hakemistojen `fm/` ja `paketti/` ohjelmilla
-on lisäksi pytest-testit.
+on lisäksi pytest-testit. Yksittäinen esimerkki ajetaan komennolla
+`python3 esimerkit/01-spektri.py` ja hakemistoesimerkki komennolla
+`python3 esimerkit/fm/main.py`.

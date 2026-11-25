@@ -9,8 +9,10 @@ on dataa. Lohkoja on satoja valmiina, ja omat voi kirjoittaa
 Pythonilla tai C++:lla.
 
 GNU Radio ei ole tämän tutoriaalin testiympäristössä, koska se on
-suuri asennus ja tarvitsee graafisen ympäristön. Luvun GNU Radio
--tiedostot ja -kääreet on siksi merkitty **testaamattomiksi**. Lohkon
+suuri asennus. Graafista ympäristöä se ei vaatisi: vain GRC-editori ja
+näyttölohkot tarvitsevat sen, ja Python-lohkokaavio tiedostolähteellä
+ja -nielulla ajetaan ilman näyttöä. Luvun GNU Radio -tiedostot ja
+-kääreet on merkitty **testaamattomiksi**. Lohkon
 logiikka on kuitenkin tavallista Pythonia, joka testataan ilman
 GNU Radiota. Samaa erottelua kannattaa käyttää muutenkin.
 

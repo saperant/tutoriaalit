@@ -30,16 +30,16 @@ mikä on AWGN-kanavassa suurimman uskottavuuden päätös.
 Hamming(7,4)-koodissa on vain 16 koodisanaa, joten kumpikin dekooderi
 voi verrata vastaanotettua sanaa kaikkiin.
 
-```{.python tiedosto="esimerkit/10-hamming.py" osa="koodi"}
+```{.python tiedosto="esimerkit/09-hamming.py" osa="koodi"}
 ```
 
-```{.python tiedosto="esimerkit/10-hamming.py" osa="dekooderit"}
+```{.python tiedosto="esimerkit/09-hamming.py" osa="dekooderit"}
 ```
 
-```{.python tiedosto="esimerkit/10-hamming.py" osa="vertailu"}
+```{.python tiedosto="esimerkit/09-hamming.py" osa="vertailu"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-hamming.odotettu"}
+```{.tuloste tiedosto="esimerkit/09-hamming.odotettu"}
 ```
 
 Kovalla päätöksellä Hamming-koodi on 3 dB:llä ja 5 dB:llä *huonompi*
@@ -64,17 +64,17 @@ Merkki on kova päätös ja itseisarvo luotettavuus. Käytännössä summat
 korvataan usein suurimmalla termillä (*max-log*), mikä vaatii vain
 etäisyydet lähimpiin pisteisiin.
 
-```{.python tiedosto="esimerkit/10-llr.py" osa="llr"}
+```{.python tiedosto="esimerkit/09-llr.py" osa="llr"}
 ```
 
 LLR:n hyvyys näkyy **kalibroinnista**: jos $L$ on oikein laskettu, bitin
 virhetodennäköisyys on $1/(1 + e^{|L|})$. Kun bitit ryhmitellään
 $|L|$:n mukaan, kunkin ryhmän virheosuuden pitää vastata kaavaa.
 
-```{.python tiedosto="esimerkit/10-llr.py" osa="kalibrointi"}
+```{.python tiedosto="esimerkit/09-llr.py" osa="kalibrointi"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-llr.odotettu"}
+```{.tuloste tiedosto="esimerkit/09-llr.odotettu"}
 ```
 
 Lähellä nollaa olevat LLR:t ovat lähes arvauksia (38 % virheitä), ja
@@ -98,7 +98,10 @@ Koodin rakenne kuvataan **trelliksenä**: taulukkona, joka kertoo
 jokaiselle tilalle ja syötebitille seuraavan tilan ja lähtöbitit.
 Lohkon loppuun lisätään kaksi nollaa, jotta kooderi palaa tilaan 0.
 
-```{.python tiedosto="esimerkit/10-viterbi/konvoluutio.py" osa="trellis"}
+```{.python tiedosto="esimerkit/09-viterbi/konvoluutio.py" osa="trellis"}
+```
+
+```{.dot tiedosto="esimerkit/09-viterbi/trellis.dot" otsikko="Koodin (7, 5) trelliksen yksi askel. Vasemmalla nykyinen tila, oikealla seuraava; yhtenäinen kaari on tietobitti 0 ja katkoviiva 1, ja kaaren alussa ovat lähtevät koodibitit. Kaavio tuotetaan kooderin tauluista, ja testi vertaa sitä tallennettuun."}
 ```
 
 ## Viterbi-algoritmi
@@ -117,20 +120,36 @@ Toteutus käsittelee monta lohkoa kerralla NumPy-taulukoina. Pehmeän ja
 kovan päätöksen ero on vain siinä, saako dekooderi näytteet vai
 niiden etumerkit.
 
-```{.python tiedosto="esimerkit/10-viterbi/konvoluutio.py" osa="viterbi"}
+```{.python tiedosto="esimerkit/09-viterbi/konvoluutio.py" osa="viterbi"}
 ```
 
 Testit tarkistavat kooderin impulssivasteen ja vapaan etäisyyden,
 kohinattoman kierroksen, kahden hajallaan olevan virheen korjautumisen
 ja pehmeän päätöksen edun:
 
-```{.python tiedosto="esimerkit/10-viterbi/test_konvoluutio.py" osa="testit"}
+```{.python tiedosto="esimerkit/09-viterbi/test_konvoluutio.py" osa="testit"}
 ```
 
 Bittivirhesuhde AWGN-kanavassa:
 
-```{.python tiedosto="esimerkit/10-viterbi/main.py" osa="ber"}
+```{.python tiedosto="esimerkit/09-viterbi/main.py" osa="ber"}
 ```
+
+```{.tuloste tiedosto="esimerkit/09-viterbi.odotettu" rivit="1-5"}
+```
+
+AWGN-kanavassa koodi antaa pehmeällä päätöksellä 4 dB:llä
+20-kertaisen parannuksen, ja 5 dB:llä virheitä on vain yksi
+100 000 bitissä. Tulos on siksi vain suuntaa antava (luku 11).
+Koodausvahvistus on noin 3 dB bittivirhesuhteella $10^{-3}$, ja
+pienemmillä virhesuhteilla se lähestyy asymptoottista arvoa
+$10\log_{10}(R\,d_\text{free}) \approx 4$ dB. Kovalla päätöksellä koodi
+on 2 ja 3 dB:llä huonompi kuin koodaamaton, kuten Hamming-koodi.
+
+![Luvun kahden esimerkin tulokset samassa kuvassa (pisteet ovat
+testattujen tulosteiden arvot). Koodausvahvistus luetaan vaakasuuntaisena
+erona koodaamattomaan käyrään, esimerkiksi virhesuhteella $10^{-3}$
+noin 3 dB konvoluutiokoodille pehmeällä päätöksellä.](kuvat/koodaus.png){width=85%}
 
 ## Purskevirheet ja lomitus
 
@@ -141,26 +160,19 @@ palauttaa sen vastaanotossa, jolloin kanavan purske hajoaa dekooderin
 näkökulmasta yksittäisiksi virheiksi. Lohkolomitin kirjoittaa bitit
 taulukkoon riveittäin ja lukee ne sarakkeittain.
 
-```{.python tiedosto="esimerkit/10-viterbi/konvoluutio.py" osa="lomitus"}
+```{.python tiedosto="esimerkit/09-viterbi/konvoluutio.py" osa="lomitus"}
 ```
 
 Kokeessa jokaiseen lohkoon osuu 12 koodibitin häipymä, jonka aikana
 vastaanotin ei saa signaalista mitään tietoa (näytteet ovat nollia).
 Pehmeä dekooderi käsittelee nollaa täydellisenä epävarmuutena.
 
-```{.python tiedosto="esimerkit/10-viterbi/main.py" osa="purske"}
+```{.python tiedosto="esimerkit/09-viterbi/main.py" osa="purske"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-viterbi.odotettu"}
+```{.tuloste tiedosto="esimerkit/09-viterbi.odotettu" alkaen="ilman lomitusta"}
 ```
 
-AWGN-kanavassa koodi antaa pehmeällä päätöksellä 4 dB:llä
-20-kertaisen parannuksen, ja 5 dB:llä virheitä on vain yksi
-100 000 bitissä. Tulos on siksi vain suuntaa antava (luku 11).
-Koodausvahvistus on noin 3 dB bittivirhesuhteella $10^{-3}$, ja
-pienemmillä virhesuhteilla se lähestyy asymptoottista arvoa
-$10\log_{10}(R\,d_\text{free}) \approx 4$ dB. Kovalla päätöksellä koodi
-on 2 ja 3 dB:llä huonompi kuin koodaamaton, kuten Hamming-koodi.
 Ilman lomitusta 12 bitin purske tuhoaa lähes jokaisen lohkon, mutta
 lomitettuna sama purske korjautuu: 12 rivin lomitin hajottaa purskeen
 yksittäisiksi bittivirheiksi 84 bitin välein.

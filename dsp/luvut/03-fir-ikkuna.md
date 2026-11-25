@@ -41,9 +41,12 @@ sivukeilat näkyvät aaltoiluna. Mitataan, mitä pidentäminen tekee.
 ```
 
 Siirtymäkaista kapenee pituuden mukana, mutta ylitys pysyy 9 %:ssa ja
-vaimennus 21 dB:ssä. Tämä on **Gibbsin ilmiö**: epäjatkuvan funktion
-katkaistu Fourier-sarja ylittää hypyn aina noin 9 %. Pidentäminen ei
-siis auta vaimennukseen. Avuksi tarvitaan toinen ikkuna.
+vaimennus 21 dB:ssä. Tämä on **Gibbsin ilmiö**, joka johdettiin taidossa
+*Kompleksiluvut ja Fourier-analyysi*: epäjatkuvan funktion katkaistu
+Fourier-sarja ylittää hypyn aina noin 9 %. Siellä katkaistiin
+kanttiaallon sarja, tässä katkaistaan impulssivaste, ja ylitys näkyy
+taajuusvasteessa. Pidentäminen ei siis auta vaimennukseen. Avuksi
+tarvitaan toinen ikkuna.
 
 ## Ikkunat
 
@@ -66,7 +69,16 @@ se ei riipu $N$:stä. Taulukosta voi lukea suunnittelusäännön: Hann-ikkuna
 antaa 44 dB ja siirtymäkaistan noin $3{,}2/N$, Blackman 75 dB ja
 noin $6{,}9/N$. Taulukon arvot on mitattu tämän luvun määritelmillä;
 kirjallisuuden luvut poikkeavat hieman, koska siirtymäkaistan reunat
-määritellään eri tavoin.
+määritellään eri tavoin. Luvut ovat *suotimen* vaimennuksia. Taidon
+*Signaalit ja järjestelmät* ikkunataulukossa Hannin kohdalla on −31 dB,
+koska siellä mitataan ikkunan oman spektrin korkein sivukeila; suotimen
+estokaista syntyy, kun sivukeilat summautuvat konvoluutiossa, ja tulos
+on eri luku.
+
+![Vasemmalla suorakaidekatkaisun amplitudivaste rajataajuuden ympärillä
+kolmella pituudella: reuna jyrkkenee, mutta ylitys ei pienene. Oikealla
+kolme ikkunaa samalla pituudella: matalammat sivukeilat maksetaan
+leveämmällä siirtymäkaistalla.](kuvat/katkaisu.png){width=95%}
 
 Ikkunoiden vaimennus on kiinteä. Jos vaatimus on 60 dB, Hann ei riitä
 ja Blackman tuhlaa kertoimia. Tähän tarvitaan säädettävä ikkuna.

@@ -45,6 +45,18 @@ spektri ei paljasta alkuperää:
 ```{.tuloste tiedosto="esimerkit/03-aliasointi.odotettu"}
 ```
 
+Aliasoinnin voi myös kuunnella. Seuraava ohjelma tuottaa
+taajuuspyyhkäisyn, jonka taajuus nousee seitsemässä sekunnissa nollasta
+7 kHz:iin, ja näytteistää sen 8 kHz:n taajuudella ilman suodatusta.
+Äänitiedostossa sävel nousee neljän sekunnin ajan ja kääntyy sitten
+laskuun: Nyquistin taajuuden yläpuolinen osa peilautuu takaisin.
+
+```{.python tiedosto="esimerkit/03-pyyhkaisy.py" osa="pyyhkaisy"}
+```
+
+```{.tuloste tiedosto="esimerkit/03-pyyhkaisy.odotettu"}
+```
+
 Arkinen esimerkki on elokuvan vaunun pyörä, joka näyttää pyörivän
 hitaasti tai takaperin: kamera näytteistää pyörän asentoa 24 kertaa
 sekunnissa, ja pinnojen nopea liike aliasoituu hitaaksi. Mittauksissa
@@ -61,6 +73,12 @@ taajuustasossa. Näytteistys toistaa signaalin spektrin $f_s$:n välein,
 ja jos spektrin leveys $2B$ on pienempi kuin $f_s$, kopiot eivät mene
 päällekkäin. Silloin alkuperäinen spektri saadaan erotettua ihanteellisella
 alipäästösuotimella, jonka rajataajuus on $f_s/2$.
+
+![Näytteistetyn signaalin spektri on alkuperäisen spektrin (vihreä)
+kopioita $f_s$:n välein. Kun $f_s > 2B$, kopiot ovat erillään ja
+alkuperäinen mahtuu katkoviivojen väliin. Kun $f_s < 2B$, kopiot
+menevät päällekkäin, eikä päällekkäistä osaa voi enää
+erottaa.](kuvat/spektrikopiot.png){width=95%}
 
 Ehto koskee *kaistaa* eikä signaalin näkyvää muotoa: 180 Hz:n sini
 tarvitsee yli 360 näytettä sekunnissa, vaikka se näyttäisi
@@ -95,6 +113,11 @@ jälkisuotimella.
 
 ```{.python tiedosto="esimerkit/03-rekonstruktio.py" osa="pito"}
 ```
+
+![Sama testisignaali rekonstruoituna kahdella tavalla. Vasemmalla
+jokaisen näytteen sinc-pulssi (harmaat) ja pulssien summa, joka kulkee
+näytteiden kautta. Oikealla nollannen asteen pidon
+porraskäyrä.](kuvat/rekonstruktio.png){width=95%}
 
 Jos ehto ei täyty, mikään interpolointi ei auta: 180 Hz:n komponentti
 näytteistettynä 300 Hz:n taajuudella rekonstruoituu 120 Hz:n

@@ -102,7 +102,7 @@ osittain läpi. Taito *Ohjelmistoradio* käsittelee sen korjaamisen.
   eivät peilikuvaa. Piirrä spektri `fftshift`-funktion avulla.
 - **Taajuusvirhe on kantataajuudella kierto.** Jos vastaanottimen
   oskillaattori on $\Delta f$ väärässä, kantataajuussignaali kerrotaan
-  tekijällä $e^{i2\pi\Delta f t}$ (luku 8).
+  tekijällä $e^{i2\pi\Delta f t}$ (luku 7).
 
 ## Itsearviointi
 

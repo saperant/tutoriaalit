@@ -34,7 +34,7 @@ mittauksille.
 | purskeet | lomitus syvemmäksi kuin purske |
 | Monte Carlo | vähintään 100 virhettä; 0 virhettä: BER < $3/n$ |
 
-## Jatkotaidot taitopuussa
+## Jatkotaidot
 
 - *Ohjelmistoradio* vie tämän tutoriaalin vastaanottimen oikeaan
   radioon: IQ-näytteet laitteelta, IQ-epätasapaino ja tasakomponentti,

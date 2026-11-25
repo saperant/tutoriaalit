@@ -105,6 +105,11 @@ Yksikköympyrällä oleva napa tuottaa jonon, joka ei vaimene eikä kasva
 (summain, oskillaattori). Nollat eivät vaikuta stabiilisuuteen. Siksi
 FIR-suodin, jonka kaikki navat ovat origossa, on aina stabiili.
 
+![Napaparin sijainti z-tasossa (ylhäällä) ja sitä vastaava
+impulssivaste (alhaalla). Etäisyys origosta määrää vaimenemisen ja
+kulma värähtelyn taajuuden; yksikköympyrän ulkopuolella vaste
+kasvaa.](kuvat/navat.png){width=100%}
+
 ```{.python tiedosto="esimerkit/07-navat.py" osa="stabiilius"}
 ```
 
@@ -128,6 +133,13 @@ navat pysyvät paikallaan saman pyöristyksen jälkeen. Siksi
 korkea-asteiset IIR-suotimet suunnitellaan muodossa `output="sos"` ja
 ajetaan funktiolla `sosfilt`. Kertoimien kvantisoinnin systemaattinen
 käsittely kuuluu taitoon *Digitaalinen signaalinkäsittely*.
+
+Myös nollien sijainnilla on nimi. Suodin, jonka nollatkin ovat
+yksikköympyrän sisällä, on **minimivaiheinen**: sen käänteissuodin
+$1/H(z)$ on stabiili, koska käänteissuotimen navat ovat alkuperäisen
+nollat. Luvun 5 dekonvoluutio onnistui juuri tästä syystä; jos kanavan
+nolla on kehällä tai sen ulkopuolella, täsmällistä stabiilia
+käänteissuodinta ei ole.
 
 ## Käänteinen muunnos ja ketjutus
 

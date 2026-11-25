@@ -27,7 +27,8 @@ ja pikaopas
    alkutila, resonaattori
 7. Z-muunnos – suppenemisalue, siirtofunktio, navat ja nollat,
    stabiilisuus, toisen asteen lohkot, osamurrot
-8. Taajuusvaste – `freqz`, desibelit, geometria, ryhmäviive, lovisuodin
+8. Taajuusvaste – DTFT, `freqz`, desibelit, geometria, ryhmäviive,
+   lovisuodin (myös äänitiedostona)
 9. DFT ja FFT käytännössä – resoluutio, vuotaminen, ikkunat, nollilla
    täyttö, nopea konvoluutio, Welchin menetelmä
 10. Lyhytaikainen spektri – STFT ja aika–taajuus-kompromissi
@@ -45,5 +46,8 @@ make kuvat    # piirtää kuvat/-hakemiston kuvat uudelleen (matplotlib)
 Esimerkit toimivat Python 3.12:lla ja uudemmilla; ne tarvitsevat NumPyn
 ja SciPyn. Tarkistukseen tarvitaan ruff, mypy, scipy-stubs ja pytest
 (kehityskontissa valmiina).
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 Lisenssi: CC BY-SA 4.0.

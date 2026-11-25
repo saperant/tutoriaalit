@@ -22,10 +22,10 @@ ja pikaopas
    sovitettu suodin
 6. Kohina ja bittivirhesuhde – Eb/N0 ja SNR, teoria ja simulaatio,
    Shannonin raja, Rayleigh-häipymä ja diversiteetti
-7. OFDM – IFFT, syklinen etuliite, taajuuskorjaus, huipputeho
-8. Kantoaallon synkronointi – vaihe- ja taajuusvirhe, Costas-silmukka
-9. Symboli- ja kehystahdistus – Gardnerin ilmaisin, korrelaatio
-10. Kanavakoodaus – koodausvahvistus, pehmeä päätös, Viterbi, lomitus
+7. Kantoaallon synkronointi – vaihe- ja taajuusvirhe, Costas-silmukka
+8. Symboli- ja kehystahdistus – Gardnerin ilmaisin, korrelaatio
+9. Kanavakoodaus – koodausvahvistus, pehmeä päätös, Viterbi, lomitus
+10. OFDM – IFFT, syklinen etuliite, taajuuskorjaus, huipputeho
 11. Kokonainen linkki – pakettivastaanotin ja simulaation testaus
 12. Lopuksi – nyrkkisäännöt, jatkotaidot, lähteet
 
@@ -40,5 +40,8 @@ make kuvat    # piirtää kuvat/-hakemiston kuvat uudelleen (matplotlib)
 Esimerkit toimivat Python 3.12:lla ja uudemmilla; ne tarvitsevat NumPyn
 ja SciPyn. Tarkistukseen tarvitaan ruff, mypy, scipy-stubs ja pytest
 (kehityskontissa valmiina).
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 Lisenssi: CC BY-SA 4.0.

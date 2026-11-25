@@ -62,9 +62,32 @@ selvästi.
 Esimerkissä on koko tutoriaalin runko. Seuraavat luvut avaavat sen osat
 ja lisäävät todellisen kanavan ongelmat: vastaanottimen kello ja
 kantoaalto eivät ole samassa tahdissa lähettimen kanssa, kanava
-vääristää pulssia, ja bittivirheitä on korjattava.
+vääristää pulssia, ja bittivirheitä on korjattava. Seuraava kaavio on
+tutoriaalin kartta: yhtenäiset laatikot ovat esimerkin vaiheet, ja
+katkoviivalla merkityt lisätään myöhemmissä luvuissa.
 
-## Kenelle ja mitä tarvitaan
+```{.dot otsikko="Siirtoketju ja luvut, joissa sen osat käsitellään"}
+digraph ketju {
+  rankdir=TB; nodesep=0.3; ranksep=0.35;
+  node [shape=box, fontsize=10];
+  bitit [label="bitit", shape=plaintext];
+  koodaus [label="koodaus\n(luku 9)", style=dashed];
+  symbolit [label="symbolit\n(luku 4)"];
+  pulssi [label="pulssi\n(luku 5)"];
+  kanava [label="kanava: kohina,\nvaihe, viive (luku 6)", shape=ellipse];
+  sovitettu [label="sovitettu suodin\n(luku 5)"];
+  tahdistus [label="tahdistus\n(luvut 7–8)", style=dashed];
+  paatos [label="päätös\n(luku 4)"];
+  dekoodaus [label="dekoodaus\n(luku 9)", style=dashed];
+  ulos [label="bitit", shape=plaintext];
+  { rank=same; bitit -> koodaus -> symbolit -> pulssi; }
+  pulssi -> kanava -> sovitettu;
+  { rank=same;
+    ulos -> dekoodaus -> paatos -> tahdistus -> sovitettu [dir=back]; }
+}
+```
+
+## Esitiedot ja rajaus
 
 Lukija osaa Pythonin ja NumPyn sekä signaalinkäsittelyn perusteet:
 kompleksiluvut ja Eulerin kaavan (taito *Kompleksiluvut ja
@@ -77,6 +100,15 @@ linkkibudjetista ja pariteetista, CRC:stä ja Hamming-koodista
 yleistasolla. Tässä tutoriaalissa samoihin aiheisiin palataan
 simuloiden ja syvemmin, mutta perusteita ei toisteta.
 
+Rajauksia on kolme. Yhden kantoaallon taajuuskorjain (kanavan
+vääristymän poisto adaptiivisella suotimella) jää pois; sen työkalu,
+LMS-suodin, on taidossa *Digitaalinen signaalinkäsittely*, ja OFDM-luku
+näyttää toisen tavan ratkaista sama ongelma. Nykyaikaiset koodit
+(LDPC, turbo, polaarikoodit) esitellään vain periaatteena. Oikean
+radion epäideaalisuudet ja laitteet ovat taidossa *Ohjelmistoradio*.
+Esimerkit ajetaan komennolla `make testaa` tai yksitellen, esimerkiksi
+`python3 esimerkit/01-ketju.py`.
+
 | Luku | Kysymys |
 |---------------------|--------------------------------------------|
 | Kantataajuus ja kaistanpäästö | Miksi radiosignaalia käsitellään kompleksilukuina? |
@@ -84,10 +116,10 @@ simuloiden ja syvemmin, mutta perusteita ei toisteta.
 | Digitaaliset modulaatiot | Montako bittiä symboliin mahtuu, ja miten ne nimetään? |
 | Pulssinmuokkaus | Miten symbolit eivät häiritse toisiaan kapealla kaistalla? |
 | Kohina ja BER | Paljonko virheitä tietyllä teholla tulee, ja missä on raja? |
-| OFDM | Miten monitiekanavasta tehdään helppo? |
 | Kantoaallon synkronointi | Miten vastaanotin korjaa vaihe- ja taajuusvirheen? |
 | Symboli- ja kehystahdistus | Milloin näyte otetaan, ja mistä kehys alkaa? |
 | Kanavakoodaus | Miten virheet korjataan, ja paljonko se säästää tehoa? |
+| OFDM | Miten monitiekanavasta tehdään helppo? |
 | Kokonainen linkki | Miten osat liitetään yhteen ja simulaatio testataan? |
 
 ## Merkinnät ja yksiköt

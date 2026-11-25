@@ -47,7 +47,8 @@ def gray_kunnossa(pisteet: Kompleksi) -> bool:
 
 print("nimi    bittejä  dmin   huippu/keski  Gray")
 for nimi, pisteet in (("BPSK", psk(2)), ("QPSK", psk(4)), ("8-PSK", psk(8)),
-                      ("16-QAM", qam(16)), ("64-QAM", qam(64))):
+                      ("16-PSK", psk(16)), ("16-QAM", qam(16)),
+                      ("64-QAM", qam(64))):
     d = np.abs(pisteet[:, None] - pisteet[None, :])
     dmin = np.min(d[d > 1e-9])
     huippu = 10 * np.log10(np.max(np.abs(pisteet) ** 2))

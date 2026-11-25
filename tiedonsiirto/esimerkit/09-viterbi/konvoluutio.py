@@ -90,3 +90,28 @@ def purkulomitus(c: Reaali, rivit: int) -> Reaali:
     tulos: Reaali = c.reshape(B, n // rivit, rivit).transpose(0, 2, 1)
     return tulos.reshape(B, n)
 # @loppu lomitus
+
+
+def trellis_dot() -> str:
+    """Yksi trelliksen askel Graphviz-muodossa tauluista SEURAAVA ja ULOS.
+
+    Katkoviiva on tietobitti 1; kaaren nimiö on kaksi koodibittiä.
+    """
+    rivit = ["digraph trellis {",
+             "  rankdir=LR; ranksep=2.2; nodesep=0.45; splines=line;",
+             "  node [shape=circle, fixedsize=true, width=0.45];"]
+    for s in range(TILOJA):
+        rivit.append(f'  a{s} [label="{s:02b}"]; b{s} [label="{s:02b}"];')
+    for s in range(TILOJA - 1):
+        for sarake in "ab":
+            rivit.append(f"  {sarake}{s} -> {sarake}{s + 1} [style=invis];")
+    for s in range(TILOJA):
+        for u in (0, 1):
+            c1, c2 = (int(b) for b in ULOS[s, u])
+            tyyli = ', style=dashed' if u else ''
+            rivit.append(f'  a{s} -> b{int(SEURAAVA[s, u])} '
+                         f'[taillabel="{c1}{c2}", labeldistance=2.6, '
+                         f'labelangle={-14 if u else 14}{tyyli}];')
+    rivit += ["  { rank=same; a0; a1; a2; a3; }",
+              "  { rank=same; b0; b1; b2; b3; }", "}"]
+    return "\n".join(rivit) + "\n"

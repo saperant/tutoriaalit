@@ -8,7 +8,7 @@ eikä missä vaiheessa sen bittikello on. Kaikki pitää selvittää paketin
 alusta muutamassa millisekunnissa.
 
 Luku rakentaa 2-GFSK-pakettivastaanottimen. Taidossa *Digitaalinen
-tiedonsiirto* (luku 11) on koherentti QPSK-pakettilinkki. Tämä
+tiedonsiirto* on koherentti QPSK-pakettilinkki. Tämä
 vastaanotin on ei-koherentti ja yksinkertaisempi, kuten
 anturiradioiden piirit, ja se toimii synteettisellä tallenteella,
 jossa on useita paketteja, törmäys ja heikko lähetin.
@@ -106,6 +106,18 @@ aikaan lähettää toinen laite, ja viimeinen tulee kaukaa
 
 ```{.tuloste tiedosto="esimerkit/paketti.odotettu"}
 ```
+
+![Tallenteen vesiputous eli spektri ajan funktiona, ohjelmistoradion
+perusnäkymä. Viisi lähetystä näkyy kaistalla −150 kHz:n ympärillä:
+kaksi selvää pakettia, törmäys 36 ms:n kohdalla (kaksi päällekkäistä
+lähetystä eri taajuusvirheillä) ja heikko paketti
+52 ms:n kohdalla.](kuvat/vesiputous.png){width=95%}
+
+![FM-ilmaisimen lähtö ensimmäisen paketin alusta. Ennen pakettia
+ilmaisin tuottaa pelkkää kohinaa. Alkuosan vuorottelevat bitit ja
+tahdistussana seuraavat mallipohjaa, johon haku korreloi; käyrän pieni
+siirtymä ylöspäin on lähettimen
+taajuusvirhe.](kuvat/ilmaisin.png){width=95%}
 
 Kaksi ensimmäistä pakettia puretaan oikein, ja taajuusvirheen arviot
 osuvat noin 0,1 kHz:n tarkkuudella lähettimen virheisiin (+3,1 ja

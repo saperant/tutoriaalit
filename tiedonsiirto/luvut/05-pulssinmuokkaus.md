@@ -75,7 +75,7 @@ Aukeama on pienin etäisyys päätösrajaan, ja negatiivinen arvo
 tarkoittaa, että silmä on kiinni: jokin symbolijono kääntää päätöksen
 ilman kohinaakin. Sinc-pulssin silmä sulkeutuu jo neljänneksen
 symbolin ajoitusvirheellä. Pienellä $\beta$:lla säästetään kaistaa,
-mutta symbolitahdistuksen on oltava tarkka (luku 9).
+mutta symbolitahdistuksen on oltava tarkka (luku 8).
 
 ## Sovitettu suodin
 

@@ -20,17 +20,17 @@ vaihevirheelle kuin QPSK.
 vaihevirheellä. Vaihevirhe siirtää uloimpia pisteitä eniten kohti
 päätösrajoja.](kuvat/konstellaatio.png){width=100%}
 
-```{.python tiedosto="esimerkit/08-virheet.py" osa="vaihe"}
+```{.python tiedosto="esimerkit/07-virheet.py" osa="vaihe"}
 ```
 
 Taajuusvirhe on kantataajuudella kertolasku tekijällä
 $e^{i2\pi\Delta f t}$, joten vaihe kasvaa $360\,\Delta f/R_s$ astetta
 symbolia kohti:
 
-```{.python tiedosto="esimerkit/08-virheet.py" osa="taajuus"}
+```{.python tiedosto="esimerkit/07-virheet.py" osa="taajuus"}
 ```
 
-```{.tuloste tiedosto="esimerkit/08-virheet.odotettu"}
+```{.tuloste tiedosto="esimerkit/07-virheet.odotettu"}
 ```
 
 Kymmenen asteen vaihevirhe moninkertaistaa kummankin modulaation
@@ -52,13 +52,13 @@ modulaatiosta riippumaton sini taajuudella $4f$. Sen taajuus löytyy
 FFT:n huipusta. BPSK:lle vastaava temppu on toinen potenssi ja
 $M$-PSK:lle $M$:s potenssi.
 
-```{.python tiedosto="esimerkit/08-taajuus.py" osa="potenssi"}
+```{.python tiedosto="esimerkit/07-taajuus.py" osa="potenssi"}
 ```
 
-```{.python tiedosto="esimerkit/08-taajuus.py" osa="koe"}
+```{.python tiedosto="esimerkit/07-taajuus.py" osa="koe"}
 ```
 
-```{.tuloste tiedosto="esimerkit/08-taajuus.odotettu"}
+```{.tuloste tiedosto="esimerkit/07-taajuus.odotettu"}
 ```
 
 Estimaatti on tarkka 10 dB:n signaali-kohinasuhteella, mutta sen alue
@@ -86,7 +86,7 @@ kohinakaistasta $B_nT$ ja vaimennuksesta $\zeta$. Kapea kaista
 suodattaa kohinaa tehokkaasti, mutta lukittuu hitaasti. Tavallinen
 lähtökohta on $\zeta = 1/\sqrt2$ ja $B_nT$ = 0,005–0,05.
 
-```{.python tiedosto="esimerkit/08-costas.py" osa="vahvistukset"}
+```{.python tiedosto="esimerkit/07-costas.py" osa="vahvistukset"}
 ```
 
 QPSK:n moduloitu signaali ei sisällä kantoaaltoa, joten virhettä ei voi
@@ -96,14 +96,14 @@ $\operatorname{sign}(I)\,Q - \operatorname{sign}(Q)\,I$, joka on nolla,
 kun symboli on akseleiden välissä, ja verrannollinen vaihevirheeseen
 pienillä virheillä.
 
-```{.python tiedosto="esimerkit/08-costas.py" osa="silmukka"}
+```{.python tiedosto="esimerkit/07-costas.py" osa="silmukka"}
 ```
 
 Kokeessa on 0,002 sykliä symbolia kohti taajuusvirhe ja yhden radiaanin
 vaihevirhe. Ensimmäisen asteen silmukassa (vain P-osa) ei ole
 integraattoria:
 
-```{.python tiedosto="esimerkit/08-costas.py" osa="koe"}
+```{.python tiedosto="esimerkit/07-costas.py" osa="koe"}
 ```
 
 ## Neljän kulman epävarmuus
@@ -116,10 +116,10 @@ tai **differentiaalisella koodauksella**, jossa tieto on peräkkäisten
 symbolien vaihe-erossa. Differentiaalinen koodaus ei tarvitse
 tahdistussanaa, mutta yksi symbolivirhe aiheuttaa kaksi virhettä.
 
-```{.python tiedosto="esimerkit/08-costas.py" osa="epavarmuus"}
+```{.python tiedosto="esimerkit/07-costas.py" osa="epavarmuus"}
 ```
 
-```{.tuloste tiedosto="esimerkit/08-costas.odotettu"}
+```{.tuloste tiedosto="esimerkit/07-costas.odotettu"}
 ```
 
 Ensimmäisen asteen silmukka seuraa taajuusvirhettä, mutta 13 asteen

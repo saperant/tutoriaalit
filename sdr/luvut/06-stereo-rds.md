@@ -158,7 +158,7 @@ bittiajoitukseksi valitaan se neljästä vaiheesta, jossa päätökset
 ovat varmimpia (suurin itseisarvojen summa). Tallenne on lyhyt, ja
 bittinopeus on lukittu pilottiin, joten ajoitus ei ehdi liukua. Pitkässä
 virrassa tarvittaisiin symbolitahdistus, esimerkiksi taidon
-*Digitaalinen tiedonsiirto* luvun 9 Gardnerin ilmaisin.
+*Digitaalinen tiedonsiirto* Gardnerin ilmaisin.
 
 ```{.python tiedosto="esimerkit/fm/vastaanotin.py" osa="rdspura"}
 ```
@@ -167,6 +167,32 @@ virrassa tarvittaisiin symbolitahdistus, esimerkiksi taidon
 
 Vastaanottimen osat kootaan yhteen funktioon: kanava, ilmaisin,
 pilotin lukitus, stereo ja RDS.
+
+```{.dot otsikko="FM-stereovastaanottimen ketju. Pilotin vaihelukko tuottaa sekä stereon 38 kHz:n että RDS:n 57 kHz:n kantoaallon."}
+digraph fm {
+  rankdir=LR; nodesep=0.22; ranksep=0.3;
+  node [shape=box, fontsize=10];
+  iq [label="IQ", shape=plaintext];
+  kanava [label="kanavan\nvalinta"];
+  ilmaisin [label="FM-\nilmaisin"];
+  summa [label="alipäästö\n15 kHz\n(L + R)"];
+  pll [label="pilotti 19 kHz\nvaihelukko"];
+  erotus [label="× 38 kHz\n(L − R)"];
+  rds [label="× 57 kHz\nRDS-bitit"];
+  matriisi [label="L ja R,\njälkikorostus"];
+  aani [label="ääni", shape=plaintext];
+  data [label="data", shape=plaintext];
+  iq -> kanava -> ilmaisin;
+  ilmaisin -> summa [label="MPX"];
+  ilmaisin -> pll;
+  ilmaisin -> erotus;
+  ilmaisin -> rds;
+  pll -> erotus [style=dashed];
+  pll -> rds [style=dashed];
+  summa -> matriisi; erotus -> matriisi;
+  matriisi -> aani; rds -> data;
+}
+```
 
 ```{.python tiedosto="esimerkit/fm/vastaanotin.py" osa="vastaanota"}
 ```

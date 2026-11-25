@@ -28,6 +28,11 @@ on suorakaideikkunalla enimmillään noin 3,9 dB.
 ```{.python tiedosto="esimerkit/09-vuotaminen.py" osa="vuotaminen"}
 ```
 
+![Vuotamisen syy ja seuraus. Ylhäällä 100 Hz:n sini, jota mahtuu
+ikkunaan tasan kymmenen jaksoa: jaksollinen jatke on saumaton ja
+spektrissä on yksi viiva. Alhaalla 104,9 Hz: saumassa on hyppy, ja
+energia leviää kaikkiin taajuusväleihin.](kuvat/vuotaminen.png){width=95%}
+
 Kaksi lähellä toisiaan olevaa taajuutta erottuu vain, jos niiden
 erotus on suurempi kuin noin yksi resoluutioväli. Esimerkissä soitetaan
 yhtä aikaa sävelet 440 Hz ja 466 Hz, jotka ovat puolisävelaskeleen
@@ -81,7 +86,8 @@ spektristä, huippu jaetaan ikkunan summalla eikä näytteiden määrällä.
 ## Nollilla täyttäminen
 
 Nollilla täyttäminen (`numpy.fft.rfft(x, n=L)`, $L > N$) laskee saman
-spektrin tiheämmästä hilasta. Se ei lisää tietoa eikä paranna
+spektrin tiheämmästä hilasta: se ottaa edellisen luvun DTFT:stä
+näytteitä tiheämmin. Se ei lisää tietoa eikä paranna
 erottelukykyä, mutta se interpoloi spektriä, jolloin huipun paikka ja
 korkeus löytyvät tarkemmin. Aaltoiluhäviö pienenee, koska jokin
 laskentapiste osuu lähemmäs todellista huippua.
@@ -131,8 +137,9 @@ menetelmän automaattisesti (`method="auto"`).
 Kohinalla ei ole huippuja, vaan tasainen tai muotoiltu **tehospektrin
 tiheys** (PSD), jonka yksikkö on $\mathrm{V^2/Hz}$. Valkoisen kohinan, jonka
 varianssi on $\sigma^2$, yksipuolinen PSD on $\sigma^2/(f_s/2)$.
-Yksittäinen DFT eli **periodogrammi** on harhaton arvio, mutta sen
-hajonta on yhtä suuri kuin itse arvo: pidempi mittaus antaa tiheämmän
+Yksittäinen DFT eli **periodogrammi** on valkoiselle kohinalle
+harhaton arvio (muotoillulla spektrillä vuotaminen vääristää sitä),
+mutta sen hajonta on yhtä suuri kuin itse arvo: pidempi mittaus antaa tiheämmän
 mutta yhtä kohinaisen spektrin. **Welchin menetelmä** jakaa signaalin
 limittäisiin, ikkunoituihin lohkoihin ja keskiarvoistaa niiden
 periodogrammit. Hajonta pienenee lohkojen määrän neliöjuuren suhteessa,

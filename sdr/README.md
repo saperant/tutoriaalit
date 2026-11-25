@@ -45,4 +45,7 @@ Esimerkit toimivat Python 3.12:lla ja uudemmilla (NumPy, SciPy) sekä
 C++23-kääntäjällä (GCC 14 tai Clang 20). Tarkistukseen tarvitaan ruff,
 mypy, scipy-stubs ja pytest (kehityskontissa valmiina).
 
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
+
 Lisenssi: CC BY-SA 4.0.

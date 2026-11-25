@@ -1,8 +1,10 @@
 """Konvoluutiokoodin ja Viterbi-dekooderin testit."""
 
+from pathlib import Path
+
 import numpy as np
 import pytest
-from konvoluutio import koodaa, lomita, purkulomitus, viterbi
+from konvoluutio import koodaa, lomita, purkulomitus, trellis_dot, viterbi
 
 
 # @alku testit
@@ -54,3 +56,9 @@ def test_lomitus_on_kaannettavissa() -> None:
     palautettu = purkulomitus(lomita(c, 4).astype(float), 4)
     assert np.array_equal(palautettu, c)
 # @loppu testit
+
+
+def test_trellis_kaavio_vastaa_koodia() -> None:
+    # Kirjassa näytetty kaavio tuotetaan kooderin tauluista.
+    tallennettu = Path(__file__).with_name("trellis.dot").read_text("utf-8")
+    assert tallennettu == trellis_dot()

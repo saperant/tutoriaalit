@@ -44,8 +44,16 @@ Etäisyys pienenee nopeasti, kun bittejä lisätään: 64-QAM:n pisteet ovat
 $20\log_{10} 4{,}6 \approx 13$ dB enemmän signaali-kohinasuhdetta
 samaan symbolivirheeseen. Kaksi bittiä lisää symbolia kohti maksaa
 noin 6 dB, mikä on tiedonsiirron perusvaihtokauppa kaistan ja tehon
-välillä. 8-PSK:n pienin etäisyys on huonompi kuin 16-QAM:n, vaikka
-siinä on vähemmän pisteitä: kehä on huono tapa pakata pisteitä.
+välillä. Kehä on huono tapa pakata pisteitä: 8-PSK:n pienin etäisyys
+on vain vähän 16-QAM:n etäisyyttä suurempi, vaikka 8-PSK kuljettaa
+bitin vähemmän, ja 16-PSK:n etäisyys (0,390) on jo selvästi 16-QAM:n
+etäisyyttä (0,632) pienempi samalla bittimäärällä.
+
+![Konstellaatiot Gray-nimiöineen keskienergialla 1. Oranssi jana on
+pienin etäisyys $d_\text{min}$: samalla 16 pisteellä neliöhila pitää
+pisteet kauempana toisistaan kuin kehä. Taidon *Tietoliikennetekniikka*
+konstellaatiokuvat näyttävät samat pisteet
+kohinassa.](kuvat/konstellaatiot.png){width=100%}
 
 ## Gray-koodauksen merkitys
 
@@ -84,7 +92,8 @@ vaihe hyppää symbolien rajalla, ja hyppy levittää spektriä. **CPFSK**
 (*continuous phase FSK*) jatkaa vaihetta saumattomasti.
 Pienimmällä ortogonaalisella erolla $\Delta f T = 1/2$ se on **MSK**
 (*minimum shift keying*), ja Gaussin suotimella pehmennettynä
-**GMSK**, jota käytettiin GSM:ssä ja käytetään Bluetoothissa.
+**GMSK**, jota käytettiin GSM:ssä. Bluetooth käyttää samaa periaatetta
+pienemmällä modulaatioindeksillä (GFSK, $\Delta f T \approx 0{,}32$).
 
 ```{.python tiedosto="esimerkit/04-fsk.py" osa="vaihe"}
 ```
@@ -111,7 +120,7 @@ kaistaa kuin BPSK.
 - **Normita konstellaatio.** Keskienergia 1 tekee kohinan
   kalibroinnista yksiselitteistä (luku 6). Normittamaton 16-QAM
   (energia 10) on yleinen 10 dB:n virhe.
-- **Huomioi huipputeho.** QAM:n ja erityisesti OFDM:n (luku 7)
+- **Huomioi huipputeho.** QAM:n ja erityisesti OFDM:n (luku 10)
   huiput vaativat tehovahvistimelta varaa (*back-off*), mikä huonontaa
   hyötysuhdetta. Siksi akkukäyttöiset ja satelliittilaitteet suosivat
   vakioamplitudisia modulaatioita, kuten MSK:ta, GMSK:ta ja PSK:ta.

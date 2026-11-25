@@ -18,12 +18,12 @@ ja pikaopas
 2. Vaatimukset ja toleranssit – vaatimukset tietona, liukulukujen erot
 3. FIR: ikkunamenetelmä – Gibbsin ilmiö, ikkunat, Kaiserin kaavat
 4. FIR: taajuusnäytteistys ja Parks–McClellan – tasavärähtely,
-   lineaarivaiheiset tyypit I–IV
+   lineaarivaiheiset tyypit I–IV, Hilbert-muunnin ja analyyttinen signaali
 5. FIR-suodin C:llä – rengaspuskuri, tila, symmetria, ctypes-vertailu
 6. IIR-suunnittelu – bilineaarimuunnos, esivääristys, suodintyypit
 7. IIR-toteutus – toisen asteen lohkot, suoramuodot, kertoimien
    kvantisointi, rajasyklit
-8. FFT ja spektrianalyysi – radix-2 C:llä, overlap-save, Goertzel
+8. FFT, nopea konvoluutio ja Goertzel – radix-2 C:llä, overlap-save
 9. Monitaajuuskäsittely – desimointi, interpolointi, polyfaasi,
    rationaalinen muunnos, CIC
 10. Adaptiiviset suotimet – LMS, NLMS, askelkoko, häiriönpoisto
@@ -43,5 +43,8 @@ Python-esimerkit tarvitsevat Python 3.12:n, NumPyn ja SciPyn;
 tarkistukseen tarvitaan ruff, mypy, scipy-stubs ja pytest. C-esimerkit
 käännetään C23:lla (GCC 14 ja Clang 20). Kehityskontissa
 (`.devcontainer/dsp`) kaikki on valmiina.
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 Lisenssi: CC BY-SA 4.0.

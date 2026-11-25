@@ -29,6 +29,12 @@ lisätään näytteisiin, näytekohtainen SNR on $E_s/N_0 - 10\log_{10}
 kohinaisemmalta kuin se on, koska suurin osa kohinasta on signaalin
 kaistan ulkopuolella, ja sovitettu suodin poistaa sen.
 
+Simulaatiossa $N_0$ on pelkkä luku. Sen fysikaalinen arvo
+($N_0 = kT$ ja vastaanottimen kohinaluku) sekä linkkibudjetti, josta
+vastaanotettu $E_b$ saadaan, ovat taidossa *Tietoliikennetekniikka*.
+Virhetodennäköisyyksien Q-funktio on normaalijakauman häntä; se ja
+kynnysilmaisun virhe johdetaan taidossa *Todennäköisyys ja tilastot*.
+
 ```{.python tiedosto="esimerkit/06-awgn.py" osa="muunnokset"}
 ```
 
@@ -114,7 +120,7 @@ paljon kaistaa tahansa käytettäisiin.
 
 Koodaamattomat modulaatiot jäävät 8,5–10,5 dB Shannonin rajasta, kun
 tavoite on $10^{-6}$. Tämä väli on kanavakoodauksen pelivara: nykyiset
-LDPC- ja turbokoodit pääsevät alle desibelin päähän rajasta (luku 10).
+LDPC- ja turbokoodit pääsevät alle desibelin päähän rajasta (luku 9).
 Linkkibudjetissa (taito *Tietoliikennetekniikka*) tarvittava
 $E_b/N_0$ otetaan tällaisesta taulukosta, ja siihen lisätään
 toteutushäviöt ja marginaali.
@@ -149,7 +155,7 @@ kaltevuuden toisen asteen käyräksi: 20 dB:llä virhesuhde paranee yli
 sata kertaa. Kahden antennin tuloksessa on vain noin 50 virhettä, joten
 sen 25 %:n ero teoriaan on vielä satunnaisvaihtelua. Muut
 diversiteetin muodot ovat aikadiversiteetti (koodaus ja lomitus, luku
-10) ja taajuusdiversiteetti (OFDM ja koodaus, luku 7).
+9) ja taajuusdiversiteetti (OFDM ja koodaus, luku 10).
 
 ## Käytännössä
 

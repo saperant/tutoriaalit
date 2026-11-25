@@ -25,6 +25,138 @@ rcParams["axes.spines.top"] = False
 rcParams["axes.spines.right"] = False
 
 
+TOINEN = "#C2571A"
+VAALEA = "#B8C4C8"
+
+
+def spektri_db(z: np.ndarray, fs: float) -> tuple[np.ndarray, np.ndarray]:
+    """Kaksipuolinen ikkunoitu spektri (dB, kompleksinen sini 1 = 0 dB)."""
+    w = np.hanning(len(z))
+    Z = np.fft.fftshift(np.fft.fft(z * w)) / w.sum()
+    f = np.fft.fftshift(np.fft.fftfreq(len(z), 1 / fs))
+    return f, 20 * np.log10(np.abs(Z) + 1e-9)
+
+
+def epaideaalisuudet(polku: Path) -> None:
+    """Luku 3: tasakomponentti, IQ-epatasapaino ja AGC (esimerkit 03-*)."""
+    fs, n = 912e3, 1 << 14
+    k = np.arange(n)
+    fig = Figure(figsize=(6.8, 4.4), dpi=200, layout="constrained")
+    (a1, a2), (a3, a4) = fig.subplots(2, 2)
+    rng = np.random.default_rng(6)
+    x = (0.1 * np.exp(2j * np.pi * 30e3 * k / fs) + (0.02 - 0.012j)
+         + 1e-3 * (rng.standard_normal(n) + 1j * rng.standard_normal(n)))
+    pitka = np.tile(x, 8)
+    y = signal.lfilter([1.0, -1.0], [1.0, -0.999], pitka)[-n:]
+    for z, vari, nimi in ((x, HARMAA, "ennen"), (y, KOROSTUS, "DC-esto")):
+        f, db = spektri_db(z, fs)
+        a1.plot(f / 1e3, db, color=vari, linewidth=0.8, label=nimi)
+    a1.set(xlim=(-60, 60), ylim=(-110, 0), ylabel="dB")
+    a1.set_title("tasakomponentti", fontsize=9)
+    a1.legend(frameon=False, fontsize=8, loc="upper left")
+    rng = np.random.default_rng(7)
+    binni = round(50e3 / fs * n)
+    ihanne = np.exp(2j * np.pi * binni / n * k) + 1e-3 * (
+        rng.standard_normal(n) + 1j * rng.standard_normal(n))
+    eps, phi = 0.05, np.radians(3.0)
+    i, q = ihanne.real, ihanne.imag
+    z = i + 1j * (1 + eps) * (q * np.cos(phi) + i * np.sin(phi))
+    qk = z.imag - np.mean(z.real * z.imag) / np.mean(z.real**2) * z.real
+    qk *= np.sqrt(np.mean(z.real**2) / np.mean(qk**2))
+    for zz, vari, nimi in ((z, HARMAA, "5 %, 3°"),
+                           (z.real + 1j * qk, KOROSTUS, "korjattu")):
+        f, db = spektri_db(zz, fs)
+        a2.plot(f / 1e3, db, color=vari, linewidth=0.8, label=nimi)
+    a2.annotate("peilikuva", (-50, -30), xytext=(-20, -12), fontsize=8,
+                arrowprops={"arrowstyle": "->", "color": HARMAA})
+    a2.set(xlim=(-100, 100), ylim=(-110, 5))
+    a2.set_title("IQ-epätasapaino", fontsize=9)
+    a2.legend(frameon=False, fontsize=8, loc="upper right")
+    fs2 = 48e3
+    tasot_db = np.repeat([-40.0, -10.0, -25.0], round(0.1 * fs2))
+    kk = np.arange(len(tasot_db))
+    x2 = 10 ** (tasot_db / 20) * np.exp(2j * np.pi * 1e3 * kk / fs2)
+    a_isku = 1 - np.exp(-1 / (1e-3 * fs2))
+    a_pal = 1 - np.exp(-1 / (50e-3 * fs2))
+    taso = -6.0
+    vahvistus = np.empty(len(kk))
+    lahto = np.empty(len(kk))
+    for j, nayte in enumerate(x2):
+        hetki = 20 * np.log10(abs(nayte) + 1e-12)
+        taso += (a_isku if hetki > taso else a_pal) * (hetki - taso)
+        vahvistus[j] = -6.0 - taso
+        lahto[j] = hetki + vahvistus[j]
+    t = kk / fs2 * 1e3
+    a3.plot(t, tasot_db, color=HARMAA, linewidth=1.0, label="tulo")
+    a3.plot(t, lahto, color=KOROSTUS, linewidth=1.2, label="lähtö")
+    a3.set(xlabel="aika (ms)", ylabel="taso (dBFS)", ylim=(-45, 30))
+    a3.set_title("vahvistuksen säätö", fontsize=9)
+    a3.legend(frameon=False, fontsize=8, loc="upper right", ncols=2)
+    a4.plot(t, vahvistus, color=TOINEN, linewidth=1.2)
+    a4.set(xlabel="aika (ms)", ylabel="vahvistus (dB)")
+    a4.set_title("AGC:n vahvistus", fontsize=9)
+    a1.set_xlabel("taajuus (kHz)")
+    a2.set_xlabel("taajuus (kHz)")
+    fig.savefig(polku)
+
+
+def paketit(polku_vesi: Path, polku_ilmaisin: Path) -> None:
+    """Luku 7: esimerkin paketti/main.py tallenne vesiputouksena ja
+    FM-ilmaisimen lahto ensimmaisen paketin alusta."""
+    fm_lahetin = sys.modules.pop("lahetin")
+    sys.path.insert(0, str(ESIMERKIT / "paketti"))
+    import lahetin as lh
+    import vastaanotin as va
+    sys.path.pop(0)
+    sys.modules["lahetin"] = fm_lahetin
+
+    rng = np.random.default_rng(433)
+    viestit = [
+        (0.004, b"T=21.5C H=40%", 18.0, +3_100.0),
+        (0.020, b"T=21.6C H=41%", 11.0, -1_800.0),
+        (0.036, b"T=21.6C H=41%", 18.0, +3_100.0),
+        (0.0365, b"OVI AUKI", 16.0, -9_000.0),
+        (0.052, b"PARISTO OK", 7.0, +500.0),
+    ]
+    x = lh.tallenne(viestit, kesto=0.07, keskitaajuus=-150e3, rng=rng)
+    f, t, S = signal.spectrogram(x, fs=lh.FS, nperseg=256, noverlap=128,
+                                 return_onesided=False)
+    jarj = np.argsort(f)
+    fig = Figure(figsize=(6.4, 2.8), dpi=200, layout="constrained")
+    ax = fig.add_subplot()
+    db = 10 * np.log10(S[jarj] + 1e-15)
+    kuva = ax.pcolormesh(t * 1e3, f[jarj] / 1e3, db, cmap="viridis",
+                         vmin=db.max() - 35, vmax=db.max(), rasterized=True)
+    ax.set(xlabel="aika (ms)", ylabel="taajuus (kHz)", ylim=(-260, -40))
+    fig.colorbar(kuva, ax=ax, label="dB", pad=0.01)
+    fig.savefig(polku_vesi)
+
+    z = va.kanava(x, -150e3)
+    taaj = va.taajuus(z)
+    fs = lh.FS / va.DESIMOINTI
+    alku = va.hae(taaj)[0]
+    pohja = va.mallipohja()
+    osa = slice(alku - 40, alku + len(pohja) + 16 * va.SPS)
+    tt = (np.arange(osa.start, osa.stop) - alku) / fs * 1e3
+    fig = Figure(figsize=(6.4, 2.4), dpi=200, layout="constrained")
+    ax = fig.add_subplot()
+    ax.plot(tt, taaj[osa], color=KOROSTUS, linewidth=0.9,
+            label="ilmaisimen lähtö")
+    ax.plot(np.arange(len(pohja)) / fs * 1e3, pohja, color=HARMAA,
+            linewidth=0.8, linestyle="--", label="mallipohja")
+    raja = len(lh.ALKUOSA) * 8 * va.SPS / fs * 1e3
+    loppu = len(pohja) / fs * 1e3
+    ax.axvspan(raja, loppu, color=VAALEA, alpha=0.4, linewidth=0)
+    ax.axhline(0, color=VAALEA, linewidth=0.6)
+    ax.text(raja / 2, 2.0, "alkuosa 1010…", ha="center", fontsize=8)
+    ax.text((raja + loppu) / 2, 2.0, "tahdistus", ha="center", fontsize=8)
+    ax.text(loppu + 0.02, 2.0, "data", fontsize=8)
+    ax.set(xlabel="aika paketin alusta (ms)", ylim=(-2.6, 2.6),
+           ylabel="taajuus / poikkeama")
+    ax.legend(frameon=False, fontsize=8, loc="lower right", ncols=2)
+    fig.savefig(polku_ilmaisin)
+
+
 def kaista(polku: Path) -> None:
     """Luvun 1 tallenteen tehospektri (sama data kuin 01-spektri.py)."""
     fs = 912e3
@@ -93,3 +225,5 @@ if __name__ == "__main__":
     kaista(kohde / "kaista.png")
     mpx(kohde / "mpx.png")
     kynnys(kohde / "kynnys.png")
+    epaideaalisuudet(kohde / "epaideaalisuudet.png")
+    paketit(kohde / "vesiputous.png", kohde / "ilmaisin.png")

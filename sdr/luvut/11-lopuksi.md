@@ -35,7 +35,7 @@ vastaanottimen jokaisesta luvusta tiedetään, onko se oikein.
 | läpäisy | mittaa reaaliaikakertoimena; desimoi lähellä ADC:tä |
 | lähetys | vain luvalla tai luvasta vapaan käytön ehdoin |
 
-## Lähitaidot taitopuussa
+## Jatkotaidot
 
 Ohjelmistoradio on taitopuun roolin *Signaalinkäsittelyn ja
 ohjelmistoradion kehittäjä* viimeinen taito. Sitä täydentävät:

@@ -11,7 +11,9 @@ ja tulosta verrataan Python-viitteeseen.
 
 ## Lohkorajapinta ja tila
 
-Lohkokäsittelyn tärkein sääntö on, että **tuloksen on oltava sama
+Tila ja lohkoinvarianssi opetettiin taidossa *Digitaalinen
+signaalinkäsittely* FIR-suotimelle C:llä; tässä sama sääntö
+ulotetaan koko vastaanotinketjuun. Lohkokäsittelyn tärkein sääntö on, että **tuloksen on oltava sama
 lohkon koosta riippumatta**. Suotimet, oskillaattorit ja ilmaisimet
 muistavat edellisen lohkon lopun:
 
@@ -142,9 +144,10 @@ Mittaustila käsittelee 2,3 sekunnin synteettisen signaalin
 ```{.cpp tiedosto="esimerkit/08-reaaliaika/main.cpp" osa="mittaa"}
 ```
 
-Kirjoittajan koneella `-O2`-käännös käsitteli noin 29 MS/s eli noin
-30 kertaa reaaliaikaa nopeammin (`make mittaa`). Mittaus tehtiin
-kuormitetulla virtuaalikoneella, ja tulos on suuntaa-antava.
+Komento `make -C esimerkit mittaa` tulostaa läpäisyn omalla koneella.
+Tavallisella pöytäkoneen prosessorilla `-O2`-käännös käsittelee
+kymmeniä miljoonia näytteitä sekunnissa eli moninkertaisesti
+reaaliaikaa nopeammin; tarkka luku riippuu koneesta.
 Toteutus on tarkoituksella suoraviivainen. Nopeuttamiseen on useita
 tunnettuja keinoja:
 

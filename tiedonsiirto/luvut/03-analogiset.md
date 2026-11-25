@@ -50,7 +50,7 @@ ilmaistun signaalin tekijällä $\cos\varphi$:
 Kun vaihe on 90 astetta väärin, signaali katoaa kokonaan. Tämä on
 digitaalisen tiedonsiirron synkronointiongelman alkumuoto: koherentti
 ilmaisu on tehokkaampi, mutta se vaatii kantoaallon palauttamista
-(luku 8). **SSB** (*single sideband*) poistaa lisäksi toisen
+(luku 7). **SSB** (*single sideband*) poistaa lisäksi toisen
 sivukaistan ja puolittaa kaistan. Se on kantataajuudella kompleksinen
 signaali $m(t) + i\,\hat m(t)$, jossa $\hat m$ on viestin
 Hilbert-muunnos.
@@ -92,7 +92,7 @@ se lasketaan peräkkäisten näytteiden vaihe-erona: $z[n]\,z^*[n-1]$ on
 kompleksiluku, jonka kulma on vaiheen muutos näytevälissä. Menetelmä
 ei välitä signaalin amplitudista eikä alkuvaiheesta, joten sitä
 käytetään myös digitaalisen FSK:n ilmaisussa ja taajuusvirheen
-estimoinnissa (luku 8).
+estimoinnissa (luku 7).
 
 ```{.python tiedosto="esimerkit/03-fm.py" osa="demoduloi"}
 ```

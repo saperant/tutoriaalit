@@ -118,6 +118,12 @@ ja vaiheella hurina saapuu mittaukseen, ja vähentää sen.
 ```{.tuloste tiedosto="esimerkit/10-kohinanpoisto.odotettu"}
 ```
 
+![Tehospektrit mittauksen jälkipuoliskolta; vaalea käyrä on
+hyötysignaali. Kiinteä lovi jättää vaeltavan 50 Hz:n hurinan reunat ja
+koko 150 Hz:n yliaallon. Adaptiivinen suodin poistaa 50 Hz:n
+komponentin ja vaimentaa yliaaltoa noin 25
+dB.](kuvat/hurina.png){width=100%}
+
 Virhesignaali $e$ on tässä hyödyllinen ulostulo: suodin poistaa siitä
 kaiken, minkä viite selittää, ja hyötysignaali jää jäljelle, koska se
 ei korreloi viitteen kanssa. Kiinteä lovi parantaa tilannetta 10 dB,

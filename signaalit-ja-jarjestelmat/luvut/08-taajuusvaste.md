@@ -8,6 +8,21 @@ paljon suodin vahvistaa kutakin taajuutta ja kuinka paljon se siirtää
 sen vaihetta. Se on suotimen käytännöllisin kuvaus: suodin valitaan,
 dokumentoidaan ja testataan taajuusvasteen avulla.
 
+## Diskreettiaikainen Fourier-muunnos
+
+Kirjallisuudessa sama lauseke esiintyy toisellakin nimellä. Jonon
+$x[n]$ **diskreettiaikainen Fourier-muunnos** (DTFT) on
+
+$$X(e^{i\omega}) = \sum_{n=-\infty}^{\infty} x[n]\,e^{-i\omega n},$$
+
+eli Z-muunnos yksikköympyrällä. Taajuusvaste on siis impulssivasteen
+DTFT. Kolme ominaisuutta kannattaa muistaa. DTFT on jatkuvan muuttujan
+$\omega$ funktio, vaikka jono on diskreetti. Se on jaksollinen jaksolla
+$2\pi$, koska $e^{-i(\omega + 2\pi)n} = e^{-i\omega n}$; tämä on
+luvun 3 aliasointi taajuustasossa. Ja äärellisen jonon DFT on sen
+DTFT:n näytteet taajuuksilla $\omega_k = 2\pi k/N$. Seuraavan luvun
+nollilla täyttäminen ottaa samasta DTFT:stä näytteitä tiheämmin.
+
 ## Sini sisään, sini ulos
 
 Reaalinen sini on kahden kompleksisen sinin summa, joten
@@ -37,6 +52,11 @@ mitattiin osoitin.
 
 ```{.tuloste tiedosto="esimerkit/08-freqz.odotettu"}
 ```
+
+![Saman Butterworth-suotimen amplitudivaste, vaihe ja ryhmäviive
+logaritmisella taajuusakselilla. Pisteviivat osoittavat rajataajuuden
+100 Hz ja −3 dB:n tason. Vaihetta ja ryhmäviivettä käsitellään
+myöhemmin tässä luvussa.](kuvat/butterworth.png){width=100%}
 
 Mittaus ja laskelma täsmäävät neljän desimaalin tarkkuudella. Toisen
 asteen Butterworth-suotimen vahvistus on rajataajuudella
@@ -154,6 +174,17 @@ signaaliin. Jos verkkotaajuus poikkeaa 50 hertsistä, kapea lovi
 ohittaa sen. Silloin lovea levennetään pienentämällä sädettä $r$, tai
 taajuutta seurataan adaptiivisesti.
 
+Sama kuuluu äänessä. Seuraava ohjelma soittaa kolme säveltä, joiden
+päällä on voimakas 50 Hz:n hurina, ja kirjoittaa signaalin
+äänitiedostoksi ennen lovisuodinta ja sen jälkeen. Hurina katoaa, ja
+sävelet säilyvät ennallaan, koska ne ovat kaukana lovesta.
+
+```{.python tiedosto="esimerkit/08-hurina.py" osa="hurina"}
+```
+
+```{.tuloste tiedosto="esimerkit/08-hurina.odotettu"}
+```
+
 ## Käytännössä
 
 - **Anna aina `fs`**, kun käytät `freqz`-, `butter`- tai
@@ -170,6 +201,8 @@ taajuutta seurataan adaptiivisesti.
 
 ## Itsearviointi
 
+- Osaat määritellä diskreettiaikaisen Fourier-muunnoksen ja selittää
+  sen yhteyden Z-muunnokseen, taajuusvasteeseen ja DFT:hen.
 - Osaat laskea suotimen taajuusvasteen `freqz`-funktiolla hertseinä ja
   varmistaa sen sinisyötteellä.
 - Osaat tulkita amplitudivasteen desibeleinä sekä nimetä päästö-,

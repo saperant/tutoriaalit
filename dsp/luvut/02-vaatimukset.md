@@ -67,6 +67,9 @@ hylätään ennen kuin sillä suunnitellaan mitään.
 
 ## Miksi C ja Python eroavat
 
+Luvun loppuosa valmistelee lukua *FIR-suodin C:llä*: siellä sama
+suodin lasketaan kahdella kielellä, ja tulokset pitää osata verrata.
+
 Kun sama suodin lasketaan C:llä ja SciPyllä, tulokset eroavat yleensä
 viimeisissä biteissä, vaikka molemmat toteutukset ovat oikein.
 Liukulukujen yhteenlasku ei ole liitännäinen: $(a + b) + c$ ja

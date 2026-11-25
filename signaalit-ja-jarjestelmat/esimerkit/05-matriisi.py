@@ -23,5 +23,5 @@ y = np.convolve(x, h) + 0.01 * rng.normal(size=N + len(h) - 1)
 arvio, *_ = linalg.lstsq(H, y)
 arvio = np.round(arvio, 2) + 0.0
 print("palautettu x:", " ".join(f"{v:5.2f}" for v in arvio))
-print(f"kuntoluku {np.linalg.cond(H):.2f}")
+print(f"ehtoluku {np.linalg.cond(H):.2f}")
 # @loppu dekonvoluutio

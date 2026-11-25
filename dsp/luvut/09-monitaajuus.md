@@ -52,6 +52,12 @@ Nollien lisäyksen jälkeen 1 kHz:n komponentti on −12 dB, eli
 $1/L$, ja peilit 11 ja 13 kHz:llä ovat yhtä voimakkaita. Suodatuksen
 jälkeen signaali on oikealla tasolla, ja peilit ovat 103 dB alempana.
 
+![Kahden edellisen esimerkin signaalit taajuustasossa. Ylhäällä
+desimointi 48 kHz:stä 12 kHz:iin: ilman suodinta 7 kHz:n komponentti
+laskostuu 5 kHz:iin. Alhaalla interpolointi 12 kHz:stä 48 kHz:iin:
+nollien lisäys tuo peilikuvat, jotka suodin poistaa (kuvassa vahvistus
+$L$ on jo mukana).](kuvat/monitaajuus.png){width=95%}
+
 ## Polyfaasirakenteet
 
 Suora toteutus tuhlaa laskentaa. Desimoija laskee jokaisen ulostulon,

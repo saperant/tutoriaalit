@@ -14,7 +14,7 @@ aukeamaa ja lisää ISI:ä. Vastaanotin ei voi vain valita lähintä
 näytettä, koska näytteitä on tyypillisesti 2–8 symbolia kohti, ja
 paras hetki osuu niiden väliin. Siksi arvo **interpoloidaan**
 näytteiden välistä, ja interpolointikohtaa säädetään silmukalla.
-Rakenne on sama kuin luvun 8 vaihelukitussa silmukassa: virheilmaisin,
+Rakenne on sama kuin luvun 7 vaihelukitussa silmukassa: virheilmaisin,
 silmukkasuodin ja NCO, joka nyt kertyttää aikaa vaiheen sijaan.
 
 ## Gardnerin ajoitusvirheilmaisin
@@ -36,7 +36,7 @@ näytehetki liukuu 0,0002 symbolia jokaisella symbolilla. Analoginen
 signaali mallinnetaan 64 näytteellä symbolia kohti, ja vastaanotin
 näytteistää sitä kahdeksalla näytteellä symbolia kohti.
 
-```{.python tiedosto="esimerkit/09-gardner.py" osa="kanava"}
+```{.python tiedosto="esimerkit/08-gardner.py" osa="kanava"}
 ```
 
 Silmukka lukee näytteen murtoindeksistä lineaarisella interpoloinnilla.
@@ -44,17 +44,17 @@ Tuotantovastaanottimissa käytetään kuutiollista Farrow-interpolaattoria
 tai polyfaasisuodinpankkia, jotka ovat tarkempia pienemmällä
 ylinäytteistyksellä.
 
-```{.python tiedosto="esimerkit/09-gardner.py" osa="gardner"}
+```{.python tiedosto="esimerkit/08-gardner.py" osa="gardner"}
 ```
 
 Mallista tiedetään oikeat symbolihetket, joten tulosta voi verrata
 niihin. Vertailukohtana on vastaanotin, joka ottaa yksinkertaisesti
 joka kahdeksannen näytteen.
 
-```{.python tiedosto="esimerkit/09-gardner.py" osa="tulos"}
+```{.python tiedosto="esimerkit/08-gardner.py" osa="tulos"}
 ```
 
-```{.tuloste tiedosto="esimerkit/09-gardner.odotettu"}
+```{.tuloste tiedosto="esimerkit/08-gardner.odotettu"}
 ```
 
 Ilman tahdistusta EVM kasvaa paketin aikana, koska näytehetki liukuu
@@ -75,7 +75,7 @@ väärien osumien todennäköisyys on pieni ja paikka tarkka.
 **Barker-koodit** ovat lyhyitä binäärijonoja, joiden autokorrelaation
 sivukeilat ovat enintään 1.
 
-```{.python tiedosto="esimerkit/09-kehys.py" osa="barker"}
+```{.python tiedosto="esimerkit/08-kehys.py" osa="barker"}
 ```
 
 Vastaanotin ei tiedä kantoaallon vaihetta, joten korrelaation
@@ -84,10 +84,10 @@ vastaanotetun signaalin energiaan samassa ikkunassa, jolloin se ei
 riipu vastaanotetun signaalin tasosta. Kun kynnys ylittyy, valitaan
 suurin huippu seuraavan alkuosan pituuden sisältä.
 
-```{.python tiedosto="esimerkit/09-kehys.py" osa="etsi"}
+```{.python tiedosto="esimerkit/08-kehys.py" osa="etsi"}
 ```
 
-```{.tuloste tiedosto="esimerkit/09-kehys.odotettu"}
+```{.tuloste tiedosto="esimerkit/08-kehys.odotettu"}
 ```
 
 Kaikki viisi kehystä löytyvät oikeista kohdista, vaikka
@@ -97,6 +97,13 @@ enintään 0,38, joten kynnykselle 0,5 jää marginaalia kumpaankin
 suuntaan. Taajuusvirhe kiertää vaihetta alkuosan aikana 19 astetta ja
 pienentää korrelaatiohuippua hieman. Paljon suuremmalla taajuusvirheellä
 alkuosa jaetaan osiin, joiden korrelaatioiden itseisarvot summataan.
+
+Sama mekanismi on **hajaspektritekniikan** perusta.
+Suorasekvenssijärjestelmässä jokainen databitti kerrotaan pitkällä
+tunnetulla jonolla, ja vastaanotin korreloi jonon kanssa: signaali kasautuu
+huipuksi, kohina ja muut käyttäjät eivät. Korrelaation tuoma
+**käsittelyvahvistus** on jonon pituus, 13 alkion Barker-koodilla
+noin 11 dB. GPS ja 802.11b toimivat näin.
 
 ## Käytännössä
 

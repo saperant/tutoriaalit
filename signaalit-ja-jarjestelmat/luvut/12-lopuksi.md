@@ -30,7 +30,7 @@ luvut, miten spektriä mitataan luotettavasti.
 | pitkä konvoluutio | FFT (`fftconvolve`, `oaconvolve`) |
 | testaus | ominaisuudet, referenssi, vaatimukset, rajatapaukset |
 
-## Jatkotaidot taitopuussa
+## Jatkotaidot
 
 - *Digitaalinen signaalinkäsittely* suunnittelee suotimet, joita tässä
   vain analysoitiin: FIR-ikkunamenetelmä, IIR-suotimet, kertoimien

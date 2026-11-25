@@ -118,8 +118,95 @@ def ber(polku: Path) -> None:
     fig.savefig(polku)
 
 
+TOINEN = "#C2571A"
+ESIMERKIT = Path(__file__).resolve().parent.parent / "esimerkit"
+
+
+def gray(i: int) -> int:
+    return i ^ (i >> 1)
+
+
+def konstellaatiot(polku: Path) -> None:
+    """Luku 4: esimerkin 04-konstellaatiot pisteet, nimiöt ja dmin."""
+    def psk(M: int) -> np.ndarray:
+        p = np.empty(M, dtype=complex)
+        for k in range(M):
+            p[gray(k)] = np.exp(2j * np.pi * k / M)
+        return p * np.exp(1j * np.pi / 4) if M == 4 else p
+
+    def qam(M: int) -> np.ndarray:
+        L = round(np.sqrt(M))
+        b = L.bit_length() - 1
+        p = np.empty(M, dtype=complex)
+        for i in range(L):
+            for q in range(L):
+                p[(gray(i) << b) | gray(q)] = (2 * i - L + 1) + 1j * (
+                    2 * q - L + 1)
+        return p / np.sqrt(np.mean(np.abs(p) ** 2))
+
+    fig = Figure(figsize=(6.8, 2.5), dpi=200, layout="constrained")
+    akselit = fig.subplots(1, 4)
+    for ax, (nimi, p) in zip(akselit, (("QPSK", psk(4)), ("8-PSK", psk(8)),
+                                       ("16-PSK", psk(16)),
+                                       ("16-QAM", qam(16))), strict=True):
+        d = np.abs(p[:, None] - p[None, :])
+        dmin = np.min(d[d > 1e-9])
+        a, b = np.argwhere(np.abs(d - dmin) < 1e-9)[0]
+        ax.axhline(0, color=VAALEA, linewidth=0.6)
+        ax.axvline(0, color=VAALEA, linewidth=0.6)
+        ax.plot(p.real, p.imag, "o", color=KOROSTUS, markersize=3.5)
+        ax.plot([p[a].real, p[b].real], [p[a].imag, p[b].imag],
+                color=TOINEN, linewidth=2)
+        bitit = len(p).bit_length() - 1
+        if len(p) <= 8 or nimi == "16-QAM":
+            for nimio, z in enumerate(p):
+                ax.annotate(f"{nimio:0{bitit}b}", (z.real, z.imag),
+                            textcoords="offset points", xytext=(0, 4),
+                            ha="center", fontsize=5.5)
+        ax.set(aspect="equal", xlim=(-1.55, 1.55), ylim=(-1.55, 1.55),
+               xticks=[], yticks=[])
+        ax.set_title(f"{nimi}, $d_{{min}}$ = {dmin:.3f}".replace(".", ","),
+                     fontsize=8.5)
+        for reuna in ax.spines.values():
+            reuna.set_visible(False)
+    fig.savefig(polku)
+
+
+def lue_taulukko(nimi: str, riveja: int) -> np.ndarray:
+    """Lukee testatun tulosteen rivit 'x dB a b c' taulukoksi."""
+    rivit = (ESIMERKIT / nimi).read_text("utf-8").splitlines()
+    alku = next(i for i, r in enumerate(rivit) if r.startswith("Eb/N0"))
+    return np.array([[float(x) for x in r.replace("dB", "").split()]
+                     for r in rivit[alku + 1:alku + 1 + riveja]])
+
+
+def koodaus(polku: Path) -> None:
+    """Luku 9: koodausvahvistus testattujen esimerkkien tulosteista."""
+    hamming = lue_taulukko("09-hamming.odotettu", 3)
+    konv = lue_taulukko("09-viterbi.odotettu", 4)
+    EbN0_dB = np.linspace(0, 9, 181)
+    fig = Figure(figsize=(5.6, 3.1), dpi=200, layout="constrained")
+    ax = fig.add_subplot()
+    ax.semilogy(EbN0_dB, Q(np.sqrt(2 * 10 ** (EbN0_dB / 10))), color="black",
+                linewidth=1.2, label="koodaamaton BPSK (teoria)")
+    sarjat = ((hamming, 2, "s", HARMAA, "--", "Hamming (7,4), kova"),
+              (hamming, 3, "s", HARMAA, "-", "Hamming (7,4), pehmeä"),
+              (konv, 2, "o", KOROSTUS, "--", "konvoluutiokoodi, kova"),
+              (konv, 3, "o", KOROSTUS, "-", "konvoluutiokoodi, pehmeä"))
+    for data, sarake, merkki, vari, viiva, nimi in sarjat:
+        ax.semilogy(data[:, 0], data[:, sarake], viiva, marker=merkki,
+                    color=vari, linewidth=1.1, markersize=4, label=nimi)
+    ax.set(xlabel="Eb/N0 (dB)", ylabel="bittivirhesuhde", xlim=(0, 9),
+           ylim=(3e-6, 0.2))
+    ax.grid(alpha=0.3, which="both")
+    ax.legend(frameon=False, fontsize=7.5, loc="lower left")
+    fig.savefig(polku)
+
+
 if __name__ == "__main__":
     kohde = Path(sys.argv[1] if len(sys.argv) > 1 else ".")
     konstellaatio(kohde / "konstellaatio.png")
     silma(kohde / "silma.png")
     ber(kohde / "ber.png")
+    konstellaatiot(kohde / "konstellaatiot.png")
+    koodaus(kohde / "koodaus.png")

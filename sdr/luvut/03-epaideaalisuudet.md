@@ -18,9 +18,9 @@ RTL-SDR:n tunnetuin ominaisuus.
 ```
 
 **DC-esto** on derivaattori ja napa yksikköympyrän lähellä. Se on
-kapea lovi nollataajuudella. Kertoimella $a = 0{,}999$ lovi on noin
-145 Hz leveä 912 kS/s:lla, eikä 30 kHz:n signaali vaimene
-lainkaan:
+kapea lovi nollataajuudella. Kertoimella $a = 0{,}999$ loven −3 dB:n
+raja on noin 145 Hz:n päässä nollataajuudesta 912 kS/s:lla (lovi on
+siis noin 290 Hz leveä), eikä 30 kHz:n signaali vaimene lainkaan:
 
 ```{.python tiedosto="esimerkit/03-dc.py" osa="esto"}
 ```
@@ -114,6 +114,13 @@ hidas: kun signaali heikkenee 200 ms:n kohdalla, taso on 80 ms
 myöhemminkin vielä 3 dB tavoitteen alapuolella. Pakettiradioissa AGC lukitaan tämän vuoksi
 alkuosan ajaksi, ja vahvistus pidetään vakiona koko paketin ajan.
 
+![Luvun kolme ensimmäistä ilmiötä esimerkkien parametreilla. Ylhäällä
+spektrit: tasakomponentti on piikki nollataajuudella ja IQ-epätasapaino
+peilikuva taajuudella $-f$; kumpikin katoaa korjauksessa. Alhaalla
+AGC: kun tulo nousee 30 dB, lähtö ylittää tavoitteen hetkeksi ja
+vahvistus putoaa millisekunnissa; kun tulo laskee, vahvistus palautuu
+hitaasti.](kuvat/epaideaalisuudet.png){width=100%}
+
 ## Kiteen taajuusvirhe
 
 Edullisen RTL-SDR:n 28,8 MHz:n kiteen tarkkuus on kymmeniä
@@ -141,8 +148,8 @@ logaritmeihin antaa huipun murto-osan tarkkuudella.
 ```
 
 Korjaus annetaan laitteelle (`rtl_sdr -p 37`) tai tehdään
-digitaalisella sekoituksella. Ppm-virhe ei korjaa näytetaajuuden
-virhettä, mutta se on yleensä merkityksetön: 37 ppm:n virhe
+digitaalisella sekoituksella. Ppm-korjaus (`-p`) ei korjaa
+näytetaajuuden virhettä, mutta se on yleensä merkityksetön: 37 ppm:n virhe
 näytetaajuudessa muuttaa 1187,5 bit/s:n bittinopeutta 0,04 bit/s.
 Pitkissä tallenteissa ja tarkoissa ajoituksissa sekin pitää
 huomioida. Kalliimmissa laitteissa on lämpötilakompensoitu kide

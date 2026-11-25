@@ -132,6 +132,47 @@ kokonaislukuviiveellä. `firwin` kieltäytyy tekemästä parillisen
 pituuden ylipäästöä, koska vaste Nyquistin taajuudella olisi pakosta
 nolla.
 
+## Hilbert-muunnin ja analyyttinen signaali
+
+Antisymmetrisen tyypin tärkein käyttö on **Hilbert-muunnin**: suodin,
+joka jättää kaikkien taajuuksien amplitudin ennalleen mutta siirtää
+vaihetta 90 astetta. Kun reaalisesta signaalista $x$ tehdään sillä
+toinen haara $q$, pari $x + iq$ on **analyyttinen signaali**, jossa on
+vain positiivisia taajuuksia. Sen itseisarvo on signaalin
+**verhokäyrä** ja sen kulman muutosnopeus hetkellinen taajuus. Samaan
+esitykseen perustuvat jatkotaitojen IQ-näytteet, verhokäyräilmaisin ja
+FM-ilmaisin.
+
+Ideaalinen muunnin ei ole toteutettavissa, koska vaste hyppää
+nollataajuudella arvosta $+i$ arvoon $-i$. Siksi suodin suunnitellaan
+kaistalle, tässä 300–3 700 Hz, ja `remez` saa tehtäväkseen tyypin
+`"hilbert"`. Pariton pituus (tyyppi III) antaa kokonaisen näytemäärän
+viiveen, joten suoran haaran voi viivästää täsmälleen saman verran.
+
+```{.python tiedosto="esimerkit/04-hilbert.py" osa="suunnittelu"}
+```
+
+Kokeillaan muunninta amplitudimoduloituun signaaliin: 1 kHz:n
+kantoaaltoon, jonka amplitudi vaihtelee 20 Hz:n tahdissa. Verhokäyrä
+saadaan ilman, että kantoaallon taajuutta tai vaihetta tarvitsee
+tuntea.
+
+```{.python tiedosto="esimerkit/04-hilbert.py" osa="verho"}
+```
+
+```{.tuloste tiedosto="esimerkit/04-hilbert.odotettu"}
+```
+
+![Amplitudimoduloitu signaali (viivästetty haara) ja analyyttisen
+signaalin itseisarvo, joka seuraa
+verhokäyrää.](kuvat/hilbert.png){width=95%}
+
+Kaistan symmetrisyys Nyquistin taajuuden puolivälin suhteen tekee joka
+toisesta kertoimesta nollan, joten kertolaskuja on puolet vähemmän.
+`scipy.signal.hilbert` laskee analyyttisen signaalin FFT:llä koko
+jonolle kerralla; FIR-muunnin sopii virtaavaan käsittelyyn, jossa
+signaali tulee lohkoina.
+
 ## Käytännössä
 
 - **Käytä `remez`-funktiota**, kun laskenta maksaa, ja anna painot
@@ -157,3 +198,5 @@ nolla.
   lyhimmän vaatimuksen täyttävän pituuden.
 - Osaat nimetä lineaarivaiheisten suotimien tyypit ja kertoa, mihin
   suotimiin kukin ei sovi.
+- Osaat suunnitella Hilbert-muuntimen, muodostaa analyyttisen signaalin
+  viivästetyn haaran kanssa ja laskea siitä verhokäyrän.

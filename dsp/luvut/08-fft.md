@@ -1,8 +1,9 @@
-# FFT ja spektrianalyysi
+# FFT, nopea konvoluutio ja Goertzel
 
 Taito *Kompleksiluvut ja Fourier-analyysi* esitteli DFT:n
 kannanvaihtona ja FFT:n ideana, ja taito *Signaalit ja järjestelmät*
-käytti `numpy.fft`-funktiota spektrin mittaamiseen. Tässä luvussa FFT
+käytti `numpy.fft`-funktiota spektrin mittaamiseen; spektrianalyysin
+käytäntö (ikkunat, vuotaminen, Welch) on siellä. Tässä luvussa FFT
 toteutetaan itse C:llä. Sitten sitä käytetään pitkän suotimen
 laskemiseen lohkoittain, ja lopuksi katsotaan, milloin koko FFT on
 tarpeeton.

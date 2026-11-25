@@ -26,20 +26,34 @@ taajuus- ja vaihevirheen sekä kohinan:
 
 ## Vastaanotin
 
-Vastaanotin tekee vaiheet luvun 9 suosittelemassa järjestyksessä:
+Vastaanotin tekee vaiheet luvun 8 suosittelemassa järjestyksessä:
 
 1. **Sovitettu suodin** (luku 5).
 2. **Kehys ja ajoitus**: alkuosan korrelaatio jokaisella näytteellä.
    Suurin itseisarvo kertoo sekä kehyksen alun että parhaan
-   näytevaiheen (luku 9). Tässä yksinkertaisessa vastaanottimessa
+   näytevaiheen (luku 8). Tässä yksinkertaisessa vastaanottimessa
    kellovirhettä ei ole, joten näytevaihe pysyy paketin ajan samana.
 3. **Karkea taajuus**: alkuosan puoliskojen vaihe-ero. Kun alkuosan
    modulaatio poistetaan kertomalla sen konjugaatilla, jäljelle jää
    kanavan kierto, joka kasvaa taajuusvirheen verran 13 symbolissa.
 4. **Vaihe**: korrelaatio alkuosaan taajuuskorjauksen jälkeen. Koska
-   alkuosa tunnetaan, neljän kulman epävarmuutta ei synny (luku 8).
+   alkuosa tunnetaan, neljän kulman epävarmuutta ei synny (luku 7).
 5. **Vaiheen seuranta**: päätösohjattu toisen asteen silmukka.
 6. **Päätökset ja CRC.**
+
+```{.dot otsikko="Pakettivastaanottimen vaiheet. Alkuosaa käytetään kolmeen estimaattiin; silmukka seuraa vaihetta paketin loppuun."}
+digraph vastaanotin {
+  rankdir=LR; nodesep=0.2; ranksep=0.25;
+  node [shape=box, fontsize=10];
+  suodin [label="sovitettu\nsuodin"];
+  kehys [label="kehys ja\najoitus"];
+  taajuus [label="karkea\ntaajuus"];
+  vaihe [label="vaihe"];
+  seuranta [label="vaiheen\nseuranta"];
+  paatos [label="päätökset\nja CRC"];
+  suodin -> kehys -> taajuus -> vaihe -> seuranta -> paatos;
+}
+```
 
 ```{.python tiedosto="esimerkit/11-linkki/linkki.py" osa="vastaanotin"}
 ```
@@ -116,7 +130,7 @@ bitissä ei ole yhtään virhettä, 95 %:n yläraja on noin $3/n$:
 ```{.tuloste tiedosto="esimerkit/11-luottamus.odotettu"}
 ```
 
-Siksi luvun 6 simulaatio jatkui, kunnes virheitä oli 400, ja luvun 10
+Siksi luvun 6 simulaatio jatkui, kunnes virheitä oli 400, ja luvun 9
 tulos yhdellä virheellä oli vain suuntaa antava. Pienten
 virhesuhteiden simulointi on kallista: $10^{-6}$ ja sata virhettä vaatii
 sata miljoonaa bittiä. Kun tarvitaan pienempiä virhesuhteita, käytetään

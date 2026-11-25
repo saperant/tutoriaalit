@@ -1,0 +1,9 @@
+antisymmetrinen: True
+joka toinen kerroin nolla: True
+   500 Hz  |H| 1.0000  vaihe  -90.0 astetta
+  1000 Hz  |H| 0.9998  vaihe  -90.0 astetta
+  2000 Hz  |H| 0.9998  vaihe  -90.0 astetta
+  3500 Hz  |H| 1.0000  vaihe  -90.0 astetta
+verhokayran suurin virhe 0.0002
+hetkellinen taajuus 1000.0 Hz
+scipy.signal.hilbert antaa saman verhon: True

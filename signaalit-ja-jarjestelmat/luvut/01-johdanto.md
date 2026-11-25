@@ -52,7 +52,7 @@ tutoriaali on tämän esimerkin laajennus: miksi impulssivaste riittää
 napoja ja nollia luetaan (luku 7) ja miten taajuusvastetta tulkitaan
 (luku 8).
 
-## Kenelle ja mitä tarvitaan
+## Esitiedot ja rajaus
 
 Lukija osaa Pythonin ja NumPyn perusteet (taito *Python
 työkaluohjelmointiin*) sekä kompleksiluvut, Eulerin kaavan,
@@ -62,6 +62,16 @@ FFT-luvut ovat tämän tutoriaalin suoria edeltäjiä, eikä niiden asioita
 toisteta. Tässä keskitytään siihen, mitä ne jättivät auki: näytteistykseen,
 järjestelmien ominaisuuksiin, Z-muunnokseen ja spektrianalyysin
 käytännön kysymyksiin.
+
+Suodinsuunnittelu (FIR-ikkunamenetelmä, IIR-suotimet bilineaarimuunnoksella,
+kertoimien kvantisointi ja monitaajuuskäsittely) on taidon *Digitaalinen
+signaalinkäsittely* aihe. Tässä käytetään valmiita suunnittelufunktioita
+(`butter`, `firwin`, `iirnotch`) ja keskitytään siihen, miten tuloksena
+saatua suodinta analysoidaan. Jatkuva-aikaisia järjestelmiä ja
+Laplace-muunnosta käsitellään vain sen verran kuin näytteistys vaatii;
+ne sekä s-tason ja z-tason yhteys ovat taidossa *Differentiaaliyhtälöt
+ja Laplace-muunnos*. Modulaatiot ja vastaanottimet ovat taitojen
+*Digitaalinen tiedonsiirto* ja *Ohjelmistoradio* aiheita.
 
 | Luku | Kysymys |
 |------|---------|
@@ -105,17 +115,10 @@ ovat samat joka koneella. Luvun 11 kirjasto testataan pytestillä.
 Kehityskontissa (`.devcontainer/signaalit-ja-jarjestelmat`) on kaikki
 tarvittava.
 
+Yksittäinen esimerkki ajetaan komennolla
+`python3 esimerkit/03-aliasointi.py`. Kaksi esimerkkiä kirjoittaa
+äänitiedoston (WAV) työhakemistoon, jotta tuloksen voi kuunnella.
 Tutoriaalin kuvat piirretään matplotlibilla skriptillä
 `kuvat/piirra.py` (`make kuvat`), ja niiden luvut lasketaan samoin kuin
 testatuissa esimerkeissä.
 
-## Mitä tutoriaali ei kata
-
-Suodinsuunnittelu (FIR-ikkunamenetelmä, IIR-suotimet bilineaarimuunnoksella,
-kertoimien kvantisointi ja monitaajuuskäsittely) on taidon *Digitaalinen
-signaalinkäsittely* aihe. Tässä käytetään valmiita suunnittelufunktioita
-(`butter`, `firwin`, `iirnotch`) ja keskitytään siihen, miten tuloksena
-saatua suodinta analysoidaan. Jatkuva-aikaisia järjestelmiä ja
-Laplace-muunnosta käsitellään vain sen verran kuin näytteistys vaatii.
-Modulaatiot ja vastaanottimet ovat taitojen *Digitaalinen tiedonsiirto* ja
-*Ohjelmistoradio* aiheita.

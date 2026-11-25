@@ -30,10 +30,11 @@ kanavan taajuuskorjauksessa ja kuvan terävöinnissä.
 ```{.tuloste tiedosto="esimerkit/05-matriisi.odotettu"}
 ```
 
-Kuntoluku kertoo, kuinka paljon mittauskohina voimistuu ratkaisussa.
+Ehtoluku (taito *Lineaarialgebra*) kertoo, kuinka paljon mittauskohina
+voimistuu ratkaisussa.
 Tässä se on pieni, koska kanava ei vaimenna mitään taajuutta voimakkaasti.
 Jos kanavan taajuusvasteessa on nolla, vastaava taajuus on kadonnut
-lopullisesti, kuntoluku kasvaa rajatta, ja dekonvoluutio vahvistaa
+lopullisesti, ehtoluku kasvaa rajatta, ja dekonvoluutio vahvistaa
 kohinaa. Silloin ratkaisua on regularisoitava, mistä esimerkki on
 Wiener-suodin.
 
@@ -108,7 +109,7 @@ laskea käsin.
   pulssi, jonka autokorrelaatio on kapea (pyyhkäisy, pseudosatunnainen
   jono), ja muunna indeksit siirroiksi `correlation_lags`-funktiolla.
 - **Varo dekonvoluutiota.** Jos kanava vaimentaa jotain taajuutta
-  voimakkaasti, suoran ratkaisun kohina räjähtää. Tarkista kuntoluku.
+  voimakkaasti, suoran ratkaisun kohina räjähtää. Tarkista ehtoluku.
 
 ## Itsearviointi
 

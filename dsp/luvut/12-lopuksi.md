@@ -31,7 +31,7 @@ signaalinkäsittelyn hiljaiset virheet löytyvät ennen laitetta.
 | reaaliaika | ei muistinvarausta, lukkoja eikä I/O:ta; jonot laitteen ja käsittelyn välillä |
 | testaus | lohkoittain = kerralla; C vs. Python toleranssilla; kiinteä pilkku bitilleen |
 
-## Jatkotaidot taitopuussa
+## Jatkotaidot
 
 - *DSP-algoritmien laitteistototeutus* vie tämän tutoriaalin FIR- ja
   biquad-rakenteet, polyfaasisuotimet ja CIC:n laitteistoksi: kiinteän

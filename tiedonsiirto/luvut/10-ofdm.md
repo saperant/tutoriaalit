@@ -1,6 +1,8 @@
 # OFDM
 
-Kun symbolinopeus kasvaa, monitiekanavan viive-erot ylittävät
+Edelliset luvut rakensivat yhden kantoaallon ketjun: pulssit,
+tahdistuksen ja koodauksen. Tämä luku esittelee toisen tavan järjestää
+sama ketju, ja se nojaa kaikkiin kolmeen. Kun symbolinopeus kasvaa, monitiekanavan viive-erot ylittävät
 symbolin keston, ja jokainen symboli vuotaa seuraaviin. Yhden
 kantoaallon järjestelmä tarvitsee silloin pitkän ja laskennallisesti
 raskaan taajuuskorjaimen. **OFDM** (*orthogonal frequency division
@@ -26,7 +28,7 @@ pois, ja jäljelle jäävä osa on lähetetyn symbolin syklinen konvoluutio
 kanavan kanssa. Silloin FFT:n jälkeen jokainen alikantoaalto on vain
 kerrottu kanavan taajuusvasteella $H[k]$.
 
-```{.python tiedosto="esimerkit/07-ofdm.py" osa="lahetin"}
+```{.python tiedosto="esimerkit/10-ofdm.py" osa="lahetin"}
 ```
 
 Kanava on kahdeksan näytteen pituinen monitie. Vastaanotin tuntee
@@ -34,10 +36,10 @@ kanavan (käytännössä se estimoidaan tunnetuista pilottisymboleista) ja
 jakaa kunkin alikantoaallon arvon sen kanavakertoimella: **yhden
 kertoimen taajuuskorjain**.
 
-```{.python tiedosto="esimerkit/07-ofdm.py" osa="kanava"}
+```{.python tiedosto="esimerkit/10-ofdm.py" osa="kanava"}
 ```
 
-```{.tuloste tiedosto="esimerkit/07-ofdm.odotettu"}
+```{.tuloste tiedosto="esimerkit/10-ofdm.odotettu"}
 ```
 
 Ilman etuliitettä edellinen symboli vuotaa seuraavaan, ja
@@ -57,7 +59,7 @@ alikantoaalloilla taajuuskorjaus jakaa signaalin pienellä luvulla ja
 vahvistaa samalla kohinaa, minkä vuoksi EVM jää 4,6 %:iin, vaikka
 lähetettyä kohinaa vastaava taso olisi 3 %. Ilman kanavakoodausta
 OFDM:n bittivirhesuhteen ratkaisevat heikoimmat alikantoaallot.
-Koodaus ja lomitus alikantoaaltojen yli muuttavat
+Edellisen luvun koodaus ja lomitus alikantoaaltojen yli muuttavat
 taajuusselektiivisyyden diversiteetiksi: heikkojen alikantoaaltojen
 bitit korjataan vahvojen avulla. Siksi kaikki OFDM-järjestelmät
 käyttävät koodausta.
@@ -70,7 +72,7 @@ kohdalla jakamalla: $\hat H[k] = Y[k]/X[k]$. Muiden alikantoaaltojen
 kanava interpoloidaan. Kokeessa joka neljäs alikantoaalto on pilotti,
 ja signaali-kohinasuhde on 25 dB.
 
-```{.python tiedosto="esimerkit/07-pilotit.py" osa="pilotit"}
+```{.python tiedosto="esimerkit/10-pilotit.py" osa="pilotit"}
 ```
 
 Lineaarinen interpolointi pilottien välillä on yksinkertaisin
@@ -81,10 +83,10 @@ ylimääräiset näytteet ovat pelkkää kohinaa, ja ne nollataan ennen kuin
 vaste muunnetaan takaisin taajuustasoon. Jos kanava pysyy samana,
 estimaatteja voi lisäksi keskiarvoistaa symbolien yli.
 
-```{.python tiedosto="esimerkit/07-pilotit.py" osa="estimoi"}
+```{.python tiedosto="esimerkit/10-pilotit.py" osa="estimoi"}
 ```
 
-```{.tuloste tiedosto="esimerkit/07-pilotit.odotettu"}
+```{.tuloste tiedosto="esimerkit/10-pilotit.odotettu"}
 ```
 
 Lineaarinen interpolointi epäonnistuu, koska kanava muuttuu nopeasti
@@ -103,7 +105,7 @@ Monen itsenäisen alikantoaallon summa on keskeisen raja-arvolauseen
 mukaan lähes normaalijakautunut, joten aikatason näytteissä on suuria
 huippuja.
 
-```{.python tiedosto="esimerkit/07-ofdm.py" osa="papr"}
+```{.python tiedosto="esimerkit/10-ofdm.py" osa="papr"}
 ```
 
 Noin joka 600. näyte on yli 8 dB keskitehon yläpuolella. Tehovahvistimen
@@ -116,8 +118,8 @@ DFT-esikoodattu OFDM pienemmillä huipuilla.
 
 OFDM on herkkä taajuusvirheelle: jo pieni osa alikantoaaltovälistä
 rikkoo ortogonaalisuuden, ja alikantoaallot vuotavat toisiinsa.
-Taajuusvirhe estimoidaan tavallisesti toistuvasta alkuosasta samaan
-tapaan kuin luvussa 11. Ajoitukselle OFDM on sen sijaan armollinen: kun
+Taajuusvirhe estimoidaan tavallisesti toistuvasta alkuosasta; saman
+menetelmän yhden kantoaallon versio on seuraavan luvun vastaanottimessa. Ajoitukselle OFDM on sen sijaan armollinen: kun
 ikkuna osuu etuliitteen sisään, ajoitusvirhe näkyy vain lineaarisena
 vaiheena alikantoaaltojen yli ja korjautuu kanavaestimaatissa.
 

@@ -1,5 +1,8 @@
 """Ensimmainen suodin: vaatimuksista kertoimiin ja tarkistukseen."""
 
+import wave
+from pathlib import Path
+
 import numpy as np
 from scipy import signal
 
@@ -46,3 +49,20 @@ def snr(arvio: np.ndarray, viite: np.ndarray) -> float:
 print(f"SNR ennen {snr((puhdas + hairio)[alku:], puhdas[alku:]):5.1f} dB")
 print(f"SNR jalkeen {snr(y[alku:], puhdas[alku - viive:-viive]):5.1f} dB")
 # @loppu kaytto
+
+
+# @alku aani
+def kirjoita_wav(polku: Path, x: np.ndarray) -> None:
+    """16-bittinen mono-WAV standardikirjaston wave-moduulilla."""
+    naytteet = np.round(np.clip(0.4 * x, -1, 1) * 32767).astype("<i2")
+    with wave.open(str(polku), "wb") as w:
+        w.setnchannels(1)
+        w.setsampwidth(2)
+        w.setframerate(int(fs))
+        w.writeframes(naytteet.tobytes())
+
+
+kirjoita_wav(Path("ennen.wav"), puhdas + hairio)
+kirjoita_wav(Path("jalkeen.wav"), y)
+print(f"ennen.wav ja jalkeen.wav: {n.size / fs:.0f} s, {fs:.0f} Hz")
+# @loppu aani
