@@ -37,10 +37,13 @@ Politiikka on *lupa* eikä käsky:
   muistia, koska kaksi lomitettua kutsua samassa säikeessä voisi lukkiutua.
 
 GCC:n libstdc++ toteuttaa rinnakkaiset politiikat Intelin TBB-kirjaston
-avulla. Jos TBB:tä ei ole asennettu, ohjelma kääntyy ja toimii, mutta
-algoritmit ajetaan sarjallisesti. Tämän tutoriaalin testiympäristössä on
-juuri niin, joten esimerkki osoittaa vain, että tulokset ovat oikeat.
-TBB:n kanssa ohjelma linkitetään valitsimella `-ltbb`. NVIDIA:n `nvc++`
+avulla. Jos TBB:n otsakkeita ei löydy, ohjelma kääntyy ja toimii, mutta
+algoritmit ajetaan sarjallisesti. Jos otsakkeet löytyvät, libstdc++
+valitsee TBB:n automaattisesti, ja ohjelma on linkitettävä valitsimella
+`-ltbb`; muuten linkitys epäonnistuu. Esimerkki valitsee siksi
+sarjallisen taustan itse makrolla `_GLIBCXX_USE_TBB_PAR_BACKEND`, jolloin
+se toimii samoin kaikilla koneilla ja osoittaa vain, että tulokset ovat
+oikeat. NVIDIA:n `nvc++`
 ajaa samat algoritmit näytönohjaimella (`-stdpar`).
 
 ## Reduktio

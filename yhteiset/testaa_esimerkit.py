@@ -611,6 +611,13 @@ def tarkista_projekti(juuri: Path) -> int:
 
 
 def main() -> int:
+    # CI:ssä tuloste voi olla estämätön putki, jolloin pitkä virheraportti
+    # kaatuisi BlockingIOErroriin ja varsinainen virhe jäisi näkymättä.
+    for virta in (sys.stdout, sys.stderr):
+        try:
+            os.set_blocking(virta.fileno(), True)
+        except (OSError, ValueError, AttributeError):
+            pass
     jasennin = argparse.ArgumentParser(
         description="Testaa tutoriaalin koodiesimerkit.")
     jasennin.add_argument("--kieli", choices=sorted(KIELET), default="cpp")

@@ -1,6 +1,11 @@
 // TSAN
 // Standardikirjaston rinnakkaiset algoritmit: suorituspolitiikka on
 // lupa rinnakkaistaa, ei käsky. Tulos ei saa riippua järjestyksestä.
+//
+// libstdc++ valitsee TBB-taustan, jos TBB:n otsakkeet löytyvät, ja silloin
+// ohjelma pitää linkittää valitsimella -ltbb. Esimerkki valitsee
+// sarjallisen taustan itse, jotta se kääntyy samoin joka koneella.
+#define _GLIBCXX_USE_TBB_PAR_BACKEND 0
 #include <algorithm>
 #include <cstdint>
 #include <execution>
