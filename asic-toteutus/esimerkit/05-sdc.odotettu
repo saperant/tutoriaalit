@@ -1,8 +1,9 @@
 kertoja2.sdc: jakso 1.4 ns, monisyklejä 0, vääriä polkuja 0
-  pahin asetus a_r[7] -> tulo[15] -1.337 ns
-  pahin pito   tulo[3] -> tulo[3] +0.281 ns
-  kertojan pahin a_r[7] -> tulo[15] -1.337 ns
+  pahin asetus a_r[7] -> tulo[15] -1.300 ns
+  pahin pito   tulo[10] -> tulo[10] +0.281 ns
+  kertojan pahin a_r[7] -> tulo[15] -1.300 ns
 kertoja2_mc.sdc: jakso 1.4 ns, monisyklejä 2, vääriä polkuja 1
-  pahin asetus vaihe -> tulo[7] -0.312 ns
-  pahin pito   tulo[3] -> tulo[3] +0.281 ns
-  kertojan pahin a_r[7] -> tulo[15] +0.063 ns
+  pahin asetus vaihe -> tulo[11] -0.267 ns
+  pahin pito   tulo[10] -> tulo[10] +0.281 ns
+  kertojan pahin a_r[7] -> tulo[15] +0.100 ns
+RTL-simulointi: tulo latautui 19 kertaa, lyhin aika tulojen muutoksesta 2 jaksoa

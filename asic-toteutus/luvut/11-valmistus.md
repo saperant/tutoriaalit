@@ -22,6 +22,15 @@ jakautuneiksi, Murphyn malli huomioi niiden kasautumisen.
 ```{.tuloste tiedosto="esimerkit/11-saanto.odotettu"}
 ```
 
+![Sama satunnainen virhejoukko (79 virhettä kiekolla, eli tulosteen
+virhetiheys) kahdella piirikoolla. Punaiseen piiriin on osunut
+vähintään yksi virhe. Suuria piirejä mahtuu kiekolle vähemmän, ja
+niistä suurempi osa on viallisia.](kuvat/kiekko.png){width=92%}
+
+![Saantomallit ja toimivan piirin hinta pinta-alan funktiona. Pisteet
+ovat tulosteen neljä piirikokoa; hinta-akseli on
+logaritminen.](kuvat/saanto.png){width=92%}
+
 Kun piirin koko nelinkertaistuu 100 mm²:stä 400 mm²:iin, toimivan
 piirin hinta lähes kymmenkertaistuu. Siksi suuret suorittimet jaetaan
 nykyään pienempiin osapiireihin (chiplet), jotka yhdistetään kotelossa,
@@ -46,6 +55,9 @@ Kaksi päätapaa:
 - **Flip-chip**: piiri käännetään ylösalaisin ja liitetään juotos-
   kuulilla (bump), joita voi olla koko pinnalla. Induktanssi on
   kymmenesosa ja nastoja voi olla tuhansia.
+
+![Lankabondaus ja flip-chip poikkileikkauksena
+(periaatepiirros).](kuvat/kotelo.png){width=92%}
 
 Induktanssi näkyy, kun monta lähtöä vaihtaa tilaa yhtä aikaa: maajohdin
 pomppaa (ground bounce), ja hiljaisetkin lähdöt näyttävät hetken

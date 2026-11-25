@@ -41,6 +41,11 @@ class Rajoitteet:
 # @loppu rajoitteet
 
 
+# Asynkronisen nollauksen vapautus tarkistetaan kuten data: recovery
+# vastaa asetus- ja removal pitotarkistusta.
+ASYNKRONISET = {"RN": ("recovery_rising", "removal_rising")}
+
+
 def osuu(nimi: str, malli: str) -> bool:
     """Nimen vertailu malliin: * on jokerimerkki, hakasulut kirjaimellisia
     (väylän bitit, esim. q[2])."""
@@ -273,7 +278,9 @@ class Analyysi:
                     if n is None:
                         continue                    # väärä polku
                     lat = self._kellon_viive(loppu)
-                    asetus = self._rajoite(solu, pinni, "setup_rising",
+                    lajit = ASYNKRONISET.get(pinni, ("setup_rising",
+                                                     "hold_rising"))
+                    asetus = self._rajoite(solu, pinni, lajit[0],
                                            tila.slew)
                     vaadittu = (lat + n * self.r.jakso - asetus
                                 - self.r.epavarmuus)
@@ -281,7 +288,7 @@ class Analyysi:
                                        vaadittu, self._askeleet(
                                            myohaiset, y, alku)))
                     a = aikaiset[y]
-                    pito = self._rajoite(solu, pinni, "hold_rising", a.slew)
+                    pito = self._rajoite(solu, pinni, lajit[1], a.slew)
                     tulos.append(Polku(alku, loppu, "pito", a.aika,
                                        lat + pito + self.r.epavarmuus,
                                        self._askeleet(aikaiset, y, alku)))

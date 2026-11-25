@@ -5,7 +5,7 @@
     "context": "..",
     "args": {
       "LISAPAKETIT": "yosys iverilog verilator",
-      "PIP_PAKETIT": "ruff mypy"
+      "PIP_PAKETIT": "ruff mypy matplotlib"
     }
   },
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/asic-toteutus/esimerkit",

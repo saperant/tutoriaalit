@@ -10,12 +10,30 @@ uudelleen: uusi maskisarja maksaa satoja tuhansia tai miljoonia euroja
 ja kuukausia.
 
 Tämä taito käy läpi, mitä RTL:lle tapahtuu matkalla piiriksi ja mitä
-suunnittelijan on tiedettävä jokaisessa vaiheessa. Esitietona on taito
-*RTL-suunnittelu SystemVerilogilla*; synkroninen suunnittelu,
-kellotusalueiden ylitys ja synteesikelpoinen koodaustyyli oletetaan
-tutuiksi. *Digitaalitekniikka* on käsitellyt portit, ajoitusyhtälöt ja
-kriittisen polun; tässä ne viedään oikean solukirjaston ja
-työkaluvuon tasolle.
+suunnittelijan on tiedettävä jokaisessa vaiheessa. Jokainen vaihe
+ajetaan: synteesi oikealla työkalulla, muut vaiheet pienillä
+opetustoteutuksilla, joiden tulokset näkyvät tulosteina ja kuvina.
+
+## Esitiedot ja rajaus
+
+Esitietona on taito *RTL-suunnittelu SystemVerilogilla*: synkroninen
+suunnittelu, kellotusalueiden ylitys ja synteesikelpoinen koodaustyyli
+oletetaan tutuiksi. Sen esitieto *Digitaalitekniikka* on käsitellyt
+portit, CMOS-portin transistorit, asetus- ja pitoehdon ja kriittisen
+polun; tässä ne viedään oikean solukirjaston ja työkaluvuon tasolle.
+Esimerkit ovat Pythonia ja Verilogia, ja Python-koodin lukemiseen
+riittää taito *Ohjelmoinnin perusteet (Python)*.
+
+Rajaus:
+
+- Transistoritason piirisuunnittelua, analogialohkoja ja solujen
+  suunnittelua ei käsitellä; piirien perusteet ovat taidossa
+  *Elektroniikan perusteet ja SPICE*.
+- Toiminnallinen verifiointi on taidossa *Laitteiston verifiointi* ja
+  järjestelmäpiirin kokoaminen taidossa *SoC-integraatio*.
+- Sama vuo ohjelmoitavalle logiikalle on taidossa *FPGA-toteutus*.
+- Oikeaa valmistajan prosessia ja täyttä RTL-to-GDS-vuota ei ajeta;
+  syy ja vaihtoehdot ovat osiossa "Työkalut ja mitä tässä ajetaan".
 
 ## Toteutusvuo
 
@@ -102,6 +120,7 @@ käyttää avoimia työkaluja ja omia opetustoteutuksia:
 | Sijoittelu, CTS, reititys | Python-opetusmallit, **ajetaan** | Innovus, ICC2, OpenROAD |
 | Teho | VCD-aktiivisuus + kuormat, **ajetaan** | PrimePower, Voltus |
 | Sign-off | DRC- ja IR-opetusmallit, **ajetaan** | Calibre, Pegasus, Magic, KLayout |
+| Parasiitit | Python-opetusmalli, **ajetaan** | StarRC, Quantus, OpenRCX |
 | Koko vuo | kuvataan tekstinä (luku 13) | OpenLane/LibreLane, kaupalliset vuot |
 
 Opetustoteutukset ovat tarkoituksella pieniä, jotta algoritmit näkyvät.
@@ -126,9 +145,19 @@ make -C asic-toteutus testaa
 cd asic-toteutus/esimerkit && python3 sta.py
 ```
 
+Tekstin kuvaajat ja piirikuviot on piirretty samoilla funktioilla ja
+siemenillä kuin tulosteet (`make kuvat`, skripti `kuvat/piirra.py`),
+joten kuvassa näkyy sama ajo, jonka lukija saa omalla koneellaan.
+Ajoituskaaviot, joiden kuvatekstissä mainitaan simulaatio, on tuotettu
+testipenkin jäljestä. Solun rakenteen, antennisäännön ja kotelojen
+kuvat ovat periaatepiirroksia.
+
 ## Lukuohje
 
-Luvut 2–5 muodostavat ytimen: solukirjasto, synteesi ja ajoitus. Luvut
-6–11 seuraavat vuota fyysiseen toteutukseen ja valmistukseen, ja ne
-voi lukea itsenäisesti. Luku 12 esittelee asynkroniset piirit
-vaihtoehtona kellolle.
+Luvut 2–5 muodostavat ytimen: solukirjasto, synteesi, ajoitus ja
+rajoitteet. Ne kannattaa lukea järjestyksessä, koska jokainen käyttää
+edellisen työkaluja. Luvut 6–11 seuraavat vuota testattavuudesta
+fyysiseen toteutukseen, sign-offiin ja valmistukseen; ne voi lukea
+itsenäisesti, kunhan luvun 4 käsitteet ovat tuttuja. Luku 12 esittelee
+asynkroniset piirit vaihtoehtona kellolle, ja luku 13 kokoaa
+nyrkkisäännöt ja jatkotaidot.

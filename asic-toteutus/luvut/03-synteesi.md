@@ -59,7 +59,17 @@ Yosys kuvaa `+`-operaattorin Brent–Kung-verkoksi:
 ```{.verilog tiedosto="esimerkit/summaimet.v" osa="bk"}
 ```
 
-Kaikki kolme syntetisoidaan ja analysoidaan samalla
+Etuliiteverkossa jokainen solmu yhdistää kahden vierekkäisen
+bittialueen generointi- ja etenemissignaalit, kunnes jokaisen bitin
+muistibitti on laskettu. Verkon syvyys määrää viiveen ja solmujen ja
+johdinten määrä pinta-alan:
+
+![Kolme etuliiteverkkoa kahdeksalle bitille. Ripple-carry on ketju,
+Kogge–Stone laskee kaikki muistibitit kolmessa tasossa, ja Brent–Kung
+käyttää vähemmän solmuja mutta tarvitsee viisi
+tasoa.](kuvat/etuliite.png){width=95%}
+
+Kaikki kolme syntetisoidaan 32-bittisinä ja analysoidaan samalla
 ajoitusanalyysillä (luku 4):
 
 ```{.python tiedosto="esimerkit/03-arkkitehtuuri.py" osa="vertailu"}
@@ -67,6 +77,10 @@ ajoitusanalyysillä (luku 4):
 
 ```{.tuloste tiedosto="esimerkit/03-arkkitehtuuri.odotettu"}
 ```
+
+![Tulosteen neljä synteesitulosta pinta-alan ja kriittisen polun
+viiveen mukaan. ABC:n oletusskriptillä Brent–Kung päätyy samaan
+pisteeseen kuin ripple-carry.](kuvat/ppa.png){width=62%}
 
 Kogge–Stone on kolme kertaa nopeampi kuin ripple, mutta kolmanneksen
 suurempi; Brent–Kung on näiden välissä. Viimeinen rivi on opettavainen:
@@ -119,7 +133,8 @@ vain listan signaalien muuttuessa:
 
 RTL-simulointi näyttää väärän tuloksen, joka ei vastaa piiriä.
 SystemVerilogin `always_comb` estää virheen, ja lint-työkalut
-huomauttavat siitä.
+huomauttavat siitä. Netlistan voi myös piirtää piirikaaviona Yosysin
+`show`-komennolla; esimerkki on taidossa *FPGA-toteutus*.
 
 ## Käytännössä
 
@@ -142,6 +157,8 @@ huomauttavat siitä.
 - Osaat kuvata synteesin vaiheet ja ajaa Yosysin solukirjastoa vasten.
 - Osaat selittää, miksi rakenteen valinta vaikuttaa enemmän kuin
   optimoija, ja mitä ajoitusrajoitteet muuttavat synteesissä.
+- Osaat verrata etuliiteverkkoja syvyyden ja solmumäärän perusteella
+  ja sijoittaa ne pinta-ala–viive-tasoon.
 - Osaat tarkistaa netlistan porttitason simuloinnilla ja muodollisella
   ekvivalenssilla ja kertoa niiden erot.
 - Osaat tunnistaa simuloinnin ja synteesin välisen epäsuhdan

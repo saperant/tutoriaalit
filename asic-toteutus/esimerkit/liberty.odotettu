@@ -1,4 +1,4 @@
-kirjasto opetus: 14 solua
+kirjasto opetus: 15 solua
 NAND2_X1: ala 3.75 µm², tulo A 0.0020 pF
   laskeva viive, slew 0.02 ns, kuorma 2 fF: 0.034 ns
   laskeva viive, slew 0.10 ns, kuorma 10 fF: 0.074 ns

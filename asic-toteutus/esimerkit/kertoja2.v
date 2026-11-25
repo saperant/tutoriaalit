@@ -1,6 +1,8 @@
 // Kertoja, jonka tulos ehtii valmistua kahdessa kellojaksossa: vaihe
-// vuorottelee, tulot ladataan parillisella ja tulos parittomalla
-// jaksolla. Ajoitusanalyysille tämä kerrotaan monisyklipolkuna.
+// vuorottelee, ja tulot ja tulos ladataan samalla, joka toisella
+// reunalla. Tulos lasketaan siis edellisestä tuloparista, joka on
+// ollut rekistereissä kaksi jaksoa. Ajoitusanalyysille tämä kerrotaan
+// monisyklipolkuna.
 // @alku kertoja2
 module kertoja2 (
   input  wire        clk,
@@ -13,8 +15,11 @@ module kertoja2 (
   reg [7:0] a_r, b_r;
   always @(posedge clk) begin
     vaihe <= nollaa ? 1'b0 : ~vaihe;
-    if (!vaihe) begin a_r <= a; b_r <= b; end
-    if (vaihe)  tulo <= a_r * b_r;
+    if (!vaihe) begin              // joka toinen reuna
+      a_r  <= a;
+      b_r  <= b;
+      tulo <= a_r * b_r;           // edellinen pari: kaksi jaksoa aikaa
+    end
   end
 endmodule
 // @loppu kertoja2

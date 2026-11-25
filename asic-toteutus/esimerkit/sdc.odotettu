@@ -1,0 +1,5 @@
+kello clk: jakso 1.4 ns, epävarmuus 0.05 ns
+tulot 0.3 ns, lähdöt 0.2 ns, kuorma 5 fF
+monisykli 2: a_r* -> tulo*
+monisykli 2: b_r* -> tulo*
+väärä polku: nollaa -> *

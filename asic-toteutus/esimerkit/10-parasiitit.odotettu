@@ -1,0 +1,25 @@
+pala      kerros  pituus µm    R Ω   C fF  kytkentä fF
+ajuri-a   met1          12    10.7   1.06       0.00
+a-b       met2         180   165.2  13.87      10.20
+b-n1      met1          15    17.9   1.33       0.00
+b-c       met3         260    45.2  20.02       0.00
+c-n2      met1          20    22.4   1.77       0.00
+johdin yhteensä 261 Ω, 48.2 fF; arvio ennen sijoittelua 3.0 fF
+ajuri INV_X1: viive n1 310 ps, n2 311 ps
+ajuri BUF_X4: viive n1 83 ps, n2 83 ps
+SPEF-ote:
+  *D_NET summa 48.24
+  *CAP
+  1 summa:a 1.06
+  2 summa:b 13.87
+  3 summa:n1 1.33
+  4 summa:c 20.02
+  5 summa:n2 1.77
+  6 summa:b naapuri:1 10.20
+  *RES
+  1 summa:ajuri summa:a 10.7
+  2 summa:a summa:b 165.2
+  3 summa:b summa:n1 17.9
+  4 summa:b summa:c 45.2
+  5 summa:c summa:n2 22.4
+  *END

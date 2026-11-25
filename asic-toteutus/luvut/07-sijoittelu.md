@@ -16,12 +16,24 @@ Pohjapiirros (floorplan) määrittelee:
 - **IO-renkaan** ja nastojen järjestyksen piirilevyn ja koteloinnin
   mukaan (luku 11).
 - **Makrot**, kuten muistit ja analogialohkot, sijoitetaan käsin
-  reunoille, ja niiden ympärille jätetään reititystilaa.
+  reunoille, ja niiden ympärille jätetään reititystilaa (ks. alla).
 - **Tehoverkon**: rengas ytimen ympäri ja pystysuuntaiset liuskat,
   joista syöttö jakautuu solurivien reunoille (luku 10).
 - **Solurivit**: standardisolut asettuvat riveihin, joissa joka
   toinen rivi on peilattu, jotta vierekkäiset rivit jakavat
   syöttö- tai maakiskon.
+
+Muistit ovat tärkein makro. Kiikuista syntetisoitu muisti on kallis:
+opetuskirjaston D-kiikku on 20 µm², kun valmistajan muistigeneraattorin
+kuuden transistorin muistisolu on samassa prosessissa parin
+neliömikrometrin luokkaa, ja osoitedekooderi ja lukuvahvistimet
+jaetaan koko matriisin kesken. Siksi vähänkin suuremmat muistit
+tehdään *muistimakroina*: generaattori tuottaa halutun kokoisen lohkon
+ja sille samat näkymät kuin standardisolulle, eli ajoitusmallin
+(Liberty), fyysisen ääriviivan ja nastat (LEF) sekä simulointimallin.
+Synteesi näkee makron mustana laatikkona, pohjapiirros kiinteänä
+esteenä. Suuressa järjestelmäpiirissä muistit vievät usein yli puolet
+pinta-alasta, ja ne testataan omalla itsetestillään (luku 6).
 
 ## Sijoittelu
 
@@ -61,9 +73,23 @@ rajaavan suorakulmion alueelle.
 ```{.tuloste tiedosto="esimerkit/07-sijoittelu.odotettu"}
 ```
 
-Jäähdytys yli puolittaa johdinpituuden. Ruuhkakartta näyttää,
-mihin johtimet kasautuvat: kuumissa kohdissa reitittimellä on vähiten
-tilaa, ja sijoittelija harventaa niitä tarvittaessa.
+![Laskurin 37 solua satunnaisessa alkusijoittelussa ja jäähdytyksen
+jälkeen. Tummat solut ovat kiikkuja, ja jokainen johdin on piirretty
+viivoina pinneistään painopisteeseensä. Tulot ovat vasemmalla ja
+lähdöt oikealla reunalla.](kuvat/sijoittelu.png){width=95%}
+
+Jäähdytys yli puolittaa johdinpituuden, ja ero näkyy silmällä:
+alussa johtimet risteävät koko ytimen yli, lopussa yhteen kytketyt
+solut ovat vierekkäin ja kiikut ovat asettuneet lähtöjensä puolelle.
+
+![Vasemmalla johdinpituus jäähdytyksen kuluessa: korkeassa
+lämpötilassa haku hyväksyy huononnuksia ja pituus heilahtelee,
+lämpötilan laskiessa se asettuu. Oikealla lopullisen sijoittelun
+ruuhkakartta.](kuvat/ruuhka.png){width=92%}
+
+Ruuhkakartta näyttää, mihin johtimet kasautuvat: kuumissa kohdissa
+reitittimellä on vähiten tilaa, ja sijoittelija harventaa niitä
+tarvittaessa.
 
 Nykyiset sijoittelijat ovat analyyttisiä: ne mallintavat johdinpituuden
 derivoituvana funktiona ja solujen tiheyden sähköstaattisena
@@ -95,8 +121,8 @@ tämä on `repair_design` ja `repair_timing`.
 
 ## Itsearviointi
 
-- Osaat kertoa, mitä pohjapiirros päättää ja miksi käyttöaste ei voi
-  olla 100 %.
+- Osaat kertoa, mitä pohjapiirros päättää, miksi käyttöaste ei voi
+  olla 100 % ja miksi muistit tehdään makroina eikä kiikuista.
 - Osaat laskea HPWL:n ja selittää, miksi sitä käytetään sijoittelun
   kustannuksena.
 - Osaat kuvata simuloidun jäähdytyksen periaatteen ja sen, miksi

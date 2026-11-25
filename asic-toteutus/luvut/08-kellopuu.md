@@ -30,25 +30,14 @@ pitkä, ja H-puuna, jonka haarautumiskohdissa on puskurit.
 ```{.tuloste tiedosto="esimerkit/08-kellopuu.odotettu"}
 ```
 
-Kuvassa on puskuroidun H-puun rakenne kahdella tasolla. Jokaisen
-kiikkuryhmän polku juuresta on yhtä pitkä ja kulkee yhtä monen
-puskurin läpi, joten viiveet ovat samat.
+![Kolme kellorakennetta millimetrin neliössä. Vinoneliö on kellon
+lähde, kolmiot puskureita ja ympyrät kiikkuja, joiden väri on kellon
+saapumisaika. Ketjussa väri liukuu kiikusta toiseen eli vinous näkyy;
+H-puissa kaikki kiikut ovat samanvärisiä.](kuvat/kellopuu.png){width=95%}
 
-```{.dot otsikko="Puskuroitu H-puu: symmetriset polut kellolähteestä 16 kiikulle"}
-digraph {
-  rankdir=TB; nodesep=0.2; ranksep=0.3;
-  lahde [label="kellolähde\n(PLL)"];
-  node [shape=invtriangle, label="", width=0.3, height=0.25];
-  p1; p2a; p2b; p3a; p3b; p3c; p3d;
-  node [shape=box, style="rounded,filled", width=0.6, height=0.3,
-        fontsize=9];
-  k1 [label="4 kiikkua"]; k2 [label="4 kiikkua"];
-  k3 [label="4 kiikkua"]; k4 [label="4 kiikkua"];
-  lahde -> p1; p1 -> p2a; p1 -> p2b;
-  p2a -> p3a; p2a -> p3b; p2b -> p3c; p2b -> p3d;
-  p3a -> k1; p3b -> k2; p3c -> k3; p3d -> k4;
-}
-```
+H-puu on saanut nimensä muodostaan: jokainen taso on H-kirjain, jonka
+kärjissä on seuraavan tason H. Jokaisen kiikun polku juuresta on yhtä
+pitkä ja kulkee yhtä monen puskurin läpi, joten viiveet ovat samat.
 
 Ketju on lyhin, mutta sen vinous on 119 ps, mikä syö suoraan
 pitomarginaalia (luku 4). H-puun symmetria poistaa vinouden, mutta
@@ -87,6 +76,13 @@ on.
 ```{.tuloste tiedosto="esimerkit/08-reititys.odotettu"}
 ```
 
+![Ylhäällä vasemmalla Leen haku johtimelle A: jokaisessa ruudussa on
+sen etäisyys lähteestä, ja reitti jäljitetään kohteesta takaisin
+pienenevien lukujen kautta. Oikealla haku johtimelle B, kun A on jo
+paikallaan: aaltorintama ei koskaan saavuta kohdetta. Alhaalla sama
+tehtävä kahdella kerroksella; valkoinen neliö on
+läpivienti.](kuvat/reititys.png){width=95%}
+
 Yhdellä kerroksella ristikkäiset johtimet B ja C eivät mahdu, ja
 ensimmäinen reitti (A) varaa tilaa, jota myöhemmät tarvitsevat. Toinen
 kerros ratkaisee ristiriidan: B ja C vaihtavat kerrosta läpivienneillä.
@@ -121,6 +117,6 @@ suojataan maajohtimilla tai etäisyydellä.
 - Osaat vertailla kellopuun rakenteita vinouden, latenssin ja
   johdinpituuden kannalta.
 - Osaat kuvata globaalin ja yksityiskohtaisen reitityksen sekä Leen
-  algoritmin periaatteen.
+  algoritmin aaltorintaman ja reitin jäljityksen.
 - Osaat selittää, miksi reititysjärjestys ja kerrosten määrä
   vaikuttavat reitittyvyyteen.

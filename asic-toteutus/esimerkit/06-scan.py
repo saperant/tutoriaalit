@@ -7,6 +7,7 @@ siirtää tuloksen ulos. Juuttumisvika näkyy väärinä bitteinä.
 """
 
 import subprocess
+import sys
 import tempfile
 from pathlib import Path
 from typing import Any
@@ -55,6 +56,11 @@ def aja(netlista: str) -> list[str]:
 
 
 def main() -> None:
+    if sys.argv[1:] == ["netlista"]:        # ajoituskaavion simulointiin
+        m = syntetisoi([HAK / "laskuri.v"], "laskuri").moduuli()
+        lisaa_scan(m)
+        print(rakenteellinen("laskuri", m))
+        return
     # @alku ajo
     tulos = syntetisoi([HAK / "laskuri.v"], "laskuri")
     m = tulos.moduuli()

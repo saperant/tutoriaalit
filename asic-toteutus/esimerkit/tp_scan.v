@@ -11,6 +11,9 @@ module tp;
                .q(q), .scan_en(scan_en), .scan_in(scan_in),
                .scan_out(scan_out));
   always #5 clk = ~clk;
+  initial if ($test$plusargs("vcd")) begin   // ajoituskaaviota varten
+    $dumpfile("scan.vcd"); $dumpvars(0, tp);
+  end
   initial begin
     scan_en = 1;                          // siirto: MSB ensin q[7]:ään
     for (i = 7; i >= 0; i = i - 1) begin

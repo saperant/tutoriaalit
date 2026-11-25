@@ -44,6 +44,7 @@ write_verilog -noattr netlista.v
 | `cell_rise/fall` | viive (slew × kuorma) |
 | `rise/fall_transition` | lähdön siirtymäaika |
 | `setup/hold_rising` | kiikun rajoitteet |
+| `recovery/removal_rising` | nollauksen vapautus |
 | `ff { next_state }` | kiikku |
 
 - Taulukot: rivit tulon siirtymäaika, sarakkeet lähdön kuorma.
@@ -62,6 +63,8 @@ $$t_{saap,min} \geq t_{kello,v} + t_{pito} + t_{\text{epävarmuus}}$$
 - Pito: nopea kulma, aikaiset polut nopeutettuna. Korjaus: viive
   datapolulle CTS:n jälkeen.
 - Vinous $+\Delta$ vastaanottajalla: asetus $+\Delta$, pito $-\Delta$.
+- Solun viive $\approx t_0 + 0{,}69\,RC$; johtimen R ja C tulevat
+  reitityksen jälkeen SPEF-tiedostosta.
 
 # SDC
 

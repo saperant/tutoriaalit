@@ -24,4 +24,7 @@ endmodule
 module SDFF_X1 (input D, SI, SE, CK, output reg Q);
   always @(posedge CK) Q <= SE ? SI : D;
 endmodule
+module DFFR_X1 (input D, RN, CK, output reg Q);
+  always @(posedge CK or negedge RN) Q <= !RN ? 1'b0 : D;
+endmodule
 // @loppu mallit

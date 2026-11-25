@@ -58,10 +58,11 @@ def hpwl(verkko: list[str], paikat: dict[str, Piste]) -> float:
 
 
 # @alku jaahdytys
-def jaahdytys(solut: list[str], johtimet: list[list[str]],
-              kiinteat: dict[str, Piste], siemen: int = 1
-              ) -> tuple[float, float, dict[str, Piste]]:
-    rng = random.Random(siemen)
+def alkusijoittelu(solut: list[str], kiinteat: dict[str, Piste],
+                   rng: random.Random
+                   ) -> tuple[list[Piste], dict[Piste, str | None],
+                              dict[str, Piste]]:
+    """Solut satunnaisiin paikkoihin; osa paikoista jää tyhjiksi."""
     paikat_kaikki = [(float(x), float(y)) for y in range(RIVEJA)
                      for x in range(PAIKKOJA)]
     rng.shuffle(paikat_kaikki)
@@ -69,6 +70,17 @@ def jaahdytys(solut: list[str], johtimet: list[list[str]],
     paikat = dict(kiinteat)
     for nimi, p in zip(solut, paikat_kaikki, strict=False):
         paikat[nimi], sisalto[p] = p, nimi
+    return paikat_kaikki, sisalto, paikat
+
+
+def jaahdytys(solut: list[str], johtimet: list[list[str]],
+              kiinteat: dict[str, Piste], siemen: int = 1,
+              historia: list[tuple[float, float]] | None = None
+              ) -> tuple[float, float, dict[str, Piste]]:
+    """Palauttaa HPWL:n alussa ja lopussa sekä lopulliset paikat.
+    `historia` saa (lämpötila, HPWL) -parin jokaiselta lämpötilalta."""
+    rng = random.Random(siemen)
+    paikat_kaikki, sisalto, paikat = alkusijoittelu(solut, kiinteat, rng)
     solun_johtimet: dict[str, list[int]] = {}
     for i, j in enumerate(johtimet):
         for n in j:
@@ -91,6 +103,9 @@ def jaahdytys(solut: list[str], johtimet: list[list[str]],
                 for solu, p in ((a, p1), (b, p2)):
                     if solu:
                         paikat[solu] = p
+        if historia is not None:
+            historia.append((lampo, sum(hpwl(j, paikat)
+                                        for j in johtimet)))
         lampo *= 0.9
     loppu = sum(hpwl(j, paikat) for j in johtimet)
     return alku, loppu, paikat

@@ -1,5 +1,12 @@
 # Asynkroniset piirit lyhyesti
 
+Kello on ollut tämän tutoriaalin jokaisen vaiheen suurin kysymys: se
+määrää ajoituksen (luku 4), sen jakelu vaatii oman puunsa (luku 8),
+ja se kuluttaa suuren osan tehosta (luku 9). Tämä luku katsoo lyhyesti,
+mitä tapahtuu, jos kellosta luovutaan. Aihe kuuluu ASIC-toteutukseen,
+koska asynkroninen piiri tarvitsee erikoissoluja, joita luvun 2
+kirjastossa ei ole, ja koska vuon työkalut olettavat kellon.
+
 Synkroninen piiri jakaa ajan kellojaksoihin, ja jokaisen polun on
 valmistuttava pahimmassa kulmassa ennen seuraavaa reunaa. Asynkroninen
 piiri luopuu kellosta: vaiheet viestivät keskenään kättelyillä ja

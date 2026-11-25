@@ -23,10 +23,11 @@
 Tämän tutoriaalin opetustoteutukset näyttävät jokaisen vaiheen
 algoritmin. Oikea avoin vuo kokoaa samat vaiheet: OpenLane (uudempi
 versio LibreLane) ajaa Yosysin, OpenROADin (sijoittelu, CTS,
-reititys, STA), Magicin ja KLayoutin (DRC) sekä Netgenin (LVS)
-SkyWater SKY130- tai GF180MCU-PDK:lla. Vuo ohjataan asetustiedostolla;
-tämä esimerkki näyttää rakenteen, mutta sitä ei ajeta tässä
-tutoriaalissa, koska PDK ja työkalut ovat useita gigatavuja:
+reititys, parasiittien poiminta, STA), Magicin ja KLayoutin (DRC)
+sekä Netgenin (LVS) SkyWater SKY130- tai GF180MCU-PDK:lla. Vuo
+ohjataan asetustiedostolla; tämä esimerkki näyttää rakenteen, mutta
+sitä ei ajeta tässä tutoriaalissa, koska PDK ja työkalut ovat useita
+gigatavuja:
 
 ```text
 {
@@ -44,6 +45,14 @@ openlane config.json      # synteesi → sijoittelu → CTS → reititys
                           # → STA, DRC, LVS, antenni → GDSII
 ```
 
+Oikean vuon tulokset vastaavat tämän tutoriaalin vaiheita yksi
+yhteen: synteesiraportti (luku 3), OpenSTA:n polkuraportti (luku 4),
+sijoittelun tiheys- ja ruuhkakartta (luku 7), kellopuun vinous
+(luku 8), DRC- ja LVS-raportit (luku 10) ja lopuksi piirikuvio, jonka
+voi avata KLayoutilla ja jossa näkyvät luvun 2 solut riveissä. Luvut
+eroavat opetusmallien luvuista, koska kirjasto, johdinmalli ja
+algoritmit ovat oikeat, mutta raportit luetaan samoin.
+
 Tiny Tapeout -projekti tarjoaa valmiin pohjan, jolla pienen piirin voi
 lähettää valmistukseen jaetulla kiekolla ja saada fyysisen piirin
 testattavaksi.
@@ -52,10 +61,12 @@ testattavaksi.
 
 | Malli | Luku | Tarkoitus |
 |-------|------|-----------|
+| RC-viivemalli | 2 | transistori vastuksena, kuorma kapasitanssina |
 | NLDM-taulukko | 2 | viive tulon siirtymäajan ja kuorman funktiona |
 | Miter + SAT | 3 | muodollinen ekvivalenssi |
 | Saapumis- ja vaadittu aika | 4 | ajoitusmarginaali |
 | Monisykli- ja väärä polku | 5 | ajoituspoikkeukset |
+| Recovery ja removal | 5 | nollauksen vapautuksen ajoitus |
 | PVT-kulma ja OCV | 5 | vaihtelun huomiointi |
 | Scan-ketju | 6 | sisäisen tilan ohjaus ja havainnointi |
 | LFSR + MISR | 6 | itsetestaus |
@@ -64,21 +75,25 @@ testattavaksi.
 | Leen sokkeloreititin | 8 | reititys |
 | ICG | 9 | kellon portitus |
 | UPF | 9 | tehoalueet |
+| Parasiittien poiminta ja SPEF | 10 | johtimen R ja C geometriasta |
 | Vastusverkko | 10 | IR-pudotus |
 | Poisson ja Murphy | 11 | saanto |
 | C-elementti | 12 | asynkroninen kättely |
 
-## Mihin tästä
+## Jatkotaidot
 
-- **Verifiointi**: testipenkit, kattavuus ja formaalit menetelmät
-  piirin oikeellisuuden varmistamiseen ennen tapeoutia.
-- **SoC-integraatio**: väylät, IP-lohkot ja järjestelmäpiirin
+- *Laitteiston verifiointi*: testipenkit, kattavuus ja formaalit
+  menetelmät piirin oikeellisuuden varmistamiseen ennen tapeoutia.
+- *SoC-integraatio*: väylät, IP-lohkot, tehoalueet ja järjestelmäpiirin
   kokoaminen.
-- **FPGA-toteutus**: sama vuo ohjelmoitavalle logiikalle, josta
+- *FPGA-toteutus*: sama vuo ohjelmoitavalle logiikalle, josta
   prototyyppi syntyy usein ennen ASICia.
-- **EDA-skriptaus**: vuon automatisointi Pythonilla ja Tcl:llä.
-- **Tietokonearkkitehtuuri ja arkkitehtuurin tutkiminen**: PPA-
-  arviot jo ennen RTL:ää.
+- *EDA-työkaluketjujen automatisointi*: vuon ajaminen, raporttien
+  jäsennys ja regressiot Pythonilla ja Tcl:llä.
+- *Arkkitehtuurin mallinnus ja suunnittelutilan tutkiminen*:
+  PPA-arviot jo ennen RTL:ää.
+- *Elektroniikan perusteet ja SPICE*: transistorin ja RC-piirin
+  käyttäytyminen piirisimulaattorissa.
 
 ## Lähteet ja lisälukemista
 
@@ -101,7 +116,8 @@ testattavaksi.
   <https://skywater-pdk.readthedocs.io/>
 - OpenLane/LibreLane: <https://librelane.readthedocs.io/>
 - Tiny Tapeout: <https://tinytapeout.com/>
-- IEEE 1801 (UPF) ja IEEE 1149.1 (JTAG) -standardit.
+- IEEE 1801 (UPF), IEEE 1149.1 (JTAG) ja IEEE 1481 (SPEF)
+  -standardit.
 
 ## Lisenssi
 

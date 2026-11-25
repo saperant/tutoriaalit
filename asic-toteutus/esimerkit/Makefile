@@ -1,7 +1,7 @@
 # Kirjan ajoituskaaviot. Esimerkit testaa yhteinen testaaja; tämä
-# Makefile tuottaa luvun 9 kellon portituksen kaavion simulaatiosta ja
-# vertaa sitä tiedostoon kaaviot/portitus.json (PAIVITA=1 kirjoittaa
-# sen uudelleen).
+# Makefile tuottaa luvun 6 scan-testin ja luvun 9 kellon portituksen
+# kaaviot simulaatiosta ja vertaa niitä tiedostoihin kaaviot/*.json
+# (PAIVITA=1 kirjoittaa ne uudelleen).
 #
 #   make           kaavio ja vertailu
 #   make siivoa    poistaa käännöstuotteet
@@ -10,7 +10,25 @@ R      := rakennus
 KAAVIO := python3 ../../yhteiset/kaaviot.py vcd
 
 .PHONY: kaikki siivoa
-kaikki: $(R)/portitus.ok
+kaikki: $(R)/portitus.ok $(R)/scan.ok
+
+# Scan-testi: netlistan tulostaa esimerkki 06-scan.py (argumentti
+# netlista), ja testipenkki tp_scan.v tallentaa jäljen valitsimella
+# +vcd. Kaaviossa on koko testijakso: 8 siirtoa, kaappaus ja 8 siirtoa.
+$(R)/scan.ok: 06-scan.py synteesi.py laskuri.v tp_scan.v opetus_solut.v \
+    opetus.lib kaaviot/scan.json
+	@mkdir -p $(R)
+	@python3 06-scan.py netlista > $(R)/scan.v
+	@iverilog -o $(R)/scan.sim $(R)/scan.v opetus_solut.v tp_scan.v
+	@cd $(R) && vvp -n scan.sim +vcd > /dev/null
+	@$(KAAVIO) $(R)/scan.vcd --kello tp.clk --jaksot 17 --kanta h \
+	    --signaalit tp.scan_en=scan_en,tp.scan_in=scan_in,tp.q=q,\
+	tp.scan_out=scan_out > $(R)/scan.json
+	@rm -f $(R)/scan.vcd
+	@if [ "$(PAIVITA)" = 1 ]; then cp $(R)/scan.json kaaviot/; fi
+	@diff -u kaaviot/scan.json $(R)/scan.json
+	@echo "OK: kaavio scan"
+	@touch $@
 
 # Näytekellon rivi poistetaan ja kaavio kavennetaan: 40 nanosekunnin
 # saraketta mahtuvat palstalle.

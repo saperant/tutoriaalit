@@ -31,15 +31,20 @@ JOHTIMET = {                       # nimi: (lähde, kohde) kerroksella 0
 
 # @alku lee
 def reitita(varatut: dict[Ruutu, str], alku: Ruutu, loppu: Ruutu,
-            kerroksia: int) -> list[Ruutu] | None:
+            kerroksia: int, aalto: dict[Ruutu, int] | None = None
+            ) -> list[Ruutu] | None:
     """Leveyshaku kolmessa ulottuvuudessa; via on siirto kerrokselta
-    toiselle samassa ruudussa."""
+    toiselle samassa ruudussa. `aalto` saa jokaisen tutkitun ruudun
+    etäisyyden lähteestä (aaltorintaman numeron)."""
     korkeus, leveys = len(ALUE), len(ALUE[0])
     edellinen: dict[Ruutu, Ruutu] = {}
     jono = deque([alku])
     nahty = {alku}
+    etaisyys = {alku: 0}
     while jono:
         r = jono.popleft()
+        if aalto is not None:
+            aalto[r] = etaisyys[r]
         if r == loppu:
             reitti = [r]
             while r != alku:
@@ -56,6 +61,7 @@ def reitita(varatut: dict[Ruutu, str], alku: Ruutu, loppu: Ruutu,
                     and (n not in varatut or n == loppu)):
                 nahty.add(n)
                 edellinen[n] = r
+                etaisyys[n] = etaisyys[r] + 1
                 jono.append(n)
     return None
 # @loppu lee
