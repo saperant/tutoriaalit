@@ -74,9 +74,10 @@ uhkamallin päivityksestä.
 
 Prosessi ei pääty julkaisuun. Ylläpidon tietoturvatehtäviä ovat:
 
-- **Haavoittuvuuksien vastaanotto.** Julkinen yhteystieto
-  (`SECURITY.md`, `security.txt`) ja sovittu käsittelyaika. Taito
-  *Tietoturvan perusteet* käsittelee koordinoidun julkistamisen.
+- **Haavoittuvuuksien vastaanotto ja käsittely.** Julkinen yhteystieto
+  (`SECURITY.md`, `security.txt`) ja sovittu käsittelyaika. Luku *SBOM
+  ja haavoittuvuustiedot* käy läpi, mitä ilmoitukselle tehdään sen
+  saavuttua.
 - **Riippuvuuksien päivitys.** Automaattiset päivityspyynnöt
   (Dependabot, Renovate) ja testit, jotka tekevät päivityksestä
   turvallisen (luku *Riippuvuudet ja toimitusketju*).

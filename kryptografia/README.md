@@ -3,7 +3,16 @@
 Tiivis suomenkielinen tutoriaali salausmenetelmien toiminnasta ja
 oikeasta käytöstä. Esimerkit käyttävät Pythonin
 [`cryptography`](https://cryptography.io)-kirjastoa (versio 50.0.1),
-vakiokirjastoa ja OpenSSL 3:n komentoriviä. Valmiit dokumentit:
+vakiokirjastoa ja OpenSSL 3:n komentoriviä.
+
+**Vastuulauseke.** Materiaali on tarkoitettu opetukseen ja oman koodin
+parantamiseen. Hyökkäysesimerkit kohdistuvat esimerkkien omaan,
+paikalliseen dataan. Kokeile tekniikoita vain omiin ohjelmiisi ja
+järjestelmiisi tai kohteisiin, joihin sinulla on kirjallinen lupa.
+Luvaton tunkeutuminen on rikos (rikoslain 38. luku). Tekijät eivät
+vastaa materiaalin väärinkäytöstä.
+
+Valmiit dokumentit:
 [kryptografia.pdf](https://saperant.github.io/tutoriaalit/materiaalit/kryptografia.pdf) ja pikaopas
 [kryptografia-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/kryptografia-pikaopas.pdf).
 
@@ -11,10 +20,10 @@ vakiokirjastoa ja OpenSSL 3:n komentoriviä. Valmiit dokumentit:
 
 1. Johdanto – mitä kryptografia takaa, älä keksi omaa, oletusvalinnat
 2. Satunnaisuus – Mersenne Twisterin ennustaminen, `secrets`
-3. Symmetrinen salaus – toimintatilat, ECB:n vuoto, muokattavuus,
-   noncen toisto
+3. Symmetrinen salaus – hyökkäysmallit, toimintatilat, ECB:n vuoto
+   kuvana, muokattavuus, noncen toisto
 4. Autentikoitu salaus – AES-GCM, ChaCha20-Poly1305, liitetty data,
-   kirjekuorisalaus
+   toisto ja järjestys, kirjekuorisalaus
 5. Tiivisteet, MAC ja HKDF – pituuslaajennus, HMAC, avainten johtaminen
 6. Salasanojen tallennus – suola, Argon2id, scrypt, bcrypt, pippuri
 7. RSA – opetustoteutus, oppikirja-RSA:n heikkoudet, OAEP ja PSS
@@ -37,11 +46,14 @@ tiedostojen alussa; niitä ei käytetä tuotannossa.
 make testaa   # tarkistaa rakenteen ja ajaa esimerkit (ruff, mypy,
               # ShellCheck) ja vertaa tulosteet
 make pdf      # kryptografia.pdf ja kryptografia-pikaopas.pdf
+make kuvat    # piirtää kuvat/ecb.png uudelleen (Matplotlib, NumPy)
 ```
 
 Esimerkit tarvitsevat Python 3.12:n tai uudemman, `cryptography`-paketin
 (`pip install cryptography==50.0.1`) ja OpenSSL 3:n. Kehityskontti
 `.devcontainer/kryptografia` sisältää kaiken tarvittavan.
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks. [Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 ## Lisenssi
 

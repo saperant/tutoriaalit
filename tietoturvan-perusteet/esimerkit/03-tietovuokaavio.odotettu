@@ -1,0 +1,20 @@
+digraph {
+  nodesep=0.6; ranksep=0.5;
+  subgraph cluster_0 {
+    label="internet"; style=dashed;
+    e0 [label="Selain", shape=box];
+  }
+  subgraph cluster_1 {
+    label="oma palvelinympäristö"; style=dashed;
+    e1 [label="Verkkokauppa-API", shape=ellipse];
+    e2 [label="Tilaustietokanta", shape=cylinder];
+  }
+  subgraph cluster_2 {
+    label="kumppanin järjestelmä"; style=dashed;
+    e3 [label="Maksupalvelu", shape=box];
+  }
+  e0 -> e1 [label="tilaus", penwidth=2.2];
+  e1 -> e2 [label="kyselyt"];
+  e1 -> e3 [label="maksupyyntö", penwidth=2.2];
+  e3 -> e1 [label="maksuilmoitus", penwidth=2.2];
+}

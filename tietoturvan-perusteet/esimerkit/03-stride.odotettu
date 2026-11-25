@@ -1,12 +1,16 @@
-Selain → API (HTTPS) [luottamusraja]
+Selain → Verkkokauppa-API: tilaus [luottamusraja]
   - peukalointi (tampering)
   - tietovuoto (information disclosure)
   - palvelunesto (denial of service)
-API → maksupalvelu [luottamusraja]
+Verkkokauppa-API → Maksupalvelu: maksupyyntö [luottamusraja]
   - peukalointi (tampering)
   - tietovuoto (information disclosure)
   - palvelunesto (denial of service)
-Asiakas (selain)
+Maksupalvelu → Verkkokauppa-API: maksuilmoitus [luottamusraja]
+  - peukalointi (tampering)
+  - tietovuoto (information disclosure)
+  - palvelunesto (denial of service)
+Selain
   - väärä henkilöllisyys (spoofing)
   - kiistäminen (repudiation)
 Verkkokauppa-API
@@ -21,8 +25,11 @@ Tilaustietokanta
   - kiistäminen (repudiation)
   - tietovuoto (information disclosure)
   - palvelunesto (denial of service)
-API → tietokanta
+Maksupalvelu
+  - väärä henkilöllisyys (spoofing)
+  - kiistäminen (repudiation)
+Verkkokauppa-API → Tilaustietokanta: kyselyt
   - peukalointi (tampering)
   - tietovuoto (information disclosure)
   - palvelunesto (denial of service)
-Uhkia yhteensä: 21
+Uhkia yhteensä: 26

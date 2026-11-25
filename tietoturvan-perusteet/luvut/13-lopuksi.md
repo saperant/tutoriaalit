@@ -25,7 +25,7 @@
 10. **Oleta, että jokin pettää.** Puolustus syvyyssuunnassa, lokit,
     hälytykset, testatut varmuuskopiot ja harjoiteltu toimintaohje.
 
-## Mihin tästä eteenpäin
+## Jatkotaidot
 
 | Kiinnostus | Seuraava taito |
 |------------|----------------|
@@ -34,7 +34,8 @@
 | kehitysprosessi ja toimitusketju | *Tietoturva kehitystyössä* |
 | laitteet ja laiteohjelmistot | *Sulautettujen järjestelmien tietoturva* |
 | pilvi ja mikropalvelut | *Palveluarkkitehtuurin tietoturva* |
-| hyökkäystekniikat ja konekieli | *Takaisinmallinnus*, *Haavoittuvuudet* |
+| konekielitason analyysi | *Takaisinmallinnus*, *Laiteohjelmiston takaisinmallinnus* |
+| muistivirheiden löytäminen ja torjunta | *Haavoittuvuuksien analyysi ja torjunta* |
 | verkot ja palomuurit | *Verkkoinfrastruktuuri* |
 
 ## Lähteet ja jatkolukeminen
@@ -56,7 +57,7 @@
   <https://cheatsheetseries.owasp.org/>.
 - MITRE CWE (heikkousluokat) ja ATT&CK (hyökkäystekniikat):
   <https://cwe.mitre.org/>, <https://attack.mitre.org/>.
-- FIRST: CVSS v4.0, <https://www.first.org/cvss/>.
+- FIRST: CVSS v4.0 ja v3.1, <https://www.first.org/cvss/>.
 - NIST SP 800-63B, *Digital Identity Guidelines: Authentication and
   Lifecycle Management*, versio 4 (2025).
 - NIST SP 800-61, *Incident Response Recommendations and

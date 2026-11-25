@@ -106,9 +106,16 @@ kehitystyössä*).
 | lokit | rivinvaihto syötteessä väärentää lokirivin | rakenteiset lokit (JSON) |
 | mallipohjat (SSTI) | käyttäjän syöte mallipohjaksi | syöte vain mallipohjan dataksi |
 | polut | `../` tiedostonimessä | luku *Syöte, polut ja sarjallistus* |
+| XML (XXE) | ulkoinen entiteetti lukee palvelimen tiedoston | DTD ja ulkoiset entiteetit pois jäsentimestä |
+| palvelimen tekemä pyyntö (SSRF) | käyttäjän antama URL osoittaa sisäverkkoon | sallittujen kohteiden lista, sisäverkon osoitteiden esto |
 
-Ristiinsivustokomentosarjat (XSS) ovat selaimen injektio, ja niitä
-käsitellään taidossa *Web-sovellusten tietoturva*.
+Kahdessa viimeisessä syöte ei muuta lauseen rakennetta vaan sen, mihin
+palvelin itse kurottaa: XML-jäsennin tai HTTP-asiakas tekee hyökkääjän
+valitseman haun palvelimen oikeuksilla. Periaate on silti sama, eli
+syöte ei saa päättää, mitä tulkki tai asiakas tekee.
+
+Ristiinsivustokomentosarjat (XSS) ovat selaimen injektio. XSS, SSRF ja
+XXE käsitellään esimerkein taidossa *Web-sovellusten tietoturva*.
 
 ## Käytännössä
 

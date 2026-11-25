@@ -5,6 +5,8 @@ lomakkeet, otsakkeet, evästeet, ladatut tiedostot, toisten palvelujen
 vastaukset ja tiedostojärjestelmän nimet. Tämä luku käsittelee kolmea
 virheluokkaa, jotka syntyvät, kun tällaiseen dataan luotetaan:
 polkujen ohitus, turvaton deserialisointi ja vahvistamaton syöte.
+Lopuksi luodaan yleiskatsaus muistivirheisiin, joita Pythonissa ei
+synny mutta jotka ovat C- ja C++-ohjelmien vakavin virheluokka.
 
 ## Polkujen ohitus
 
@@ -100,6 +102,43 @@ Virheilmoitus on käyttäjälle hyödyllinen mutta lyhyt: se ei toista
 pitkää syötettä kokonaan (`!r:.20`) eikä paljasta sisäistä rakennetta,
 kuten pinojälkeä tai SQL-lausetta.
 
+## Muistiturvallisuus lyhyesti
+
+Tämän tutoriaalin esimerkit ovat Pythonia, jossa yksi vakava
+virheluokka ei voi syntyä: muistivirheet. C:ssä ja C++:ssa ohjelma
+käsittelee muistia suoraan, eikä kieli tarkista, pysyykö käsittely
+varatun alueen sisällä.
+
+| Virhe | Mitä tapahtuu | Seuraus |
+|-------|---------------|---------|
+| puskurin ylivuoto (*buffer overflow*) | syöte on pidempi kuin sille varattu tila, ja kirjoitus jatkuu viereiseen muistiin | viereinen data tai paluuosoite muuttuu |
+| luku rajojen ulkopuolelta | ohjelma lukee enemmän kuin puskurissa on | muistissa olleet salaisuudet vuotavat (Heartbleed 2014) |
+| käyttö vapautuksen jälkeen (*use after free*) | osoitin viittaa muistiin, joka on jo annettu toiseen käyttöön | hyökkääjän data tulkitaan ohjelman omaksi rakenteeksi |
+
+Kaikissa syy on sama kuin tämän luvun muissa virheissä: syötteen
+pituuteen tai sisältöön luotetaan tarkistamatta. Seuraus on vakavampi,
+koska hyökkääjä voi pahimmillaan ohjata ohjelman suorituksen
+haluamaansa koodiin. Microsoft ja Chromium-projekti ovat kumpikin
+raportoineet, että noin 70 prosenttia niiden vakavista
+haavoittuvuuksista on ollut muistivirheitä.
+
+**Muistiturvallinen kieli** poistaa koko luokan. Python, Java, Go ja
+C# tarkistavat jokaisen taulukkoviittauksen rajat ja vapauttavat
+muistin roskienkeruulla; Rust tekee saman käännösaikaisilla
+omistussäännöillä ilman roskienkeruuta. Siksi viranomaisohjeet (muun
+muassa Yhdysvaltain CISA) suosittelevat uuteen koodiin
+muistiturvallista kieltä. Sama Python-rivi, joka C:ssä kirjoittaisi
+puskurin yli, päättyy poikkeukseen `IndexError`.
+
+Suoja ei ulotu C:llä kirjoitettuihin osiin: kuvankäsittely-,
+pakkaus- ja jäsennyskirjastot Python-ohjelman alla ovat usein C:tä, ja
+niiden haavoittuvuudet ovat myös Python-palvelun haavoittuvuuksia.
+Kirjastot pidetään ajan tasalla (taito *Tietoturva kehitystyössä*).
+Kun C:tä tai C++:aa on kirjoitettava itse, virheitä torjutaan
+kääntäjän varoituksilla, sanitoijilla, fuzzauksella ja käyttöjärjestelmän
+suojauksilla. Ne opetetaan taidossa *Haavoittuvuuksien analyysi ja
+torjunta*.
+
 ## Käytännössä
 
 - **Kaikki luottamusrajan yli tuleva on syötettä.** Myös otsakkeet,
@@ -128,3 +167,5 @@ kuten pinojälkeä tai SQL-lausetta.
   tyyppiset ja ylimääräisiä kenttiä sisältävät syötteet.
 - Osaat perustella, miksi sallittujen arvojen lista on parempi kuin
   kiellettyjen lista.
+- Osaat selittää, mitä puskurin ylivuoto ja käyttö vapautuksen jälkeen
+  ovat ja miksi muistiturvallinen kieli poistaa ne.

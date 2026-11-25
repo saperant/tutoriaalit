@@ -103,8 +103,8 @@ eikä korvaa hyvää salasanatiivistettä.
   ettei salasana ole tunnetussa vuotolistassa (esim. Have I Been Pwned
   -palvelun k-anonymiteettirajapinta).
 - **Yritysten rajoitus.** Hidas tiiviste suojaa vuotanutta tietokantaa;
-  verkon yli tehtyjä arvauksia rajoitetaan erikseen (luku 11 ja taito
-  *Web-sovellusten tietoturva*).
+  verkon yli tehtyjä arvauksia rajoitetaan erikseen (taidot
+  *Tietoturvan perusteet* ja *Web-sovellusten tietoturva*).
 - **Palvelunesto:** hidas tiiviste on myös hyökkääjän työkalu.
   Kirjautumisyritysten määrää rajoitetaan ennen tiivisteen laskentaa.
 - **Mieluiten ei salasanoja lainkaan.** Pääsyavaimet (WebAuthn) ja

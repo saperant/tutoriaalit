@@ -111,6 +111,11 @@ etiikka*), joten oikeudellinen arvio aloitetaan heti analyysivaiheessa.
 - **Varmuuskopiot ovat viimeinen puolustuslinja.** Kiristyshaittaohjelma
   salaa myös verkkolevyt, joten vähintään yksi kopio on erillään
   verkosta tai muuttumattomana, ja palautus testataan.
+- **Sovi palautumisen tavoitteet etukäteen.** *RPO* (*recovery point
+  objective*) kertoo, kuinka paljon dataa saa enintään menettää, ja
+  *RTO* (*recovery time objective*), kuinka kauan palautus saa kestää.
+  Ne ratkaisevat, kuinka usein kopioidaan ja mitä palautusta
+  harjoitellaan. Toteutus on taidossa *Palvelinympäristöt*.
 - **Harjoittele.** Pöytäharjoitus, jossa käydään läpi kuviteltu
   poikkeama, paljastaa puuttuvat yhteystiedot ja oikeudet ennen
   todellista tilannetta.

@@ -1,0 +1,14 @@
+digraph {
+  nodesep=0.3; ranksep=0.45;
+  s1 [label="SQL-injektio\nrajapinnassa\n5000 €"];
+  s3 [label="tietojenkalastelu\n2000 €"];
+  s4 [label="MFA-väsytys\n(push-pommitus)\n1500 €"];
+  s2 [label="ylläpitäjän\ntunnukset\nJA: 3500 €", shape=box];
+  s2 -> s3;
+  s2 -> s4;
+  s5 [label="julkinen\nvarmuuskopio\npilvisäilössä\n500 €", penwidth=2.2];
+  s0 [label="lue\nasiakastietokanta\nTAI: 500 €", shape=box, penwidth=2.2];
+  s0 -> s1;
+  s0 -> s2;
+  s0 -> s5 [penwidth=2.2];
+}

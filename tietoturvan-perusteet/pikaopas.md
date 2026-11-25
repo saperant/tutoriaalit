@@ -134,3 +134,9 @@ Tarkoituksellinen poikkeus rivikohtaisesti ja perusteltuna:
 
 Löysitkö haavoittuvuuden? `security.txt` → valmistaja → sovittu
 julkistus; tarvittaessa Kyberturvallisuuskeskus. Lupa ensin.
+
+# Vastuulauseke
+
+Vain omat ohjelmat ja järjestelmät tai kirjallisella luvalla testattavat
+kohteet. Luvaton tunkeutuminen on rikos (rikoslain 38. luku). Laillinen
+harjoittelu: oma kone, OWASP Juice Shop, picoCTF, OverTheWire.

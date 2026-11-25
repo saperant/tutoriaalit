@@ -39,10 +39,16 @@ puu = Solmu("lue asiakastietokanta", tyyppi="TAI", lapset=[
 ])
 # @loppu esimerkki
 
-hinta, polku = halvin(puu)
-print(f"Halvin hyökkäys {hinta:.0f} €: {' + '.join(polku)}")
 
-# Korjataan halvin kohta ja katsotaan, mihin hyökkääjä siirtyy.
-varmuuskopio.hinta = math.inf
-hinta, polku = halvin(puu)
-print(f"Korjauksen jälkeen {hinta:.0f} €: {' + '.join(polku)}")
+def tulosta() -> None:
+    hinta, polku = halvin(puu)
+    print(f"Halvin hyökkäys {hinta:.0f} €: {' + '.join(polku)}")
+
+    # Korjataan halvin kohta ja katsotaan, mihin hyökkääjä siirtyy.
+    varmuuskopio.hinta = math.inf
+    hinta, polku = halvin(puu)
+    print(f"Korjauksen jälkeen {hinta:.0f} €: {' + '.join(polku)}")
+
+
+if __name__ == "__main__":
+    tulosta()

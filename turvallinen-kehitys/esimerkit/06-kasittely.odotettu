@@ -1,0 +1,5 @@
+ESIM-2026-0007 (korkea), haavoittuva versiosta 2.0.0 alkaen
+  1.8: ei koske (VEX: not_affected, haavoittuvaa koodia ei ole)
+  2.4: tuki päättynyt, tiedotteessa kehotus päivittää
+  2.6: korjaus versioon 2.6.2 viimeistään 2026-12-02
+  3.0: korjaus versioon 3.0.3 viimeistään 2026-12-02

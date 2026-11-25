@@ -16,6 +16,21 @@ lakiasiantuntija.
 | **Kyberkestävyyssäädös** (CRA, EU 2024/2847) | tuotteet, joissa on digitaalisia osia | tietoturva suunnittelussa, haavoittuvuuksien käsittely koko tuen ajan, aktiivisesti hyödynnetyistä haavoittuvuuksista ilmoitukset (11.9.2026 alkaen), täysi soveltaminen 11.12.2027 |
 | **Rikoslaki** 38 luku | kaikki | tietomurto (8 §), viestintäsalaisuuden loukkaus, tietoliikenteen häirintä, rikoksen valmistelu |
 
+GDPR:n velvoitteet seuraavat sen 5 artiklan periaatteista, ja kolme
+niistä näkyy suoraan ohjelmiston suunnittelussa:
+
+- **Tietojen minimointi.** Kerätään vain tieto, jota käyttötarkoitus
+  vaatii. Tieto, jota ei ole, ei voi vuotaa, joten periaate on myös
+  tietoturvatoimi.
+- **Käyttötarkoitussidonnaisuus.** Laskutusta varten kerättyä osoitetta
+  ei käytetä toiseen tarkoitukseen ilman uutta perustetta. Koodissa
+  tämä näkyy siinä, mitkä palvelut saavat lukea mitäkin kenttiä.
+- **Säilytyksen rajoittaminen.** Tiedolle määritetään säilytysaika, ja
+  poisto toteutetaan, myös varmuuskopioista ja lokeista.
+
+Lisäksi rekisterinpitäjän on pystyttävä osoittamaan, että periaatteita
+noudatetaan (osoitusvelvollisuus). Siksi päätökset kirjataan.
+
 NIS2 ja CRA siirtävät vastuuta: kyberturvallisuus on johdon
 vastuulla, ja tuotteen valmistaja vastaa sen haavoittuvuuksista koko
 tukijakson ajan. Ohjelmistokehittäjälle tämä tarkoittaa, että
@@ -102,12 +117,19 @@ eettinen perusta on yksinkertainen:
 - **Dokumentoi turvatoimet.** Riskiarvio, uhkamallit ja tehdyt
   päätökset osoittavat valvojalle, että turvatoimet ovat asianmukaisia.
 - **Kunnioita rajoja.** Uteliaisuus ei ole lupa. Harjoitteluun on
-  tarkoitettuja ympäristöjä ja kilpailuja (CTF).
+  laillisia ympäristöjä: oma kone ja oma palvelu, tarkoituksella
+  haavoittuvat harjoitussovellukset omalla koneella (esimerkiksi OWASP
+  Juice Shop) sekä harjoitusalustat ja CTF-kilpailut (*capture the
+  flag*), kuten picoCTF ja OverTheWire. Laajempi luettelo on taidossa
+  *Haavoittuvuuksien analyysi ja torjunta*. Lue jokaisen palvelun
+  säännöt ennen aloittamista.
 
 ## Itsearviointi
 
 - Osaat kertoa, mitä GDPR, NIS2, kyberturvallisuuslaki ja CRA
   edellyttävät tietoturvalta ja kenelle ne kuuluvat.
+- Osaat soveltaa tietojen minimointia, käyttötarkoitussidonnaisuutta
+  ja säilytyksen rajoittamista palvelun suunnitteluun.
 - Osaat laskea poikkeaman ilmoitusten määräajat ja kertoa, kenelle
   ilmoitukset tehdään.
 - Osaat toimia vastuullisesti löytäessäsi haavoittuvuuden toisen

@@ -81,3 +81,9 @@ subtitle: Pikaopas · Python cryptography 50 · OpenSSL 3
 - Itse allekirjoitettu palvelinvarmenne opettaa ohittamaan varoitukset:
   oma CA sisäverkkoon, ACME julkisiin palveluihin.
 - Testaa myös hylkäys: väärä avain, muutettu viesti, väärä nimi.
+
+# Vastuulauseke
+
+Hyökkäysesimerkit kohdistuvat esimerkkien omaan dataan. Kokeile vain
+omiin järjestelmiisi tai kirjallisella luvalla; luvaton tunkeutuminen
+on rikos (rikoslain 38. luku). Laillinen harjoittelu: CryptoPals.

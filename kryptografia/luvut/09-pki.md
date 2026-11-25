@@ -35,6 +35,21 @@ varmennetta. Juuriavaimet säilytetään eristettyinä, ja ne allekirjoittavat
 oman varmenteensa ja välivarmenteet, ja asiakas rakentaa ketjun
 luottamaansa juureen:
 
+```{.dot otsikko="Luottamusketju. Palvelin lähettää palvelin- ja välivarmenteen; juurivarmenne on asiakkaalla valmiina."}
+digraph {
+  rankdir=LR; nodesep=0.4; ranksep=0.45;
+  juuri [label="juurivarmenne\n(itse allekirjoitettu)"];
+  vali [label="välivarmenne\nCA: kyllä"];
+  palvelin [label="palvelinvarmenne\npalvelu.example\nCA: ei"];
+  juuri -> vali [label="allekirjoittaa"];
+  vali -> palvelin [label="allekirjoittaa"];
+  sailo [label="asiakkaan\nluottamussäilö", shape=cylinder];
+  { rank=same; sailo -> juuri [style=dashed, label="sisältää"]; }
+}
+```
+
+Asiakas tarkistaa ketjusta neljä asiaa:
+
 1. jokaisen varmenteen allekirjoitus tarkistetaan myöntäjän avaimella,
 2. jokainen varmenne on voimassa, ja myöntäjät ovat CA-varmenteita,
 3. palvelinvarmenteen nimi vastaa osoitetta, johon yhdistettiin,

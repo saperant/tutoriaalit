@@ -49,7 +49,7 @@ Avaimet:
 | varmenteet | `x509.CertificateBuilder` | `openssl req`, `openssl x509` |
 | TLS | `ssl.create_default_context()` | `openssl s_client` |
 
-## Jatko taitopuussa
+## Jatkotaidot
 
 - *Tietoturva kehitystyössä*: salaisuuksien hallinta, allekirjoitetut
   julkaisut ja toimitusketju.

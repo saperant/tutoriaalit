@@ -84,7 +84,9 @@ alttiita, mutta oikea työkalu on silti HMAC.
 
 HMAC (RFC 2104) tiivistää kahdesti eri avainjohdannaisilla, mikä estää
 pituuslaajennuksen. Tyypillinen käyttö on webhook-kutsujen ja
-API-pyyntöjen allekirjoitus jaetulla avaimella:
+API-pyyntöjen allekirjoitus jaetulla avaimella. Tilanne on tuttu
+taidosta *Tietoturvan perusteet*; tässä toteutus tarkistetaan lisäksi
+standardin testivektoria vastaan:
 
 ```{.python tiedosto="esimerkit/05-hmac.py" osa="webhook"}
 ```
@@ -95,7 +97,8 @@ API-pyyntöjen allekirjoitus jaetulla avaimella:
 Vertailu tehdään `hmac.compare_digest`-funktiolla, joka vie yhtä kauan
 riippumatta siitä, missä kohtaa merkkijonot eroavat (luku 11).
 Ensimmäinen tulosrivi tarkistaa toteutuksen RFC 4231:n testivektoria
-vastaan.
+vastaan. HMAC ei estä aidon kutsun lähettämistä uudelleen; toiston
+torjunta on kuvattu luvussa 4.
 
 ## Avainten johtaminen: HKDF
 

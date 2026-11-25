@@ -112,6 +112,57 @@ jotta raporttia osaa käyttää:
   riskin rajaaminen (ominaisuus pois, syöte suodatettuna), toiseen
   kirjastoon siirtyminen tai korjauksen tekeminen itse.
 
+## Kun haavoittuvuus on omassa tuotteessa
+
+Edellä oltiin tiedotteiden vastaanottajia. Kun haavoittuvuus löytyy
+omasta koodista, tiimi on se, jonka tiedotetta muut odottavat. EU:n
+kyberkestävyyssäädös (CRA) tekee käsittelystä valmistajan velvollisuuden
+koko tukiajan ajaksi, ja SSDF kuvaa sen käytäntöinä RV.1–RV.3. Vaiheet
+ovat:
+
+1. **Vastaanotto.** `SECURITY.md` ja `security.txt` kertovat
+   yksityisen ilmoituskanavan (esimerkiksi koodialustan yksityinen
+   haavoittuvuusilmoitus), ei julkista tikettiä. Ilmoitus kuitataan
+   muutamassa päivässä, ja ilmoittajalle kerrotaan aikataulu.
+2. **Toisto ja luokittelu.** Virhe toistetaan, sille määritetään
+   vakavuus (CVSS) ja heikkousluokka (CWE) ja selvitetään, mistä
+   versiosta alkaen se on koodissa.
+3. **Korjaus yksityisesti.** Korjaus ja sen regressiotesti tehdään
+   yksityisessä haarassa, jotta muutoshistoria ei paljasta virhettä
+   ennen julkaisua. Korjaus **takaisinsovitetaan** (*backport*)
+   jokaiseen tuettuun julkaisulinjaan.
+4. **Tunniste.** CVE-tunniste pyydetään CVE-numerointiviranomaiselta
+   (CNA), esimerkiksi koodialustan tietoturvatiedotteen kautta.
+5. **Julkaisu ja tiedote.** Korjatut versiot julkaistaan yhtä aikaa.
+   Tiedote kertoo haavoittuvat ja korjatut versiot, vakavuuden,
+   mahdollisen kiertotavan ja kiittää löytäjää. Koneluettavana se
+   julkaistaan OSV- tai CSAF-muodossa, ja linjoille, joita virhe ei
+   koske, annetaan VEX-lausuma.
+6. **Jälkikatsaus.** Miksi katselmointi ja tarkistukset eivät
+   löytäneet virhettä, ja mikä testi tai linterisääntö löytää saman
+   virheluokan ensi kerralla?
+
+Vaiheet 2 ja 3 tuottavat suunnitelman, jonka voi laskea: mitkä linjat
+korjataan, mihin mennessä ja mitä muista sanotaan.
+
+```{.python tiedosto="esimerkit/06-kasittely.py" osa="tiedot"}
+```
+
+```{.python tiedosto="esimerkit/06-kasittely.py" osa="suunnitelma"}
+```
+
+```{.tuloste tiedosto="esimerkit/06-kasittely.odotettu"}
+```
+
+Linja 1.8 saa VEX-lausuman, koska asiakkaiden skannerit hälyttävät
+siitä muuten turhaan. Linjan 2.4 tuki on päättynyt, joten sille ei
+tehdä korjausta, mutta tiedote sanoo sen suoraan. Julkaistut
+korjausajat ovat lupaus, jota mitataan. Jos haavoittuvuutta
+hyödynnetään jo aktiivisesti, CRA edellyttää lisäksi ilmoitusta
+viranomaiselle 24 tunnin kuluessa (taito *Tietoturvan perusteet*).
+Löytäjän puoli samasta prosessista on taidossa *Haavoittuvuuksien
+analyysi ja torjunta*.
+
 ## Käytännössä
 
 - **SBOM buildin tuotteena.** Jokaisesta julkaisusta tuotetaan SBOM
@@ -133,3 +184,6 @@ jotta raporttia osaa käyttää:
 - Osaat verrata riippuvuuksia OSV-muotoiseen haavoittuvuustietoon ja
   välttää versiovertailun sudenkuopan.
 - Osaat kertoa haavoittuvuusskannauksen rajat ja mitä VEX tarkoittaa.
+- Osaat kuvata, miten omasta tuotteesta ilmoitettu haavoittuvuus
+  käsitellään vastaanotosta tiedotteeseen, ja päättää, mitkä
+  julkaisulinjat korjataan.

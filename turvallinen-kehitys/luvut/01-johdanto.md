@@ -27,17 +27,36 @@ putkea kuin testaus ja julkaisu.
 | 9 | CI:n turvallisuus | Miten itse putki pysyy turvallisena? |
 | 10 | Katselmointi ja julkaisu | Kuka saa yhdistää ja julkaista mitä? |
 
-Rajaus muihin taitoihin:
+## Esitiedot ja rajaus
 
-- **Tietoturvan perusteet** (esitieto) opettaa käsitteet,
-  uhkamallinnuksen ja haavoittuvuusluokat. Tässä niitä *sovelletaan
-  prosessiin*, eikä niitä selitetä uudelleen.
-- **Versionhallinta** (esitieto): commitit, haarat ja koukut oletetaan
+Esitietoja on kaksi:
+
+- *Tietoturvan perusteet* opettaa käsitteet, uhkamallinnuksen ja
+  haavoittuvuusluokat. Tässä niitä sovelletaan prosessiin, eikä niitä
+  selitetä uudelleen.
+- *Versionhallinta (Git)*: commitit, haarat ja koukut oletetaan
   tutuiksi.
-- **Web-sovellusten tietoturva** ja **Palveluarkkitehtuurin
-  tietoturva** jatkavat sovelluksen ja tuotantoympäristön suojaamiseen.
-  Salaisuuksien hallinta tuotannossa (Vault, KMS, työkuormien
-  identiteetit) syvenee jälkimmäisessä.
+
+Esimerkit koskettavat lisäksi neljää aihetta, joista on hyötyä mutta
+jotka selitetään siltä osin kuin niitä tarvitaan:
+
+- Bash-skriptit ja ShellCheck luvuissa 3, 5 ja 7 (taito
+  *Bash-skriptaus*),
+- kehityskontin ja Dockerin asetukset luvussa 4 (taidot
+  *Kehitysympäristöt ja Dev Containers* ja *Kontit ja
+  pilvi-infrastruktuuri*),
+- CI-työnkulut luvussa 9 (taito *Jatkuva integraatio ja toimitus*),
+- allekirjoitukset ja tiivisteet luvuissa 5 ja 7 (taito *Kryptografia*).
+
+Rajauksen ulkopuolelle jäävät sovelluksen omat haavoittuvuudet (taito
+*Web-sovellusten tietoturva*) ja tuotantoympäristön suojaaminen.
+Salaisuuksien hallinta tuotannossa (Vault, KMS, työkuormien
+identiteetit) syvenee taidossa *Palveluarkkitehtuurin tietoturva*.
+
+Tutoriaalissa ei ole hyökkäystekniikoita, mutta siinä on tarkistimia:
+salaisuusskanneri, työnkulkujen tarkistin ja haavoittuvuusvertailu.
+Niitä ja niiden esikuvia ajetaan omiin repositorioihin ja sellaisiin,
+joiden tarkastamiseen on omistajan lupa.
 
 ## Miten esimerkit on rakennettu
 
@@ -62,7 +81,8 @@ make pdf         # tämä dokumentti ja pikaopas
 ```
 
 Kehityskontti (`.devcontainer/turvallinen-kehitys`) sisältää Pythonin,
-ruffin, mypyn, ShellCheckin, gitin ja OpenSSH:n.
+ruffin, mypyn, ShellCheckin, gitin ja OpenSSH:n. Kontin avaaminen
+neuvotaan taidossa *Kehitysympäristöt ja Dev Containers*.
 
 ## Kolme periaatetta
 

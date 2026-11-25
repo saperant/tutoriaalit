@@ -100,8 +100,8 @@ Builds -projekti dokumentoi korjaukset eri työkaluille.
 ## SLSA-tasot
 
 **SLSA** (*Supply-chain Levels for Software Artifacts*) jäsentää
-build-ketjun turvallisuuden tasoiksi. Versio 1.0 määrittelee
-build-polun tasot:
+build-ketjun turvallisuuden tasoiksi. Versiosta 1.0 (2023) alkaen
+build-polun tasot ovat:
 
 | Taso | Vaatimus | Mitä se estää |
 |------|----------|---------------|

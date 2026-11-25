@@ -7,11 +7,35 @@ ja *kiistämättömyys* (lähettäjä ei voi jälkikäteen kiistää
 allekirjoitustaan). Saatavuutta kryptografia ei suojaa: salattu
 palvelu kaatuu yhtä helposti kuin salaamaton.
 
-Tutoriaali olettaa taidot *Tietoturvan perusteet* (uhkamallinnus ja
-tietoturvan käsitteet), *Diskreetti matematiikka* (modulaariaritmetiikka)
-ja *Python*. Tavoitteena on ymmärtää, mitä kukin menetelmä takaa ja mitä
-ei, valita oikea menetelmä ja käyttää sitä oikein. Algoritmien sisäistä
+Tavoitteena on ymmärtää, mitä kukin menetelmä takaa ja mitä ei,
+valita oikea menetelmä ja käyttää sitä oikein. Algoritmien sisäistä
 rakennetta käsitellään vain sen verran kuin oikea käyttö vaatii.
+
+## Esitiedot ja rajaus
+
+Tutoriaali olettaa kolme taitoa:
+
+- *Tietoturvan perusteet*: uhkamallinnus, tietoturvan käsitteet ja se,
+  mitä tiiviste, MAC, salaus ja allekirjoitus käyttäjälle takaavat.
+  Tässä samat työkalut avataan: miten ne toimivat, miten niitä
+  käytetään kirjastosta ja miten ne pettävät väärin käytettyinä.
+- *Diskreetti matematiikka*: modulaariaritmetiikka, jota RSA,
+  Diffie–Hellman ja elliptiset käyrät käyttävät.
+- *Python*: esimerkit käyttävät tyyppivihjeitä, tietoluokkia ja
+  kirjastoja.
+
+Rajauksen ulkopuolelle jäävät algoritmien suunnittelu ja kryptoanalyysi
+(ks. lähteet), tokenit ja selaimen protokollat (taito *Web-sovellusten
+tietoturva*), avainten hallinta tuotannossa (taito
+*Palveluarkkitehtuurin tietoturva*) sekä sivukanavien mittaaminen
+laitteesta (taito *Sulautettujen järjestelmien tietoturva*).
+
+Tutoriaalissa on myös hyökkäysesimerkkejä: satunnaislukugeneraattorin
+tilan palautus, pituuslaajennus ja täyteoraakkeli. Ne kohdistuvat
+esimerkin omaan, paikalliseen dataan ja funktioihin, ja jokaisen
+tarkoitus on näyttää, miksi oikea rakenne tarvitaan. Toisten
+järjestelmien testaaminen ilman lupaa on rikos (rikoslain 38. luku).
+Laillisia harjoitustehtäviä on viimeisen luvun lähteissä.
 
 ## Älä keksi omaa kryptografiaa
 
@@ -68,6 +92,18 @@ helppokäyttöinen ja turvallinen oletus), **BoringSSL** ja **AWS-LC**
 (OpenSSL:n johdannaiset), **RustCrypto** ja **ring** (Rust), Javan
 **JCA** ja **Bouncy Castle**, Go:n `crypto`-paketti sekä selainten
 **Web Crypto API**.
+
+Esimerkit ajetaan paketin juurihakemistossa:
+
+```text
+python3 esimerkit/01-perusteet.py   # yksi esimerkki
+make testaa                         # rakenne, ruff, mypy, ShellCheck ja kaikki ajot
+make pdf                            # tämä dokumentti ja pikaopas
+```
+
+Kehityskontissa (`.devcontainer/kryptografia`) kirjasto, OpenSSL ja
+tarkistimet ovat valmiina. Kontin avaaminen neuvotaan taidossa
+*Kehitysympäristöt ja Dev Containers*.
 
 ## Ensimmäinen esimerkki
 

@@ -20,7 +20,37 @@ kohteeseen, vaan kohde asentaa hyökkääjän koodin itse.
 
 Puolustus on kerroksellinen: lukitse ja tarkista, mitä asennat;
 tiedä, mitä sinulla on (SBOM, seuraava luku); varmista, kuka teki ja
-mistä se rakennettiin (allekirjoitukset, luku 7).
+mistä se rakennettiin (allekirjoitukset, luku 7). Kaavio sijoittaa
+hyökkäykset ja kontrollit toimitusketjun vaiheisiin:
+
+```{.dot otsikko="Toimitusketju lähdekoodista käyttöönottoon. Vaiheen vasemmalla puolella on siihen kohdistuvia hyökkäyksiä, oikealla kontrollit ja luku, jossa ne käsitellään."}
+digraph {
+  nodesep=0.25; ranksep=0.3;
+  node [width=1.3];
+  lahde [label="lähdekoodi\n(repositorio)"]; riip [label="riippuvuudet\n(rekisterit)"];
+  build [label="build\n(CI)"]; paketti [label="julkaisu\n(paketti, kuva)"];
+  kaytto [label="käyttöönotto"];
+  lahde -> riip [style=invis];
+  lahde -> build; riip -> build; build -> paketti -> kaytto;
+  node [shape=plain, style="", width=0];
+  h1 [label="haitallinen muutos,\rkaapattu tili\r"];
+  h2 [label="kirjoitusvirhepaketti,\rriippuvuussekaannus,\rkaapattu ylläpitäjä\r"];
+  h3 [label="kaapattu CI-toiminto,\rsaastunut build\r"];
+  h4 [label="julkaisun vaihto\rbuildin jälkeen\r"];
+  h5 [label=" "];
+  s1 [label="haarasuojaus, katselmointi,\lallekirjoitetut commitit\l(luvut 7 ja 10)\l"];
+  s2 [label="lukitus ja tiivisteet, SBOM,\lhaavoittuvuustieto\l(luvut 5 ja 6)\l"];
+  s3 [label="kiinnitetyt toiminnot,\lvähimmät oikeudet, OIDC\l(luku 9)\l"];
+  s4 [label="allekirjoitus, alkuperätieto,\ltoistettava build\l(luku 7)\l"];
+  s5 [label="allekirjoituksen ja\lalkuperätiedon tarkistus\l(luku 7)\l"];
+  edge [style=dashed, arrowhead=none];
+  { rank=same; h1 -> lahde -> s1; }
+  { rank=same; h2 -> riip -> s2; }
+  { rank=same; h3 -> build -> s3; }
+  { rank=same; h4 -> paketti -> s4; }
+  { rank=same; h5 -> kaytto [style=invis]; kaytto -> s5; }
+}
+```
 
 ## Lukitus ja tiivisteet
 

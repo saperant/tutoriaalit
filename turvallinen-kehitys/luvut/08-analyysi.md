@@ -83,6 +83,25 @@ se kutistuu ajan myötä. Samaa periaatetta käyttävät esimerkiksi
 detect-secretsin `.secrets.baseline` ja SARIF-muotoisten tulosten
 vertailu koodialustoilla.
 
+## Tietoturvatestit testisarjassa
+
+Työkalujen rinnalla tiimin omat testit ovat tarkin tietoturvatarkistus,
+koska ne tuntevat sovelluksen säännöt:
+
+- **Väärinkäyttötapaukset** (*abuse cases*). Jokaisen
+  valtuutussäännön rinnalla on testi, joka yrittää rikkoa sen: toisen
+  käyttäjän tietue, negatiivinen määrä, liian suuri syöte. Testi
+  odottaa kieltoa.
+- **Regressiotesti jokaisesta korjatusta haavoittuvuudesta.** Korjaus
+  ilman testiä palaa takaisin seuraavassa uudelleenkirjoituksessa.
+  Testi kirjoitetaan ensin ja sen nähdään epäonnistuvan haavoittuvalla
+  koodilla.
+
+Testien suunnittelu on taidossa *Testivetoinen kehitys ja
+testisuunnittelu*. C- ja C++-koodissa analyysiin kuuluvat lisäksi
+kääntäjän koventavat valitsimet, sanitoijat ja fuzzaus (taito
+*Haavoittuvuuksien analyysi ja torjunta*).
+
 ## Dynaaminen analyysi periaatteena
 
 DAST-työkalu, kuten OWASP ZAP, käyttää sovellusta kuten hyökkääjä:
@@ -123,3 +142,5 @@ DAST etsii.
 - Osaat hallita vanhan koodin löydöksiä perustason ja vanhenevien
   poikkeusten avulla.
 - Osaat kertoa, miten DAST ajetaan turvallisesti.
+- Osaat kirjoittaa väärinkäyttötapauksen testiksi ja perustella
+  regressiotestin jokaiselle korjatulle haavoittuvuudelle.

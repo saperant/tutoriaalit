@@ -37,6 +37,26 @@ itseensä *k* kertaa) on helppo laskea mutta vaikea kumota. Sama
 turvallisuus saavutetaan paljon pienemmillä avaimilla kuin RSA:lla:
 256-bittinen käyrä vastaa 3072-bittistä RSA:ta.
 
+Menetelmiä verrataan **turvallisuustasolla**: taso *n* bittiä
+tarkoittaa, että paras tunnettu hyökkäys vaatii noin 2^*n*^ operaatiota.
+Symmetrisellä salaimella taso on avaimen pituus, mutta julkisen avaimen
+menetelmissä avain on paljon tasoa pidempi, koska hyökkäys ei ole
+avainten läpikäynti vaan matemaattisen ongelman ratkaisu. Taulukko
+kokoaa tämän ja edellisten lukujen menetelmät (NIST SP 800-57); taso
+ja RSA:n avainpituus ovat bittejä:
+
+| Taso | Symmetrinen | Tiiviste (törmäys) | RSA, DH | Elliptinen käyrä | Kvanttiturvallinen (luku 12) |
+|------|-------------|--------------------|---------|------------------|------------------------------|
+| 112 | – | SHA-224 | 2048 | P-224 | – |
+| 128 | AES-128 | SHA-256 | 3072 | P-256, X25519, Ed25519 | ML-KEM-512 |
+| 192 | AES-192 | SHA-384 | 7680 | P-384 | ML-KEM-768, ML-DSA-65 |
+| 256 | AES-256 | SHA-512 | 15 360 | P-521 | ML-KEM-1024, ML-DSA-87 |
+
+Tiivisteen taso törmäyksiä vastaan on puolet tulosteen pituudesta
+(syntymäpäiväongelma). Uusiin järjestelmiin valitaan vähintään 128
+bitin taso. Järjestelmän taso on sen heikoimman osan taso: AES-256
+RSA-2048:lla sovitulla avaimella on 112 bitin järjestelmä.
+
 Opetusesimerkin käyrässä on vain 19 pistettä:
 
 ```{.python tiedosto="esimerkit/08-kayra-opetus.py" osa="ryhmalaki"}
@@ -134,6 +154,8 @@ hoitavat myös avainten jakelun: **minisign**, **signify**,
 - Osaat selittää Diffie–Hellmanin ja miksi se tarvitsee todennuksen.
 - Osaat kuvata elliptisen käyrän ryhmälain ja skalaarikertolaskun
   periaatteen ja niiden suhteen avainten kokoon.
+- Osaat verrata symmetristen ja julkisen avaimen menetelmien
+  avainpituuksia turvallisuustason avulla.
 - Osaat sopia istuntoavaimen X25519:llä ja HKDF:llä ja selittää
   eteenpäin salaisuuden.
 - Osaat allekirjoittaa ja tarkistaa Ed25519:llä sekä Pythonilla että

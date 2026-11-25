@@ -27,8 +27,9 @@ oikeuksia vaativat kutsut omilla tunnuksillaan.
 
 Salaisuuksien skannaus perustuu kolmeen keinoon: tunnettuihin muotoihin
 (palveluntarjoajien avaimilla on tunnistettava etuliite), sijoituksiin
-(`password = "..."`) ja satunnaisuuteen eli entropiaan. Pieni toteutus
-näyttää periaatteen:
+(`password = "..."`) ja satunnaisuuteen eli entropiaan. Periaate on
+tuttu taidosta *Tietoturvan perusteet*; tässä skanneri saa rinnalleen
+sijoitussäännön ja kytketään seuraavassa osiossa commit-koukkuun:
 
 ```{.python tiedosto="esimerkit/03-skanneri.py" osa="saannot"}
 ```
@@ -122,12 +123,29 @@ yhtä aikaa:
 ```{.tuloste tiedosto="esimerkit/03-kierto.odotettu"}
 ```
 
-Samaa kolmen vaiheen mallia käytetään kaikessa kierrossa: TLS-varmenteet,
-JWT:n allekirjoitusavaimet (JWKS-joukossa on useita avaimia, ja
-tunnisteen otsakkeen `kid` kertoo, millä avaimella se on allekirjoitettu)
-ja tietokantasalasanat (kaksi käyttäjää, joista toinen on aina
-voimassa). Jos kierto vaatii katkon, sitä ei tehdä, ja avaimesta tulee
-ikuinen.
+```{.ajoituskaavio otsikko="Kierron kolme vaihetta: (1) uusi avain jaetaan, (2) allekirjoitus vaihtuu uuteen, (3) vanha poistetaan. Avaimet ovat päällekkäin voimassa niin kauan, että kaikki instanssit tuntevat uuden ja vanhalla allekirjoitetut tunnisteet ovat vanhentuneet."}
+{"signal": [
+  {"name": "vaihe", "wave": "====", "data": ["alku", "1", "2", "3"]},
+  {"name": "allekirjoittava avain", "wave": "=.=.", "data": ["k1", "k2"]},
+  {"name": "k1 hyväksytään", "wave": "1..0"},
+  {"name": "k2 hyväksytään", "wave": "01.."}
+], "config": {"hscale": 2}}
+```
+
+Samaa kolmen vaiheen mallia käytetään kaikessa kierrossa:
+
+- **TLS-varmenteet**: uusi varmenne otetaan käyttöön ennen vanhan
+  vanhenemista.
+- **Tokenien allekirjoitusavaimet.** Kirjautumispalvelu allekirjoittaa
+  käyttäjästä kertovan tunnisteen (*JSON Web Token*, JWT) ja julkaisee
+  tarkistukseen tarvittavat julkiset avaimet avainjoukkona (*JSON Web
+  Key Set*, JWKS). Joukossa on useita avaimia, ja tunnisteen otsakkeen
+  `kid` (*key id*) kertoo, millä niistä se on allekirjoitettu. Tokenit
+  käsitellään taidossa *Web-sovellusten tietoturva*.
+- **Tietokantasalasanat**: kaksi käyttäjää, joista toinen on aina
+  voimassa.
+
+Jos kierto vaatii katkon, sitä ei tehdä, ja avaimesta tulee ikuinen.
 
 ## Kun salaisuus vuotaa
 

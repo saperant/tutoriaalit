@@ -20,15 +20,30 @@ taidot jatkavat tästä:
 | *Tietoturva kehitystyössä* | salaisuudet, toimitusketju, CI-tarkistukset |
 | *Sulautettujen järjestelmien tietoturva* | luottamusketju, avainten säilytys laitteessa |
 | *Palveluarkkitehtuurin tietoturva* | nollaluottamus, palvelujen identiteetit |
-| *Takaisinmallinnus* ja *Haavoittuvuudet* | konekielitason analyysi, muistivirheet |
+| *Takaisinmallinnus* | käännetyn ohjelman toiminnan selvittäminen konekielestä |
+| *Haavoittuvuuksien analyysi ja torjunta* | muistivirheet, niiden löytäminen ja suojaukset |
+| *Laiteohjelmiston takaisinmallinnus* | laiteohjelmistokuvan analyysi ja laitteen suojaaminen |
 
-## Kenelle
+## Esitiedot ja rajaus
 
 Lukija osaa ohjelmoida ja tuntee tietoverkkojen perusteet (taidot
-*Ohjelmoinnin perusteet* ja *Tietoverkot*). Esimerkit ovat Pythonia,
-mutta virheluokat ja korjaukset ovat samat kaikissa kielissä.
-C-kielen muistivirheet, kuten puskurin ylivuoto, käsitellään taidossa
-*Haavoittuvuudet*.
+*Ohjelmoinnin perusteet (Python)* ja *Tietoverkot*). Verkoista
+tarvitaan vain peruskäsitteet: HTTP-pyyntö, TLS-yhteys ja palvelujen
+välinen kutsu. Esimerkit ovat Pythonia, mutta virheluokat ja korjaukset
+ovat samat kaikissa kielissä.
+
+Tutoriaali ei käsittele seuraavia aiheita muuten kuin yleiskuvana:
+
+- **Salausmenetelmien toiminta.** Luku *Kryptografia käyttäjän
+  näkökulmasta* kertoo, mitä kukin työkalu takaa. Algoritmit ja
+  protokollat ovat taidossa *Kryptografia*.
+- **Selaimen suojausmallit** (XSS, CSRF, evästeet, OAuth) ovat taidossa
+  *Web-sovellusten tietoturva*.
+- **C-kielen muistivirheet**, kuten puskurin ylivuoto. Luvussa *Syöte,
+  polut ja sarjallistus* on niistä lyhyt yleiskuva, ja varsinainen
+  käsittely on taidossa *Haavoittuvuuksien analyysi ja torjunta*.
+- **Verkon suojaukset**, kuten palomuurit ja segmentointi, ovat
+  taidossa *Verkkoinfrastruktuuri*.
 
 ## Miten esimerkit on rakennettu
 
@@ -49,8 +64,19 @@ samaan tarkoitukseen:
 - Jokainen esimerkki ajetaan, ja tulostetta verrataan odotettuun.
 
 Esimerkit käyttävät vain Pythonin standardikirjastoa, ja ne toimivat
-Python 3.12:lla ja uudemmilla. Niitä voi ajaa paikallisesti tai
-tutoriaalin kehityskontissa.
+Python 3.12:lla ja uudemmilla. Yksittäisen esimerkin voi ajaa
+sellaisenaan, ja koko paketin tarkistukset ajetaan paketin
+juurihakemistossa:
+
+```text
+python3 esimerkit/07-sql.py   # yksi esimerkki
+make testaa                   # rakenne, ruff, mypy ja kaikkien esimerkkien ajo
+make pdf                      # tämä dokumentti ja pikaopas
+```
+
+Kehityskontissa (`.devcontainer/tietoturvan-perusteet`) Python, ruff ja
+mypy ovat valmiina. Kontin avaaminen neuvotaan taidossa
+*Kehitysympäristöt ja Dev Containers*.
 
 ## Mitä tietoturva ei ole
 
@@ -64,11 +90,21 @@ Tietoturva ei myöskään ole pelkkää estämistä. Kaikkea ei voi estää,
 joten järjestelmän on myös havaittava hyökkäykset ja toivuttava niistä.
 Luku *Lokitus, havaitseminen ja poikkeamat* käsittelee tätä puolta.
 
-## Etiikka ja laki ensin
+## Vastuulauseke: etiikka ja laki ensin
 
+Materiaali on tarkoitettu opetukseen ja oman koodin parantamiseen.
 Tutoriaalin hyökkäysesimerkit kohdistuvat esimerkin omaan, paikalliseen
-dataan. Toisen järjestelmään tunkeutuminen ilman lupaa on Suomessa
-rikos (tietomurto, rikoslaki 38 luku 8 §), vaikka tarkoitus olisi hyvä.
-Omia taitoja harjoitellaan omissa ympäristöissä ja niille tehdyissä
-harjoitusalustoissa. Luku *Lainsäädäntö ja etiikka* kertoo, miten
-löydetystä haavoittuvuudesta ilmoitetaan vastuullisesti.
+dataan, ja jokaisen rinnalla on korjaus.
+
+- **Kokeile vain omiin ohjelmiisi ja järjestelmiisi** tai kohteisiin,
+  joihin sinulla on omistajan kirjallinen lupa. Oman palvelun
+  testaamiseen kannustetaan: juuri niin virheet löytyvät ennen
+  hyökkääjää.
+- **Luvaton tunkeutuminen on rikos.** Toisen järjestelmään
+  tunkeutuminen ilman lupaa on Suomessa rangaistavaa (tietomurto,
+  rikoslaki 38 luku 8 §), vaikka tarkoitus olisi hyvä.
+- **Harjoitteluun on laillisia ympäristöjä.** Luku *Lainsäädäntö ja
+  etiikka* nimeää harjoitusalustoja ja kertoo, miten löydetystä
+  haavoittuvuudesta ilmoitetaan vastuullisesti.
+
+Tekijät eivät vastaa materiaalin väärinkäytöstä.

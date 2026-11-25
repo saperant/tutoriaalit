@@ -85,3 +85,8 @@ eristetty, väärentämätön.
   suojaa myös työnkulut, riippuvuustiedostot ja `CODEOWNERS` itse.
 - Katsoja: luottamusrajat, valtuutus, virhepolut, mitä puuttuu.
 - Poikkeukset: `# noqa: SÄÄNTÖ  syy`, perustaso + vanhenemispäivä.
+
+# Vastuulauseke
+
+Aja skannereita ja tarkistimia vain omiin repositorioihin ja
+järjestelmiin tai omistajan luvalla.

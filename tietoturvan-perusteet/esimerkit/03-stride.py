@@ -22,34 +22,62 @@ KOSKEE = {
 # @loppu taulukko
 
 
+# @alku malli
 @dataclass(frozen=True)
 class Elementti:
     nimi: str
-    tyyppi: str              # toimija, prosessi, varasto tai virta
-    ylittaa_rajan: bool = False
+    tyyppi: str              # toimija, prosessi tai varasto
+    vyohyke: str             # luottamusvyöhyke, jossa elementti on
 
 
-# @alku malli
-MALLI = [
-    Elementti("Asiakas (selain)", "toimija"),
-    Elementti("Verkkokauppa-API", "prosessi"),
-    Elementti("Tilaustietokanta", "varasto"),
-    Elementti("Selain → API (HTTPS)", "virta", ylittaa_rajan=True),
-    Elementti("API → tietokanta", "virta"),
-    Elementti("API → maksupalvelu", "virta", ylittaa_rajan=True),
+@dataclass(frozen=True)
+class Virta:
+    mista: Elementti
+    mihin: Elementti
+    sisalto: str
+    tyyppi: str = "virta"
+
+    @property
+    def nimi(self) -> str:
+        return f"{self.mista.nimi} → {self.mihin.nimi}: {self.sisalto}"
+
+    @property
+    def ylittaa_rajan(self) -> bool:
+        return self.mista.vyohyke != self.mihin.vyohyke
+
+
+selain = Elementti("Selain", "toimija", "internet")
+api = Elementti("Verkkokauppa-API", "prosessi", "oma palvelinympäristö")
+kanta = Elementti("Tilaustietokanta", "varasto", "oma palvelinympäristö")
+maksu = Elementti("Maksupalvelu", "toimija", "kumppanin järjestelmä")
+
+ELEMENTIT = [selain, api, kanta, maksu]
+VIRRAT = [
+    Virta(selain, api, "tilaus"),
+    Virta(api, kanta, "kyselyt"),
+    Virta(api, maksu, "maksupyyntö"),
+    Virta(maksu, api, "maksuilmoitus"),
 ]
 # @loppu malli
 
 
-def uhat(elementti: Elementti) -> list[str]:
-    return [STRIDE[k] for k in KOSKEE[elementti.tyyppi]]
+def uhat(osa: Elementti | Virta) -> list[str]:
+    return [STRIDE[k] for k in KOSKEE[osa.tyyppi]]
 
 
-# Luottamusrajan ylittävät virrat käsitellään ensin: niissä hyökkääjä
-# pääsee käsiksi dataan.
-for e in sorted(MALLI, key=lambda e: not e.ylittaa_rajan):
-    raja = " [luottamusraja]" if e.ylittaa_rajan else ""
-    print(f"{e.nimi}{raja}")
-    for uhka in uhat(e):
-        print(f"  - {uhka}")
-print(f"Uhkia yhteensä: {sum(len(uhat(e)) for e in MALLI)}")
+def tulosta() -> None:
+    # Luottamusrajan ylittävät virrat käsitellään ensin: niissä
+    # hyökkääjä pääsee käsiksi dataan.
+    rajalla = [v for v in VIRRAT if v.ylittaa_rajan]
+    sisalla = [v for v in VIRRAT if not v.ylittaa_rajan]
+    osat: list[Elementti | Virta] = [*rajalla, *ELEMENTIT, *sisalla]
+    for osa in osat:
+        raja = " [luottamusraja]" if osa in rajalla else ""
+        print(f"{osa.nimi}{raja}")
+        for uhka in uhat(osa):
+            print(f"  - {uhka}")
+    print(f"Uhkia yhteensä: {sum(len(uhat(osa)) for osa in osat)}")
+
+
+if __name__ == "__main__":
+    tulosta()

@@ -31,6 +31,34 @@ taustapalvelu, oma ja kumppanin järjestelmä. Rajan ylittävät
 tietovirrat ovat hyökkääjän helpoimpia kohteita, koska niissä hän voi
 lähettää mitä tahansa. Jokainen rajan ylittävä syöte on tarkistettava.
 
+Luvun esimerkkinä on verkkokauppa. Asiakkaan selain lähettää tilauksen
+kaupan API:lle, API tallentaa sen tietokantaan ja pyytää maksun
+maksupalvelulta, ja maksupalvelu ilmoittaa onnistuneesta maksusta
+takaisin API:lle. Kun elementit, niiden vyöhykkeet ja tietovirrat
+kirjoitetaan datana, luottamusrajan ylitys seuraa mallista: virta
+ylittää rajan, jos sen päät ovat eri vyöhykkeissä.
+
+```{.python tiedosto="esimerkit/03-stride.py" osa="malli"}
+```
+
+Samasta mallista piirretään kaavio. Esimerkki `03-tietovuokaavio.py`
+lukee mallin ja tulostaa sen Graphvizin DOT-kielellä:
+
+```{.python tiedosto="esimerkit/03-tietovuokaavio.py" osa="kaavio"}
+```
+
+Toimija on suorakulmio, prosessi ellipsi ja tietovarasto lieriö.
+Katkoviiva rajaa luottamusvyöhykkeen, ja rajan ylittävät virrat on
+piirretty paksulla viivalla:
+
+```{.dot tiedosto="esimerkit/03-tietovuokaavio.odotettu" otsikko="Verkkokaupan tietovuokaavio ja luottamusrajat ohjelman tulosteesta piirrettynä."}
+```
+
+Valkotaululla kaavio piirretään käsin, ja se riittää. Datana
+esitetystä mallista on hyötyä, kun kaavio halutaan pitää
+versionhallinnassa koodin vieressä ja siitä halutaan johtaa muuta,
+kuten seuraavan osion uhkaluettelo.
+
 ## STRIDE
 
 Toiseen kysymykseen vastataan käymällä kaavio läpi uhkaluokittain.
@@ -49,24 +77,25 @@ luokka rikkoo jotakin tietoturvan ominaisuutta:
 Kaikki luokat eivät koske kaikkia elementtejä. Tietovirtaa ei voi
 "korottaa oikeuksiltaan", eikä ulkoista toimijaa voi peukaloida
 järjestelmän sisältä. *STRIDE per element* -taulukko kertoo, mitkä
-luokat kuuluvat millekin elementille. Kun malli esitetään datana,
-uhkalistan voi johtaa siitä:
+luokat kuuluvat millekin elementille:
 
 ```{.python tiedosto="esimerkit/03-stride.py" osa="taulukko"}
 ```
 
-```{.python tiedosto="esimerkit/03-stride.py" osa="malli"}
-```
+Uhkaluettelo saadaan käymällä verkkokaupan malli läpi taulukon avulla.
+Luottamusrajan ylittävät virrat tulostetaan ensin, koska niistä
+kannattaa aloittaa:
 
 ```{.tuloste tiedosto="esimerkit/03-stride.odotettu"}
 ```
 
 Lista ei ole vastaus vaan kysymyslista. Jokaisesta rivistä kysytään:
 voiko tämä tapahtua meidän järjestelmässämme, ja jos voi, mikä sen
-estää? Esimerkiksi "API → maksupalvelu: peukalointi" johtaa
-kysymykseen, tarkistammeko maksupalvelun vastauksen aitouden vai
-luotammeko mihin tahansa vastaukseen (luku *Kryptografia käyttäjän
-näkökulmasta*, HMAC).
+estää? Esimerkiksi "Maksupalvelu → Verkkokauppa-API: maksuilmoitus,
+peukalointi" johtaa kysymykseen, tarkistammeko ilmoituksen aitouden vai
+merkitsemmekö tilauksen maksetuksi minkä tahansa viestin perusteella.
+Luku *Kryptografia käyttäjän näkökulmasta* näyttää tarkistuksen
+HMAC:lla.
 
 ## Hyökkäyspuut
 
@@ -83,6 +112,16 @@ hyökkääjän halvimman reitin:
 ```
 
 ```{.tuloste tiedosto="esimerkit/03-hyokkayspuu.odotettu"}
+```
+
+Puu on helpompi lukea kuvana. Piirtofunktio käy puun läpi samalla
+rekursiolla kuin `halvin` ja merkitsee halvimman reitin solmut ja
+kaaret paksulla viivalla:
+
+```{.python tiedosto="esimerkit/03-hyokkayspuu-kaavio.py" osa="piirto"}
+```
+
+```{.dot tiedosto="esimerkit/03-hyokkayspuu-kaavio.odotettu" otsikko="Hyökkäyspuu ennen korjausta. Sisäsolmussa näkyy sen tyyppi ja halvimman alipuun hinta."}
 ```
 
 Puu opettaa kaksi asiaa. Ensinnäkin hyökkääjä valitsee halvimman
@@ -120,9 +159,13 @@ Riskille on neljä vaihtoehtoista käsittelytapaa:
 Numeerinen asteikko näyttää tarkalta, mutta arviot ovat karkeita.
 Matriisin arvo on keskustelussa: miksi tämä on 4 eikä 2? Haavoittuvuuksien
 vakavuuden standardoitu mittari on **CVSS** (*Common Vulnerability
-Scoring System*, versio 4.0), jota käytetään julkaistuissa
-haavoittuvuustiedotteissa (CVE). CVSS kuvaa haavoittuvuuden teknistä
-vakavuutta, ei riskiä juuri sinun ympäristössäsi.
+Scoring System*), jota käytetään julkaistuissa
+haavoittuvuustiedotteissa (CVE). Uusin versio on 4.0 (2023), mutta moni
+haavoittuvuustietokanta ilmoittaa pisteet yhä versiolla 3.1, joten
+tiedotteesta kannattaa katsoa, kumpaa se käyttää. CVSS kuvaa
+haavoittuvuuden teknistä vakavuutta, ei riskiä juuri sinun
+ympäristössäsi. Pisteiden laskenta vektorista käydään läpi taidossa
+*Haavoittuvuuksien analyysi ja torjunta*.
 
 ## Käytännössä
 

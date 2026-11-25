@@ -42,6 +42,30 @@ järjestelmään: verkkorajapinnat, lomakkeet, tiedostojen lataus,
 ylläpitoliittymät, riippuvuudet, työntekijät. Jokainen poistettu
 ominaisuus ja suljettu portti pienentää sitä.
 
+## Ihminen hyökkäyksen kohteena
+
+Hyökkäyspintaan kuuluvat myös ihmiset. **Käyttäjän manipulointi**
+(*social engineering*) tarkoittaa, että hyökkääjä saa ihmisen tekemään
+jotain hyökkääjän puolesta: kertomaan salasanan, hyväksymään
+kirjautumisen tai maksamaan laskun. Tavallisimmat muodot ovat
+
+- **tietojenkalastelu** (*phishing*): viesti, joka ohjaa väärennetylle
+  kirjautumissivulle tai saa avaamaan haitallisen liitteen,
+- **kohdennettu kalastelu** (*spear phishing*): sama, mutta viesti on
+  räätälöity vastaanottajalle julkisista tiedoista,
+- **tekosyy** (*pretexting*): soittaja esiintyy tukihenkilönä,
+  esihenkilönä tai toimittajana ja pyytää poikkeusta käytäntöön.
+
+Keinot toimivat, koska ne vetoavat kiireeseen, auktoriteettiin ja
+auttamisenhaluun, eivät siksi, että kohde olisi huolimaton. Siksi
+torjunta ei voi nojata pelkkään valppauteen. Kestävät suojaukset ovat
+teknisiä ja prosessiin rakennettuja: kalastelua kestävä tunnistus (luku
+*Todennus*), kahden henkilön hyväksyntä maksuille ja oikeuksien
+muutoksille, tunnistetun kanavan käyttö takaisinsoittoon sekä
+ilmoituskanava, jonka käytöstä ei seuraa syyllistämistä. Koulutus
+auttaa tunnistamaan yritykset, mutta järjestelmä suunnitellaan niin,
+että yhden ihmisen erehdys ei riitä murtoon.
+
 ## Suunnitteluperiaatteet
 
 Saltzer ja Schroeder kokosivat vuonna 1975 periaatteet, jotka ovat
@@ -127,6 +151,8 @@ jotka käyttävät samaa salasanaa, ovat yksi suojaus.
 - Osaat selittää luottamuksellisuuden, eheyden ja saatavuuden erot
   esimerkein.
 - Osaat erottaa uhan, haavoittuvuuden ja riskin toisistaan.
+- Osaat nimetä käyttäjän manipuloinnin tavallisimmat muodot ja
+  suojaukset, jotka eivät nojaa yksittäisen ihmisen valppauteen.
 - Osaat tunnistaa koodista tarkistuksen, joka epäonnistuu avoimeksi, ja
   korjata sen.
 - Osaat suunnitella palvelulle toisistaan riippumattomia

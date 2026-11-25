@@ -87,7 +87,7 @@ pysähtyy:
 | Asetus | Miksi vaarallinen |
 |--------|-------------------|
 | debug tuotannossa | pinojäljet, asetukset ja joskus etäkonsoli näkyvät hyökkääjälle |
-| TLS-tarkistus pois | välimieshyökkäys mahdollinen, ks. luku *Kryptografia* |
+| TLS-tarkistus pois | välimieshyökkäys mahdollinen, ks. luku *Kryptografia käyttäjän näkökulmasta* |
 | CORS `*` tunnisteiden kanssa | mikä tahansa sivusto voi lukea vastaukset |
 | `0.0.0.0` ylläpitoliittymälle | kuuntelee kaikissa verkoissa, myös internetissä |
 | oletustunnukset | löytyvät valmistajan ohjeista ja hyökkäyslistoista |

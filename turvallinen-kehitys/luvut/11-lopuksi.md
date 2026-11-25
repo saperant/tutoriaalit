@@ -39,16 +39,18 @@
 | allekirjoitukset | ssh-keygen -Y, Sigstore (cosign, gitsign), in-toto |
 | projektin arvio | OpenSSF Scorecard |
 
-## Jatkotaidot taitopuussa
+## Jatkotaidot
 
-- **Web-sovellusten tietoturva**: sovelluksen hyökkäykset ja
+- *Web-sovellusten tietoturva*: sovelluksen hyökkäykset ja
   torjunnat, joita DAST etsii ja katselmoija arvioi.
-- **Palveluarkkitehtuurin tietoturva**: salaisuuksien hallinta
+- *Palveluarkkitehtuurin tietoturva*: salaisuuksien hallinta
   tuotannossa, työkuormien identiteetit ja nollaluottamus.
-- **Kontit ja pilvi**: kuvien rakentaminen, CI/CD-putket ja
-  infrastruktuuri koodina, joihin tämän tutoriaalin käytännöt
-  sovelletaan.
-- **Haavoittuvuudet**: fuzzaus ja muistivirheiden analyysi.
+- *Jatkuva integraatio ja toimitus*: toimitusputki, julkaisustrategiat
+  ja GitOps, joihin tämän tutoriaalin tarkistukset sijoitetaan.
+- *Kontit ja pilvi-infrastruktuuri*: kuvien rakentaminen ja
+  infrastruktuuri koodina.
+- *Haavoittuvuuksien analyysi ja torjunta*: fuzzaus ja muistivirheiden
+  analyysi.
 
 ## Lähteet
 
@@ -65,7 +67,8 @@
   <https://cheatsheetseries.owasp.org/>.
 - OWASP Top 10 CI/CD Security Risks:
   <https://owasp.org/www-project-top-10-ci-cd-security-risks/>.
-- SLSA (Supply-chain Levels for Software Artifacts), versio 1.0:
+- SLSA (Supply-chain Levels for Software Artifacts), versio 1.0 ja
+  uudemmat:
   <https://slsa.dev/>.
 - CycloneDX (ECMA-424): <https://cyclonedx.org/>; SPDX (ISO/IEC
   5962): <https://spdx.dev/>; Package URL:

@@ -122,6 +122,40 @@ Tunnisteen vaihto kirjautuessa torjuu **istunnon kiinnityksen**
 (*session fixation*): hyökkääjä hankkii anonyymin istunnon ja saa uhrin
 käyttämään sitä esimerkiksi linkin kautta. Jos tunniste ei vaihdu,
 hyökkääjällä on uhrin kirjautumisen jälkeen kirjautunut istunto.
+Kaaviossa palvelin vaihtaa tunnisteen vaiheessa 5, joten hyökkääjän
+tuntema tunniste lakkaa kelpaamasta. Esimerkin tulosteen ensimmäinen
+rivi on kaavion vaihe 7:
+
+```{.dot otsikko="Istunnon kiinnitys ja sen torjunta: tunniste vaihtuu kirjautuessa."}
+digraph {
+  nodesep=0.2; ranksep=0.3;
+  node [shape=point, width=0.04, color="#5B6B70"];
+  edge [arrowhead=none, style=dashed, color="#B8C4C8", weight=100];
+  t0 [shape=box, width=1.0, label="hyökkääjä"];
+  t0 -> t0_0 -> t0_1 -> t0_2 -> t0_3 -> t0_4 -> t0_5 -> t0_6 -> t0_7;
+  t1 [shape=box, width=1.0, label="uhri"];
+  t1 -> t1_0 -> t1_1 -> t1_2 -> t1_3 -> t1_4 -> t1_5 -> t1_6 -> t1_7;
+  t2 [shape=box, width=1.0, label="palvelin"];
+  t2 -> t2_0 -> t2_1 -> t2_2 -> t2_3 -> t2_4 -> t2_5 -> t2_6 -> t2_7;
+  {rank=same; t0 -> t1 -> t2 [style=invis, weight=1];}
+  {rank=same; t0_0; t1_0; t2_0;}
+  {rank=same; t0_1; t1_1; t2_1;}
+  {rank=same; t0_2; t1_2; t2_2;}
+  {rank=same; t0_3; t1_3; t2_3;}
+  {rank=same; t0_4; t1_4; t2_4;}
+  {rank=same; t0_5; t1_5; t2_5;}
+  {rank=same; t0_6; t1_6; t2_6;}
+  {rank=same; t0_7; t1_7; t2_7;}
+  edge [style=solid, arrowhead=normal, color="#1F2A2E", constraint=false, weight=1];
+  t0_0 -> t2_1 [label="1. avaa kirjautumissivun"];
+  t2_1 -> t0_2 [label="2. anonyymi istunto X"];
+  t0_2 -> t1_3 [label="3. linkki, jossa istunto X"];
+  t1_3 -> t2_4 [label="4. kirjautuu istunnossa X"];
+  t2_4 -> t1_5 [label="5. uusi tunniste Y, X mitätöidään"];
+  t0_5 -> t2_6 [label="6. pyyntö tunnisteella X"];
+  t2_6 -> t0_7 [label="7. hylätty: X ei ole voimassa"];
+}
+```
 
 Evästeiden suojausmääreet (`Secure`, `HttpOnly`, `SameSite`) ja
 tokenipohjaiset istunnot, kuten JWT, käsitellään taidossa
