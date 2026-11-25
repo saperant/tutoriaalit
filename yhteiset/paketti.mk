@@ -40,11 +40,13 @@ KOROSTUS  := $(shell python3 $(YHTEISET)/korostus.py $(NIMI))
 
 pdf: $(NIMI).pdf $(NIMI)-pikaopas.pdf
 
-$(NIMI).pdf: metadata.yaml $(LUVUT) $(ESIMERKIT) $(wildcard $(YHTEISET)/*)
+$(NIMI).pdf: metadata.yaml $(LUVUT) $(ESIMERKIT) $(wildcard kuvat/*) \
+        $(wildcard $(YHTEISET)/*)
 	pandoc --defaults=$(YHTEISET)/pdf.yaml -V 'header-includes=$(KOROSTUS)' \
 	    metadata.yaml $(LUVUT) -o $@
 
-$(NIMI)-pikaopas.pdf: pikaopas.md $(ESIMERKIT) $(wildcard $(YHTEISET)/*)
+$(NIMI)-pikaopas.pdf: pikaopas.md $(ESIMERKIT) $(wildcard kuvat/*) \
+        $(wildcard $(YHTEISET)/*)
 	pandoc --defaults=$(YHTEISET)/pikaopas.yaml -V 'header-includes=$(KOROSTUS)' \
 	    pikaopas.md -o $@
 
