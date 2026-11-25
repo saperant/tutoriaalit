@@ -19,15 +19,15 @@ Valmiit dokumentit: [vhdl.pdf](https://saperant.github.io/tutoriaalit/materiaali
    muuttujat, kellon deltaviive
 6. Tilakoneet – luettelotyyppi, UART-vastaanotin, kattavuus,
    turvallinen tilakone
-7. Generic-parametrit ja generate – rajoittamattomat portit, geneeriset
-   tyypit, parametrien tarkistus
+7. Generic-parametrit, generate ja muistit – rajoittamattomat portit,
+   geneeriset tyypit, parametrien tarkistus, RAM, ROM ja FIFO
 8. Paketit, funktiot ja proseduurit – CRC-paketti, puhtaus,
    standardipaketit
 9. Testipenkit – malli, jono suojattuna tyyppinä, satunnaisuus,
    aikakatkaisut, testikehykset
-10. VHDL ja SystemVerilog rinnakkain
-11. Testit Pythonilla: cocotb – GHDL, ajuri ja monitori, mutaatiot
-12. Lopuksi – nyrkkisäännöt, lähteet
+10. Testit Pythonilla: cocotb – GHDL, ajuri ja monitori, mutaatiot
+11. VHDL ja SystemVerilog rinnakkain
+12. Lopuksi – nyrkkisäännöt, jatkotaidot, lähteet
 
 ## Rakentaminen
 
@@ -36,5 +36,11 @@ make testaa   # analysoi, elaboroi ja simuloi esimerkit GHDL:llä
 make pdf      # rakentaa vhdl.pdf:n ja vhdl-pikaopas.pdf:n
 ```
 
+Ajoituskaaviot tuotetaan simulaatiosta: `make -C esimerkit` tarkistaa
+ne ja `make -C esimerkit paivita` kirjoittaa ne uudelleen.
+
 Riippuvuudet on lueteltu repositorion juuren README-tiedostossa.
 Kehityskontti: `.devcontainer/vhdl`.
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.

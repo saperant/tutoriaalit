@@ -36,7 +36,7 @@ MUUT := suunnitelma regressio laatu kaavio-ohjattu
 
 KOHTEET := $(SV_KOHTEET) $(COCOTB_KOHTEET) $(FORMAALIT) $(MUUT)
 
-.PHONY: kaikki siivoa formaali-kaavio $(KOHTEET)
+.PHONY: kaikki siivoa formaali-kaavio induktio-kaavio $(KOHTEET)
 kaikki: $(KOHTEET)
 
 # sv NIMI VALITSIMET LÄHTEET: kääntää Verilatorilla hakemistoon
@@ -47,7 +47,7 @@ define sv
 	    > $(RAKENNUS)/$(1).loki 2>&1 || (cat $(RAKENNUS)/$(1).loki; false)
 endef
 
-# --- Luvut 1-4: ohjattu testi ja kerroksellinen testipenkki ----------
+# --- Luvut 1, 3 ja 5: ohjattu testi, testipenkki ja siemenet ---------
 ohjattu:
 	$(call sv,$@,--binary,$(FIFO) 01-ohjattu/testipenkki.sv)
 	@$(VERTAA) odotetut/$@.odotettu -- $(RAKENNUS)/$@/sim
@@ -98,11 +98,11 @@ kaavio-ohjattu:
 	    > $(RAKENNUS)/ohjattu.json
 	$(call kaavio,ohjattu,$(RAKENNUS)/$@.vcd)
 
-# --- Luku 5: koodikattavuus -----------------------------------------
+# --- Luku 6: koodikattavuus -----------------------------------------
 # Verilatorin --binary ei kirjoita kattavuutta, joten käytetään omaa
 # pääohjelmaa. Make-ohjelma tarvitsee sen absoluuttisen polun.
 KAT := --cc --exe --build --timing --coverage
-PAA := $(CURDIR)/05-kattavuus/paa.cpp
+PAA := $(CURDIR)/06-kattavuus/paa.cpp
 kattavuus:
 	$(call sv,$@-ohjattu,$(KAT),$(FIFO) 01-ohjattu/testipenkki.sv $(PAA))
 	$(call sv,$@-penkki,$(KAT),$(FIFO) 03-penkki/testipenkki.sv $(PAA))
@@ -118,8 +118,8 @@ kattavuus:
 	    $(RAKENNUS)/$@-ohjattu/kattavuus.dat \
 	    $(RAKENNUS)/$@-penkki/kattavuus.dat
 
-# --- Luku 6: SVA ----------------------------------------------------
-SVA := $(FIFO) 06-sva/fifo_sva.sv 06-sva/testipenkki.sv
+# --- Luku 7: SVA ----------------------------------------------------
+SVA := $(FIFO) 07-sva/fifo_sva.sv 07-sva/testipenkki.sv
 sva:
 	$(call sv,$@,--binary,$(SVA))
 	@$(VERTAA) odotetut/$@.odotettu -- $(RAKENNUS)/$@/sim +siemen=1
@@ -130,9 +130,9 @@ $(addprefix sva-,$(FIFOVIAT)):
 
 sva-ei-tuettu:
 	@$(VERTAA) odotetut/$@.odotettu --virhe -- \
-	    verilator --lint-only -Wall 06-sva/ei_tuettu.sv
+	    verilator --lint-only -Wall 07-sva/ei_tuettu.sv
 
-# --- Luvut 7 ja 9: cocotb -------------------------------------------
+# --- Luvut 4-6 ja 9: cocotb -----------------------------------------
 cocotb-fifo:
 	@$(VERTAA) odotetut/$@.odotettu -- \
 	    $(COCOTB) --top fifo --moduuli test_fifo --lahde $(FIFO)
@@ -172,9 +172,19 @@ formaali-kaavio:
 	    > $(RAKENNUS)/vastaesimerkki.json
 	$(call kaavio,vastaesimerkki,$(JALKI_VCD))
 
-formaali-induktio:
+formaali-induktio: induktio-kaavio
 	@$(VERTAA) odotetut/$@.odotettu --virhe -- $(FIFO_F) --tila prove \
 	    --syvyys 8 --signaalit push,pop,kirj,luku,maara,tyhja
+
+# Epäonnistuneen induktion jälki ajoituskaaviona (luku 8). Jälki alkaa
+# mielivaltaisesta tilasta, joten myös askel 0 näytetään (--alkureuna).
+INDUKTIO_VCD := $(RAKENNUS)/formaali/fifo-prove/jalki.vcd
+induktio-kaavio:
+	@$(FIFO_F) --tila prove --syvyys 8 > /dev/null || true
+	@$(KAAVIOT) $(INDUKTIO_VCD) --jaksot 9 --alkureuna --kanta d \
+	    --kello clk --signaalit push,pop,kirj,luku,maara,tyhja \
+	    > $(RAKENNUS)/induktio.json
+	$(call kaavio,induktio,$(INDUKTIO_VCD))
 
 formaali-invariantti:
 	@$(VERTAA) odotetut/$@.odotettu -- $(FIFO_F) --tila prove \

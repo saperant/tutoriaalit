@@ -62,7 +62,7 @@ vastaus), joka kestää useita jaksoja; ajuri hoitaa kättelyt.
 
 Tässä generaattori arpoo toimenpiteitä painotetusti. Painotus on
 valittu niin, että jono täyttyy ja tyhjenee usein. Satunnaistusta
-käsitellään tarkemmin luvussa 4.
+käsitellään tarkemmin luvussa 5.
 
 ```{.systemverilog tiedosto="esimerkit/03-penkki/testipenkki.sv" osa="generaattori"}
 ```
@@ -157,7 +157,7 @@ lippujen ja määrän osalta, mutta datan osalta transaktiotasoinen.
 
 Kun malli on kirjoitettu toisella kielellä (C, C++ tai Python), se
 liitetään testipenkkiin SystemVerilogin DPI-rajapinnalla tai
-cocotb:llä (luku 7). Algoritmilohkoissa sama malli on usein
+cocotb:llä (seuraava luku). Algoritmilohkoissa sama malli on usein
 järjestelmäsuunnittelijan alkuperäinen malli, jolloin RTL:ää verrataan
 suoraan siihen.
 
@@ -171,8 +171,14 @@ suoraan siihen.
 - **Ärsyke laskevalla reunalla tai pienellä viiveellä, näytteistys
   nousevalla.** Kilpatilanne testipenkin ja DUT:n välillä on yleisin
   syy testiin, joka toimii yhdellä simulaattorilla ja ei toisella.
-  SystemVerilogin `clocking`-lohko tekee saman ajoituksen
-  standardilla tavalla, ja myös Verilator 5 tukee sitä.
+  SystemVerilogin `clocking`-lohko ilmaisee saman ajoituksen
+  kielen rakenteena: lohko kertoo, minkä kellon reunalla testipenkin
+  signaalit näytteistetään ja ajetaan ja millä viiveellä, ja ajuri ja
+  monitori käyttävät signaaleja sen kautta. Kaupallisissa
+  simulaattoreissa `interface` ja `clocking`-lohko ovat testipenkin ja
+  DUT:n kytkennän vakiotapa. Tämän tutoriaalin esimerkit käyttävät
+  laskevaa reunaa, koska sama käytäntö toimii sellaisenaan myös
+  cocotb:ssä.
 - **Ensimmäinen virhe on tärkein.** Tulosta muutama ensimmäinen ja
   laske loput; tuhat virheriviä piilottaa syyn.
 - **Testi päättyy virhekoodiin.** `$error` tai `$fatal` saa

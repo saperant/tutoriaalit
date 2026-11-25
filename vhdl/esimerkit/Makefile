@@ -23,7 +23,26 @@ SIMULOIDUT := $(patsubst kaaviot/%.kaavio,%,$(wildcard kaaviot/*.kaavio))
 TARKISTUKSET := $(SIMULOIDUT:%=$(RAK)/%.ok)
 
 .PHONY: kaikki paivita siivoa cocotb
-kaikki: $(TARKISTUKSET) cocotb
+kaikki: $(TARKISTUKSET) $(RAK)/synteesi.ok cocotb
+
+# --- Luku 7: muistien päättely --------------------------------------
+#
+# ghdl --synth ilmoittaa jokaisesta tunnistamastaan muistista. Rivit
+# verrataan tiedostoon 07-muisti/synteesi.odotettu: jos kuvio rikkoutuu,
+# ilmoitus katoaa ja tarkistus epäonnistuu.
+MUISTIT := ram nelio_rom fifo
+
+$(RAK)/synteesi.ok: 07-muisti/synteesi.odotettu $(wildcard 07-muisti/*.vhd)
+	@rm -rf $(RAK)/synteesi && mkdir -p $(RAK)/synteesi
+	@ghdl -a --std=08 --workdir=$(RAK)/synteesi 07-muisti/ram.vhd \
+	    07-muisti/rom.vhd 07-muisti/fifo.vhd
+	@for e in $(MUISTIT); do \
+	    ghdl --synth --std=08 --workdir=$(RAK)/synteesi $$e 2>&1 \
+	        > /dev/null \
+	    | sed -n "s/^.*note: found \([A-Z]*\) \"[^\"]*\"/$$e: \1/p"; \
+	done > $(RAK)/synteesi.tuloste
+	@diff -u 07-muisti/synteesi.odotettu $(RAK)/synteesi.tuloste
+	@touch $@
 
 # Kaavio simuloidaan GHDL:llä omassa hakemistossaan.
 $(RAK)/%.json: kaaviot/%.kaavio $(wildcard *.vhd */*.vhd) $(KAAVIOT)
@@ -52,7 +71,7 @@ paivita: $(SIMULOIDUT:%=$(RAK)/%.json)
 siivoa:
 	rm -rf $(RAK) cocotb-testit/__pycache__
 
-# --- Luku 11: cocotb-testit ----------------------------------------
+# --- Luku 10: cocotb-testit ----------------------------------------
 #
 # Jokainen ajo kääntää entiteetin GHDL:llä ja ajaa Python-testit
 # (cocotb-testit/aja.py). Tuloste verrataan tiedostoon

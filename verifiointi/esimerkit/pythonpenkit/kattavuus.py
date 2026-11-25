@@ -7,6 +7,8 @@ lokero on tilanne, jota ei saa koskaan tapahtua: osuma siihen on virhe.
 
 from __future__ import annotations
 
+import json
+import os
 from collections.abc import Callable, Hashable
 from dataclasses import dataclass, field
 
@@ -73,4 +75,23 @@ def raportoi(pisteet: list[Kattavuuspiste | Ristikattavuus]) -> list[str]:
         aukot = p.aukot()
         lisa = f" aukot: {', '.join(aukot)}" if aukot else ""
         rivit.append(f"{p.nimi:<22} {p.prosentti():5.1f} %{lisa}")
+    _tallenna(pisteet)
     return rivit
+
+
+def _tallenna(pisteet: list[Kattavuuspiste | Ristikattavuus]) -> None:
+    """Kirjoittaa ristien osumamäärät tiedostoon, jonka nimi on
+    ympäristömuuttujassa KATTAVUUS_TIEDOSTO (kirjan kuvia varten)."""
+    polku = os.environ.get("KATTAVUUS_TIEDOSTO")
+    if not polku:
+        return
+    with open(polku, "a", encoding="utf-8") as f:
+        for p in pisteet:
+            if isinstance(p, Ristikattavuus):
+                osumat = {f"{a}*{b}": n for (a, b), n in p.osumat.items()}
+                rivi = {
+                    "rivit": list(p.a.lokerot),
+                    "sarakkeet": list(p.b.lokerot),
+                    "osumat": osumat,
+                }
+                f.write(json.dumps(rivi, ensure_ascii=False) + "\n")

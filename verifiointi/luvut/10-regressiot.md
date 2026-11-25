@@ -53,7 +53,7 @@ Matriisista luetaan useita asioita:
 - **Jokainen vika löytyy jostakin.** Rivi, jossa on pelkkiä viivoja,
   tarkoittaisi vikaa, jota mikään testi ei löydä.
 - **Siemenriippuvuus.** `BUGI_TYHJA` löytyy satunnaistetulla testillä
-  neljällä siemenellä viidestä. Syy on luvussa 4: generaattorin oma
+  neljällä siemenellä viidestä. Syy on luvussa 5: generaattorin oma
   arvio jonon tilasta erkanee joskus todellisesta, ja silloin se
   lukee tyhjästä jonosta. Siemen 1 ei koskaan tee niin. Myös
   `BUGI_KAKSI` jää satunnaiselta testiltä yhdellä siemenellä
@@ -72,7 +72,8 @@ Yöajossa voi epäonnistua satoja ajoja, mutta niiden taustalla on
 yleensä muutama vika. *Luokittelu* (triage) ryhmittelee
 epäonnistumiset, valitsee jokaisesta ryhmästä edustajan ja ohjaa sen
 oikealle henkilölle. Ryhmittely tehdään epäonnistumisen tunnisteen
-(signature) perusteella. Saman vian eri ajojen virheviestit eroavat
+(signature; taidossa *EDA-työkaluketjujen automatisointi* sama asia
+on nimellä allekirjoitus) perusteella. Saman vian eri ajojen virheviestit eroavat
 yleensä vain jaksonumeroiltaan ja arvoiltaan, joten luvut korvataan
 paikkamerkillä:
 
@@ -145,7 +146,7 @@ ajamalla testiä uudelleen.
 ## Raportointi
 
 Regression tulokset viedään CI-järjestelmään. cocotb:n ajaja kirjoittaa
-JUnit-muotoisen XML-tiedoston (luku 7), jonka useimmat CI-järjestelmät
+JUnit-muotoisen XML-tiedoston (luku 4), jonka useimmat CI-järjestelmät
 näyttävät testitaulukkona. Pitkän aikavälin seurannassa tärkeimmät
 mittarit ovat:
 

@@ -6,16 +6,16 @@ selittää simulointisemantiikan, joka erottaa signaalin ja muuttujan.
 Ero on VHDL:n tärkein yksittäinen käsite, ja suurin osa
 aloittelijan virheistä johtuu siitä. Synkronisen suunnittelun
 periaatteet, ajoitus ja nollausstrategiat käsitellään taidossa
-*RTL-suunnittelu SystemVerilogilla* (luvut 5 ja 9).
+*RTL-suunnittelu SystemVerilogilla*.
 
 ## Kellotettu prosessi
 
 Kiikku kuvataan prosessilla, jonka herkkyyslistassa on kello ja
-jonka koko sisältö on ehdon `rising_edge(clk)` sisällä. Esimerkiksi
-luvun 7 PWM-lohkon vapaasti pyörivä laskuri synkronisella
-nollauksella:
+jonka koko sisältö on ehdon `rising_edge(clk)` sisällä. Tavallisin
+malli on rekisteri, jolla on *synkroninen nollaus* ja sallinta.
+Nollaus on tavallinen ehto kellon reunan sisällä:
 
-```{.vhdl tiedosto="esimerkit/07-pwm.vhd" osa="laskenta"}
+```{.vhdl tiedosto="esimerkit/05-rekisteri.vhd" osa="synkroninen"}
 ```
 
 Jokaisesta prosessissa sijoitetusta signaalista tulee rekisteri.
@@ -25,15 +25,32 @@ sallinnan. `rising_edge` tarkistaa, että kello todella nousi
 nollasta ykköseen. Vanhaa muotoa `clk'event and clk = '1'` ei enää
 tarvita.
 
-*Synkroninen nollaus* on tavallinen ehto kellon sisällä. Esimerkiksi
-AMD:n (Xilinx) FPGA-ohjeet suosittelevat sitä, ja luvun 10
-vertailuesimerkkiä lukuun ottamatta tämän tutoriaalin esimerkit
-käyttävät sitä. *Asynkroninen nollaus* kirjoitetaan
-herkkyyslistaan ja ennen kellon ehtoa (luku 10). FPGA:ssa signaalin
-alkuarvo, kuten `signal tila : tila_t := LEPO;`, ladataan kiikkuun
-konfiguroinnissa, joten pelkkä alkuarvo riittää monelle
-rekisterille. ASIC-piirissä alkuarvoja ei ole, ja jokainen ohjaava
-rekisteri tarvitsee nollauksen.
+Toinen vakiomalli on *asynkroninen nollaus*. Nollaus kirjoitetaan
+herkkyyslistaan ja tarkistetaan ennen kellon reunaa, joten se
+vaikuttaa heti eikä tarvitse kelloa:
+
+```{.vhdl tiedosto="esimerkit/05-rekisteri.vhd" osa="asynkroninen"}
+```
+
+Esimerkissä samalla entiteetillä on kaksi arkkitehtuuria, ja
+testipenkki instansioi molemmat (`entity work.rekisteri(synkroninen)`).
+Kun nollaus nostetaan kellon ollessa pysähdyksissä, vain asynkroninen
+rekisteri nollautuu:
+
+```{.tuloste tiedosto="esimerkit/05-rekisteri.odotettu"}
+```
+
+Synkronista nollausta suosittelevat esimerkiksi AMD:n (Xilinx)
+FPGA-ohjeet, ja tämän tutoriaalin esimerkit käyttävät sitä luvun 11
+vertailuesimerkkiä lukuun ottamatta. Asynkroninen nollaus on yleinen
+ASIC-suunnittelussa ja monissa IP-kirjastoissa. Sen vapautus on
+tahdistettava kelloon erillisellä nollauksen tahdistimella, jotta
+kaikki kiikut lähtevät liikkeelle samalla reunalla (taito
+*RTL-suunnittelu SystemVerilogilla*). FPGA:ssa signaalin alkuarvo,
+kuten `signal tila : tila_t := LEPO;`, ladataan kiikkuun
+konfiguroinnissa, joten pelkkä alkuarvo riittää monelle rekisterille.
+ASIC-piirissä alkuarvoja ei ole, ja jokainen ohjaava rekisteri
+tarvitsee nollauksen.
 
 ## Esimerkki: kvadratuurikooderi
 
@@ -142,7 +159,37 @@ Kumpikin versio on synteesikelpoinen, ja molemmat tuottavat laitteiston,
 mutta eri laitteiston: signaaliversiossa summa1:n rekisterin lähtö
 kytkeytyy summa2:n summaimeen, muuttujaversiossa summa1:n summaimen
 lähtö. Simulaattori näyttää tarkalleen saman kuin piiri, joten virhe
-on suunnittelun, ei työkalun.
+on suunnittelun, ei työkalun. Alla olevissa kuvissa ainoa ero on
+paksulla piirretty johto.
+
+```{.dot otsikko="Muuttujaversio: summa2 saa summa1:n uuden arvon suoraan summaimesta"}
+digraph {
+  rankdir=LR; nodesep=0.35; ranksep=0.6;
+  tavu [shape=plaintext];
+  a1 [shape=circle, label="+", fixedsize=true, width=0.4];
+  a2 [shape=circle, label="+", fixedsize=true, width=0.4];
+  r1 [shape=box, label="s1\nrekisteri"];
+  r2 [shape=box, label="s2\nrekisteri"];
+  tavu -> a1; a1 -> r1; r1 -> a1 [constraint=false];
+  a1 -> a2 [penwidth=2.5, label="uusi1"];
+  a2 -> r2; r2 -> a2 [constraint=false];
+  { rank=same; r1; a2; }
+}
+```
+
+```{.dot otsikko="Signaaliversio: summa2 saa summa1:n vanhan arvon rekisteristä"}
+digraph {
+  rankdir=LR; nodesep=0.35; ranksep=0.6;
+  tavu [shape=plaintext];
+  a1 [shape=circle, label="+", fixedsize=true, width=0.4];
+  a2 [shape=circle, label="+", fixedsize=true, width=0.4];
+  r1 [shape=box, label="s1\nrekisteri"];
+  r2 [shape=box, label="s2\nrekisteri"];
+  tavu -> a1; a1 -> r1; r1 -> a1 [constraint=false];
+  r1 -> a2 [penwidth=2.5, label="s1"];
+  a2 -> r2; r2 -> a2 [constraint=false];
+}
+```
 
 Muuttuja kellotetussa prosessissa voi myös tuottaa rekisterin: jos
 muuttujaa luetaan ennen kuin siihen sijoitetaan, sen on muistettava
@@ -162,6 +209,20 @@ nousee, ja data ohittaa yhden vaiheen:
 
 ```{.tuloste tiedosto="esimerkit/05-deltakello.virhe"}
 ```
+
+Alla sama reuna on purettu deltasykleiksi. Vaaka-akseli ei ole aikaa:
+kolme deltasaraketta tapahtuvat samalla simulointihetkellä.
+Deltassa 1 `q1` saa uuden arvonsa ja `clk_b` vasta nousee. `vaihe2`
+herää tästä noususta ja lukee jo päivittyneen `q1`:n, joten `q2` saa
+uuden arvon heti seuraavassa deltassa.
+
+| Signaali | ennen reunaa | delta 0 | delta 1 | delta 2 |
+|----------|--------------|---------|---------|---------|
+| `clk` | 0 | **1** | 1 | 1 |
+| `clk_b` | 0 | 0 | **1** | 1 |
+| `q1` | 0 | 0 | **1** (= `d`) | 1 |
+| `q2` | 0 | 0 | 0 | **1** (= uusi `q1`) |
+| herää | | `vaihe1`, `clk_b`:n sijoitus | `vaihe2` | – |
 
 Laitteistossa viivelinja toimisi, koska johdon viive on paljon kiikun
 viivettä lyhyempi. Simulointi ja laitteisto eroavat, ja virhe on

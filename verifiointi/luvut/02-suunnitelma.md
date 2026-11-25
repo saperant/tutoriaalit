@@ -55,6 +55,9 @@ Jokaiselle ominaisuudelle kirjataan kolme asiaa:
 | reiluus, ei lukkiutumista | formaali | "ei koskaan" on vaikea osoittaa simuloimalla |
 | järjestelmän suorituskyky | simulointi | vaatii pitkiä ja realistisia ajoja |
 | ohjelmiston ja laitteiston yhteistoiminta | simulointi, emulointi | vaatii koko järjestelmän |
+| kellotusalueiden ylitykset | rakenteellinen CDC-analyysi | metastabiilius ei näy RTL-simulaatiossa (*RTL-suunnittelu SystemVerilogilla*) |
+| nollauksen toiminta ja vapautus | simulointi nollauksella kesken toiminnan, nollausanalyysi | virhe näkyy vain tietyssä vaiheessa |
+| synteesin tulos vastaa RTL:ää | ekvivalenssitarkistus, porttitason simulointi | työkaluvirheet ja ajoitus (*ASIC-toteutus*) |
 
 Formaali tarkistus on vahvin, kun lohko on pieni ja ominaisuus
 paikallinen. Simulointi on ainoa vaihtoehto, kun tarvitaan koko
@@ -98,7 +101,7 @@ valmis (sign-off). Tavallisia kriteerejä ovat:
 Vikojen löytymistahti on hyödyllinen mittari: kun uusia vikoja löytyy
 viikossa yhä vähemmän, menetelmät ovat tehneet tehtävänsä. Se ei
 kuitenkaan erota valmista lohkoa testipenkistä, joka ei enää löydä
-mitään. Siksi tarvitaan kattavuus (luku 5).
+mitään. Siksi tarvitaan kattavuus (luku 6).
 
 ## Suunnitelma tiedostona
 

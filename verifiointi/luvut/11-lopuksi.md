@@ -7,11 +7,11 @@ kokoaa tulokset (✓ löytyi, – ei löytynyt, luku suluissa):
 
 | Menetelmä | `TYHJA` | `SAMANAIKAINEN` | `TAYSI` | `KIINTEA` | `KAKSI` |
 |-----------|---------|-----------------|---------|-----------|---------|
-| ohjattu testi (1, 7) | – | – | ✓ | | |
+| ohjattu testi (1, 4) | – | – | ✓ | | |
 | kerroksellinen SV-testipenkki (3) | ✓ | ✓ | ✓ | | |
-| kohtelias satunnaistesti, siemen 1 (7) | – | ✓ | ✓ | | |
-| kulmatesti (7) | ✓ | – | ✓ | | |
-| SVA-väitteet satunnaisärsykkeellä (6) | ✓ | ✓ | ✓ | | |
+| kohtelias satunnaistesti, siemen 1 (5) | – | ✓ | ✓ | | |
+| kulmatesti (6) | ✓ | – | ✓ | | |
+| SVA-väitteet satunnaisärsykkeellä (7) | ✓ | ✓ | ✓ | | |
 | formaali BMC (8) | ✓ | ✓ | ✓ | ✓ | ✓ |
 | UVM-tyylinen ympäristö, satunnainen (9) | | | | ✓ | ✓ |
 | UVM-tyylinen ympäristö, kuormitus (9) | | | | ✓ | ✓ |
@@ -55,7 +55,7 @@ keskenään; ne peittävät toistensa aukkoja.
 | jonomalli referenssinä | `malli[$]` (SV), `FifoMalli` (Python) |
 | ajuri laskevalla reunalla, monitori nousevalla | `FifoAjuri`, `FifoMonitori` |
 | kattavuuspiste, lokerot ja risti | `pythonpenkit/kattavuus.py` |
-| väitemoduuli ja `bind` | `06-sva/fifo_sva.sv` |
+| väitemoduuli ja `bind` | `07-sva/fifo_sva.sv` |
 | alkutilan oletus formaalissa | `alku`-rekisteri, `assume (rst)` |
 | invariantti induktiolle | `rtl/fifo.sv`, osa `INVARIANTTI` |
 | rajattu reiluus apulaskurilla | `rtl/arbiteri.sv`, lohko `reilu` |
@@ -68,14 +68,14 @@ keskenään; ne peittävät toistensa aukkoja.
 
 - *DSP-algoritmien laitteistototeutus*: bittitarkat referenssimallit
   Pythonilla ja suodattimien verifiointi niitä vasten.
-- *EDA-työkalujen skriptaus*: regressioiden, raporttien ja
+- *EDA-työkaluketjujen automatisointi*: regressioiden, raporttien ja
   työkaluketjujen automatisointi.
 - *ASIC-toteutus*: ekvivalenssitarkistus, porttitason simulointi ja
   testattavuus.
 - *SoC-integraatio*: väyläprotokollien tarkistimet ja
   järjestelmätason testipenkit.
-- *FPGA-toteutus*: verifioidun RTL:n vieminen piirille ja testaus
-  kortilla.
+- *FPGA-toteutus*: verifioidun RTL:n vieminen piirille ja ajaminen
+  simuloidulla kortilla.
 
 ## Lähteet
 

@@ -78,7 +78,7 @@ signaaleihin (`.*`). FIFOn lähdettä ei tarvitse muuttaa, ja samat
 väitteet voi liittää myös lohkoon, jonka lähdettä ei saa muuttaa,
 kuten ostettuun IP:hen.
 
-```{.systemverilog tiedosto="esimerkit/06-sva/fifo_sva.sv" osa="sva"}
+```{.systemverilog tiedosto="esimerkit/07-sva/fifo_sva.sv" osa="sva"}
 ```
 
 Väitteillä on nimet (`a_liput`, `a_raja`), jotka näkyvät
@@ -89,7 +89,7 @@ vain väitteen nimen.
 Testipenkissä ei ole tulostaulua eikä mallia. Se syöttää FIFOlle
 satunnaisia toimenpiteitä, ja väitteet tekevät kaiken tarkistamisen:
 
-```{.systemverilog tiedosto="esimerkit/06-sva/testipenkki.sv"}
+```{.systemverilog tiedosto="esimerkit/07-sva/testipenkki.sv"}
 ```
 
 Verilator tarkistaa väitteet, kun se ajetaan valitsimella `--assert`.
@@ -137,7 +137,7 @@ kirjoitettu tuetulla osajoukolla:
 Ei-tuettu rakenne on käännösvirhe, ei hiljainen ohitus, joten
 rajoitus ei piilota mitään:
 
-```{.systemverilog tiedosto="esimerkit/06-sva/ei_tuettu.sv"}
+```{.systemverilog tiedosto="esimerkit/07-sva/ei_tuettu.sv"}
 ```
 
 ```{.tuloste tiedosto="esimerkit/odotetut/sva-ei-tuettu.odotettu"}

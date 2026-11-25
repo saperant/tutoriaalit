@@ -12,7 +12,7 @@ pikaopas:
 [verifiointi-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/verifiointi-pikaopas.pdf).
 
 Esitiedot: taidot *RTL-suunnittelu SystemVerilogilla* ja
-*Python-työkalut*.
+*Python työkaluohjelmointiin*.
 
 ## Sisältö
 
@@ -22,11 +22,12 @@ Esitiedot: taidot *RTL-suunnittelu SystemVerilogilla* ja
    valmiuskriteerit, suunnitelma tiedostona
 3. Testipenkin rakenne – transaktio, ajuri, monitori, malli,
    tulostaulu
-4. Satunnaistus ja siemenet – rajoitteet, painot, toistettavuus
-5. Kattavuus – koodikattavuus Verilatorilla, toiminnallinen kattavuus,
+4. cocotb – testipenkin kerrokset Pythonilla: malli, ajuri, monitori,
+   tulostaulu
+5. Satunnaistus ja siemenet – rajoitteet, painot, toistettavuus
+6. Kattavuus – koodikattavuus Verilatorilla, toiminnallinen kattavuus,
    aukkojen sulkeminen
-6. SystemVerilogin väitteet – ominaisuudet, `bind`, Verilatorin tuki
-7. cocotb – testipenkit Pythonilla
+7. SystemVerilogin väitteet – ominaisuudet, `bind`, Verilatorin tuki
 8. Formaali verifiointi – BMC, induktio ja invariantit, cover,
    reiluus
 9. UVM:n käsitteet – komponentit, vaiheet, sekvenssit ja niiden
@@ -52,6 +53,11 @@ make -C esimerkit siivoa          # poistaa rakennus/-hakemiston
 
 Työkalut: Verilator 5.020, Icarus Verilog 12, Yosys 0.33 ja
 yosys-smtbmc, Z3 (Ubuntu 24.04) sekä cocotb 2.1, ruff ja mypy (pip).
-Kehityskontti `.devcontainer/verifiointi` sisältää ne.
+Kehityskontti `.devcontainer/verifiointi` sisältää ne. Kuvat
+(`kuvat/*.png`) tuottaa `make kuvat`, joka tarvitsee lisäksi
+Matplotlibin.
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 Lisenssi: CC BY-SA 4.0.

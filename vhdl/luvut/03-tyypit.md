@@ -46,10 +46,23 @@ ristiriidan tai tuntemattomasta lasketun tuloksen.
 
 `std_logic` on `std_ulogic`in *ratkaistu* alityyppi. Ratkaistulla
 signaalilla saa olla useita ajureita, ja *ratkaisufunktio* laskee
-niiden yhteisarvon: `'Z'` ja `'1'` antavat `'1'`, mutta `'0'` ja `'1'`
-antavat `'X'`. Tämä on tarpeen kolmitilaväylille, mutta piirin
-sisällä useampi ajuri on aina virhe. Seuraavassa esimerkissä
-varaustilaa ohjaa vahingossa kaksi lausetta:
+niiden yhteisarvon. Seuraava testipenkki ajaa samaa johtoa kahdella
+sijoituksella ja tulostaa tuloksen kaikille arvopareille:
+
+```{.vhdl tiedosto="esimerkit/03-ratkaisu.vhd" osa="ajurit"}
+```
+
+```{.tuloste tiedosto="esimerkit/03-ratkaisu.odotettu"}
+```
+
+Taulukosta näkyy kolme sääntöä. `'Z'` väistyy kaiken tieltä, eli
+irti oleva ajuri ei vaikuta tulokseen. Vahva arvo voittaa heikon:
+ylösvetovastus `'H'` ja ajuri `'0'` antavat `'0'`. Kaksi erisuuntaista
+vahvaa ajuria antaa `'X'`:n, joka piirissä olisi oikosulku.
+
+Ratkaisu on tarpeen kolmitilaväylille, mutta piirin sisällä useampi
+ajuri on aina virhe. Seuraavassa esimerkissä varaustilaa ohjaa
+vahingossa kaksi lausetta:
 
 ```{.vhdl tiedosto="esimerkit/03-ajurit.kaatuu.vhd" osa="ajurit"}
 ```

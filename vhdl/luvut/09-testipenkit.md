@@ -189,7 +189,14 @@ valmiista avoimesta kirjastosta:
 | VUnit | testien löytö ja ajo Python-skriptillä, rinnakkaisajo, CI-raportit, tarkistuskirjasto |
 | OSVVM | tulostaulut, väyläkomponentit, rajoitettu satunnaistus, toiminnallinen kattavuus |
 | UVVM | väyläkomponentit (UART, SPI, AXI...), lokitus, toiminnallinen kattavuus |
-| cocotb | testipenkki Pythonilla; simulaattori ajaa VHDL:n (luku 11) |
+| cocotb | testipenkki Pythonilla; simulaattori ajaa VHDL:n (luku 10) |
+
+VHDL-2008 sisältää myös PSL-väittämäkielen (*Property Specification
+Language*), jolla ajallinen ehto kirjoitetaan suoraan arkkitehtuuriin,
+esimerkiksi "pyyntöä seuraa myöntö neljän jakson kuluessa". GHDL
+tarkistaa PSL-väittämät simuloinnissa. Väittämien ja formaalin
+verifioinnin menetelmät käsitellään taidossa *Laitteiston
+verifiointi*.
 
 VUnitin ja OSVVM:n voi yhdistää: VUnit ajaa testit ja OSVVM tarjoaa
 verifiointikomponentit. Kehyksen valinta on tiimin päätös, mutta

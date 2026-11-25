@@ -1,0 +1,3 @@
+ram: sama osoite samalla reunalla -> vanha B2, seuraavalla C3
+rom: 12 * 12 = 144
+fifo: kirjoitettu 219, luettu 219, täynnä 123 ja tyhjä 135 jaksoa

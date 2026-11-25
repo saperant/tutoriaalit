@@ -59,6 +59,7 @@ async def aja(dut: Any, toimet: list[Toimenpide], otsikko: str) -> None:
     # @loppu aja
 
 
+# @alku ohjattu
 @cocotb.test()
 async def ohjattu(dut: Any) -> None:
     """Täyttö, ylivuotoyritys ja tyhjennys."""
@@ -66,6 +67,7 @@ async def ohjattu(dut: Any) -> None:
     toimet = [Toimenpide(True, False, 0x10 + i) for i in range(SYVYYS + 1)]
     toimet += [Toimenpide(False, True)] * (SYVYYS + 1)
     await aja(dut, toimet, "ohjattu")
+    # @loppu ohjattu
 
 
 # @alku satunnainen

@@ -38,7 +38,7 @@ mutta valitsimen `--binary` tuottama pääohjelma ei kirjoita sitä.
 Siksi esimerkki käyttää omaa pääohjelmaa, joka on muuten samanlainen
 mutta tallentaa kattavuuden lopuksi:
 
-```{.cpp tiedosto="esimerkit/05-kattavuus/paa.cpp"}
+```{.cpp tiedosto="esimerkit/06-kattavuus/paa.cpp"}
 ```
 
 Verilatorin työkalu `verilator_coverage` yhdistää tiedostoja
@@ -135,27 +135,56 @@ Toimenpide on koodattu luvuksi `push + 2·pop`:
 
 ## Aukot ja niiden sulkeminen
 
-Luvun 7 cocotb-testit raportoivat kattavuuden jokaisen testin jälkeen.
-Ehjän FIFOn ajossa näkyy kolmen testin kattavuus:
+Luvun 4 apufunktio `aja` kirjaa jokaisen jakson havainnon tähän
+malliin ja tulostaa kattavuuden testin jälkeen. Ehjän FIFOn ajossa
+näkyy kolmen testin kattavuus:
 
 ```{.tuloste tiedosto="esimerkit/odotetut/cocotb-fifo.odotettu"}
 ```
 
+Sama tieto näkyy alla lämpökarttana: jokainen ruutu on yksi ristin
+lokero ja luku on osumien määrä. Valkoinen ruutu on aukko.
+
+![Ristikattavuus täyttöaste × toimenpide kolmelle testille. Kuva on
+tuotettu samasta ajosta kuin yllä oleva raportti
+(`kuvat/piirra.py`).](kuvat/ristikattavuus.png){width=95%}
+
 Ohjattu testi ei koskaan levännyt eikä kirjoittanut ja lukenut yhtä
 aikaa. Satunnaistetusta testistä puuttuu kaksi ristin lokeroa:
-`tyhja*pop` ja `tyhja*push+pop`. Se on luvun 4 kohtelias generaattori:
+`tyhja*pop` ja `tyhja*push+pop`. Se on luvun 5 kohtelias generaattori:
 koska se ei koskaan lue tyhjästä jonosta, sääntöä "luku tyhjästä
 hylätään" ei testattu kertaakaan. Vika `BUGI_TYHJA` jäisi siis
 satunnaistestiltä löytymättä, ja kattavuusraportti kertoo sen
 etukäteen.
 
-Aukko suljettiin kirjoittamalla testi `kulmat`, joka painottaa juuri
-puuttuvia tilanteita. Se ei yksin kata kaikkea, mutta testit yhdessä
-kattavat ristin kokonaan. Kun FIFOssa on vika `BUGI_TYHJA`, vain
-`kulmat` löytää sen:
+Aukko suljettiin kirjoittamalla kolmas testi `kulmat`, joka painottaa
+juuri puuttuvia tilanteita. Sen rakenne on kiinteä, ja satunnaisuus on
+vain määrissä ja datassa:
 
-```{.tuloste tiedosto="esimerkit/odotetut/cocotb-fifo-tyhja.odotettu"}
+```{.python tiedosto="esimerkit/pythonpenkit/test_fifo.py" osa="kulmat"}
 ```
+
+`kulmat` ei yksin kata kaikkea, mutta testit yhdessä kattavat ristin
+kokonaan. Kun FIFOssa on vika `BUGI_TYHJA`, vain `kulmat` löytää sen:
+
+```{.tuloste tiedosto="esimerkit/odotetut/cocotb-fifo-tyhja.odotettu" alkaen="läpi"}
+```
+
+Vian `BUGI_SAMANAIKAINEN` löysi luvussa 5 vain satunnaistettu testi.
+Kulmatesti kirjoittaa ja lukee yhtä aikaa vain täyteen tai tyhjään
+jonoon, joissa jompikumpi toimenpide hylätään, joten se ei osu
+lokeroon `osittain*push+pop`. Kumpikaan testi ei siis korvaa toista.
+
+Viallisen lohkon kattavuusraporttia ei pidä lukea sellaisenaan.
+`BUGI_TAYSI` kaataa kaikki kolme testiä, ja raportti näyttää samalla
+aukkoja, joita ehjällä lohkolla ei ole:
+
+```{.tuloste tiedosto="esimerkit/odotetut/cocotb-fifo-taysi.odotettu"}
+```
+
+Kattavuus kirjataan DUT:n havaitusta tilasta. Viallinen DUT ei koskaan
+päässyt neljään sanaan, joten lokerot `taysi*...` jäivät tyhjiksi.
+Kattavuus luetaan siksi vain ajoista, jotka läpäisivät tarkistukset.
 
 Tämä on *kattavuusohjatun verifioinnin* (coverage-driven
 verification) silmukka:
@@ -184,7 +213,7 @@ todistetaan formaalisti (luku 8).
 
 Kattavuuskohteen voi kirjoittaa myös väitteenä: SystemVerilogin
 `cover property` laskee, kuinka monta kertaa ehto toteutui
-(luku 6), ja formaalissa tarkistuksessa `cover` pyytää ratkaisijaa
+(luku 7), ja formaalissa tarkistuksessa `cover` pyytää ratkaisijaa
 etsimään ajon, jossa ehto toteutuu (luku 8). Väitepohjainen kattavuus
 sopii aikajärjestyksiin, kuten "pyyntö, jota seuraa myöntö kolmen
 jakson kuluttua", joita kattavuuspisteellä on vaikea ilmaista.

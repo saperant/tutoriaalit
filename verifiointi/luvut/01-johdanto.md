@@ -11,13 +11,25 @@ työtä kuin itse suunnitteluun, ja suurissa piireissä verifioijia on
 enemmän kuin suunnittelijoita.
 
 Tämä tutoriaali opettaa verifioinnin menetelmät kahden pienen lohkon
-avulla: synkronisen FIFOn ja vuorottelevan arbiterin. Esitietoina ovat
-taidot *RTL-suunnittelu SystemVerilogilla* (moduulit, kellotettu
-logiikka, FIFOt, Verilator) ja *Python-työkalut* (tyyppivihjeet, ruff,
-mypy, pytest). Niitä ei kerrata. Väyläprotokollan tarkistin on
-esitelty taidossa *SoC-integraatio* ja synteesin jälkeinen
-ekvivalenssitarkistus taidossa *ASIC-toteutus*; tässä keskitytään
-lohkotason verifiointiin.
+avulla: synkronisen FIFOn ja vuorottelevan arbiterin.
+
+## Esitiedot ja rajaus
+
+Esitietoina ovat taidot *RTL-suunnittelu SystemVerilogilla* (moduulit,
+kellotettu logiikka, FIFOt, kelvollinen/valmis-kättely, Verilator ja
+cocotb:n perusteet) ja *Python työkaluohjelmointiin* (tyyppivihjeet,
+ruff, mypy, pytest). Niitä ei kerrata.
+
+Tässä keskitytään lohkotason verifiointiin. Rajauksen ulkopuolelle
+jäävät:
+
+- väyläprotokollien tarkistimet ja järjestelmätason testit, joita
+  käsitellään taidossa *SoC-integraatio*
+- synteesin jälkeinen ekvivalenssitarkistus ja porttitason simulointi,
+  joita käsitellään taidossa *ASIC-toteutus*
+- regressioiden ajaminen työkaluketjun osana, jota käsitellään
+  taidossa *EDA-työkaluketjujen automatisointi*
+- emulaattorit ja FPGA-prototyypit.
 
 ## Verifiointi, validointi ja testaus
 
@@ -180,13 +192,15 @@ tarkistus).
 
 ## Lukuohje
 
-Luku 2 kertoo, miten verifiointi suunnitellaan. Luvut 3–5 rakentavat
-simulointiin perustuvan testipenkin: rakenne, satunnaistus ja
-kattavuus. Luku 6 esittelee SystemVerilogin väitteet ja luku 7 saman
-testipenkin Pythonilla cocotb:n avulla. Luku 8 käsittelee formaalia
-verifiointia, luku 9 alan standardimenetelmän UVM:n käsitteet ja
-luku 10 regressiot ja epäonnistumisten luokittelun. Luku 11 kokoaa
+Luku 2 kertoo, miten verifiointi suunnitellaan. Luvut 3–6 rakentavat
+simulointiin perustuvan testipenkin: rakenne SystemVerilogilla
+(luku 3), sama ympäristö Pythonilla cocotb:n avulla (luku 4),
+satunnaistus (luku 5) ja kattavuus (luku 6). Luvut 5 ja 6 käyttävät
+luvun 4 Python-ympäristöä, joten ne luetaan tässä järjestyksessä.
+Luku 7 esittelee SystemVerilogin väitteet ja luku 8 formaalin
+verifioinnin. Luku 9 käy läpi alan standardimenetelmän UVM:n käsitteet
+ja luku 10 regressiot ja epäonnistumisten luokittelun. Luku 11 kokoaa
 nyrkkisäännöt ja lähteet.
 
-Kokenut lukija voi aloittaa luvuista 6 ja 8, jos testipenkkien rakenne
+Kokenut lukija voi aloittaa luvuista 7 ja 8, jos testipenkkien rakenne
 on tuttu, ja lukea muiden lukujen lopussa olevat itsearvioinnit.

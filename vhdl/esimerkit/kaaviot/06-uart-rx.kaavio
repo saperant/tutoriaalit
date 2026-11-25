@@ -1,0 +1,48 @@
+-- lahde: 06-uart-rx/sarjavastaanotin.vhd 06-uart-rx/testipenkki.vhd
+-- vcd: --kello kaavio.bittiaika --piilota-kello --signaalit kaavio.rx=rx,kaavio.bitti[2:0]=bitti,kaavio.siirto[7:0]=siirto,kaavio.tavu[7:0]=tavu --kanta b --jaksot 12 --hscale 1.5
+-- Toinen kehys (A5). Näyte otetaan kerran bittiajassa, kolme
+-- kellojaksoa bitin keskikohdan jälkeen, jolloin vastaanotin on juuri
+-- näytteistänyt linjan (bittiaika on 16 kellojaksoa).
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity kaavio is
+end entity kaavio;
+
+architecture sim of kaavio is
+  signal bittiaika : std_logic := '0';
+  signal rx        : std_logic;
+  signal bitti     : unsigned(2 downto 0);
+  signal siirto    : std_logic_vector(7 downto 0);
+  signal tavu      : std_logic_vector(7 downto 0);
+begin
+  tb : entity work.testipenkki;
+
+  -- Toinen kehys alkaa hetkellä 2020 ns; aloitusbitin keskikohta on
+  -- 2100 ns. Ensimmäinen näyte otetaan yhtä bittiaikaa aiemmin.
+  naytteet : process
+  begin
+    wait for 1970 ns;
+    for i in 1 to 14 loop
+      bittiaika <= '1'; wait for 80 ns;
+      bittiaika <= '0'; wait for 80 ns;
+    end loop;
+    wait;
+  end process naytteet;
+
+  kytkenta : block
+    alias rx_tb is << signal .kaavio.tb.rx : std_logic >>;
+    alias tavu_tb is
+      << signal .kaavio.tb.tavu : std_logic_vector(7 downto 0) >>;
+    alias bitti_dut is
+      << signal .kaavio.tb.dut.bitti : natural range 0 to 7 >>;
+    alias siirto_dut is
+      << signal .kaavio.tb.dut.siirto : std_logic_vector(7 downto 0) >>;
+  begin
+    rx     <= rx_tb;
+    tavu   <= tavu_tb;
+    bitti  <= to_unsigned(bitti_dut, 3);
+    siirto <= siirto_dut;
+  end block kytkenta;
+end architecture sim;

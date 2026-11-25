@@ -1,4 +1,4 @@
 [725] %Error: fifo_sva.sv:20: Assertion failed in
     TOP.testipenkki.dut.sva.a_raja: maara=7 ylittää syvyyden
-%Error: 06-sva/fifo_sva.sv:20: Verilog $stop
+%Error: 07-sva/fifo_sva.sv:20: Verilog $stop
 Aborting...

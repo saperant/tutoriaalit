@@ -6,9 +6,10 @@ on kymmeniä tuloja ja tuhansia tiloja, eikä kukaan pysty luettelemaan
 kaikkia kiinnostavia yhdistelmiä käsin. *Rajoitettu satunnaistus*
 (constrained random) kääntää työnjaon: verifioija kuvaa, millainen
 ärsyke on sallittua ja mitä halutaan painottaa, ja kone arpoo
-yhdistelmät. Edellisen luvun testipenkki löysi kaikki kolme FIFOn
-vikaa juuri siksi, että generaattori tuotti tilanteita, joita kukaan
-ei kirjoittanut erikseen.
+yhdistelmät. Luvun 3 testipenkki löysi kaikki kolme FIFOn vikaa
+juuri siksi, että generaattori tuotti tilanteita, joita kukaan ei
+kirjoittanut erikseen. Tässä luvussa satunnaistus lisätään myös
+luvun 4 Python-ympäristöön.
 
 ## Rajoitteet ja painot
 
@@ -42,8 +43,8 @@ luokan `rand`-kentät, mutta jättää rajoitteet huomiotta ja varoittaa
 siitä (CONSTRAINTIGN). Uudemmat versiot ratkaisevat rajoitteita
 ulkoisella SMT-ratkaisijalla. Siksi esimerkit arpovat arvot funktioilla
 `$urandom` ja `$urandom_range` ja kirjoittavat rajoitteet tavallisina
-ehtoina. Pythonissa (luku 7) tilanne on sama: `random`-moduuli arpoo,
-ja rajoitteet ovat koodia. Monimutkaisiin rajoitteisiin on
+ehtoina. Pythonissa tilanne on sama: `random`-moduuli arpoo, ja
+rajoitteet ovat koodia. Monimutkaisiin rajoitteisiin on
 Python-kirjasto PyVSC.
 
 ## Laillinen ja laiton ärsyke
@@ -55,16 +56,32 @@ se piilottaa vikoja. FIFOn määrittely sallii lukemisen tyhjästä jonosta
 (luku jätetään huomiotta), joten luku tyhjästä on laillinen ja tärkeä
 testattava tilanne.
 
-Luvun 7 Python-generaattori jäljittelee yleistä virhettä: se on
+Python-ympäristön generaattori jäljittelee yleistä virhettä: se on
 "kohtelias" eikä lue jonosta, jonka se arvioi tyhjäksi. Arvio on oma
 laskuri, koska generaattori ei näe DUT:n tilaa:
 
 ```{.python tiedosto="esimerkit/pythonpenkit/fifo_ymparisto.py" osa="generaattori"}
 ```
 
-Ylirajoitettu generaattori ei koskaan tuota tilannetta, jossa
-`BUGI_TYHJA` näkyy, ja vika jää löytymättä, vaikka testi ajaa satoja
-jaksoja. Luku 5 näyttää, miten kattavuus paljastaa tällaisen aukon.
+Testi `satunnaistettu` ajaa generaattorin tuottamat 500 toimenpidettä
+luvun 4 apufunktiolla:
+
+```{.python tiedosto="esimerkit/pythonpenkit/test_fifo.py" osa="satunnainen"}
+```
+
+Kun FIFOssa on vika `BUGI_SAMANAIKAINEN`, ohjattu testi menee läpi
+mutta satunnaistettu testi kaatuu, koska vain se kirjoittaa ja lukee
+yhtä aikaa osittain täyteen jonoon. Raportin loppu kertoo
+ensimmäisen virheen (kolmas testi `kulmat` esitellään seuraavassa
+luvussa):
+
+```{.tuloste tiedosto="esimerkit/odotetut/cocotb-fifo-samanaikainen.odotettu" alkaen="läpi 2"}
+```
+
+Ylirajoitettu generaattori ei kuitenkaan koskaan tuota tilannetta,
+jossa `BUGI_TYHJA` näkyy, ja se vika jää löytymättä, vaikka testi ajaa
+satoja jaksoja. Luku 6 näyttää, miten kattavuus paljastaa tällaisen
+aukon.
 
 Laskurissa on lisäksi oma vikansa: kun jono on täynnä ja generaattori
 kirjoittaa ja lukee yhtä aikaa, FIFO hylkää kirjoituksen, mutta arvio
@@ -133,18 +150,25 @@ että tilanne syntyy jatkossakin siemenestä riippumatta.
 
 Tasainen satunnaisuus tuottaa harvoin äärimmäisiä tiloja. Jos 1024
 paikan FIFOa kirjoitetaan ja luetaan kumpaakin todennäköisyydellä
-puolet, jonon määrä on satunnaiskulku, joka käy täynnä vasta
-satojentuhansien jaksojen jälkeen. Siksi generaattori rakennetaan
-usein *vaiheista* tai *sekvensseistä*:
+puolet, jonon määrä on satunnaiskulku. Alla olevassa simulaatiossa se
+ei 200 000 jakson aikana käy kertaakaan täynnä, kun taas
+täyttö- ja tyhjennysvaiheista rakennettu generaattori käy molemmissa
+päissä kymmeniä kertoja.
+
+![Jonon täyttöaste 1024 paikan FIFOssa: tasainen satunnaisuus pysyy
+kaukana täydestä, vaiheistettu generaattori käy toistuvasti
+kummassakin päässä (`kuvat/piirra.py`).](kuvat/tayttoaste.png){width=85%}
+
+Siksi generaattori rakennetaan usein *vaiheista* tai *sekvensseistä*:
 
 - täyttövaihe, jossa kirjoitetaan, kunnes jono on täynnä, ja
   tyhjennysvaihe vastaavasti;
 - purskeet, joissa sama toimenpide toistuu satunnaisen määrän kertoja;
 - painojen vaihtaminen testin aikana tai testikohtaisesti.
 
-Luvun 7 testi `kulmat` on tällainen: se täyttää jonon yli rajan,
-kirjoittaa ja lukee täyteen jonoon ja lukee tyhjästä jonosta, ja
-satunnaisuus vaikuttaa vain määriin ja dataan. UVM:ssä (luku 9)
+Seuraavan luvun testi `kulmat` on tällainen: se täyttää jonon yli
+rajan, kirjoittaa ja lukee täyteen jonoon ja lukee tyhjästä jonosta,
+ja satunnaisuus vaikuttaa vain määriin ja dataan. UVM:ssä (luku 9)
 sekvenssit ovat juuri tätä varten omia luokkiaan, joita testi voi
 yhdistellä.
 
@@ -165,7 +189,7 @@ yhdistellä.
 - **Löydetty vika ohjatuksi testiksi tai kattavuuskohteeksi.**
   Siemen voi lakata toistamasta vikaa, kun testipenkki muuttuu.
 - **Satunnaistus ei korvaa ajattelua.** Generaattori tuottaa vain sitä,
-  mitä sen jakauma sallii. Kattavuus (luku 5) kertoo, mitä se
+  mitä sen jakauma sallii. Kattavuus (luku 6) kertoo, mitä se
   todella tuotti.
 
 ## Itsearviointi

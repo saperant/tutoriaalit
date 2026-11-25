@@ -5,7 +5,7 @@
     "context": "..",
     "args": {
       "LISAPAKETIT": "verilator iverilog yosys z3",
-      "PIP_PAKETIT": "cocotb==2.1.0 ruff mypy pytest"
+      "PIP_PAKETIT": "cocotb==2.1.0 ruff mypy pytest matplotlib"
     }
   },
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/verifiointi/esimerkit",

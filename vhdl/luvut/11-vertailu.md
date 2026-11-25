@@ -12,16 +12,16 @@ toista. Se toimii myös kertauksena koko tutoriaalille.
 Taidon *RTL-suunnittelu SystemVerilogilla* ensimmäinen esimerkki on
 laskuri, jolla on asynkroninen nollaus ja sallinta. VHDL-versio:
 
-```{.vhdl tiedosto="esimerkit/10-laskuri.vhd" osa="entiteetti"}
+```{.vhdl tiedosto="esimerkit/11-laskuri.vhd" osa="entiteetti"}
 ```
 
 Testipenkki tekee saman kuin SystemVerilog-versio ja tulostaa
 täsmälleen saman tuloksen:
 
-```{.vhdl tiedosto="esimerkit/10-laskuri.vhd" osa="testipenkki"}
+```{.vhdl tiedosto="esimerkit/11-laskuri.vhd" osa="testipenkki"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-laskuri.odotettu"}
+```{.tuloste tiedosto="esimerkit/11-laskuri.odotettu"}
 ```
 
 Asynkroninen nollaus kirjoitetaan VHDL:ssä niin, että nollaus on

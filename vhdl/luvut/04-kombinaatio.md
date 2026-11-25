@@ -135,7 +135,7 @@ Jos ehdot ovat toisensa poissulkevia, kuten osoitealueet, `case` tai
 erilliset ehdot kertovat lukijalle ja synteesille, ettei prioriteettia
 tarvita. Pitkä `elsif`-ketju kriittisellä polulla tuottaa pitkän
 multiplekseriketjun; ajoituksen kannalta rinnakkainen rakenne on
-parempi (ks. *RTL-suunnittelu SystemVerilogilla*, luku 4).
+parempi (ks. taito *RTL-suunnittelu SystemVerilogilla*).
 
 VHDL-2008 sallii ehdollisen ja valitsevan sijoituksen myös prosessin
 sisällä (`y <= a when s = '1' else b;`), mikä lyhentää yksinkertaisia

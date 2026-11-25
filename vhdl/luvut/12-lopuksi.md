@@ -61,7 +61,7 @@ luvuissa, joihin suluissa viitataan.
 - **UVVM** (<https://github.com/UVVM/UVVM>): verifiointikomponentit ja
   lokitus.
 - **cocotb** (<https://www.cocotb.org>): testipenkit Pythonilla
-  (luku 11).
+  (luku 10).
 
 ### Työkalut
 
@@ -73,15 +73,19 @@ luvuissa, joihin suluissa viitataan.
 - FPGA-valmistajien ympäristöt: AMD Vivado, Altera Quartus, Lattice
   Radiant, Microchip Libero.
 
-### Mihin tästä eteenpäin
+## Jatkotaidot
 
-Taitopuussa VHDL:n rinnalla on *RTL-suunnittelu SystemVerilogilla*,
-joka käsittelee laajemmin datapolut, muistit, kellot ja
-kellotusalueiden ylityksen. Sieltä polku jatkuu taitoihin *Laitteiston
-verifiointi*, *FPGA-toteutus* ja *EDA-työkaluketjujen automatisointi*,
-jossa simulointi, synteesi ja testit ajetaan skripteillä. Kiinteän
-pilkun laskenta VHDL:n `fixed_pkg`-paketilla liittyy taitoon *Lukujen
-esitys ja kiinteän pilkun aritmetiikka*.
+- *RTL-suunnittelu SystemVerilogilla*: sama taito toisella kielellä.
+  Se käsittelee laajemmin kieliriippumattomat aiheet: liukuhihnat ja
+  vastapaineen, kellot ja nollaukset sekä kellotusalueiden ylityksen.
+- *Laitteiston verifiointi*: testipenkkien rakenne, satunnaistus,
+  kattavuus, väittämät ja formaali verifiointi.
+- *FPGA-toteutus*: synteesi, sijoittelu ja ajoitusanalyysi sekä
+  suunnitelman ajaminen simuloidulla kortilla.
+- *EDA-työkaluketjujen automatisointi*: simulointi, synteesi ja testit
+  skripteillä.
+- *Lukujen esitys ja kiinteän pilkun aritmetiikka*: kiinteän pilkun
+  laskenta, jota VHDL:ssä tukee paketti `fixed_pkg`.
 
 ## Lisenssi
 

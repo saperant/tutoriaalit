@@ -1,4 +1,4 @@
 [95] %Error: fifo_sva.sv:28: Assertion failed in
     TOP.testipenkki.dut.sva.a_samanaikainen: push+pop muutti määrää: 2 -> 3
-%Error: 06-sva/fifo_sva.sv:28: Verilog $stop
+%Error: 07-sva/fifo_sva.sv:28: Verilog $stop
 Aborting...

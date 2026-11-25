@@ -1,11 +1,13 @@
-# Generic-parametrit ja generate
+# Generic-parametrit, generate ja muistit
 
 Uudelleenkäytettävä lohko on parametroitu: väylän leveys, puskurin
 syvyys, kanavien määrä ja ajoitusvakiot annetaan instansioinnissa.
 VHDL:ssä tähän on kolme välinettä: *generic-parametrit*,
 *rajoittamattomat portit*, joiden leveys tulee liitetystä signaalista,
 ja `generate`-lauseet, jotka monistavat tai valitsevat rakenteita
-elaboroinnissa.
+elaboroinnissa. Luvun lopussa välineet yhdistetään tavallisimpaan
+parametroituun lohkoon, muistiin: RAM, ROM ja FIFO kirjoitetaan niin,
+että synteesi tunnistaa ne.
 
 ## Generic-parametrit
 
@@ -118,8 +120,85 @@ parantunut, mutta se kannattaa tarkistaa käytetystä työkalusta ennen
 kuin niitä käytetään synteesikoodissa. Testipenkeissä ja malleissa
 niitä voi käyttää vapaasti.
 
+## Muistit: RAM, ROM ja FIFO
+
+Suuri muisti toteutetaan FPGA:n lohkomuistina tai ASIC-piirin
+muistimakrona, ei kiikuista. Synteesityökalu *päättelee* (infer)
+muistin, kun koodi vastaa tunnettua kuviota, ja kuvio on
+kielikohtainen. VHDL:ssä muisti on taulukkotyyppinen signaali, jota
+kirjoitetaan ja luetaan kellotetussa prosessissa:
+
+```{.vhdl tiedosto="esimerkit/07-muisti/ram.vhd" osa="ram"}
+```
+
+Kolme asiaa tekee tästä muistin eikä kiikkurivistöä. Luku on
+rekisteröity, eli lukudata tulee kellon reunan jälkeen. Muistia ei
+nollata, koska lohkomuistia ei voi tyhjentää yhdellä jaksolla.
+Osoite on `natural`-alityyppi, jonka alue tulee generic-parametrista,
+joten väärän levyinen osoite ei käänny. Kun samaa osoitetta luetaan
+ja kirjoitetaan samalla reunalla, tämä muoto palauttaa vanhan arvon
+(*read-first*), koska signaali `muisti` päivittyy vasta deltasyklin
+lopussa. Uuden arvon palauttava muoto (*write-first*) kirjoitetaan
+muuttujalla tai ohituslogiikalla, ja kohdepiirin muistista riippuu,
+kumpaa se tukee.
+
+ROM on vakio, jonka sisältö lasketaan funktiolla elaboroinnissa
+(funktiot esitellään luvussa 8). Sisällön voi myös lukea tiedostosta
+`impure function` -alustuksella ja `textio`-paketilla.
+
+```{.vhdl tiedosto="esimerkit/07-muisti/rom.vhd" osa="rom"}
+```
+
+FIFO on rengaspuskuri: muisti ja kaksi osoitinta. Osoittimissa on
+yksi ylimääräinen bitti, jolla täysi ja tyhjä jono erotetaan: kun
+osoittimet ovat kokonaan samat, jono on tyhjä, ja kun vain ylin bitti
+eroaa, kirjoitusosoitin on kierroksen edellä ja jono on täynnä.
+`alias` antaa osoittimen alimmille biteille nimen ilman uutta
+signaalia.
+
+```{.vhdl tiedosto="esimerkit/07-muisti/fifo.vhd" osa="fifo"}
+```
+
+Tässä FIFOssa luku on kombinatorinen, joten jonon ensimmäinen sana
+näkyy lähdössä ennen lukua. Syvyys annetaan osoitebitteinä, jolloin
+se on aina kahden potenssi eikä erillistä tarkistusta tarvita.
+
+Testipenkki tarkistaa RAMin lukuviiveen ja saman osoitteen tapauksen,
+ROMin kaikki arvot ja FIFOn järjestyksen satunnaisella tahdilla.
+FIFOon kirjoitetaan juoksevia numeroita, joten kadonnut tai
+kahdentunut sana jää heti kiinni. Tarkistus tehdään kellon laskevalla
+reunalla, jolloin jakson signaalit ovat asettuneet ja siirto toteutuu
+seuraavalla nousevalla reunalla:
+
+```{.vhdl tiedosto="esimerkit/07-muisti/testipenkki.vhd" osa="fifotesti"}
+```
+
+```{.tuloste tiedosto="esimerkit/07-muisti.odotettu"}
+```
+
+Viimeisen rivin kaksi lukua kertovat, että sekä täysi että tyhjä jono
+tulivat testatuiksi.
+
+Simulointi ei kerro, päätyikö muisti lohkomuistiin. Sen kertoo
+synteesi. GHDL:n synteesi (`ghdl --synth --std=08 ram`) ilmoittaa
+jokaisesta tunnistamastaan muistista, ja esimerkkien makefile vertaa
+ilmoituksia tallennettuihin:
+
+```{.tuloste tiedosto="esimerkit/07-muisti/synteesi.odotettu"}
+```
+
+Jos rivi puuttuu, kuvio on rikki ja muisti syntyisi kiikuista.
+FPGA-valmistajan työkalussa sama tarkistetaan synteesiraportin
+resurssitaulukosta. Kaksikellomuisti, tavukohtainen kirjoitus ja
+attribuutit, kuten `ram_style`, ovat valmistajakohtaisia, ja niiden
+kuviot löytyvät työkalun synteesioppaasta.
+
 ## Käytännössä
 
+- **Muisti kirjoitetaan päättelykuviona.** Taulukkosignaali,
+  rekisteröity luku, ei nollausta. Synteesin ilmoituksesta tai
+  resurssiraportista tarkistetaan, että muisti tunnistettiin; pieni
+  poikkeama kuviosta voi tehdä tuhansista biteistä kiikkuja.
 - **Yksi lähde jokaiselle tiedolle.** Leveys tulee liitetystä
   signaalista tai yhdestä generic-parametrista, ja muut koot
   lasketaan siitä. Kaksi toisistaan riippuvaa parametria on
@@ -146,3 +225,6 @@ niitä voi käyttää vapaasti.
 - Osaat tarkistaa parametrien rajoitukset `assert`-lauseella.
 - Osaat kertoa, mitä geneeriset tyypit mahdollistavat ja missä niiden
   tukea on syytä varmistaa.
+- Osaat kirjoittaa RAMin, ROMin ja synkronisen FIFOn niin, että
+  synteesi päättelee muistin, ja tarkistaa päättelyn synteesin
+  ilmoituksista.

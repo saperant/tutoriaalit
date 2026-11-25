@@ -22,7 +22,7 @@ kattavuus = ["rtl/fifo.sv#cover (taysi && pop && push)"]
 id = "F3"
 kuvaus = "Luku tyhjästä jonosta hylätään"
 tarkistukset = [
-    "06-sva/fifo_sva.sv#a_tyhja_luku",
+    "07-sva/fifo_sva.sv#a_tyhja_luku",
     "rtl/fifo.sv#$past(pop && tyhja && !push)",
 ]
 kattavuus = ["pythonpenkit/test_fifo.py#async def kulmat"]
@@ -30,14 +30,14 @@ kattavuus = ["pythonpenkit/test_fifo.py#async def kulmat"]
 [[vaatimus]]
 id = "F4"
 kuvaus = "Liput tyhja ja taysi vastaavat määrää"
-tarkistukset = ["06-sva/fifo_sva.sv#a_liput", "rtl/fifo.sv#assert (taysi =="]
+tarkistukset = ["07-sva/fifo_sva.sv#a_liput", "rtl/fifo.sv#assert (taysi =="]
 kattavuus = ["pythonpenkit/fifo_ymparisto.py#\"tayttoaste\""]
 
 [[vaatimus]]
 id = "F5"
 kuvaus = "Samanaikainen kirjoitus ja luku säilyttää määrän"
-tarkistukset = ["06-sva/fifo_sva.sv#a_samanaikainen"]
-kattavuus = ["06-sva/fifo_sva.sv#c_taysi_samanaikainen"]
+tarkistukset = ["07-sva/fifo_sva.sv#a_samanaikainen"]
+kattavuus = ["07-sva/fifo_sva.sv#c_taysi_samanaikainen"]
 
 [[vaatimus]]
 id = "F6"

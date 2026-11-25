@@ -6,15 +6,25 @@ simuloidaan ennen kuin siitä tehdään FPGA-konfiguraatio tai
 mikropiiri. Tämä tutoriaali opettaa synteesikelpoisen VHDL:n ja
 itsetarkistavat testipenkit VHDL-2008-standardin mukaisesti.
 
+## Esitiedot ja rajaus
+
 Esitietona on taito *Digitaalitekniikka*: Boolen algebra, kiikut,
-tilakoneet ja lukujärjestelmät oletetaan tutuiksi. Kieliriippumaton
-RTL-ajattelu, kuten synkroninen suunnittelu, ajoitus, muistit ja
-kellotusalueiden ylitys, käsitellään taidossa *RTL-suunnittelu
-SystemVerilogilla*. Tämä tutoriaali keskittyy siihen, mikä on
-VHDL:lle ominaista: vahvaan tyypitykseen, signaalien ja muuttujien
-eroon, deltasykleihin, paketteihin ja kielen omiin sudenkuoppiin.
+tilakoneet ja lukujärjestelmät oletetaan tutuiksi. Luku 10 olettaa
+lisäksi Pythonin perusteet (*Ohjelmoinnin perusteet (Python)*); sen
+voi ohittaa.
+
+Tämä tutoriaali keskittyy siihen, mikä on VHDL:lle ominaista: vahvaan
+tyypitykseen, signaalien ja muuttujien eroon, deltasykleihin,
+paketteihin, muistien kuvaamiseen ja kielen omiin sudenkuoppiin.
 Laitteistoperusteet kerrotaan vain sen verran, että esimerkit ovat
-ymmärrettäviä.
+ymmärrettäviä. Muu käsitellään omissa taidoissaan:
+
+- kieliriippumaton RTL-ajattelu, kuten synkroninen suunnittelu,
+  ajoitus, liukuhihnat ja vastapaine, nollausstrategiat ja
+  kellotusalueiden ylitys: *RTL-suunnittelu SystemVerilogilla*
+- verifiointimenetelmät (satunnaistus, kattavuus, väittämät, formaali
+  verifiointi): *Laitteiston verifiointi*
+- synteesi, sijoittelu ja ajoitusanalyysi: *FPGA-toteutus*.
 
 ## Historia ja standardit
 
@@ -54,7 +64,7 @@ SystemVerilog on yleisempi ASIC-suunnittelussa ja erityisesti
 verifioinnissa (UVM). Moni organisaatio käyttää molempia: RTL on
 VHDL:ää ja verifiointi SystemVerilogia tai Pythonia (cocotb).
 Työkalut simuloivat sekakielisiä malleja. Kielten erot ja
-vastaavuudet on koottu lukuun 10.
+vastaavuudet on koottu lukuun 11.
 
 VHDL ei sovellu algoritmien nopeaan mallinnukseen tai suuriin
 verifiointiympäristöihin sellaisenaan. Korkean tason mallit
@@ -151,11 +161,12 @@ simulaattorissa, kunhan VHDL-2008 on valittuna.
 | 4 | Kombinaatiologiikka: rinnakkaiset lauseet ja `process (all)` |
 | 5 | Sekvenssilogiikka, signaalit, muuttujat ja deltasyklit |
 | 6 | Tilakoneet |
-| 7 | Generic-parametrit ja `generate` |
+| 7 | Generic-parametrit, `generate` ja muistit (RAM, ROM, FIFO) |
 | 8 | Paketit, funktiot ja proseduurit |
-| 9 | Testipenkit |
-| 10 | VHDL ja SystemVerilog rinnakkain |
-| 11 | Nyrkkisäännöt ja lähteet |
+| 9 | Testipenkit VHDL:llä |
+| 10 | Testit Pythonilla: cocotb |
+| 11 | VHDL ja SystemVerilog rinnakkain |
+| 12 | Nyrkkisäännöt, jatkotaidot ja lähteet |
 
-Kokenut SystemVerilog-suunnittelija voi aloittaa luvusta 10 ja
+Kokenut SystemVerilog-suunnittelija voi aloittaa luvusta 11 ja
 palata sieltä lukuihin 3 ja 5, joissa VHDL eroaa eniten.

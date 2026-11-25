@@ -83,6 +83,15 @@ virheet aikaleimoineen:
 ```{.tuloste tiedosto="esimerkit/06-uart-rx.odotettu"}
 ```
 
+Alla on toinen kehys (A5) samasta simulaatiosta, yksi sarake bittiä
+kohden. Näyte on otettu heti sen jälkeen, kun vastaanotin on
+näytteistänyt linjan. Bitit siirtyvät rekisteriin `siirto` vasemmalta,
+vähiten merkitsevä ensin, ja valuvat oikealle. `tavu` vaihtuu vasta,
+kun lopetusbitti on tarkistettu.
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/06-uart-rx.json" otsikko="UART-vastaanotto: bitit siirtyvät rekisteriin, tavu vaihtuu lopetusbitin jälkeen"}
+```
+
 Testipenkki käyttää 16 kellojakson bittiaikaa, jotta simulointi on
 nopea. Oikeassa käytössä arvo on esimerkiksi 868 (100 MHz, 115 200
 bit/s). Lohkon tulo `rx` oletetaan tahdistetuksi; ylempi taso lisää
@@ -94,8 +103,8 @@ Toinen yleinen tyyli on *kahden prosessin* tilakone: kombinaatioprosessi
 laskee seuraavan tilan ja lähdöt, ja kellotettu prosessi vain
 rekisteröi tilan.
 
-| | Yksi prosessi | Kaksi prosessia |
-|-|---------------|-----------------|
+| Ominaisuus | Yksi prosessi | Kaksi prosessia |
+|----------------|------------------------------|----------------------------------|
 | Lähdöt | rekisteröityjä, jakson viive | kombinaatiollisia, ei viivettä |
 | Salpojen vaara | ei | on, jos oletussijoitus unohtuu |
 | Luettavuus | kaikki yhdessä paikassa | seuraava tila erikseen nähtävissä |
@@ -105,8 +114,9 @@ Yhden prosessin tyyli on hyvä oletus: rekisteröidyt lähdöt eivät
 välkehdi, ne katkaisevat ajoituspolut ja salpoja ei synny. Kahden
 prosessin tyyliä käytetään, kun lähdön on reagoitava tuloon samalla
 jaksolla, esimerkiksi virtauksenohjauksen `valmis`-signaalissa.
-Mooren lähdön voi myös laskea tilasta rinnakkaisella sijoituksella,
-kuten seuraavan esimerkin `pyynto` ja `siirto`.
+Mooren lähdön voi myös laskea tilasta rinnakkaisella sijoituksella.
+Niin tekee seuraavan osion väyläpyyntöesimerkki, jossa lähdöt `pyynto`
+ja `siirto` ovat tilasta laskettuja vertailuja.
 
 ## Kattavuus ja uudet tilat
 

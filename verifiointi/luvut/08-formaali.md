@@ -52,6 +52,39 @@ voivatko ne rikkoutua seuraavassa? Askeleen tila ei ala nollauksesta
 vaan mistä tahansa tilasta, myös sellaisesta, johon nollauksesta ei
 voi päästä. Jos askel onnistuu, väite pätee aina.
 
+```{.dot otsikko="Periaatekuva: BMC purkaa suunnitelman k kopioksi nollauksesta alkaen"}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.45;
+  node [shape=box];
+  n [label="nollaus", shape=ellipse];
+  s0 [label="tila 0"]; s1 [label="tila 1"]; s2 [label="tila 2"];
+  sk [label="tila k"];
+  v0 [label="väite?", shape=diamond]; v1 [label="väite?", shape=diamond];
+  v2 [label="väite?", shape=diamond]; vk [label="väite?", shape=diamond];
+  p [label="…", shape=plaintext];
+  n -> s0; s0 -> s1 [label="siirtymä"]; s1 -> s2 [label="siirtymä"];
+  s2 -> p; p -> sk;
+  s0 -> v0; s1 -> v1; s2 -> v2; sk -> vk;
+  { rank=same; s0; v0; } { rank=same; s1; v1; }
+  { rank=same; s2; v2; } { rank=same; sk; vk; }
+}
+```
+
+```{.dot otsikko="Periaatekuva: induktioaskel alkaa mistä tahansa tilasta, jossa väitteet pätevät"}
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.45;
+  node [shape=box];
+  a [label="mikä tahansa\ntila", shape=ellipse, style=dashed];
+  s0 [label="tila i\nväite pätee"]; s1 [label="tila i+1\nväite pätee"];
+  sk [label="tila i+k-1\nväite pätee"];
+  u [label="tila i+k"]; v [label="väite?", shape=diamond];
+  p [label="…", shape=plaintext];
+  a -> s0 [style=dashed]; s0 -> s1 [label="siirtymä"]; s1 -> p; p -> sk;
+  sk -> u [label="siirtymä"]; u -> v;
+  { rank=same; u; v; }
+}
+```
+
 **Kattavuus** (*cover*) etsii lyhimmän syötejonon, joka toteuttaa
 kunkin `cover`-ehdon. Se osoittaa, että tila on saavutettavissa, ja
 tuottaa samalla valmiin esimerkkiajon, jota voi katsoa
@@ -96,8 +129,9 @@ ominaisuudet on kirjoitettu `always`-lohkoihin.
 
 ## Alkutila
 
-Simulaattorissa rekisterit alkavat arvosta `x`, ja testipenkki
-nollaa lohkon. Formaalissa mallissa rekisterien alkuarvot ovat
+Nelitilaisessa simulaattorissa rekisterit alkavat arvosta `x`
+(kaksitilainen Verilator arpoo tai nollaa ne), ja testipenkki nollaa
+lohkon. Formaalissa mallissa rekisterien alkuarvot ovat
 vapaita: ratkaisija saa valita ne. Ilman rajoitusta ratkaisija aloittaa
 esimerkiksi tilasta, jossa `maara` on 7, ja väite rikkoutuu heti.
 Siksi ominaisuudet aloitetaan oletuksella, että ensimmäisellä jaksolla
@@ -172,6 +206,12 @@ induktiolla, ja ensimmäinen yritys epäonnistuu:
 ```{.tuloste tiedosto="esimerkit/odotetut/formaali-induktio.odotettu"}
 ```
 
+Sama jälki ajoituskaaviona, piirrettynä ratkaisijan VCD-tiedostosta
+(`make induktio-kaavio`):
+
+```{.ajoituskaavio tiedosto="esimerkit/kaaviot/induktio.json" otsikko="Epäonnistuneen induktion jälki: alkutila ei ole saavutettavissa"}
+```
+
 Jäljen ensimmäinen tila on mahdoton: jonossa on neljä alkiota, mutta
 kirjoitusosoitin on 2 ja lukuosoitin 3. Nollauksesta ei pääse tällaiseen
 tilaan, mutta induktioaskel ei tiedä sitä, koska kaikki väitteet
@@ -181,10 +221,34 @@ Syvyyden kasvattaminen ei auta, koska ratkaisija voi pitää jonon
 puolillaan kuinka kauan tahansa.
 
 Väite on tosi, mutta se ei ole *induktiivinen*: se ei yksin rajaa
-tilajoukkoa niin, että askel säilyttää sen. Ratkaisu on *invariantti*,
-lisäväite, joka kuvaa tilojen välisen yhteyden, jonka suunnittelija
-tietää mutta jota mikään väite ei sanonut: osoittimien erotus vastaa
-määrää.
+tilajoukkoa niin, että askel säilyttää sen. Alla olevassa
+periaatekuvassa väitteen sallimat tilat ovat suurempi joukko kuin
+nollauksesta saavutettavat tilat. Induktion vastaesimerkki alkaa
+väliin jäävästä tilasta, josta on siirtymä virhetilaan.
+
+```{.dot otsikko="Periaatekuva: väite ei ole induktiivinen, invariantti rajaa tilajoukon"}
+digraph {
+  rankdir=LR; nodesep=0.5; ranksep=0.8; compound=true;
+  subgraph cluster_v { label="väitteen sallimat tilat"; style=rounded;
+    subgraph cluster_i { label="invariantin sallimat tilat";
+      style="rounded,dashed";
+      subgraph cluster_s { label="saavutettavat tilat"; style=rounded;
+        n [label="nollaus", shape=ellipse];
+        s [label="tyhjä,\nkirj = luku"];
+        n -> s;
+      }
+    }
+    m [label="maara 4,\nkirj 2, luku 3\n(mahdoton)", style=dashed];
+  }
+  e [label="tyhjä,\nkirj ≠ luku\n(väite rikki)", penwidth=2];
+  m -> e [label="8 siirtymää"];
+}
+```
+
+Ratkaisu on *invariantti*, lisäväite, joka kuvaa tilojen välisen
+yhteyden, jonka suunnittelija tietää mutta jota mikään väite ei
+sanonut: osoittimien erotus vastaa määrää. Se sulkee mahdottoman
+alkutilan pois induktioaskeleesta.
 
 ```{.systemverilog tiedosto="esimerkit/rtl/fifo.sv" osa="invariantti"}
 ```

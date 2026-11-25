@@ -1,0 +1,3 @@
+ram: RAM, width: 8 bits, depth: 16
+nelio_rom: ROM, width: 8 bits, depth: 16
+fifo: RAM, width: 8 bits, depth: 8
