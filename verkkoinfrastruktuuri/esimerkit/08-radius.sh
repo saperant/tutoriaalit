@@ -104,8 +104,10 @@ kysy liisa Kesa-2026
 kysy vieras Tervetuloa
 kysy liisa arvaus
 # @loppu kysely
-# Vianetsintää varten: jos palvelin ei vastaa, sen loki virhetulosteeseen.
+# Vianetsintää varten: jos palvelin ei vastaa, radtestin tuloste ja
+# palvelimen loki tulostetaan, jolloin ne näkyvät testin erotuksessa.
 if ! ns nas radtest liisa Kesa-2026 10.70.0.10 0 Jaettu-Salaisuus-Tamakin \
-        2>&1 | grep -q '^Received'; then
-    cat "$R/radius.log" >&2
+        > "$R/radtest.log" 2>&1 || ! grep -q '^Received' "$R/radtest.log"; then
+    echo "--- radtest"; cat "$R/radtest.log"
+    echo "--- radius.log"; cat "$R/radius.log"
 fi

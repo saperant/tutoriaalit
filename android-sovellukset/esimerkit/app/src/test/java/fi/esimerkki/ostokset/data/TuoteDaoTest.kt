@@ -6,6 +6,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
 import kotlinx.coroutines.test.runTest
+import kotlin.time.Duration.Companion.seconds
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -25,7 +26,9 @@ class TuoteDaoTest {
     @After fun sulje() = kanta.close()
 
     @Test fun ostetutListanLoppuunJaPoistoTyhjentaa() = runTest {
-        dao.kaikki().test {
+        // Room ilmoittaa muutoksista taustasäikeessä oikeassa ajassa, joten
+        // hitaalla CI-koneella Turbinen oletusaikaraja (3 s) ei riitä.
+        dao.kaikki().test(timeout = 30.seconds) {
             assertEquals(emptyList<TuoteRivi>(), awaitItem())
             val maito = dao.tallenna(TuoteRivi(nimi = "maito", maara = 1,
                                                 ostettu = false))
