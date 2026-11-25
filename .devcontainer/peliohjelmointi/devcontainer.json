@@ -4,7 +4,8 @@
     "dockerfile": "../Dockerfile",
     "context": "..",
     "args": {
-      "LISAPAKETIT": "libsdl2-dev"
+      "LISAPAKETIT": "libsdl2-dev",
+      "PIP_PAKETIT": "matplotlib numpy"
     }
   },
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/peliohjelmointi/esimerkit",

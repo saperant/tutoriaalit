@@ -79,6 +79,7 @@ Tulos aja(int havio, int toisto, bool tyonto) {
                 if (y.numero > palvelin_kasitelty) {
                     palvelin_x = liiku(palvelin_x, y);
                     palvelin_kasitelty = y.numero;
+                    loki("P {} {}", y.numero, nyt);  // kuvitusta varten
                 }
             }
         }
@@ -98,6 +99,7 @@ Tulos aja(int havio, int toisto, bool tyonto) {
             for (const Syote& y : kesken) {
                 x = liiku(x, y);
             }
+            loki("T {} {} {} {}", nyt, t.kasitelty, t.x, kesken.size());
             if (x != ennuste) {
                 ++tulos.korjauksia;
                 tulos.suurin_hyppy =
@@ -110,11 +112,13 @@ Tulos aja(int havio, int toisto, bool tyonto) {
             }
         }
         // @loppu tasmaytys
+        loki("X {} {} {}", nyt, ennuste, palvelin_x);
     }
     return tulos;
 }
 
-int main() {
+int main(int argc, char**) {
+    loki_paalla = argc > 1;
     struct Tapaus {
         const char* nimi;
         int havio, toisto;
@@ -124,6 +128,7 @@ int main() {
                             Tapaus{"5 % hävikki", 50, 1, false},
                             Tapaus{"5 %, 3 syötettä", 50, 3, false},
                             Tapaus{"tönäisy", 0, 1, true}}) {
+        loki("tapaus {}", t.nimi);
         const Tulos r = aja(t.havio, t.toisto, t.tyonto);
         std::println("{:<16} korjauksia {:>3}, suurin hyppy {:>3} cm, "
                      "kuittaus {} ms",

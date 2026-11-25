@@ -79,7 +79,7 @@ void tallenna_wav(const char* nimi, const std::vector<std::int16_t>& n) {
     }
 }
 
-int main() {
+int main(int argc, char**) {
     for (double voimakkuus : {0.6, 0.3}) {
         std::vector<Aani> aanet = {
             {440.0, voimakkuus, 0.0, 0.5},   // laukaus
@@ -89,6 +89,13 @@ int main() {
         int leikattuja = 0;
         auto puskuri = miksaa(aanet, 0.6, leikattuja);
         tallenna_wav("aanet.wav", puskuri);
+        if (argc > 1) {  // käyrätila kuvitusta varten: 20 ms näytteitä
+            for (int i = 10'080; i < 11'040; ++i) {
+                std::println("{} {} {}", voimakkuus, i,
+                             puskuri[static_cast<std::size_t>(i)]);
+            }
+            continue;
+        }
         std::println("voimakkuus {:.1f}: {} näytettä, leikattuja {}",
                      voimakkuus, puskuri.size(), leikattuja);
     }

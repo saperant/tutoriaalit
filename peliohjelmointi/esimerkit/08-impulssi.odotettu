@@ -1,0 +1,6 @@
+kevyt pallo (1 kg, 4 m/s) osuu raskaaseen (3 kg, levossa):
+  e = 1.0: nopeudet -2.00 ja 2.00 m/s, liikemäärä 4.0 -> 4.0, energiaa 100 %
+  e = 0.5: nopeudet -0.50 ja 1.50 m/s, liikemäärä 4.0 -> 4.0, energiaa  44 %
+  e = 0.0: nopeudet  1.00 ja 1.00 m/s, liikemäärä 4.0 -> 4.0, energiaa  25 %
+pallo osuu liikkumattomaan seinään vinosti (e = 0.8):
+  nopeus (3.00, -2.00) -> (-2.40, -2.00), paikka x = -0.10, seinä x = 0.90

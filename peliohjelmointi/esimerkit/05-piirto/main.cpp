@@ -41,9 +41,19 @@ constexpr std::array<std::string_view, 4> KARTTA = {
     "###################################",
 };
 
-int main() {
+int main(int argc, char**) {
     const Kuva atlas = ascii_kuvaksi(ATLAS, PALETTI);
     const double maailman_leveys = KARTTA[0].size() * RUUTU;
+    if (argc > 1) {  // käyrätila kuvitusta varten: pelaaja kääntyy
+        Kamera k{0.0, 0.0, 64, 32};  // välillä takaisin
+        double px = 10.0;
+        for (int ruutu = 0; ruutu < 360; ++ruutu) {
+            px += ((ruutu / 60) % 3 == 2 ? -30.0 : 30.0) / 60.0;
+            k.seuraa(px, maailman_leveys);
+            std::println("{} {:.3f} {:.3f}", ruutu, px, k.x);
+        }
+        return 0;
+    }
     Kamera kamera{0.0, 0.0, 64, 32};
     double pelaaja_x = 10.0;
     double aika = 0.0;
@@ -77,6 +87,7 @@ int main() {
     // @loppu piirto
 
     ruutu.tallenna_ppm("ruutu.ppm");
+    atlas.tallenna_ppm("atlas.ppm");
     std::println("pelaaja x = {:.1f}, kamera x = {:.1f}", pelaaja_x,
                  kamera.x);
     std::println("piirrettyjä ruutuja {}, kartassa {}", piirretty,

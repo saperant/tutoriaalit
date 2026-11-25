@@ -1,0 +1,6 @@
+ilman valmistelua:
+C -> B: pudotettu vastaanottajan NATissa
+reiän avaaminen:
+A -> B: pudotettu vastaanottajan NATissa
+B -> A: perillä
+A -> B: perillä

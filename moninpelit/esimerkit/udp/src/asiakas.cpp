@@ -17,8 +17,8 @@ int main(int argc, char** argv) {
         paikallinen(static_cast<std::uint16_t>(std::stoi(argv[2])));
     const std::vector<Syote> omat = syotteet(pelaaja + 1u);
 
-    Pistoke pistoke;
-    pistoke.sido(0);
+    Soketti soketti;
+    soketti.sido(0);
     Tila tila;
     std::uint32_t lahetetty = 0;
     int hiljaista = 0;
@@ -35,10 +35,10 @@ int main(int argc, char** argv) {
                 v.syote[k] = omat[lahetetty - IKKUNA + k];
             }
         }
-        pistoke.laheta(kirjoita(v), palvelin);
+        soketti.laheta(kirjoita(v), palvelin);
 
         sockaddr_in lahettaja{};
-        auto p = pistoke.vastaanota(5, &lahettaja);
+        auto p = soketti.vastaanota(5, &lahettaja);
         if (!p) {
             if (++hiljaista > 2000) {  // 10 s ilman vastausta
                 std::println(stderr, "asiakas {}: palvelin ei vastaa",

@@ -25,11 +25,23 @@ uuden tilan lisääminen ilman käsittelyä on käännösvirhe.
 ```{.tuloste tiedosto="esimerkit/04-tilakone.odotettu"}
 ```
 
-Monimutkaisempi tekoäly rakennetaan hierarkkisilla tilakoneilla (tila
-sisältää alitilakoneen), käyttäytymispuilla (behavior tree) tai
-hyötyfunktioilla (utility AI). Pelimoottoreissa animaatiot ohjataan
-yleensä samanlaisella tilakoneella, jonka siirtymät muokataan
-graafisesti.
+```{.dot otsikko="Esimerkin vartija tilakoneena" leveys="70%"}
+digraph {
+  rankdir=LR; nodesep=0.5;
+  node [shape=box, style=rounded];
+  partio [label="Partio"]; takaa [label="TakaaAjo"];
+  etsinta [label="Etsinta"];
+  partio -> takaa [label="näkee"];
+  takaa -> etsinta [label="ei näe"];
+  etsinta -> takaa [label="näkee"];
+  etsinta -> partio [label="3 ruutua kulunut"];
+}
+```
+
+Tässä vartija elää yksiulotteisella käytävällä ja näkee kaiken
+viiden metrin säteellä. Luku *Pelitekoäly* antaa samalle tilakoneelle
+kartan, näkölinjan ja reitinhaun. Pelimoottoreissa myös animaatiot
+ohjataan yleensä tilakoneella, jonka siirtymät muokataan graafisesti.
 
 ## Kohtaukset
 

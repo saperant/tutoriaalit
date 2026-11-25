@@ -39,9 +39,22 @@ void verlet(Tila& s, double dt) {
 }
 // @loppu integraattorit
 
-int main() {
+int main(int argc, char**) {
     constexpr double dt = 1.0 / 30.0;
     const double alku = energia(1.0, 0.0);
+    if (argc > 1) {  // käyrätila kuvitusta varten: aika, paikat, energiat
+        Tila e{1.0, 0.0}, s{1.0, 0.0}, v{1.0, 0.0};
+        for (int i = 0; i <= 300; ++i) {
+            std::println("{:.4f} {:.6g} {:.6g} {:.6g} {:.6g} {:.6g} {:.6g}",
+                         i * dt, e.x, s.x, v.x, energia(e.x, e.v) / alku,
+                         energia(s.x, s.v) / alku,
+                         energia(v.x, v.v) / alku);
+            euler(e, dt);
+            semi_implisiittinen(s, dt);
+            verlet(v, dt);
+        }
+        return 0;
+    }
     std::println("energia / alkuenergia 10 s:n jälkeen (dt = 1/30 s):");
     for (auto [nimi, askel] :
          {std::pair{"Euler", &euler},

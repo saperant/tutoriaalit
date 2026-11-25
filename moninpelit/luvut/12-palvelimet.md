@@ -4,7 +4,8 @@ Yksittäinen pelipalvelin ajaa yhtä tai muutamaa ottelua. Pelaajia
 palvelee kokonainen järjestelmä: otteluiden muodostus, palvelinten
 käynnistys ja sammutus kysynnän mukaan, alueet viiveen pienentämiseksi
 ja istuntojen hallinta. Rakenne on hajautettu järjestelmä (taidot
-*Kontit ja pilvi* ja *Järjestelmäsuunnittelu*), mutta muutama osa on
+*Kontit ja pilvi-infrastruktuuri* ja *Skaalautuvien järjestelmien
+suunnittelu*), mutta muutama osa on
 pelikohtainen.
 
 ## Taitoluokitus
@@ -27,6 +28,10 @@ taito, ja kaikki aloittavat luvusta 1 500:
 
 ```{.tuloste tiedosto="esimerkit/12-elo.odotettu"}
 ```
+
+![Sama ajo kierros kierrokselta. Luokituksen virhe pienenee hitaasti
+mutta tasaisten otteluiden osuus kasvaa nopeasti: jo karkea luokitus
+riittää erottamaan vahvat heikoista.](kuvat/elo.png){width=95%}
 
 Alussa luokitus ei kerro mitään, ja vain viidesosa otteluista on
 tasaisia (taitoero alle 100), kuten satunnaisesti muodostetuissa.
@@ -59,6 +64,22 @@ minimoi suurimman viiveen.
 
 Palvelin hallitsee jokaista pelaajan istuntoa tilakoneena, jonka
 ajastimet ovat palvelimen kellossa:
+
+```{.dot otsikko="Istunnon tilakone: ajastetut siirtymät ovat palvelimen kellossa" leveys="95%"}
+digraph {
+  rankdir=LR; nodesep=0.8;
+  node [shape=box, style=rounded];
+  jonossa -> ladataan [label="ottelu löytyi"];
+  ladataan -> pelissa [label="ladattu"];
+  ladataan -> jonossa [label="30 s kului"];
+  pelissa:nw -> katkennut:sw [label="yhteys\nkatkesi  "];
+  katkennut:se -> pelissa:ne [label="  palasi"];
+  katkennut -> paattynyt [label="60 s kului\ntai peli loppui"];
+  pelissa -> paattynyt [label="peli loppui"];
+  pelissa [label="pelissä"]; paattynyt [label="päättynyt"];
+  {rank=same; pelissa; katkennut;}
+}
+```
 
 ```{.cpp tiedosto="esimerkit/12-istunnot.cpp" osa="tilat"}
 ```

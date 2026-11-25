@@ -60,6 +60,28 @@ Tallenne + tarkistussumma = regressiotesti.
 
 Hyppy korkeudelle *h* ajassa *t*: `g = 2h/t²`, `v₀ = 2h/t`.
 
+# Törmäysvaste
+
+| Tilanne | Vaste |
+|---------|-------|
+| hahmo ja ruutukartta | liike akseli kerrallaan, työntö ruudun reunaan |
+| kaksi liikkuvaa kappaletta | erotus, sitten impulssi normaalin suunnassa |
+| liikkumaton kappale | käänteismassa 0 |
+| lepäävä kosketus | lepokynnys, iterointi, sijainnin korjaus |
+
+Impulssi: `j = −(1 + e) · v_n / (1/m_a + 1/m_b)`, e = kimmokerroin.
+
+# Pelitekoäly
+
+| Osa | Toteutus |
+|-----|----------|
+| päätös | tilakone: tila valitsee kohteen |
+| havainto | kantama ja näkölinja (Bresenham, säde) |
+| liike | A\*: `f = g + h`, h ei saa yliarvioida |
+
+- h = 0: Dijkstra. Neljän suunnan ruudukossa h = Manhattan-etäisyys.
+- Reitti lasketaan uudelleen vain, kun kohde vaihtaa ruutua.
+
 # Arkkitehtuuri
 
 | Malli | Käyttö |
@@ -70,6 +92,7 @@ Hyppy korkeudelle *h* ajassa *t*: `g = 2h/t²`, `v₀ = 2h/t`.
 | ECS | paljon samanlaisia olioita |
 | kahva | viittaukset resursseihin ja entiteetteihin |
 | objektipooli | ammukset, partikkelit |
+| tallennus | otsake: tunniste, versio, pituus, tarkistussumma |
 
 # Hinnat 60 Hz:llä
 

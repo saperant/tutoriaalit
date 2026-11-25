@@ -4,7 +4,8 @@
     "dockerfile": "../Dockerfile",
     "context": "..",
     "args": {
-      "LISAPAKETIT": "iproute2"
+      "LISAPAKETIT": "iproute2",
+      "PIP_PAKETIT": "matplotlib"
     }
   },
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/moninpelit/esimerkit",

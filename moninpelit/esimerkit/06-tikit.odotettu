@@ -1,0 +1,13 @@
+näytteitä 224, kiertoviive 81–140 ms
+yksittäinen näyte:         virhe ka.  5 ms, suurin 15 ms
+pienin kiertoviive 8:sta:  virhe ka.  2 ms, suurin 10 ms
+sekunti  myöhässä etumatka lopussa  tikin pituus
+      1        49         0 tikkiä         19 ms
+      2         1         2 tikkiä         20 ms
+      3         0         2 tikkiä         20 ms
+      4         0         2 tikkiä         20 ms
+     10         0         2 tikkiä         20 ms
+     11         0         2 tikkiä         19 ms
+     12         0         2 tikkiä         20 ms
+     13         0         2 tikkiä         20 ms
+     14         0         2 tikkiä         20 ms

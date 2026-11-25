@@ -27,11 +27,11 @@ int main(int argc, char** argv) {
         std::println(stderr, "käyttö: palvelin PORTTITIEDOSTO");
         return 2;
     }
-    Pistoke pistoke;
-    pistoke.sido(0);  // käyttöjärjestelmä valitsee vapaan portin
+    Soketti soketti;
+    soketti.sido(0);  // käyttöjärjestelmä valitsee vapaan portin
     {
         const std::string tilapainen = std::string(argv[1]) + ".tmp";
-        std::ofstream(tilapainen) << pistoke.portti() << '\n';
+        std::ofstream(tilapainen) << soketti.portti() << '\n';
         std::rename(tilapainen.c_str(), argv[1]);  // valmis kerralla
     }
 
@@ -43,7 +43,7 @@ int main(int argc, char** argv) {
     auto viimeksi = std::chrono::steady_clock::now();
     while (vahvistetut.size() < RUUTUJA) {
         sockaddr_in lahettaja{};
-        if (auto p = pistoke.vastaanota(5, &lahettaja)) {
+        if (auto p = soketti.vastaanota(5, &lahettaja)) {
             if (p->lue_u8() != SYOTE) {
                 continue;
             }
@@ -77,7 +77,7 @@ int main(int argc, char** argv) {
             const TilaViesti t = viesti(TILA, vahvistetut, tila);
             for (const auto& a : asiakkaat) {
                 if (a) {
-                    pistoke.laheta(kirjoita(t), *a);
+                    soketti.laheta(kirjoita(t), *a);
                 }
             }
         }
@@ -86,10 +86,10 @@ int main(int argc, char** argv) {
     const TilaViesti loppu = viesti(LOPPU, vahvistetut, tila);
     for (int i = 0; i < 20; ++i) {
         for (const auto& a : asiakkaat) {
-            pistoke.laheta(kirjoita(loppu), *a);
+            soketti.laheta(kirjoita(loppu), *a);
         }
         sockaddr_in ohita{};
-        pistoke.vastaanota(5, &ohita);
+        soketti.vastaanota(5, &ohita);
     }
     std::println("palvelin: {} ruutua, summa {:08x}", tila.ruutu,
                  tarkistussumma(tila));

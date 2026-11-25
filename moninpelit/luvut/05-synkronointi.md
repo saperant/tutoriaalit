@@ -62,6 +62,9 @@ huijaamisen esto: mitä ei lähetetä, sitä ei voi paljastaa (luku
 ```{.tuloste tiedosto="esimerkit/05-vedokset.odotettu"}
 ```
 
+![Samat luvut kuvana: jokainen keino pienentää edellisen
+tulosta.](kuvat/kaista.png){width=75%}
+
 64 entiteetin täysi tila 30 kertaa sekunnissa vie 277 kbit/s
 pelaajaa kohti. Kvantisointi pudottaa sen 96:een, delta 25:een ja
 kiinnostusalue alle neljään. Kertoimet riippuvat pelistä: liikkuvat

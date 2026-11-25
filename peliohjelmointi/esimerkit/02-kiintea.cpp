@@ -40,12 +40,21 @@ Tila aja(const std::vector<Kesto>& ruutujen_kestot) {
 }
 // @loppu kertyma
 
-int main() {
+int main(int argc, char**) {
     // Kolme koneen eri tahtia; jokainen kestää yhteensä 0,9 sekuntia.
     std::vector<Kesto> tasainen(90, 10ms);
     std::vector<Kesto> nykiva;
     for (int i = 0; i < 30; ++i) {
         nykiva.insert(nykiva.end(), {5ms, 20ms, 5ms});
+    }
+    if (argc > 1) {  // käyrätila kuvitusta varten: askelia ruuduittain
+        for (std::size_t n = 1; n <= 15; ++n) {
+            const std::vector<Kesto> alku(nykiva.begin(),
+                                          nykiva.begin() + n);
+            std::println("{} {} {}", n, nykiva[n - 1].count(),
+                         aja(alku).askelia);
+        }
+        return 0;
     }
     std::vector<Kesto> hidas(9, 100ms);
 

@@ -16,9 +16,12 @@
    datana.
 7. Viittaukset tunnisteilla ja kahvoilla, ei osoittimilla.
 8. Törmäykset kahdessa vaiheessa; nopeat kappaleet pyyhkäisytestillä.
+   Vasteessa ensin erotus, sitten nopeuden muutos.
 9. Semi-implisiittinen Euler ja suunnittelijan kielellä annetut
    parametrit.
-10. Ei keon varauksia pelisilmukassa; poolit ja areenat.
+10. Tekoälyssä päätös, havainto ja liike erikseen; vastustaja tietää
+    vain sen, minkä se näkee.
+11. Ei keon varauksia pelisilmukassa; poolit ja areenat.
 
 ## Mallit
 
@@ -31,6 +34,8 @@
 | tapahtumajono | järjestelmien irrotus | Pelin tila |
 | komponentti, ECS | kykyjen yhdistelmät, datan asettelu | Entiteetit |
 | tila-taulukko (spatial partition) | törmäysparien karsinta | Törmäykset |
+| käänteismassa | liikkumattomat kappaleet ilman erikoistapausta | Fysiikka ja törmäysvaste |
+| reitinhaku (A\*) | liike esteiden ohi | Pelitekoäly |
 | objektipooli | varaukset pelisilmukassa | Resurssit |
 | kahva | roikkuvat viittaukset | Resurssit |
 | välitön käyttöliittymä | käyttöliittymän tilan synkronointi | Ääni ja käyttöliittymä |
@@ -45,6 +50,8 @@
   varjostimet, OpenGL ja Vulkan.
 - *C++:n suorituskyky* ja *Suorituskyvyn analyysi ja optimointi*:
   datan asettelu, profilointi ja vektorointi.
+- *Algoritmit* ja *Numeeriset menetelmät*: reitinhaun ja
+  integraattorien teoria, jota tässä vain käytettiin.
 
 ## Lähteet ja lisälukemista
 
@@ -65,7 +72,8 @@
   Statistically Good Algorithms for Random Number Generation*, 2014.
   <https://www.pcg-random.org/>.
 - Amit Patel: *Red Blob Games*. <https://www.redblobgames.com/>.
-  Havainnollisia artikkeleita peleissä käytettävistä algoritmeista.
+  Havainnollisia artikkeleita peleissä käytettävistä algoritmeista,
+  muun muassa A\*-reitinhausta.
 - SDL2-dokumentaatio: <https://wiki.libsdl.org/>. SDL on
   zlib-lisensoitu.
 - EnTT (<https://github.com/skypjack/entt>) ja flecs

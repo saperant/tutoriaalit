@@ -31,6 +31,13 @@ ruutu lasketaan.
 ```{.tuloste tiedosto="esimerkit/09-lukitusaskel.odotettu"}
 ```
 
+![Kymmenen ruutua samasta ajosta. Numerot ovat ruutuja, joita syötteet
+koskevat. Ilman syöteviivettä syöte lähtee vasta ruudun hetkellä ja
+jokainen ruutu ajetaan myöhässä (punaiset viivat aikataulusta
+toteutukseen). Neljän ruudun syöteviiveellä syöte on perillä ennen
+ruudun aikaa, ja ruudut ajetaan
+aikataulussa.](kuvat/lukitusaskel.png){width=95%}
+
 Jokainen ajo päätyy samaan summaan kuin viite, koska syötteet ovat
 samat. Ero on tuntumassa: ilman syöteviivettä jokainen ruutu odottaa
 vastustajan syötettä 40–55 ms, ja peli nykii. Kahden ruudun viive ei
@@ -55,6 +62,12 @@ tehtiin, ja simuloi ruudut nykyhetkeen oikeilla syötteillä:
 
 ```{.tuloste tiedosto="esimerkit/09-rollback.odotettu"}
 ```
+
+![Ajon 50 ensimmäistä ruutua ilman syöteviivettä. Jokainen ruutu
+ajetaan aikataulussa arvatulla syötteellä. Nuoli näyttää palautuksen:
+kun vastustajan todellinen syöte saapuu ja poikkeaa arvauksesta, peli
+palaa nuolen kärkeen ja laskee ruudut siitä nykyhetkeen
+uudelleen.](kuvat/rollback.png){width=95%}
 
 Lopputila on jälleen sama kuin viitteessä. Palautuksia tulee jokaisesta
 vastustajan syötteen muutoksesta, jota ei ehditty saada ennen ruudun

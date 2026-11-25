@@ -3,7 +3,9 @@
 Törmäysten käsittely on kaksivaiheinen. *Laaja vaihe* (broad phase)
 karsii nopeasti parit, jotka eivät voi koskettaa. *Kapea vaihe* (narrow
 phase) testaa jäljelle jääneet parit tarkasti ja laskee, miten
-kappaleet erotetaan.
+kappaleet erotetaan. Tämä luku tunnistaa törmäykset; se, mitä
+osuman jälkeen tapahtuu (pysähtyminen, kimpoaminen, pinoutuminen), on
+seuraavan luvun aihe.
 
 ## Perusmuodot
 
@@ -29,6 +31,12 @@ on se akseli, jolla päällekkäisyys on pienin.
 Ympyröiden vertailu tehdään neliöinä, jolloin neliöjuurta ei tarvita.
 Ympyrän ja laatikon testi etsii laatikon lähimmän pisteen ympyrän
 keskipisteestä.
+
+![Esimerkin tapaukset mittakaavassa. Vasemmalla pelaajan laatikko
+työnnetään seinästä lyhintä tietä: sivulta tullut sivulle, ylhäältä
+tullut ylös. Oikealla pallo ei kosketa seinää, koska lähin piste on
+säteen ulkopuolella, mutta pallot koskettavat
+toisiaan.](kuvat/tormaysmuodot.png){width=90%}
 
 ## Erottavan akselin lause
 
@@ -61,6 +69,11 @@ ja vain samassa tai viereisessä solussa olevat kappaleet testataan.
 ```{.tuloste tiedosto="esimerkit/07-laajavaihe.odotettu"}
 ```
 
+![Laajan vaiheen periaate kahdellakymmenellä kappaleella. Viivat ovat
+kapean vaiheen testejä: vasemmalla kaikki parit, oikealla vain parit,
+joiden kappaleet ovat samassa tai viereisessä
+solussa.](kuvat/ruudukko.png){width=85%}
+
 Testejä on 435 kertaa vähemmän, ja tulos on sama. Ruudukko toimii, kun
 kappaleet ovat suunnilleen samankokoisia ja tasaisesti jakautuneita.
 Erikokoisille kappaleille sopivat *nelipuu* (quadtree), joka jakaa
@@ -86,6 +99,10 @@ kanssa ja palauttaa osuman ajan askeleen sisällä.
 ```{.tuloste tiedosto="esimerkit/07-tunnelointi.odotettu"}
 ```
 
+![Kappaleen paikka askelten lopussa. Hidas kappale pysähtyy askeleen
+lopussa seinän kohdalle, nopea on seinän edessä ja seuraavalla
+askeleella jo sen takana.](kuvat/tunnelointi.png){width=90%}
+
 60 m/s:n kappale liikkuu askeleessa metrin ja osuu, 420 m/s:n kappale
 seitsemän metriä ja ohittaa 20 senttimetrin seinän. Ammukset
 kannattaa käsitellä säteinä (raycast), ja fysiikkamoottoreissa nopeille
@@ -97,9 +114,7 @@ kappaleille kytketään jatkuva törmäystunnistus (CCD).
   spriteä pienempi, jotta osumat tuntuvat reiluilta.
 - **Erota ennen vastetta.** Siirrä kappale ensin irti (MTV), sitten
   muuta nopeutta (pysäytys, kimpoaminen tai liukuminen seinää pitkin).
-- **Akseli kerrallaan** ruutupohjaisessa tasohyppelyssä: liikuta x:n
-  suunnassa ja ratkaise törmäykset, sitten y:n suunnassa. Kulmiin
-  jumiutuminen vähenee.
+  Seuraava luku toteuttaa molemmat.
 - **Törmäyskerrokset ja -maskit:** ammus ei osu ampujaansa, kolikot
   eivät törmää toisiinsa. Moottoreissa nämä ovat asetuksia.
 - **Hinta:** laaja vaihe maksaa ylläpidon (rakenne päivitetään, kun

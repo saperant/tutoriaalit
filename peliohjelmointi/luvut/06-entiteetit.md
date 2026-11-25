@@ -56,6 +56,12 @@ muistin läpi järjestyksessä. Tämä esimerkki käyttää *harvaa joukkoa*
 ```{.cpp tiedosto="esimerkit/06-ecs/rekisteri.hpp" osa="joukko"}
 ```
 
+![Harva joukko, kun olioilla 1, 4 ja 3 on nopeuskomponentti. Harva
+taulukko on indeksoitu olion tunnuksella ja kertoo paikan tiheässä
+taulukossa; tiheä taulukko ja komponenttien arvot ovat samassa
+järjestyksessä ilman aukkoja, ja järjestelmä käy läpi vain
+ne.](kuvat/harva-joukko.png){width=80%}
+
 Poisto siirtää viimeisen alkion aukkoon, joten taulukossa ei ole
 reikiä, ja haku on vakioaikainen. Hinta: järjestys muuttuu poistossa, ja
 usean komponentin kysely joutuu hakemaan muut komponentit harvan
@@ -98,10 +104,11 @@ Mittaus käännetään optimoiden esimerkkihakemiston Makefilellä
 ```{.tuloste tiedosto="esimerkit/mittaus/oliot-vs-taulukot.odotettu"}
 ```
 
-Tutoriaalin testikoneella miljoonan olion päivitys kesti noin 11 ms
-ja taulukoiden 0,6 ms, eli ero oli lähes 20-kertainen. 60 Hz:n pelissä
-koko ruudun budjetti on 16,7 ms. Ero syntyy muistista eikä
-virtuaalikutsusta: tiiviissä taulukossa prosessori lukee peräkkäisiä
+Tutoriaalin testikoneella miljoonan olion päivitys oli taulukoilla
+lähes 20 kertaa nopeampi kuin olioilla. Suuruusluokka on kymmenen
+millisekuntia vastaan alle yksi, ja 60 Hz:n pelissä koko ruudun
+budjetti on 16,7 ms. Tarkat luvut riippuvat koneesta, suhde paljon
+vähemmän. Ero syntyy muistista eikä virtuaalikutsusta: tiiviissä taulukossa prosessori lukee peräkkäisiä
 välimuistirivejä ja kääntäjä vektoroi silmukan (ks. taito *Suorituskyvyn
 analyysi ja optimointi*).
 

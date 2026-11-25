@@ -20,6 +20,38 @@ kustannuksiin, eikä sitä voi helposti muuttaa myöhemmin.
   nolla, isännän lähetyskaista rajoittaa pelaajamäärää, ja jos isäntä
   lähtee, peli loppuu tai isäntä on siirrettävä.
 
+```{.dot otsikko="Kolme mallia neljällä pelaajalla: viivat ovat yhteyksiä, tumma solmu pitää virallista tilaa" leveys="95%"}
+graph {
+  layout=neato; overlap=false; splines=true;
+  node [shape=circle, width=0.32, fixedsize=true, fontsize=9];
+  subgraph v {
+    a1 [label="1", pos="0,1!"]; a2 [label="2", pos="1,1!"];
+    a3 [label="3", pos="0,0!"]; a4 [label="4", pos="1,0!"];
+    a1 -- a2; a1 -- a3; a1 -- a4; a2 -- a3; a2 -- a4; a3 -- a4;
+    va [shape=plaintext, fixedsize=false, label="vertaisverkko",
+        pos="0.5,-0.5!"];
+  }
+  subgraph p {
+    b1 [label="1", pos="2.5,1!"]; b2 [label="2", pos="3.5,1!"];
+    b3 [label="3", pos="2.5,0!"]; b4 [label="4", pos="3.5,0!"];
+    s [label="P", pos="3,0.5!", style=filled, fillcolor="#2B3438",
+       fontcolor=white];
+    b1 -- s; b2 -- s; b3 -- s; b4 -- s;
+    pa [shape=plaintext, fixedsize=false, label="asiakas–palvelin",
+        pos="3,-0.5!"];
+  }
+  subgraph i {
+    c1 [label="1", pos="5,1!", style=filled, fillcolor="#2B3438",
+        fontcolor=white];
+    c2 [label="2", pos="6,1!"]; c3 [label="3", pos="5,0!"];
+    c4 [label="4", pos="6,0!"];
+    c1 -- c2; c1 -- c3; c1 -- c4;
+    ia [shape=plaintext, fixedsize=false, label="isäntä–asiakas",
+        pos="5.5,-0.5!"];
+  }
+}
+```
+
 Kun viiveet tunnetaan, mallien erot voi laskea:
 
 ```{.cpp tiedosto="esimerkit/02-topologiat.cpp" osa="viive"}

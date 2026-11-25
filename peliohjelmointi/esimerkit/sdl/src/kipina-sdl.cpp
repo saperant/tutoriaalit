@@ -1,11 +1,11 @@
 // Kipinän SDL2-etupää: ikkuna, näppäimistö ja kiinteän aika-askeleen
 // pelisilmukka oikealla kellolla. Pelilogiikka ja piirto ovat samat
-// kuin ikkunattomassa versiossa (../../11-kipina).
+// kuin ikkunattomassa versiossa (../../12-kipina).
 //
 //   kipina-sdl            pelaa ikkunassa (nuolinäppäimet, Esc lopettaa)
 //   kipina-sdl --testi    ajaa ilman näyttöä ja tarkistaa piirron
-#include "../../11-kipina/peli.hpp"
-#include "../../11-kipina/piirto.hpp"
+#include "../../12-kipina/peli.hpp"
+#include "../../12-kipina/piirto.hpp"
 
 #include <SDL.h>
 

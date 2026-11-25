@@ -45,6 +45,11 @@ ei kannata odottaa vanhan takia.
 ```{.tuloste tiedosto="esimerkit/03-jonopaa.odotettu"}
 ```
 
+![Sama ajo yhden kadonneen paketin ympäriltä. UDP:llä tila vanhenee
+yhden lähetysvälin verran ja seuraava paketti korjaa tilanteen. TCP:llä
+kaikki myöhemmät paketit odottavat uudelleenlähetystä, ja näytetty tila
+vanhenee koko odotuksen ajan.](kuvat/jonopaa.png){width=85%}
+
 Samalla 2 %:n häviöllä UDP:n tila on pahimmillaan 213 ms vanha, TCP:n
 607 ms. TCP:llä peli jäätyy yli 200 ms:n ajaksi seitsemisen prosenttia
 ajasta, UDP:llä tuskin koskaan. Siksi reaaliaikaiset pelit käyttävät
@@ -66,6 +71,14 @@ Yli MTU:n (Ethernetissä 1 500 tavua, käytännössä varmuudeksi noin
 hukkaa koko paketin. Pelin paketit pidetään siksi MTU:n alla, ja
 lähetystahti valitaan kaistan mukaan: tyypillisesti 20–60 tilapäivitystä
 sekunnissa ja muutamia kymmeniä kilobittejä sekunnissa pelaajaa kohti.
+
+TCP hidastaa lähetystä itse, kun verkko ruuhkautuu. UDP ei hidasta,
+joten *ruuhkaan sovittaminen* jää pelille. Kasvava häviö tai nouseva
+kiertoviive kertoo, että jokin jono reitillä täyttyy. Silloin
+lähetystahtia tai paketin kokoa pienennetään (harvempi vedos, vähemmän
+entiteettejä pakettiin) ja palautetaan hitaasti, kun yhteys on taas
+vakaa. Häviöön ei vastata lähettämällä enemmän: lisätoisto ruuhkaisella
+yhteydellä pahentaa ruuhkaa.
 
 ## Käytännössä
 

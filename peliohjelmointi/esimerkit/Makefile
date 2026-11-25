@@ -13,7 +13,7 @@ CXX      := $(shell command -v g++-14 >/dev/null 2>&1 \
                     && echo g++-14 || echo g++)
 CXXFLAGS := -std=c++23 -Wall -Wextra -Wpedantic -Werror
 SDL      := $(shell sdl2-config --cflags --libs 2>/dev/null)
-KIPINA   := 11-kipina/peli.cpp 11-kipina/piirto.cpp
+KIPINA   := 12-kipina/peli.cpp 12-kipina/piirto.cpp
 
 .PHONY: kaikki sdl sdl-testi pelaa mittaa siivoa
 
@@ -24,7 +24,7 @@ bin:
 
 # @alku sdl
 bin/kipina-sdl: sdl/src/kipina-sdl.cpp $(KIPINA) \
-                $(wildcard 11-kipina/*.hpp) | bin
+                $(wildcard 12-kipina/*.hpp) | bin
 	@test -n "$(SDL)" || { echo "SDL2 puuttuu (libsdl2-dev)"; exit 1; }
 	$(CXX) $(CXXFLAGS) -g -fsanitize=address,undefined \
 	    sdl/src/kipina-sdl.cpp $(KIPINA) $(SDL) -o $@

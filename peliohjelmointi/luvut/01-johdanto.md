@@ -40,8 +40,9 @@ tunnistaa sen rajat (luku *3D ja pelimoottorit*).
 | 2D-grafiikka | kuvapuskuri, spritet, atlas, animaatio, kamera |
 | Entiteetit | oliohierarkia vastaan ECS ja datan asettelu |
 | Törmäykset | AABB, ympyrät, SAT, laaja vaihe, tunneloituminen |
-| Fysiikka | integraattorit, hypyn suunnittelu |
-| Resurssit | kahvat, objektipooli, välimuisti, kuumalataus |
+| Fysiikka ja törmäysvaste | integraattorit, hyppy, hahmo ja ruutukartta, impulssit, pinot |
+| Pelitekoäly | reitinhaku (A\*), näkölinja, vartija |
+| Resurssit | kahvat, objektipooli, välimuisti, kuumalataus, tallennus |
 | Ääni ja käyttöliittymä | miksaus, välitön käyttöliittymä |
 | Kipinä | kokonainen peli ja SDL2-etupää |
 | 3D ja pelimoottorit | näkymäpuu, kamera, moottorien periaatteet |
@@ -94,5 +95,5 @@ sama joka ajolla.
 Vaiheiden erottaminen on tärkeämpää kuin miltä näyttää. Kun päivitys
 ei piirrä ja piirto ei muuta tilaa, päivityksen voi ajaa ilman
 grafiikkaa (testit, palvelin, tekoälyn harjoittelu), piirtää saman tilan
-useaan kertaan (interpolointi, luku 2) ja tallentaa syötteen, josta peli
-toistuu täsmälleen samana (luku 3).
+useaan kertaan (interpolointi, luku *Pelisilmukka*) ja tallentaa
+syötteen, josta peli toistuu täsmälleen samana (luku *Syöte*).

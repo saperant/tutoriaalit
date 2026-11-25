@@ -1,5 +1,5 @@
 // Lukitusaskelpelin UDP-protokolla: viestit tavuiksi ja takaisin sekä
-// pistokkeen apufunktiot. Kaikki luvut verkkotavujärjestyksessä.
+// soketin apufunktiot. Kaikki luvut verkkotavujärjestyksessä.
 #pragma once
 #include <arpa/inet.h>
 #include <netinet/in.h>
@@ -121,17 +121,17 @@ inline TilaViesti lue_tila(Puskuri& p, std::uint8_t laji) {
     return v;
 }
 
-// UDP-pistoke, joka suljetaan automaattisesti (RAII).
-class Pistoke {
+// UDP-soketti, joka suljetaan automaattisesti (RAII).
+class Soketti {
 public:
-    Pistoke() : fd_(socket(AF_INET, SOCK_DGRAM, 0)) {
+    Soketti() : fd_(socket(AF_INET, SOCK_DGRAM, 0)) {
         if (fd_ < 0) {
             throw std::runtime_error("socket");
         }
     }
-    ~Pistoke() { close(fd_); }
-    Pistoke(const Pistoke&) = delete;
-    Pistoke& operator=(const Pistoke&) = delete;
+    ~Soketti() { close(fd_); }
+    Soketti(const Soketti&) = delete;
+    Soketti& operator=(const Soketti&) = delete;
 
     void sido(std::uint16_t portti) {
         sockaddr_in osoite{};

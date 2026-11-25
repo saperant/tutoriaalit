@@ -12,13 +12,13 @@ Jos sprite pitää osoitinta tekstuuriin ja tekstuuri vapautetaan tason
 vaihtuessa, osoitin jää roikkumaan. *Kahva* (handle) on indeksi ja
 sukupolvi, ja jokainen käyttö tarkistaa, onko resurssi yhä sama.
 
-```{.cpp tiedosto="esimerkit/09-kahvat.cpp" osa="kahva"}
+```{.cpp tiedosto="esimerkit/10-kahvat.cpp" osa="kahva"}
 ```
 
-```{.cpp tiedosto="esimerkit/09-kahvat.cpp" osa="vanheneminen"}
+```{.cpp tiedosto="esimerkit/10-kahvat.cpp" osa="vanheneminen"}
 ```
 
-```{.tuloste tiedosto="esimerkit/09-kahvat.odotettu"}
+```{.tuloste tiedosto="esimerkit/10-kahvat.odotettu"}
 ```
 
 Uusi tekstuuri sai saman paikan, mutta vanha kahva ei osoita siihen.
@@ -34,13 +34,13 @@ pirstoutuu ja yksittäinen varaus voi kestää arvaamattoman kauan.
 *Objektipooli* varaa kiinteän määrän olioita kerran ja kierrättää niitä
 vapaiden listan avulla.
 
-```{.cpp tiedosto="esimerkit/09-pooli.cpp" osa="pooli"}
+```{.cpp tiedosto="esimerkit/10-pooli.cpp" osa="pooli"}
 ```
 
-```{.cpp tiedosto="esimerkit/09-pooli.cpp" osa="kaytto"}
+```{.cpp tiedosto="esimerkit/10-pooli.cpp" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/09-pooli.odotettu"}
+```{.tuloste tiedosto="esimerkit/10-pooli.odotettu"}
 ```
 
 Esimerkki laskee varaukset korvaamalla globaalin `operator new`n.
@@ -55,10 +55,10 @@ käyttäjille. *Kuumalataus* (hot reload) lataa muuttuneen tiedoston
 uudelleen pelin ollessa käynnissä, jolloin suunnittelija näkee
 muutoksen heti ilman pelin uudelleenkäynnistystä.
 
-```{.cpp tiedosto="esimerkit/09-valimuisti.cpp" osa="valimuisti"}
+```{.cpp tiedosto="esimerkit/10-valimuisti.cpp" osa="valimuisti"}
 ```
 
-```{.tuloste tiedosto="esimerkit/09-valimuisti.odotettu"}
+```{.tuloste tiedosto="esimerkit/10-valimuisti.odotettu"}
 ```
 
 Muutos päivitetään paikallaan, joten olemassa olevat viittaukset näkevät
@@ -67,8 +67,47 @@ joten tuotantotyökalut seuraavat muutoksia käyttöjärjestelmän
 ilmoituksilla (inotify, ReadDirectoryChangesW) tai sisällön
 tiivisteellä.
 
+## Tallennus
+
+Pelitilanteen tallennus on resurssien lataamisen peilikuva: pelin tila
+kirjoitetaan tiedostoksi ja luetaan myöhemmin takaisin, mahdollisesti
+pelin uudemmalla versiolla. Tallennetaan vain se, mitä ei voi johtaa
+muusta: taso, pisteet ja pelaajan paikka, ei ladattuja kuvia eikä
+osoittimia.
+
+```{.cpp tiedosto="esimerkit/10-tallennus.cpp" osa="tila"}
+```
+
+```{.cpp tiedosto="esimerkit/10-tallennus.cpp" osa="tavut"}
+```
+
+Tiedoston alussa on otsake: tunniste, versio, sisällön pituus ja
+tarkistussumma.
+
+```{.cpp tiedosto="esimerkit/10-tallennus.cpp" osa="tallenna"}
+```
+
+Lataus tarkistaa otsakkeen ennen kuin se uskoo yhtäkään kenttää, ja
+palauttaa joko tilanteen tai syyn hylkäykseen. Versio kertoo, mitkä
+kentät tiedostossa on: vanhasta tiedostosta puuttuva kenttä saa
+oletusarvon.
+
+```{.cpp tiedosto="esimerkit/10-tallennus.cpp" osa="lataa"}
+```
+
+```{.tuloste tiedosto="esimerkit/10-tallennus.odotettu"}
+```
+
+Yhden bitin muutos ja kesken jäänyt kirjoitus havaitaan, vanha versio
+latautuu ja tulevaisuuden versio hylätään siististi. Tarkistussumma
+suojaa vahingoilta, ei muokkaukselta: pelaaja voi laskea summan
+uudelleen. Verkkopelissä tärkeä tila pidetään siksi palvelimella.
+
 ## Käytännössä
 
+- **Tallenna turvallisesti:** kirjoita ensin väliaikaiseen tiedostoon
+  ja nimeä se vasta lopuksi oikeaksi. Jos peli kaatuu tai virta katkeaa
+  kesken kirjoituksen, edellinen tallennus säilyy.
 - **Kahvat** (generational handles) resurssi- ja entiteettiviittauksiin;
   `std::shared_ptr` vain, kun omistajuus todella jaetaan.
 - **Objektipooli** usein syntyville ja katoaville olioille. Varaa
@@ -89,3 +128,5 @@ tiivisteellä.
   vältetään keon varauksia.
 - Osaat toteuttaa resurssivälimuistin ja kuumalatauksen niin, että
   olemassa olevat viittaukset pysyvät voimassa.
+- Osaat suunnitella tallennustiedoston, jossa on versio ja
+  tarkistussumma, ja ladata vanhan version tiedoston.

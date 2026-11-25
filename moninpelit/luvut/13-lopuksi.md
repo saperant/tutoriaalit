@@ -6,12 +6,15 @@
    lopputuloksia.
 2. Tila epäluotettavasti UDP:llä, tärkeät tapahtumat oman
    luotettavuuskerroksen kautta. Ei koko peliä TCP:llä.
-3. Sekvenssinumerot kiertävät: vertaa etumerkillisellä erotuksella.
+3. Yhteys alkaa haasteella: palvelin ei varaa mitään varmistamattomalle
+   osoitteelle. Sekvenssinumerot kiertävät: vertaa etumerkillisellä
+   erotuksella.
 4. Kuittaukset vastakkaisen liikenteen mukana kuittauskenttänä.
 5. Vedokset kvantisoituna, deltana kuitattuun vedokseen ja vain
    kiinnostusalueelta.
 6. Oma hahmo ennustetaan ja täsmäytetään; syötteet toistetaan
-   paketeissa.
+   paketeissa, ja asiakkaan tikit pidetään palvelimen edellä tahtia
+   säätämällä.
 7. Muut pelaajat interpoloidaan kahden vedosvälin ja värinän
    puskurilla.
 8. Osumat ratkaistaan kelaamalla ampujan näkemään hetkeen, ylärajan
@@ -26,10 +29,12 @@
 | Malli | Ratkaisee | Luku |
 |-------|-----------|------|
 | palvelimen auktoriteetti | huijaaminen, eriävä tila | Arkkitehtuurit |
+| haaste kättelyssä | väärennetyt lähdeosoitteet | Luotettavuuskerros |
 | kuittauskenttä | luotettavuus ilman erillisiä kuittauksia | Luotettavuuskerros |
 | delta kuitattuun vedokseen | kaista | Tilan synkronointi |
 | kiinnostusalue | kaista ja tiedon rajaus | Tilan synkronointi |
 | asiakkaan ennustus ja täsmäytys | oman ohjauksen viive | Ennustus |
+| tahdin säätö palautteesta | myöhästyvät syötteet | Ennustus |
 | entiteettien interpolointi | muiden pelaajien nykiminen | Interpolointi |
 | takaisinkelaus | osumat viiveellä | Viiveen kompensointi |
 | lukitusaskel | suuri tila, pieni kaista | Lukitusaskel |
@@ -39,11 +44,12 @@
 
 ## Mihin tästä eteenpäin
 
-- *Verkko-ohjelmointi*: pistokkeet, tapahtumasilmukat, protokollien
+- *Verkko-ohjelmointi*: soketit, tapahtumasilmukat, protokollien
   suunnittelu ja vikasietoisuus syvemmin.
-- *Hajautetut järjestelmät* ja *Järjestelmäsuunnittelu*:
+- *Hajautetut järjestelmät* ja *Skaalautuvien järjestelmien suunnittelu*:
   pelipalvelinten taustajärjestelmät, skaalaus ja tietokannat.
-- *Kontit ja pilvi*: pelipalvelinten ajaminen konteissa ja klustereissa.
+- *Kontit ja pilvi-infrastruktuuri*: pelipalvelinten ajaminen konteissa
+  ja klustereissa.
 - *Web-sovellusten tietoturva* ja *Palveluarkkitehtuurin tietoturva*:
   todennus ja palvelinten suojaus.
 

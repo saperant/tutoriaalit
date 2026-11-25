@@ -32,7 +32,8 @@ struct Viesti {
     Syote syote;
 };
 
-int main() {
+int main(int argc, char**) {
+    loki_paalla = argc > 1;
     const auto oma = syotteet(1), vastustaja = syotteet(2);
     Tila viite;
     for (int f = 0; f < RUUTUJA; ++f) {
@@ -69,6 +70,7 @@ int main() {
                 // ruudut uudelleen parhailla tiedossa olevilla syötteillä.
                 ++palautuksia;
                 syvin = std::max(syvin, ruutu - palaa);
+                loki("P {} {} {} {}", viive, t, palaa, ruutu);
                 Syote arvaus = palaa > 0 ? kaytetty[palaa - 1] : 0;
                 for (int f = palaa; f < ruutu; ++f) {
                     arvaus = varma[f] ? tiedetty[f] : arvaus;
@@ -92,6 +94,7 @@ int main() {
                 }
                 kaytetty[ruutu] =
                     varma[ruutu] ? tiedetty[ruutu] : viimeisin_varma;
+                loki("R {} {} {} {}", viive, t, ruutu, bool{varma[ruutu]});
                 tilat[ruutu + 1] = tilat[ruutu];
                 askel(tilat[ruutu + 1], {oma[ruutu], kaytetty[ruutu]});
                 ++ruutu;

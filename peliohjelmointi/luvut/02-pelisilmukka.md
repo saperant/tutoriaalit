@@ -1,7 +1,8 @@
 # Pelisilmukka
 
-Pelisilmukan tärkein päätös on, miten pelin aika etenee suhteessa
-seinäkelloon. Näyttöjen virkistystaajuudet vaihtelevat (60, 120, 144 Hz
+Johdannon ensimmäinen silmukka päivitti peliä kerran ruudussa eikä
+välittänyt siitä, kauanko ruutu kesti. Pelisilmukan tärkein päätös on,
+miten pelin aika etenee suhteessa seinäkelloon. Näyttöjen virkistystaajuudet vaihtelevat (60, 120, 144 Hz
 tai muuttuva), ja yksittäinen ruutu voi viivästyä levyhaun tai
 käyttöjärjestelmän takia. Pelin pitää silti toimia samoin kaikilla
 koneilla.
@@ -32,11 +33,34 @@ Ratkaisu on päivittää peliä aina samalla askeleella, esimerkiksi
 kuuluu. Ruudun kesto lisätään *kertymään* (accumulator), josta otetaan
 kokonaisia askelia. Ylijäämä siirtyy seuraavaan ruutuun.
 
+```{.dot otsikko="Pelisilmukka kiinteällä aika-askeleella" leveys="95%"}
+digraph {
+  rankdir=LR; nodesep=0.35;
+  node [shape=box, style=rounded];
+  syote [label="lue syöte"];
+  kello [label="kertymä +=\nruudun kesto"];
+  ehto [label="kertymä ≥\naskel?", shape=diamond, style=""];
+  askel [label="päivitä askel\nkertymä −= askel"];
+  piirto [label="piirrä\nalfa = kertymä / askel"];
+  syote -> kello -> ehto;
+  ehto -> askel [label="kyllä"];
+  askel -> ehto;
+  ehto -> piirto [label="ei"];
+  piirto -> syote [label="seuraava ruutu", constraint=false];
+}
+```
+
 ```{.cpp tiedosto="esimerkit/02-kiintea.cpp" osa="kertyma"}
 ```
 
 ```{.tuloste tiedosto="esimerkit/02-kiintea.odotettu"}
 ```
+
+![Nykivän kestosarjan alku. Ruudun päättyessä sen kesto lisätään
+kertymään, ja kertymästä ajetaan niin monta kokonaista askelta kuin
+siihen mahtuu (nuolet). Viiden millisekunnin ruutu ei useimmiten aja
+yhtään askelta, kahdenkymmenen millisekunnin ruutu yhden tai
+kaksi.](kuvat/aika-askel.png){width=95%}
 
 Kolme erilaista ruutujen kestosarjaa tuottaa bitilleen saman tilan,
 koska simulaatio näkee vain kiinteät askeleet. Kaksi yksityiskohtaa
@@ -67,6 +91,11 @@ simulaatiotilan välistä, kertymän osuuden mukaan.
 
 ```{.tuloste tiedosto="esimerkit/02-interpolointi.odotettu"}
 ```
+
+![Sama liike pidemmältä ajalta. Uusin simulaatiotila etenee portain,
+joiden pituus vaihtelee kahden ja kolmen ruudun välillä; interpoloitu
+sijainti etenee tasaisesti mutta kulkee yhden askeleen
+jäljessä.](kuvat/interpolointi.png){width=75%}
 
 Ilman interpolointia sijainti etenee portaittain (0, 0, 1, 1, 2, 2, 2,
 3), interpoloituna tasaisesti noin 0,42 pikseliä ruudussa. Hinta on

@@ -35,7 +35,8 @@ std::optional<std::int64_t> interpoloi(const std::vector<Vedos>& v,
 }
 // @loppu interpoloi
 
-int main() {
+int main(int argc, char**) {
+    loki_paalla = argc > 1;
     const Linkki linkki{.viive_ms = 50, .varina_ms = 40,
                         .havio_promille = 30};
     for (int tapa = 0; tapa < 5; ++tapa) {
@@ -50,6 +51,9 @@ int main() {
             for (const Vedos& v : kanava.vastaanota(t)) {
                 if (saadut.empty() || v.aika > saadut.back().aika) {
                     saadut.push_back(v);  // vanhentunut hylätään
+                    if (tapa == 0 && t >= 2800 && t < 5200) {
+                        loki("V {} {} {}", v.aika, v.x, t);
+                    }
                 }
             }
             if (t % 16 != 0 || t < 1000 || saadut.size() < 2) {
@@ -78,6 +82,9 @@ int main() {
                 naytetty = x.value_or(uusin.x);
             }
             // @loppu tavat
+            if (t >= 3000 && t < 5200) {
+                loki("N {} {} {} {}", tapa, t, naytetty, tosi_x(t));
+            }
             virhe += std::abs(naytetty - tosi_x(esittaa));
         }
         const char* nimet[] = {"uusin vedos", "ekstrapolointi",

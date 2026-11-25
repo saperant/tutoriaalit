@@ -107,7 +107,8 @@ private:
     std::set<int> kasitellyt_;
 };
 
-int main() {
+int main(int argc, char**) {
+    loki_paalla = argc > 1;
     const Linkki huono{.viive_ms = 40, .varina_ms = 30,
                        .havio_promille = 150};
     Kanava<Paketti> menossa(huono, 1), tulossa(huono, 2);
@@ -119,14 +120,23 @@ int main() {
             asiakas.lisaa_tapahtuma(static_cast<int>(nyt / 200));
         }
         if (nyt % 33 == 0) {  // noin 30 pakettia sekunnissa
-            menossa.laheta(nyt, asiakas.laheta(nyt));
-            tulossa.laheta(nyt, palvelin.laheta(nyt));
+            const Paketti ylos = asiakas.laheta(nyt);
+            const Paketti alas = palvelin.laheta(nyt);
+            loki("L ylos {} {} {}", nyt, ylos.numero, ylos.kuittaus);
+            loki("L alas {} {} {}", nyt, alas.numero, alas.kuittaus);
+            for (int tunniste : ylos.tapahtumat) {
+                loki("E {} {}", ylos.numero, tunniste);
+            }
+            menossa.laheta(nyt, ylos);
+            tulossa.laheta(nyt, alas);
             ++paketteja;
         }
         for (const Paketti& p : menossa.vastaanota(nyt)) {
+            loki("V ylos {} {}", nyt, p.numero);
             palvelin.vastaanota(p);
         }
         for (const Paketti& p : tulossa.vastaanota(nyt)) {
+            loki("V alas {} {}", nyt, p.numero);
             asiakas.vastaanota(p);
         }
     }

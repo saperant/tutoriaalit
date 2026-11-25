@@ -2,8 +2,8 @@
 
 Tiivis suomenkielinen tutoriaali pelien rakentamisesta C++23:lla:
 pelisilmukka ja kiinteä aika-askel, syöte, tilakoneet, 2D-grafiikka,
-entiteetit ja ECS, törmäykset, fysiikka, resurssit, ääni ja
-käyttöliittymä. Lopuksi kootaan pieni peli, *Kipinä*, jolle tehdään
+entiteetit ja ECS, törmäykset ja törmäysvaste, fysiikka, pelitekoäly
+(reitinhaku), resurssit ja tallennus, ääni ja käyttöliittymä. Lopuksi kootaan pieni peli, *Kipinä*, jolle tehdään
 SDL2-etupää.
 
 Valmis dokumentti:
@@ -23,11 +23,17 @@ make -C esimerkit          # SDL2-testi (ilman näyttöä) ja mittaus
 make -C esimerkit pelaa    # Kipinä ikkunassa (vaatii näytön)
 make testaa                # kaikki testit
 make pdf                   # PDF:t
-make kuvat                 # Kipinän kuvitus kuvat/kipina.png
+make kuvat                 # kuvitus esimerkkien tulosteista (kuvat/)
 ```
 
-Kehityskontissa (`.devcontainer/peliohjelmointi`) on kääntäjät ja
-SDL2:n kehityspaketti.
+Kuvat tuotetaan esimerkkien tulosteista ja niiden tallentamista
+ruuduista skriptillä `kuvat/piirra.py` (Matplotlib); PNG-tiedostot ovat
+versionhallinnassa.
+
+Kehityskontissa (`.devcontainer/peliohjelmointi`) on kääntäjät,
+SDL2:n kehityspaketti ja Matplotlib.
+
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks. [Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 ## Lisenssi
 

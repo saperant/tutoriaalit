@@ -1,0 +1,18 @@
+ruutu  55: irtosi maasta (8.10, 7.34)
+ruutu  61: osui seinään (8.60, 6.34)
+ruutu  75: laskeutui (8.90, 5.55)
+ruutu 105: irtosi maasta (11.90, 5.34)
+ruutu 133: osui seinään (14.60, 4.10)
+ruutu 140: hyppy ei onnistu ilmassa
+ruutu 150: laskeutui (15.40, 7.55)
+ruutu 203: osui seinään (20.60, 7.55)
+lopussa (20.60, 7.55), maassa: true
+######################
+#....................#
+#....................#
+#...........ooo......#
+#...........o.o###...#
+#.......oooo..o......#
+#.......o###..o......#
+#.ooooooo......oooooo#
+######################

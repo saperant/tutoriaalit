@@ -21,12 +21,13 @@ Tila sekoita(const Tila& edellinen, const Tila& nykyinen, double alfa) {
 }
 // @loppu interpolointi
 
-int main() {
+int main(int argc, char**) {
+    const int ruutuja = argc > 1 ? 24 : 8;  // pidempi sarja kuvaajaan
     const double dt = std::chrono::duration<double>(ASKEL).count();
     Tila edellinen, nykyinen;
     Kesto kertyma{0};
     std::println("ruutu  ilman   interpoloitu");
-    for (int ruutu = 1; ruutu <= 8; ++ruutu) {
+    for (int ruutu = 1; ruutu <= ruutuja; ++ruutu) {
         kertyma += RUUTU;
         while (kertyma >= ASKEL) {
             edellinen = nykyinen;

@@ -26,6 +26,12 @@ vertaa tapoja yhteydellä, jonka viive on 50–90 ms ja häviö 3 %:
 ```{.tuloste tiedosto="esimerkit/07-interpolointi.odotettu"}
 ```
 
+![Kaksi sekuntia samasta ajosta. Renkaat ovat vedoksia sillä hetkellä,
+kun ne saapuvat. Uusin vedos etenee portain ja on aina jäljessä.
+Ekstrapolointi seuraa todellista paikkaa, kunnes suunta vaihtuu, ja
+ampuu silloin yli. Interpolointi toistaa todellisen liikkeen tarkasti
+mutta 150 ms myöhässä.](kuvat/interpolointi.png){width=95%}
+
 - **Uusin vedos** on keskimäärin 9 cm väärässä paikassa ja nykii.
 - **Ekstrapolointi** osuu tasaisessa liikkeessä hyvin (1,4 cm), mutta
   jokaisessa suunnanmuutoksessa hahmo jatkaa hetken väärään suuntaan ja

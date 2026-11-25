@@ -19,20 +19,20 @@ piirto toimivat ilman ikkunaa testissä ja ikkunassa SDL2:lla.
 Pelilogiikka tuntee vain toiminnot, kappaleet ja kiinteän askeleen.
 Se ei tiedä ikkunoista, kellosta eikä grafiikasta.
 
-```{.cpp tiedosto="esimerkit/11-kipina/peli.hpp" osa="tila"}
+```{.cpp tiedosto="esimerkit/12-kipina/peli.hpp" osa="tila"}
 ```
 
 Satunnaisuus tulee pelin omasta generaattorista, jonka siemen on
 osa pelin tilaa (luku *Pelisilmukka*):
 
-```{.cpp tiedosto="esimerkit/11-kipina/pcg.hpp"}
+```{.cpp tiedosto="esimerkit/12-kipina/pcg.hpp"}
 ```
 
 Päivitys etenee aina samassa järjestyksessä: pelaajan liike
 syötteestä, miinojen liike, keräys, osumat ja vaikeuden kasvu.
 Kiinteä järjestys on osa determinismiä.
 
-```{.cpp tiedosto="esimerkit/11-kipina/peli.cpp" osa="paivita"}
+```{.cpp tiedosto="esimerkit/12-kipina/peli.cpp" osa="paivita"}
 ```
 
 Osuman jälkeen pelaaja on kaksi sekuntia haavoittumaton. Ilman suojaa
@@ -45,10 +45,10 @@ paikassa, joten silmukan aikana taulukko ei muutu.
 Piirto lukee pelin tilaa ja kirjoittaa kuvapuskuriin. Se ei muuta
 pelin tilaa, joten saman tilan voi piirtää vaikka kahdesti.
 
-```{.cpp tiedosto="esimerkit/11-kipina/piirto.hpp"}
+```{.cpp tiedosto="esimerkit/12-kipina/piirto.hpp"}
 ```
 
-```{.cpp tiedosto="esimerkit/11-kipina/piirto.cpp" osa="piirra"}
+```{.cpp tiedosto="esimerkit/12-kipina/piirto.cpp" osa="piirra"}
 ```
 
 Pisteet piirretään omalla 3 × 5 pikselin numerofontilla, joten peli
@@ -61,13 +61,13 @@ Ikkunaton versio lukee syötteen tallenteesta ja ajaa pelin kiinteällä
 askeleella. Tämä on samalla pelin regressiotesti: jos pelimekaniikka
 muuttuu, tilan ja kuvan tarkistussummat muuttuvat.
 
-```{.cpp tiedosto="esimerkit/11-kipina/main.cpp" osa="silmukka"}
+```{.cpp tiedosto="esimerkit/12-kipina/main.cpp" osa="silmukka"}
 ```
 
-```{.text tiedosto="esimerkit/11-kipina.syote"}
+```{.text tiedosto="esimerkit/12-kipina.syote"}
 ```
 
-```{.tuloste tiedosto="esimerkit/11-kipina.odotettu"}
+```{.tuloste tiedosto="esimerkit/12-kipina.odotettu"}
 ```
 
 Ajo tallentaa lopputilan kuvaksi `kipina.ppm`. Kuvassa vasemmassa
@@ -75,6 +75,11 @@ yläkulmassa ovat pisteet ja oikeassa yläkulmassa jäljellä olevat elämät.
 
 ![Kipinän lopputila tallenteen jälkeen: pelaaja (sininen), kiteet
 (keltaiset) ja miinat (punaiset).](kuvat/kipina.png){width=60%}
+
+![Neljä ruutua saman tallenteen varrelta. Kuvat on tuotettu ajamalla
+tallenteen alkua eripituisina paloina: koska peli on deterministinen,
+jokainen ajo päätyy samaan tilaan kuin koko tallenne samassa
+kohdassa.](kuvat/kipina-sarja.png){width=100%}
 
 ## SDL2-etupää
 

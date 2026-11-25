@@ -25,7 +25,8 @@ void paivita(double& a, double& b, double tulos_a, double k = 32) {
 
 constexpr int N = 200;
 
-int main() {
+int main(int argc, char**) {
+    const bool kayra = argc > 1;  // käyrätila: tulostaa joka kierroksen
     Pcg32 r(12);
     std::vector<double> taito(N), luku(N, 1500);
     for (double& t : taito) {
@@ -60,7 +61,7 @@ int main() {
             paivita(luku[a], luku[b], voitto ? 1.0 : 0.0);
         }
         ++otteluita;
-        if (kierros == 1 || kierros == 10 || kierros == 50 ||
+        if (kayra || kierros == 1 || kierros == 10 || kierros == 50 ||
             kierros == 200) {
             // Luokitus ja taito ovat eri asteikolla: verrataan keskiarvoon.
             const double ka_l = std::accumulate(luku.begin(), luku.end(),

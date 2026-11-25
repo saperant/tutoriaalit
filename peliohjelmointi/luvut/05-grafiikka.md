@@ -1,6 +1,8 @@
 # 2D-grafiikka
 
-Grafiikkakirjasto (SDL, SFML, raylib tai pelimoottori) hoitaa ikkunan
+Tähän asti peli on ollut lukuja: aikaa, syötettä ja tiloja. Nyt tila
+piirretään näkyviin. Grafiikkakirjasto (SDL, SFML, raylib tai
+pelimoottori) hoitaa ikkunan
 ja kuvien siirron näytönohjaimelle, mutta 2D-pelin piirron käsitteet
 ovat samat kaikissa: kuvapuskuri, spritet, atlas, animaatio, kamera ja
 karsinta. Tässä luvussa ne toteutetaan ohjelmistona omaan
@@ -66,6 +68,17 @@ ulkopuolta. Pyöristys kokonaisiin pikseleihin tehdään vasta
 muunnoksessa: jos kameran paikka pyöristettäisiin ensin, hidas liike
 nytkähtelisi.
 
+![Kamera ja pelaaja, joka juoksee oikealle ja kääntyy välillä takaisin.
+Kamera pysyy paikallaan niin kauan kuin pelaaja on kuolleella alueella
+ja liikkuu vasta, kun pelaaja työntää alueen reunaa. Alussa kamera ei
+näytä maailman vasemman reunan ohi.](kuvat/kamera.png){width=75%}
+
+Taustan voi piirtää useana *kerroksena*, joista kukin käyttää kameran
+paikkaa eri kertoimella: kaukainen vuoristo liikkuu esimerkiksi
+neljäsosan kameran matkasta ja pilvet kymmenesosan. Tämä
+*parallaksivieritys* luo syvyysvaikutelman pelkällä
+vähennyslaskulla, koska vain piirron muunnos muuttuu.
+
 ## Piirto ja karsinta
 
 Näkymään piirretään vain ruudut, jotka ovat kameran alueella
@@ -80,7 +93,12 @@ kameran paikasta.
 
 Kartan 140 ruudusta piirretään 13. Tulosteen merkkikuvassa näkyy joka
 toinen pikselirivi: kolikko, osa tasannetta, hahmo ja lattia. Sama
-kuva tallentuu tiedostoon `ruutu.ppm`.
+kuva tallentuu tiedostoon `ruutu.ppm` ja atlas tiedostoon `atlas.ppm`.
+
+![Esimerkin tallentamat kuvat suurennettuina. Atlaksessa on neljä
+kahdeksan pikselin spriteä: tiili, kolikko ja kaksi kävelyanimaation
+kuvaa. Ruudussa näkyy kameran rajaama osa
+maailmasta.](kuvat/piirto.png){width=95%}
 
 ## Käytännössä
 

@@ -43,7 +43,8 @@ struct Historia {
 };
 // @loppu historia
 
-int main() {
+int main(int argc, char**) {
+    loki_paalla = argc > 1;
     std::println("{:>6} {:>14} {:>12} {:>15}", "viive", "ilman kelausta",
                  "kelauksella", "seinän takana");
     for (std::int64_t viive : {30, 60, 150, 250}) {
@@ -52,6 +53,9 @@ int main() {
         int ilman = 0, kelattu = 0, takana = 0, laukauksia = 0;
         for (std::int64_t t = 0; t < 60'000; t += 20) {  // 50 tikkiä/s
             historia.tallenna(t, kohde_x(t));
+            if (viive == 150 && t < 4000) {
+                loki("X {} {}", t, kohde_x(t));  // kuvitusta varten
+            }
             if (t < 1000 || satunnainen.valilta(10) != 0) {
                 continue;
             }
@@ -76,6 +80,10 @@ int main() {
                 takana += kohde_x(t) >= SUOJA;  // kohde jo turvassa
             }
             // @loppu laukaus
+            if (viive == 150 && t < 8000) {
+                loki("L {} {} {} {} {} {}", t, nakyi, tahtays, hetki,
+                     historia.kelaa(hetki), kohde_x(t));
+            }
         }
         std::println("{:>3} ms {:>13} % {:>11} % {:>14} %", viive,
                      ilman * 100 / laukauksia, kelattu * 100 / laukauksia,

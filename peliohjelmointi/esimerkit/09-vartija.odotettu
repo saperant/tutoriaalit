@@ -1,0 +1,14 @@
+askel  4: partio -> takaa-ajo, vartija (3, 3), pelaaja (9, 3)
+askel 11: takaa-ajo -> etsintä, vartija (7, 3), pelaaja (13, 4)
+askel 23: etsintä -> partio, vartija (13, 3), pelaaja (18, 1)
+vartijan (v) ja pelaajan (p) jäljet:
+######################
+#.........#....#ppp..#
+#.........#....#p###.#
+#.vvvvvvvvvvvv.#p....#
+#.vv......#..v.#p....#
+#####.#####..vppp....#
+#.........#..v.......#
+#.......vv#vvv.......#
+#........vvv.........#
+######################

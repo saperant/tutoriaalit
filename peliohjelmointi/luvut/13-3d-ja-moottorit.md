@@ -13,10 +13,22 @@ lautalle ja lautta maailmaan. Jokaisella solmulla on *paikallinen
 muunnos* vanhempansa koordinaatistossa. *Maailmamuunnos* saadaan
 kertomalla muunnokset juuresta alas.
 
-```{.cpp tiedosto="esimerkit/12-nakymapuu.cpp" osa="matriisi"}
+```{.cpp tiedosto="esimerkit/13-nakymapuu.cpp" osa="matriisi"}
 ```
 
-```{.cpp tiedosto="esimerkit/12-nakymapuu.cpp" osa="puu"}
+```{.cpp tiedosto="esimerkit/13-nakymapuu.cpp" osa="puu"}
+```
+
+```{.dot otsikko="Esimerkin näkymäpuu: jokainen muunnos on vanhemman koordinaatistossa" leveys="80%"}
+digraph {
+  rankdir=LR; nodesep=0.4;
+  node [shape=box, style=rounded];
+  maailma [label="maailma"];
+  lautta [label="lautta\nsiirto (0, 0, −10)\n+ kierto"];
+  auto_ [label="auto\nsiirto (2, 0,5, 0)"];
+  pyora [label="pyörä\nsiirto (0,8, −0,3, 0,6)"];
+  maailma -> lautta -> auto_ -> pyora;
+}
 ```
 
 Kun solmut ovat taulukossa vanhemmat ennen lapsia, yksi läpikäynti
@@ -30,10 +42,10 @@ koordinaatistoon, jossa kamera on origossa ja katsoo −z-suuntaan.
 Perspektiivi jakaa koordinaatit syvyydellä, jolloin kaukaiset kappaleet
 pienenevät ja lähestyvät ruudun keskustaa.
 
-```{.cpp tiedosto="esimerkit/12-nakymapuu.cpp" osa="projektio"}
+```{.cpp tiedosto="esimerkit/13-nakymapuu.cpp" osa="projektio"}
 ```
 
-```{.tuloste tiedosto="esimerkit/12-nakymapuu.odotettu"}
+```{.tuloste tiedosto="esimerkit/13-nakymapuu.odotettu"}
 ```
 
 Kun lauttaa käännetään 90 astetta, auto ja pyörä liikkuvat mukana,

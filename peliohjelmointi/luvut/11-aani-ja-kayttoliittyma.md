@@ -1,8 +1,10 @@
 # Ääni ja käyttöliittymä
 
-Ääni ja käyttöliittymä ovat pelissä omia järjestelmiään, joissa on
-omat sudenkuoppansa. Tässä luvussa käsitellään kummastakin keskeinen
-periaate: äänen miksaus ja välitön käyttöliittymä.
+Ääni ja käyttöliittymä ovat pelin kaksi muuta tulostetta kuvan
+rinnalla. Kumpikin on oma järjestelmänsä, joka lukee pelin tilaa mutta
+ei kuulu simulaatioon, ja kummallakin on oma sudenkuoppansa. Tässä
+luvussa käsitellään kummastakin keskeinen periaate: äänen miksaus ja
+välitön käyttöliittymä.
 
 ## Äänen miksaus
 
@@ -13,14 +15,19 @@ muistia, lueta levyä eikä odoteta lukkoja.
 
 Useat samanaikaiset äänet *miksataan* laskemalla näytteet yhteen.
 
-```{.cpp tiedosto="esimerkit/10-miksaus.cpp" osa="aani"}
+```{.cpp tiedosto="esimerkit/11-miksaus.cpp" osa="aani"}
 ```
 
-```{.cpp tiedosto="esimerkit/10-miksaus.cpp" osa="miksaus"}
+```{.cpp tiedosto="esimerkit/11-miksaus.cpp" osa="miksaus"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-miksaus.odotettu"}
+```{.tuloste tiedosto="esimerkit/11-miksaus.odotettu"}
 ```
+
+![Kaksikymmentä millisekuntia miksattua ääntä kohdasta, jossa kaikki
+kolme ääntä soivat. Voimakkuudella 0,6 summan huiput ylittävät
+16-bittisen näytteen alueen (pisteviivat) ja leikkautuvat tasaisiksi;
+voimakkuudella 0,3 aaltomuoto säilyy.](kuvat/miksaus.png){width=85%}
 
 Kun kolme ääntä soi yhtä aikaa voimakkuudella 0,6, summa ylittää
 täyden voimakkuuden, ja yli 3000 näytettä joudutaan leikkaamaan. Se
@@ -37,19 +44,21 @@ liukuluvun tarkkuus ei heikkene pitkässä äänessä.
 
 ## Välitön käyttöliittymä
 
+Ääni kulkee pelistä pelaajalle; käyttöliittymä kulkee molempiin
+suuntiin, koska se sekä näyttää tilaa että ottaa vastaan syötettä.
 Perinteisessä (*säilyttävässä*, retained mode) käyttöliittymässä
 painikkeet ovat olioita, joiden tila synkronoidaan pelin tilan kanssa.
 *Välittömässä* (immediate mode) käyttöliittymässä käyttöliittymä
 kuvataan koodissa joka ruudulla, ja painikkeen funktio palauttaa,
 painettiinko sitä.
 
-```{.cpp tiedosto="esimerkit/10-kayttoliittyma.cpp" osa="valiton"}
+```{.cpp tiedosto="esimerkit/11-kayttoliittyma.cpp" osa="valiton"}
 ```
 
-```{.cpp tiedosto="esimerkit/10-kayttoliittyma.cpp" osa="valikko"}
+```{.cpp tiedosto="esimerkit/11-kayttoliittyma.cpp" osa="valikko"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-kayttoliittyma.odotettu"}
+```{.tuloste tiedosto="esimerkit/11-kayttoliittyma.odotettu"}
 ```
 
 Painike laukeaa, kun hiiren nappi *vapautetaan* sen päällä, kuten

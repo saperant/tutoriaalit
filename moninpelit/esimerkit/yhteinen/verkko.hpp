@@ -4,6 +4,8 @@
 #pragma once
 #include <algorithm>
 #include <cstdint>
+#include <format>
+#include <print>
 #include <utility>
 #include <vector>
 
@@ -106,3 +108,16 @@ private:
     int hukattu_ = 0;
 };
 // @loppu linkki
+
+// Tapahtumaloki kuvitusta varten: lokirivit tulostuvat vain, kun
+// esimerkki käynnistetään argumentilla (ks. kuvat/piirra.py). Testit
+// ajavat esimerkit ilman argumenttia.
+inline bool loki_paalla = false;
+
+template <class... A>
+void loki(std::format_string<A...> muoto, A&&... a) {
+    if (loki_paalla) {
+        std::print("@ ");
+        std::println(muoto, std::forward<A>(a)...);
+    }
+}

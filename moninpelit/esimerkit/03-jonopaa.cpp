@@ -17,7 +17,8 @@ constexpr int RTO = 250;        // uudelleenlähetyksen odotus
 constexpr int HAVIO = 20;       // promillea
 constexpr int PAKETIT = 2000;
 
-int main() {
+int main(int argc, char**) {
+    loki_paalla = argc > 1;
     Pcg32 satunnainen(11);
     std::vector<std::int64_t> udp(PAKETIT, -1), tcp(PAKETIT);
     // @alku saapuminen
@@ -44,6 +45,9 @@ int main() {
         tcp[k] = std::max(tcp[k], tcp[k - 1]);
     }
     // @loppu saapuminen
+    for (int k = 0; k < PAKETIT; ++k) {
+        loki("{} {} {}", k, udp[k], tcp[k]);
+    }
 
     // @alku ika
     // Näytetyn tilan ikä joka millisekunti: kauanko sitten uusin

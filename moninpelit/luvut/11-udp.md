@@ -1,8 +1,13 @@
-# Kaikki yhteen: UDP-peli
+# Lukitusaskel oikean UDP:n yli
 
-Tämän luvun peli kulkee oikeiden UDP-pistokkeiden yli: palvelin ja kaksi
-asiakasta ovat erillisiä prosesseja, ja niiden välillä on vain
-käyttöjärjestelmän verkkopino. Peli on luvun *Lukitusaskel ja
+Tähän asti verkko on ollut simuloitu. Tämän luvun peli kulkee oikeiden
+UDP-sokettien yli: palvelin ja kaksi asiakasta ovat erillisiä
+prosesseja, ja niiden välillä on vain käyttöjärjestelmän verkkopino.
+Luku ei kokoa kaikkia tutoriaalin tekniikoita yhteen peliin. Se
+toteuttaa niistä yhden, lukitusaskeleen, koska sen lopputuloksen voi
+tarkistaa testissä bitilleen. Tilannevedokset, ennustus ja viiveen
+kompensointi jäävät simuloidun verkon esimerkkeihin, joissa niiden
+toiminta näkyy aikajanoina. Peli on luvun *Lukitusaskel ja
 rollback* kaksintaistelu, ja palvelin toimii lukitusaskeleen
 tahdistajana: se kerää syötteet, laskee ruudun, kun molemmat ovat
 perillä, ja jakaa vahvistetut syötteet. Asiakkaat simuloivat pelin
@@ -73,7 +78,7 @@ yhden uuden syötteen ruudun välein (16 ms).
 
 ## Käytännössä
 
-- **Yksi pistoke, ei säikeitä:** `poll` aikakatkaisulla riittää
+- **Yksi soketti, ei säikeitä:** `poll` aikakatkaisulla riittää
   pelipalvelimelle, ja silmukka pysyy deterministisenä ja helposti
   testattavana. Suuret palvelimet hajauttavat pelit prosesseihin, eivät
   säikeisiin.

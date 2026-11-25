@@ -23,6 +23,15 @@ Asiakas lähettää **aikeita** (syötteet), palvelin päättää
 - Tila UDP:llä, ei TCP:llä: jonopää-ongelma jäädyttää pelin.
 - Paketti alle ~1 200 tavua (MTU, ei pilkkomista).
 
+# Yhteys
+
+- Kättely: pyyntö → haaste → vastaus → hyväksytty; paikka varataan
+  vasta vastauksesta. Haaste = tiiviste(salaisuus, osoite, asiakkaan
+  luku), ei tallenneta.
+- Aikakatkaisu ja elossaoloviestit molempiin suuntiin.
+- NATin läpi: molemmat lähettävät ensin (reiän avaaminen); varalla
+  välityspalvelin.
+
 # Sekvenssinumerot ja kuittaukset
 
 ```{.cpp tiedosto="esimerkit/pikaopas.cpp" osa="sekvenssi"}
@@ -48,6 +57,8 @@ Asiakas lähettää **aikeita** (syötteet), palvelin päättää
 
 - Sama simulaatiokoodi asiakkaalla ja palvelimella.
 - Toista 2–3 viimeistä syötettä joka paketissa.
+- Kello: `siirtymä = ts + rtt/2 − t1`, paras näyte = pienin rtt.
+- Syöte 1–2 tikkiä etuajassa: säädä asiakkaan tahtia ±5 %, älä hyppää.
 
 # Muut pelaajat: interpolointi
 

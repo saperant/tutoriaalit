@@ -13,7 +13,7 @@ Tutoriaali olettaa taidon *Peliohjelmointi*: kiinteä aika-askel,
 kokonaislukuaika, oma satunnaislukugeneraattori ja deterministinen
 simulaatio ovat tämän tutoriaalin perusta, eikä niitä käydä uudelleen
 läpi. Verkon peruskäsitteet (IP, UDP, TCP, portit, MTU) ovat taidossa
-*Tietoverkot*, ja pistokeohjelmointi syvemmin taidossa
+*Tietoverkot*, ja sokettiohjelmointi syvemmin taidossa
 *Verkko-ohjelmointi*.
 
 ## Mitä tutoriaali kattaa
@@ -24,11 +24,12 @@ Luvut etenevät verkon todellisuudesta kohti pelaajan kokemusta:
    palvelimen auktoriteetti.
 2. **Verkon todellisuus**: viive, värinä, häviö ja kaistanleveys; miksi
    pelit käyttävät UDP:tä.
-3. **Luotettavuuskerros**: sekvenssinumerot, kuittauskentät ja
-   uudelleenlähetys vain sille, mikä sitä tarvitsee.
+3. **Luotettavuuskerros**: yhteyden muodostus, sekvenssinumerot,
+   kuittauskentät ja uudelleenlähetys vain sille, mikä sitä tarvitsee.
 4. **Tilan synkronointi**: tilannevedokset, delta-pakkaus,
    kiinnostusalueet, kvantisointi ja bittitason pakkaus.
-5. **Asiakkaan ennustus ja täsmäytys**: oma hahmo liikkuu heti.
+5. **Asiakkaan ennustus ja täsmäytys**: oma hahmo liikkuu heti;
+   asiakkaan ja palvelimen tikkien tahdistus.
 6. **Interpolointi ja ekstrapolointi**: muut pelaajat liikkuvat
    sulavasti.
 7. **Viiveen kompensointi**: osumat ratkaistaan ampujan näkemässä
@@ -36,8 +37,8 @@ Luvut etenevät verkon todellisuudesta kohti pelaajan kokemusta:
 8. **Lukitusaskel ja rollback**: koko pelin simulointi kaikilla
    koneilla.
 9. **Auktoriteetti ja huijaamisen esto**.
-10. **Kaikki yhteen**: oikea UDP-peli palvelimella ja kahdella
-    asiakkaalla.
+10. **Lukitusaskel oikean UDP:n yli**: palvelin ja kaksi asiakasta
+    erillisinä prosesseina.
 11. **Pelipalvelimet ja otteluiden muodostus**.
 
 ## Simuloitu verkko
@@ -63,6 +64,9 @@ esimerkki mittaa kiertoviiveen:
 ```{.tuloste tiedosto="esimerkit/01-ping.odotettu"}
 ```
 
+![Saman ajon kiertoviiveet. Jokainen pylväs on yksi ping; rastin
+kohdalla kysely tai vastaus katosi matkalla.](kuvat/ping.png){width=75%}
+
 Jo tässä näkyvät tutoriaalin perusongelmat: kiertoviive on 67–82 ms
 eikä vakio, ja kaksi pingiä (9 ja 11) katosi kokonaan.
 
@@ -72,7 +76,8 @@ Esimerkit ovat hakemistossa `esimerkit/` ja kirjoitettu C++23:lla.
 Testeissä jokainen käännetään GCC 14:llä ja Clang 20:llä
 AddressSanitizerin ja UndefinedBehaviorSanitizerin kanssa, ja molempien
 tulosteen on oltava sama. Yhteiset osat ovat hakemistossa
-`esimerkit/yhteinen/`. Oikea UDP-peli (luku *Kaikki yhteen*) ajetaan
+`esimerkit/yhteinen/`. Oikea UDP-peli (luku *Lukitusaskel oikean UDP:n
+yli*) ajetaan
 esimerkkihakemiston Makefilellä, koska siinä on kolme erillistä
 prosessia:
 
@@ -82,5 +87,10 @@ make testaa                # kaikki testit
 make pdf                   # tutoriaalin ja pikaoppaan PDF:t
 ```
 
-Kehityskontissa (`.devcontainer/moninpelit`) on kääntäjät ja
-verkkotyökalut.
+Aikajanat ja kuvaajat on piirretty esimerkkien omista lokeista:
+argumentilla käynnistetty esimerkki tulostaa tapahtumansa, ja
+`make kuvat` piirtää niistä kuvat. Kuva näyttää siis saman ajon, jonka
+tuloste on tekstissä.
+
+Kehityskontissa (`.devcontainer/moninpelit`) on kääntäjät,
+verkkotyökalut ja kuvien piirtoon Matplotlib.

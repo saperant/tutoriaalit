@@ -3,6 +3,7 @@
 // hyppyä, ja putoaminen on nousua nopeampaa.
 #include <algorithm>
 #include <print>
+#include <vector>
 
 // @alku parametrit
 struct Hyppyparametrit {
@@ -23,7 +24,7 @@ struct Tulos {
 
 // @alku simulointi
 Tulos hyppaa(Hyppyparametrit p, int pidetaan_ruutuja,
-             double putoamiskerroin) {
+             double putoamiskerroin, std::vector<double>* rata = nullptr) {
     constexpr double dt = 1.0 / 60.0;
     double y = 0.0, vy = p.alkunopeus, huippu = 0.0;
     int ruutu = 0;
@@ -38,13 +39,30 @@ Tulos hyppaa(Hyppyparametrit p, int pidetaan_ruutuja,
         y += vy * dt;
         huippu = std::max(huippu, y);
         ++ruutu;
+        if (rata != nullptr) {
+            rata->push_back(y);  // korkeus ruuduittain kuvaajaa varten
+        }
     } while (y > 0.0);
     return {huippu, ruutu};
 }
 // @loppu simulointi
 
-int main() {
+int main(int argc, char**) {
     constexpr auto p = parametrit(3.0, 0.4);  // 3 m, huippu 0,4 s:ssa
+    if (argc > 1) {  // käyrätila kuvitusta varten
+        int n = 0;
+        for (auto [pito, kerroin] : {std::pair{1000, 1.0},
+                                     std::pair{6, 1.0},
+                                     std::pair{1000, 2.0}}) {
+            std::vector<double> rata;
+            hyppaa(p, pito, kerroin, &rata);
+            for (std::size_t i = 0; i < rata.size(); ++i) {
+                std::println("{} {} {:.5f}", n, i + 1, rata[i]);
+            }
+            ++n;
+        }
+        return 0;
+    }
     std::println("painovoima {:.1f} m/s², alkunopeus {:.1f} m/s",
                  p.painovoima, p.alkunopeus);
     for (auto [nimi, pito, kerroin] :

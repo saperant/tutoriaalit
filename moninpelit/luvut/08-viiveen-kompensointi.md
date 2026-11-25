@@ -23,6 +23,12 @@ maailmaa se näytti (palvelimen tikki ja interpoloinnin kohta).
 ```{.tuloste tiedosto="esimerkit/08-takaisinkelaus.odotettu"}
 ```
 
+![Yksi laukaus 150 ms:n viiveellä. Ampuja tähtää kohteeseen, jonka se
+näkee (ympyrä). Kun laukaus saapuu palvelimelle, kohde on jo seinän
+reunalla (neliö). Palvelin kelaa 400 ms taaksepäin, ja kohde on
+osuma-alueella. Sama kuva näyttää reiluusongelman: kohteen omasta
+näkökulmasta se oli jo suojassa.](kuvat/takaisinkelaus.png){width=85%}
+
 Ilman kelausta täydellisestä tähtäyksestä osuu vain 12–22 %.
 Kelauksella osuu kaikki, kunhan viive on hyväksytyn rajan sisällä.
 250 ms:n yhteydellä kelaus rajataan, eikä kompensointi enää auta:

@@ -33,7 +33,8 @@ struct Viesti {
     Syote syote;
 };
 
-int main() {
+int main(int argc, char**) {
+    loki_paalla = argc > 1;
     const auto oma = syotteet(1), vastustaja = syotteet(2);
     Tila viite;
     for (int f = 0; f < RUUTUJA; ++f) {
@@ -61,6 +62,7 @@ int main() {
             }
             for (const Viesti& v : kanava.vastaanota(t)) {
                 saadut[v.ruutu] = v.syote;
+                loki("S {} {} {}", viive, v.ruutu, t);  // kuvitusta varten
             }
             if (t < std::int64_t{ruutu} * RUUTU_MS) {
                 continue;  // seuraavan ruudun aika ei ole vielä
@@ -75,6 +77,7 @@ int main() {
                 myohassa += m > 0;
                 suurin = std::max(suurin, m);
             }
+            loki("A {} {} {}", viive, ruutu, t);
             askel(tila, {oma[ruutu], it->second});
             ++ruutu;
         }
