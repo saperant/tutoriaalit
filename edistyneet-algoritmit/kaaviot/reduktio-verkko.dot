@@ -1,0 +1,31 @@
+graph {
+  nodesep=0.35; ranksep=0.5;
+  node [shape=circle, width=0.42, fixedsize=true, fontsize=10];
+  subgraph cluster_0 {
+    label="lauseke 1"; fontsize=9; color=white;
+    n0 [label="x1", style=filled, fillcolor="#D8EFEB", penwidth=1.8];
+    n1 [label="x2"];
+    n2 [label="¬x3"];
+    n0 -- n1; n1 -- n2; n0 -- n2;
+  }
+  subgraph cluster_1 {
+    label="lauseke 2"; fontsize=9; color=white;
+    n3 [label="¬x1"];
+    n4 [label="x2", style=filled, fillcolor="#D8EFEB", penwidth=1.8];
+    n5 [label="x3"];
+    n3 -- n4; n4 -- n5; n3 -- n5;
+  }
+  subgraph cluster_2 {
+    label="lauseke 3"; fontsize=9; color=white;
+    n6 [label="¬x2"];
+    n7 [label="¬x3", style=filled, fillcolor="#D8EFEB", penwidth=1.8];
+    n8 [label="x1"];
+    n6 -- n7; n7 -- n8; n6 -- n8;
+  }
+  n0 -- n3 [style=dashed, color="#B04848", constraint=false];
+  n1 -- n6 [style=dashed, color="#B04848", constraint=false];
+  n2 -- n5 [style=dashed, color="#B04848", constraint=false];
+  n3 -- n8 [style=dashed, color="#B04848", constraint=false];
+  n4 -- n6 [style=dashed, color="#B04848", constraint=false];
+  n5 -- n7 [style=dashed, color="#B04848", constraint=false];
+}

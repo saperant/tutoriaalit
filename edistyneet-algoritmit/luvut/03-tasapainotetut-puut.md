@@ -30,10 +30,9 @@ solmua, joita yhdistää *punainen* linkki. Muut linkit ovat *mustia*.
 Robert Sedgewickin *vasemmalle kallistuvassa* punamustassa puussa
 (engl. *left-leaning red-black tree*, LLRB) punaiset linkit
 osoittavat aina vasemmalle. Silloin jokaista 2-3-puuta vastaa
-täsmälleen yksi punamusta puu. Väri tallennetaan linkin alapään
-solmuun:
+täsmälleen yksi punamusta puu.
 
-Sama kolmen avaimen joukko 2-3-puuna ja vasemmalle kallistuvana
+Sama kuuden avaimen joukko 2-3-puuna ja vasemmalle kallistuvana
 punamustana puuna; punainen linkki yhdistää 3-solmun kaksi avainta:
 
 ```{.dot otsikko="2-3-puu ja sitä vastaava LLRB-puu"}
@@ -54,6 +53,44 @@ digraph {
     C -> A [color="#B04848", penwidth=2]; }
 }
 ```
+
+Väri tallennetaan linkin alapään solmuun. Puuta muokataan kolmella
+paikallisella operaatiolla, jotka säilyttävät hakupuun järjestyksen ja
+mustien linkkien määrän jokaisella polulla. Kierto kääntää punaisen
+linkin suunnan, ja värinvaihto jakaa väliaikaisen 4-solmun ja nostaa
+sen keskimmäisen avaimen ylemmäs:
+
+```{.dot otsikko="Vasen kierto ja värinvaihto. Punainen linkki on paksu; a, b ja c ovat alipuita, joiden sisältö ei muutu."}
+digraph {
+  nodesep=0.25; ranksep=0.3; ordering=out;
+  node [shape=circle, width=0.36, fixedsize=true, fontsize=10];
+  edge [arrowsize=0.6];
+  subgraph cluster_k1 { label="ennen kiertoa"; fontsize=9; color=white;
+    h1 [label="h"]; x1 [label="x"];
+    a1 [label="a", shape=plaintext, style=""];
+    b1 [label="b", shape=plaintext, style=""];
+    c1 [label="c", shape=plaintext, style=""];
+    h1 -> a1; h1 -> x1 [color="#B04848", penwidth=2]; x1 -> b1; x1 -> c1; }
+  subgraph cluster_k2 { label="vasemman kierron jälkeen"; fontsize=9;
+    color=white;
+    x2 [label="x"]; h2 [label="h"];
+    a2 [label="a", shape=plaintext, style=""];
+    b2 [label="b", shape=plaintext, style=""];
+    c2 [label="c", shape=plaintext, style=""];
+    x2 -> h2 [color="#B04848", penwidth=2]; x2 -> c2; h2 -> a2; h2 -> b2; }
+  subgraph cluster_v1 { label="ennen värinvaihtoa"; fontsize=9; color=white;
+    p1 [label="h"]; l1 [label="x"]; r1 [label="y"];
+    p1 -> l1 [color="#B04848", penwidth=2];
+    p1 -> r1 [color="#B04848", penwidth=2]; }
+  subgraph cluster_v2 { label="värinvaihdon jälkeen"; fontsize=9;
+    color=white;
+    y0 [label="", shape=point, style=invis];
+    p2 [label="h"]; l2 [label="x"]; r2 [label="y"];
+    y0 -> p2 [color="#B04848", penwidth=2]; p2 -> l2; p2 -> r2; }
+}
+```
+
+Oikea kierto on vasemman peilikuva.
 
 ```{.cpp tiedosto="esimerkit/punamusta.hpp" osa="kierrot"}
 ```

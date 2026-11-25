@@ -77,6 +77,21 @@ kokoinen riippumaton joukko, missä $m$ on lausekkeiden määrä:
 ```{.cpp tiedosto="esimerkit/13-reduktio.cpp" osa="reduktio"}
 ```
 
+Esimerkkiohjelma tekee reduktion ensin pienelle kaavalle
+$(x_1 \lor x_2 \lor \lnot x_3) \land (\lnot x_1 \lor x_2 \lor x_3)
+\land (\lnot x_2 \lor \lnot x_3 \lor x_1)$. Literaalit on tulosteessa
+merkitty etumerkillä ja solmut numeroitu lausekkeittain:
+
+```{.tuloste tiedosto="esimerkit/13-reduktio.odotettu" rivit="1-4"}
+```
+
+```{.dot tiedosto="kaaviot/reduktio-verkko.dot" otsikko="Kaavasta rakennettu verkko: lausekkeiden kolmiot, ristiriitakaaret katkoviivalla ja kolmen solmun riippumaton joukko korostettuna (esimerkin tulosteesta)" leveys="55%"}
+```
+
+Korostetut solmut $x_1$, $x_2$ ja $\lnot x_3$ ovat eri kolmioista,
+eikä niiden välillä ole kaaria. Niistä luetaan sijoitus $x_1 = 1$,
+$x_2 = 1$, $x_3 = 0$, joka toteuttaa kaavan.
+
 Oikeellisuus todistetaan kumpaankin suuntaan:
 
 - **Kaava toteutuu $\Rightarrow$ joukko on olemassa.** Toteuttava
@@ -98,17 +113,23 @@ toteuttavan sijoituksen. Reduktio kuljettaa siis myös ratkaisut.
 Reduktio on ohjelma, ja siinä voi olla virhe. Esimerkiksi kaari voi
 puuttua tai literaalien vertailu voi olla väärin. Vertailutesti ratkaisee
 satunnaiset pienet kaavat raa'asti molemmilla puolilla ja tarkistaa,
-että vastaukset täsmäävät. Riippumaton joukko etsitään haarautumalla ja
-karsimalla (luku 14). Solmujoukot ovat 64-bittisiä maskeja, ja
-yläraja saadaan jakamalla ehdokkaat ahneesti klikkeihin, koska
-kustakin klikistä voi ottaa vain yhden solmun:
+että vastaukset täsmäävät. Riippumaton joukko etsitään peruuttavalla
+haulla (taito *Algoritmit*), jota nopeutetaan karsinnalla: haara
+hylätään, jos edes yläraja sille, mitä haarasta voi vielä saada, ei
+ylitä parasta löydettyä ratkaisua. Luku 14 käsittelee tämän
+*haarautumisen ja karsinnan* yleisesti. Solmujoukot ovat 64-bittisiä
+maskeja, ja yläraja saadaan jakamalla ehdokkaat ahneesti klikkeihin,
+koska kustakin klikistä voi ottaa vain yhden solmun:
+
+```{.cpp tiedosto="esimerkit/13-reduktio.cpp" osa="haku"}
+```
 
 Testi arpoo 300 kaavaa, joissa on 3–5 muuttujaa, rakentaa niistä
 verkot ja vertaa raa'an SAT-haun ja riippumattoman joukon haun
 vastauksia. Toteutuvissa kaavoissa löydetty joukko muunnetaan
 sijoitukseksi, ja varmentaja tarkistaa sen:
 
-```{.tuloste tiedosto="esimerkit/13-reduktio.odotettu"}
+```{.tuloste tiedosto="esimerkit/13-reduktio.odotettu" alkaen="300 kaavaa"}
 ```
 
 Satunnaiset 3-SAT-kaavat ovat helppoja, kun lausekkeita on vähän

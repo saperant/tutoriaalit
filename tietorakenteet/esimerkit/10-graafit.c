@@ -25,15 +25,15 @@ typedef struct naapuri {
 // CSR: kaikkien solmujen naapurit yhdessä taulukossa peräkkäin.
 // Solmun v naapurit ovat kohde[alku[v]] ... kohde[alku[v + 1] - 1].
 typedef struct {
-    uint32_t *alku;             // SOLMUJA + 1 alkiota
-    uint32_t *kohde;            // 2 * KAARIA alkiota
+    uint32_t *alku;             // n + 1 alkiota
+    uint32_t *kohde;            // 2 * m alkiota
 } Csr;
 
-static bool csr_rakenna(Csr *g, const Kaari *kaaret, size_t m)
+static bool csr_rakenna(Csr *g, uint32_t n, const Kaari *kaaret, size_t m)
 {
-    g->alku = calloc(SOLMUJA + 1, sizeof *g->alku);
+    g->alku = calloc(n + 1, sizeof *g->alku);
     g->kohde = malloc(2 * m * sizeof *g->kohde);
-    uint32_t *paikka = malloc(SOLMUJA * sizeof *paikka);
+    uint32_t *paikka = malloc(n * sizeof *paikka);
     if (g->alku == nullptr || g->kohde == nullptr || paikka == nullptr) {
         free(paikka);
         return false;
@@ -42,7 +42,7 @@ static bool csr_rakenna(Csr *g, const Kaari *kaaret, size_t m)
         g->alku[kaaret[i].a + 1]++;
         g->alku[kaaret[i].b + 1]++;
     }
-    for (uint32_t v = 0; v < SOLMUJA; v++) {    // 2. kumulatiivinen summa
+    for (uint32_t v = 0; v < n; v++) {      // 2. kumulatiivinen summa
         g->alku[v + 1] += g->alku[v];
         paikka[v] = g->alku[v];
     }
@@ -55,8 +55,50 @@ static bool csr_rakenna(Csr *g, const Kaari *kaaret, size_t m)
 }
 // @loppu csr
 
+// Viiden solmun graafi matriisina ja CSR-taulukoina. Kirjan kuva
+// kolmesta esitystavasta piirretään näistä riveistä (kaaviot/tee.py).
+static bool pieni_graafi(void)
+{
+    enum { N = 5, M = 5 };
+    const Kaari kaaret[M] = {{0, 1}, {0, 2}, {1, 2}, {1, 3}, {3, 4}};
+    Csr g;
+    if (!csr_rakenna(&g, N, kaaret, M)) {
+        return false;
+    }
+    printf("pieni graafi: %d solmua, kaaret", N);
+    for (int i = 0; i < M; i++) {
+        printf(" %u-%u", kaaret[i].a, kaaret[i].b);
+    }
+    printf("\nmatriisi:\n");
+    for (uint32_t u = 0; u < N; u++) {
+        for (uint32_t v = 0; v < N; v++) {
+            bool kaari = false;
+            for (uint32_t i = g.alku[u]; i < g.alku[u + 1]; i++) {
+                kaari |= g.kohde[i] == v;
+            }
+            printf(" %d", kaari);
+        }
+        printf("\n");
+    }
+    printf("CSR alku: ");
+    for (uint32_t v = 0; v <= N; v++) {
+        printf(" %u", g.alku[v]);
+    }
+    printf("\nCSR kohde:");
+    for (uint32_t i = 0; i < 2 * M; i++) {
+        printf(" %u", g.kohde[i]);
+    }
+    printf("\n\n");
+    free(g.alku);
+    free(g.kohde);
+    return true;
+}
+
 int main(void)
 {
+    if (!pieni_graafi()) {
+        return EXIT_FAILURE;
+    }
     static Kaari kaaret[KAARIA];
     Satunnainen s = {3};
     for (int i = 0; i < KAARIA; i++) {
@@ -94,7 +136,7 @@ int main(void)
     }
 
     Csr g;
-    if (!csr_rakenna(&g, kaaret, KAARIA)) {
+    if (!csr_rakenna(&g, SOLMUJA, kaaret, KAARIA)) {
         return EXIT_FAILURE;
     }
 

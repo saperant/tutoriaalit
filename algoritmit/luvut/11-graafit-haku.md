@@ -142,6 +142,55 @@ kaari osoittaa eteenpäin. Tarkistukset ovat riippumattomia
 toteutuksesta, joten ne löytäisivät virheen kummasta tahansa
 algoritmista.
 
+## Komponentit
+
+Syvyyshaun toinen pääsovellus on graafin jakaminen osiin.
+Suuntaamattomassa graafissa *yhtenäinen komponentti* on joukko solmuja,
+joiden välillä on polku. Komponentit löytyvät käynnistämällä haku
+vuorotellen jokaisesta vielä löytämättömästä solmusta: jokainen
+käynnistys löytää täsmälleen yhden komponentin.
+
+Suunnatussa graafissa vastaava käsite on *vahvasti yhtenäinen
+komponentti* (engl. strongly connected component): suurin joukko
+solmuja, joissa jokaisesta pääsee jokaiseen. Edellisen osion
+riippuvuussykli on tällainen komponentti. Kun jokainen komponentti
+kutistetaan yhdeksi solmuksi, jäljelle jää syklitön graafi, jolla on
+topologinen järjestys.
+
+Kosarajun algoritmi löytää komponentit kahdella syvyyshaulla.
+Ensimmäinen kirjaa solmut siinä järjestyksessä, jossa ne valmistuvat
+(muuttuvat mustiksi). Toinen käy solmut läpi käänteisessä
+valmistumisjärjestyksessä ja kulkee kaaria *vastaan*; jokainen
+käynnistys merkitsee yhden komponentin. Perustelu: viimeksi valmistunut
+solmu kuuluu komponenttiin, johon mikään muu komponentti ei johda
+käännetyssä graafissa, joten haku ei voi vuotaa siitä ulos.
+
+```{.c tiedosto="esimerkit/11-komponentit.c" osa="kosaraju"}
+```
+
+Esimerkin graafi on palvelujen kutsusuhteet. Komponentti, jossa on
+useampi palvelu, on kutsusykli: sen palveluja ei voi käynnistää,
+päivittää tai testata toisistaan riippumatta.
+
+```{.c tiedosto="esimerkit/11-komponentit.c" osa="palvelut"}
+```
+
+```{.tuloste tiedosto="esimerkit/11-komponentit.odotettu"}
+```
+
+```{.dot tiedosto="kaaviot/komponentit.dot" otsikko="Kutsugraafin vahvasti yhtenäiset komponentit (esimerkin datasta ja tulosteesta). Komponenttien numerot ovat topologisessa järjestyksessä."}
+```
+
+Komponentit numeroituvat topologiseen järjestykseen: jokainen
+komponenttien välinen kaari kulkee pienemmästä numerosta suurempaan.
+Testi vertaa tulosta määritelmään 500 satunnaisella graafilla: kaksi
+solmua ovat samassa komponentissa täsmälleen silloin, kun kumpikin on
+saavutettavissa toisesta. Saavutettavuus lasketaan erikseen
+transitiivisena sulkeumana. Esimerkki käyttää vierekkäisyysmatriisia,
+jotta kaaren kääntäminen on pelkkä indeksien vaihto; listoilla aika on
+$O(n + m)$, kun käännetty graafi rakennetaan erikseen. Tarjanin
+algoritmi tekee saman yhdellä haulla.
+
 ## Käytännössä
 
 - **Leveyshaku painottomille lyhimmille poluille.** Jos kaikki kaaret
@@ -153,6 +202,9 @@ algoritmista.
   kaari mustaan ei ole.
 - **Kerro sykli, älä vain sen olemassaoloa.** Edeltäjätaulukko antaa
   syklin solmut, ja käyttäjä voi korjata riippuvuuden.
+- **Sykli on komponentti.** Vahvasti yhtenäiset komponentit kertovat
+  kaikki riippuvuussyklit kerralla, ja kutistettu graafi on aina
+  järjestettävissä.
 - **Kahn rinnakkaistaa.** Jonossa olevat solmut ovat riippumattomia, ja
   niiden määrä kertoo, montako työtä voi ajaa yhtä aikaa.
 
@@ -165,5 +217,7 @@ algoritmista.
   syvyyshaulla ja tulostaa syklin solmut.
 - Osaat muodostaa topologisen järjestyksen Kahnin algoritmilla ja
   syvyyshaun valmistumisjärjestyksestä.
+- Osaat etsiä suunnatun graafin vahvasti yhtenäiset komponentit
+  kahdella syvyyshaulla ja selittää, mitä ne kertovat sykleistä.
 - Osaat valita leveyshaun, syvyyshaun ja painotetun haun välillä
   tehtävän mukaan.

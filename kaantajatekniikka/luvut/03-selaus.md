@@ -53,6 +53,43 @@ säännölliset lausekkeet determinististen automaattien siirtymätauluiksi.
 Käsin kirjoitettu selaaja on sama automaatti koodina: tila on se kohta
 ohjelmassa, jossa suoritus on, ja siirtymät ovat ehtolauseita.
 
+Muunnos säännöllisestä lausekkeesta automaatiksi tehdään kahdessa
+vaiheessa. *Thompsonin konstruktio* rakentaa lausekkeesta
+epädeterministisen automaatin (NFA) osa kerrallaan: peräkkäisyys
+ketjuttaa osien automaatit, vaihtoehto `|` haarauttaa ja tähti `*`
+lisää paluukaaren. Epädeterministinen automaatti voi olla monessa
+tilassa yhtä aikaa, joten *osajoukkokonstruktio* tekee siitä
+deterministisen (DFA): jokainen DFA:n tila on joukko NFA:n tiloja,
+joissa automaatti voi olla saman syötteen jälkeen. Lopputulos on
+siirtymätaulu, jossa tilan ja merkin perusteella luetaan seuraava
+tila, eli yksi taulukkohaku merkkiä kohti. Kaikkien tokenien
+lausekkeet yhdistetään vaihtoehdoiksi ennen muunnosta, jolloin
+tuloksena on yksi automaatti koko kielen tokeneille. Säännöllisten
+lausekkeiden hakualgoritmit laajemmin jäävät tämän tutoriaalin
+ulkopuolelle.
+
+Kuvassa on osa Kiden tokenien yhdistetystä automaatista: tunniste,
+luku ja operaattorit `<` ja `<=`. Kaksoisympyrä on hyväksyvä tila.
+
+```{.dot otsikko="Tunnisteen, luvun ja operaattorien < ja <= yhdistetty automaatti. Hyväksyvästä tilasta voi jatkaa: selaaja ottaa pisimmän osuman." leveys="70%"}
+digraph {
+  rankdir=LR; nodesep=0.35; ranksep=0.6;
+  node [shape=circle, width=0.5, fixedsize=true, fontsize=9];
+  edge [fontsize=8, fontname="DejaVu Sans Mono"];
+  alku [label="alku"];
+  tunniste [label="tunniste", shape=doublecircle, width=0.75];
+  luku [label="luku", shape=doublecircle, width=0.55];
+  pienempi [label="<", shape=doublecircle];
+  pienempiyhta [label="<=", shape=doublecircle];
+  alku -> tunniste [label="A-Z a-z _"];
+  tunniste -> tunniste [label="A-Z a-z 0-9 _"];
+  alku -> luku [label="0-9"];
+  luku -> luku [label="0-9"];
+  alku -> pienempi [label="<"];
+  pienempi -> pienempiyhta [label="="];
+}
+```
+
 Tunnisteen automaatissa on kaksi tilaa. Alkutilasta siirrytään
 kirjaimen tai alaviivan jälkeen tilaan *tunniste*, jossa pysytään niin
 kauan kuin seuraava merkki on kirjain, numero tai alaviiva; muuten

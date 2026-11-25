@@ -14,9 +14,10 @@ enum { MAX = 64 };
 // p[i][j] = p[i-1][j-1] + 1,              jos a[i-1] == b[j-1]
 //         = max(p[i-1][j], p[i][j-1]),    muuten
 // Rekonstruktio kulkee taulukon oikeasta alakulmasta takaisin alkuun.
+static int p[MAX + 1][MAX + 1];
+
 static int lcs(const char *a, const char *b, char *tulos)
 {
-    static int p[MAX + 1][MAX + 1];
     int n = (int)strlen(a), m = (int)strlen(b);
     for (int i = 0; i <= n; i++) {
         for (int j = 0; j <= m; j++) {
@@ -46,6 +47,41 @@ static int lcs(const char *a, const char *b, char *tulos)
     return p[n][m];
 }
 // @loppu lcs
+
+// Tulostaa lcs-kutsun täyttämän taulukon ja merkitsee tähdellä
+// ruudut, joiden kautta rekonstruktio kulkee. Kirjan kuva piirretään
+// tästä tulosteesta (kaaviot/tee.py).
+static void tulosta_taulukko(const char *a, const char *b)
+{
+    int n = (int)strlen(a), m = (int)strlen(b);
+    static bool polku[MAX + 1][MAX + 1];
+    memset(polku, 0, sizeof polku);
+    int i = n, j = m;
+    polku[i][j] = true;
+    while (i > 0 && j > 0) {                // sama sääntö kuin lcs:ssä
+        if (a[i - 1] == b[j - 1]) {
+            i--;
+            j--;
+        } else if (p[i - 1][j] >= p[i][j - 1]) {
+            i--;
+        } else {
+            j--;
+        }
+        polku[i][j] = true;
+    }
+    printf("taulukko %s / %s, rekonstruktion polku tähdellä:\n     -", a, b);
+    for (j = 0; j < m; j++) {
+        printf("  %c", b[j]);
+    }
+    printf("\n");
+    for (i = 0; i <= n; i++) {
+        printf("  %c", i == 0 ? '-' : a[i - 1]);
+        for (j = 0; j <= m; j++) {
+            printf(" %c%d", polku[i][j] ? '*' : ' ', p[i][j]);
+        }
+        printf("\n");
+    }
+}
 
 static bool osajono(const char *x, const char *y)   // onko x y:n osajono?
 {
@@ -88,6 +124,7 @@ int main(void)
         int k = lcs(parit[i][0], parit[i][1], tulos);
         printf("%-10s %-10s %d %s\n", parit[i][0], parit[i][1], k, tulos);
     }
+    tulosta_taulukko(parit[2][0], parit[2][1]);     // viimeisin lcs-kutsu
 
     Satunnainen s = { 31 };
     int virheita = 0;

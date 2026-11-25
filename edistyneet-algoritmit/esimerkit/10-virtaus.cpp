@@ -91,4 +91,21 @@ int main()
     }
     std::println("");
     // @loppu esimerkki
+
+    // Kaarten virrat ja leikkauksen lähdepuoli: kirjan kuva piirretään
+    // näistä riveistä (kaaviot/tee.py). Kaaren i tunniste on 2 * i.
+    std::print("virrat:");
+    for (std::size_t i = 0; i < yhteydet.size(); ++i) {
+        auto [u, v, c] = yhteydet[i];
+        std::print(" {}-{} {}/{}", nimi[static_cast<std::size_t>(u)],
+                   nimi[static_cast<std::size_t>(v)],
+                   verkko.virta(static_cast<int>(2 * i)), c);
+    }
+    std::print("\nlähteen puoli:");
+    for (std::size_t v = 0; v < nimi.size(); ++v) {
+        if (puoli[v]) {
+            std::print(" {}", nimi[v]);
+        }
+    }
+    std::println("");
 }

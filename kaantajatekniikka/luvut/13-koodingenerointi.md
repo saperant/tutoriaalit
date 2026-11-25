@@ -43,6 +43,22 @@ vaikka `sp` muuttuisi:
 ```{.cpp tiedosto="esimerkit/kide/koodigen.cpp" osa="kehys"}
 ```
 
+Sama asettelu kuvana funktiolle, joka tallentaa kaksi `s`-rekisteriä
+ja käyttää kolmea pinopaikkaa (kehyksen koko 56 tavua pyöristyy
+64:ään):
+
+| Osoite | Sisältö | Kuka kirjoittaa |
+|:-------|:--------|:----------------|
+| `0(s0)` ja ylöspäin | kutsujan kehys | kutsuja |
+| `-8(s0)` | paluuosoite `ra` | prologi |
+| `-16(s0)` | kutsujan `s0` | prologi |
+| `-24(s0)`, `-32(s0)` | tallennetut `s`-rekisterit | prologi |
+| `-40(s0)` … `-56(s0)` | pinopaikat | funktion runko |
+| `-64(s0)` = `0(sp)` | tasaus 16 tavuun | – |
+
+Pino kasvaa alaspäin, joten `sp` osoittaa kehyksen alimpaan tavuun ja
+`s0` sen yläreunaan.
+
 RISC-V:n lataus- ja tallennuskäskyjen siirtymä on 12-bittinen
 etumerkillinen luku. Suurempi siirtymä lasketaan ensin rekisteriin;
 tämä on tyypillinen RISC-arkkitehtuurin rajoitus, jonka kääntäjä
@@ -63,8 +79,11 @@ näytti tämän x86-64:llä).
 
 ## Operandit ja tulokset
 
-Rekisterien varaus (luku 14) kertoo kunkin virtuaalirekisterin
-paikan: `s`-rekisteri tai pinopaikka. Koodingeneraattori kysyy
+Jokaisella virtuaalirekisterillä on **paikka**, jossa sen arvo on
+funktion ajan: jokin kutsun yli säilyvistä `s`-rekistereistä tai
+kehyksen pinopaikka. Paikat päättää rekisterien varaus (luku 14);
+tässä luvussa riittää, että ne on annettu, ja luvun lopussa käytetään
+yksinkertaisinta varausta, jossa kaikki on pinossa. Koodingeneraattori kysyy
 operandin rekisteriä; pinossa oleva arvo ladataan apurekisteriin, ja
 pinoon menevä tulos lasketaan `t0`:aan ja tallennetaan:
 

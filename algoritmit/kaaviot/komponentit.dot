@@ -1,0 +1,33 @@
+digraph {
+  rankdir=LR; nodesep=0.3; ranksep=0.5;
+  node [shape=box, style="rounded,filled", fontsize=10];
+  subgraph cluster_0 {
+    style="rounded,dashed"; color=gray50; label="0"; fontsize=9;
+    portti [fillcolor="white"];
+  }
+  subgraph cluster_1 {
+    style="rounded,dashed"; color=gray50; label="1"; fontsize=9;
+    tilaus [fillcolor="#D8EFEB"];
+    varasto [fillcolor="#D8EFEB"];
+    laskutus [fillcolor="#D8EFEB"];
+  }
+  subgraph cluster_2 {
+    style="rounded,dashed"; color=gray50; label="2"; fontsize=9;
+    ilmoitus [fillcolor="#D8EFEB"];
+    raportti [fillcolor="#D8EFEB"];
+  }
+  subgraph cluster_3 {
+    style="rounded,dashed"; color=gray50; label="3"; fontsize=9;
+    loki [fillcolor="white"];
+  }
+  portti -> tilaus;
+  tilaus -> varasto;
+  varasto -> laskutus;
+  laskutus -> tilaus;
+  tilaus -> ilmoitus;
+  ilmoitus -> loki;
+  laskutus -> loki;
+  raportti -> loki;
+  raportti -> ilmoitus;
+  ilmoitus -> raportti;
+}

@@ -80,7 +80,12 @@ järjestetty syöte tekee jokaisesta jaosta mahdollisimman huonon.
 Valinnan oikeellisuus testataan lajitellun taulukon $k$:nnetta alkiota
 vastaan syötteillä, joissa on paljon yhtä suuria arvoja. Sen jälkeen
 esimerkki etsii 5000 alkion järjestetyn taulukon mediaanin molemmilla
-jakoalkioilla. Ero on yli 500-kertainen (tuloste on alempana). `std::nth_element` käyttää
+jakoalkioilla:
+
+```{.tuloste tiedosto="esimerkit/11-valinta.odotettu" rivit="1-3"}
+```
+
+Ero on yli 500-kertainen. `std::nth_element` käyttää
 *introselect*-menetelmää. Se aloittaa pikavalinnalla ja vaihtaa
 kekoon perustuvaan valintaan, jos rekursio syvenee liikaa. *Mediaanien
 mediaani* (Blum ym. 1973) valitsee jakoalkion deterministisesti
@@ -104,7 +109,7 @@ Esimerkki tarkistaa $60 \times 60$ -matriisien oikean tulon 1000
 kertaa yhdellä kierroksella. Sitten se muuttaa tulosta yhden alkion ja
 toistaa kokeen yhdellä ja kymmenellä kierroksella:
 
-```{.tuloste tiedosto="esimerkit/11-valinta.odotettu"}
+```{.tuloste tiedosto="esimerkit/11-valinta.odotettu" alkaen="oikea tulo"}
 ```
 
 Yhdellä kierroksella virheellinen tulo hyväksyttiin noin puolessa

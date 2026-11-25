@@ -13,6 +13,48 @@ Helsingistä Kuopioon Mikkelin kautta sisältää lyhimmän reitin
 Helsingistä Mikkeliin. Nimi on historiallinen: "ohjelmointi" tarkoitti
 1950-luvulla suunnittelua taulukon avulla, ei tietokoneohjelmaa.
 
+## Raaka haku ja peruuttaminen
+
+Ennen dynaamista ohjelmointia kannattaa katsoa, mitä se korvaa.
+Yleisin tapa ratkaista valintatehtävä on *peruuttava haku* (engl.
+backtracking): ratkaisu rakennetaan yksi valinta kerrallaan, ja kun
+osaratkaisu osoittautuu kelvottomaksi, viimeisin valinta perutaan ja
+kokeillaan seuraavaa. Edellisten lukujen testien "raaka haku" on sama
+menetelmä ilman peruutuksia: se käy läpi kaikki vaihtoehdot.
+
+Esimerkkinä on retkireppu, johon palataan alempana: kahdeksan tavaraa,
+painoraja 6 kiloa, ja arvo halutaan mahdollisimman suureksi. Jokainen
+tavara joko otetaan tai jätetään, joten hakupuussa on kaksi haaraa
+tasoa kohti:
+
+```{.c tiedosto="esimerkit/09-peruutus.c" osa="haku"}
+```
+
+Sama funktio ajetaan kolmella tavalla. Ensin se käy läpi kaikki
+osajoukot. Sitten se *karsii* (engl. prune) haarat, joissa painoraja
+ylittyisi: niiden jatkaminen ei voi tuottaa sallittua ratkaisua.
+Lopuksi se karsii myös haarat, jotka eivät voi parantaa parasta
+löydettyä arvoa, vaikka kaikki jäljellä olevat tavarat mahtuisivat
+mukaan:
+
+```{.tuloste tiedosto="esimerkit/09-peruutus.odotettu"}
+```
+
+Kaikki kolme löytävät saman optimin, ja karsinta pudottaa solmujen
+määrän kolmannekseen. Pahimmassa tapauksessa työ on silti
+eksponentiaalinen: kahdeksalla tavaralla osajoukkoja on 256, mutta
+40 tavaralla $10^{12}$. Peruuttava haku on oikea työkalu, kun tehtävä
+on pieni, rajoitteet karsivat suurimman osan puusta tai parempaa
+menetelmää ei tunneta. Karsinnan kehittyneemmät muodot (haarautuminen
+ja rajat, engl. branch and bound) kuuluvat taitoon *Edistyneet
+algoritmit ja tietorakenteet*.
+
+Dynaaminen ohjelmointi lähtee toisesta havainnosta: hakupuun eri
+haarat päätyvät usein *samaan tilanteeseen*. Kun tavaroista 1–5 on
+päätetty ja painoa on käytetty kolme kiloa, loppuosan paras ratkaisu
+on sama riippumatta siitä, mitkä tavarat nuo kolme kiloa olivat.
+Tilanne lasketaan kerran ja tallennetaan.
+
 ## Muistiinpano ja taulukointi
 
 Fibonaccin luvut ovat yksinkertaisin esimerkki päällekkäisistä
@@ -25,7 +67,13 @@ rekursiivinen funktio:
 Kutsu $F(30)$ laskee $F(28)$:n kahdesti, $F(27)$:n kolmesti ja
 $F(2)$:n yli 500 000 kertaa. Kutsuja on yhteensä $2F(n+1) - 1$, joka
 kasvaa kuten $\varphi^n$, missä $\varphi \approx 1{,}618$ on kultainen
-leikkaus. Kaksi korjausta on mahdollista:
+leikkaus. Jo $F(5)$:n kutsupuussa sama alipuu toistuu: $F(3)$ lasketaan
+kahdesti ja $F(2)$ kolmesti.
+
+```{.dot tiedosto="kaaviot/fibonacci-kutsupuut.dot" otsikko="F(5):n kutsupuu suorana rekursiona ja muistiinpanolla. Sama argumentti on samalla sävyllä; katkoviivalla merkitty kutsu saa arvon muistista eikä haaraudu (esimerkin tulosteesta)."}
+```
+
+Kaksi korjausta on mahdollista:
 
 ```{.c tiedosto="esimerkit/09-fibonacci.c" osa="muisti"}
 ```
@@ -40,7 +88,7 @@ leikkaus. Kaksi korjausta on mahdollista:
   vain kaksi edellistä arvoa, joten koko taulukon voi korvata kahdella
   muuttujalla.
 
-```{.tuloste tiedosto="esimerkit/09-fibonacci.odotettu"}
+```{.tuloste tiedosto="esimerkit/09-fibonacci.odotettu" rivit="3-"}
 ```
 
 Muistiinpanolla kutsuja on $2n - 1$: jokainen arvo lasketaan kerran,
@@ -129,6 +177,7 @@ Tavallisia osatehtävien muotoja ovat:
 | alkuosa ja resurssi | `t[i][w]`: $i$ alkiota, raja $w$ | reppu |
 | väli | `t[i][j]`: osajono $i \ldots j$ | matriisiketju, palindromit |
 | osajoukko | `t[S][v]`: joukko $S$, viimeinen $v$ | kauppamatkustaja, $2^n n$ |
+| välisolmut | `d[u][v]` kierroksella $k$: polku solmujen $0 \ldots k$ kautta | kaikkien parien lyhimmät polut (luku 12) |
 
 Luvun 1 Kadanen algoritmi oli alkuosan muotoa, ja luvun 8
 kolikkotehtävän optimi oli sama muoto. Seuraava luku käsittelee kahden
@@ -136,6 +185,9 @@ alkuosan muodon merkkijonoille.
 
 ## Käytännössä
 
+- **Raaka haku ensin.** Peruuttava haku on helppo kirjoittaa oikein,
+  ja se jää testin vertailukohdaksi, kun varsinainen ratkaisu vaihtuu
+  nopeampaan.
 - **Kirjoita osatehtävän määritelmä kommenttiin.** "`paras[i][w]` on
   suurin arvo $i$ ensimmäisellä tavaralla rajalla $w$" on puolet
   ratkaisusta, ja ilman sitä koodia ei voi tarkistaa.
@@ -152,6 +204,8 @@ alkuosan muodon merkkijonoille.
 
 ## Itsearviointi
 
+- Osaat kirjoittaa peruuttavan haun valintatehtävälle, lisätä siihen
+  karsinnan ja selittää, miksi työ on silti eksponentiaalinen.
 - Osaat tunnistaa päällekkäiset osatehtävät ja optimaalisen
   osarakenteen.
 - Osaat muuttaa rekursiivisen ratkaisun muistiinpanoksi ja

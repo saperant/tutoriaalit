@@ -1,0 +1,7 @@
+            Helsinki     Lahti   Tampere   Mikkeli    Kuopio
+Helsinki           0       105       180       240       405
+Lahti            105         0       130       135       300
+Tampere          180       130         0       265       295
+Mikkeli          240       135       265         0       165
+Kuopio           405       300       295       165         0
+vertailu Bellman-Fordiin: 300 graafia (26 negatiivista sykliä), 0 virhettä

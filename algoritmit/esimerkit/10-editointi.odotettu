@@ -10,4 +10,15 @@ lauantai -> sunnuntai: etäisyys 5
    - l a u a n t a i
    s u n n u n t a i
    + ~ ~ ~ ~ = = = =
+taulukko lauantai / sunnuntai, kohdistuksen polku tähdellä:
+     -  s  u  n  n  u  n  t  a  i
+  - *0 *1  2  3  4  5  6  7  8  9
+  l  1  1 *2  3  4  5  6  7  8  9
+  a  2  2  2 *3  4  5  6  7  7  8
+  u  3  3  2  3 *4  4  5  6  7  8
+  a  4  4  3  3  4 *5  5  6  6  7
+  n  5  5  4  3  3  4 *5  6  7  7
+  t  6  6  5  4  4  4  5 *5  6  7
+  a  7  7  6  5  5  5  5  6 *5  6
+  i  8  8  7  6  6  6  6  6  6 *5
 raakatesti: 300 paria, 0 virhettä

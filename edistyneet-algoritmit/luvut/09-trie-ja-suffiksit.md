@@ -111,7 +111,13 @@ tarvitse aloittaa joka kerta nollasta:
 ```
 
 Esimerkkiohjelma tulostaa ensin sanan "banaani" suffiksitaulukon,
-LCP-arvot ja suffiksit (tuloste on alempana).
+LCP-arvot ja suffiksit:
+
+```{.tuloste tiedosto="esimerkit/09-suffiksit.odotettu" rivit="1-7"}
+```
+
+Rivit näyttävät rakenteen: suffiksit "anaani" ja "ani" jakavat
+etuliitteen "an", joten jälkimmäisen LCP on 2.
 
 Taulukoista saa vastauksia, joita on vaikea laskea muuten:
 
@@ -133,11 +139,9 @@ esiintymät `find`-funktiolla.
 Lopuksi ohjelma laskee samat suureet lauseelle "kalastaja kalasti
 kalaa kalasaaresta ja kalasatamasta":
 
-```{.tuloste tiedosto="esimerkit/09-suffiksit.odotettu"}
+```{.tuloste tiedosto="esimerkit/09-suffiksit.odotettu" rivit="8-"}
 ```
 
-Sanan "banaani" rivit näyttävät rakenteen: suffiksit "anaani" ja
-"ani" jakavat etuliitteen "an", joten jälkimmäisen LCP on 2.
 Tekstiesimerkin pisin toistuva osajono on "a kalasa" (kohdista
 "kalaa kalasaaresta" ja "ja kalasatamasta").
 

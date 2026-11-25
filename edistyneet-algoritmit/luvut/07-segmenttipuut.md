@@ -21,10 +21,20 @@ Kumpikin kulkee enintään $\log_2 n$ askelta:
 ```{.cpp tiedosto="esimerkit/07-fenwick.cpp" osa="fenwick"}
 ```
 
-Esimerkiksi etuliite 13 = 1101₂ kootaan solmuista 13 (väli 13),
-12 (välit 9–12) ja 8 (välit 1–8). Päivitys indeksiin 5 = 101₂
-koskee solmuja 5, 6 ja 8, koska vain niiden välit sisältävät
-indeksin 5.
+Esimerkkiohjelma tulostaa rakenteen muodon 16 alkiolle samoilla
+bittikaavoilla:
+
+```{.tuloste tiedosto="esimerkit/07-fenwick.odotettu" rivit="1-3"}
+```
+
+```{.dot tiedosto="kaaviot/fenwick-valit.dot" otsikko="Fenwick-puun solmujen kattamat välit 16 alkiolle. Etuliitesumma 13 lukee kolme solmua (vihreät ja violetti), päivitys paikkaan 5 muuttaa neljää (punertavat ja violetti); solmu 8 kuuluu molempiin (esimerkin tulosteesta)."}
+```
+
+Etuliite 13 = 1101₂ kootaan solmuista 13 (väli 13), 12 (välit 9–12)
+ja 8 (välit 1–8): yksi solmu indeksin jokaista ykkösbittiä kohti.
+Päivitys viidenteen alkioon (0-pohjainen indeksi 4, solmu 5 = 101₂)
+koskee solmuja 5, 6, 8 ja 16, koska vain niiden välit sisältävät
+paikan 5.
 
 Funktio `etsi()` kääntää etuliitesumman: se löytää pienimmän indeksin,
 jonka etuliitesumma ylittää $k$:n. Se laskeutuu bitti kerrallaan
@@ -38,10 +48,9 @@ vähentää omaansa. Mediaani on `etsi(n / 2)` ja 99. persentiili
 `etsi(n * 99 / 100)`.
 
 Vertailutesti käyttää mallina tavallista taulukkoa ja laskee
-välisummat ja käänteishaun raa'asti. Sen ensimmäinen rivi on tulosteen
-alussa:
+välisummat ja käänteishaun raa'asti. Sen rivi on tulosteessa ensin:
 
-```{.tuloste tiedosto="esimerkit/07-fenwick.odotettu"}
+```{.tuloste tiedosto="esimerkit/07-fenwick.odotettu" alkaen="vertailutesti"}
 ```
 
 Kaksi prosenttia pyynnöistä on hitaita (600 ms lisää). Mediaani ei

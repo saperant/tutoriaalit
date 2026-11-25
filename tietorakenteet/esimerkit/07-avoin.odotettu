@@ -1,4 +1,14 @@
+avainten 1, 9 ja 17 kotipaikka on 4
+lisätty:      -  -  -  -  1  9 17  -
+hautakivi:    -  -  -  -  1  + 17  -
+haku 17: paikka 6, 3 kokeilua
+tyhjäksi:     -  -  -  -  1  - 17  -
+haku 17: ei löydy, vaikka avain on taulussa
+
 vertailutesti: 200000 operaatiota, ei eroja, lopussa 2058 avainta
-alfa 0.50: löytyy  1.49 (teoria  1.50), ei löydy   2.47 (teoria   2.50)
-alfa 0.75: löytyy  2.45 (teoria  2.50), ei löydy   8.44 (teoria   8.50)
-alfa 0.90: löytyy  5.55 (teoria  5.50), ei löydy  51.21 (teoria  50.50)
+alfa 0.250: löytyy  1.17 (teoria  1.17), ei löydy   1.37 (teoria   1.39)
+alfa 0.500: löytyy  1.49 (teoria  1.50), ei löydy   2.47 (teoria   2.50)
+alfa 0.625: löytyy  1.80 (teoria  1.83), ei löydy   4.06 (teoria   4.06)
+alfa 0.750: löytyy  2.45 (teoria  2.50), ei löydy   8.44 (teoria   8.50)
+alfa 0.875: löytyy  4.57 (teoria  4.50), ei löydy  34.37 (teoria  32.50)
+alfa 0.900: löytyy  5.55 (teoria  5.50), ei löydy  51.21 (teoria  50.50)

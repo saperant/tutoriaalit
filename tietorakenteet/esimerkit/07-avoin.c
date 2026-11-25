@@ -205,7 +205,7 @@ static void kuormitus(double alfa)
     double epaonnistunut = (double)t.kokeiluja / n;
     double teoria_s = 0.5 * (1 + 1 / (1 - alfa));
     double teoria_e = 0.5 * (1 + 1 / ((1 - alfa) * (1 - alfa)));
-    printf("alfa %.2f: löytyy %5.2f (teoria %5.2f), "
+    printf("alfa %.3f: löytyy %5.2f (teoria %5.2f), "
            "ei löydy %6.2f (teoria %6.2f)\n", alfa, onnistunut, teoria_s,
            epaonnistunut, teoria_e);
     free(avaimet);
@@ -213,11 +213,63 @@ static void kuormitus(double alfa)
 }
 // @loppu kuormitus
 
+// @alku jakso
+// Kahdeksan paikan taulu ja kolme avainta, joilla on sama kotipaikka.
+// Keskimmäinen poistetaan: hautakiven yli haku löytää kolmannen, mutta
+// tyhjäksi merkitty paikka katkaisisi jakson.
+static void tulosta_taulu(const Taulu *t, const char *tila)
+{
+    printf("%s", tila);
+    for (uint32_t i = 0; i < t->kapasiteetti; i++) {
+        if (t->tilat[i] == KAYTOSSA) {
+            printf(" %2u", t->avaimet[i]);
+        } else {
+            printf("  %c", t->tilat[i] == HAUTAKIVI ? '+' : '-');
+        }
+    }
+    printf("\n");
+}
+
+static bool jakso(void)
+{
+    Taulu t;
+    if (!taulu_alusta(&t, 8)) {
+        return false;
+    }
+    uint32_t sama[3], n = 0;
+    for (uint32_t a = 1; n < 3; a++) {      // kolme avainta samaan paikkaan
+        if (paikka(&t, a) == paikka(&t, 1)) {
+            sama[n++] = a;
+        }
+    }
+    bool ok = true;
+    for (uint32_t i = 0; i < 3; i++) {
+        ok &= taulu_lisaa(&t, sama[i]);
+    }
+    printf("avainten %u, %u ja %u kotipaikka on %u\n", sama[0], sama[1],
+           sama[2], paikka(&t, 1));
+    tulosta_taulu(&t, "lisätty:    ");
+    taulu_poista(&t, sama[1]);
+    tulosta_taulu(&t, "hautakivi:  ");
+    t.kokeiluja = 0;
+    long loytyi = taulu_etsi(&t, sama[2]);
+    printf("haku %u: paikka %ld, %ld kokeilua\n", sama[2], loytyi,
+           t.kokeiluja);
+    t.tilat[paikka(&t, 1) + 1] = TYHJA;     // virheellinen poisto
+    tulosta_taulu(&t, "tyhjäksi:   ");
+    printf("haku %u: %s\n\n", sama[2],
+           taulu_etsi(&t, sama[2]) < 0 ? "ei löydy, vaikka avain on taulussa"
+                                       : "löytyy");
+    taulu_vapauta(&t);
+    return ok && loytyi >= 0;
+}
+// @loppu jakso
+
 int main(void)
 {
-    bool ok = vertailutesti(200000);
-    const double alfat[] = {0.5, 0.75, 0.9};
-    for (int i = 0; i < 3; i++) {
+    bool ok = jakso() && vertailutesti(200000);
+    const double alfat[] = {0.25, 0.5, 0.625, 0.75, 0.875, 0.9};
+    for (size_t i = 0; i < sizeof alfat / sizeof alfat[0]; i++) {
         kuormitus(alfat[i]);
     }
     return ok ? EXIT_SUCCESS : EXIT_FAILURE;

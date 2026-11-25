@@ -25,8 +25,8 @@ paluu (`ret`), eikä lohkon keskellä ole hyppyjä sisään tai ulos.
 Lohkot ja niiden väliset hypyt muodostavat **ohjausvuograafin**
 (*control flow graph*, CFG), jonka solmuja lohkot ovat. Graafi on
 kaikkien myöhempien analyysien perusta: datavuoanalyysi kulkee sen
-kaaria pitkin (luku 11), ja SSA-muoto rakennetaan sen dominanssista
-(luku 10).
+kaaria pitkin (luku 10), ja SSA-muoto rakennetaan sen dominanssista
+(luku 12).
 
 Lähdekoodin muuttujat ovat virtuaalirekistereitä omilla nimillään, ja
 lausekkeiden välitulokset ovat numeroituja rekistereitä `%1`, `%2` ...
@@ -108,6 +108,22 @@ edeltäjät saadaan kääntämällä kaaret. Tulosteen kommentit
 *yhtymäkohta* (*join point*), ja yhtymäkohdat ovat datavuoanalyysin
 ja SSA-muodon kannalta kiinnostavimmat paikat: niissä eri polkujen
 tiedot yhdistyvät.
+
+Seuraavien kolmen luvun esimerkkinä on funktio, jossa on silmukka ja
+sen sisällä ehto:
+
+```{.rust tiedosto="esimerkit/naytteet/summa.kide"}
+```
+
+```{.tuloste tiedosto="esimerkit/naytteet/ir-summa.txt"}
+```
+
+Graafina näkyy silmukan rakenne: L1 on silmukan otsake, L4 hyppää
+takaisin siihen (paluukaari), ja L5 on ainoa poistuminen. L1 ja L4
+ovat yhtymäkohtia.
+
+```{.dot tiedosto="kaaviot/cfg-summa.dot" otsikko="Funktion summa ohjausvuograafi (kääntäjän tulosteesta)" leveys="55%"}
+```
 
 ## Käytännössä
 

@@ -16,12 +16,25 @@ RISC-V-assemblyä (RV64IM), joka kootaan ristikääntäjällä ja ajetaan
 QEMU-emulaattorissa. Kääntäjässä on noin 3000 riviä, joten sen voi
 lukea kokonaan; jokainen luku esittelee yhden vaiheen ja sen koodin.
 
+## Esitiedot ja rajaus
+
 Esitiedoiksi oletetaan *Algoritmit* (verkot, syvyyshaku,
 kiintopisteiteraatio), *Assembly* (RISC-V-käskyt, kutsukonventio ja
-pino) ja *Funktionaalinen ohjelmointi* (rekursiiviset tietotyypit ja
-hahmonsovitus, joita syntaksipuun käsittely muistuttaa). Koodi
-käyttää modernia C++:aa: `std::variant`, `std::unique_ptr`,
-lambdat ja designoidut alustajat (taito *Moderni C++*).
+pino), *Funktionaalinen ohjelmointi (Racket)* (rekursiiviset
+tietotyypit ja hahmonsovitus, joita syntaksipuun käsittely muistuttaa)
+ja *Moderni C++*, jolla kääntäjä on kirjoitettu: `std::variant`,
+`std::unique_ptr`, lambdat ja designoidut alustajat.
+
+Kääntäjä on pidetty noin 3000 rivissä, joten osa aiheista on rajattu
+pois. Kide-kielessä on vain kokonaislukuja ja funktioita, joten
+ajonaikainen ympäristö jää pinokehykseen: taulukot, keko ja
+muistinhallinta eivät ole mukana (taulukot ovat luvun 17
+harjoituksena). SSA-muoto rakennetaan, mutta optimoinnit tehdään
+tavallisella välikielellä, eikä takaosassa ole käskyjen valinnan
+viimeistelyä (kurkistusoptimointia). Jäsenningeneraattorit ja
+LR-jäsennys esitellään vain vertailuna. Luku 16 näyttää, mitä
+tuotantokääntäjä tekee toisin.
+
 Läheisiä taitoja ovat *Suorituskyvyn analyysi ja optimointi*,
 *Takaisinmallinnus* ja *Korkean tason synteesi*, joissa kääntäjän
 tuottamaa koodia luetaan, arvioidaan ja ohjataan.

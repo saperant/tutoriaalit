@@ -29,11 +29,11 @@ pikaopas: [kaantajatekniikka-pikaopas.pdf](https://saperant.github.io/tutoriaali
 8. Tulkki viitetoteutuksena – kehykset, oikosulku, rajat
 9. Välikieli – kolmiosoitekoodi, peruslohkot, ohjausvuograafi,
    hyppykoodi
-10. SSA-muoto – dominanssi, dominanssiraja, phi-funktiot,
-    uudelleennimeäminen
-11. Datavuoanalyysi – elävyys, kiintopiste, muut analyysit
-12. Optimoinnit – laskostus, arvonumerointi, kuollut koodi,
+10. Datavuoanalyysi – elävyys, kiintopiste, muut analyysit
+11. Optimoinnit – laskostus, arvonumerointi, kuollut koodi,
     ohjausvuo, kopiot
+12. SSA-muoto – dominanssi, dominanssiraja, phi-funktiot,
+    uudelleennimeäminen, mitä SSA-muodolla tehdään
 13. Koodingenerointi RISC-V:lle – kutsukonventio, pinokehys,
     käskyjen valinta
 14. Rekisterien varaus – elinvälit, lineaarinen pyyhkäisy,
@@ -54,3 +54,5 @@ Esimerkit tarvitsevat GCC 14:n, Clang 20:n, RISC-V-ristikääntäjän
 (`gcc-riscv64-linux-gnu`, `libc6-dev-riscv64-cross`), QEMU:n
 käyttäjätilan emulaattorin (`qemu-user`) ja Python 3:n. Kehityskontti
 on hakemistossa `.devcontainer/kaantajatekniikka/`.
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.

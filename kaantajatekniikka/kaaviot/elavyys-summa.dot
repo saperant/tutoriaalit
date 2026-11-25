@@ -1,0 +1,18 @@
+digraph {
+  ranksep=0.3;
+  node [shape=record, fontname="DejaVu Sans Mono",
+        fontsize=8];
+  L0 [label="{sisään \{n\}|L0|ulos \{n s i\}}"];
+  L1 [label="{sisään \{n s i\}|L1|ulos \{n s i\}}"];
+  L2 [label="{sisään \{n s i\}|L2|ulos \{n s i\}}"];
+  L3 [label="{sisään \{n s i\}|L3|ulos \{n s i\}}"];
+  L4 [label="{sisään \{n s i\}|L4|ulos \{n s i\}}"];
+  L5 [label="{sisään \{s\}|L5|ulos \{\}}"];
+  L0 -> L1;
+  L1 -> L2;
+  L1 -> L5;
+  L2 -> L3;
+  L2 -> L4;
+  L3 -> L4;
+  L4 -> L1;
+}

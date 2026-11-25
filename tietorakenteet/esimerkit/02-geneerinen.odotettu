@@ -1,0 +1,6 @@
+ssh      22
+dns      53
+http     80
+ntp     123
+https   443
+lukuja 5, summa 7.5

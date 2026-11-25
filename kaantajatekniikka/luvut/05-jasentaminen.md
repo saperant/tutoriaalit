@@ -48,7 +48,28 @@ järjestyksessä:
 Muut avainsanalla alkavat lauseet ovat samanlaisia. Ainoa hankala
 tapaus on sijoitus: sekä `x = 1;` että `x + 1;` alkavat tunnisteella.
 Sijoitus tunnistetaan katsomalla *kahta* tokenia eteenpäin, eli
-kielioppi on LL(2) tässä kohdassa:
+kielioppi on LL(2) tässä kohdassa.
+
+Merkintä tulee jäsennysmenetelmien luokittelusta. **LL(k)**-jäsennin
+lukee syötteen vasemmalta (L), rakentaa vasemmanpuoleisen johdon (L)
+ja valitsee säännön katsomalla $k$ tokenia eteenpäin. Rekursiivisesti
+etenevä jäsennin on LL-jäsennin. Yhden tokenin ennakointi riittää,
+kun välikkeen vaihtoehtojen **FIRST-joukot** – tokenit, joilla
+vaihtoehto voi alkaa – ovat erilliset:
+
+| Lause | FIRST |
+|-------|-------|
+| esittely | `var` |
+| ehto | `if` |
+| silmukka | `while` |
+| paluu | `return` |
+| tulostus | `print` |
+| lohko | `{` |
+| sijoitus | tunniste |
+| lausekelause | tunniste, luku, `true`, `false`, `(`, `-`, `!` |
+
+Kaksi viimeistä riviä leikkaavat: tunniste voi aloittaa kumman
+tahansa, ja vasta seuraava token (`=` tai jokin muu) ratkaisee:
 
 ```{.cpp tiedosto="esimerkit/kide/jasennin.cpp" osa="sijoitus"}
 ```

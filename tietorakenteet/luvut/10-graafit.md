@@ -22,9 +22,19 @@ graafeissa – tieverkot, sosiaaliset verkostot, riippuvuusgraafit,
 piirilevyn kytkennät – kaaria on tavallisesti vain pieni vakio kertaa
 $n$. Tällainen graafi on *harva*.
 
-Luvun esimerkki rakentaa saman harvan graafin kolmella tavalla: 2000
-solmua ja 6000 suuntaamatonta kaarta (rengas ja satunnaisia
-oikoteitä), keskimäärin kuusi naapuria solmua kohti.
+Kolme esitystapaa näkyvät rinnakkain viiden solmun graafissa. Esimerkki
+tulostaa sen matriisina ja CSR-taulukoina, ja kuva on piirretty
+tulosteesta:
+
+```{.tuloste tiedosto="esimerkit/10-graafit.odotettu" rivit="1-9"}
+```
+
+```{.dot tiedosto="kaaviot/graafi-esitykset.dot" otsikko="Sama graafi matriisina, vierekkäisyyslistoina ja CSR-taulukoina. Taulukon alku paikka v osoittaa solmun v naapurien alkuun taulukossa kohde."}
+```
+
+Mittauksia varten esimerkki rakentaa suuremman harvan graafin samoilla
+kolmella tavalla: 2000 solmua ja 6000 suuntaamatonta kaarta (rengas ja
+satunnaisia oikoteitä), keskimäärin kuusi naapuria solmua kohti.
 
 ## Vierekkäisyysmatriisi
 
@@ -40,8 +50,8 @@ naapureiden luettelemiseen on käytävä läpi koko rivi, $O(n)$, vaikka
 naapureita olisi vain kuusi. Muistia kuluu $n^2$ bittiä kaarten
 määrästä riippumatta. Matriisi sopii tiheille graafeille ja pienille
 graafeille, joissa $n^2$ ei ole ongelma, sekä algoritmeille, jotka
-kysyvät jatkuvasti mielivaltaisia kaaria (esimerkiksi
-Floyd–Warshall).
+kysyvät jatkuvasti mielivaltaisia kaaria (esimerkiksi kaikkien parien
+lyhimmät polut laskeva Floyd–Warshall, taito *Algoritmit*).
 
 ## Vierekkäisyyslistat
 
@@ -77,7 +87,8 @@ matriiseille numeerisessa laskennassa.
 
 Rakennus tehdään kolmella läpikäynnillä. Ensin lasketaan jokaisen
 solmun aste. Sitten asteista lasketaan kumulatiivinen summa, joka
-antaa kunkin solmun alkukohdan. Lopuksi naapurit kirjoitetaan
+antaa kunkin solmun alkukohdan (kuvan graafissa asteet 2, 3, 2, 2 ja 1
+antavat alkukohdat 0, 2, 5, 7 ja 9). Lopuksi naapurit kirjoitetaan
 paikoilleen apulaskurin avulla. Kaikki on $O(n + m)$, eikä
 välivaiheessa tarvita listoja. Naapureiden läpikäynti on yksinkertainen
 silmukka (tässä pääohjelman tarkistuksesta, joka vertaa naapuria
@@ -89,7 +100,7 @@ matriisiin):
 Pääohjelma tarkistaa, että kaikki kolme esitystä kertovat samat
 naapurit, ja vertaa muistinkulutusta:
 
-```{.tuloste tiedosto="esimerkit/10-graafit.odotettu"}
+```{.tuloste tiedosto="esimerkit/10-graafit.odotettu" alkaen="2000 solmua"}
 ```
 
 Matriisi vie lähes kymmenkertaisesti listojen ja listat lähes

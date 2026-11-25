@@ -15,7 +15,7 @@ arvoa voidaan vielä lukea jollakin polulla ennen kuin se kirjoitetaan
 uudelleen. Elävyyttä tarvitaan kolmeen asiaan: kuolleen koodin
 poistoon (kirjoitus rekisteriin, joka ei ole elävä, on turha),
 rekisterien varaukseen (kaksi samaan aikaan elävää arvoa tarvitsevat
-eri rekisterit) ja karsittuun SSA-muotoon (luku 10).
+eri rekisterit) ja karsittuun SSA-muotoon (luku 12).
 
 Elävyys on **taaksepäin etenevä** analyysi: tieto kulkee käytöstä
 kohti määrittelyä. Jokaiselle lohkolle B lasketaan ensin kaksi
@@ -54,9 +54,13 @@ kun analyysin arvot muodostavat äärellisen korkuisen **hilan** ja
 siirtofunktiot ovat **monotonisia**, iteraatio saavuttaa pienimmän
 kiintopisteen (Kildall 1973). Järjestyksellä on merkitystä vain
 nopeudelle: taaksepäin etenevä analyysi suppenee nopeimmin, kun lohkot
-käydään lopusta alkuun. Esimerkkifunktion elävyys (`--vaihe=elavyys`):
+käydään lopusta alkuun. Luvun 9 esimerkkifunktion `summa` elävyys
+(`--vaihe=elavyys`):
 
 ```{.tuloste tiedosto="esimerkit/naytteet/elavyys-summa.txt"}
+```
+
+```{.dot tiedosto="kaaviot/elavyys-summa.dot" otsikko="Elävyysanalyysin kiintopiste funktion summa ohjausvuograafissa. Tieto kulkee kaaria vastaan: lohkon ulos-joukko on seuraajien sisään-joukkojen yhdiste (kääntäjän tulosteesta)." leveys="42%"}
 ```
 
 Kolmas kierros vain toteaa, ettei mikään muuttunut. Parametri `n` on
@@ -92,7 +96,7 @@ merkityksen.
 
 ## Paikallinen ja globaali
 
-Kiden optimoinnit (luku 12) yhdistävät kaksi tasoa. Arvonumerointi on
+Kiden optimoinnit (luku 11) yhdistävät kaksi tasoa. Arvonumerointi on
 **paikallinen**: se käy yhden lohkon läpi alusta loppuun ja tietää
 tarkasti, mitä kussakin kohdassa on laskettu, mutta unohtaa kaiken
 lohkon rajalla. Kuolleen koodin poisto on **globaali**: se käyttää

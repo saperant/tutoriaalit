@@ -1,0 +1,37 @@
+digraph {
+  nodesep=0.3; ranksep=0.35; compound=true;
+  edge [arrowsize=0.6];
+  subgraph cluster_g {
+    label="graafi"; fontsize=10; color=white;
+    node [shape=circle, width=0.35, fixedsize=true, fontsize=10];
+    v0 [label="0"];
+    v1 [label="1"];
+    v2 [label="2"];
+    v3 [label="3"];
+    v4 [label="4"];
+    v0 -> v1 [arrowhead=none];
+    v0 -> v2 [arrowhead=none];
+    v1 -> v2 [arrowhead=none];
+    v1 -> v3 [arrowhead=none];
+    v3 -> v4 [arrowhead=none];
+  }
+  subgraph cluster_m {
+    label="vierekkäisyysmatriisi"; fontsize=10; color=white;
+    m [shape=plain, style=solid, label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="3"><tr><td border="0"></td><td border="0"><font point-size="8">0</font></td><td border="0"><font point-size="8">1</font></td><td border="0"><font point-size="8">2</font></td><td border="0"><font point-size="8">3</font></td><td border="0"><font point-size="8">4</font></td></tr><tr><td border="0"><font point-size="8">0</font></td><td width="18">0</td><td width="18" bgcolor="#D8EFEB">1</td><td width="18" bgcolor="#D8EFEB">1</td><td width="18">0</td><td width="18">0</td></tr><tr><td border="0"><font point-size="8">1</font></td><td width="18" bgcolor="#D8EFEB">1</td><td width="18">0</td><td width="18" bgcolor="#D8EFEB">1</td><td width="18" bgcolor="#D8EFEB">1</td><td width="18">0</td></tr><tr><td border="0"><font point-size="8">2</font></td><td width="18" bgcolor="#D8EFEB">1</td><td width="18" bgcolor="#D8EFEB">1</td><td width="18">0</td><td width="18">0</td><td width="18">0</td></tr><tr><td border="0"><font point-size="8">3</font></td><td width="18">0</td><td width="18" bgcolor="#D8EFEB">1</td><td width="18">0</td><td width="18">0</td><td width="18" bgcolor="#D8EFEB">1</td></tr><tr><td border="0"><font point-size="8">4</font></td><td width="18">0</td><td width="18">0</td><td width="18">0</td><td width="18" bgcolor="#D8EFEB">1</td><td width="18">0</td></tr></table>>];
+  }
+  subgraph cluster_l {
+    label="vierekkäisyyslistat"; fontsize=10; color=white;
+    l [shape=plain, style=solid, label=<<table border="0" cellborder="0" cellspacing="2" cellpadding="2"><tr><td border="1" width="18">0</td><td align="left">→ 1 → 2</td></tr><tr><td border="1" width="18">1</td><td align="left">→ 0 → 2 → 3</td></tr><tr><td border="1" width="18">2</td><td align="left">→ 0 → 1</td></tr><tr><td border="1" width="18">3</td><td align="left">→ 1 → 4</td></tr><tr><td border="1" width="18">4</td><td align="left">→ 3</td></tr></table>>];
+  }
+  subgraph cluster_c {
+    label="CSR"; fontsize=10; color=white;
+    ca [shape=plain, style=solid, label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4"><tr><td border="0" align="right">alku  </td><td port="p0" width="24">0</td><td port="p1" width="24">2</td><td port="p2" width="24">5</td><td port="p3" width="24">7</td><td port="p4" width="24">9</td><td port="p5" width="24">10</td></tr><tr><td border="0"></td><td border="0"><font point-size="8">0</font></td><td border="0"><font point-size="8">1</font></td><td border="0"><font point-size="8">2</font></td><td border="0"><font point-size="8">3</font></td><td border="0"><font point-size="8">4</font></td><td border="0"><font point-size="8">5</font></td></tr></table>>];
+    ck [shape=plain, style=solid, label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4"><tr><td border="0" align="right">kohde  </td><td port="p0" width="24" bgcolor="#D8EFEB">1</td><td port="p1" width="24" bgcolor="#D8EFEB">2</td><td port="p2" width="24">0</td><td port="p3" width="24">2</td><td port="p4" width="24">3</td><td port="p5" width="24" bgcolor="#D8EFEB">0</td><td port="p6" width="24" bgcolor="#D8EFEB">1</td><td port="p7" width="24">1</td><td port="p8" width="24">4</td><td port="p9" width="24" bgcolor="#D8EFEB">3</td></tr><tr><td border="0"></td><td border="0"><font point-size="8">0</font></td><td border="0"><font point-size="8">1</font></td><td border="0"><font point-size="8">2</font></td><td border="0"><font point-size="8">3</font></td><td border="0"><font point-size="8">4</font></td><td border="0"><font point-size="8">5</font></td><td border="0"><font point-size="8">6</font></td><td border="0"><font point-size="8">7</font></td><td border="0"><font point-size="8">8</font></td><td border="0"><font point-size="8">9</font></td></tr></table>>];
+    ca:p0:s -> ck:p0:n;
+    ca:p1:s -> ck:p2:n;
+    ca:p2:s -> ck:p5:n;
+    ca:p3:s -> ck:p7:n;
+    ca:p4:s -> ck:p9:n;
+  }
+  m -> ca [style=invis]; l -> ca [style=invis];
+}

@@ -14,6 +14,10 @@ vaikka yksikään kutsu ei varaisi mitään.
 
 ## O, Ω ja Θ
 
+Merkinnät ovat tuttuja taidosta *Diskreetti matematiikka*. Tässä ne
+kerrataan lyhyesti, koska koko tutoriaali käyttää niitä, ja luvun
+lopussa niiden ennusteet tarkistetaan mittaamalla.
+
 Kolme merkintää kuvaa kasvunopeutta:
 
 | Merkintä | Määritelmä | Tulkinta |
@@ -116,7 +120,7 @@ edeltäjien ohi. Siksi puhutaan kolmesta tapauksesta:
   operaatiosarjan kokonaistyö jaettuna operaatioiden määrällä.
   Dynaamisen taulukon lisäys on joskus $\Theta(n)$, kun taulukko
   kasvatetaan, mutta $n$ lisäyksen sarja on $\Theta(n)$, joten lisäys on
-  tasoitetusti vakioaikainen (Tietorakenteet, luku 3). Tasoitettu takuu
+  tasoitetusti vakioaikainen (taito *Tietorakenteet*). Tasoitettu takuu
   on aito takuu koko sarjalle, ei todennäköisyyslaskelma.
 
 ## Kasvun mittaaminen
@@ -166,7 +170,7 @@ lisäyslajitteluun, kun osataulukko on pienempi kuin noin 16–32 alkiota.
 
 Vakiokertoimiin vaikuttaa myös muisti. Peräkkäin luettava taulukko
 on moninkertaisesti nopeampi kuin osoittimia seuraava lista, vaikka
-molemmat ovat $\Theta(n)$ (Tietorakenteet, luku 11). Analyysi valitsee
+molemmat ovat $\Theta(n)$ (taito *Tietorakenteet*). Analyysi valitsee
 kasvuluokan, mittaus valitsee toteutuksen.
 
 ## Käytännössä

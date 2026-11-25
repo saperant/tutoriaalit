@@ -163,6 +163,36 @@ static std::vector<std::size_t> suurin_riippumaton(const Verkko& g,
 
 int main()
 {
+    // Pieni kaava ja sen verkko: kirjan kuva piirretään näistä riveistä
+    // (kaaviot/tee.py). Solmu 3i + j on lausekkeen i literaali j.
+    {
+        const Kaava f{{1, 2, -3}, {-1, 2, 3}, {-2, -3, 1}};
+        auto g = reduktio(f);
+        long solmuja = 0;
+        auto joukko = suurin_riippumaton(g, solmuja);
+        std::print("kaava:");
+        for (const auto& l : f) {
+            std::print(" ({} {} {})", l[0], l[1], l[2]);
+        }
+        std::print("\nristiriitakaaret:");
+        for (std::size_t u = 0; u < g.size(); ++u) {
+            for (std::size_t v = u + 1; v < g.size(); ++v) {
+                if (g[u][v] && u / 3 != v / 3) {
+                    std::print(" {}-{}", u, v);
+                }
+            }
+        }
+        std::print("\nriippumaton joukko:");
+        for (std::size_t u : joukko) {
+            std::print(" {}", u);
+        }
+        auto arvo = sijoitus(f, 3, joukko);
+        vaadi(joukko.size() == f.size() && toteuttaa(f, arvo),
+              "pienen kaavan reduktio");
+        std::println("\nsijoitus: x1={} x2={} x3={}\n", arvo[1] ? 1 : 0,
+                     arvo[2] ? 1 : 0, arvo[3] ? 1 : 0);
+    }
+
     // @alku testi
     int toteutuvia = 0;
     long hakusolmuja = 0;

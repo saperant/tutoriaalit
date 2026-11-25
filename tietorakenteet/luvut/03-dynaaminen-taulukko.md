@@ -65,9 +65,9 @@ enemmän hukkaa.
 Kertoimella 1,5 on lisäksi käytännön etu: vapautetut vanhat alueet
 ovat yhteensä pian riittävän suuria uutta taulukkoa varten, jolloin
 muistinvaraaja voi käyttää niitä uudelleen. Tuplauksessa uusi alue on
-aina suurempi kuin kaikki aiemmat yhteensä. Useat C++-kirjastot ja
-Javan `ArrayList` käyttävät kerrointa 1,5, glibc:n `realloc` taas
-pystyy usein kasvattamaan suuren alueen paikallaan, jolloin kopiointia
+aina suurempi kuin kaikki aiemmat yhteensä. MSVC:n `std::vector` ja
+Javan `ArrayList` käyttävät kerrointa 1,5, libstdc++ ja libc++
+kerrointa 2. glibc:n `realloc` taas pystyy usein kasvattamaan suuren alueen paikallaan, jolloin kopiointia
 ei tapahdu lainkaan.
 
 ## Vektorin toteutus

@@ -103,6 +103,70 @@ static void sisajarjestys(const Solmu *s)
 }
 // @loppu sisajarjestys
 
+// @alku jarjestys
+// Pienin avain on vasemmanpuoleisin solmu.
+static const Solmu *pienin(const Solmu *s)
+{
+    while (s != nullptr && s->vasen != nullptr) {
+        s = s->vasen;
+    }
+    return s;
+}
+
+// Pienin avainta suurempi avain. Haku kulkee juuresta alas ja muistaa
+// viimeisen solmun, josta käännyttiin vasemmalle: se on ehdokas, jota
+// lähempää ei löydy oikealta.
+static const Solmu *seuraaja(const Solmu *s, int avain)
+{
+    const Solmu *ehdokas = nullptr;
+    while (s != nullptr) {
+        if (avain < s->avain) {
+            ehdokas = s;
+            s = s->vasen;
+        } else {
+            s = s->oikea;
+        }
+    }
+    return ehdokas;
+}
+
+// Avaimet väliltä [a, b] kasvavassa järjestyksessä. Alipuuhun
+// mennään vain, jos siinä voi olla välin avaimia.
+static void vali(const Solmu *s, int a, int b)
+{
+    if (s == nullptr) {
+        return;
+    }
+    if (a < s->avain) {
+        vali(s->vasen, a, b);
+    }
+    if (a <= s->avain && s->avain <= b) {
+        printf(" %d", s->avain);
+    }
+    if (s->avain < b) {
+        vali(s->oikea, a, b);
+    }
+}
+// @loppu jarjestys
+
+// Puu sulkulausekkeena (avain vasen oikea); tyhjä alipuu on ().
+// Kirjan puukaaviot piirretään näistä riveistä (kaaviot/tee.py).
+static void sulkuina(const Solmu *s)
+{
+    if (s == nullptr) {
+        printf("()");
+        return;
+    }
+    printf("(%d", s->avain);
+    if (s->vasen != nullptr || s->oikea != nullptr) {
+        printf(" ");
+        sulkuina(s->vasen);
+        printf(" ");
+        sulkuina(s->oikea);
+    }
+    printf(")");
+}
+
 static void vapauta(Solmu *s)
 {
     if (s != nullptr) {
@@ -122,13 +186,41 @@ int main(void)
             return EXIT_FAILURE;
         }
     }
-    printf("sisäjärjestys:");
+    printf("puu ennen:  ");
+    sulkuina(puu);
+    printf("\nsisäjärjestys:");
     sisajarjestys(puu);
+    // @alku kyselyt
+    printf("\npienin %d, 40:n seuraaja %d, 80:n seuraaja: %s\n",
+           pienin(puu)->avain, seuraaja(puu, 40)->avain,
+           seuraaja(puu, 80) == nullptr ? "ei ole" : "on");
+    printf("avaimet väliltä [33, 65]:");
+    vali(puu, 33, 65);
+    // @loppu kyselyt
     poista(&puu, 30);
     printf("\n30 poistettu: ");
     sisajarjestys(puu);
+    printf("\npuu jälkeen: ");
+    sulkuina(puu);
     printf("\njuuren vasen lapsi nyt %d\n", puu->vasen->avain);
     vapauta(puu);
+
+    // Seitsemän avainta kahdessa järjestyksessä: sama joukko, eri puu.
+    const int nousevat[] = {1, 2, 3, 4, 5, 6, 7};
+    const int sekaisin[] = {4, 2, 6, 1, 3, 5, 7};
+    Solmu *lista = nullptr, *tasainen = nullptr;
+    for (size_t i = 0; i < 7; i++) {
+        if (!lisaa(&lista, nousevat[i]) || !lisaa(&tasainen, sekaisin[i])) {
+            return EXIT_FAILURE;
+        }
+    }
+    printf("1..7 järjestyksessä: korkeus %d, ", korkeus(lista));
+    sulkuina(lista);
+    printf("\n4 2 6 1 3 5 7:       korkeus %d, ", korkeus(tasainen));
+    sulkuina(tasainen);
+    printf("\n");
+    vapauta(lista);
+    vapauta(tasainen);
 
     // @alku korkeus
     // Sama 1000 avainta järjestyksessä ja satunnaisessa järjestyksessä.

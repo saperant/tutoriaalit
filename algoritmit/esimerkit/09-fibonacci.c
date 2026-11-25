@@ -49,8 +49,42 @@ static uint64_t fib_taulukko(int n)        // alhaalta ylös
 }
 // @loppu muisti
 
+// Kutsupuut sulkulausekkeina (argumentti ja lasten puut): suora
+// rekursio ja muistiinpano, jossa tähti merkitsee muistista saatua
+// arvoa. Kirjan kuva piirretään näistä riveistä (kaaviot/tee.py).
+static void puu_suora(int n)
+{
+    printf("(%d", n);
+    if (n >= 2) {
+        printf(" ");
+        puu_suora(n - 1);
+        printf(" ");
+        puu_suora(n - 2);
+    }
+    printf(")");
+}
+
+static void puu_muisti(int n)
+{
+    if (n < 2 || laskettu[n]) {
+        printf("(%d%s)", n, n < 2 ? "" : "*");
+        return;
+    }
+    printf("(%d ", n);
+    puu_muisti(n - 1);
+    printf(" ");
+    puu_muisti(n - 2);
+    printf(")");
+    laskettu[n] = true;
+}
+
 int main(void)
 {
+    printf("kutsupuu F(5), suora:  ");
+    puu_suora(5);
+    printf("\nkutsupuu F(5), muisti: ");
+    puu_muisti(5);
+    printf("\n");
     printf("%3s %22s %12s %10s\n", "n", "F(n)", "suora", "muisti");
     for (int n = 10; n <= 30; n += 5) {
         kutsuja = 0;

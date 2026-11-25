@@ -32,12 +32,26 @@ Menetelmiä sovelletaan oikeisiin tehtäviin: reitinhakuun kartalla,
 käännösriippuvuuksien järjestämiseen, diff-työkalun ytimeen ja
 tiedoston pakkaamiseen Huffmanin koodilla.
 
-Tutoriaali rakentuu taitojen *Tietorakenteet* ja *Diskreetti
-matematiikka* päälle. Dynaaminen taulukko, hajautustaulu, binäärikeko
-ja graafien esitystavat ovat tuttuja tietorakenteista, eikä niitä
-toisteta. Rekursioyhtälöt, master-lause, induktio ja
-silmukkainvariantit ovat tuttuja diskreetistä matematiikasta; tässä
-niitä käytetään.
+## Esitiedot ja rajaus
+
+Tutoriaali rakentuu taidon *Tietorakenteet* ja sen esitietojen
+*C-kieli* ja *Diskreetti matematiikka* päälle. Dynaaminen taulukko,
+hajautustaulu, binäärikeko ja graafien esitystavat ovat tuttuja
+tietorakenteista, eikä niitä toisteta. O-merkintä, rekursioyhtälöt,
+master-lause, induktio ja silmukkainvariantit ovat tuttuja
+diskreetistä matematiikasta; luku 2 kertaa merkinnät ja käyttää
+niitä mittauksiin.
+
+Rajauksen ulkopuolelle jäävät:
+
+- tasapainotetut puut, merkkijonohaku, virtausalgoritmit,
+  NP-täydellisyys ja approksimointi (jatkotaito *Edistyneet algoritmit
+  ja tietorakenteet*); peruuttavasta hausta ja karsinnasta on tässä
+  vain perusmuoto (luku 9),
+- yhtälönratkaisu, interpolointi ja muut liukulukualgoritmit
+  (*Numeeriset menetelmät*) ja
+- algoritmin sovittaminen välimuistiin ja prosessoriin
+  (*Suorituskyvyn analyysi ja optimointi*).
 
 ## Kolme tapaa samaan vastaukseen
 
@@ -106,8 +120,10 @@ riippumatonta toteutusta antavat saman vastauksen.
 
 ## Esimerkit ja testaus
 
-Kaikki esimerkit ovat C23:a. Ne käännetään GCC 14:llä ja Clang 20:llä
-varoitukset virheinä, AddressSanitizerin ja
+Kaikki esimerkit ovat C23:a hakemistossa `esimerkit/`, ja `make testaa`
+kääntää ja ajaa ne. Valmis ympäristö on kehityskontissa (ks.
+*Kehitysympäristöt ja Dev Containers*). Esimerkit käännetään GCC 14:llä
+ja Clang 20:llä varoitukset virheinä, AddressSanitizerin ja
 UndefinedBehaviorSanitizerin kanssa. Sanitoijat pysäyttävät ohjelman,
 jos indeksi menee taulukon ohi tai etumerkillinen kokonaisluku
 ylivuotaa. Algoritmeissa ne ovat yleisimmät virheet: väärä silmukan raja

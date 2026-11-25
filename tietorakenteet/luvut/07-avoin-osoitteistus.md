@@ -48,6 +48,21 @@ jotka on lisätty sen *ohi* törmäyksen vuoksi. Siksi poistettu paikka
 merkitään *hautakiveksi* (engl. tombstone): haku jatkaa sen yli, mutta
 lisäys saa käyttää sen uudelleen.
 
+Esimerkin funktio `jakso` näyttää tilanteen kahdeksan paikan
+taulussa. Avaimilla 1, 9 ja 17 on sama kotipaikka, joten ne asettuvat
+peräkkäin. Keskimmäinen poistetaan (hautakivi on tulosteessa `+`), ja
+viimeisen haku kulkee hautakiven yli:
+
+```{.tuloste tiedosto="esimerkit/07-avoin.odotettu" rivit="1-6"}
+```
+
+```{.dot tiedosto="kaaviot/avoin-jakso.dot" otsikko="Kokeilujakso: hautakivi (†) pitää jakson yhtenäisenä, tyhjäksi merkitty paikka katkaisee sen"}
+```
+
+Viimeisellä rivillä poisto on tehty väärin merkitsemällä paikka
+tyhjäksi. Avain 17 on yhä taulussa, mutta haku pysähtyy paikkaan 5
+eikä löydä sitä.
+
 Hautakivillä on hintansa. Ne eivät sisällä avaimia, mutta pidentävät
 hakuja kuin käytössä olevat paikat. Jos taulussa lisätään ja poistetaan
 jatkuvasti, hautakivet voivat täyttää sen, ja epäonnistunut haku käy
@@ -83,6 +98,9 @@ uudelleen debuggerissa. Silmukan voi helposti laajentaa tulostamaan
 ensimmäisen eroavan operaation numeron, jolloin virheen paikantaminen
 on suoraviivaista.
 
+```{.tuloste tiedosto="esimerkit/07-avoin.odotettu" rivit="8-8"}
+```
+
 ## Kuormituskerroin
 
 Avoimessa osoitteistuksessa kuormituskerroin $\alpha$ on enintään 1,
@@ -99,8 +117,11 @@ ensin jokaisen lisätyn avaimen, sitten yhtä monta puuttuvaa:
 ```{.c tiedosto="esimerkit/07-avoin.c" osa="kuormitus"}
 ```
 
-```{.tuloste tiedosto="esimerkit/07-avoin.odotettu"}
+```{.tuloste tiedosto="esimerkit/07-avoin.odotettu" rivit="9-"}
 ```
+
+![Kokeilujen määrä kuormituskertoimen funktiona: Knuthin kaavat
+käyrinä ja yllä olevan tulosteen mittaukset pisteinä](kuvat/kuormitus.png){width=85%}
 
 Mittaus osuu teoriaan. Kun kerroin kasvaa puolesta 0,9:ään,
 onnistuneen haun hinta lähes nelinkertaistuu, mutta epäonnistuneen

@@ -1,0 +1,6 @@
+4 komponenttia:
+  0: portti
+  1: tilaus varasto laskutus
+  2: ilmoitus raportti
+  3: loki
+satunnaistesti: 500 graafia, 2360 komponenttia, 188 graafissa ei syklejä, 0 virhettä

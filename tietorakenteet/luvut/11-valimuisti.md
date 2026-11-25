@@ -88,7 +88,10 @@ Sama periaate pätee tietueiden sisällä. Tavallinen tapa tallentaa
 hiukkassimulaation data on *tietuetaulukko* (engl. array of structures,
 AoS): taulukko, jonka jokainen alkio on kaikki yhden hiukkasen kentät.
 Vaihtoehto on *kenttätaulukot* (engl. structure of arrays, SoA): oma
-taulukko kullekin kentälle.
+taulukko kullekin kentälle. Samoista asetteluista käytetään myös
+nimiä rakenteiden taulukko ja taulukoiden rakenne, esimerkiksi taidossa
+*Suorituskyvyn analyysi ja optimointi*, joka mittaa eron
+suorituskykylaskureilla.
 
 ```{.c tiedosto="esimerkit/11-asettelu.c" osa="tietue"}
 ```

@@ -29,7 +29,20 @@ Rekonstruktio alkaa taulukon oikeasta alakulmasta. Kun merkit ovat
 samat, merkki kirjoitetaan tulokseen lopusta alkaen ja siirrytään
 vinosti. Muuten siirrytään siihen naapuriin, josta arvo tuli.
 
-```{.tuloste tiedosto="esimerkit/10-lcs.odotettu"}
+```{.tuloste tiedosto="esimerkit/10-lcs.odotettu" rivit="1-3"}
+```
+
+Viimeisen parin taulukko näyttää, mitä algoritmi teki. Ruudussa on
+alkuosien LCS:n pituus, ja korostettu polku on rekonstruktion reitti
+oikeasta alakulmasta takaisin alkuun. Jokainen vino askel, jossa arvo
+kasvaa, on yhteinen merkki: k, i ja a.
+
+```{.dot tiedosto="kaaviot/lcs-taulukko.dot" otsikko="LCS-taulukko sanoille kissa ja koira; rekonstruktion polku korostettuna (esimerkin tulosteesta)" leveys="38%"}
+```
+
+Sama taulukko ohjelman tulosteena ja testin tulos:
+
+```{.tuloste tiedosto="esimerkit/10-lcs.odotettu" rivit="4-"}
 ```
 
 Pisimpiä yhteisiä osajonoja voi olla useita: ALGORITMI ja LOGARITMI
@@ -65,13 +78,24 @@ vaihtoehto, joka selittää taulukon arvon:
 ```{.c tiedosto="esimerkit/10-editointi.c" osa="kohdistus"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-editointi.odotettu"}
+```{.tuloste tiedosto="esimerkit/10-editointi.odotettu" asti="+ ~ ~ ~ ~ = = = ="}
 ```
 
 Kohdistuksen rivit ovat lähtö- ja kohdesana sekä operaatiot: `=`
 pitää merkin, `~` korvaa, `x` poistaa ja `+` lisää. Viiva tarkoittaa
 puuttuvaa merkkiä. Lauantai muuttuu sunnuntaiksi lisäämällä alkuun
 s:n ja korvaamalla neljä merkkiä; loppuosa "ntai" on yhteinen.
+
+Taulukossa sama näkyy polkuna. Askel oikealle on lisäys, askel alas
+poisto ja vino askel korvaus tai, jos arvo ei kasva, säilytetty merkki.
+Polku alkaa yhdellä askeleella oikealle (lisätään s) ja jatkuu vinosti
+loppuun; viimeiset neljä vinoa askelta eivät kasvata arvoa.
+
+```{.dot tiedosto="kaaviot/editointi-taulukko.dot" otsikko="Editointietäisyyden taulukko: lauantai (rivit) muuttuu sunnuntaiksi (sarakkeet); kohdistuksen polku korostettuna (esimerkin tulosteesta)" leveys="55%"}
+```
+
+```{.tuloste tiedosto="esimerkit/10-editointi.odotettu" alkaen="raakatesti"}
+```
 Testi vertaa taulukon arvoa suoraan rekursiivisen määritelmän arvoon,
 joka käy kaikki kohdistukset läpi eksponentiaalisessa ajassa ja on
 siksi rajattu seitsemän merkin sanoihin.

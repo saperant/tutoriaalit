@@ -6,7 +6,7 @@ sisältävä reitti ei ole välttämättä lyhin. Tässä luvussa on kaksi
 tehtävää: *lyhimmät polut* yhdestä lähtösolmusta kaikkiin muihin ja
 *pienin virittävä puu*, halvin kaarijoukko, joka yhdistää kaikki
 solmut. Molempien perusalgoritmit ovat ahneita, ja molemmissa
-binäärikeko (Tietorakenteet, luku 9) tekee ahneesta valinnasta
+binäärikeko (taito *Tietorakenteet*) tekee ahneesta valinnasta
 halvan.
 
 ## Relaksaatio
@@ -94,9 +94,15 @@ nollapainoisia kaaria ja saavuttamattomia solmuja.
 
 Dijkstran perustelu nojasi siihen, ettei loppumatka voi lyhentää
 reittiä. Negatiivinen kaari rikkoo tämän. Esimerkin pienessä
-graafissa kaaret ovat A → B 2, A → C 3, C → B −2 ja B → D 1:
+graafissa on neljä solmua ja yksi negatiivinen kaari:
+
+```{.dot tiedosto="kaaviot/negatiivinen-kaari.dot" otsikko="Negatiivinen kaari C → B: Dijkstra antaa D:n etäisyydeksi 3, oikea vastaus on 2 (esimerkin datasta ja tulosteesta)" leveys="55%"}
+```
 
 ```{.c tiedosto="esimerkit/12-dijkstra.c" osa="negatiivinen"}
+```
+
+```{.tuloste tiedosto="esimerkit/12-dijkstra.odotettu" alkaen="negatiivinen kaari"}
 ```
 
 Dijkstra ottaa B:n keosta etäisyydellä 2, julistaa sen valmiiksi ja
@@ -179,17 +185,59 @@ graafeilla nopeampi kuin keko:
 ```{.tuloste tiedosto="esimerkit/12-virittava.odotettu"}
 ```
 
+```{.dot tiedosto="kaaviot/virittava-puu.dot" otsikko="Kuituverkon reittivaihtoehdot hintoineen ja pienin virittävä puu paksulla viivalla (esimerkin datasta ja tulosteesta)" leveys="60%"}
+```
+
 Kruskal valitsee kaaret halvimmasta alkaen: Koski–Salo 2, Mäki–Niemi 6
 ja Aho–Kangas 7. Seuraavat kaksi, Aho–Koski 9 ja Niemi–Salo 9,
 yhdistävät ryhmät yhdeksi, ja algoritmi lopettaa, kun viisi kaarta on
-valittu. Kalliimmat kaaret, kuten Kangas–Koski 10, sulkisivat syklin. Satunnaistesti vertaa
-algoritmeja 300 graafilla. Puu on yksikäsitteinen vain, jos painot ovat
-erisuuria, joten testi vertaa kokonaishintoja. Epäyhtenäisellä
-graafilla virittävää puuta ei ole, ja molempien on ilmoitettava se.
+valittu. Kalliimmat kaaret, kuten Kangas–Koski 10, sulkisivat syklin.
+
+Satunnaistesti vertaa algoritmeja 300 graafilla. Puu on yksikäsitteinen
+vain, jos painot ovat erisuuria, joten testi vertaa kokonaishintoja.
+Epäyhtenäisellä graafilla virittävää puuta ei ole, ja molempien on
+ilmoitettava se.
 
 Kruskal on $O(m \log m)$ lajittelun vuoksi ja sopii harvoille
 graafeille, joiden kaaret ovat jo listana. Prim keolla on
 $O(m \log n)$ ja taulukolla $O(n^2)$, mikä sopii tiheille graafeille.
+
+## Kaikkien parien lyhimmät polut
+
+Dijkstra ja Bellman–Ford laskevat etäisyydet yhdestä lähtösolmusta.
+Etäisyystaulukko kaikkien kaupunkien välillä tai verkon halkaisija
+vaatii lyhimmän polun *jokaiselle solmuparille*. Sen saa ajamalla
+Dijkstran jokaisesta solmusta, mutta tiheälle tai pienelle graafille on
+yksinkertaisempi tapa: Floydin–Warshallin algoritmi, joka on dynaamista
+ohjelmointia (luku 9) graafissa.
+
+Osatehtävä on lyhin polku $u$:sta $v$:hen, kun välisolmuina saa
+käyttää vain solmuja $0, \ldots, k$. Kun mukaan otetaan solmu $k$,
+polku joko ei käytä sitä, jolloin vanha arvo jää voimaan, tai kulkee
+sen kautta, jolloin pituus on polkujen $u \to k$ ja $k \to v$ summa.
+Koska kierroksen $k$ arvot riippuvat vain rivistä ja sarakkeesta $k$,
+jotka eivät kierroksella muutu, yksi matriisi riittää:
+
+```{.c tiedosto="esimerkit/12-kaikki-parit.c" osa="floyd"}
+```
+
+Algoritmin ydin on kolme sisäkkäistä silmukkaa, ja uloimman on oltava
+välisolmu $k$. Aika on $\Theta(n^3)$ ja muisti $\Theta(n^2)$.
+Negatiiviset painot käyvät, ja negatiivinen sykli näkyy lävistäjällä:
+solmusta pääsee itseensä alle nollan hinnalla.
+
+```{.c tiedosto="esimerkit/12-kaikki-parit.c" osa="tiet"}
+```
+
+```{.tuloste tiedosto="esimerkit/12-kaikki-parit.odotettu"}
+```
+
+Taulukosta näkee esimerkiksi, että Mikkelistä Tampereelle kuljetaan
+Lahden kautta (135 + 130). Testi vertaa matriisia Bellman–Fordiin,
+joka ajetaan jokaisesta lähtösolmusta, 300 satunnaisella suunnatulla
+graafilla, joissa on myös negatiivisia kaaria; negatiivisen syklin
+olemassaolosta molempien on oltava samaa mieltä. Harvalla graafilla
+$n$ Dijkstran ajoa, $O(n(n + m) \log n)$, on nopeampi.
 
 ## Algoritmin valinta
 
@@ -199,6 +247,7 @@ $O(m \log n)$ ja taulukolla $O(n^2)$, mikä sopii tiheille graafeille.
 | lyhin polku | painot $\ge 0$ | Dijkstra keolla | $O((n + m) \log n)$ |
 | lyhin polku | negatiiviset painot | Bellman–Ford | $O(nm)$ |
 | lyhin polku | syklitön graafi | topologinen järjestys | $O(n + m)$ |
+| lyhin polku | kaikki parit, tiheä tai pieni graafi | Floyd–Warshall | $O(n^3)$ |
 | virittävä puu | harva graafi | Kruskal | $O(m \log m)$ |
 | virittävä puu | tiheä graafi | Prim taulukolla | $O(n^2)$ |
 
@@ -218,6 +267,9 @@ pisimmille poluille.
 - **Bellman–Ford negatiivisille painoille ja syklien havaitsemiseen.**
   $n$:s kierros, joka vielä muuttaa jotain, todistaa negatiivisen
   syklin.
+- **Floyd–Warshall, kun tarvitaan kaikki parit ja $n$ on satoja.**
+  Kolme silmukkaa, välisolmu uloimpana; harvalle graafille $n$
+  Dijkstran ajoa.
 - **Union-find puolituksella ja koolla.** Molemmat optimoinnit ovat
   muutaman rivin mittaisia, ja ilman niitä puut voivat kasvaa
   lineaarisen syviksi.
@@ -233,5 +285,7 @@ pisimmille poluille.
   ja ratkaista tehtävän Bellman–Fordilla.
 - Osaat havaita negatiivisen syklin Bellman–Fordin $n$:nnellä
   kierroksella.
+- Osaat laskea kaikkien parien lyhimmät polut Floydin–Warshallin
+  algoritmilla ja selittää, miksi välisolmun silmukka on uloin.
 - Osaat toteuttaa Kruskalin algoritmin union-findilla ja Primin
   algoritmin sekä valita niiden välillä graafin tiheyden mukaan.

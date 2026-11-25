@@ -99,6 +99,42 @@ def cfg() -> str:
     return "\n".join(rivit) + "\n"
 
 
+def elavyys() -> str:
+    """Ohjausvuograafi, jonka lohkoissa on elävyysanalyysin kiintopiste."""
+    joukot: dict[str, tuple[str, str]] = {}
+    for rivi in (NAYTTEET / "elavyys-summa.txt").read_text("utf-8").splitlines():
+        osat = rivi.split()
+        if osat and osat[0].startswith("L"):
+            sisaan = rivi[rivi.index("sisään") + 7:rivi.index("ulos")].strip()
+            ulos = rivi[rivi.index("ulos") + 5:].strip()
+            joukot[osat[0]] = (sisaan, ulos)
+    kaaret: list[tuple[str, str]] = []
+    nykyinen = ""
+    for rivi in (NAYTTEET / "ir-summa.txt").read_text("utf-8").splitlines():
+        if rivi.startswith("fn") or not rivi.strip():
+            continue
+        if not rivi.startswith(" "):
+            nykyinen = rivi.split(":")[0]
+            continue
+        sanat = rivi.replace(",", "").split()
+        if sanat[0] == "jmp":
+            kaaret.append((nykyinen, sanat[1]))
+        elif sanat[0] == "br":
+            kaaret += [(nykyinen, sanat[2]), (nykyinen, sanat[3])]
+    assert set(joukot) == {a for a, _ in kaaret} | {b for _, b in kaaret}
+    rivit = ["digraph {", "  ranksep=0.3;",
+             "  node [shape=record, fontname=\"DejaVu Sans Mono\",",
+             "        fontsize=8];"]
+    for nimi, (sisaan, ulos) in joukot.items():
+        s = lainaa(sisaan).replace("{", "\\{").replace("}", "\\}")
+        u = lainaa(ulos).replace("{", "\\{").replace("}", "\\}")
+        rivit.append(f'  {nimi} [label="{{sisään {s}|{nimi}|ulos {u}}}"];')
+    for a, b in kaaret:
+        rivit.append(f"  {a} -> {b};")
+    rivit.append("}")
+    return "\n".join(rivit) + "\n"
+
+
 def dominanssi() -> str:
     rivit = ["digraph {", "  ranksep=0.3;",
              "  node [shape=circle, width=0.45, fixedsize=true];"]
@@ -136,6 +172,7 @@ def elinvalit() -> str:
 
 
 KAAVIOT = {"ast-presedenssi.dot": ast, "cfg-summa.dot": cfg,
+           "elavyys-summa.dot": elavyys,
            "dominanssi-summa.dot": dominanssi,
            "valit-summa.json": elinvalit}
 

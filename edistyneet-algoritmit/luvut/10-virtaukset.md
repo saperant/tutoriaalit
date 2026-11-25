@@ -73,21 +73,6 @@ saavutetaan. Kun lisäyspolkuja ei enää ole, $s$:stä jäännösverkossa
 saavutettavat solmut muodostavat $S$:n. Jokainen $S$:stä $T$:hen
 kulkeva kaari on täynnä, ja jokainen $T$:stä $S$:ään kulkeva on tyhjä.
 
-```{.dot otsikko="Maksimivirta 23 ja sen todistava minimileikkaus (virta/kapasiteetti; leikkauksen kaaret punaisina)"}
-digraph {
-  rankdir=LR; nodesep=0.4; ranksep=0.6;
-  edge [fontsize=8];
-  node [shape=circle, width=0.4, fixedsize=true];
-  subgraph cluster_S { label="S"; color="#D9E0E3"; s; a; c; d; }
-  subgraph cluster_T { label="T"; color="#D9E0E3"; b; t; }
-  s -> a [label="11/16"]; s -> c [label="12/13"];
-  a -> c [label="0/10"]; c -> a [label="1/4"]; c -> d [label="11/14"];
-  b -> c [label="0/9", style=dashed]; b -> t [label="19/20"];
-  edge [color="#B04848", penwidth=1.6];
-  a -> b [label="12/12"]; d -> b [label="7/7"]; d -> t [label="4/4"];
-}
-```
-
 ```{.cpp tiedosto="esimerkit/virtaus.hpp" osa="leikkaus"}
 ```
 
@@ -106,7 +91,12 @@ B–E 8, C–E 9, E–D 6, D–F 10 ja E–F 10.
 ```{.tuloste tiedosto="esimerkit/10-virtaus.odotettu"}
 ```
 
-Leikkaus kertoo, mitä yhteyksiä kannattaa vahvistaa: niin kauan kuin
+```{.dot tiedosto="kaaviot/virtaus-leikkaus.dot" otsikko="Konesaliverkon maksimivirta 19 ja sen todistava minimileikkaus (virta/kapasiteetti; leikkauksen kaaret punaisina; esimerkin tulosteesta)"}
+```
+
+Kuvassa näkyy max-flow min-cut -lauseen sisältö: leikkauksen kaaret
+A–B ja C–E ovat täynnä, ja ainoa $T$:stä $S$:ään kulkeva kaari B–C on
+tyhjä. Leikkaus kertoo, mitä yhteyksiä kannattaa vahvistaa: niin kauan kuin
 yhteydet A–B ja C–E pysyvät ennallaan, virta ei voi kasvaa yli
 19 Gbit/s, vaikka muita yhteyksiä vahvistettaisiin. Se kertoo myös,
 mitkä yhteydet ovat kriittisiä luotettavuuden kannalta.
@@ -162,6 +152,44 @@ Kolme aihetta peittää kaikki toiveet: kukaan ei toivonut grafiikkaa,
 joten viisi opiskelijaa jakaa kolme aihetta. Tällainen vastaus
 kelpaa käyttäjälle paremmin kuin pelkkä luku.
 
+## Mallinnus minimileikkauksena
+
+Virtausalgoritmi on harvoin itse tehtävä. Työ on tunnistaa, että
+tehtävän voi esittää verkkona, ja joskus vastaus on minimileikkaus
+eikä virta. Leikkaus jakaa solmut kahteen joukkoon, joten se sopii
+tehtäviin, joissa jokaisesta asiasta tehdään kyllä tai ei -päätös ja
+päätösten välillä on riippuvuuksia.
+
+*Projektien valinta* on tällainen tehtävä. Projekti tuottaa rahaa
+mutta vaatii investointeja, ja sama investointi voi palvella useaa
+projektia. Mitkä projektit kannattaa tehdä? Verkkoon tulee kaari
+lähteestä jokaiseen projektiin (kapasiteettina tuotto), jokaisesta
+investoinnista nieluun (hinta) ja projektista sen vaatimiin
+investointeihin (ääretön). Lähteen puolelle jäävät projektit tehdään:
+
+```{.cpp tiedosto="esimerkit/10-projektit.cpp" osa="malli"}
+```
+
+Ääretön kaari pakottaa riippuvuuden: jos projekti on lähteen puolella
+ja sen investointi nielun puolella, leikkaus olisi ääretön. Äärellinen
+leikkaus maksaa jokaisesta hylätystä projektista sen tuoton ja
+jokaisesta tehdystä investoinnista sen hinnan, joten leikkauksen
+minimointi on voiton maksimointia.
+
+```{.cpp tiedosto="esimerkit/10-projektit.cpp" osa="esimerkki"}
+```
+
+```{.tuloste tiedosto="esimerkit/10-projektit.odotettu"}
+```
+
+Verkkokauppa (40) ja mobiilisovellus (25) jakavat maksurajapinnan ja
+tunnistautumisen (yhteensä 42). Kumpikaan ei kannata yksin, mutta
+yhdessä ne tuottavat 23. Raportointi ja arkistointi eivät yhdessäkään
+ylitä tietovaraston hintaa. Ahne valinta projekti kerrallaan ei löydä
+tätä ratkaisua. Vertailutesti käy pienissä tapauksissa läpi kaikki
+projektijoukot. Sama rakenne ratkaisee kuvan jakamisen kohteeseen ja
+taustaan sekä louhoksen kaivuujärjestyksen.
+
 ## Laajennuksia
 
 - **Monta lähdettä ja nielua:** lisätään superlähde ja supernielu,
@@ -204,5 +232,7 @@ kelpaa käyttäjälle paremmin kuin pelkkä luku.
   max-flow min-cut -lausetta vertailutestin mallina.
 - Osaat mallintaa kaksijakoisen parituksen virtauksena ja ratkaista
   sen Kuhnin algoritmilla.
+- Osaat mallintaa riippuvuuksia sisältävän valintatehtävän
+  minimileikkauksena ja selittää äärettömän kaaren merkityksen.
 - Osaat muodostaa Königin lauseen mukaisen pienimmän solmupeitteen ja
   käyttää sitä parituksen optimaalisuuden todistuksena.

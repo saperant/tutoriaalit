@@ -77,7 +77,7 @@ ole.
 
 Kiden aritmetiikka on määritelty niin, että se vastaa suoraan
 RISC-V:n käskyjä. Määrittely on kirjoitettu C++:ksi, ja sitä käyttävät
-sekä tulkki (luku 8) että vakioiden laskostus (luku 12):
+sekä tulkki (luku 8) että vakioiden laskostus (luku 11):
 
 ```{.cpp tiedosto="esimerkit/kide/semantiikka.hpp" osa="aritmetiikka"}
 ```

@@ -41,6 +41,24 @@ static bool rengas_lue(Rengas *r, uint8_t *tavu)
 }
 // @loppu rengas
 
+// Puskurin sisältö ja indeksien paikat yhdellä rivillä: vapaa paikka
+// on -, välilyönti _. Kirjan kuva kolmesta tilasta piirretään näistä
+// riveistä (kaaviot/tee.py).
+static void nayta(const Rengas *r, const char *tila)
+{
+    printf("%s [", tila);
+    for (uint32_t i = 0; i < KOKO; i++) {
+        // Paikka on käytössä, jos sen etäisyys lukuindeksistä on
+        // pienempi kuin täyttö.
+        bool kaytossa = ((i - r->luettu) & (KOKO - 1)) < rengas_taytto(r);
+        char merkki = !kaytossa ? '-'
+                      : r->data[i] == ' ' ? '_' : (char)r->data[i];
+        printf("%c%s", merkki, i + 1 < KOKO ? " " : "");
+    }
+    printf("] luku %u, kirjoitus %u, täyttö %u\n", r->luettu & (KOKO - 1),
+           r->kirjoitettu & (KOKO - 1), rengas_taytto(r));
+}
+
 int main(void)
 {
     // Indeksit aloitetaan lähellä 2^32:ta, jotta niiden ympärikierto
@@ -51,6 +69,8 @@ int main(void)
     int odotuksia = 0;
     char vastaanotettu[64];
     size_t vastaanotetut = 0;
+    bool kiertanyt_naytetty = false, taysi_naytetty = false;
+    nayta(&r, "tyhjä:    ");
 
     // Kirjoittaja tuottaa 4 tavua kierroksessa, lukija ehtii lukea 2.
     for (int kierros = 0; viesti[lahetetty] != '\0' || rengas_taytto(&r);
@@ -61,6 +81,14 @@ int main(void)
                 break;          // kirjoittaja odottaa seuraavaa kierrosta
             }
             lahetetty++;
+        }
+        if (!taysi_naytetty && rengas_taytto(&r) == KOKO) {
+            nayta(&r, "täysi:    ");
+            taysi_naytetty = true;
+        } else if (!kiertanyt_naytetty && (r.kirjoitettu & (KOKO - 1))
+                                          < (r.luettu & (KOKO - 1))) {
+            nayta(&r, "kiertänyt:");
+            kiertanyt_naytetty = true;
         }
         uint8_t tavu;
         for (int i = 0; i < 2 && rengas_lue(&r, &tavu); i++) {

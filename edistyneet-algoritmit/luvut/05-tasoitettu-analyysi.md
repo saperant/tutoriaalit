@@ -1,5 +1,10 @@
 # Tasoitettu analyysi
 
+Taito *Tietorakenteet* mittasi dynaamisen taulukon kopioiden määrän
+eri kasvatuskertoimilla, ja *Algoritmit* määritteli tasoitetun ajan.
+Tämä luku antaa menetelmät, joilla tasoitettu raja todistetaan, ja
+tarkistaa todistuksen kirjanpidon ohjelmalla lisäys lisäykseltä.
+
 Dynaamisen taulukon `push_back` on yleensä halpa, mutta joskus se
 kopioi koko taulukon. Pahimman tapauksen analyysi antaa yhdelle
 lisäykselle ajan $O(n)$, ja $n$ lisäykselle se antaisi

@@ -1,0 +1,3 @@
+täysi:      [4 5 6 7 8 1 2 3] alku 5, määrä 8
+kasvatettu: [1 2 3 4 5 6 7 8 9 - - - - - - -] alku 0, määrä 9
+vertailutesti: 200000 operaatiota, ei eroja, kapasiteetti lopussa 4096

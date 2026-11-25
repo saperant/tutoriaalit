@@ -21,7 +21,14 @@ viimeisen alkion ja kerää sitä pienemmät välin alkuun:
 ```
 
 Jaon invariantti on, että kierroksen alussa `a[lo..i)` on pienempiä
-kuin `p` ja `a[i..j)` suurempia tai yhtä suuria. Kun `j` saavuttaa
+kuin `p` ja `a[i..j)` suurempia tai yhtä suuria:
+
+| `a[lo..i)` | `a[i..j)` | `a[j..hi)` | `a[hi]` |
+|:----------:|:---------:|:----------:|:-------:|
+| pienempiä kuin `p` | vähintään `p` | tutkimatta | jakoalkio `p` |
+
+Jokainen kierros siirtää alkion `a[j]` tutkimattomista jompaankumpaan
+alueeseen: pienempi vaihdetaan kohtaan `i`, ja molemmat rajat siirtyvät. Kun `j` saavuttaa
 välin lopun, jakoalkio vaihdetaan kohtaan `i`, joka on sen lopullinen
 paikka lajitellussa taulukossa. Jako on $\Theta(n)$ ja tekee
 täsmälleen $n - 1$ vertailua.
@@ -74,8 +81,14 @@ lipun ongelmana:
 ```{.c tiedosto="esimerkit/04-pika.c" osa="kolmijako"}
 ```
 
-Invariantti on `a[lo..lt) < p`, `a[lt..i) == p` ja `a(gt..hi] > p`;
-väli `a[i..gt]` on käsittelemättä. Kun kaikki alkiot ovat samoja,
+Invariantissa on neljä aluetta:
+
+| `a[lo..lt)` | `a[lt..i)` | `a[i..gt]` | `a(gt..hi]` |
+|:-----------:|:----------:|:----------:|:-----------:|
+| pienempiä kuin `p` | yhtä suuria | tutkimatta | suurempia kuin `p` |
+
+Tutkimaton alue kutistuu kummastakin päästä: pienempi alkio vaihdetaan
+vasemmalle, suurempi oikealle, ja yhtä suuri jää paikalleen. Kun kaikki alkiot ovat samoja,
 yksi kierros riittää: $n$ vertailua ja rekursiosyvyys 1. Erisuurilla
 alkioilla kolmijako on hieman hitaampi kuin Lomuton jako, koska se
 tekee enemmän vaihtoja, mutta asymptoottisesti yhtä hyvä.
@@ -102,8 +115,8 @@ Kekoutus on $O(n)$, ja jokainen $n - 1$ poistosta on $O(\log n)$.
 Kekolajittelu on siis $O(n \log n)$ myös pahimmassa tapauksessa ja
 lajittelee paikallaan ilman lisämuistia. Vertailujen määrä tuskin
 riippuu syötteestä. Testi vertaa tulosta `qsort`-funktioon 300
-satunnaisella taulukolla; vertailijan oikea kirjoitustapa käsitellään
-luvussa 5.
+satunnaisella taulukolla; vertailijan oikea kirjoitustapa käsiteltiin
+luvussa 3.
 
 Kekolajittelu ei ole vakaa, ja käytännössä se on pikalajittelua
 hitaampi. Lapset ovat taulukossa kaukana vanhemmistaan, joten suurella

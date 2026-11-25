@@ -1,0 +1,41 @@
+digraph {
+  nodesep=0.25; ranksep=0.3;
+  node [shape=circle, width=0.4, fixedsize=true, fontsize=10];
+  edge [arrowsize=0.6];
+  subgraph cluster_0 {
+    label="ennen"; fontsize=10; color=white;
+    p0_0 [label="50"];
+    p0_1 [label="30", style=filled, fillcolor="#F6D6CF"];
+    p0_2 [label="20"];
+    p0_1 -> p0_2;
+    p0_3 [label="40"];
+    p0_4 [label="35", style=filled, fillcolor="#D8EFEB"];
+    p0_3 -> p0_4;
+    p0_5 [shape=point, style=invis];
+    p0_3 -> p0_5 [style=invis];
+    p0_1 -> p0_3;
+    p0_0 -> p0_1;
+    p0_6 [label="70"];
+    p0_7 [label="60"];
+    p0_6 -> p0_7;
+    p0_8 [label="80"];
+    p0_6 -> p0_8;
+    p0_0 -> p0_6;
+  }
+  subgraph cluster_1 {
+    label="avain 30 poistettu"; fontsize=10; color=white;
+    p1_0 [label="50"];
+    p1_1 [label="35", style=filled, fillcolor="#D8EFEB"];
+    p1_2 [label="20"];
+    p1_1 -> p1_2;
+    p1_3 [label="40"];
+    p1_1 -> p1_3;
+    p1_0 -> p1_1;
+    p1_4 [label="70"];
+    p1_5 [label="60"];
+    p1_4 -> p1_5;
+    p1_6 [label="80"];
+    p1_4 -> p1_6;
+    p1_0 -> p1_4;
+  }
+}

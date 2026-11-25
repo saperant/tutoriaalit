@@ -40,34 +40,6 @@ joita ei ole vielä keksitty. Se on Ω-tulos, ja se kertoo, milloin
 optimointi kannattaa lopettaa: vertailulajittelua ei voi parantaa
 asymptoottisesti, vain vakiokertoimilla.
 
-## Vertailijan sudenkuoppa
-
-Kirjaston `qsort` tarvitsee vertailufunktion, joka palauttaa
-negatiivisen, nollan tai positiivisen luvun. Lyhin kirjoitustapa on
-tavallinen virhe:
-
-```{.c tiedosto="esimerkit/05-vertailija.kaatuu.c" osa="vaarin"}
-```
-
-Erotus $a - b$ ylivuotaa, kun luvut ovat eri merkkisiä ja kaukana
-toisistaan, esimerkiksi $3 - (-2^{31})$. Etumerkillisen ylivuoto on
-C:ssä määrittelemätöntä käyttäytymistä. Käytännössä tulos kiertyy
-negatiiviseksi, `qsort` saa väärän vastauksen ja järjestää taulukon
-väärin, mitään virheilmoitusta antamatta. UBSan pysäyttää ohjelman
-ensimmäiseen ylivuotoon:
-
-```text
-runtime error: signed integer overflow: 3 - -2147483648 cannot be
-represented in type 'int'
-```
-
-Oikea muoto on `(a > b) - (a < b)`, joka palauttaa aina $-1$, $0$
-tai $1$ eikä voi ylivuotaa. Vertailijan on myös oltava johdonmukainen:
-jos $a < b$ ja $b < c$, on oltava $a < c$, eikä tulos saa riippua
-kutsujärjestyksestä. Liukulukujen `NaN` rikkoo tämän, koska se ei ole
-pienempi, yhtä suuri eikä suurempi kuin mikään luku. Epäjohdonmukainen
-vertailija voi saada lajittelun silmukoimaan tai lukemaan taulukon ohi.
-
 ## Laskemislajittelu
 
 Jos avaimet ovat kokonaislukuja välillä $0 \ldots k - 1$, ne voi laskea.
@@ -147,11 +119,6 @@ vertailulla. Mittauksen ajaa komento `make -C esimerkit`.
 - **$n \log n$ on raja vain vertailuille.** Jos avaimet ovat pieniä
   kokonaislukuja tai kiinteänmittaisia, laskemis- tai
   kantalukulajittelu voi olla moninkertaisesti nopeampi.
-- **Vertailija on `(a > b) - (a < b)`.** Erotus ylivuotaa, ja
-  ylivuoto on määrittelemätöntä käyttäytymistä. Sanitoija löytää
-  virheen, testit eivät välttämättä.
-- **Vertailijan on oltava johdonmukainen.** `NaN` tai satunnainen
-  tasapelin ratkaisu voi rikkoa lajittelun.
 - **Vakaus tekee monivaiheisen lajittelun mahdolliseksi.**
   Kantalukulajittelu on yhtä kuin vakaa lajittelu numero kerrallaan.
 - **Mittaa todellisella datalla.** Asymptoottisesti parempi algoritmi
@@ -161,8 +128,6 @@ vertailulla. Mittauksen ajaa komento `make -C esimerkit`.
 
 - Osaat johtaa vertailulajittelun alarajan $\log_2 n!$ päätöspuusta ja
   selittää, miksi se ei koske laskemislajittelua.
-- Osaat kirjoittaa oikean `qsort`-vertailijan ja selittää, miksi
-  erotus on virhe.
 - Osaat kirjoittaa vakaan laskemislajittelun etuliitesummilla.
 - Osaat kirjoittaa LSD-kantalukulajittelun ja perustella sen
   oikeellisuuden vakaudella.

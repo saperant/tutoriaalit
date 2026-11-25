@@ -1,0 +1,21 @@
+graph {
+  layout=neato;
+  node [shape=box, style="rounded,filled", fontsize=10];
+  edge [fontsize=9];
+  "Aho" [pos="0.0,-0.9!"];
+  "Kangas" [pos="0.0,2.0!"];
+  "Koski" [pos="1.8,0.1!"];
+  "Mäki" [pos="2.2,1.15!"];
+  "Niemi" [pos="4.2,2.0!"];
+  "Salo" [pos="4.0,-0.9!"];
+  "Aho" -- "Kangas" [label="7", color="#B04848", penwidth=2.2];
+  "Aho" -- "Koski" [label="9", color="#B04848", penwidth=2.2];
+  "Aho" -- "Salo" [label="14", style=dashed];
+  "Kangas" -- "Koski" [label="10", style=dashed];
+  "Kangas" -- "Mäki" [label="15", style=dashed];
+  "Koski" -- "Mäki" [label="11", style=dashed];
+  "Koski" -- "Salo" [label="2", color="#B04848", penwidth=2.2];
+  "Mäki" -- "Niemi" [label="6", color="#B04848", penwidth=2.2];
+  "Niemi" -- "Salo" [label="9", color="#B04848", penwidth=2.2];
+  "Kangas" -- "Niemi" [label="20", style=dashed];
+}

@@ -80,9 +80,13 @@ katselua 100 000 tuotteesta. Luonnoksen parametrit ovat
 $\varepsilon = 0{,}002$ ja $\delta = 0{,}01$, ja tarkat laskurit
 lasketaan rinnalla mallina.
 
-Luonnos käyttää 6800 laskuria satatuhannelle tuotteelle. Yksikään
-arvio ei ylitä rajaa $\varepsilon N = 400$, eikä yksikään ole liian
-pieni (tuloste on luvun lopussa). Suosituimpien tuotteiden arviot
+Luonnos käyttää 6800 laskuria satatuhannelle tuotteelle:
+
+```{.tuloste tiedosto="esimerkit/12-luonnos.odotettu" asti="tuote 10000"}
+```
+
+Yksikään arvio ei ylitä rajaa $\varepsilon N = 400$, eikä yksikään ole
+liian pieni. Suosituimpien tuotteiden arviot
 ovat lähes tarkkoja. Harvinaisten tuotteiden arvioissa virhe on
 suuri suhteessa todelliseen määrään, koska virhe riippuu virran
 pituudesta eikä tuotteen omasta määrästä. Count-Min sopii siis
@@ -107,7 +111,7 @@ Tasaisuus testataan tilastollisesti. Jokaisen 20 alkiosta pitäisi
 esiintyä odotusarvoisesti 6000 otoksessa 30 000:sta. *Khii toiseen
 -testi* (taito *Todennäköisyys*) vertaa havaittuja määriä odotettuihin:
 
-```{.tuloste tiedosto="esimerkit/12-luonnos.odotettu"}
+```{.tuloste tiedosto="esimerkit/12-luonnos.odotettu" alkaen="otanta"}
 ```
 
 Testisuure $9{,}8$ on selvästi alle 95 prosentin rajan $30{,}1$, joten

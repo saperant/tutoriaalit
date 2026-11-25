@@ -58,6 +58,37 @@ Puun vapautus on jälkijärjestys: lapset vapautetaan ennen solmua,
 jonka kentistä niiden osoitteet luetaan. Leveyshaku (taso kerrallaan)
 tehdään jonolla, kuten graafeissa (luku 10).
 
+Esimerkki lisää puuhun avaimet 50, 30, 70, 20, 40, 60, 80 ja 35.
+Ensimmäinen tulosterivi on puu esijärjestyksessä sulkulausekkeena
+`(avain vasen oikea)`, jossa tyhjä alipuu on `()` – tässä muodossa
+puun voi tallentaa ja rakentaa uudelleen. Toinen rivi on
+sisäjärjestys:
+
+```{.tuloste tiedosto="esimerkit/08-hakupuu.odotettu" rivit="1-2"}
+```
+
+## Järjestyskyselyt
+
+Järjestyksen säilyminen on hakupuun varsinainen etu hajautustauluun
+verrattuna. Kolme kyselyä, joihin hajautustaulu ei pysty ilman koko
+taulun läpikäyntiä, ovat pienin (tai suurin) avain, annetun avaimen
+seuraaja ja kaikki avaimet annetulta väliltä:
+
+```{.c tiedosto="esimerkit/08-hakupuu.c" osa="jarjestys"}
+```
+
+Pienin ja seuraaja kulkevat yhden polun, joten niiden hinta on puun
+korkeus. Seuraaja ei vaadi, että avain itse on puussa: sama funktio
+vastaa kysymykseen "mikä on lähin suurempi arvo". Välikysely karsii
+alipuut, joissa välin avaimia ei voi olla, ja sen hinta on korkeus
+plus löydettyjen avainten määrä.
+
+```{.c tiedosto="esimerkit/08-hakupuu.c" osa="kyselyt"}
+```
+
+```{.tuloste tiedosto="esimerkit/08-hakupuu.odotettu" rivit="3-4"}
+```
+
 ## Poisto
 
 Poistossa on kolme tapausta. Lehti poistetaan suoraan. Solmu, jolla
@@ -70,15 +101,16 @@ vasenta lasta, joten sen poisto on yksi kahdesta helposta tapauksesta.
 ```{.c tiedosto="esimerkit/08-hakupuu.c" osa="poista"}
 ```
 
-Avaimet 50, 30, 70, 20, 40, 60, 80 ja 35 tuottavat puun, jossa
-solmulla 30 on kaksi lasta. Sen seuraaja on 35:
+Esimerkin puussa solmulla 30 on kaksi lasta, ja sen seuraaja on 35:
 
-```{.tuloste tiedosto="esimerkit/08-hakupuu.odotettu"}
+```{.dot tiedosto="kaaviot/hakupuu-poisto.dot" otsikko="Kahden lapsen solmun poisto: seuraaja 35 nousee avaimen 30 paikalle (esimerkin tulosteesta)" leveys="70%"}
 ```
 
-Tulosteen kaksi ensimmäistä riviä näyttävät, että sisäjärjestys
-säilyy poistossa, ja kolmas, että 35 nousi poistetun solmun paikalle.
-Seuraavat rivit käsitellään alla.
+```{.tuloste tiedosto="esimerkit/08-hakupuu.odotettu" rivit="5-7"}
+```
+
+Sisäjärjestys säilyy poistossa, ja 35 on noussut poistetun solmun
+paikalle juuren vasemmaksi lapseksi.
 
 ## Epätasapaino
 
@@ -86,9 +118,17 @@ Puun korkeus riippuu lisäysjärjestyksestä. Satunnaisessa järjestyksessä
 lisätyn puun odotettu korkeus on $O(\log n)$, noin $3 \log_2 n$
 suurilla $n$. Mutta jos avaimet tulevat järjestyksessä, jokainen uusi
 avain on edellistä suurempi ja menee oikealle, ja puusta tulee
-linkitetty lista:
+linkitetty lista. Seitsemällä avaimella ero näkyy jo:
+
+```{.dot tiedosto="kaaviot/hakupuu-epatasapaino.dot" otsikko="Samat seitsemän avainta kahdessa lisäysjärjestyksessä: korkeus 3 ja korkeus 7 (esimerkin tulosteesta)" leveys="75%"}
+```
+
+Sama koe tuhannella avaimella:
 
 ```{.c tiedosto="esimerkit/08-hakupuu.c" osa="korkeus"}
+```
+
+```{.tuloste tiedosto="esimerkit/08-hakupuu.odotettu" rivit="8-11"}
 ```
 
 Tuhannen avaimen puun korkeus on järjestyksessä lisättynä 1000 ja
@@ -124,6 +164,9 @@ jälkeen. Pieni avainalue saa poistot osumaan usein kahden lapsen
 solmuihin, joissa virheet tavallisesti ovat:
 
 ```{.c tiedosto="esimerkit/08-hakupuu.c" osa="vertailu"}
+```
+
+```{.tuloste tiedosto="esimerkit/08-hakupuu.odotettu" rivit="12-"}
 ```
 
 Invariantin tarkistus jokaisen operaation jälkeen on $O(n)$, joten

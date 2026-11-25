@@ -80,16 +80,27 @@ $2^{32}$ on jaollinen $K$:lla.
 Testi aloittaa indeksit neljän askeleen päästä ympärikierrosta, jotta
 reunatapaus tulee testatuksi heti eikä vasta tuntien käytön jälkeen.
 Kirjoittaja tuottaa neljä tavua kierroksessa, lukija ehtii käsitellä
-kaksi, joten puskuri täyttyy ja kirjoittaja joutuu odottamaan:
+kaksi, joten puskuri täyttyy ja kirjoittaja joutuu odottamaan. Ohjelma
+tulostaa puskurin sisällön kolmessa tilassa (vapaa paikka on `-`,
+välilyönti `_`) ja täytön jokaisen kierroksen lopussa:
 
 ```{.tuloste tiedosto="esimerkit/05-rengas.odotettu"}
+```
+
+Samat kolme tilaa kuvana. Tyhjässä ja täydessä puskurissa indeksit
+osoittavat samaan paikkaan, ja ne erottaa vain indeksien erotus eli
+täyttö. Keskimmäisessä tilassa data kiertää taulukon reunan yli:
+viesti jatkuu paikasta 7 paikkaan 0.
+
+```{.dot tiedosto="kaaviot/rengas-tilat.dot" otsikko="Rengaspuskuri tyhjänä, reunan yli kiertäneenä ja täytenä (esimerkin tulosteesta)"}
 ```
 
 Mallin suurin etu näkyy rinnakkaisuudessa. Kirjoittaja muuttaa vain
 indeksiä `kirjoitettu` ja lukija vain indeksiä `luettu`; kumpikin vain
 lukee toisen indeksin. Siksi yksi kirjoittaja ja yksi lukija voivat
 käyttää puskuria ilman lukkoa, kunhan indeksit ovat atomisia ja
-kirjoitus näkyy oikeassa järjestyksessä (vapautus–hankinta-semantiikka).
+kirjoitus näkyy oikeassa järjestyksessä (vapautus–hankinta-semantiikka,
+engl. release/acquire).
 Erillinen laskuri tekisi tämän mahdottomaksi, koska molemmat
 muuttaisivat samaa muuttujaa. Muistijärjestys käsitellään taidossa
 *Rinnakkaisohjelmointi*.
@@ -97,11 +108,38 @@ muuttaisivat samaa muuttujaa. Muistijärjestys käsitellään taidossa
 ## Kasvava jono ja pakka
 
 Jos jonon kokoa ei tiedetä etukäteen, rengaspuskurin voi kasvattaa
-kuten vektorin: varataan kaksinkertainen taulukko ja kopioidaan
-alkiot loogisessa järjestyksessä uuden taulukon alkuun. Silloin lisäys
-on tasoitetusti $O(1)$. Kasvava rengaspuskuri on samalla *pakka*
-(engl. deque): lisäys ja poisto onnistuvat vakioajassa kummastakin
-päästä, ja $i$:nnen alkion saa laskemalla `data[(alku + i) & (K - 1)]`.
+kuten vektorin, jolloin lisäys on tasoitetusti $O(1)$. Leveyshaku
+(taito *Algoritmit*) tarvitsee juuri tällaista jonoa. Kasvava
+rengaspuskuri on samalla *pakka* (engl. deque): lisäys ja poisto
+onnistuvat vakioajassa kummastakin päästä. Tässä mallissa tallennetaan
+alkukohta ja määrä, ja loogisen paikan $i$ alkio on
+`data[(alku + i) & (K - 1)]`:
+
+```{.c tiedosto="esimerkit/05-pakka.c" osa="pakka"}
+```
+
+Kasvatuksessa on sudenkuoppa. Pelkkä `realloc` säilyttäisi alkiot
+vanhoilla paikoillaan, ja jos data kiertää reunan yli, uusi tyhjä tila
+tulisi keskelle jonoa: alkuosa olisi vanhan taulukon lopussa ja
+loppuosa sen alussa. Alkiot kopioidaan siksi loogisessa järjestyksessä
+uuden taulukon alkuun. Esimerkin täysi jono 1–8 alkaa paikasta 5, ja
+yhdeksäs lisäys kasvattaa taulukon:
+
+```{.tuloste tiedosto="esimerkit/05-pakka.odotettu" rivit="1-2"}
+```
+
+```{.dot tiedosto="kaaviot/pakka-kasvatus.dot" otsikko="Kasvatus kopioi alkiot loogisessa järjestyksessä: jonon ensimmäinen alkio paikasta 5 paikkaan 0"}
+```
+
+Vertailutesti ajaa satunnaisia lisäyksiä ja poistoja kumpaankin päähän
+sekä pakalle että tavalliselle taulukolle, jossa alkuun lisäys siirtää
+kaikkia alkioita:
+
+```{.c tiedosto="esimerkit/05-pakka.c" osa="vertailu"}
+```
+
+```{.tuloste tiedosto="esimerkit/05-pakka.odotettu" rivit="3-"}
+```
 
 Jonon voi toteuttaa myös yksöislinkitetyllä listalla, jolla on
 häntäosoitin: lisäys loppuun, poisto alusta. Se kannattaa vain, kun
@@ -118,6 +156,8 @@ alkioita ei voi siirtää muistissa tai kun tarvitaan tunkeileva jono
   maksimia, ettei virhe paljastu vasta pitkän ajon jälkeen.
 - **Yksi kirjoittaja, yksi lukija, ei yhteistä muuttujaa.** Kahden
   indeksin malli on lukottoman jonon perusta.
+- **Kasvata kopioimalla loogisessa järjestyksessä.** `realloc` jättää
+  reunan yli kiertäneen datan kahteen palaan.
 - **Päätä täyden puskurin käytös.** Odottaako kirjoittaja, hylätäänkö
   uusin vai ylikirjoitetaanko vanhin? Valinta kuuluu rajapintaan.
 
@@ -131,3 +171,5 @@ alkioita ei voi siirtää muistissa tai kun tarvitaan tunkeileva jono
   indeksillä ja perustella, miksi erotus on oikein ympärikierrossakin.
 - Osaat kertoa, miksi kahden indeksin malli sopii yhden kirjoittajan ja
   yhden lukijan jonoon ilman lukkoa.
+- Osaat kasvattaa rengaspuskurin niin, että reunan yli kiertänyt data
+  säilyy järjestyksessä, ja toteuttaa sillä pakan.

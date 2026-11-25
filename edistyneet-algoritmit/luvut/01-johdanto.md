@@ -27,7 +27,10 @@ tilanteet:
   NP-täydellisyys sekä approksimointi, heuristiikat ja haarautuminen
   ja karsinta.
 
-Tutoriaali jatkaa taidosta *Algoritmit*. Sen menetelmät oletetaan
+## Esitiedot ja rajaus
+
+Tutoriaali jatkaa taidosta *Algoritmit*, ja esimerkkien kieli on tuttu
+taidosta *Moderni C++*. Algoritmien menetelmät oletetaan
 tunnetuiksi: vaativuusanalyysi, lajittelut ja niiden alaraja,
 binäärihaku, ahneet algoritmit, dynaaminen ohjelmointi sekä Dijkstran,
 Bellmanin–Fordin, Kruskalin ja Primin algoritmit. Kruskalin algoritmin
@@ -35,15 +38,23 @@ yhteydessä käytetty union-find käsitellään tässä tarkemmin.
 Tietorakenteista oletetaan tavallinen hakupuu, keko, hajautustaulu ja
 verkkojen esitystavat (taito *Tietorakenteet*). Matematiikasta
 tarvitaan induktiota ja invariantteja (*Diskreetti matematiikka*) sekä
-odotusarvoa ja riippumattomuutta (*Todennäköisyys*).
+luvuissa 11 ja 12 odotusarvoa ja riippumattomuutta (*Todennäköisyys*;
+tarvittavat tulokset kerrataan niissä luvuissa).
+
+Rajauksen ulkopuolelle jäävät laskennallinen geometria (kupera peite,
+pyyhkäisyviiva), lineaarinen ohjelmointi ja rinnakkaiset algoritmit.
+Säännölliset lausekkeet ja automaatit käsitellään taidossa
+*Kääntäjätekniikka*, liukulukualgoritmit taidossa *Numeeriset
+menetelmät* ja pelikartan reitinhaku (A\*) taidossa *Peliohjelmointi*.
 
 ## Kieli ja testaus
 
-Esimerkit ovat C++23:a. Kieli antaa tietorakenteille omistuksen
+Esimerkit ovat C++23:a hakemistossa `esimerkit/`, ja `make testaa`
+kääntää ja ajaa ne; valmis ympäristö on kehityskontissa (ks.
+*Kehitysympäristöt ja Dev Containers*). Kieli antaa tietorakenteille omistuksen
 (`std::unique_ptr`), malliparametrit ja standardikirjaston valmiit
 rakenteet, joita käytetään vertailun malleina (`std::set`,
-`std::string::find`, `std::sort`). Kieli on tuttu taidosta *Moderni
-C++*. Esimerkit käännetään GCC 14:llä ja Clang 20:llä
+`std::string::find`, `std::sort`). Esimerkit käännetään GCC 14:llä ja Clang 20:llä
 (`-std=c++23 -Wall -Wextra -Wpedantic -Werror`) AddressSanitizerin ja
 UndefinedBehaviorSanitizerin kanssa. Sanitoijat havaitsevat
 roikkuvat osoittimet ja taulukon ohi indeksoinnin, jotka ovat
@@ -57,7 +68,9 @@ rakenteelle ja yksinkertaiselle mallille, jonka oikeellisuus on
 ilmeinen, ja tuloksia verrataan jokaisen operaation jälkeen. Lisäksi
 tarkistetaan rakenteen sisäiset invariantit. Luku 2 esittelee
 menetelmän ja näyttää, miten se löytää virheen ja pienentää sen
-aiheuttavan syötteen.
+aiheuttavan syötteen. Sama menetelmä on käytössä kevyempänä taidossa
+*Tietorakenteet* ja kokonaisen kääntäjän differentiaalitestauksena
+taidossa *Kääntäjätekniikka*.
 
 Satunnaisuus tulee omasta generaattorista kiinteällä siemenellä, joten
 tulosteet ovat samat joka koneella. Työmäärää mitataan laskureilla

@@ -1,3 +1,7 @@
+solmujen välit: 1:(0,1] 2:(0,2] 3:(2,3] 4:(0,4] 5:(4,5] 6:(4,6] 7:(6,7] 8:(0,8] 9:(8,9] 10:(8,10] 11:(10,11] 12:(8,12] 13:(12,13] 14:(12,14] 15:(14,15] 16:(0,16]
+summa(13) lukee solmut: 13 12 8
+lisaa(4, d) päivittää solmut: 5 6 8 16
+
 vertailutesti: 20 taulukkoa x 3000 operaatiota
 pyyntö  2500: mediaani 51 ms, 99. persentiili 652 ms
 pyyntö  5000: mediaani 50 ms, 99. persentiili 80 ms

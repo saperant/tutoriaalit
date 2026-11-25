@@ -26,6 +26,11 @@ joka kokeilee kaikki varausten osajoukot:
 ```{.tuloste tiedosto="esimerkit/08-aikataulu.odotettu"}
 ```
 
+![Kaksi vastaesimerkkiä aikajanalla. Täytetyt palkit ovat säännön
+valitsemat varaukset: ylhäällä epäonnistuva sääntö, alhaalla
+aikaisimmin loppuva (esimerkin varaukset ja
+tulokset).](kuvat/aikataulu.png){width=90%}
+
 Aikaisin alkava epäonnistuu, kun yksi pitkä varaus alkaa ensimmäisenä
 ja peittää kolme lyhyttä. Lyhin epäonnistuu, kun lyhyt varaus osuu
 kahden pidemmän väliin ja estää molemmat. Satunnaisilla syötteillä
@@ -94,10 +99,18 @@ merkit; koodi on polku juuresta lehteen, vasen haara 0 ja oikea 1.
 David Huffmanin algoritmi (1952) rakentaa optimaalisen puun ahneesti.
 Aluksi jokainen merkki on oma puunsa, jonka paino on merkin
 esiintymien määrä. Kaksi kevyintä puuta yhdistetään, kunnes jäljellä on
-yksi puu. Kevyimmät puut löytyvät binäärikeosta (Tietorakenteet,
-luku 9):
+yksi puu. Kevyimmät puut löytyvät binäärikeosta (taito
+*Tietorakenteet*):
 
 ```{.c tiedosto="esimerkit/08-huffman/huffman.c" osa="rakenna"}
+```
+
+Seuraavan osion pakkausesimerkin puusta näkyy periaate. Kuvassa ovat
+tekstin kuusi yleisintä merkkiä; kolme pistettä merkitsee alipuuta,
+jossa on harvinaisempia merkkejä. Yleisimmät merkit ovat lähellä
+juurta ja saavat kolmen bitin koodin:
+
+```{.dot tiedosto="kaaviot/huffman-puu.dot" otsikko="Huffmanin puun yläosa: koodi on polku juuresta lehteen (pakkausesimerkin tulosteesta)"}
 ```
 
 Algoritmin oikeellisuus perustuu vaihtoargumenttiin. Optimaalisessa

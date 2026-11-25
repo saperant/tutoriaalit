@@ -10,7 +10,7 @@ jokainen latauskäsky vie tilaa käskyvälimuistista.
 
 Kahdella virtuaalirekisterillä voi olla sama fyysinen rekisteri, jos
 ne eivät ole koskaan yhtä aikaa eläviä. Varaus on siis elävyyden
-(luku 11) sovellus.
+(luku 10) sovellus.
 
 ## Elinvälit
 
@@ -62,8 +62,8 @@ aikaa, joten `%6` saa oman rekisterinsä `s5`.
 ```{.ajoituskaavio tiedosto="kaaviot/valit-summa.json" otsikko="Funktion summa elinvälit ja varatut rekisterit"}
 ```
 
-Väliaikaiset `%3`–`%9` ovat lyhytikäisiä ja jakavat lähes kaikki `s4`:n. Pinoa ei
-tarvita. Kun rekistereitä on vain kaksi (`--rekistereita=2`), kolme
+Väliaikaiset `%3`–`%9` ovat lyhytikäisiä ja jakavat lähes kaikki
+`s4`:n. Pinoa ei tarvita. Kun rekistereitä on vain kaksi (`--rekistereita=2`), kolme
 koko silmukan ajan elävää arvoa joutuu pinoon:
 
 ```{.tuloste tiedosto="esimerkit/naytteet/valit-summa-2.txt"}

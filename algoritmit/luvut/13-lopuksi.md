@@ -15,11 +15,13 @@ taulukko auttaa valitsemaan menetelmän:
 | riippumattomat osat, halpa yhdistäminen | hajota ja hallitse | 7 |
 | turvallinen paikallinen valinta | ahne algoritmi | 8 |
 | päällekkäiset osatehtävät, optimi tai lukumäärä | dynaaminen ohjelmointi | 9–10 |
-| yhteydet, painottomat reitit, riippuvuudet | leveys- ja syvyyshaku | 11 |
-| painotetut reitit, yhdistäminen | Dijkstra, Bellman–Ford, MST | 12 |
+| yhteydet, painottomat reitit, riippuvuudet, syklit | leveys- ja syvyyshaku, komponentit | 11 |
+| painotetut reitit, yhdistäminen | Dijkstra, Bellman–Ford, Floyd–Warshall, MST | 12 |
+| pieni syöte, rajoitteet karsivat vaihtoehtoja | peruuttava haku | 9 |
 
-Jos mikään ei sovi ja syöte on pieni, raaka haku on hyvä aloitus. Se
-on myös aina hyödyllinen testireferenssi nopeammalle algoritmille.
+Jos mikään ei sovi ja syöte on pieni, raaka haku (luku 9) on hyvä
+aloitus. Se on myös aina hyödyllinen testireferenssi nopeammalle
+algoritmille.
 
 ## Nyrkkisäännöt
 
@@ -70,8 +72,8 @@ pienentävät virheen aiheuttavan syötteen lyhimmäksi mahdolliseksi.
 
 - **Edistyneet algoritmit ja tietorakenteet** jatkaa tästä:
   tasapainotetut puut ja B-puut, union-find tarkemmin, segmenttipuu,
-  merkkijonohaku, virtausalgoritmit ja laskennallinen vaativuus
-  (P, NP ja NP-täydellisyys).
+  merkkijonohaku, virtausalgoritmit, laskennallinen vaativuus
+  (P, NP ja NP-täydellisyys) sekä haarautuminen ja rajat.
 - **Kääntäjätekniikka** käyttää graafialgoritmeja ja dynaamista
   ohjelmointia: riippuvuusjärjestys, kontrollivuograafi, rekisterien
   varaus graafin värityksenä ja käskyjen valinta.
@@ -82,6 +84,8 @@ pienentävät virheen aiheuttavan syötteen lyhimmäksi mahdolliseksi.
 - **Suorituskyvyn analyysi ja optimointi** jatkaa siitä, mihin
   asymptoottinen analyysi loppuu: välimuisti, haarautumisen ennustus ja
   vektorointi.
+- **Peliohjelmointi** soveltaa reitinhakua pelikartalla (A*, joka on
+  Dijkstran algoritmi arviofunktiolla).
 
 ## Lähteet
 

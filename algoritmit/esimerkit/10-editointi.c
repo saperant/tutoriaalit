@@ -75,6 +75,42 @@ static void kohdistus(const char *a, const char *b)
 }
 // @loppu kohdistus
 
+// Tulostaa etaisyys-kutsun täyttämän taulukon ja merkitsee tähdellä
+// ruudut, joiden kautta kohdistus kulkee (sama sääntö kuin yllä).
+// Kirjan kuva piirretään tästä tulosteesta (kaaviot/tee.py).
+static void tulosta_taulukko(const char *a, const char *b)
+{
+    int n = (int)strlen(a), m = (int)strlen(b);
+    static bool polku[MAX + 1][MAX + 1];
+    memset(polku, 0, sizeof polku);
+    int i = n, j = m;
+    polku[i][j] = true;
+    while (i > 0 || j > 0) {
+        if (i > 0 && j > 0 &&
+            e[i][j] == e[i - 1][j - 1] + (a[i - 1] != b[j - 1])) {
+            i--;
+            j--;
+        } else if (i > 0 && e[i][j] == e[i - 1][j] + 1) {
+            i--;
+        } else {
+            j--;
+        }
+        polku[i][j] = true;
+    }
+    printf("taulukko %s / %s, kohdistuksen polku tähdellä:\n     -", a, b);
+    for (j = 0; j < m; j++) {
+        printf("  %c", b[j]);
+    }
+    printf("\n");
+    for (i = 0; i <= n; i++) {
+        printf("  %c", i == 0 ? '-' : a[i - 1]);
+        for (j = 0; j <= m; j++) {
+            printf(" %c%d", polku[i][j] ? '*' : ' ', e[i][j]);
+        }
+        printf("\n");
+    }
+}
+
 static int raaka(const char *a, const char *b)
 {
     if (*a == '\0') {
@@ -99,6 +135,7 @@ int main(void)
                etaisyys(parit[i][0], parit[i][1]));
         kohdistus(parit[i][0], parit[i][1]);
     }
+    tulosta_taulukko(parit[2][0], parit[2][1]);     // viimeisin kutsu
 
     Satunnainen s = { 37 };
     int virheita = 0;

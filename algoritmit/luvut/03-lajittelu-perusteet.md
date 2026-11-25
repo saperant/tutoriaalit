@@ -138,6 +138,34 @@ C:n `qsort` ei lupaa vakautta. Jos vakaus tarvitaan, avaimeen lisätään
 alkuperäinen indeksi tasapelin ratkaisijaksi, kuten esimerkin kenttä
 `kello`, tai käytetään omaa lomituslajittelua.
 
+## Vertailijan sudenkuoppa
+
+Kirjaston `qsort` tarvitsee vertailufunktion, joka palauttaa
+negatiivisen, nollan tai positiivisen luvun. Lyhin kirjoitustapa on
+tavallinen virhe:
+
+```{.c tiedosto="esimerkit/03-vertailija.kaatuu.c" osa="vaarin"}
+```
+
+Erotus $a - b$ ylivuotaa, kun luvut ovat eri merkkisiä ja kaukana
+toisistaan, esimerkiksi $3 - (-2^{31})$. Etumerkillisen ylivuoto on
+C:ssä määrittelemätöntä käyttäytymistä. Käytännössä tulos kiertyy
+negatiiviseksi, `qsort` saa väärän vastauksen ja järjestää taulukon
+väärin, mitään virheilmoitusta antamatta. UBSan pysäyttää ohjelman
+ensimmäiseen ylivuotoon:
+
+```text
+runtime error: signed integer overflow: 3 - -2147483648 cannot be
+represented in type 'int'
+```
+
+Oikea muoto on `(a > b) - (a < b)`, joka palauttaa aina $-1$, $0$
+tai $1$ eikä voi ylivuotaa. Vertailijan on myös oltava johdonmukainen:
+jos $a < b$ ja $b < c$, on oltava $a < c$, eikä tulos saa riippua
+kutsujärjestyksestä. Liukulukujen `NaN` rikkoo tämän, koska se ei ole
+pienempi, yhtä suuri eikä suurempi kuin mikään luku. Epäjohdonmukainen
+vertailija voi saada lajittelun silmukoimaan tai lukemaan taulukon ohi.
+
 ## Käytännössä
 
 - **Lajittele ennen kuin keksit monimutkaisempaa.** Järjestetty data
@@ -154,6 +182,11 @@ alkuperäinen indeksi tasapelin ratkaisijaksi, kuten esimerkin kenttä
   työstä.
 - **Tiedä, tarvitsetko vakauden.** Jos alkiolla on muutakin tietoa
   kuin avain, kirjoita vakausvaatimus näkyviin ja testaa se.
+- **Vertailija on `(a > b) - (a < b)`.** Erotus ylivuotaa, ja
+  ylivuoto on määrittelemätöntä käyttäytymistä. Sanitoija löytää
+  virheen, testit eivät välttämättä.
+- **Vertailijan on oltava johdonmukainen.** `NaN` tai satunnainen
+  tasapelin ratkaisu voi rikkoa lajittelun.
 
 ## Itsearviointi
 
@@ -165,3 +198,5 @@ alkuperäinen indeksi tasapelin ratkaisijaksi, kuten esimerkin kenttä
   kerran, ja johtaa sen $\Theta(n \log n)$-ajan rekursiopuusta.
 - Osaat määritellä vakauden, tunnistaa vakaan ja epävakaan
   algoritmin ja testata vakauden satunnaistetusti.
+- Osaat kirjoittaa oikean `qsort`-vertailijan ja selittää, miksi
+  erotus on virhe.

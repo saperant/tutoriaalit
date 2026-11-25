@@ -117,10 +117,13 @@ samaa ajatusta.
 Satunnaisohjelma, joka paljastaa virheen, on usein satoja rivejä pitkä.
 Ennen virheen etsimistä se **pienennetään** (*test case reduction*):
 poistetaan lauseita ja yksinkertaistetaan lausekkeita yksi kerrallaan
-niin kauan kuin virhe säilyy. Työkalut kuten C-Reduce (muillekin kielille valinnalla `--not-c`)
-ja Perses tekevät tämän automaattisesti delta-debuggauksen
-(Zeller ja Hildebrandt 2002) periaatteella. Pienennetty ohjelma lisätään kultaisiin testeihin, jotta
-virhe ei palaa.
+niin kauan kuin virhe säilyy. Työkalut kuten C-Reduce (muillekin
+kielille valinnalla `--not-c`) ja Perses tekevät tämän automaattisesti
+delta-debuggauksen (Zeller ja Hildebrandt 2002) periaatteella.
+Pienennetty ohjelma lisätään kultaisiin testeihin, jotta virhe ei
+palaa. Sama menetelmä tietorakenteille – malli, invariantit ja
+operaatiosarjan pienentäminen – on taidossa *Edistyneet algoritmit ja
+tietorakenteet*.
 
 ## Käytännössä
 

@@ -58,12 +58,19 @@ Satunnaisuus tulee omasta generaattorista (`testaus.hpp`) kiinteällä
 siemenellä, ja työmäärä mitataan laskureilla, joten tulosteet ovat
 samat joka koneella.
 
+Virtausverkon, reduktion ja Fenwick-puun kaaviot tuotetaan esimerkkien
+tulosteista (`kaaviot/tee.py`), ja `make testaa` tarkistaa, että
+tallennetut kaaviot vastaavat tulosteita.
+
 ```text
 make testaa                 # rakenteen tarkistus ja esimerkit
 make pdf                    # tutoriaali ja pikaopas PDF:ksi
+python3 kaaviot/tee.py      # kaaviot uudelleen esimerkkien tulosteista
 ```
 
 Kehityskontti: `.devcontainer/edistyneet-algoritmit`.
+Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
+[Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 
 ## Lisenssi
 

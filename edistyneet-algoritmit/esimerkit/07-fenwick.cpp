@@ -60,6 +60,22 @@ private:
 
 int main()
 {
+    // Rakenteen muoto 16 alkiolle samoilla bittikaavoilla kuin luokassa:
+    // kirjan kuva piirretään näistä riveistä (kaaviot/tee.py).
+    std::print("solmujen välit:");
+    for (int i = 1; i <= 16; ++i) {
+        std::print(" {}:({},{}]", i, i - (i & -i), i);
+    }
+    std::print("\nsumma(13) lukee solmut:");
+    for (int i = 13; i > 0; i -= i & -i) {
+        std::print(" {}", i);
+    }
+    std::print("\nlisaa(4, d) päivittää solmut:");
+    for (int i = 4 + 1; i <= 16; i += i & -i) {
+        std::print(" {}", i);
+    }
+    std::println("\n");
+
     // @alku testi
     for (std::uint64_t siemen = 1; siemen <= 20; ++siemen) {
         Satunnainen s{siemen};

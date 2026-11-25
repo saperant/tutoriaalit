@@ -23,12 +23,22 @@ Tämä tutoriaali käy läpi ohjelmoinnin perusrakenteet C:llä:
 - **Välimuisti ja datan asettelu:** miksi taulukko voittaa listan
   käytännössä useammin kuin teoria antaa ymmärtää.
 
+## Esitiedot ja rajaus
+
 Tutoriaali rakentuu taitojen *C-kieli* ja *Diskreetti matematiikka*
 päälle. Osoittimet, `malloc` ja `free` sekä rakenteet oletetaan
-tutuiksi C-kielestä; graafit, puut ja rekursio diskreetistä
-matematiikasta. Operaatioiden hintaa kuvataan O-merkinnällä
-($O(1)$, $O(\log n)$, $O(n)$), mutta sen tarkka määritelmä ja
-algoritmien analyysi kuuluvat jatkotaitoon *Algoritmit*.
+tutuiksi C-kielestä; graafit, puut, rekursio ja O-merkintä
+($O(1)$, $O(\log n)$, $O(n)$) diskreetistä matematiikasta.
+
+Rajauksen ulkopuolelle jäävät:
+
+- lajittelu- ja graafialgoritmit sekä algoritmien analyysi
+  (jatkotaito *Algoritmit*),
+- tasapainotetut hakupuut, B-puut, trie ja union-find (*Edistyneet
+  algoritmit ja tietorakenteet*),
+- lukottomat ja usean säikeen rakenteet (*Rinnakkaisohjelmointi*) ja
+- välimuistin mittaaminen suorituskykylaskureilla (*Suorituskyvyn
+  analyysi ja optimointi*); luku 11 näyttää ilmiön, ei mittaustekniikkaa.
 
 ## Miksi rakenteella on väliä
 
@@ -82,8 +92,10 @@ muuttamatta käyttäjän koodia. Luku 2 näyttää, miten tämä tehdään C:ss�
 
 ## Esimerkit ja testaus
 
-Kaikki esimerkit ovat C23:a. Ne käännetään GCC 14:llä ja Clang 20:llä
-varoitukset virheinä, AddressSanitizerin ja
+Kaikki esimerkit ovat C23:a hakemistossa `esimerkit/`, ja `make testaa`
+kääntää ja ajaa ne. Valmis ympäristö on kehityskontissa (ks.
+*Kehitysympäristöt ja Dev Containers*). Esimerkit käännetään GCC 14:llä
+ja Clang 20:llä varoitukset virheinä, AddressSanitizerin ja
 UndefinedBehaviorSanitizerin kanssa. Sanitoijat pysäyttävät ohjelman,
 jos se lukee vapautettua muistia tai taulukon ohi – tietorakenteiden
 yleisimmät virheet.
@@ -106,3 +118,13 @@ tutoriaalissa:
    sitä kutsutaan testeissä jokaisen operaation jälkeen.
 3. **Sanitoijat:** muistivirheet ja määrittelemätön käyttäytyminen
    havaitaan heti eikä vasta, kun data on jo turmeltunut.
+
+Vertailutestin menetelmä – malli, invariantit ja löydetyn virheen
+pienentäminen – käsitellään perusteellisesti taidossa *Edistyneet
+algoritmit ja tietorakenteet*. Tässä tutoriaalissa sitä käytetään
+työkaluna.
+
+Rakenteita kuvaavat kaaviot piirretään esimerkkien tulosteista
+(`kaaviot/tee.py`), ja `make testaa` tarkistaa, että ne vastaavat
+tulosteita. Kuva näyttää siis sen taulukon tai puun, jonka ohjelma
+oikeasti rakensi.

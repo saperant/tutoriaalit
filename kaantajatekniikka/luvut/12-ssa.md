@@ -1,11 +1,12 @@
 # SSA-muoto
 
-Luvun 9 välikielessä sama rekisteri voi saada arvon monessa paikassa:
-silmukkamuuttuja `i` kirjoitetaan ennen silmukkaa ja jokaisella
-kierroksella. Kun optimointi näkee käskyn `%5 = rem i, %4`, se ei
-tiedä, *mikä* kirjoitus `i`:hin on voimassa, ilman analyysiä koko
-graafin yli. **SSA-muoto** (*static single assignment*) poistaa tämän
-ongelman: jokainen rekisteri kirjoitetaan ohjelmatekstissä tasan kerran.
+Luvun 11 arvonumerointi toimi vain yhden peruslohkon sisällä, ja
+syy oli välikielen muoto. Sama rekisteri voi saada arvon monessa
+paikassa: silmukkamuuttuja `i` kirjoitetaan ennen silmukkaa ja
+jokaisella kierroksella. Kun optimointi näkee käskyn
+`%5 = rem i, %4`, se ei tiedä, *mikä* kirjoitus `i`:hin on voimassa,
+ilman luvun 10 kaltaista analyysiä koko graafin yli. **SSA-muoto**
+(*static single assignment*) poistaa tämän ongelman: jokainen rekisteri kirjoitetaan ohjelmatekstissä tasan kerran.
 Silloin rekisterin nimi kertoo sen määrittelyn, ja monet optimoinnit
 muuttuvat yksinkertaisiksi.
 
@@ -23,20 +24,8 @@ kierroksella) tai edellisen kierroksen arvo. Tätä varten SSA:ssa on
 **phi-funktio**, esimerkiksi `i.1 = phi [i.0, L0], [i.2, L4]`.
 Phi valitsee arvon sen mukaan, mistä edeltäjästä lohkoon tultiin.
 Se ei ole oikea käsky vaan merkintä, joka poistetaan ennen
-koodingenerointia. Seuraavassa on luvun esimerkkifunktio ensin
-tavallisena välikielenä ja sitten SSA-muodossa:
-
-```{.rust tiedosto="esimerkit/naytteet/summa.kide"}
-```
-
-```{.tuloste tiedosto="esimerkit/naytteet/ir-summa.txt"}
-```
-
-Ohjausvuograafina sama funktio näyttää silmukan rakenteen: L1 on
-silmukan otsake, L4 hyppää takaisin siihen, ja L5 on ainoa poistuminen.
-
-```{.dot tiedosto="kaaviot/cfg-summa.dot" otsikko="Funktion summa ohjausvuograafi (kääntäjän tulosteesta)" leveys="55%"}
-```
+koodingenerointia. Luvun 9 esimerkkifunktio `summa` (välikieli ja
+ohjausvuograafi ovat siellä) on SSA-muodossa tällainen:
 
 ```{.tuloste tiedosto="esimerkit/naytteet/ssa-summa.txt"}
 ```
@@ -107,7 +96,7 @@ sen lohkon raja käsitellään vuorostaan (iteroitu dominanssiraja):
 Minimaalinen SSA lisäisi phin jokaiseen rajan lohkoon. Tämä toteutus
 tekee **karsitun SSA:n** (*pruned SSA*): phi lisätään vain, jos
 rekisteri on elävä lohkon alussa, eli sen arvoa vielä luetaan.
-Elävyys lasketaan luvun 11 analyysillä. Ilman karsintaa esimerkiksi
+Elävyys lasketaan luvun 10 analyysillä. Ilman karsintaa esimerkiksi
 silmukan rungossa esitellylle väliaikaiselle muuttujalle syntyisi
 silmukan otsakkeeseen turha phi.
 
@@ -134,12 +123,30 @@ kaari* jaetaan ensin uudella lohkolla. Lisäksi saman lohkon phit on
 suoritettava *rinnakkain*: jos phit vaihtavat kaksi arvoa keskenään,
 peräkkäiset kopiot hävittäisivät toisen (*swap problem*).
 
-Kide käyttää SSA-muotoa vain analyysin havainnollistamiseen: sen
-optimoinnit (luku 12) toimivat tavallisella välikielellä, ja ne
-nojaavat datavuoanalyysiin. Tämä on klassinen, 1970-luvun
-optimoivien kääntäjien tapa. SSA-pohjaisessa kääntäjässä samat
-optimoinnit olisivat lyhyempiä, mutta SSA-muodon ylläpito jokaisen
-muunnoksen jälkeen on oma työnsä.
+## Mitä SSA-muodolla tehdään
+
+SSA-muodossa rekisterin nimi yksilöi sen määrittelyn, joten moni
+koko funktion analyysi muuttuu taulukkohauksi:
+
+- **Globaali arvonumerointi.** Luvun 11 arvonumerointi unohti taulunsa
+  lohkon lopussa, koska rekisteri saattoi muuttua toisessa lohkossa.
+  SSA-muodossa se ei voi muuttua, joten dominoivassa lohkossa laskettu
+  lauseke on voimassa kaikissa sen dominoimissa lohkoissa. Taulu
+  kuljetetaan dominaattoripuuta pitkin.
+- **Vakioiden eteneminen.** Jos `x.1` on vakio, jokainen `x.1`:n käyttö
+  on sama vakio; mitään kiintopisteiteraatiota ei tarvita.
+- **Kuolleen koodin poisto.** Määrittely, jolla ei ole käyttöjä, on
+  kuollut. Käytöt löytyvät määrittely–käyttö-ketjusta ilman
+  elävyysanalyysiä.
+
+Kide rakentaa SSA-muodon (`--vaihe=ssa`) mutta ei optimoi sitä: sen
+optimoinnit (luku 11) toimivat tavallisella välikielellä ja nojaavat
+datavuoanalyysiin. Tämä on klassinen, 1970-luvun optimoivien
+kääntäjien tapa, ja se pitää kääntäjän pienenä. SSA-pohjaisessa
+kääntäjässä samat optimoinnit olisivat lyhyempiä ja tehokkaampia,
+mutta SSA-muodon ylläpito jokaisen muunnoksen jälkeen ja siitä
+poistuminen ovat oma työnsä. Luvun 17 harjoitus ehdottaa globaalin
+arvonumeroinnin lisäämistä tämän luvun rakenteiden päälle.
 
 ## Käytännössä
 

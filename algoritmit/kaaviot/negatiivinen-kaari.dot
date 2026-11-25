@@ -1,0 +1,9 @@
+digraph {
+  rankdir=LR; nodesep=0.4; ranksep=0.6;
+  node [shape=circle, width=0.4, fixedsize=true, fontsize=10];
+  edge [fontsize=9];
+  A -> B [label="2"];
+  A -> C [label="3"];
+  C -> B [label="−2", color="#B04848", fontcolor="#B04848", penwidth=1.5];
+  B -> D [label="1"];
+}

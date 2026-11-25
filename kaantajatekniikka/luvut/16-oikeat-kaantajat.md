@@ -88,7 +88,7 @@ jokainen on tässä tutoriaalissa esitellyn jatke:
   lehtifunktioissa (luku 14).
 - **Kokonaiset SSA-optimoinnit** (globaali arvonumerointi, vakioiden
   harva eteneminen, silmukkaoptimoinnit) toimivat koko funktion yli
-  (luvut 10 ja 12).
+  (luvut 11 ja 12).
 - **Upottaminen ja funktioiden väliset analyysit** tuovat kutsutun
   koodin kutsujan optimoinnin piiriin, ja linkitysaikainen optimointi
   (LTO) tekee saman käännösyksiköiden yli.

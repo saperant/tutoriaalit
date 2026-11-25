@@ -108,6 +108,50 @@ julkaista otsaketiedostossa ja nimetä kentät niin, että niiden
 yksityisyys on selvä (esimerkiksi etuliite `sis_`), tai tarjota
 `static inline` -lukufunktiot.
 
+## Yksi rakenne, monta tyyppiä
+
+Luvun joukko tallentaa vain `int`-arvoja, ja samoin tekevät
+tutoriaalin muut rakenteet: yksi alkiotyyppi pitää koodin lyhyenä.
+Oikeassa ohjelmassa sama vektori tai hajautustaulu tarvitaan monelle
+tyypille. C:ssä ei ole malleja eikä geneerisiä tyyppejä, joten valinta
+on tehtävä itse kolmesta tavasta:
+
+| Tapa | Tyyppitarkistus | Koodin määrä | Hinta ajon aikana |
+|------|-----------------|--------------|-------------------|
+| `void *` ja alkion koko | ei ole: kutsuja muuntaa osoittimet | yksi toteutus | `memcpy` ja kutsu funktio-osoittimen kautta |
+| makro tuottaa toteutuksen | on | kopio tyyppiä kohti | ei lisähintaa, kääntäjä optimoi tyypin mukaan |
+| tunkeileva rakenne (luku 4) | osittain: makro laskee sisältävän tietueen | yksi toteutus | ei varauksia, linkit alkion sisällä |
+
+Ensimmäinen tapa on standardikirjaston `qsort`in ja `bsearch`in tapa.
+Rakenne käsittelee alkioita tavuina ja saa alkion koon parametrina;
+vertailu tai hajautus annetaan funktio-osoittimena:
+
+```{.c tiedosto="esimerkit/02-geneerinen.c" osa="void"}
+```
+
+Toinen tapa kirjoittaa toteutuksen makroksi, jonka parametreina ovat
+tyypin nimi ja alkiotyyppi. Jokainen käyttö tuottaa oman tietueen ja
+omat funktiot:
+
+```{.c tiedosto="esimerkit/02-geneerinen.c" osa="makro"}
+```
+
+Käytössä ero näkyy tyyppitarkistuksessa. `void *` -versio hyväksyy
+minkä tahansa osoittimen, ja virhe näkyy vasta ajon aikana vääränä
+datana. Makroversiossa kääntäjä hylkää väärän tyypin:
+
+```{.c tiedosto="esimerkit/02-geneerinen.c" osa="kaytto"}
+```
+
+```{.tuloste tiedosto="esimerkit/02-geneerinen.odotettu"}
+```
+
+Makron hinta on luettavuus: virheilmoitukset viittaavat makron
+laajennukseen, ja debuggeri näyttää yhden pitkän rivin. Käytännön
+kirjastot valitsevat tarpeen mukaan. Kun nopeus ratkaisee ja tyyppejä
+on vähän, makro; kun rakenne on suuri ja tyyppejä paljon, `void *`;
+kun alkio kuuluu moneen rakenteeseen yhtä aikaa, tunkeileva rakenne.
+
 ## Invariantti
 
 Jokaisella rakenteella on *invariantti*: ehto, joka on voimassa aina
@@ -135,6 +179,9 @@ kirjoitetaan tällainen funktio.
   Virhepolkujen siivous yksinkertaistuu.
 - **Tila ennen muutosta.** Varaa muisti ensin ja muuta rakennetta vasta
   sitten. Näin muistin loppuminen ei jätä rakennetta puolivalmiiksi.
+- **Geneerisyys on valinta.** `void *` ja alkion koko, kun yksi
+  toteutus riittää kaikille; makro, kun kääntäjän pitää tarkistaa
+  tyypit ja optimoida niiden mukaan.
 - **Älä paljasta sisäisiä osoittimia.** Funktio, joka palauttaa
   osoittimen rakenteen sisälle, sitoo käyttäjän toteutukseen ja
   tuottaa roikkuvia osoittimia, kun rakenne kasvaa (luku 3).
@@ -148,3 +195,5 @@ kirjoitetaan tällainen funktio.
 - Osaat kertoa rajapinnan kommentissa, kuka omistaa minkäkin muistin.
 - Osaat muotoilla rakenteen invariantin ja kirjoittaa sille
   tarkistusfunktion.
+- Osaat nimetä kolme tapaa tehdä C:n tietorakenteesta
+  tyyppiriippumaton ja kertoa kunkin hinnan.

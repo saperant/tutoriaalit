@@ -2,7 +2,7 @@
 
 Tutoriaalissa rakennettiin kääntäjä, joka kulkee lähdetekstistä
 ajettavaan RISC-V-ohjelmaan: selaaja, jäsennin, semanttinen analyysi,
-tulkki, välikieli, SSA-muoto, datavuoanalyysi, optimoinnit,
+tulkki, välikieli, datavuoanalyysi, optimoinnit, SSA-muoto,
 koodingenerointi ja rekisterien varaus. Jokainen vaihe on lyhyt, ja
 jokaisella on oma tulostettava tietorakenteensa ja omat testinsä.
 
@@ -46,13 +46,18 @@ jokaisella on oma tulostettava tietorakenteensa ja omat testinsä.
   funktion alkuun, kun `f` on funktio itse.
 - **Upottaminen.** Korvaa pienen funktion kutsu sen rungolla
   välikielessä ja katso, mitä laskostus tekee jäljelle jääneelle.
-- **SSA-optimoinnit.** Tee vakioiden eteneminen SSA-muodossa ja poistu
-  SSA:sta kopioilla; vertaa tulosta paikalliseen arvonumerointiin.
+- **SSA-optimoinnit.** Tee vakioiden eteneminen tai globaali
+  arvonumerointi SSA-muodossa (luku 12) ja poistu SSA:sta kopioilla;
+  vertaa tulosta paikalliseen arvonumerointiin esimerkillä, jossa
+  yhteinen alilauseke on eri lohkoissa.
 - **Viennin hinta.** Painota lineaarisen pyyhkäisyn valintaa
   silmukoiden syvyydellä ja mittaa pinolatausten määrä
   `summa`-esimerkissä kahdella rekisterillä.
 
-## Läheiset taidot
+## Jatkotaidot
+
+Kääntäjätekniikka on taitopuussa polun pää, joten jatko on
+soveltamista naapuritaidoissa:
 
 - *Suorituskyvyn analyysi ja optimointi* – kääntäjän tuottaman koodin
   mittaaminen ja ohjaaminen.

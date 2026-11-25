@@ -11,8 +11,9 @@ valita rakenne. Taulukko kokoaa tutoriaalin rakenteet:
 | Pysyvät osoittimet, irrotus keskeltä | kaksoislinkitetty lista | $O(1)$ | 4 |
 | LIFO | pino taulukossa | $O(1)$ | 5 |
 | FIFO, kiinteä koko | rengaspuskuri | $O(1)$ | 5 |
+| FIFO tai molemmat päät, kasvava | pakka (kasvava rengaspuskuri) | tasoitettu $O(1)$ | 5 |
 | Onko avain mukana? | hajautustaulu | odotusarvo $O(1)$ | 6–7 |
-| Järjestys, välit, lähin arvo | tasapainotettu hakupuu | $O(\log n)$ | 8 |
+| Järjestys, välit, lähin arvo | tasapainotettu hakupuu | $O(\log n)$ (väli: lisäksi tulosten määrä) | 8 |
 | Harvoin muuttuva järjestetty joukko | lajiteltu taulukko | haku $O(\log n)$ | 2 |
 | Pienin ensin | binäärikeko | $O(\log n)$, kekoutus $O(n)$ | 9 |
 | Harva graafi | vierekkäisyyslistat, CSR | $O(n + m)$ muistia | 10 |

@@ -73,7 +73,7 @@ ne SMT-ratkaisijalla.
 ## Kuolleen koodin poisto
 
 Käsky on **kuollut**, jos sen tulosta ei lueta ja sillä ei ole
-sivuvaikutuksia. Elävyysanalyysi (luku 11) kertoo lohkon lopussa
+sivuvaikutuksia. Elävyysanalyysi (luku 10) kertoo lohkon lopussa
 elävät rekisterit, ja lohko käydään taaksepäin:
 
 ```{.cpp tiedosto="esimerkit/kide/optimointi.cpp" osa="kuollut"}
@@ -152,7 +152,7 @@ Tärkeimmät optimoinnit, joita Kide ei tee:
 | induktiomuuttujat ja voiman vähennys | `i * 8` silmukassa muuttuu yhteenlaskuksi |
 | häntärekursion poisto | rekursiivinen kutsu viimeisenä muuttuu hypyksi |
 | silmukoiden avaus ja vektorointi | useampi kierros kerralla, SIMD-käskyt |
-| globaali arvonumerointi | yhteiset alilausekkeet lohkojen yli (SSA:ssa) |
+| globaali arvonumerointi | yhteiset alilausekkeet lohkojen yli (SSA-muodossa, luku 12) |
 
 Upottaminen on niistä tärkein: se poistaa kutsun kustannuksen ja tuo
 kutsujan ja kutsutun koodin saman optimoinnin piiriin. Luvussa 16
