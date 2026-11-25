@@ -51,7 +51,7 @@ vapauttaminen:
 ```{.tuloste tiedosto="esimerkit/tulokset/10-areena.txt"}
 ```
 
-Areena oli noin kaksi kertaa nopeampi. Osa erosta tulee varauksista
+Areena oli yli kaksi kertaa nopeampi. Osa erosta tulee varauksista
 ja vapautuksesta (yksi `free` lohkoa kohden eikä solmua kohden), osa
 siitä, että peräkkäin varatut solmut ovat muistissa lähekkäin. Areenan
 riskit ovat elinkaaren virheet: osoitin areenan olioon on

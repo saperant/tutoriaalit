@@ -27,6 +27,13 @@ Hakemiston `esimerkit/tsan/` ohjelmissa on tarkoituksellinen
 rinnakkaisuusvirhe. `esimerkit/Makefile` ajaa ne ThreadSanitizerilla ja
 tarkistaa, että raportissa on tiedoston `<nimi>.raportti` rivit.
 
+Hakemiston `esimerkit/mittaus/` ohjelmat mittaavat aikoja ja
+havaintojen määriä (nopeutus, väärä jakaminen, litmus-testit). Testit
+vain kääntävät ne. `make -C esimerkit tulokset` ajaa ne ja kirjoittaa
+tekstissä näytetyt tulokset hakemistoon `esimerkit/tulokset/`; aja se
+koneella, jossa ei ole muuta kuormaa, ja piirrä kuvat sen jälkeen
+komennolla `make kuvat`.
+
 ```text
 make testaa   # rakenne, esimerkit, ThreadSanitizer-raportit ja OpenMP
 make pdf      # PDF:t

@@ -155,6 +155,9 @@ lukee lipun ja datan. Voiko lukija nähdä lipun mutta vanhan datan?
 ```{.cpp tiedosto="esimerkit/04-litmus.cpp" osa="mp"}
 ```
 
+```{.cpp tiedosto="esimerkit/04-litmus.cpp" osa="ajot"}
+```
+
 ```{.tuloste tiedosto="esimerkit/04-litmus.odotettu"}
 ```
 
@@ -174,12 +177,42 @@ tulostetaan virhetulosteeseen. Tulokset tulkitaan näin:
   järjestyksen. ARM ja POWER tuottavat sen, joten `relaxed`-julkaisu, joka
   "toimii" x86:lla, rikkoutuu ARM-palvelimella tai puhelimessa.
 
-Kirjoittajan koneella SB (0,0) ei näkynyt kertaakaan 20 000
-kierroksessa, koska esteeltä heräävät säikeet eivät
-käynnisty riittävän tarkasti yhtä aikaa. Erikoistyökalut kuten `litmus7` ajavat testejä
-tiukemmin tahdistettuna ja löytävät tuloksen helposti. Havainto on
-tärkeä: *se, ettei virhettä näy, ei todista sen puuttumista*. Muistimallin
-sallima tulos voi ilmetä vasta toisella suorittimella tai kuormalla.
+### Havaintojen määrät
+
+Esteellä tahdistettu ajuri riittää tarkistamaan, että havainnot ovat
+sallittuja, mutta harvinaisten tulosten esiin saamiseen se on löysä:
+esteeltä heräävät säikeet käynnistyvät harvoin samalla hetkellä.
+Kirjoittajan koneella SB (0,0) näkyi sillä muutaman kymmenen kertaa
+20 000 kierroksesta. Mittausohjelma `esimerkit/mittaus/litmus.cc`
+tahdistaa tiukemmin. Säikeet sidotaan eri ytimiin, ne odottavat
+pyörimällä yhteistä lähtöhetkeä, ja kumpikin lukee muuttujat ennen
+lähtöä omaan välimuistiinsa:
+
+```{.cpp tiedosto="esimerkit/mittaus/litmus.cc" osa="ajuri"}
+```
+
+Miljoonan kierroksen tulos neliytimisessä x86-64-virtuaalikoneessa
+(Intel Xeon, GCC 14, `-O2`, ei muuta kuormaa):
+
+```{.tuloste tiedosto="esimerkit/tulokset/04-litmus.txt"}
+```
+
+SB (0,0) on `relaxed`- ja release/acquire-järjestyksillä selvästi
+yleisin tulos: kumpikin kirjoitus odottaa vielä kirjoituspuskurissa, kun
+luku jo tehdään. `seq_cst` poistaa tuloksen kokonaan. MP (1,0) ei
+esiinny kertaakaan, kuten x86-TSO lupaa.
+
+Ajurin ensimmäisessä versiossa muistijärjestys annettiin testille
+funktion argumenttina, eikä SB (0,0) näkynyt silloin kertaakaan, ei edes
+tiukalla tahdistuksella. Syy löytyi konekoodista: kun järjestys ei ole
+käännösaikainen vakio, GCC kääntää kirjoituksen varmuuden vuoksi
+vahvimmalla järjestyksellä (`xchg`), joten `relaxed`-testi ajoi samaa
+konekoodia kuin `seq_cst`-testi. Siksi järjestys on esimerkeissä mallin
+parametri. Tässä on kaksi opetusta. *Se, ettei virhettä näy, ei todista
+sen puuttumista*: muistimallin sallima tulos voi ilmetä vasta toisella
+suorittimella, kääntäjällä tai kuormalla. Ja testi voi mitata muuta kuin
+sen nimi sanoo, ellei konekoodia tarkista. Erikoistyökalut kuten
+`litmus7` on tehty juuri tällaisiin kokeisiin.
 
 ## Laitteisto ja hinta
 
@@ -216,6 +249,9 @@ tarvitaan harvoin, ja ThreadSanitizer ei mallinna niitä (GCC varoittaa
   eivät synkronoidu.
 - **Testaa ARMilla.** x86 piilottaa monet järjestysvirheet. CI:hin
   kannattaa lisätä AArch64-kone, jos ohjelma käyttää heikkoja järjestyksiä.
+- **Anna muistijärjestys vakiona.** Kun järjestys ei ole käännösaikainen
+  vakio, kääntäjä saa valita vahvimman, ja heikomman järjestyksen koodi
+  jää testaamatta. Tarkista konekoodista, mitä testi todella ajaa.
 - **`volatile` ei ole atominen.** Se estää kääntäjää poistamasta
   operaatioita mutta ei takaa atomisuutta eikä järjestystä säikeiden
   välillä. Sitä käytetään muistiin kuvattuihin laitteisiin, ei
@@ -232,3 +268,5 @@ tarvitaan harvoin, ja ThreadSanitizer ei mallinna niitä (GCC varoittaa
   tuottavat.
 - Osaat valita laskurille, julkaisulle ja lukolle sopivan
   muistijärjestyksen.
+- Osaat selittää, miksi litmus-testin tulos riippuu tahdistuksesta ja
+  siitä, onko muistijärjestys käännösaikainen vakio.

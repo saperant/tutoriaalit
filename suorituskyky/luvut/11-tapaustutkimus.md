@@ -94,12 +94,15 @@ $2048 \times 2048$ -kuvalle kirjoittajan koneella:
 
 ![Vaiheet rinnakkain logaritmisella asteikolla (samat luvut kuin
 tulosteissa). Vaihe 3 vähentää käskyjä mutta kasvattaa L1-hudit
-kaksikymmenkertaisiksi, joten aika ei juuri lyhene; vaihe 4 poistaa
+kaksikymmenkertaisiksi, joten aika pitenee; vaihe 4 poistaa
 hudit.](kuvat/sumennus.png){width=92%}
 
-Algoritmiset muutokset (vaiheet 2 ja 3) toivat suurimman osan
-nopeudesta, ja muistin käyttötavan muutos (vaihe 4) vielä
-kuusinkertaisen lisän. Yhteensä sumennus nopeutui kymmeniä kertoja,
+Vaihe 2 toi algoritmisella muutoksella noin seitsenkertaisen
+nopeuden. Vaihe 3 vähensi käskyt vielä kuudesosaan, mutta suuri kuva
+hidastui: sarakkeittaisen läpikäynnin hudit maksoivat enemmän kuin
+säästetyt käskyt. Vasta vaihe 4, joka tekee saman liukuvan summan
+riveittäin, lunasti algoritmin hyödyn ja oli noin seitsemän kertaa
+vaihetta 2 nopeampi. Yhteensä sumennus nopeutui kymmeniä kertoja,
 ja tulos on bitilleen sama. Mittaukset on käännetty tasolla `-O2`,
 jolla GCC 14 ei vektoroi näitä silmukoita, joten vaiheiden 3 ja 4 ero
 tulee pelkästä muistin käyttötavasta. Luvun 9 optimointitasojen

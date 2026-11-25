@@ -39,22 +39,31 @@ kaikilla koneilla:
 ```{.tuloste tiedosto="esimerkit/09-hinta/main.odotettu"}
 ```
 
-Esimerkin koneella suhdeluvut olivat suunnilleen seuraavat:
+Kirjoittajan koneella (neliytiminen 2,1 GHz:n Intel Xeon
+virtuaalikoneena, Python 3.13, ei muuta kuormaa) sama mittaus antoi
+alkiota kohden seuraavat ajat. Ne tuottaa `kuvat/piirra.py`, joka ajaa
+samat neljä kutsua samalla datalla:
 
-| Vertailu | Suhde |
-|----------|-------|
-| C++-kutsu alkiota kohden / Pythonin `x * x` | 1,5–3 |
-| lista / NumPy-taulukko | 25–40 |
-| alkio kerrallaan / NumPy-taulukko | 50–90 |
+```{.tuloste tiedosto="esimerkit/tulokset/09-hinta.txt"}
+```
 
-Ensimmäinen rivi on tärkein: **C++-funktion kutsuminen alkio
+![Neljän tavan aika alkiota kohden (samat luvut kuin tulosteessa,
+logaritminen asteikko). Vain taulukon välittäminen kerralla on Pythonia
+nopeampi.](kuvat/hinta.png){width=85%}
+
+Suhteet toistuivat ajosta toiseen suunnilleen samoina: alkio
+kerrallaan kutsuttu C++ oli noin kaksi kertaa Pythonia hitaampi, ja
+taulukko 30–40 kertaa listaa ja 60–75 kertaa alkiokutsuja nopeampi.
+
+Ensimmäinen havainto on tärkein: **C++-funktion kutsuminen alkio
 kerrallaan oli hitaampaa kuin sama lasku Pythonilla.** Pythonin
 `x * x` on yksi tulkin käsky, kun taas C++-kutsu käy läpi
 pybind11:n koko kutsukoneiston. Pieni funktio C++:lla ei nopeuta
 mitään, jos kutsuja on yhtä monta kuin alkioita.
 
 Lista ja taulukko tekevät saman laskun yhdellä kutsulla, mutta lista
-oli kymmeniä kertoja hitaampi. Aika ei kulunut laskuun vaan
+oli kymmeniä kertoja hitaampi eikä yhtään Pythonin omaa silmukkaa
+nopeampi. Aika ei kulunut laskuun vaan
 muunnoksiin: 200 000 Python-liukulukua purettiin vektoriin ja 200 000
 uutta luotiin tuloslistaan. Taulukon käsittely on pelkkä muistin
 läpikäynti.

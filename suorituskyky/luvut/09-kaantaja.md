@@ -122,7 +122,7 @@ kanssa:
 ```{.tuloste tiedosto="esimerkit/tulokset/04-lokit-pgo.txt"}
 ```
 
-Viimeisen rivin ero oli kirjoittajan koneella muutaman prosentin
+Viimeisen rivin ero oli kirjoittajan koneella kymmenen prosentin
 luokkaa, ja sen suunta vaihteli ajosta toiseen kohinan mukana. Suurissa
 ohjelmissa, joissa on paljon haaroja ja kutsuja, kuten kääntäjissä,
 tietokannoissa ja selaimissa, PGO tuo tyypillisesti 10–20 %; GCC,

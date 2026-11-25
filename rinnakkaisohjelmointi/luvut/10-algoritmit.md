@@ -224,6 +224,29 @@ yhdistäminen. Gustafsonin näkökulma selittää, miksi suuret koneet ovat
 silti hyödyllisiä: ne eivät ratkaise samaa ongelmaa nopeammin vaan
 isomman ongelman samassa ajassa.
 
+Mitattu nopeutus näyttää saman käytännössä. Luvun alun reduktio ajettiin
+40 miljoonalle luvulle eri säiemäärillä neliytimisessä virtuaalikoneessa
+(Intel Xeon 2,1 GHz, GCC 14, `-O2`, ei muuta kuormaa). Mittausohjelma
+`esimerkit/mittaus/nopeutus.cc` sisällyttää esimerkin funktion
+sellaisenaan ja ilmoittaa yhdeksän ajon mediaanin:
+
+```{.tuloste tiedosto="esimerkit/tulokset/10-nopeutus.txt"}
+```
+
+![Mitattu nopeutus säiemäärän funktiona (samat luvut kuin
+tulosteessa). Neljään säikeeseen asti nopeutus seuraa ihannetta;
+kahdeksan säiettä neljällä ytimellä on hitaampi kuin
+neljä.](kuvat/mitattu.png){width=70%}
+
+Neljällä säikeellä nopeutus on noin 3,6 eli 90 % ihanteesta. Amdahlin
+kaavasta ratkaistuna se vastaa 3–4 %:n sarjallista osuutta: säikeiden
+käynnistystä, osasummien yhdistämistä ja ytimien yhteistä muistikaistaa.
+Kahdeksan säiettä neljällä ytimellä ei nopeuta vaan hidastaa, koska
+säikeet vuorottelevat ytimillä ja vuoronvaihdot maksavat. Laskentatyössä
+säikeitä kannattaa siksi olla enintään ytimien verran
+(`std::thread::hardware_concurrency`). Luvut vaihtelevat ajosta toiseen
+muutaman prosentin.
+
 ## Väärä jakaminen
 
 Välimuisti käsittelee muistia riveittäin, x86-64:llä 64 tavun paloina.
@@ -243,15 +266,32 @@ kaksi oliota eivät häiritse toisiaan:
 ```
 
 Tiiviit laskurit ovat kaikki samalla rivillä, erilliset kukin omallaan.
-Tyhjällä moniydinkoneella tiiviin version ajan odotetaan olevan
-moninkertainen, koska rivi kulkee ytimeltä toiselle jokaisella
-kirjoituksella. Tämän tutoriaalin testikone oli kuormitettu muilla
-töillä, ja säikeet olivat harvoin käynnissä samaan aikaan, joten ajoissa
-(virhetulosteessa) ei ollut selvää eroa. Mittaa omalla koneellasi
-optimoidulla käännöksellä (`-O2`) ilman sanitoijia. Mittaustulokseen
-vaikuttaa siis myös se, mitä muuta koneessa on käynnissä; luotettavaan
-mittaukseen tarvitaan rauhallinen kone ja toistot. Taito *Suorituskyvyn
-analyysi ja optimointi* käsittelee mittaamisen tarkemmin.
+Esimerkin silmukka on lyhyt ja sen ajat (virhetulosteessa) riippuvat
+koneesta, joten ero mitattiin erikseen. Mittausohjelma
+`esimerkit/mittaus/vaara-jakaminen.cc` käyttää samoja rakenteita,
+kasvattaa jokaista laskuria 20 miljoonaa kertaa ja ilmoittaa seitsemän
+ajon mediaanin samalla koneella kuin edellä:
+
+```{.tuloste tiedosto="esimerkit/tulokset/10-vaara-jakaminen.txt"}
+```
+
+![Väärän jakamisen hinta (samat luvut kuin tulosteessa, logaritminen
+asteikko). Erillisten laskurien aika ei riipu säikeiden määrästä;
+tiiviiden laskurien aika kasvaa jokaisen säikeen
+myötä.](kuvat/jakaminen.png){width=70%}
+
+Yhdellä säikeellä asettelulla ei ole väliä. Kahdella säikeellä tiivis
+versio on noin kymmenen ja neljällä yli kaksikymmentä kertaa hitaampi,
+vaikka säikeet eivät jaa yhtään muuttujaa: atominen kasvatus tarvitsee
+rivin yksinomistuksen, ja rivi kulkee ytimeltä toiselle jokaisella
+kirjoituksella. Säikeiden lisääminen siis hidastaa ohjelmaa. Ilmiö on
+voimakkain atomisilla ja lukituilla operaatioilla. Tavallinen kirjoitus
+kärsii vähemmän, koska suoritin voi kerätä kirjoituksia puskuriinsa ja
+purkaa ne kerralla, kun rivi on sen hallussa; taidon *Suorituskyvyn
+analyysi ja optimointi* vastaava koe tavallisilla muuttujilla näytti
+samalla koneella vain pienen eron. Mittaa omalla koneellasi optimoidulla
+käännöksellä (`-O2`) ilman sanitoijia ja muuta kuormaa; sama taito
+käsittelee mittaamisen tarkemmin.
 
 GCC varoittaa (`-Winterference-size`), jos vakiota käytetään
 otsikkotiedostossa, koska sen arvo voi muuttua kääntäjäversion tai

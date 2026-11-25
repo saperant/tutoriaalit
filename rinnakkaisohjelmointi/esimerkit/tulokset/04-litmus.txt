@@ -1,0 +1,7 @@
+litmus-testit, 1000000 kierrosta, 4 ydinta
+(r1,r2)                 (0,0)    (0,1)    (1,0)    (1,1)
+SB relaxed             979259    10656    10051       34
+SB release/acquire     984472     8035     7473       20
+SB seq_cst                  0    24645    22403   952952
+MP relaxed             992449     1154        0     6397
+MP release/acquire     989297     1382        0     9321

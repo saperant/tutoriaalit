@@ -1,0 +1,5 @@
+omat laskurit, 20000000 kasvatusta saietta kohden, 4 ydinta
+  saikeita   tiivis (ms)   erillinen (ms)   suhde
+         1         110.2            115.2     1.0
+         2        1081.5            111.1     9.7
+         4        2567.5            117.2    21.9

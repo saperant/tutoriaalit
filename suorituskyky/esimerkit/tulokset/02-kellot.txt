@@ -1,4 +1,4 @@
 kellojen tarkkuus (clock_getres)
   CLOCK_MONOTONIC            1 ns
   CLOCK_PROCESS_CPUTIME_ID   1 ns
-clock_gettime-kutsun hinta: 28.3 ns
+clock_gettime-kutsun hinta: 34.1 ns

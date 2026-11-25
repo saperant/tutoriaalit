@@ -70,8 +70,10 @@ oltava samat.
 ```
 
 Mittaus kirjoittajan koneella näyttää neliöllisen kasvun: kun $n$
-kaksinkertaistuu, hidas versio hidastuu noin neljä kertaa, nopea
-kaksi kertaa.
+kahdeksankertaistuu, hidas versio hidastuu noin 70-kertaiseksi
+(neliöllinen kasvu ennustaa 64) ja nopea noin kymmenkertaiseksi.
+Yksittäiset askeleet poikkeavat tasaisesta nelinkertaistumisesta,
+koska merkkijono kasvaa välillä ulos L1-välimuistista.
 
 ```{.tuloste tiedosto="esimerkit/tulokset/01-isot.txt"}
 ```
@@ -118,7 +120,8 @@ luku 2 käy läpi.
 
 Tekstissä näytetyt ajat on mitattu neliytimisessä virtuaalikoneessa
 (Intel Xeon 2,1 GHz, L1d 48 KiB ja L2 2 MiB ydintä kohden, GCC 14.2,
-Linux 6.18), jota muut prosessit kuormittivat mittausten aikana. Ne
+Linux 6.18) ilman muuta kuormaa. Virtuaalikoneessa peräkkäiset ajot
+poikkesivat silti toisistaan tyypillisesti 10–20 %, joten luvut
 ovat suuntaa-antavia: suhteet toistuvat yleensä, mutta tarkat luvut
 eivät. Omalla koneella luvut ovat erilaisia, ja juuri siksi ne kannattaa
 mitata itse. Valgrindin luvut ovat samat jokaisella koneella, jolla on

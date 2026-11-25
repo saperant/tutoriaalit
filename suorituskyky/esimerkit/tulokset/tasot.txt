@@ -1,7 +1,7 @@
 == Optimointitasot: sumennus, vaihe 4 ==
-  -O0                koodia   8934 tavua  47.120 ms
-  -O1                koodia   6806 tavua  19.620 ms
-  -O2                koodia   7933 tavua  10.461 ms
-  -O3                koodia  12407 tavua  7.252 ms
-  -Os                koodia   5680 tavua  28.383 ms
-  -O3 -march=native  koodia  13112 tavua  5.840 ms
+  -O0                koodia   9022 tavua  31.822 ms
+  -O1                koodia   6891 tavua  10.503 ms
+  -O2                koodia   8029 tavua  7.452 ms
+  -O3                koodia  12074 tavua  5.489 ms
+  -Os                koodia   5760 tavua  11.707 ms
+  -O3 -march=native  koodia  12835 tavua  4.666 ms

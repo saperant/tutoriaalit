@@ -64,8 +64,10 @@ koodilla optimoituna sadalletuhannelle nimelle:
 ```{.tuloste tiedosto="esimerkit/tulokset/01-kopiot.txt"}
 ```
 
-Ajat on mitattu kirjoittajan koneella, joka oli mittausten aikana
-muun työn kuormittama. Kaikki tämän tutoriaalin ajat ovat siksi
+Ajat on mitattu yhdellä koneella (neliytiminen 2,1 GHz:n Intel Xeon
+virtuaalikoneena, GCC 14, ei muuta kuormaa). Peräkkäisten ajojen
+välillä ne vaihtelivat silti kymmenisen prosenttia, ja toisella
+koneella luvut ovat toiset. Kaikki tämän tutoriaalin ajat ovat siksi
 suuntaa-antavia: suhteiden suunta ja suuruusluokka pätevät, tarkat
 luvut eivät.
 

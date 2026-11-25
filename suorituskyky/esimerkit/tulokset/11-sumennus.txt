@@ -1,6 +1,6 @@
 laatikkosumennus 2048x2048, R = 4
-  vaihe 1                     638.381 ms +- 43.460
-  vaihe 2                      61.249 ms +-  2.230  10.4 x nopeampi
-  vaihe 3                      54.944 ms +-  5.103  11.6 x nopeampi
-  vaihe 4                       8.795 ms +-  0.353  72.6 x nopeampi
+  vaihe 1                     319.336 ms +- 26.319
+  vaihe 2                      48.367 ms +-  7.099  6.6 x nopeampi
+  vaihe 3                      63.034 ms +-  1.504  5.1 x nopeampi
+  vaihe 4                       7.019 ms +-  0.106  45.5 x nopeampi
 tiiviste c43d5c10, kaikki vaiheet samat: kylla

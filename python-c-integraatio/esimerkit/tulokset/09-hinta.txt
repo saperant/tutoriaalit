@@ -1,0 +1,5 @@
+kutsun hinta, 200000 alkiota, ns/alkio (paras 15 ajosta)
+  Python: [x * x for x in lista]            23.26      35 x
+  C++ alkio kerrallaan: nelio(x)            49.41      73 x
+  C++ lista kerralla: neliot_lista          24.79      37 x
+  C++ taulukko kerralla: neliot_taulukko     0.67       1 x

@@ -1,5 +1,5 @@
 jasennys, 100000 rivia
-  poikkeus-ok                    1.352 ms +-  0.053
-  expected-ok                    1.550 ms +-  0.126
-  poikkeus-virhe               231.159 ms +- 22.588
-  expected-virhe                 0.932 ms +-  0.024
+  poikkeus-ok                    0.629 ms +-  0.029
+  expected-ok                    0.718 ms +-  0.032
+  poikkeus-virhe                93.485 ms +-  4.063
+  expected-virhe                 0.671 ms +-  0.017

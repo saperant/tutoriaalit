@@ -95,19 +95,26 @@ kertoo rivin koon kääntäjän tietämänä.
 Esimerkin mittaustilassa kaksi säiettä kasvattaa kumpikin omaa
 laskuriaan 50 miljoonaa kertaa. Fyysisillä koneilla väärä jakaminen
 hidastaa tällaista silmukkaa tyypillisesti moninkertaisesti.
-Kirjoittajan virtuaalikoneessa tulos vaihteli ajosta toiseen: eri
-riveille sijoitettu versio oli 0,8–5 kertaa niin nopea kuin
-vierekkäinen. Yksi ajo näytti tältä:
+Kirjoittajan virtuaalikoneessa ero jäi pieneksi: kuormittamattomalla
+koneella eri riveille sijoitettu versio oli toistetuissa ajoissa
+1,0–1,3 kertaa niin nopea kuin vierekkäinen, ja kuormitetulla koneella
+vaihteluväli oli vielä laajempi. Yksi ajo näytti tältä:
 
 ```{.tuloste tiedosto="esimerkit/tulokset/06-asettelu.txt"}
 ```
 
-Tulos on opettavainen sinänsä: virtuaalikoneen säikeiden sijoittelua
-fyysisiin ytimiin ei hallitse, ja kaksi virtuaaliydintä voi jakaa
-saman fyysisen ytimen ja L1-välimuistin, jolloin koherenssiliikennettä
-ei synny. Monisäikeiset mittaukset on tehtävä ympäristössä, jossa
-ytimet tunnetaan. Rinnakkaisuus kokonaisuudessaan on taidon
-*Rinnakkaisohjelmointi* aihe.
+Tulos on opettavainen sinänsä. Silmukan kirjoitus on tavallinen
+`add`-käsky. Todennäköinen selitys pienelle erolle on, että suoritin
+jättää tällaiset kirjoitukset kirjoituspuskuriinsa, lukee uuden arvon
+sieltä ja purkaa monta kirjoitusta kerralla aina, kun rivi on sen
+hallussa: rivi kulkee ytimeltä toiselle, mutta harvoin suhteessa
+kirjoitusten määrään. Kun sama koe tehdään atomisilla laskureilla,
+joiden jokainen kasvatus vaatii rivin yksinomistuksen, sama kone
+näyttää kahdella säikeellä noin kymmenkertaisen ja neljällä yli
+kaksikymmenkertaisen eron (taito *Rinnakkaisohjelmointi*, jonka aihe
+rinnakkaisuus kokonaisuudessaan on). Väärän jakamisen hinta riippuu
+siis siitä, millaisia kirjoitukset ovat, eikä sitä voi päätellä
+mittaamatta.
 
 ## Matriisitulo
 
@@ -156,15 +163,18 @@ muistiliikennettä noin 25-kertaisesti. Ajoissa kirjoittajan koneella:
 ```{.tuloste tiedosto="esimerkit/tulokset/06-matriisitulo.txt"}
 ```
 
-Silmukoiden järjestys toi nelinkertaisen nopeuden, lohkominen vain
-vähän lisää. Syy näkyy roofline-mallista: skalaarikoodi on
-laskentarajoitteinen jo ikj-järjestyksessä, koska tämän koneen
+Silmukoiden järjestys toi noin viisinkertaisen nopeuden. Lohkominen
+ei tuonut lisää: toistetuissa ajoissa lohkottu versio oli 15–20 %
+ikj-järjestystä hitaampi. Syy näkyy roofline-mallista: skalaarikoodi
+on laskentarajoitteinen jo ikj-järjestyksessä, koska tämän koneen
 2 MiB:n L2-välimuisti ja esihaku syöttävät riveittäistä dataa
-riittävän nopeasti. Kun laskenta vektoroidaan (`-O3 -march=native`),
-ikj-järjestyksen nopeus lähes kolminkertaistuu, ja lohkottu versio
-on yhä hieman nopein. Tämän kokoinen matriisi mahtuu kuitenkin vielä
-L3-välimuistiin, joten muistiliikenteen säästö näkyy ajassa
-vasta suuremmilla matriiseilla ja tehokkaammalla laskennalla:
+riittävän nopeasti, ja lohkojen lisäsilmukat ovat silloin pelkkää
+lisätyötä. Kun laskenta vektoroidaan (`-O3 -march=native`),
+ikj-järjestyksen nopeus yli kaksinkertaistuu ja versiot ovat
+käytännössä yhtä nopeita: ajosta riippuen kumpi tahansa oli hieman
+edellä. Tämän kokoinen matriisi mahtuu vielä L3-välimuistiin, joten
+Cachegrindin näyttämä muistiliikenteen säästö näkyisi ajassa vasta
+suuremmilla matriiseilla ja tehokkaammalla laskennalla:
 
 ```{.tuloste tiedosto="esimerkit/tulokset/06-matriisitulo-O3.txt"}
 ```

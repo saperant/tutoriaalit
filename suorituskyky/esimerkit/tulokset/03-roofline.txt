@@ -1,8 +1,8 @@
 mitattu kone (yksi ydin, skalaarikoodi)
-huippu 3.1 GFLOP/s, kaista 14.0 GB/s, harjanne 0.22 F/B
+huippu 3.4 GFLOP/s, kaista 16.8 GB/s, harjanne 0.20 F/B
 ydin                              F/B    GFLOP/s raja
 kopio a[i] = b[i]               0.000       0.00 muisti
-triad a[i] = b[i] + s*c[i]      0.062       0.88 muisti
-pistetulo s += a[i]*b[i]        0.125       1.75 muisti
-polynomi aste 16, y = p(x)      1.333       3.11 laskenta
-matriisitulo n = 1024          85.333       3.11 laskenta
+triad a[i] = b[i] + s*c[i]      0.062       1.05 muisti
+pistetulo s += a[i]*b[i]        0.125       2.10 muisti
+polynomi aste 16, y = p(x)      1.333       3.36 laskenta
+matriisitulo n = 1024          85.333       3.36 laskenta

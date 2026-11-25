@@ -8,21 +8,30 @@
 # Hakemiston openmp/ ohjelma käännetään GCC:llä valitsimella -fopenmp
 # (libgomp tulee GCC:n mukana), ja sen tulostetta verrataan tiedostoon
 # <nimi>.odotettu.
+#
+# Hakemiston mittaus/ ohjelmat mittaavat aikoja ja havaintojen määriä,
+# jotka riippuvat koneesta. Testi vain kääntää ne (ne sisällyttävät
+# esimerkkien koodin, joten ne eivät saa vanhentua); `make tulokset`
+# ajaa ne optimoituina hiljaisella koneella ja kirjoittaa tulokset
+# hakemistoon tulokset/, josta teksti ja kuvat ne lukevat.
 GCC   := $(firstword $(shell command -v g++-14 g++ 2>/dev/null))
 CLANG := $(firstword $(shell command -v clang++-20 clang++ 2>/dev/null))
 LIPUT := -std=c++23 -Wall -Wextra -Wpedantic -Werror -g -fsanitize=thread
 OHJELMAT := $(basename $(notdir $(wildcard tsan/*.cc)))
 export TSAN_OPTIONS := halt_on_error=1
 
-.PHONY: kaikki rivit openmp siivoa $(OHJELMAT)
-kaikki: rivit $(OHJELMAT) openmp
+MITTAUKSET := litmus nopeutus vaara-jakaminen
+MITTALIPUT := -std=c++23 -O2 -Wall -Wextra -Wpedantic -Werror -pthread
+
+.PHONY: kaikki rivit openmp mittaus tulokset siivoa $(OHJELMAT)
+kaikki: rivit $(OHJELMAT) openmp mittaus
 
 rivit:
 	@python3 -c 'import sys; v = [f"{t}:{n}: rivi on liian pitkä" \
 	    for t in sys.argv[1:] for n, r in enumerate(open(t, \
 	    encoding="utf-8"), 1) if len(r.rstrip("\n")) > 78]; \
 	    print(*v, sep="\n") if v else None; sys.exit(bool(v))' \
-	    tsan/*.cc tsan/*.raportti tsan/*.sh openmp/*.cc
+	    tsan/*.cc tsan/*.raportti tsan/*.sh openmp/*.cc mittaus/*.cc
 
 openmp:
 	@mkdir -p bin
@@ -54,6 +63,21 @@ $(OHJELMAT): %:
 	        || { echo "VIRHE: $@ ($$n)"; exit 1; }; \
 	done
 	@echo "OK: $@ (ThreadSanitizer-raportti)"
+
+# @alku mittaus
+mittaus:
+	@mkdir -p bin
+	@for m in $(MITTAUKSET); do \
+	    $(GCC) $(MITTALIPUT) mittaus/$$m.cc -o bin/mittaus-$$m || exit 1; \
+	done
+	@echo "OK: mittausohjelmat kääntyvät"
+
+tulokset: mittaus
+	@mkdir -p tulokset
+	bin/mittaus-litmus > tulokset/04-litmus.txt
+	bin/mittaus-nopeutus > tulokset/10-nopeutus.txt
+	bin/mittaus-vaara-jakaminen > tulokset/10-vaara-jakaminen.txt
+# @loppu mittaus
 
 siivoa:
 	rm -rf bin

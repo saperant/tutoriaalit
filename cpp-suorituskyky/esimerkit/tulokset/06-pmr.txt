@@ -1,6 +1,6 @@
 1000 rivin jasennys, 51 kenttaa rivilla
-  std::vector<std::string>       2.019 ms +-  0.591
-  pmr ja pinopuskuri             0.918 ms +-  0.029  2.2 x nopeampi
+  std::vector<std::string>       1.104 ms +-  0.014
+  pmr ja pinopuskuri             0.646 ms +-  0.023  1.7 x nopeampi
 std::map, 100000 lisaysta ja 50000 poistoa
-  oletusvaraaja                 39.183 ms +-  4.455
-  unsynchronized_pool           24.945 ms +-  2.014  1.6 x nopeampi
+  oletusvaraaja                 27.940 ms +-  0.613
+  unsynchronized_pool           16.288 ms +-  0.136  1.7 x nopeampi

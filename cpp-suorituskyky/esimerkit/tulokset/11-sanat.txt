@@ -1,5 +1,5 @@
 10 yleisinta sanaa, 1000000 sanaa
-  v1                           289.361 ms +- 43.024
-  v2                           108.167 ms +-  6.718  2.7 x nopeampi
-  v3                            70.105 ms +-  5.176  4.1 x nopeampi
-  v4                            93.158 ms +- 12.165  3.1 x nopeampi
+  v1                           149.945 ms +-  4.549
+  v2                            48.295 ms +-  0.665  3.1 x nopeampi
+  v3                            30.539 ms +-  0.066  4.9 x nopeampi
+  v4                            31.915 ms +-  0.513  4.7 x nopeampi

@@ -1,6 +1,6 @@
 taulukon summa, 4 MiB, 51 toistoa (ms)
-  ensimmainen ajo     2.734
+  ensimmainen ajo     0.772
   pienin              0.194
-  mediaani            0.209  (MAD 0.009)
-  keskiarvo           0.253
-  suurin              1.044
+  mediaani            0.204  (MAD 0.008)
+  keskiarvo           0.223
+  suurin              0.598

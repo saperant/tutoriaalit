@@ -85,8 +85,10 @@ uusille sanoille ja niiden solmuille. Vaihe 4 varaa vain hajautustaulun
 solmut. Käskymäärä sanaa kohden laskee joka vaiheessa, ja vaihe 4 tekee
 alle kolmanneksen vaiheen 1 työstä.
 
-Ajoissa vaiheet 3 ja 4 olivat kirjoittajan kuormitetulla koneella
-kohinan rajoissa, ja niiden järjestys vaihteli ajosta toiseen.
+Ajassa vaiheet 1–3 nopeutuvat selvästi, mutta vaihe 4 ei ole vaihetta
+3 nopeampi: toistetuissa ajoissa kuormittamattomalla koneella se oli
+joka kerta muutaman prosentin hitaampi, vaikka se tekee kolmanneksen
+vähemmän käskyjä ja kolmanneksen varauksista.
 Kun käskyt ja varaukset vähenevät mutta aika ei, jäljellä oleva hinta
 on muistissa: libstdc++:n hajautustaulun solmut ovat erillisiä
 varauksia, ja jokainen haku seuraa osoitinta. Seuraava askel olisi

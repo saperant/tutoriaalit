@@ -93,7 +93,10 @@ Rinnakkaisen ohjelman tuloste ei saa riippua lomituksesta, jotta testi on
 toistettava. Siksi esimerkit tulostavat vain lopputuloksia,
 invarianttien tarkistuksia ja laskureita. Ajat ja muut koneesta riippuvat
 mittaukset kirjoitetaan virhetulosteeseen, jota testi ei vertaa. Samaa
-periaatetta kannattaa noudattaa omissa testeissä.
+periaatetta kannattaa noudattaa omissa testeissä. Tekstissä näytetyt
+mitatut tulokset (nopeutus, väärä jakaminen, litmus-testien
+havaintomäärät) on ajettu erikseen kuormittamattomalla koneella
+hakemiston `esimerkit/mittaus/` ohjelmilla.
 
 Kehityskontissa (`.devcontainer/rinnakkaisohjelmointi`) ovat kääntäjät,
 sanitoijat ja dokumenttityökalut.

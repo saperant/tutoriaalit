@@ -39,8 +39,8 @@ konekoodissa:
 ```
 
 Lajittelematon data on kahdeksan kertaa hitaampaa kuin lajiteltu,
-vaikka työ on sama. Jos tavu kestää 5 ns ja puolet niistä ennustetaan
-väärin, yksi väärä ennuste maksaa noin 10 ns eli parikymmentä jaksoa.
+vaikka työ on sama. Jos tavu kestää 3,5 ns ja puolet niistä ennustetaan
+väärin, yksi väärä ennuste maksaa noin 7 ns eli viitisentoista jaksoa.
 
 ## Haaraton muoto
 

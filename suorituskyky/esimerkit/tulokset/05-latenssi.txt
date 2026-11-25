@@ -1,10 +1,10 @@
 osoitinjahti, satunnainen sykli
   tyojoukko   ns/lataus
-      16 KiB       1.83
-      64 KiB       9.67
-     256 KiB      10.13
-    1024 KiB      19.50
-    4096 KiB      47.18
-   16384 KiB     178.06
-   65536 KiB     203.00
-  262144 KiB     154.29
+      16 KiB       1.58
+      64 KiB       4.96
+     256 KiB       4.98
+    1024 KiB       6.59
+    4096 KiB      55.47
+   16384 KiB      75.61
+   65536 KiB     167.46
+  262144 KiB     196.46

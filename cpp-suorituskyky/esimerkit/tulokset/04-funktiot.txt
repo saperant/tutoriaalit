@@ -1,4 +1,4 @@
 ehdon tayttavien laskenta, 10000000 alkiota
-  function                      21.901 ms +-  0.532
-  osoitin                       18.989 ms +-  0.282  1.2 x nopeampi
-  malli                          9.975 ms +-  0.188  2.2 x nopeampi
+  function                      14.348 ms +-  0.360
+  osoitin                       12.996 ms +-  0.371  1.1 x nopeampi
+  malli                          4.094 ms +-  0.797  3.5 x nopeampi

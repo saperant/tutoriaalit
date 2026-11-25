@@ -1,6 +1,6 @@
 pinta-alojen summa, 1000000 kuviota
-  virtuaali                      9.740 ms +-  0.463
-  variant                        5.554 ms +-  0.114
-  avoin                          0.865 ms +-  0.025
-  final                          0.820 ms +-  0.023
-  crtp                           0.733 ms +-  0.017
+  virtuaali                      8.313 ms +-  0.396
+  variant                        4.072 ms +-  0.080
+  avoin                          0.871 ms +-  0.052
+  final                          0.734 ms +-  0.008
+  crtp                           0.570 ms +-  0.018

@@ -62,7 +62,7 @@ suhteessa enemmän) tai kun kääntäjä luopuu versioinnista
 kokonaan. Optimointitaso ratkaisee myös paljon: tasolla `-O2` GCC 14
 käyttää kevyttä kustannusmallia eikä vektoroinut kumpaakaan
 saxpy-silmukkaa, vain kokonaislukusumman, ja `-O2`-käännöksen
-saxpy-kutsut kestivät kirjoittajan koneella noin kuusi kertaa
+saxpy-kutsut kestivät kirjoittajan koneella noin kolme kertaa
 kauemmin kuin yllä.
 
 ## Liukulukujen järjestys

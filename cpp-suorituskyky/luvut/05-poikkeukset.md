@@ -58,7 +58,7 @@ Käskyt jäsennystä kohden tuhannella rivillä:
 Onnistuvalla polulla tavat ovat yhtä nopeita: poikkeusversio on jopa
 hieman nopeampi, koska paluuarvo on pelkkä `int` eikä kutsujan tarvitse
 tarkistaa mitään. Epäonnistuvalla polulla jokainen heitto maksaa noin
-14 000 käskyä ja ajassa yli kaksi mikrosekuntia, yli sata kertaa enemmän
+14 000 käskyä ja ajassa noin mikrosekunnin, yli sata kertaa enemmän
 kuin itse jäsennys. Monisäikeisessä ohjelmassa hinta oli vanhemmilla
 C-kirjastoilla vielä suurempi, koska purkutaulujen haku otti
 globaalin lukon; glibc 2.35:stä alkaen haku on lukoton.

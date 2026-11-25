@@ -45,8 +45,8 @@ osoitteen laskenta ei sievene. Ajassa ero näyttää tältä:
 ```{.tuloste tiedosto="esimerkit/tulokset/05-lapikaynti.txt"}
 ```
 
-Kun matriisi mahtuu L2-välimuistiin (512 KiB), ero on pieni. Kun se on
-muistissa (128 MiB), sarakkeittainen läpikäynti on noin kymmenen
+Kun matriisi mahtuu L2-välimuistiin (512 KiB), ero on pieni. Kun se ei
+mahdu (8 MiB ja 128 MiB), sarakkeittainen läpikäynti on noin kymmenen
 kertaa hitaampi. Sama koskee kaikkia moniulotteisia rakenteita:
 kuvan pikselit, taulukkolaskennan solut ja tietokannan rivit. Sisin
 silmukka kulkee aina sitä indeksiä pitkin, joka vaihtuu muistissa
@@ -63,8 +63,8 @@ kolmella:
 Kun $k$ kasvaa yhdestä kuuteentoista, laskentaa on 16 kertaa vähemmän,
 mutta jokainen 64 tavun rivi on yhä luettava ja kirjoitettava, koska
 jokaisella rivillä on ainakin yksi päivitettävä alkio. Kun $k$ ylittää
-16 (64 tavua neljän tavun lukuina), joka toinen rivi jää koskematta,
-ja aika puolittuu jokaisella kaksinkertaistuksella:
+16 (64 tavua neljän tavun lukuina), osa riveistä jää koskematta, ja
+aika alkaa laskea työn mukana:
 
 ```{.tuloste tiedosto="esimerkit/tulokset/05-askel.txt"}
 ```
@@ -74,12 +74,17 @@ Katkoviiva näyttää, miten aika laskisi, jos se riippuisi vain
 päivitysten määrästä. Askeleeseen 16 asti jokainen rivi on yhä
 haettava muistista.](kuvat/askel.png){width=76%}
 
-Askeleilla 1–16 aika laskee vain noin puoleen, vaikka työ vähenee
-kuudestoistaosaan: ohjelma on muistirajoitteinen, ja muistista
-siirretty data on sama. Askeleesta 16 alkaen aika puolittuu jokaisella
+Askeleilla 1–16 aika laskee vain noin kolmannekseen, vaikka työ
+vähenee kuudestoistaosaan: ohjelma on muistirajoitteinen, ja muistista
+siirretty data on sama. Tässä koneessa aika laskee hitaasti vielä
+askeleeseen 64 asti, vaikka silloin jo kolme riviä neljästä jää
+koskematta. Todennäköinen syy on esihakija, joka noutaa peräkkäiset
+rivit joka tapauksessa; laskureilla sitä ei tässä ympäristössä voi
+varmistaa. Askeleesta 64 alkaen aika puolittuu jokaisella
 kaksinkertaistuksella, kunnes taulukko on niin harva, että
-TLB-hudit ja sivujen rajat alkavat näkyä. Luvuista voi päätellä rivin
-koon ilman dokumentaatiota.
+TLB-hudit ja sivujen rajat alkavat näkyä. Sarake ns/päivitys kertoo
+saman: yhden päivityksen hinta kasvaa, kunnes jokainen päivitys maksaa
+oman rivinsä noudon, ja tasaantuu sitten noin kymmeneen nanosekuntiin.
 
 ## Viive työjoukon koon mukaan
 
@@ -118,11 +123,13 @@ L2-välimuistin koot.](kuvat/latenssi.png){width=76%}
 
 16 KiB mahtuu L1-välimuistiin, ja lataus kestää alle kaksi
 nanosekuntia eli noin neljä jaksoa. 64 KiB–1 MiB on L2:ssa
-(noin 10–20 ns), muutama megatavu jaetussa L3:ssa ja kymmenet
-megatavut keskusmuistissa (150–200 ns). Viimeisen rivin pienempi luku
-ei ole uusi porras vaan mittauksen vaihtelua: jaetulla koneella
-keskusmuistin viive muuttuu ajosta toiseen kymmeniä prosentteja muun
-kuorman ja sivujen sijoittelun mukaan. Muistihuti maksaa siis
+(noin 5–7 ns). Muutaman megatavun työjoukko on jaetussa L3:ssa, ja
+viive hyppää kymmeniin nanosekunteihin (55–75 ns; mukana ovat jo
+TLB-hudit). Kymmenien ja satojen megatavujen työjoukolla valtaosa
+latauksista haetaan keskusmuistista (150–200 ns). Jaetulla koneella
+suurten työjoukkojen viive muuttuu ajosta toiseen kymmenen tai
+parikymmentä prosenttia muun kuorman ja sivujen sijoittelun mukaan.
+Muistihuti maksaa siis
 satoja jaksoja, joiden aikana suoritin voisi tehdä tuhat käskyä.
 Satunnainen saanti suureen tietorakenteeseen, kuten linkitettyyn
 listaan, hajautustauluun tai puuhun, maksaa tämän hinnan jokaisella

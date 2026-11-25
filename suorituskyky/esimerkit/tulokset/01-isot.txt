@@ -1,13 +1,13 @@
 isot kirjaimet (aika kasvaa: hidas ~n^2, nopea ~n)
  n = 10000
-  hidas                         0.679 ms +-  0.005
-  nopea                         0.004 ms +-  0.000  185.7 x nopeampi
+  hidas                         0.765 ms +-  0.011
+  nopea                         0.003 ms +-  0.000  224.6 x nopeampi
  n = 20000
-  hidas                         3.062 ms +-  0.162
-  nopea                         0.007 ms +-  0.000  423.9 x nopeampi
+  hidas                         2.542 ms +-  0.005
+  nopea                         0.007 ms +-  0.000  375.6 x nopeampi
  n = 40000
-  hidas                        11.297 ms +-  0.304
-  nopea                         0.028 ms +-  0.000  403.0 x nopeampi
+  hidas                         7.766 ms +-  0.707
+  nopea                         0.010 ms +-  0.000  746.6 x nopeampi
  n = 80000
-  hidas                        79.522 ms +-  7.293
-  nopea                         0.031 ms +-  0.000  2562.5 x nopeampi
+  hidas                        52.498 ms +-  1.129
+  nopea                         0.029 ms +-  0.000  1790.4 x nopeampi

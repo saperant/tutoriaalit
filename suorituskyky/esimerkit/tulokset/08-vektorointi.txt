@@ -1,6 +1,6 @@
 saxpy, 4096 alkiota (aika = 1000 kutsua)
-  ilman restrict                2.761 ms +-  0.190
-  restrict                      2.644 ms +-  0.163  1.0 x nopeampi
+  ilman restrict                1.420 ms +-  0.018
+  restrict                      1.414 ms +-  0.008  yhta nopea
 float-summa, 4096 alkiota (aika = 1000 kutsua)
-  yksi summa                    3.178 ms +-  0.334
-  kahdeksan osasummaa           0.359 ms +-  0.012  8.9 x nopeampi
+  yksi summa                    2.497 ms +-  0.016
+  kahdeksan osasummaa           0.301 ms +-  0.000  8.3 x nopeampi

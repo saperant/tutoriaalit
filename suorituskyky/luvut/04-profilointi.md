@@ -58,8 +58,9 @@ tiedoston `gmon.out`, jonka `gprof` muuttaa raportiksi:
 Ohjelman omista funktioista näytteitä sai vain lineaarinen haku, ja
 arvaus näyttää osuneen. (Merkintään `_init` gprof kirjaa näytteet,
 jotka osuvat kirjastokutsujen hyppytauluun.) Mutta raportti kattaa
-vain muutaman sadasosasekunnin, vaikka ajo kesti noin 300
-millisekuntia. Ero selittyy sillä, että
+vain muutaman sadasosasekunnin, vaikka ajo kesti noin 200
+millisekuntia, ja koska näytteitä on vain muutama, niiden jakauma
+vaihtelee ajosta toiseen. Ero selittyy sillä, että
 gprof näytteistää vain ohjelman omaa koodia. Aika, joka kuluu jaetussa
 C-kirjastossa, kuten `sscanf`-, `strlen`- ja `strcmp`-funktioissa,
 ei näy raportissa lainkaan. Kutsumäärät (`calls`) ovat sen sijaan
