@@ -1,0 +1,8 @@
+todennäköisimpien summa         43.0 pv
+PERT-odotusarvo                 51.5 pv
+PERT 85 % (odotus + 1,04 s)     57.6 pv
+simuloitu keskiarvo             51.5 pv
+simuloitu 85 %                  57.9 pv
+jokaiselle oma 85 %:n vara      67.9 pv
+yksi yhteinen puskuri           57.9 pv (puskuri 6.4 pv)
+omien varojen summa pitää      99.4% toistoista

@@ -1,0 +1,16 @@
+riski                                       p vaikutus altistus
+maksurajapinnan toimittaja myöhästyy      40%     20 pv   8.0 pv
+vanhan järjestelmän data on likaista      60%     10 pv   6.2 pv
+avainhenkilö lähtee kesken projektin      15%     25 pv   3.8 pv
+suorituskyky ei riitä tuotantodatalla     25%     15 pv   3.8 pv
+tietosuojavaatimus tulkittu väärin        10%     32 pv   3.2 pv
+altistusten summa 24.9 pv
+torjunnan hyötysuhde (altistuksen lasku / hinta):
+  maksurajapinnan toimittaja myöhästyy     1.7
+  avainhenkilö lähtee kesken projektin     0.4
+  suorituskyky ei riitä tuotantodatalla    1.5
+  vanhan järjestelmän data on likaista     1.6
+torjutaan              keskiarvo    50 %    85 %    95 %
+ei mitään                25.2 pv   22 pv   46 pv   64 pv
+hyötysuhde yli 1         20.8 pv   15 pv   39 pv   54 pv
+kaikki                   24.5 pv   21 pv   39 pv   55 pv

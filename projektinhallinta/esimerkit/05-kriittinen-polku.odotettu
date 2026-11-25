@@ -1,0 +1,18 @@
+projektin kesto 29 pv
+  määrittely        5 pv  kriittinen
+  tietokanta        9 pv  pelivara 1 pv
+  rajapinta        10 pv  kriittinen
+  käyttöliittymä   15 pv  pelivara 1 pv
+  integraatio       6 pv  kriittinen
+  testaus           5 pv  kriittinen
+  käyttöönotto      3 pv  kriittinen
+kriittinen polku keskimääräisin kestoin 32.9 pv
+simuloitu keskimääräinen kesto          34.0 pv
+kriittisellä polulla osuus toistoista:
+  määrittely       100%
+  tietokanta        22%
+  rajapinta         48%
+  käyttöliittymä    30%
+  integraatio       70%
+  testaus          100%
+  käyttöönotto     100%

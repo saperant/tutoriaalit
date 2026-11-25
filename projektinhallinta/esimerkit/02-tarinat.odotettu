@@ -1,0 +1,10 @@
+T-4: ei hyväksymiskriteerejä: ei voi testata
+T-5: hyöty puuttuu: miksi tämä tehdään?
+T-5: koko 13 pv > 8: pilko
+T-6: ei arviota
+T-6: kehäriippuvuus
+T-7: kehäriippuvuus
+
+julkaisu  Etsi            Kerää           Maksa           Ylläpidä        
+1         T-1             T-2             T-3             -               
+2         T-4             T-6,T-7         -               T-5             

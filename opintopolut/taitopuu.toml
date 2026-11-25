@@ -2245,6 +2245,7 @@ laajuus = 5
 testaus = "Python-simulaatiot: Monte Carlo -ennusteet ja virtausmallit, mittarit Git-historiasta"
 roadmap = []
 amk = "Projektityö ja ohjelmistotuotanto"
+tutoriaali = "projektinhallinta"
 
 [[taito]]
 id = "tiimit-ja-organisaatiot"

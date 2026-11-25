@@ -161,7 +161,7 @@ flowchart LR
     testivetoinen_kehitys["Testivetoinen kehitys ja testisuunnittelu"]
     jatkuva_toimitus["Jatkuva integraatio ja toimitus"]
     tekninen_dokumentaatio["Tekninen dokumentaatio"]
-    projektinhallinta["Ohjelmistoprojektin hallinta"]
+    projektinhallinta["✓ Ohjelmistoprojektin hallinta"]
     tiimit_ja_organisaatiot["Tiimit ja organisaatiomallit"]
   end
   komentorivi --> versionhallinta
@@ -504,7 +504,7 @@ flowchart LR
 
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
-| Ohjelmistoprojektin hallinta | 5 | Versionhallinta (Git) | suunniteltu |
+| Ohjelmistoprojektin hallinta | 5 | Versionhallinta (Git) | [valmis](../projektinhallinta/) |
 | Tekninen dokumentaatio | 4 | Python työkaluohjelmointiin, Versionhallinta (Git) | suunniteltu |
 | Testivetoinen kehitys ja testisuunnittelu | 5 | Python työkaluohjelmointiin, Versionhallinta (Git) | suunniteltu |
 | Tiimit ja organisaatiomallit | 3 | Ohjelmistoprojektin hallinta | suunniteltu |
