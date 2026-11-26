@@ -1,0 +1,23 @@
+# Järjestelmän lepotila: laitteiden suspend ja resume ajetaan ytimen
+# testitilassa (pm_test), joka palaa itsestään sekunnin kuluttua.
+suodata paine jakokello PM:~suspend
+lataa kello.ko
+lataa paine_pm.ko
+nuku 2000
+# @alku testitila
+lue /sys/power/state
+kirjoita /sys/module/suspend/parameters/pm_test_delay 1
+kirjoita /sys/power/pm_test devices
+lue /sys/power/pm_test
+# @loppu testitila
+# @alku nukkuva
+aja /bin/tila
+kirjoita /sys/power/state freeze
+aja /bin/tila
+# @loppu nukkuva
+# @alku kaytossa
+kirjoita /sys/devices/platform/paineanturi/jatkuva 1
+aja /bin/tila
+kirjoita /sys/power/state freeze
+aja /bin/tila
+# @loppu kaytossa

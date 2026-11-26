@@ -48,7 +48,7 @@ uevent-tiedot:
 ```{.tuloste tiedosto="esimerkit/testit/02-jono.odotettu" osa="vaiheet"}
 ```
 
-Pääluku 254 on ytimen valitsema. Laitteen nimi ja numero ovat
+Pääluku 253 on ytimen valitsema. Laitteen nimi ja numero ovat
 tiedostossa `uevent` juuri niin kuin `udev` ne saa.
 
 ## Tiedosto-operaatiot

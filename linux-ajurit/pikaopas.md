@@ -1,6 +1,6 @@
 ---
 title: Linux-laiteajurit
-subtitle: Pikaopas · moduulit, laitteet, keskeytykset, DMA, väylät, vianetsintä
+subtitle: Pikaopas · moduulit, laitteet, keskeytykset, DMA, väylät, virranhallinta, vianetsintä
 ---
 
 # Moduuli
@@ -53,7 +53,7 @@ kopioi `copy_to_user` → `-EFAULT`. `poll`: `poll_wait` + maski.
 | virhe | `return dev_err_probe(dev, err, "...")` |
 
 `readl`/`writel` (estein), `*_relaxed` (ilman), `ioread32be`.
-Riippuvuus puuttuu → `-EPROBE_DEFER`. Käsin: `bind`, `unbind`,
+Riippuvuus puuttuu → `-EPROBE_DEFER` (`debug/devices_deferred`). Käsin: `bind`, `unbind`,
 `driver_override` ajurin ja laitteen hakemistoissa.
 
 # Keskeytykset ja lukot
@@ -104,6 +104,15 @@ Ei pinon puskureita. Laitepuun `dma-coherent`: ei välimuistitoimia.
 SMBus-sana on pienin tavu ensin (`REGMAP_ENDIAN_LITTLE`). Testiväylä:
 `i2c-stub chip_addr=0x48,0x49`.
 
+# Resurssit ja virranhallinta
+
+| Asia | Tapa |
+|------|------|
+| kello | `devm_clk_get`, `clk_set_rate`, `clk_prepare_enable` |
+| jännite, GPIO | `devm_regulator_get`, `devm_gpiod_get` (looginen arvo) |
+| käyttö | `pm_runtime_resume_and_get` … `pm_runtime_put_autosuspend` |
+| lepotila | `DEFINE_RUNTIME_DEV_PM_OPS`; testi `/sys/power/pm_test` |
+
 # sysfs ja debugfs
 
 ```{.c tiedosto="esimerkit/03-platform/herate.c" osa="debugfs"}
@@ -119,7 +128,7 @@ tarkisteta, `debugfs_remove_recursive`.
 | Väline | Käyttö |
 |--------|--------|
 | `dev_dbg` + dyndbg | `echo 'module m +p' > /proc/dynamic_debug/control`, `m.dyndbg=+p` |
-| ftrace | `set_ftrace_filter` `:mod:m`, `current_tracer` `function` |
+| ftrace | `set_ftrace_filter` `:mod:m`, tracer `function` |
 | oops | `pc`, `lr`, `Call trace`; `scripts/faddr2line m.ko f+0xc/0x14` |
 | lockdep | `PROVE_LOCKING`: lukkojärjestys |
 | nukkuminen | `DEBUG_ATOMIC_SLEEP`: mutex spinlockissa |

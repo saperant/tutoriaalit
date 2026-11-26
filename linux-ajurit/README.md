@@ -2,8 +2,8 @@
 
 Tiivis suomenkielinen tutoriaali Linux-ytimen laiteajureiden
 kirjoittamisesta: moduulit, merkkilaitteet, platform-ajurit ja laitepuu,
-keskeytykset ja lukitus, DMA, I2C- ja SPI-ajurit, sysfs ja debugfs sekä
-ytimen vianetsintä. Valmiit dokumentit:
+keskeytykset ja lukitus, DMA, I2C- ja SPI-ajurit, kellot, säätimet ja
+GPIO-linjat, virranhallinta, sysfs ja debugfs sekä ytimen vianetsintä. Valmiit dokumentit:
 [linux-ajurit.pdf](https://saperant.github.io/tutoriaalit/materiaalit/linux-ajurit.pdf)
 ja pikaopas
 [linux-ajurit-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/linux-ajurit-pikaopas.pdf).
@@ -24,10 +24,14 @@ ja pikaopas
    välimuistin koherenssi, dmaengine
 7. I2C-ajurit – alijärjestelmä, SMBus, regmap, hwmon, `i2c-stub`
 8. SPI-ajurit – siirrot ja viestit, ohjaimen ja laitteen ajuri, spidev
-9. sysfs ja debugfs – binääriattribuutit, debugfs, rajapinnan valinta
-10. Ytimen vianetsintä – lokitasot, dynaaminen debug, ftrace,
+9. Kellot, jännitteet ja GPIO-linjat – resurssit laitepuussa,
+   kytkentäjärjestys, lykätty sidonta, kellon tarjoaja, GPIO-keskeytys
+10. Virranhallinta – käyttölaskuri ja lepoviive, tilat sysfsissä,
+    järjestelmän lepotila ja sen testitila, herätyslähteet
+11. sysfs ja debugfs – binääriattribuutit, debugfs, rajapinnan valinta
+12. Ytimen vianetsintä – lokitasot, dynaaminen debug, ftrace,
     kaatumisilmoitus, lockdep ja muut tarkistimet
-11. Lopuksi – nyrkkisäännöt, oikeaan laitteeseen, jatkotaidot, lähteet
+13. Lopuksi – nyrkkisäännöt, oikeaan laitteeseen, jatkotaidot, lähteet
 
 ## Esimerkit
 
@@ -43,7 +47,9 @@ vaiheajuri `esimerkit/kayttaja/ajo.c`, joka suorittaa testin
 Laitteet ovat QEMU:n virt-koneen omia: PL031-reaaliaikakello
 (platform-ajuri ja keskeytykset) ja fw_cfg (DMA). I2C-väylän tarjoaa
 ytimen testimoduuli `i2c-stub`, ja SPI-ohjain ja sen muistipiiri ovat
-tämän tutoriaalin ohjelmallisia malleja. Ympäristö
+tämän tutoriaalin ohjelmallisia malleja. Kellojen, säätimien ja
+GPIO-linjojen esimerkki käyttää ytimen GPIO-simulaattoria ja kiinteää
+säädintä sekä omaa kellon tarjoajaa. Ympäristö
 (`esimerkit/ymparisto/`) on kopioitu tutoriaalista *Sulautettu Linux*,
 ja ytimeen on lisätty fragmentti `ajurit.config`.
 

@@ -1,0 +1,76 @@
+# @alku alku
+# lataa kello.ko
+  loki: jakokello naytekello: tarjolla, 1000000 Hz
+# lataa paine_pm.ko
+  loki: jakokello naytekello: jakaja 544: 44117 Hz
+  loki: paine paineanturi: pyydetty 44100 Hz, saatu 44117 Hz
+  loki: jakokello naytekello: paalle
+  loki: paine paineanturi: virta paalla, 3300 mV
+# aja /bin/tila
+  tila=active kayttajia=0 vdd=enabled kello=1 nreset=1
+# nuku 2000
+  loki: jakokello naytekello: pois
+  loki: paine paineanturi: virta pois
+# aja /bin/tila
+  tila=suspended kayttajia=0 vdd=disabled kello=0 nreset=0
+# @loppu alku
+# @alku mittaus
+# lue /sys/devices/platform/paineanturi/paine_pa
+  101325
+  loki: jakokello naytekello: paalle
+  loki: paine paineanturi: virta paalla, 3300 mV
+  loki: paine paineanturi: mittaus 1
+# aja /bin/tila
+  tila=active kayttajia=0 vdd=enabled kello=1 nreset=1
+# lue /sys/devices/platform/paineanturi/paine_pa
+  101325
+  loki: paine paineanturi: mittaus 2
+# nuku 2000
+  loki: jakokello naytekello: pois
+  loki: paine paineanturi: virta pois
+# aja /bin/tila
+  tila=suspended kayttajia=0 vdd=disabled kello=0 nreset=0
+# @loppu mittaus
+# @alku jatkuva
+# kirjoita /sys/devices/platform/paineanturi/jatkuva 1
+  loki: jakokello naytekello: paalle
+  loki: paine paineanturi: virta paalla, 3300 mV
+# aja /bin/tila
+  tila=active kayttajia=1 vdd=enabled kello=1 nreset=1
+# nuku 2000
+# aja /bin/tila
+  tila=active kayttajia=1 vdd=enabled kello=1 nreset=1
+# kirjoita /sys/devices/platform/paineanturi/jatkuva 0
+# aja /bin/tila
+  tila=active kayttajia=0 vdd=enabled kello=1 nreset=1
+# nuku 2000
+  loki: jakokello naytekello: pois
+  loki: paine paineanturi: virta pois
+# aja /bin/tila
+  tila=suspended kayttajia=0 vdd=disabled kello=0 nreset=0
+# @loppu jatkuva
+# @alku ohjaus
+# kirjoita /sys/devices/platform/paineanturi/power/control on
+  loki: jakokello naytekello: paalle
+  loki: paine paineanturi: virta paalla, 3300 mV
+# aja /bin/tila
+  tila=active kayttajia=1 vdd=enabled kello=1 nreset=1
+# kirjoita /sys/devices/platform/paineanturi/power/control auto
+# aja /bin/tila
+  tila=active kayttajia=0 vdd=enabled kello=1 nreset=1
+# nuku 2000
+  loki: jakokello naytekello: pois
+  loki: paine paineanturi: virta pois
+# aja /bin/tila
+  tila=suspended kayttajia=0 vdd=disabled kello=0 nreset=0
+# @loppu ohjaus
+# @alku irrotus
+# poista paine_pm
+  loki: jakokello naytekello: paalle
+  loki: paine paineanturi: virta paalla, 3300 mV
+  loki: jakokello naytekello: pois
+  loki: paine paineanturi: virta pois
+# aja /bin/tila
+  tila=unsupported kayttajia=0 vdd=disabled kello=0 nreset=0
+# @loppu irrotus
+paluuarvo 0

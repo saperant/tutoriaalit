@@ -103,7 +103,7 @@ voi antaa pinon muuttujia.
 
 ## Testi
 
-Muistin sisältö näkyy sysfsissä binääritiedostona (luku 9). Testi
+Muistin sisältö näkyy sysfsissä binääritiedostona (luku 11). Testi
 lataa ensin ohjaimen, jolloin laite syntyy ilman ajuria, ja sitten
 ajurin:
 
@@ -123,7 +123,7 @@ Tyhjä flash-muisti on täynnä tavua `0xff`. Kirjoitettu teksti näkyy
 muistin alussa, kun piiri on ottanut sen vastaan kirjoitusluvan jälkeen.
 
 Väylän liikenteen voi nähdä ohjaimen `dev_dbg`-riveistä, jotka
-kytketään päälle dynaamisella debugilla (luku 10). Lokirivien alussa
+kytketään päälle dynaamisella debugilla (luku 12). Lokirivien alussa
 on laitteen eikä ohjaimen ajurin nimi, koska viestit liittyvät
 laitteeseen `spi0.0`:
 

@@ -1,0 +1,1 @@
+obj-m := kello.o paine.o paine_pm.o

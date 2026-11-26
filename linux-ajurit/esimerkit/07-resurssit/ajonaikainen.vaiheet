@@ -1,0 +1,39 @@
+# Ajonaikainen virranhallinta: anturi on päällä vain käytön ajan.
+# tila-ohjelma tulostaa virtatilan jokaisen vaiheen jälkeen.
+suodata paine jakokello
+# @alku alku
+lataa kello.ko
+lataa paine_pm.ko
+aja /bin/tila
+nuku 2000
+aja /bin/tila
+# @loppu alku
+# @alku mittaus
+lue /sys/devices/platform/paineanturi/paine_pa
+aja /bin/tila
+lue /sys/devices/platform/paineanturi/paine_pa
+nuku 2000
+aja /bin/tila
+# @loppu mittaus
+# @alku jatkuva
+kirjoita /sys/devices/platform/paineanturi/jatkuva 1
+aja /bin/tila
+nuku 2000
+aja /bin/tila
+kirjoita /sys/devices/platform/paineanturi/jatkuva 0
+aja /bin/tila
+nuku 2000
+aja /bin/tila
+# @loppu jatkuva
+# @alku ohjaus
+kirjoita /sys/devices/platform/paineanturi/power/control on
+aja /bin/tila
+kirjoita /sys/devices/platform/paineanturi/power/control auto
+aja /bin/tila
+nuku 2000
+aja /bin/tila
+# @loppu ohjaus
+# @alku irrotus
+poista paine_pm
+aja /bin/tila
+# @loppu irrotus

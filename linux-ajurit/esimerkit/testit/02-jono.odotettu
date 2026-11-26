@@ -6,7 +6,7 @@
   jono0
   jono1
 # lue /sys/class/jono/jono0/uevent
-  MAJOR=254
+  MAJOR=253
   MINOR=0
   DEVNAME=jono0
 # aja /bin/jonotesti

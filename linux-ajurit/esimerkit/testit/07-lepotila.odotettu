@@ -1,0 +1,46 @@
+# lataa kello.ko
+  loki: jakokello naytekello: tarjolla, 1000000 Hz
+# lataa paine_pm.ko
+  loki: jakokello naytekello: jakaja 544: 44117 Hz
+  loki: paine paineanturi: pyydetty 44100 Hz, saatu 44117 Hz
+  loki: jakokello naytekello: paalle
+  loki: paine paineanturi: virta paalla, 3300 mV
+# nuku 2000
+  loki: jakokello naytekello: pois
+  loki: paine paineanturi: virta pois
+# @alku testitila
+# lue /sys/power/state
+  freeze mem
+# kirjoita /sys/module/suspend/parameters/pm_test_delay 1
+# kirjoita /sys/power/pm_test devices
+# lue /sys/power/pm_test
+  none core processors platform [devices] freezer
+# @loppu testitila
+# @alku nukkuva
+# aja /bin/tila
+  tila=suspended kayttajia=0 vdd=disabled kello=0 nreset=0
+# kirjoita /sys/power/state freeze
+  loki: PM: suspend entry (s2idle)
+  loki: PM: suspend debug: Waiting for 1 second(s).
+  loki: PM: suspend exit
+# aja /bin/tila
+  tila=suspended kayttajia=0 vdd=disabled kello=0 nreset=0
+# @loppu nukkuva
+# @alku kaytossa
+# kirjoita /sys/devices/platform/paineanturi/jatkuva 1
+  loki: jakokello naytekello: paalle
+  loki: paine paineanturi: virta paalla, 3300 mV
+# aja /bin/tila
+  tila=active kayttajia=1 vdd=enabled kello=1 nreset=1
+# kirjoita /sys/power/state freeze
+  loki: PM: suspend entry (s2idle)
+  loki: jakokello naytekello: pois
+  loki: paine paineanturi: virta pois
+  loki: PM: suspend debug: Waiting for 1 second(s).
+  loki: jakokello naytekello: paalle
+  loki: paine paineanturi: virta paalla, 3300 mV
+  loki: PM: suspend exit
+# aja /bin/tila
+  tila=active kayttajia=1 vdd=enabled kello=1 nreset=1
+# @loppu kaytossa
+paluuarvo 0

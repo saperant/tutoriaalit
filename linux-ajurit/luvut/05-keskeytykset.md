@@ -140,7 +140,7 @@ Herätyksen asetus käyttää kahta lukkoa: mutex sarjallistaa asettajat
 (prosessit, joille nukkuminen on sallittua), ja spinlock suojaa
 keskeytyksen kanssa jaetut kentät ja rekisterit. Lukkojen järjestys on
 aina sama: ensin mutex, sitten spinlock. Lukkojärjestyksen rikkominen
-löytyy lockdep-tarkistimella (luku 10).
+löytyy lockdep-tarkistimella (luku 12).
 
 ## Laite käyttäjälle
 
@@ -190,7 +190,7 @@ Ryhmä `dev_groups`-kentässä on parempi kuin `device_create_file`-kutsu
 ajurin tarvitse poistaa niitä itse. sysfs on käyttäjätilan rajapinta,
 joten julkaistua attribuuttia ei voi enää poistaa eikä sen muotoa
 muuttaa; binääriattribuutit, debugfs ja rajapinnan valinta käsitellään
-luvussa 9.
+luvussa 11.
 
 Attribuutti `jakso` tekee herätyksestä jaksollisen: yläpuolisko siirtää
 silloin vertailuarvoa eteenpäin jokaisessa keskeytyksessä. Sen

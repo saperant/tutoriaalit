@@ -26,9 +26,9 @@ KOMENTO  := console=ttyAMA0 loglevel=0 panic=-1 \
 TULOS     = { $(1); echo "paluuarvo $$?"; } 2>&1 | tr -d '\r'
 
 TESTIT := 01-modinfo 01-suljettu 01-parametrit 02-jono 02-kartta 03-herate \
-          03-vahti 04-dma 05-i2c 06-spi 07-dyndbg 07-ftrace 07-oops \
-          07-lukot
-TULOKSET := $(TESTIT:%=$(B)/%.tulos) $(B)/tyylit.ok
+          03-vahti 04-dma 05-i2c 06-spi 07-resurssit 07-ajonaikainen \
+          07-lepotila 08-dyndbg 08-ftrace 08-oops 08-lukot
+TULOKSET := $(TESTIT:%=$(B)/%.tulos) $(B)/tyylit.ok $(B)/kaaviot.ok
 
 .PHONY: kaikki aja siivoa
 kaikki: $(TULOKSET)
@@ -45,6 +45,16 @@ $(B)/tyylit.ok: $(SKRIPTIT) | $(B)
 	shellcheck $(SKRIPTIT)
 	touch $@
 
+# Virranhallinnan aikajana tuotetaan testin tulosteesta ja verrataan
+# tallennettuun kaavioon, jota tekstissä näytetään.
+# @alku kaavio
+$(B)/kaaviot.ok: kaaviot/tee.py testit/07-ajonaikainen.odotettu \
+                 kaaviot/virta.json | $(B)
+	python3 kaaviot/tee.py testit/07-ajonaikainen.odotettu | \
+	    diff -u kaaviot/virta.json -
+	touch $@
+# @loppu kaavio
+
 # --- käyttäjätilan ohjelmat: staattisia ARM64-ohjelmia ------------------
 # @alku ohjelmat
 $(B)/bin/%: | $(B)
@@ -58,6 +68,7 @@ $(B)/bin/jonotesti: 02-merkkilaite/jonotesti.c 02-merkkilaite/jono.h
 $(B)/bin/karttatesti: 02-merkkilaite/karttatesti.c
 $(B)/bin/heratetesti: 03-platform/heratetesti.c
 $(B)/bin/i2c-aseta: 05-i2c/i2c-aseta.c
+$(B)/bin/tila: 07-resurssit/tila.c
 # @loppu ohjelmat
 
 # --- moduulit: ytimen ulkopuoliset moduulit Kbuildilla ------------------
@@ -74,7 +85,7 @@ $(B)/$(1)/valmis: $(wildcard $(1)/*.c $(1)/*.h) $(1)/Kbuild $(YDIN)/valmis
 endef
 # @loppu moduulit
 HAKEMISTOT := 01-moduulit 02-merkkilaite 03-platform 04-dma 05-i2c \
-              06-spi 07-vianetsinta
+              06-spi 07-resurssit 08-vianetsinta
 $(foreach h,$(HAKEMISTOT),$(eval $(call MODUULIT,$(h))))
 
 # --- initramfs ja ajo ---------------------------------------------------
@@ -199,26 +210,49 @@ $(B)/06-spi/vspi.ko $(B)/06-spi/muisti.ko: $(B)/06-spi/valmis
 $(eval $(call TESTI,06-spi,06-spi/spi.vaiheet,\
     $(B)/06-spi/vspi.ko $(B)/06-spi/muisti.ko,heksa,))
 
-# --- 07: vianetsintä ----------------------------------------------------
-VIKA := $(B)/07-vianetsinta/vika.ko
-$(VIKA): $(B)/07-vianetsinta/valmis
+# --- 07: kellot, säätimet, GPIO ja virranhallinta -----------------------
+# GPIO-simulaattori ja kiinteä säädin ovat ytimessä; kello ja anturin
+# kaksi ajuria ovat tutoriaalin moduuleja. Laitepuuhun lisätään linjat,
+# säädin, kello ja anturi.
+R07 := $(B)/07-resurssit
+$(R07)/kello.ko $(R07)/paine.ko $(R07)/paine_pm.ko: $(R07)/valmis
 	test -f $@
-$(eval $(call TESTI,07-dyndbg,07-vianetsinta/dyndbg.vaiheet,$(VIKA),,))
-$(eval $(call TESTI,07-ftrace,07-vianetsinta/ftrace.vaiheet,$(VIKA),,))
-$(eval $(call TESTI,07-oops,07-vianetsinta/oops.vaiheet,$(VIKA),\
+$(B)/paine.dtb: $(B)/virt.dts 07-resurssit/paine.dtsi
+	cat $^ | dtc -q -I dts -O dtb -o $@ -
+PAINE := -d $(B)/paine.dtb
+
+$(eval $(call TESTI,07-resurssit,07-resurssit/resurssit.vaiheet,\
+    $(R07)/kello.ko $(R07)/paine.ko,,PAINE))
+$(eval $(call TESTI,07-ajonaikainen,07-resurssit/ajonaikainen.vaiheet,\
+    $(R07)/kello.ko $(R07)/paine_pm.ko,tila,PAINE))
+$(eval $(call TESTI,07-lepotila,07-resurssit/lepotila.vaiheet,\
+    $(R07)/kello.ko $(R07)/paine_pm.ko,tila,PAINE))
+$(B)/07-resurssit.raaka $(B)/07-ajonaikainen.raaka \
+    $(B)/07-lepotila.raaka: $(B)/paine.dtb
+# devices_deferred erottaa laitteen ja syyn sarkaimella.
+$(B)/07-resurssit.uusi: $(B)/07-resurssit.raaka
+	expand -t 16 $< | $(TAITA) > $@
+
+# --- 08: vianetsintä ----------------------------------------------------
+VIKA := $(B)/08-vianetsinta/vika.ko
+$(VIKA): $(B)/08-vianetsinta/valmis
+	test -f $@
+$(eval $(call TESTI,08-dyndbg,08-vianetsinta/dyndbg.vaiheet,$(VIKA),,))
+$(eval $(call TESTI,08-ftrace,08-vianetsinta/ftrace.vaiheet,$(VIKA),,))
+$(eval $(call TESTI,08-oops,08-vianetsinta/oops.vaiheet,$(VIKA),\
     kirjoita,))
-$(eval $(call TESTI,07-lukot,07-vianetsinta/lukot.vaiheet,$(VIKA),,))
+$(eval $(call TESTI,08-lukot,08-vianetsinta/lukot.vaiheet,$(VIKA),,))
 
 # Jäljityksen riveiltä poistetaan prosessinumero, aika ja liput.
 # @alku jalki
-$(B)/07-ftrace.uusi: $(B)/07-ftrace.raaka
+$(B)/08-ftrace.uusi: $(B)/08-ftrace.raaka
 	sed -E 's/^ +[^ ]+-[0-9]+ +\[[0-9]+\] [^ ]+ +[0-9.]+: /  /' $< | \
 	    grep -v '^  #' > $@
 # @loppu jalki
 
 # Kaatumisilmoituksen osoite muunnetaan lähdekoodin riviksi isännällä.
 # @alku faddr2line
-$(B)/07-oops.uusi: $(B)/07-oops.raaka $(VIKA)
+$(B)/08-oops.uusi: $(B)/08-oops.raaka $(VIKA)
 	sed -E 's/\+0x[0-9a-f]+\/0x[0-9a-f]+/+.../; s/PID: [0-9]+/PID: .../' \
 	    $< | $(TAITA) > $@
 	echo "faddr2line:" >> $@
@@ -228,7 +262,7 @@ $(B)/07-oops.uusi: $(B)/07-oops.raaka $(VIKA)
 	    | sed -n 's|.* at .*/\([^/]*:[0-9]*\).*|  \1|p' >> $@
 # @loppu faddr2line
 
-$(B)/07-lukot.uusi: $(B)/07-lukot.raaka
+$(B)/08-lukot.uusi: $(B)/08-lukot.raaka
 	$(TAITA) $< > $@
 
 .SECONDARY:

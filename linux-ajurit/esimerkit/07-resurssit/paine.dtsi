@@ -1,0 +1,48 @@
+// Lisätään QEMU:n virt-koneen laitepuun perään (cat virt.dts paine.dtsi).
+// Kone ei tunne paineanturia, joten kaikki sen tarvitsema kuvataan tässä:
+// GPIO-linjat, käyttöjännitteen säädin, näytekello ja itse anturi.
+/ {
+    // Ytimen GPIO-simulaattori: neljä linjaa, joita ei ole kytketty
+    // mihinkään. Linjojen tila näkyy sysfsissä, ja tulon voi asettaa
+    // sieltä.
+    gpio-simulator {
+        compatible = "gpio-simulator";
+
+        linjat: pankki {
+            gpio-controller;
+            #gpio-cells = <2>;   // linjan numero ja liput
+            ngpios = <4>;
+            gpio-sim,label = "anturilinjat";
+            gpio-line-names = "vdd-kytkin", "nreset", "halytys", "";
+        };
+    };
+
+    // Kiinteä 3,3 V:n säädin, jonka kytkin on GPIO-linja 0.
+    vdd_anturi: saadin-vdd-anturi {
+        compatible = "regulator-fixed";
+        regulator-name = "vdd-anturi";
+        regulator-min-microvolt = <3300000>;
+        regulator-max-microvolt = <3300000>;
+        gpio = <&linjat 0 0>;            // 0 = GPIO_ACTIVE_HIGH
+        enable-active-high;
+    };
+
+    // Näytekello jakaa koneen 24 MHz:n kellon (apb-pclk, phandle 0x8000).
+    naytekello: naytekello {
+        compatible = "tutoriaalit,jakokello";
+        #clock-cells = <0>;
+        clocks = <0x8000>;
+        clock-output-names = "naytekello";
+    };
+
+    // @alku anturi
+    paineanturi {
+        compatible = "tutoriaalit,paineanturi";
+        vdd-supply = <&vdd_anturi>;
+        clocks = <&naytekello>;
+        reset-gpios = <&linjat 1 1>;     // 1 = GPIO_ACTIVE_LOW
+        halytys-gpios = <&linjat 2 0>;
+        tutoriaalit,naytetaajuus-hz = <44100>;
+    };
+    // @loppu anturi
+};

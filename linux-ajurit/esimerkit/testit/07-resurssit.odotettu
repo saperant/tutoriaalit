@@ -1,0 +1,73 @@
+# @alku lykkays
+# lataa paine.ko
+  loki: paine: loading out-of-tree module taints kernel.
+# lue /sys/kernel/debug/devices_deferred
+  paineanturi   platform: supplier naytekello not ready
+# lataa kello.ko
+  loki: jakokello naytekello: tarjolla, 1000000 Hz
+  loki: jakokello naytekello: jakaja 544: 44117 Hz
+  loki: paine paineanturi: pyydetty 44100 Hz, saatu 44117 Hz
+  loki: jakokello naytekello: paalle
+  loki: paine paineanturi: virta paalla, 3300 mV
+# lue /sys/kernel/debug/devices_deferred
+# listaa /sys/bus/platform/drivers/paine
+  bind
+  module
+  paineanturi
+  uevent
+  unbind
+# @loppu lykkays
+# @alku kello
+# lue /sys/kernel/debug/clk/naytekello/clk_parent
+  clk24mhz
+# lue /sys/kernel/debug/clk/naytekello/clk_rate
+  44117
+# lue /sys/kernel/debug/clk/naytekello/clk_enable_count
+  1
+# @loppu kello
+# @alku saadin
+# lue /sys/class/regulator/regulator.1/name
+  vdd-anturi
+# lue /sys/class/regulator/regulator.1/microvolts
+  3300000
+# lue /sys/class/regulator/regulator.1/state
+  enabled
+# lue /sys/class/regulator/regulator.1/num_users
+  1
+# @loppu saadin
+# @alku gpio
+# lue /sys/kernel/debug/gpio
+  gpiochip0: GPIOs 512-515, parent: platform/gpio-simulator, anturilinjat,
+      can sleep:
+   gpio-512 (saadin-vdd-anturi) output-high,pull-down
+   gpio-513 (reset) output-high,pull-down
+   gpio-514 (halytys) input,pull-down
+# @loppu gpio
+# @alku halytys
+# kirjoita /sys/devices/platform/gpio-simulator/gpiochip0/sim_gpio2/pull
+    pull-up
+  loki: paine paineanturi: halytys 1
+# kirjoita /sys/devices/platform/gpio-simulator/gpiochip0/sim_gpio2/pull
+    pull-down
+# kirjoita /sys/devices/platform/gpio-simulator/gpiochip0/sim_gpio2/pull
+    pull-up
+  loki: paine paineanturi: halytys 2
+# lue /sys/devices/platform/paineanturi/halytyksia
+  2
+# lue /proc/interrupts paineanturi
+   14:          2   irq_sim   2 Edge      paineanturi
+# @loppu halytys
+# @alku irrotus
+# kirjoita /sys/bus/platform/drivers/paine/unbind paineanturi
+  loki: jakokello naytekello: pois
+  loki: paine paineanturi: virta pois
+# lue /sys/kernel/debug/clk/naytekello/clk_enable_count
+  0
+# lue /sys/class/regulator/regulator.1/state
+  disabled
+# lue /sys/kernel/debug/gpio
+  gpiochip0: GPIOs 512-515, parent: platform/gpio-simulator, anturilinjat,
+      can sleep:
+   gpio-512 (saadin-vdd-anturi) output-low,pull-down
+# @loppu irrotus
+paluuarvo 0

@@ -190,7 +190,7 @@ signaaliin, ja moduuli voi jäädä puoliksi ladatuksi niin, ettei sitä saa
 poistettua. Testijärjestelmä käynnistetään silloin uudelleen, mikä on
 QEMU:ssa sekuntien asia ja hyvä syy kehittää ajuria emulaattorissa.
 Ilmoituksen lukeminen ja osoitteen muuntaminen lähdekoodin riviksi
-käsitellään luvussa 10; siihen kannattaa palata heti, kun oma moduuli
+käsitellään luvussa 12; siihen kannattaa palata heti, kun oma moduuli
 kaatuu ensimmäisen kerran.
 
 ## Moduuli vai ytimeen

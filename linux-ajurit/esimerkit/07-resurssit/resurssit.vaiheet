@@ -1,0 +1,37 @@
+# Kello, säädin ja GPIO-linjat laitepuusta: lykätty sidonta, resurssien
+# tila, hälytyskeskeytys ja irrotus.
+suodata paine jakokello
+# @alku lykkays
+lataa paine.ko
+lue /sys/kernel/debug/devices_deferred
+lataa kello.ko
+lue /sys/kernel/debug/devices_deferred
+listaa /sys/bus/platform/drivers/paine
+# @loppu lykkays
+# @alku kello
+lue /sys/kernel/debug/clk/naytekello/clk_parent
+lue /sys/kernel/debug/clk/naytekello/clk_rate
+lue /sys/kernel/debug/clk/naytekello/clk_enable_count
+# @loppu kello
+# @alku saadin
+lue /sys/class/regulator/regulator.1/name
+lue /sys/class/regulator/regulator.1/microvolts
+lue /sys/class/regulator/regulator.1/state
+lue /sys/class/regulator/regulator.1/num_users
+# @loppu saadin
+# @alku gpio
+lue /sys/kernel/debug/gpio
+# @loppu gpio
+# @alku halytys
+kirjoita /sys/devices/platform/gpio-simulator/gpiochip0/sim_gpio2/pull pull-up
+kirjoita /sys/devices/platform/gpio-simulator/gpiochip0/sim_gpio2/pull pull-down
+kirjoita /sys/devices/platform/gpio-simulator/gpiochip0/sim_gpio2/pull pull-up
+lue /sys/devices/platform/paineanturi/halytyksia
+lue /proc/interrupts paineanturi
+# @loppu halytys
+# @alku irrotus
+kirjoita /sys/bus/platform/drivers/paine/unbind paineanturi
+lue /sys/kernel/debug/clk/naytekello/clk_enable_count
+lue /sys/class/regulator/regulator.1/state
+lue /sys/kernel/debug/gpio
+# @loppu irrotus

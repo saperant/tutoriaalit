@@ -170,7 +170,8 @@ vielä ole, kuten kelloa tai jännitesäädintä, jonka ajuri ladataan
 myöhemmin, `probe` palauttaa tämän virheen, ja ydin yrittää uudelleen,
 kun uusia ajureita on sidottu. `dev_err_probe` ei tulosta lykkäystä
 virheenä vaan kirjaa syyn tiedostoon
-`/sys/kernel/debug/devices_deferred`.
+`/sys/kernel/debug/devices_deferred`. Luvussa 9 laite todella jää
+odottamaan tarjoajaansa.
 
 ## Sitominen ja irrotus käsin
 

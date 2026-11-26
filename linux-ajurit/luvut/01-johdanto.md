@@ -31,6 +31,10 @@ Tutoriaali käsittelee
   koherenssi ARM64:ssä
 - **I2C- ja SPI-ajureita**: alijärjestelmien rakenne, regmap, hwmon ja
   oma SPI-ohjain
+- **laitteen resursseja**: kellot, jännitesäätimet ja GPIO-linjat
+  laitepuusta, kytkentäjärjestys ja lykätty sidonta
+- **virranhallintaa**: ajonaikainen virranhallinta, lepoviive ja
+  järjestelmän lepotila
 - **sysfsiä ja debugfsiä**: laitteen attribuutit ja kehittäjän
   työkalut
 - **ytimen vianetsintää**: lokitasot, dynaaminen debug, ftrace,
@@ -48,10 +52,11 @@ C-kieltä on osattava hyvin.
 
 Tutoriaali rajautuu ajureihin, jotka voi ajaa ja testata QEMU:n
 virt-koneessa: merkkilaitteet, platform-laitteet sekä I2C- ja
-SPI-piirit. Oikean järjestelmäpiirin ajuri tarvitsee lisäksi kellot,
-jännitesäätimet, nastojen asetukset ja virranhallinnan. Ne nimetään
-viimeisessä luvussa, mutta niitä ei käsitellä, koska virt-koneessa ei
-ole niille laitteita. Lohko-, verkko- ja USB-ajurit jäävät samoin pois.
+SPI-piirit. Kellot, jännitesäätimet, GPIO-linjat ja virranhallinta
+käsitellään ohjelmallisilla tarjoajilla, koska virt-koneessa ei ole
+niille piirejä. Nastojen asetukset (pinctrl), tehoalueet ja
+taajuuden skaalaus jäävät maininnoiksi, ja lohko-, verkko- ja
+USB-ajurit jäävät kokonaan pois.
 Käyttäjätilan ohjelmien vianetsintä kohteessa kuuluu taitoon
 *Sulautettu Linux*; tässä etsitään vikoja ytimen puolelta.
 
@@ -111,6 +116,9 @@ otettiin käyttöön. Ydin saa lisäksi oman fragmentin:
 ```{.ini tiedosto="esimerkit/ymparisto/ajurit.config" osa="vaylat"}
 ```
 
+Kolmas osa fragmentista, virranhallinnan sekä säädin- ja GPIO-kehyksen
+asetukset, esitellään luvussa 9.
+
 Vianetsinnän asetukset tekevät ytimestä suuremman ja hitaamman, joten
 tuotantoydin käännetään ilman lukkotarkistimia ja jäljitystä. Kehityksen
 aikana ne kuitenkin löytävät virheitä, joita testit eivät muuten
@@ -126,6 +134,8 @@ jäljittele mitään piirilevyä:
 | fw_cfg | `0x9020000` | DMA: QEMU kopioi tiedostoja vieraan muistiin |
 | I2C | ei ole | ytimen testiväylä `i2c-stub` tarjoaa piirien rekisterit |
 | SPI | ei ole | oma ohjelmallinen ohjain ja simuloitu muistipiiri |
+| GPIO-linjat | ei käytössä | ytimen simulaattori `gpio-sim`: linjat näkyvät sysfsissä |
+| säädin ja kello | ei ole | `regulator-fixed` simuloidulla linjalla ja oma kellon tarjoaja |
 
 Puuttuvat väylät on korvattu ohjelmalla, ja tekstissä sanotaan, mikä on
 simuloitua. Ajurin kannalta ero on pieni: I2C- tai SPI-laitteen ajuri
@@ -159,6 +169,10 @@ Moduulit ladataan järjestelmäkutsulla `finit_module`, kuten
 ```{.c tiedosto="esimerkit/kayttaja/ajo.c" osa="lataa"}
 ```
 
+Latauksen jälkeinen lyhyt odotus pitää tulosteen toistettavana: osa
+sidonnoista ajetaan ytimen työjonossa vasta, kun lataus on jo palannut
+(luku 9).
+
 Ytimen oma konsoli on hiljennetty (`loglevel=0` ja
 `printk.console_no_auto_verbose=1`), jotta lokirivit eivät sekoitu
 testin tulosteeseen. Lokiviestit näkyvät vain vaiheajurin kautta
@@ -182,11 +196,13 @@ Esimerkkihakemistot ja luvut, joissa niitä käytetään:
 | `kayttaja/` | vaiheajuri ja testien apuohjelmat | 1 |
 | `01-moduulit/` | kaksi moduulia, parametrit, suljettu lisenssi | 2 |
 | `02-merkkilaite/` | viestijono ja `mmap`-esimerkki testiohjelmineen | 3 |
-| `03-platform/` | herätysajastimen ajuri ja laitepuun lisäykset | 4, 5, 9 |
+| `03-platform/` | herätysajastimen ajuri ja laitepuun lisäykset | 4, 5, 11 |
 | `04-dma/` | fw_cfg-laitteen DMA-ajuri | 6 |
 | `05-i2c/` | lämpöanturin ajuri (regmap, hwmon) | 7 |
-| `06-spi/` | ohjelmallinen SPI-ohjain ja muistipiirin ajuri | 8, 9 |
-| `07-vianetsinta/` | tahallaan virheellinen harjoitusmoduuli | 10 |
+| `06-spi/` | ohjelmallinen SPI-ohjain ja muistipiirin ajuri | 8, 11 |
+| `07-resurssit/` | kellon tarjoaja ja paineanturin ajuri ilman virranhallintaa ja sen kanssa | 9, 10 |
+| `08-vianetsinta/` | tahallaan virheellinen harjoitusmoduuli | 12 |
+| `kaaviot/` | testin tulosteesta tuotettu aikajana | 10 |
 | `testit/` | testien odotetut tulosteet | kaikki |
 
 ## Koodityyli

@@ -37,13 +37,13 @@ Ytimen asetus `DYNAMIC_DEBUG` tekee jokaisesta `pr_debug`- ja
 `/proc/dynamic_debug/control`, ja niitä voi valita moduulin, tiedoston,
 funktion tai rivin mukaan:
 
-```{.c tiedosto="esimerkit/07-vianetsinta/vika.c" osa="laske"}
+```{.c tiedosto="esimerkit/08-vianetsinta/vika.c" osa="laske"}
 ```
 
-```{.text tiedosto="esimerkit/07-vianetsinta/dyndbg.vaiheet" osa="vaiheet"}
+```{.text tiedosto="esimerkit/08-vianetsinta/dyndbg.vaiheet" osa="vaiheet"}
 ```
 
-```{.tuloste tiedosto="esimerkit/testit/07-dyndbg.odotettu" osa="vaiheet"}
+```{.tuloste tiedosto="esimerkit/testit/08-dyndbg.odotettu" osa="vaiheet"}
 ```
 
 Ensimmäisellä kerralla debug-rivit ovat pois päältä. Funktion mukaan
@@ -62,13 +62,13 @@ kirjaa jokaisen valitun funktion kutsun ja kutsujan. Ydin on käännetty
 niin, että jokaisen funktion alussa on muutama tyhjä käsky, jotka
 ftrace korvaa ajon aikana hypyllä jäljittimeen:
 
-```{.text tiedosto="esimerkit/07-vianetsinta/ftrace.vaiheet" osa="vaiheet"}
+```{.text tiedosto="esimerkit/08-vianetsinta/ftrace.vaiheet" osa="vaiheet"}
 ```
 
 ```{.make tiedosto="esimerkit/Makefile" osa="jalki"}
 ```
 
-```{.tuloste tiedosto="esimerkit/testit/07-ftrace.odotettu" osa="vaiheet"}
+```{.tuloste tiedosto="esimerkit/testit/08-ftrace.odotettu" osa="vaiheet"}
 ```
 
 Suodatin `:mod:vika` valitsee moduulin kaikki funktiot. Jäljitys näyttää
@@ -95,13 +95,13 @@ joka jää varatuksi, ja tila voi olla vioittunut. Tuotantolaitteessa
 asetetaan siksi usein `panic_on_oops=1` ja vahtikoira, joka
 käynnistää laitteen uudelleen.
 
-```{.c tiedosto="esimerkit/07-vianetsinta/vika.c" osa="kaada"}
+```{.c tiedosto="esimerkit/08-vianetsinta/vika.c" osa="kaada"}
 ```
 
-```{.text tiedosto="esimerkit/07-vianetsinta/oops.vaiheet" osa="vaiheet"}
+```{.text tiedosto="esimerkit/08-vianetsinta/oops.vaiheet" osa="vaiheet"}
 ```
 
-```{.tuloste tiedosto="esimerkit/testit/07-oops.odotettu"}
+```{.tuloste tiedosto="esimerkit/testit/08-oops.odotettu"}
 ```
 
 Ilmoituksen tärkeimmät rivit:
@@ -123,7 +123,7 @@ Siirtymä muunnetaan lähdekoodin riviksi ytimen skriptillä
 `faddr2line`, joka tarvitsee moduulin virheenjäljitystiedot. Ne
 saadaan Kbuild-tiedoston `ccflags-y := -g` -rivillä:
 
-```{.make tiedosto="esimerkit/07-vianetsinta/Kbuild"}
+```{.make tiedosto="esimerkit/08-vianetsinta/Kbuild"}
 ```
 
 ```{.make tiedosto="esimerkit/Makefile" osa="faddr2line"}
@@ -143,13 +143,13 @@ järjestelmän vain, jos toinen CPU tarvitsee samaa lukkoa samaan aikaan.
 Ytimen tarkistimet löytävät nämä heti, kun virheellistä polkua ajetaan
 kerrankin.
 
-```{.c tiedosto="esimerkit/07-vianetsinta/vika.c" osa="jarjestys"}
+```{.c tiedosto="esimerkit/08-vianetsinta/vika.c" osa="jarjestys"}
 ```
 
-```{.c tiedosto="esimerkit/07-vianetsinta/vika.c" osa="nuku"}
+```{.c tiedosto="esimerkit/08-vianetsinta/vika.c" osa="nuku"}
 ```
 
-```{.tuloste tiedosto="esimerkit/testit/07-lukot.odotettu" osa="vaiheet"}
+```{.tuloste tiedosto="esimerkit/testit/08-lukot.odotettu" osa="vaiheet"}
 ```
 
 - **lockdep** (`PROVE_LOCKING`) kirjaa jokaisen lukko-otteen

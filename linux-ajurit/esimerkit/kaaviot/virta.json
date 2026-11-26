@@ -1,0 +1,54 @@
+{
+ "signal": [
+  {
+   "name": "vaihe",
+   "wave": "========",
+   "data": [
+    "lataus",
+    "2 s",
+    "mittaus",
+    "mittaus, 2 s",
+    "jatkuva 1",
+    "2 s",
+    "jatkuva 0",
+    "2 s"
+   ]
+  },
+  {
+   "name": "runtime_status",
+   "wave": "=====..=",
+   "data": [
+    "active",
+    "suspended",
+    "active",
+    "suspended",
+    "active",
+    "suspended"
+   ]
+  },
+  {
+   "name": "runtime_usage",
+   "wave": "=...=.=.",
+   "data": [
+    "0",
+    "1",
+    "0"
+   ]
+  },
+  {
+   "name": "vdd",
+   "wave": "10101..0"
+  },
+  {
+   "name": "näytekello",
+   "wave": "10101..0"
+  },
+  {
+   "name": "nreset",
+   "wave": "10101..0"
+  }
+ ],
+ "config": {
+  "hscale": 2
+ }
+}

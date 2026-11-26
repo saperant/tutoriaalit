@@ -11,6 +11,11 @@
   puuttuva riippuvuus on `-EPROBE_DEFER`.
 - **Resurssit hallitusti.** `devm_`-funktiot poistavat
   virhepolkujen vuodot, ja `remove` pysäyttää laitteen ja peruu työt.
+- **Kytkentäjärjestys yhdessä paikassa.** Jännite, kello ja nollaus
+  kytketään datalehden järjestyksessä ja sammutetaan käänteisesti; sama
+  funktiopari palvelee sidontaa, irrotusta ja virranhallintaa.
+- **Laite on päällä vain, kun sitä käytetään.** Jokainen laitteen käyttö
+  on käyttölaskurin kasvatuksen ja vähennyksen välissä.
 - **Konteksti ratkaisee lukon.** Keskeytyksessä ei nukuta: spinlock ja
   `spin_lock_irqsave` jaetulle tilalle, mutex muualla. Nukkuminen aina
   lukon ulkopuolella.
@@ -32,13 +37,15 @@ sama, mutta laitteisto ei ole yhtä armollinen:
    ajoitus, käynnistysjärjestys ja virhetilat ennen koodaamista. Etsi
    ytimestä ajuri samanlaiselle piirille: usein valmistaja on käyttänyt
    samaa lohkoa ennenkin.
-2. **Kellot, jännitteet ja nastat.** Oikea oheislaite tarvitsee
-   kellonsa (`devm_clk_get_enabled`), jännitteensä (`regulator`),
-   nastojen asetukset (`pinctrl`) ja usein reset-linjan. Puuttuva kello
-   näkyy rekistereinä, jotka lukevat nollaa.
-3. **Virranhallinta.** Ajuri sammuttaa laitteen, kun sitä ei käytetä
-   (`pm_runtime`), ja tallentaa ja palauttaa tilan lepotilassa
-   (`suspend`- ja `resume`-funktiot).
+2. **Kellot, jännitteet ja nastat.** Luvun 9 resurssit ovat oikeassa
+   piirissä rekistereitä ja virtapiirejä: tarkista kytkentäjärjestys ja
+   viiveet datalehdestä ja nastojen asetukset (`pinctrl`) levyn
+   kytkentäkaaviosta. Puuttuva kello näkyy rekistereinä, jotka lukevat
+   nollaa.
+3. **Virranhallinta.** Mittaa virrankulutus: vasta mittari kertoo,
+   sammuuko laite todella ja pitääkö jokin ajuri tehoalueen päällä.
+   Lepotilasta herääminen testataan oikealla herätyslähteellä, koska
+   testitila ei sitä kata (luku 10).
 4. **Mittaa väylältä.** Logiikka-analysaattori tai oskilloskooppi
    kertoo, lähteekö SPI-viesti ja vastaako I2C-piiri. Ajurin
    jäljitystapahtumat (`events/i2c`, `events/spi`) näyttävät saman
@@ -81,6 +88,16 @@ sama, mutta laitteisto ei ole yhtä armollinen:
   ja *The Kernel Address Sanitizer*.
 - sysfs-rajapinnat: `Documentation/ABI/` ja *sysfs - The filesystem for
   exporting kernel objects*.
+- Kellot, säätimet ja GPIO: *The Common Clk Framework*
+  (`Documentation/driver-api/clk.rst`), *Regulator Consumer Driver
+  Interface* (`Documentation/power/regulator/consumer.rst`), *GPIO
+  Descriptor Consumer Interface*
+  (`Documentation/driver-api/gpio/consumer.rst`) ja *Configfs GPIO
+  Simulator* (`Documentation/admin-guide/gpio/gpio-sim.rst`).
+- Virranhallinta: *Runtime Power Management Framework for I/O Devices*
+  (`Documentation/power/runtime_pm.rst`), *Device Power Management
+  Basics* (`Documentation/driver-api/pm/devices.rst`) ja *Debugging
+  hibernation and suspend* (`Documentation/power/basic-pm-debugging.rst`).
 - Laitepuun sidonnat: `Documentation/devicetree/bindings/` ja
   *Writing Devicetree Bindings in json-schema*.
 - ARM: *PrimeCell Real Time Clock (PL031) Technical Reference Manual*

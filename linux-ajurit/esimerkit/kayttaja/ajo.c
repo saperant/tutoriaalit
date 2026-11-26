@@ -88,6 +88,13 @@ static int lue_tiedosto(const char *polku, char *puskuri, size_t koko)
     return (int)kaytetty;
 }
 
+static void nuku(long millisekunnit)
+{
+    struct timespec t = {millisekunnit / 1000,
+                         (millisekunnit % 1000) * 1000000L};
+    nanosleep(&t, NULL);
+}
+
 // @alku lataa
 static void lataa(char **sanat, int maara)
 {
@@ -110,6 +117,10 @@ static void lataa(char **sanat, int maara)
         printf("  virhe: %s\n", strerror(errno));
     }
     close(fd);
+    // Uusi ajuri voi käynnistää lykättyjä sidontoja, jotka ydin ajaa
+    // työjonossa latauksen jälkeen. Odotetaan, että niiden lokirivit
+    // ehtivät tämän komennon tulosteeseen.
+    nuku(200);
 }
 
 static void poista(const char *nimi)
@@ -195,13 +206,6 @@ static void aja(char **sanat)
     }
 }
 // @loppu aja
-
-static void nuku(long millisekunnit)
-{
-    struct timespec t = {millisekunnit / 1000,
-                         (millisekunnit % 1000) * 1000000L};
-    nanosleep(&t, NULL);
-}
 
 static void suorita(char *rivi)
 {
