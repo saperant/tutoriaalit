@@ -13,16 +13,20 @@
    kustannukset ovat laskelmia, joiden oletukset kirjataan.
 6. **Yksi lähde käyttäjille ja ryhmille**, ja oikeudet ryhmille.
 7. **Idempotentti konfiguraatio ja ajautumisen valvonta.**
-8. **Päivitä rutiinilla**, ja muista uudelleenkäynnistys.
-9. **Mitoita N+1**, myös suurimman koneen ja jokaisen sovelluksen
-   kannalta.
-10. **Hälytä käyttäjälle näkyvistä oireista ja virhebudjetin
+8. **Palvelu on rajattu yksikössään**: oma tunnus, vain luettava
+   tiedostojärjestelmä, resurssirajat ja uudelleenkäynnistys rajalla.
+9. **Päivitä rutiinilla**, ja muista uudelleenkäynnistys.
+10. **Mitoita N+1**, myös suurimman koneen ja jokaisen sovelluksen
+    kannalta.
+11. **Hälytä käyttäjälle näkyvistä oireista ja virhebudjetin
     palamisesta**, ja anna jokaiselle hälytykselle ohje.
 
 ## Jatkotaidot
 
 - *Virtualisointi*: hypervisorit, laitteistotuki ja kontit ytimen
   tasolla.
+- *Käyttöjärjestelmät*: kyvyt, resurssirajat, nimiavaruudet, cgroupit
+  ja seccomp mekanismeina, joiden päälle palvelujen rajaus rakentuu.
 - *Kontit ja pilvi-infrastruktuuri*: tämän taidon esitieto, johon
   kannattaa palata klusterin käyttäjän näkökulmasta.
 - *Skaalautuvien järjestelmien suunnittelu*: skaalautuvuus,
@@ -57,6 +61,10 @@
 - OpenLDAP Administrator's Guide: <https://www.openldap.org/doc/admin26/>
 - MIT Kerberos -dokumentaatio: <https://web.mit.edu/kerberos/krb5-latest/doc/>
 - SSSD: <https://sssd.io/>
+- systemd: ohjesivut `systemd.unit(5)`, `systemd.service(5)`,
+  `systemd.exec(5)` ja `systemd.resource-control(5)` sekä
+  <https://systemd.io/>
+- chrony: <https://chrony-project.org/>
 - Ansible-dokumentaatio: <https://docs.ansible.com/>
 - DMTF Redfish -määrittely: <https://www.dmtf.org/standards/redfish>
 - Prometheus: <https://prometheus.io/docs/>

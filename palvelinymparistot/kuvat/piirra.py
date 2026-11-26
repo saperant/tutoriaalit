@@ -204,7 +204,7 @@ def palaminen(polku: Path) -> None:
 
 def kapasiteetti(polku: Path) -> None:
     """Käyttöhistoria, sovitettu suora ja rajojen ylityshetket."""
-    m = esimerkki("11-kapasiteetti")
+    m = esimerkki("12-kapasiteetti")
     kaytto = m.KAYTTO
     kk = list(range(len(kaytto)))
     kulma, vakio = linear_regression(kk, kaytto)
@@ -241,6 +241,75 @@ def kapasiteetti(polku: Path) -> None:
     fig.savefig(polku, metadata=METATIEDOT)
 
 
+def altistus(polku: Path) -> None:
+    """systemd-analyze securityn arvio kovennus kerrallaan.
+
+    Luvut luetaan esimerkin 07-yksikot testatusta tulosteesta.
+    """
+    rivit = (ESIMERKIT / "07-yksikot.odotettu").read_text("utf-8").splitlines()
+    alku = rivit.index("== altistus kovennus kerrallaan") + 1
+    nimet, arvot, luokat = [], [], []
+    for rivi in rivit[alku:]:
+        if rivi.startswith("=="):
+            break
+        *nimi, arvo, luokka = rivi.split()
+        nimet.append(" ".join(nimi).removesuffix(".conf"))
+        arvot.append(float(arvo))
+        luokat.append(luokka)
+    fig = uusi(5.2, 2.2)
+    ax = fig.add_subplot()
+    paikat = list(range(len(arvot)))[::-1]
+    ax.barh(paikat, arvot, color=KOROSTUS, height=0.6)
+    for y, arvo, luokka in zip(paikat, arvot, luokat, strict=True):
+        ax.text(arvo + 0.15, y, f"{arvo:.1f} {luokka}", va="center",
+                fontsize=8, color="#1F2A2E")
+    ax.set_yticks(paikat, nimet)
+    ax.set_xlim(0, 11.5)
+    ax.set_xticks([0, 2, 4, 6, 8, 10])
+    ax.set_xlabel("altistus (0 = suojattu, 10 = altis)")
+    fig.savefig(polku, metadata=METATIEDOT)
+
+
+def ntp(polku: Path) -> None:
+    """NTP-kyselyn neljä aikaleimaa, kun meno on paluuta hitaampi."""
+    m = esimerkki("07-ntp")
+    v = m.kysely(0.250, 20.0, 4.0)
+    siirtyma = 0.250                     # palvelimen kello on edellä
+    # Piirretään todellisella aika-akselilla (asiakkaan kellon mukaan).
+    ms = [(v.t1 - v.t1) * 1000, (v.t2 - siirtyma - v.t1) * 1000,
+          (v.t3 - siirtyma - v.t1) * 1000, (v.t4 - v.t1) * 1000]
+    fig = uusi(5.2, 2.1)
+    ax = fig.add_subplot()
+    for y, nimi in ((1, "palvelin"), (0, "asiakas")):
+        ax.plot([-3, ms[3] + 3], [y, y], color=HARMAA, lw=0.8)
+        ax.text(-3.5, y, nimi, ha="right", va="center", fontsize=8)
+    for (x0, y0, x1, y1) in ((ms[0], 0, ms[1], 1), (ms[2], 1, ms[3], 0)):
+        ax.annotate("", xy=(x1, y1), xytext=(x0, y0),
+                    arrowprops={"arrowstyle": "-|>", "color": KOROSTUS,
+                                "lw": 1.2})
+    for x, y, teksti, va, ha in ((ms[0], 0, "$t_1$", "top", "center"),
+                                 (ms[1], 1, "$t_2$", "bottom", "right"),
+                                 (ms[2], 1, "$t_3$", "bottom", "left"),
+                                 (ms[3], 0, "$t_4$", "top", "center")):
+        ax.plot([x], [y], "o", color="#1F2A2E", ms=3)
+        ax.text(x, y + (0.12 if va == "bottom" else -0.12), teksti,
+                ha=ha, va=va, fontsize=9)
+    ax.text(ms[1] / 2 - 1.5, 0.5, "meno 20 ms", fontsize=8, ha="right",
+            color=KOROSTUS)
+    ax.text((ms[2] + ms[3]) / 2 + 1.5, 0.5, "paluu 4 ms", fontsize=8,
+            color=KOROSTUS)
+    ax.text(ms[3] / 2, -0.62,
+            f"arvio {v.siirtyma() * 1000:.0f} ms, todellinen 250 ms: "
+            f"virhe {(v.siirtyma() - siirtyma) * 1000:+.0f} ms",
+            ha="center", fontsize=8, color=TOINEN)
+    ax.set_xlim(-12, ms[3] + 8)
+    ax.set_ylim(-0.8, 1.4)
+    ax.set_xlabel("aika, ms")
+    ax.set_yticks([])
+    ax.spines["left"].set_visible(False)
+    fig.savefig(polku, metadata=METATIEDOT)
+
+
 def main() -> None:
     kohde = Path(sys.argv[1])
     kohde.mkdir(parents=True, exist_ok=True)
@@ -248,8 +317,10 @@ def main() -> None:
     ure(kohde / "03-ure.png")
     rpo_rto(kohde / "05-rpo-rto.png")
     gfs(kohde / "05-gfs.png")
-    palaminen(kohde / "10-palaminen.png")
-    kapasiteetti(kohde / "11-kapasiteetti.png")
+    altistus(kohde / "07-altistus.png")
+    ntp(kohde / "07-ntp.png")
+    palaminen(kohde / "11-palaminen.png")
+    kapasiteetti(kohde / "12-kapasiteetti.png")
 
 
 if __name__ == "__main__":

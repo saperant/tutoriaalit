@@ -22,25 +22,25 @@ asentaa agenttia. Rakenneosat:
 
 Esimerkin playbook ajaa web-palvelimille roolin `perus`:
 
-```{.yaml tiedosto="esimerkit/07-ansible/palvelin.yml" osa="playbook"}
+```{.yaml tiedosto="esimerkit/08-ansible/palvelin.yml" osa="playbook"}
 ```
 
 Roolin oletusarvot voi korvata inventaariossa ryhmä- tai konekohtaisesti:
 
-```{.yaml tiedosto="esimerkit/07-ansible/roles/perus/defaults/main.yml" osa="oletukset"}
+```{.yaml tiedosto="esimerkit/08-ansible/roles/perus/defaults/main.yml" osa="oletukset"}
 ```
 
 Tehtävät kuvaavat lopputilan, eivät komentoja. `template` tuottaa
 SSH-palvelimen asetukset Jinja2-mallista ja ilmoittaa käsittelijälle,
 jos tiedosto muuttui:
 
-```{.yaml tiedosto="esimerkit/07-ansible/roles/perus/tasks/main.yml" osa="tehtavat"}
+```{.yaml tiedosto="esimerkit/08-ansible/roles/perus/tasks/main.yml" osa="tehtavat"}
 ```
 
-```{.text tiedosto="esimerkit/07-ansible/roles/perus/templates/sshd_config.j2"}
+```{.text tiedosto="esimerkit/08-ansible/roles/perus/templates/sshd_config.j2"}
 ```
 
-```{.yaml tiedosto="esimerkit/07-ansible/roles/perus/handlers/main.yml" osa="kasittelija"}
+```{.yaml tiedosto="esimerkit/08-ansible/roles/perus/handlers/main.yml" osa="kasittelija"}
 ```
 
 Testissä tiedostot kirjoitetaan tilapäiseen juurihakemistoon
@@ -54,7 +54,7 @@ sata kertaa, ja raportoi muutoksen vain, kun se todella muutti jotain.
 Siksi playbookin voi ajaa milloin tahansa, ja ajon tulos kertoo, oliko
 kone halutussa tilassa:
 
-```{.bash tiedosto="esimerkit/07-ansible/main.sh" osa="ajo"}
+```{.bash tiedosto="esimerkit/08-ansible/main.sh" osa="ajo"}
 ```
 
 Toinen ajo ei muuta mitään (`changed=0`), eikä käsittelijää ajeta.
@@ -62,10 +62,10 @@ Kun joku muuttaa asetusta käsin, tarkistusajo (`--check --diff`)
 näyttää poikkeaman muuttamatta mitään, ja seuraava ajo palauttaa
 halutun tilan:
 
-```{.bash tiedosto="esimerkit/07-ansible/main.sh" osa="ajautuminen"}
+```{.bash tiedosto="esimerkit/08-ansible/main.sh" osa="ajautuminen"}
 ```
 
-```{.tuloste tiedosto="esimerkit/07-ansible.odotettu"}
+```{.tuloste tiedosto="esimerkit/08-ansible.odotettu"}
 ```
 
 Säännöllisesti ajettu tarkistusajo on halpa tapa havaita *ajautuminen*
@@ -78,16 +78,16 @@ ennen kuin korjaa sen.
 Idempotenssi ei synny itsestään. Moduuli `shell` ajaa komennon joka
 kerta, eikä Ansible tiedä, mitä se tekee:
 
-```{.yaml tiedosto="esimerkit/07-idempotenssi/kirjaus.yml" osa="huono"}
+```{.yaml tiedosto="esimerkit/08-idempotenssi/kirjaus.yml" osa="huono"}
 ```
 
-```{.yaml tiedosto="esimerkit/07-idempotenssi/kirjaus.yml" osa="hyva"}
+```{.yaml tiedosto="esimerkit/08-idempotenssi/kirjaus.yml" osa="hyva"}
 ```
 
-```{.bash tiedosto="esimerkit/07-idempotenssi/main.sh"}
+```{.bash tiedosto="esimerkit/08-idempotenssi/main.sh"}
 ```
 
-```{.tuloste tiedosto="esimerkit/07-idempotenssi.odotettu"}
+```{.tuloste tiedosto="esimerkit/08-idempotenssi.odotettu"}
 ```
 
 Jos komentoa on pakko käyttää, sille kerrotaan, milloin se on jo tehty
@@ -106,6 +106,13 @@ Konfiguraatiokoodi testataan kuten muukin koodi, portaittain:
    tarkistetaan (Molecule-työkalu automatisoi tämän).
 4. **Vaiheittainen käyttöönotto:** ensin yksi kone (`--limit`), sitten
    loput erissä (`serial:`), jotta virhe ei kaada kaikkia kerralla.
+
+Palvelujen yksikkötiedostot ja niiden lisäystiedostot (luku *Palvelut
+ja systemd*) viedään koneille samalla tavalla kuin muutkin asetukset:
+tiedosto mallista, ja käsittelijä, joka ajaa `systemctl daemon-reload`
+-komennon ja käynnistää palvelun uudelleen vain, jos tiedosto muuttui.
+Tarkistukset `systemd-analyze verify` ja `security` kuuluvat portaaseen
+yksi.
 
 ## Salaisuudet
 

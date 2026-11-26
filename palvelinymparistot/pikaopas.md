@@ -1,6 +1,6 @@
 ---
 title: Palvelinympäristöt
-subtitle: Pikaopas · laitteisto, tallennus, varmuuskopiot, hakemistot, Ansible, palvelutasot
+subtitle: Pikaopas · laitteisto, tallennus, varmuuskopiot, hakemistot, palvelut, Ansible, palvelutasot
 ---
 
 # Laitteisto
@@ -66,6 +66,20 @@ subtitle: Pikaopas · laitteisto, tallennus, varmuuskopiot, hakemistot, Ansible,
 | AD-liitos | `realm join esimerkki.fi`, `getent passwd aino` |
 | Kerberos | `kinit aino`, `klist`; kellot ±5 min |
 
+# Palvelut (systemd)
+
+| Tehtävä | Komento tai asetus |
+|---------|--------------------|
+| Tarkistus | `systemd-analyze verify x.service` |
+| Altistus | `systemd-analyze security x`, putkessa `--threshold=20` |
+| Tila ja loki | `systemctl status x`, `journalctl -u x -b -p err` |
+| Asetukset | `systemctl cat x`; lisäys `systemctl edit x` |
+| Riippuvuus | `Wants=` ja `After=`; `Requires=` vain pakosta |
+| Kestävyys | `Type=notify`, `Restart=on-failure`, `StartLimitBurst=` |
+| Rajaus | `DynamicUser=`, `ProtectSystem=strict`, `MemoryMax=` |
+| Ajastin | `OnCalendar=`, `systemd-analyze calendar "Mon..Fri 02:30"` |
+| Kello | `timedatectl`, `chronyc tracking`, `chronyc sources` |
+
 # Ansible
 
 | Tehtävä | Komento |
@@ -92,7 +106,7 @@ subtitle: Pikaopas · laitteisto, tallennus, varmuuskopiot, hakemistot, Ansible,
 | 99,9 % | 43 min | 8,8 h |
 | 99,99 % | 4,3 min | 53 min |
 
-```{.python tiedosto="esimerkit/10-virhebudjetti.py" osa="palaminen"}
+```{.python tiedosto="esimerkit/11-virhebudjetti.py" osa="palaminen"}
 ```
 
 - Päivystäjä: palamisnopeus > 14,4 (1 h ja 5 min ikkunat).

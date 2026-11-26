@@ -1,0 +1,23 @@
+== sokettiaktivointi
+valvoja kuuntelee, palvelu: inactive
+yhteys jonossa, käynnistetään palvelu
+käynnistetty, palvelu: activating
+READY=1 saatu, palvelu: active
+jonossa odottanut asiakas sai: ok pyyntöjä=1
+toinen pyyntö: ok pyyntöjä=2
+väärä pyyntö: virhe tuntematon komento
+SIGTERM, paluuarvo 0, viimeisin tila: valmis, pyyntöjä 3
+loki:
+  PRIORITY=6 MESSAGE=kuuntelusoketti saatu valvojalta
+  PRIORITY=6 MESSAGE=valmis
+  PRIORITY=3 MESSAGE=tuntematon komento: 'tilaa'
+  PRIORITY=6 MESSAGE=lopetetaan, pyyntöjä 3
+== palvelu kaatuu 2 kertaa käynnistyessään
+yritys 1: failed (exit-code 1)
+yritys 2: failed (exit-code 1)
+yritys 3: active
+== palvelu kaatuu 5 kertaa käynnistyessään
+yritys 1: failed (exit-code 1)
+yritys 2: failed (exit-code 1)
+yritys 3: failed (exit-code 1)
+ei enää yrityksiä: failed (käynnistysraja täynnä)

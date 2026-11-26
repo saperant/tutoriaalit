@@ -1,0 +1,31 @@
+== kunnossa olevat yksiköt
+paluuarvo 0
+== viallinen yksikkö
+rikki.service:7: Unknown key name 'Tyyppi' in section 'Service', ignoring.
+rikki.service:9: Failed to parse service restart specifier, ignoring: joskus
+rikki.service: Failed to create rikki.service/start: Unit olematon.socket not found.
+rikki.service: Command mittari.py is not executable: No such file or directory
+paluuarvo 1
+== altistus kovennus kerrallaan
+ilman kovennusta     9.4 UNSAFE
++ 10-kayttaja.conf   8.2 EXPOSED
++ 20-tiedostot.conf  6.1 MEDIUM
++ 30-oikeudet.conf   1.2 OK
++ 40-resurssit.conf  1.2 OK
+== mitä arvio vielä huomauttaa (paino ja asetus)
+0.1 RootDirectory=/RootImage=
+0.1 RestrictAddressFamilies=~AF_UNIX
+0.3 RestrictAddressFamilies=~AF_(INET|INET6)
+0.1 ProcSubset=
+0.5 PrivateNetwork=
+0.2 PrivateUsers=
+0.1 DeviceAllow=
+0.2 IPAddressDeny=
+== kynnysarvo putkessa: altistus enintään 2.0
+mittari.service: hyväksytty
+raportti.service: hylätty (8.2 EXPOSED)
+== ajastimen seuraavat ajot keskiviikosta 25.11.2026 klo 12
+Normalized form: Mon..Fri *-*-* 02:30:00
+Next elapse: Thu 2026-11-26 02:30:00 UTC
+Iteration #2: Fri 2026-11-27 02:30:00 UTC
+Iteration #3: Mon 2026-11-30 02:30:00 UTC

@@ -1,0 +1,9 @@
+# Tahallaan viallinen yksikkö: tarkistuksen pitää löytää neljä vikaa.
+[Unit]
+Description=Viallinen yksikkö
+Requires=olematon.socket
+
+[Service]
+Tyyppi=notify
+ExecStart=mittari.py
+Restart=joskus

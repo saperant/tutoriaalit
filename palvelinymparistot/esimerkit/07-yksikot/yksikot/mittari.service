@@ -1,0 +1,15 @@
+# Mittaripalvelu. Käynnistyy, kun sokettiin mittari.socket tulee yhteys.
+[Unit]
+Description=Mittaripalvelu
+Requires=mittari.socket
+After=mittari.socket
+StartLimitIntervalSec=60
+StartLimitBurst=3
+
+[Service]
+Type=notify
+ExecStart=/usr/bin/python3 /opt/mittari/mittari.py
+Restart=on-failure
+RestartSec=2
+WatchdogSec=30
+TimeoutStopSec=10

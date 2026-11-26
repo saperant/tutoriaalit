@@ -20,7 +20,8 @@ Laitteelle kerätään käyttö, kyllästyminen ja virheet (USE-menetelmä):
 suoritin, muisti, levyt ja verkko.
 
 Lokit kerätään keskitetysti: koneelta kadonnut tai murtautujan
-poistama loki on hyödytön. Keskitetyssä palvelussa lokeja voi
+poistama loki on hyödytön. Koneella lokin kerää journald (luku
+*Palvelut ja systemd*), josta merkinnät välitetään eteenpäin. Keskitetyssä palvelussa lokeja voi
 myös yhdistää: sama korrelaatiotunniste kulkee pyynnön mukana kaikkien
 palveluiden lokeihin.
 
@@ -29,13 +30,13 @@ palveluiden lokeihin.
 Saatavuus ilmoitetaan "yhdeksiköinä". Jokainen lisäyhdeksikkö
 kymmenkertaistaa vaatimuksen:
 
-```{.python tiedosto="esimerkit/10-saatavuus.py" osa="kaavat"}
+```{.python tiedosto="esimerkit/11-saatavuus.py" osa="kaavat"}
 ```
 
-```{.python tiedosto="esimerkit/10-saatavuus.py" osa="esimerkki"}
+```{.python tiedosto="esimerkit/11-saatavuus.py" osa="esimerkki"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-saatavuus.odotettu"}
+```{.tuloste tiedosto="esimerkit/11-saatavuus.odotettu"}
 ```
 
 Kolme sarjaan kytkettyä osaa, joista jokainen on yli 99,5 %
@@ -69,16 +70,16 @@ ole väliä, ja ohittaa hitaan vuodon, joka kuluttaa budjetin päivissä.
 Parempi peruste on budjetin *palamisnopeus*: kuinka monta kertaa
 nopeammin budjetti kuluu kuin tasaisella tahdilla:
 
-```{.python tiedosto="esimerkit/10-virhebudjetti.py" osa="palaminen"}
+```{.python tiedosto="esimerkit/11-virhebudjetti.py" osa="palaminen"}
 ```
 
-```{.python tiedosto="esimerkit/10-virhebudjetti.py" osa="tilanteet"}
+```{.python tiedosto="esimerkit/11-virhebudjetti.py" osa="tilanteet"}
 ```
 
-```{.tuloste tiedosto="esimerkit/10-virhebudjetti.odotettu"}
+```{.tuloste tiedosto="esimerkit/11-virhebudjetti.odotettu"}
 ```
 
-![Virhebudjetin kuluminen 30 päivän jaksolla eri palamisnopeuksilla. Nopeudella 1 budjetti riittää tasan jakson; hälytysrajojen 6 ja 14,4 nopeuksilla se loppuu päivissä.](kuvat/10-palaminen.png){width=75%}
+![Virhebudjetin kuluminen 30 päivän jaksolla eri palamisnopeuksilla. Nopeudella 1 budjetti riittää tasan jakson; hälytysrajojen 6 ja 14,4 nopeuksilla se loppuu päivissä.](kuvat/11-palaminen.png){width=75%}
 
 Palamisnopeus 14,4 tunnin ajan kuluttaa 2 % kuukauden budjetista;
 se on syy herättää päivystäjä. Nopeus 6 kuuden tunnin ajan kuluttaa

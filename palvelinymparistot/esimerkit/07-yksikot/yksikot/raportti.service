@@ -1,0 +1,9 @@
+# Kertaluonteinen työ: ajetaan, se päättyy, ja tulos jää lokiin.
+[Unit]
+Description=Mittariraportin koostaminen
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /opt/mittari/raportti.py
+DynamicUser=yes
+ProtectSystem=strict

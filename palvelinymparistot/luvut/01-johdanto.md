@@ -25,6 +25,7 @@ koventamisen.
 | Tiedostojärjestelmät ja tarkistussummat | Miten hiljainen korruptoituminen havaitaan? |
 | Varmuuskopiointi | Riittääkö kopiointi palvelun RPO- ja RTO-tavoitteisiin? |
 | Käyttäjähallinta | Miten sadat koneet tunnistavat samat käyttäjät? |
+| Palvelut ja systemd | Miten palvelu pysyy käynnissä, rajattuna ja jäljitettävänä? |
 | Konfiguraationhallinta | Miten sadat koneet pidetään samassa, tunnetussa tilassa? |
 | Koventaminen ja päivitykset | Miten hyökkäyspinta pienennetään ja pidetään pienenä? |
 | Alustat ja klusterit | Kestääkö klusteri yhden koneen vian tai huoltokatkon? |
@@ -48,9 +49,11 @@ Tutoriaali ei käsittele seuraavia aiheita:
   suunnitteluun.
 - Salaisuuksien hallinta ja toimitusketjun turvallisuus ovat taidossa
   *Tietoturva kehitystyössä*.
-- Palvelimen ensiasennuksen automatisointia (verkkoasennus,
-  cloud-init), systemd-palvelujen kirjoittamista ja ajan synkronointia
-  ei käydä läpi; systemd:n käyttö on taidossa *Komentorivi ja Linux*.
+- Käyttöjärjestelmän asennusta ja sen automatisointia (verkkoasennus,
+  cloud-init) ei käydä läpi; luku *Palvelut ja systemd* viittaa
+  jakelujen omiin ohjeisiin. systemd:n peruskäyttö (`systemctl`,
+  `journalctl`) on taidossa *Komentorivi ja Linux*, ja tässä jatketaan
+  siitä.
 
 ## Kenen työtä palvelinympäristö on
 
@@ -96,6 +99,10 @@ siltä osin kuin se onnistuu ilman erikoislaitteita:
   tilapäisessä juurihakemistossa.
 - **ext4-tiedostojärjestelmä** luodaan levykuvaan, johon kirjoitetaan
   `debugfs`-työkalulla ilman liittämistä.
+- **systemd-yksiköt** tarkistetaan ja arvioidaan `systemd-analyze`-
+  komennolla tiedostoina. Lisäksi samat yksiköt ajetaan oikean
+  systemd:n alla koneessa, jossa se on käynnissä (CI-kone tai oma
+  testikone); kehityskontissa tämä koe ohittaa itsensä.
 
 Levyjärjestelmiä (`mdadm`, LVM) ei voi luoda tavallisessa kontissa
 ilman ytimen etuoikeuksia. Niiden komennot näytetään tekstinä, ja
@@ -112,4 +119,5 @@ bash esimerkit/05-restic.sh
 ```
 
 Kehityskontissa (`.devcontainer/palvelinymparistot`) on valmiina
-Python, ShellCheck, Ansible, OpenLDAP, rsync ja restic.
+Python, ShellCheck, Ansible, OpenLDAP, rsync, restic ja systemd:n
+tarkistustyökalut.

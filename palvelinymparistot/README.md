@@ -2,8 +2,9 @@
 
 Tiivis suomenkielinen opas palvelinympäristöjen ylläpitoon: laitteisto,
 tallennus ja RAID, tiedostojärjestelmät, varmuuskopiointi,
-käyttäjähallinta, konfiguraationhallinta Ansiblella, koventaminen,
-klusterien ylläpito, valvonta ja palvelutasot sekä kustannukset.
+käyttäjähallinta, palvelut ja systemd, konfiguraationhallinta
+Ansiblella, koventaminen, klusterien ylläpito, valvonta ja
+palvelutasot sekä kustannukset.
 Valmiit dokumentit:
 [palvelinymparistot.pdf](https://saperant.github.io/tutoriaalit/materiaalit/palvelinymparistot.pdf)
 ja pikaopas
@@ -25,17 +26,20 @@ Esitiedot: [Verkkoinfrastruktuuri](../verkkoinfrastruktuuri/) ja
    restic, porrastettu säilytys, palautustestaus
 6. Käyttäjähallinta ja hakemistot – LDAP, pääsynhallinta, Kerberos,
    Active Directory ja SSSD
-7. Konfiguraationhallinta Ansiblella – roolit, idempotenssi,
+7. Palvelut ja systemd – yksiköt, riippuvuudet, valmius ja
+   sokettiaktivointi, uudelleenkäynnistys, rajaaminen, journald,
+   ajastimet, vianetsintä, ajan tahdistus
+8. Konfiguraationhallinta Ansiblella – roolit, idempotenssi,
    ajautuminen, testaus
-8. Koventaminen ja päivitykset – tarkastus koodina, päivitysprosessi,
+9. Koventaminen ja päivitykset – tarkastus koodina, päivitysprosessi,
    varmenteiden elinkaari, auditointi
-9. Virtualisointialustat ja klusterit – N+1, live migration,
-   PodDisruptionBudget, klusterin ylläpito
-10. Valvonta ja palvelutasot – saatavuus, SLI, SLO, SLA,
+10. Virtualisointialustat ja klusterit – N+1, live migration,
+    PodDisruptionBudget, klusterin ylläpito
+11. Valvonta ja palvelutasot – saatavuus, SLI, SLO, SLA,
     virhebudjetti ja palamisnopeushälytykset, häiriön jälkiselvitys
-11. Kustannukset ja kapasiteetti – TCO, kapasiteetin ennustaminen,
+12. Kustannukset ja kapasiteetti – TCO, kapasiteetin ennustaminen,
     varakapasiteetti
-12. Lopuksi – nyrkkisäännöt, jatkotaidot, lähteet
+13. Lopuksi – nyrkkisäännöt, jatkotaidot, lähteet
 
 ## Rakentaminen
 
@@ -47,7 +51,11 @@ make kuvat    # piirtää kuvaajat uudelleen (kuvat/piirra.py, Matplotlib)
 
 Esimerkit tarvitsevat Python 3.12:n, ShellCheckin, Ansiblen
 (`ansible-core`), OpenLDAPin (`slapd`, `ldap-utils`), rsyncin,
-resticin ja e2fsprogsin. Kehityskontissa ne ovat valmiina. Levyjärjestelmien
+resticin, e2fsprogsin ja systemd:n (`systemd-analyze`).
+Kehityskontissa ne ovat valmiina. Luvun 7 koe oikean systemd:n alla
+(`make -C esimerkit`) ajetaan vain koneessa, jossa systemd on
+prosessi 1 ja `sudo` toimii ilman salasanaa; muualla se ohittaa
+itsensä. Levyjärjestelmien
 komennot (`mdadm`, LVM, ZFS) vaativat ytimen etuoikeuksia, ja ne
 näytetään tekstissä ajamatta.
 

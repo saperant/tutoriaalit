@@ -23,13 +23,13 @@ lasketaan:
   käyttöjärjestelmien lisenssit.
 - **Työ**: asennus, päivitykset, vianselvitys, hankinnat.
 
-```{.python tiedosto="esimerkit/11-tco.py" osa="tco"}
+```{.python tiedosto="esimerkit/12-tco.py" osa="tco"}
 ```
 
-```{.python tiedosto="esimerkit/11-tco.py" osa="kaytto"}
+```{.python tiedosto="esimerkit/12-tco.py" osa="kaytto"}
 ```
 
-```{.tuloste tiedosto="esimerkit/11-tco.odotettu"}
+```{.tuloste tiedosto="esimerkit/12-tco.odotettu"}
 ```
 
 Tulos riippuu ennen kaikkea käyttöasteesta. Jatkuvasti päällä oleva
@@ -47,13 +47,13 @@ Kapasiteetin loppuminen on harvoin yllätys, jos käyttöä seurataan.
 Kasvusta sovitetaan malli, ja siitä lasketaan, milloin raja ylittyy.
 Hankinta on aloitettava hankinta-ajan verran aiemmin:
 
-```{.python tiedosto="esimerkit/11-kapasiteetti.py" osa="ennuste"}
+```{.python tiedosto="esimerkit/12-kapasiteetti.py" osa="ennuste"}
 ```
 
-```{.tuloste tiedosto="esimerkit/11-kapasiteetti.odotettu"}
+```{.tuloste tiedosto="esimerkit/12-kapasiteetti.odotettu"}
 ```
 
-![Esimerkin mittaukset, niihin sovitettu suora ja ennusteen kolme päivämäärää. Tilaus on tehtävä hankinta-ajan verran ennen kuin hälytysraja ylittyy.](kuvat/11-kapasiteetti.png){width=85%}
+![Esimerkin mittaukset, niihin sovitettu suora ja ennusteen kolme päivämäärää. Tilaus on tehtävä hankinta-ajan verran ennen kuin hälytysraja ylittyy.](kuvat/12-kapasiteetti.png){width=85%}
 
 Käyttö on nyt 68 %, eikä mitään hälytystä ole lauennut, mutta
 laajennus on tilattava neljän kuukauden kuluessa. Raja 80 % jättää

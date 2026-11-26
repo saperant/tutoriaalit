@@ -139,7 +139,8 @@ mutta ei salattu, ja KDC:n vaiheet on yhdistetty. Periaatteet ovat
 samat kuin oikeassa Kerberoksessa: lipun voimassaoloaika, todentimen
 aikaleima ja toistojen esto. Viiden minuutin raja selittää, miksi
 toimialueen koneiden NTP-tahdistus on kriittinen palvelu: kellon
-ajautuminen estää kaikki kirjautumiset.
+ajautuminen estää kaikki kirjautumiset. Tahdistus käsitellään luvussa
+*Palvelut ja systemd*.
 
 ## Active Directory ja SSSD
 

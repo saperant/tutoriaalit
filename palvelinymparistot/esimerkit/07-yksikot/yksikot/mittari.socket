@@ -1,0 +1,10 @@
+# Kuuntelusoketti on systemd:n hallussa, joten se on auki jo ennen
+# palvelun käynnistymistä ja pysyy auki uudelleenkäynnistyksen yli.
+[Unit]
+Description=Mittaripalvelun kuuntelusoketti
+
+[Socket]
+ListenStream=127.0.0.1:9108
+
+[Install]
+WantedBy=sockets.target

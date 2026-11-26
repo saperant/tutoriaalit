@@ -1,0 +1,12 @@
+todellinen siirtymä 250,0 ms
+meno  paluu  arvio     virhe   kiertoviive/2
+  12     12   250.0 ms   +0.0 ms   12.0 ms
+  20      4   258.0 ms   +8.0 ms   12.0 ms
+   4     20   242.0 ms   -8.0 ms   12.0 ms
+  80      8   286.0 ms  +36.0 ms   44.0 ms
+
+ajautuma  virhe/vrk  5 min:n raja täyttyy
+   1 ppm    0.09 s      3472 vrk
+  20 ppm    1.73 s       174 vrk
+  50 ppm    4.32 s        69 vrk
+ 200 ppm   17.28 s        17 vrk

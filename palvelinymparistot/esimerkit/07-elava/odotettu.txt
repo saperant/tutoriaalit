@@ -1,0 +1,25 @@
+== sokettiaktivointi
+soketti active, palvelu inactive
+asiakas sai: ok pyyntöjä=1
+soketti active, palvelu active
+Type=notify
+StatusText=valmis, pyyntöjä 1
+NRestarts=0
+== kovennus palvelun sisältä
+käyttäjä=dynaaminen /etc=estetty tilahakemisto=sallittu
+CPUQuotaPerSecUSec=500ms
+MemoryMax=209715200
+TasksMax=32
+== loki
+PRIORITY=6 MESSAGE=kuuntelusoketti saatu valvojalta
+PRIORITY=6 MESSAGE=valmis
+PRIORITY=3 MESSAGE=tuntematon komento: 'tilaa'
+PRIORITY=6 MESSAGE=lopetetaan, pyyntöjä 3
+== kaatuva palvelu ja käynnistysraja
+Result=exit-code
+NRestarts=3
+ActiveState=failed
+lokissa: kaatuva.service: Start request repeated too quickly.
+== Requires ja Wants, kun riippuvuus ei käynnisty
+vaatii.service: systemctl start palautti 1, tila inactive
+toivoo.service: systemctl start palautti 0, tila active

@@ -17,6 +17,7 @@ haavoittuvuudet siirtävät konetta jatkuvasti pois siitä.
 | Päivitykset | Tietoturvapäivitykset automaattisesti, ytimen päivitys ja uudelleenkäynnistys hallitusti |
 | Tiedostot | Kriittisten tiedostojen oikeudet, ei kaikkien kirjoitettavia tiedostoja |
 | Kirjaus | Kirjautumiset ja sudo-käyttö keskitettyyn lokiin, auditd tärkeille tapahtumille |
+| Palvelut | Jokainen palvelu omalla tunnuksellaan ja rajattuna yksikössään (luku *Palvelut ja systemd*) |
 
 Tiukennuksille on valmiita tarkistuslistoja: **CIS Benchmarks**
 käyttöjärjestelmittäin ja Suomessa **Kyberturvallisuuskeskuksen**
@@ -29,19 +30,19 @@ Tarkastusskripti tekee jokaisesta säännöstä yhden tarkistuksen. Sille
 annetaan juurihakemisto, joten samaa skriptiä voi käyttää
 palvelimella, levykuvalla tai kontin tiedostojärjestelmällä:
 
-```{.bash tiedosto="esimerkit/08-kovennus/tarkastus.sh" osa="saannot"}
+```{.bash tiedosto="esimerkit/09-kovennus/tarkastus.sh" osa="saannot"}
 ```
 
-```{.bash tiedosto="esimerkit/08-kovennus/tarkastus.sh" osa="tarkastus"}
+```{.bash tiedosto="esimerkit/09-kovennus/tarkastus.sh" osa="tarkastus"}
 ```
 
 Testi rakentaa kaksi järjestelmää, kovennetun ja kovennettamattoman, ja
 ajaa tarkastuksen molemmille:
 
-```{.bash tiedosto="esimerkit/08-kovennus/main.sh" osa="testi"}
+```{.bash tiedosto="esimerkit/09-kovennus/main.sh" osa="testi"}
 ```
 
-```{.tuloste tiedosto="esimerkit/08-kovennus.odotettu"}
+```{.tuloste tiedosto="esimerkit/09-kovennus.odotettu"}
 ```
 
 Paluuarvo kertoo tuloksen, joten tarkastus voidaan ajaa CI-putkessa
@@ -73,10 +74,10 @@ korjaus. Päivitysprosessi:
 
 Tilannekuva kerätään kaikilta koneilta:
 
-```{.python tiedosto="esimerkit/08-paivitykset.py" osa="tilanne"}
+```{.python tiedosto="esimerkit/09-paivitykset.py" osa="tilanne"}
 ```
 
-```{.tuloste tiedosto="esimerkit/08-paivitykset.odotettu"}
+```{.tuloste tiedosto="esimerkit/09-paivitykset.odotettu"}
 ```
 
 Kone `web2` on päivitetty, mutta se ajaa yhä vanhaa ydintä: korjaus ei

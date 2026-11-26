@@ -4,7 +4,7 @@
     "dockerfile": "../Dockerfile",
     "context": "..",
     "args": {
-      "LISAPAKETIT": "shellcheck rsync restic slapd ldap-utils e2fsprogs",
+      "LISAPAKETIT": "shellcheck rsync restic slapd ldap-utils e2fsprogs systemd",
       "PIP_PAKETIT": "ansible-core==2.21.6 ruff mypy"
     }
   },

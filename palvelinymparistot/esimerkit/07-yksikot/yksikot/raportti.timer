@@ -1,0 +1,12 @@
+# Ajastin käynnistää samannimisen palvelun. Persistent=true ajaa työn
+# käynnistyksen jälkeen, jos kone oli ajohetkellä sammuksissa.
+[Unit]
+Description=Mittariraportti arkiöisin
+
+[Timer]
+OnCalendar=Mon..Fri 02:30
+RandomizedDelaySec=15min
+Persistent=true
+
+[Install]
+WantedBy=timers.target

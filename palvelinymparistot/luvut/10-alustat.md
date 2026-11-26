@@ -21,10 +21,10 @@ Pelkkä kokonaistilan laskeminen ei riitä, koska virtuaalikone ei voi
 jakautua usealle isännälle. Tarkistus kokeilee jokaisen isännän
 poistamista ja sijoittaa sen koneet muille:
 
-```{.python tiedosto="esimerkit/09-n-plus-1.py" osa="tarkistus"}
+```{.python tiedosto="esimerkit/10-n-plus-1.py" osa="tarkistus"}
 ```
 
-```{.tuloste tiedosto="esimerkit/09-n-plus-1.odotettu"}
+```{.tuloste tiedosto="esimerkit/10-n-plus-1.odotettu"}
 ```
 
 Klusterissa on vapaata muistia yhteensä yli 800 Gt, mutta kun `esx3`
@@ -53,10 +53,10 @@ kopiomäärän. Kubernetesissa sovelluksen omistaja ilmaisee tarpeen
 katsotaan, mitä budjetti tekee ylläpitäjän huollolle. Tyhjennys odottaa, kunnes
 budjetti sallii podin poistamisen:
 
-```{.python tiedosto="esimerkit/09-huolto.py" osa="tyhjennys"}
+```{.python tiedosto="esimerkit/10-huolto.py" osa="tyhjennys"}
 ```
 
-```{.tuloste tiedosto="esimerkit/09-huolto.odotettu"}
+```{.tuloste tiedosto="esimerkit/10-huolto.odotettu"}
 ```
 
 Hakusovelluksella on kaksi kopiota ja vaatimus kahdesta käytettävästä.
