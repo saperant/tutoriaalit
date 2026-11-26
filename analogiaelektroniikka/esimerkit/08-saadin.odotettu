@@ -1,0 +1,16 @@
+nimellinen lähtö 3.300 V, vahvistus A = 1000, A * beta = 379
+LDO (P-kanava), syöttö 5 V:
+  virhe        simuloitu    7.81 mV   laskettu    7.80 mV   ok
+  hila         simuloitu     2.96 V   laskettu     2.96 V   ok
+  kuorma       simuloitu   -1.05 mV   laskettu   -1.05 mV   ok
+  linja        simuloitu  2.65 mV/V   laskettu  2.64 mV/V   ok
+  pudotus      simuloitu    58.9 mV   laskettu    59.0 mV   ok
+seuraaja (N-kanava), syöttö 7 V:
+  virhe        simuloitu   -13.3 mV   laskettu   -13.3 mV   ok
+  hila         simuloitu     5.03 V   laskettu     5.03 V   ok
+  kuorma       simuloitu    -328 uV   laskettu    -327 uV   ok
+  linja        simuloitu  1.77 uV/V   laskettu  1.76 uV/V   ok
+  pudotus      simuloitu     1.74 V   laskettu     1.74 V   ok
+LDO, syöttö 5 V: häviö 170 mW, hyötysuhde 66%
+LDO, syöttö 3,6 V: häviö 30 mW, hyötysuhde 92%
+seuraaja, syöttö 5,3 V: häviö 200 mW, hyötysuhde 62%

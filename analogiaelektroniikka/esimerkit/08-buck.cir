@@ -1,0 +1,48 @@
+* Buck-muunnin (alentava hakkuri) kiinteällä pulssisuhteella 0,275:
+* 12 V -> noin 3,3 V. Kytkin S1 johtaa, kun ohjaus pwm on ylhäällä;
+* muulloin kelan virta kulkee diodin D1 kautta. Kytkentätaajuus 200 kHz.
+* Ihanteellinen kytkin ja diodi; parametreilla saadaan häviölliset osat.
+.param RK=3.3 UALKU=3.3 IALKU=1
+.param RON=1m DN=0.01 DIS=1n DRS=0
+.model KYTKIN SW(RON={RON} ROFF=10Meg VT=2.5 VH=0.5)
+.model DVAPAA D(IS={DIS} N={DN} RS={DRS})
+Vin in 0 DC 12
+Vpwm pwm 0 PULSE(0 5 0 20n 20n 1.355u 5u)
+S1 in sw pwm 0 KYTKIN
+D1 0 sw DVAPAA
+* kytkentäsolmun hajakapasitanssi ja vaimennus (RC-vaimennin)
+Csw sw sn 100p
+Rsn sn 0 1k
+L1 sw out 100u IC={IALKU}
+C1 out 0 47u IC={UALKU}
+Rk out 0 {RK}
+.control
+* 1) kuorma 3,3 ohm (1 A): kelan virta ei käy nollassa
+* 2) kuorma 330 ohm: kelan virta katkeaa joka jaksolla
+* 3) kuten 1, mutta kytkimessä 0,1 ohm ja diodina Schottky
+foreach tapaus 1 2 3
+  if $tapaus = 2
+    alterparam RK = 330
+    alterparam UALKU = 6.45
+    alterparam IALKU = 0
+  end
+  if $tapaus = 3
+    alterparam RK = 3.3
+    alterparam UALKU = 3.0
+    alterparam IALKU = 0.9
+    alterparam RON = 0.1
+    alterparam DN = 1.05
+    alterparam DIS = 10u
+    alterparam DRS = 20m
+  end
+  reset
+  tran 25n 3m 0 25n uic
+  meas tran uka AVG v(out) FROM=2.5m TO=3m
+  meas tran imin MIN i(L1) FROM=2.5m TO=3m
+  meas tran imax MAX i(L1) FROM=2.5m TO=3m
+  meas tran umin MIN v(out) FROM=2.5m TO=3m
+  meas tran umax MAX v(out) FROM=2.5m TO=3m
+  meas tran iin AVG i(Vin) FROM=2.5m TO=3m
+end
+.endc
+.end

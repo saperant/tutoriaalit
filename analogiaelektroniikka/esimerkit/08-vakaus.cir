@@ -1,0 +1,38 @@
+* LDO:n stabiilisuus: silmukkavahvistus ja kuorma-askel kolmella
+* lähtökondensaattorin sarjaresistanssilla (ESR). Virhevahvistimen tulo
+* ei ota virtaa, joten silmukka katkaistaan sarjaan kytketyllä
+* testilähteellä Vt: silmukkavahvistus T = -v(fb) / v(fbi).
+.include transistorit.lib
+.include saatimet.lib
+.param ESR=0.5
+Vin in 0 DC 5
+Vref ref 0 DC 1.25
+X1 fbi ref g in VIRHEVAHV
+Cgs g in 150p
+Cea g 0 70p
+M1 out g in in PLOG W=20u L=100u
+R1 out fb 16.4k
+R2 fb 0 10k
+Vt fb fbi DC 0 AC 1
+Cout out c1 10u
+Resr c1 0 {ESR}
+* AC-analyysin toimintapiste 100 mA; aika-analyysissä askel 10 -> 100 mA
+Ikuorma out 0 DC 100m PULSE(10m 100m 0.2m 1u 1u 1.3m 3m)
+.control
+foreach r 0.01 0.5 10
+  alterparam ESR = $r
+  reset
+  ac dec 200 10 10Meg
+  let T = -v(fb)/v(fbi)
+  let Tdb = db(T)
+  let Tvaihe = 180/pi*cph(T)
+  meas ac fc WHEN Tdb=0 FALL=1
+  meas ac vaihe FIND Tvaihe WHEN Tdb=0 FALL=1
+  tran 0.2u 1.5m
+  meas tran alku FIND v(out) AT=0.19m
+  meas tran pohja MIN v(out) FROM=0.2m TO=0.3m
+  meas tran loppu_min MIN v(out) FROM=1.3m TO=1.5m
+  meas tran loppu_max MAX v(out) FROM=1.3m TO=1.5m
+end
+.endc
+.end

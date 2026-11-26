@@ -19,7 +19,10 @@ rakennuspalikat insinöörin näkökulmasta:
 - AD- ja DA-muuntimet: kvantisointi, SAR- ja sigma-delta-periaate,
   R-2R-tikapuu sekä näytteenotto ja pito
 - kohina ja signaalin eheys: terminen kohina, kohinabudjetti ja
-  heijastukset siirtolinjassa.
+  heijastukset siirtolinjassa
+- jännitteensäätimet: lineaarisäädin takaisinkytkentäsilmukkana,
+  pudotusjännite, lähtökondensaattorin vaikutus stabiilisuuteen,
+  syötön häiriöiden vaimennus ja hakkurin periaate.
 
 ```{.dot otsikko="Tyypillinen mittausketju. Tutoriaalin luvut käsittelevät ketjun analogisen osan; luvun numero on suluissa."}
 digraph {
@@ -32,6 +35,8 @@ digraph {
   anturi -> vahvistin -> suodin -> ad -> ohjelma;
   kohina [label="kohina ja\nhäiriöt (7)", shape=plaintext, style=""];
   kohina -> vahvistin [style=dashed, arrowhead=open];
+  syotto [label="käyttö-\njännite (8)", shape=plaintext, style=""];
+  syotto -> ad [style=dashed, arrowhead=open];
 }
 ```
 
@@ -112,7 +117,8 @@ lasketun arvon rinnakkain:
 Mallikirjastoja on kaksi. `transistorit.lib` on sama kuin perustaidossa:
 pienitehoisen NPN-transistorin malli (2N3904:n kaltainen) ja
 MOSFET-mallit. `operaatiovahvistimet.lib` sisältää tämän tutoriaalin
-operaatiovahvistimen makromallin. Mallien parametrit ovat tyypillisiä
+operaatiovahvistimen makromallin, ja luvussa 8 otetaan käyttöön
+`saatimet.lib`, jossa on säätimen virhevahvistin. Mallien parametrit ovat tyypillisiä
 arvoja eivätkä minkään valmistajan takuuarvoja; oikeassa suunnittelussa
 käytetään valmistajan julkaisemia malleja ja datalehden raja-arvoja.
 
@@ -133,14 +139,15 @@ Tutoriaali rajautuu signaaliketjun analogiaosaan. Muualla käsitellään:
   *Signaalit ja järjestelmät* ja *Digitaalinen signaalinkäsittely*
 - kvantisointi lukujen esityksen kannalta: taito *Lukujen esitys ja
   kiinteän pilkun aritmetiikka*
-- lineaarisäädin käyttäjän näkökulmasta (pudotusjännite, häviö):
-  taito *Elektroniikan perusteet ja SPICE*
+- lineaarisäädin mustana laatikkona ja häviötehon lämpölaskenta:
+  taito *Elektroniikan perusteet ja SPICE*; luku 8 avaa laatikon
 - väylien protokollat, joiden sähköistä puolta luku 7 sivuaa: taito
   *Oheislaiteväylät*.
 
-Jännitteensäätimien ja hakkuriteholähteiden suunnittelu,
-radiotaajuuspiirit ja piirilevysuunnittelu jäävät tämän taitopuun
-ulkopuolelle; luvun 8 lähteet ohjaavat niihin.
+Hakkuriteholähteiden ja muun tehoelektroniikan suunnittelu,
+radiotaajuuspiirit ja piirilevysuunnittelu jäävät tämän tutoriaalin
+ulkopuolelle. Luku 8 esittelee hakkurin periaatteen, ja luvun 9 lähteet
+ohjaavat pidemmälle.
 
 Piirit esitetään piirikaavioina ja netlisteinä rinnakkain. Kaavion
 harmaat solmunimet ovat samat kuin netlistissä. Ohjelmien tulosteissa
@@ -164,4 +171,7 @@ takaisinkytketty piiri alkaa värähdellä, ja näyttää lopuksi
 positiivisen takaisinkytkennän hyötykäytön, vertailijan hystereesin.
 Luku 6 käsittelee DA- ja AD-muuntimet tässä järjestyksessä, koska
 AD-muuntimen sisällä on DA-muunnin. Luku 7 käsittelee kohinan ja
-signaalin eheyden, ja luku 8 kokoaa nyrkkisäännöt ja lähteet.
+signaalin eheyden. Luku 8 rakentaa käyttöjännitteen, jonka aiemmat
+luvut olettivat: se soveltaa luvun 5 stabiilisuusanalyysia ja luvun 7
+kohinaa lineaarisäätimeen ja esittelee hakkurin. Luku 9 kokoaa
+nyrkkisäännöt ja lähteet.

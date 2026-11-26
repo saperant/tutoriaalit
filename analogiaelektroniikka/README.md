@@ -3,7 +3,8 @@
 Tiivis suomenkielinen tutoriaali analogiaelektroniikan rakennuspalikoista
 ohjelmoijalle ja insinööriopiskelijalle: transistorivahvistimet,
 operaatiovahvistimet, aktiiviset suodattimet, takaisinkytkennän
-stabiilisuus, AD- ja DA-muuntimet sekä kohina ja signaalin eheys.
+stabiilisuus, AD- ja DA-muuntimet, kohina ja signaalin eheys sekä
+jännitteensäätimet.
 Jokainen piiri lasketaan mallilla Pythonilla ja simuloidaan avoimella
 ngspice-simulaattorilla, ja esimerkit vertaavat tuloksia automaattisesti.
 Valmiit dokumentit:
@@ -28,7 +29,10 @@ ja pikaopas
    RC-suodin, SAR, näytteenotto ja pito, sigma-delta, referenssi
 7. Kohina ja signaalin eheys – terminen kohina, kohinabudjetti,
    heijastukset siirtolinjassa, maadoitus ja ohitus
-8. Lopuksi – nyrkkisäännöt, jatkotaidot ja lähteet
+8. Jännitteensäätimet – lineaarisäädin sisältä (LDO ja seuraaja),
+   pudotusjännite, lähtökondensaattori ja vaihevara, PSRR ja kohina,
+   buck-muunnin, lineaarisen ja hakkurin valinta
+9. Lopuksi – nyrkkisäännöt, jatkotaidot ja lähteet
 
 Esitiedot: *Elektroniikan perusteet ja SPICE* ja *Differentiaaliyhtälöt
 ja Laplace-muunnos*. Laitteita ei tarvita: jokainen piiri simuloidaan,
@@ -47,7 +51,8 @@ Esimerkit ajetaan esimerkkihakemistossa, esimerkiksi
 `python3 04-sallen-key.py`. Kehityskontissa
 (`.devcontainer/analogiaelektroniikka`) ngspice ja Python-kirjastot ovat
 valmiina. Operaatiovahvistimen makromalli on tiedostossa
-`esimerkit/operaatiovahvistimet.lib`.
+`esimerkit/operaatiovahvistimet.lib` ja säätimen virhevahvistin
+tiedostossa `esimerkit/saatimet.lib`.
 
 Esimerkkien avaaminen kehityskontissa ja ajaminen: ks. [Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.
 

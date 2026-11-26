@@ -1,0 +1,43 @@
+* LDO: syötön häiriöiden vaimennus (PSRR) ja lähdön kohina.
+* Referenssin kohinaa mallintaa 1 Mohm:n vastus Rn: sen terminen kohina
+* 129 nV/sqrt(Hz) on tavallisen bandgap-referenssin suuruusluokkaa.
+* Kondensaattori Cnr suodattaa sen (säätimen NR- tai BYP-nasta).
+.include transistorit.lib
+.include saatimet.lib
+.param CNR=1f
+Vin in 0 DC 5 AC 1
+Vref ref0 0 DC 1.25
+Rn ref0 ref 1Meg
+Cnr ref 0 {CNR}
+X1 fb ref g in VIRHEVAHV
+Cgs g in 150p
+Cea g 0 70p
+M1 out g in in PLOG W=20u L=100u
+R1 out fb 16.4k
+R2 fb 0 10k
+Cout out c1 10u
+Resr c1 0 0.5
+Ikuorma out 0 DC 100m
+.control
+* PSRR: 1 V:n vaihtosignaali syötössä, vaimennus lähdössä
+ac dec 20 10 10Meg
+let psrr = -db(v(out))
+meas ac p100 FIND psrr AT=100
+meas ac p10k FIND psrr AT=10k
+meas ac p200k FIND psrr AT=200k
+* kohina 10 Hz ... 100 kHz ilman referenssin suodatusta ja sen kanssa
+foreach c 1f 100n
+  alterparam CNR = $c
+  reset
+  noise v(out) Vin dec 20 10 100k
+end
+setplot noise1
+print onoise_spectrum[40]
+setplot noise2
+print onoise_total
+setplot noise3
+print onoise_spectrum[40]
+setplot noise4
+print onoise_total
+.endc
+.end

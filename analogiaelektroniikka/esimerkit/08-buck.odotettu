@@ -1,0 +1,12 @@
+U = 3.30 V, kelavirran rippeli 120 mA, lähdön rippeli 1.59 mV, raja 60 mA
+jatkuva johtuminen, kuorma 3.3 ohm:
+  lähtö        simuloitu     3.30 V   laskettu     3.30 V   ok
+  kelan dI     simuloitu     120 mA   laskettu     120 mA   ok
+  lähdön dU    simuloitu    1.63 mV   laskettu    1.59 mV   ok
+katkeava johtuminen, kuorma 330 ohm:
+  lähtö        simuloitu     6.44 V   laskettu     6.45 V   ok
+  kelavirran pienin arvo 0 mA
+häviölliset osat, kuorma 3.3 ohm:
+  lähtö        simuloitu     3.04 V   laskettu     3.04 V   ok
+  hyötysuhde   simuloitu      0.919   laskettu       0.92   ok
+  häviö 246 mW; lineaarisäätimessä 8.7 W ja hyötysuhde 27.5%

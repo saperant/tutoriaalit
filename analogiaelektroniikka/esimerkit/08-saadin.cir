@@ -1,0 +1,51 @@
+* Sama 3,3 V:n säädin kahdella päästötransistorilla. Molemmissa on
+* 1,25 V:n referenssi, virhevahvistin ja jännitteenjako 16,4k / 10k.
+* a) LDO: P-kanavainen transistori, lähde syötössä. Hilaa vedetään alas,
+*    kun lähtö on liian matala, joten takaisinkytkentä tulee plus-tuloon.
+* b) seuraaja: N-kanavainen transistori, lähde lähdössä.
+.include transistorit.lib
+.include saatimet.lib
+* Regulaatio mitataan mikrovolttien eroina: tiukemmat toleranssit.
+.options reltol=1e-6 vntol=10n
+Vin in 0 DC 5
+Vref ref 0 DC 1.25
+* a) LDO
+X1 fb ref g in VIRHEVAHV
+M1 out g in in PLOG W=20u L=100u
+R1 out fb 16.4k
+R2 fb 0 10k
+Ikuorma out 0 DC 100m
+* b) seuraajasäädin
+X2 ref fb2 g2 in VIRHEVAHV
+M2 in g2 out2 out2 NLOG
+R3 out2 fb2 16.4k
+R4 fb2 0 10k
+Ikuorma2 out2 0 DC 100m
+.control
+* toimintapiste: LDO 5 V:n syötöllä
+op
+print v(out) v(g)
+* kuormaregulaatio 1 mA -> 100 mA
+dc Ikuorma 1m 100m 99m
+let kuorma_ldo = v(out)[1] - v(out)[0]
+print kuorma_ldo
+* linjaregulaatio 4,5 V -> 5,5 V
+dc Vin 4.5 5.5 1
+let linja_ldo = v(out)[1] - v(out)[0]
+print linja_ldo
+* seuraaja tarvitsee korkeamman syötön: samat mittaukset 7 V:n ympärillä
+alter Vin DC = 7
+op
+print v(out2) v(g2)
+dc Ikuorma2 1m 100m 99m
+let kuorma_seur = v(out2)[1] - v(out2)[0]
+print kuorma_seur
+dc Vin 6.5 7.5 1
+let linja_seur = v(out2)[1] - v(out2)[0]
+print linja_seur
+* pudotusjännite: syöttö lasketaan 7 V:sta 3 V:iin 100 mA:n kuormalla
+dc Vin 7 3 -0.005
+meas dc pud_ldo WHEN v(out)=3.267 CROSS=1
+meas dc pud_seur WHEN v(out2)=3.267 CROSS=1
+.endc
+.end

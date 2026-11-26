@@ -1,0 +1,19 @@
+silmukka 100 mA:n kuormalla:
+ESR = 0.01 ohm:
+  ylitys       simuloitu   62.5 kHz   laskettu   62.5 kHz   ok
+  vaihevara    simuloitu  -3.5 deg   laskettu  -3.5 deg   ok
+ESR = 0.5 ohm:
+  ylitys       simuloitu    124 kHz   laskettu    124 kHz   ok
+  vaihevara    simuloitu  62.4 deg   laskettu  62.4 deg   ok
+ESR = 10 ohm:
+  ylitys       simuloitu   1.05 MHz   laskettu   1.05 MHz   ok
+  vaihevara    simuloitu  25.4 deg   laskettu  25.4 deg   ok
+vaihevara (deg) mallista:  ESR 0.01   0.1   0.5     1    10 ohm
+  kuorma   1 mA               2     9    36    61    65
+  kuorma  10 mA               0    11    52    71    43
+  kuorma 100 mA              -4    16    62    62    25
+kuorma-askel 10 mA -> 100 mA:
+  ESR = 0.01 ohm: värähtelee, huipusta huippuun 0.2 V
+  ESR = 0.5 ohm: notkahdus 46 mV, asettuu
+  ESR = 10 ohm: notkahdus 244 mV, asettuu
+  ESR-askel    simuloitu    45.6 mV   laskettu    45.0 mV   ok

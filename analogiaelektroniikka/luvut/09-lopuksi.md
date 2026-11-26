@@ -1,12 +1,14 @@
 # Lopuksi {.runko-lahteet}
 
 Tutoriaali kulki transistorin toimintapisteestä operaatiovahvistimiin,
-suodattimiin, takaisinkytkennän stabiilisuuteen, muuntimiin ja kohinaan.
+suodattimiin, takaisinkytkennän stabiilisuuteen, muuntimiin, kohinaan
+ja jännitteensäätimiin.
 Jokainen piiri laskettiin mallilla ja simuloitiin, ja Python vertasi
 tuloksia. Matkan varrella erot opettivat eniten: transistorin vahvistus
 toimintapisteessä, lähtöresistanssin vaikutus kaistanleveyteen,
-toleranssien eri vaikutus kulma- ja rajataajuuteen ja nousunopeuden
-taakse piiloutunut epävakaus. Analogiasuunnittelu on mallien ja niiden
+toleranssien eri vaikutus kulma- ja rajataajuuteen, nousunopeuden
+taakse piiloutunut epävakaus ja säädin, joka värähtelee liian hyvällä
+kondensaattorilla. Analogiasuunnittelu on mallien ja niiden
 oletusten tuntemista.
 
 ## Nyrkkisäännöt
@@ -32,6 +34,11 @@ oletusten tuntemista.
 | terminen kohina | 1 kΩ: 4 nV/√Hz; RC: $\sqrt{kT/C}$ |
 | siirtolinja | kun viive yli 1/6 nousuajasta; piirilevyllä 15 cm/ns |
 | ohitus | 100 nF jokaiseen käyttöjännitenastaan |
+| säätimen lähtö | $U_{ref}(1 + R_1/R_2)$; linjaregulaatio ja PSRR $\approx A\beta$ |
+| pudotusjännite | seuraaja noin 2 V, LDO $R_{DS(on)} I$: kymmeniä ... satoja mV |
+| säätimen kondensaattori | arvo ja sarjaresistanssi datalehden alueelta |
+| buck-muunnin | $U_{ulos} = D\,U_{in}$, kun $I > \Delta I_L/2$; $\Delta I_L = (U_{in} - U_{ulos}) D T/L$ |
+| lineaarinen vai hakkuri | hakkuri, kun häviö $(U_{in} - U_{ulos}) I$ on yli satoja mW |
 
 ## Jatkotaidot
 
@@ -49,11 +56,13 @@ Tästä edetään taitopuussa seuraaviin taitoihin:
 - *ASIC-toteutus* esittelee integroidun piirin digitaalisen puolen.
 - *Numeeriset menetelmät* selittää, miten SPICE ratkaisee piirin
   yhtälöt.
+- *Säätötekniikka* käsittelee takaisinkytkettyjen järjestelmien
+  suunnittelun yleisesti; luvun 8 säätimet ovat siitä yksi esimerkki.
 
 Analogiaelektroniikka on laaja ala, ja osa sen jatkosuunnista on tämän
-taitopuun ulkopuolella. Tehoelektroniikassa (jännitteensäätimet,
-hakkuriteholähteet, moottoriohjaimet) luvun 5 stabiilisuusanalyysi on
-keskeinen työkalu. Radiotaajuuspiireissä tarvitaan impedanssisovitusta,
+taitopuun ulkopuolella. Tehoelektroniikassa (hakkuriteholähteiden
+mitoitus, eristetyt muuntimet, moottoriohjaimet) luvun 8 buck-muunnin
+on lähtökohta ja luvun 5 stabiilisuusanalyysi keskeinen työkalu. Radiotaajuuspiireissä tarvitaan impedanssisovitusta,
 Smithin karttaa ja s-parametreja. Piirilevysuunnittelussa (esimerkiksi
 KiCad) maatasot, impedanssikontrolloidut johtimet ja EMC ratkaisevat,
 toimiiko tässä simuloitu piiri myös levyllä. Lähdeluettelon teokset
@@ -69,15 +78,19 @@ simuloitu eroavat, etsi se, mitä malli ei sisällä.
 
 - Horowitz, P. ja Hill, W. *The Art of Electronics*. 3. painos.
   Cambridge University Press, 2015. Käytännönläheinen perusteos,
-  erityisesti luvut transistoreista, operaatiovahvistimista ja kohinasta.
+  erityisesti luvut transistoreista, operaatiovahvistimista, kohinasta
+  sekä jännitteensäätimistä ja teholähteistä.
+- Erickson, R. W. ja Maksimović, D. *Fundamentals of Power
+  Electronics*. 3. painos. Springer, 2020. Hakkuriteholähteiden
+  toiminta, mallit ja säätö.
 - Sedra, A. S. ja Smith, K. C. *Microelectronic Circuits*. Oxford
   University Press. Piensignaalimallit ja vahvistinasteet.
 - Franco, S. *Design with Operational Amplifiers and Analog Integrated
   Circuits*. 4. painos. McGraw-Hill, 2015. Operaatiovahvistinkytkennät,
   suodattimet ja stabiilisuus.
-- Kester, W. (toim.). *The Data Conversion Handbook*. Analog Devices,
-  2005. AD- ja DA-muuntimien arkkitehtuurit ja määritelmät (SNR, ENOB,
-  INL, DNL).
+- Kester, W. (toim.). *The Data Conversion Handbook*. Analog
+  Devices, 2005. AD- ja DA-muuntimien arkkitehtuurit ja määritelmät
+  (SNR, ENOB, INL, DNL).
 - Schreier, R. ja Temes, G. C. *Understanding Delta-Sigma Data
   Converters*. Wiley-IEEE Press, 2005.
 - Johnson, H. ja Graham, M. *High-Speed Digital Design: A Handbook of

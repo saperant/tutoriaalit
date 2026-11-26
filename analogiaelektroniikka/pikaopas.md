@@ -64,6 +64,18 @@ subtitle: Pikaopas · kaavat, kytkennät ja ngspice
 | heijastuskerroin | $\Gamma = (Z - Z_0)/(Z + Z_0)$ |
 | siirtolinja | viive > nousuaika / 6 |
 
+# Jännitteensäätimet
+
+| Asia | Kaava tai sääntö |
+|------|------------------|
+| lähtö | $U_{ref}/\beta$, $\beta = R_2/(R_1 + R_2)$; kohina vahvistuu samoin |
+| linjaregulaatio, PSRR | $\approx 1/(A\beta)$; heikkenee taajuuden kasvaessa |
+| pudotusjännite | seuraaja noin 2 V; LDO $R_{DS(on)} I$ |
+| häviö | $(U_{in} - U_{ulos}) I$, $\eta \le U_{ulos}/U_{in}$ |
+| ESR:n nolla | $f = 1/(2\pi\,ESR\,C)$; askel $ESR \cdot \Delta I$ |
+| buck, jatkuva | $U = D U_{in}$, $\Delta I_L = (U_{in} - U) D T / L$ |
+| buck, rippeli ja raja | $\Delta U = \Delta I_L T/(8C)$; katkeava, kun $I < \Delta I_L/2$ |
+
 # ngspice
 
 | Tehtävä | Netlist tai komento |
@@ -71,6 +83,7 @@ subtitle: Pikaopas · kaavat, kytkennät ja ngspice
 | makromalli | `X1 inp inn out vcc vee OPAMP AOL=1e5 GBW=1Meg` |
 | käyttäytymislähde | `B1 0 n I = 1m*tanh(v(a)-v(b))` |
 | silmukan katkaisu | `Lkatko out inn 1k`, `Ckatko t inn 1k` |
+| katkaisu sarjalähteellä | `Vt fb fbi AC 1`, $T = -u_{fb}/u_{fbi}$ |
 | kohina | `noise v(out) Vin dec 50 1 10G`, `setplot noise2` |
 | siirtolinja | `T1 a 0 b 0 Z0=50 TD=5n` |
 | kytkin | `S1 a b ohj 0 KYTKIN`, `.model KYTKIN SW(RON=100)` |

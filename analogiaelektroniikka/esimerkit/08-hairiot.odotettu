@@ -1,0 +1,10 @@
+A * beta = 379 eli 51.6 dB
+  PSRR 100 Hz  simuloitu    51.5 dB   laskettu    51.5 dB   ok
+  PSRR 10 kHz  simuloitu    43.6 dB   laskettu    43.7 dB   ok
+  PSRR 200 kHz simuloitu    21.5 dB   laskettu    21.5 dB   ok
+kohina, ilman suodatusta:
+  1 kHz        simuloitu 341 nV/rtHz   laskettu 341 nV/rtHz   ok
+  10 Hz ... 100 kHz yhteensä 121 uV rms
+kohina, Cnr = 100 nF:
+  1 kHz        simuloitu 28.9 nV/rtHz   laskettu 28.9 nV/rtHz   ok
+  10 Hz ... 100 kHz yhteensä 10 uV rms

@@ -944,6 +944,254 @@ def ohitus_aallot(kohde: Path) -> None:
     plt.close(fig)
 
 
+def _saadin(x0: float, ldo: bool) -> schemdraw.elements.Element:
+    """Säädin: päästötransistori ylärivillä, virhevahvistin sen alla
+    osoittamassa vasemmalle hilaa kohti. Palauttaa lähtösolmun."""
+    nimet = (("out", "g", "fb", "X1", "M1", "R1", "R2") if ldo
+             else ("out2", "g2", "fb2", "X2", "M2", "R3", "R4"))
+    elm.Dot(open=True).at((x0 - 1.2, 0)).label("in", loc="top", **ISO_SOLMU)
+    elm.Line().right(1.2)
+    if ldo:
+        m = elm.PFet().down().flip().anchor("source")
+        ulos = m.drain
+    else:
+        m = elm.NFet().down().flip().anchor("drain")
+        ulos = m.source
+    elm.Label().at((x0 + 0.75, 0.4)).label(nimet[4])
+    elm.Line().right(5.2).at(ulos)
+    jako = elm.Dot().label(nimet[0], loc="top", **ISO_SOLMU)
+    elm.Resistor().down(2.0).label(f"{nimet[5]}\n16,4 kΩ", loc="bottom")
+    fb = elm.Dot().label(nimet[2], loc="right", **ISO_SOLMU)
+    elm.Resistor().down(2.0).label(f"{nimet[6]}\n10 kΩ", loc="bottom")
+    elm.Ground()
+    elm.Line().left(2.2).at(fb.center)
+    if ldo:
+        op = elm.Opamp(leads=True).left().anchor("in2")
+        alempi = op.in1
+    else:
+        op = elm.Opamp(leads=True).left().flip().anchor("in1")
+        alempi = op.in2
+    elm.Label().at((op.out[0] + 1.75, op.out[1])).label(nimet[3])
+    elm.Line().left().at(op.out).tox(m.gate)
+    elm.Dot().label(nimet[1], loc="left", **ISO_SOLMU)
+    elm.Line().up().toy(m.gate)
+    elm.Dot().at(alempi).label("ref", loc="right", **ISO_SOLMU)
+    elm.SourceV().down(1.6).at(alempi).reverse().label("1,25 V",
+                                                       loc="bottom")
+    elm.Ground()
+    return jako
+
+
+def saadin_kaavio(kohde: Path) -> None:
+    """Lineaarisäädin kahdella päästötransistorilla."""
+    with schemdraw.Drawing(show=False) as d:
+        d.config(unit=2.0, fontsize=13)
+        jako = _saadin(0, True)
+        elm.Line().right(2.0).at(jako.center)
+        elm.Dot()
+        d.push()
+        elm.Capacitor().down(1.6).label("Cout\n10 µF", loc="bottom")
+        elm.Dot().label("c1", loc="left", **ISO_SOLMU)
+        elm.Resistor().down(1.6).label("Resr", loc="bottom")
+        elm.Ground()
+        d.pop()
+        elm.Line().right(2.0)
+        elm.SourceI().down(3.2).label("Ikuorma", loc="bottom")
+        elm.Ground()
+        elm.Label().at((4.5, -6.7)).label(
+            "a) LDO: P-kanavainen päästötransistori,\nlähde syötössä")
+        jako2 = _saadin(15.0, False)
+        elm.Line().right(2.6).at(jako2.center)
+        elm.SourceI().down(3.2).label("Ikuorma2", loc="bottom")
+        elm.Ground()
+        elm.Label().at((19.0, -6.7)).label(
+            "b) seuraaja: N-kanavainen,\nlähde lähdössä")
+        tallenna_kaavio(d, kohde / "saadin-kaavio.png")
+
+
+def saadin_pudotus(kohde: Path) -> None:
+    """Lähtö syötön funktiona ja LDO:n lähtö kuormavirran funktiona."""
+    data = _ajo((ESIMERKIT / "08-saadin.cir").read_text("utf-8"),
+                "wrdata pud.dat v(out) v(out2)\nalter Vin DC = 5\n"
+                "dc Ikuorma 1m 100m 1m\nwrdata kuorma.dat v(out)").data
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(5.8, 2.6))
+    pud = data["pud"]
+    a1.plot(pud[:, 0], pud[:, 1], color=KOROSTUS, label="LDO (P-kanava)")
+    a1.plot(pud[:, 0], pud[:, 3], color=TOINEN, label="seuraaja (N-kanava)")
+    a1.plot(pud[:, 0], pud[:, 0], color=HARMAA, lw=0.6, ls=":",
+            label="lähtö = syöttö")
+    a1.axhline(0.99 * 3.3, color=HARMAA, lw=0.6, ls="--")
+    a1.set_xlim(3.0, 7.0)
+    a1.set_ylim(2.6, 3.5)
+    a1.set_xlabel("syöttöjännite (V)")
+    a1.set_ylabel("lähtö (V), kuorma 100 mA")
+    a1.legend(fontsize=7, loc="lower right")
+    kuorma = data["kuorma"]
+    a2.plot(kuorma[:, 0] * 1e3, (kuorma[:, 1] - kuorma[0, 1]) * 1e3,
+            color=KOROSTUS)
+    a2.set_xlabel("kuormavirta (mA)")
+    a2.set_ylabel("LDO:n lähdön muutos (mV)")
+    fig.tight_layout()
+    fig.savefig(kohde / "saadin-pudotus.png")
+    plt.close(fig)
+
+
+def _saadin_ajo(esr: str, ohjaus: str) -> Tulos:
+    """Ajaa stabiilisuusnetlistin yhdellä ESR:n arvolla ja omalla
+    .control-lohkolla."""
+    perus = (ESIMERKIT / "08-vakaus.cir").read_text("utf-8")
+    perus = perus[:perus.index(".control")].replace(
+        ".param ESR=0.5", f".param ESR={esr}")
+    return simuloi(perus + f".control\n{ohjaus}\n.endc\n.end\n")
+
+
+def saadin_vaihevara(kohde: Path) -> None:
+    """LDO:n silmukkavahvistus kolmella ESR:llä ja vaihevara ESR:n
+    funktiona kolmella kuormalla."""
+    with contextlib.redirect_stdout(io.StringIO()):
+        esim = runpy.run_path(str(ESIMERKIT / "08-vakaus.py"))
+    fig = plt.figure(figsize=(5.8, 3.4))
+    ruudut = fig.add_gridspec(2, 2, width_ratios=(1.15, 1.0))
+    a1 = fig.add_subplot(ruudut[0, 0])
+    a2 = fig.add_subplot(ruudut[1, 0], sharex=a1)
+    a3 = fig.add_subplot(ruudut[:, 1])
+    for esr, nimi, vari in (("0.01", "10 mΩ", TOINEN),
+                            ("0.5", "0,5 Ω", KOROSTUS),
+                            ("10", "10 Ω", HARMAA)):
+        data = _saadin_ajo(esr, "ac dec 50 10 10Meg\n"
+                           "let T = -v(fb)/v(fbi)\n"
+                           "wrdata t.dat db(T) 180/pi*cph(T)").data["t"]
+        a1.semilogx(data[:, 0], data[:, 1], color=vari, label=f"ESR {nimi}")
+        a2.semilogx(data[:, 0], data[:, 3], color=vari)
+    a1.axhline(0, color=HARMAA, lw=0.6)
+    a2.axhline(-180, color=HARMAA, lw=0.6, ls="--")
+    a1.set_ylabel("|T| (dB)")
+    a1.set_ylim(-40, 90)
+    a1.legend(fontsize=7)
+    a1.tick_params(labelbottom=False)
+    a2.set_ylabel("vaihe (°)")
+    a2.set_ylim(-200, 0)
+    a2.set_xlabel("taajuus (Hz), kuorma 100 mA")
+    esrt = np.logspace(-2, 1.2, 60)
+    for virta, vari in ((1e-3, HARMAA), (10e-3, TOINEN), (100e-3, KOROSTUS)):
+        a3.semilogx(esrt, [esim["vaihevara"](virta, r)[1] for r in esrt],
+                    color=vari, label=f"{virta * 1e3:g} mA")
+    a3.axhspan(45, 90, color=KOROSTUS, alpha=0.08)
+    a3.axhline(0, color=HARMAA, lw=0.6)
+    a3.set_xlabel("lähtökondensaattorin ESR (Ω)")
+    a3.set_ylabel("vaihevara (°)")
+    a3.set_ylim(-10, 90)
+    a3.legend(fontsize=7, title="kuorma", title_fontsize=7)
+    fig.tight_layout()
+    fig.savefig(kohde / "saadin-vaihevara.png")
+    plt.close(fig)
+
+
+def saadin_askel(kohde: Path) -> None:
+    """Kuorma-askel 10 -> 100 mA kahdella ESR:llä."""
+    fig, akselit = plt.subplots(1, 2, figsize=(5.8, 2.4), sharey=True)
+    for ax, esr, nimi, vari, alue in zip(
+            akselit, ("0.01", "0.5"),
+            ("ESR 10 mΩ: värähtelee", "ESR 0,5 Ω: asettuu"),
+            (TOINEN, KOROSTUS), ((-50, 400), (-10, 60)), strict=True):
+        data = _saadin_ajo(esr, "tran 0.2u 1.5m\n"
+                           "wrdata askel.dat v(out)").data["askel"]
+        ax.plot((data[:, 0] - 0.2e-3) * 1e6, data[:, 1], color=vari, lw=0.8)
+        ax.axvline(0, color=HARMAA, lw=0.6, ls=":")
+        ax.set_title(nimi, fontsize=9)
+        ax.set_xlabel("aika askeleesta (µs)")
+        ax.set_xlim(alue)
+    akselit[0].set_ylabel("lähtö (V)")
+    fig.tight_layout()
+    fig.savefig(kohde / "saadin-askel.png")
+    plt.close(fig)
+
+
+def saadin_hairiot(kohde: Path) -> None:
+    """LDO:n PSRR ja lähdön kohinatiheys ilman referenssin suodatusta
+    ja sen kanssa."""
+    with contextlib.redirect_stdout(io.StringIO()):
+        esim = runpy.run_path(str(ESIMERKIT / "08-hairiot.py"))
+    perus = (ESIMERKIT / "08-hairiot.cir").read_text("utf-8")
+    perus = perus[:perus.index(".control")]
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(5.8, 2.6))
+    data = simuloi(perus + ".control\nac dec 20 10 10Meg\n"
+                   "wrdata psrr.dat -db(v(out))\n.endc\n.end\n").data["psrr"]
+    a1.semilogx(data[:, 0], data[:, 1], color=KOROSTUS, lw=2.5, alpha=0.5,
+                label="SPICE")
+    a1.semilogx(data[:, 0], [esim["psrr"](f) for f in data[:, 0]], "--",
+                color=HARMAA, label="malli")
+    a1.axvline(200e3, color=TOINEN, lw=0.8, ls=":")
+    a1.text(230e3, 45, "hakkurin\n200 kHz", fontsize=7, color=TOINEN)
+    a1.set_xlabel("taajuus (Hz)")
+    a1.set_ylabel("PSRR (dB)")
+    a1.set_ylim(0, 60)
+    a1.legend(fontsize=7, loc="lower left")
+    for cnr, nimi, vari in (("1f", "ilman suodatusta", TOINEN),
+                            ("100n", "Cnr = 100 nF", KOROSTUS)):
+        kohina = simuloi(
+            perus.replace(".param CNR=1f", f".param CNR={cnr}")
+            + ".control\nnoise v(out) Vin dec 20 10 100k\nsetplot noise1\n"
+            "wrdata n.dat onoise_spectrum\n.endc\n.end\n").data["n"]
+        a2.loglog(kohina[:, 0], kohina[:, 1] * 1e9, color=vari, label=nimi)
+    a2.set_xlabel("taajuus (Hz)")
+    a2.set_ylabel("lähdön kohina (nV/√Hz)")
+    a2.legend(fontsize=7)
+    fig.tight_layout()
+    fig.savefig(kohde / "saadin-hairiot.png")
+    plt.close(fig)
+
+
+def buck_kaavio(kohde: Path) -> None:
+    """Buck-muuntimen tehoaste."""
+    with schemdraw.Drawing(show=False) as d:
+        d.config(unit=2.0, fontsize=10)
+        v = elm.SourceV().up().label("Vin\n12 V")
+        elm.Dot().label("in", loc="top", **SOLMU)
+        elm.Switch().right().label("S1\n(ohjaus pwm)", loc="top")
+        sw = elm.Dot().label("sw", loc="top", **SOLMU)
+        elm.Inductor2().right().label("L1 100 µH")
+        ulos = elm.Dot().label("out", loc="top", **SOLMU)
+        elm.Line().right(1.6)
+        elm.Resistor().down().label("Rk", loc="bottom")
+        elm.Line().left().tox(v.start)
+        elm.Diode().up().at((sw.center[0], v.start[1])).toy(
+            sw.center).label("D1", loc="bottom")
+        elm.Capacitor().down().at(ulos.center).toy(v.start).label(
+            "C1\n47 µF", loc="bottom")
+        elm.Ground().at(v.start)
+        tallenna_kaavio(d, kohde / "buck-kaavio.png")
+
+
+def buck_aallot(kohde: Path) -> None:
+    """Kytkentäsolmun jännite, kelan virta ja lähdön rippeli jatkuvassa
+    ja katkeavassa johtumisessa."""
+    perus = (ESIMERKIT / "08-buck.cir").read_text("utf-8")
+    perus = perus[:perus.index(".control")]
+    fig, akselit = plt.subplots(3, 2, figsize=(5.8, 4.0), sharex=True)
+    for sarake, (korvaus, nimi) in enumerate((
+            ("RK=3.3 UALKU=3.3 IALKU=1", "kuorma 3,3 Ω: jatkuva"),
+            ("RK=330 UALKU=6.45 IALKU=0", "kuorma 330 Ω: katkeava"))):
+        data = simuloi(
+            perus.replace("RK=3.3 UALKU=3.3 IALKU=1", korvaus)
+            + ".control\ntran 25n 3m 2.98m 25n uic\n"
+            "wrdata b.dat v(sw) i(L1) v(out)\n.endc\n.end\n").data["b"]
+        t = (data[:, 0] - data[0, 0]) * 1e6
+        for rivi, (arvot, vari) in enumerate((
+                (data[:, 1], HARMAA), (data[:, 3] * 1e3, KOROSTUS),
+                ((data[:, 5] - data[:, 5].mean()) * 1e3, TOINEN))):
+            akselit[rivi, sarake].plot(t, arvot, color=vari, lw=0.9)
+        akselit[0, sarake].set_title(nimi, fontsize=9)
+        akselit[2, sarake].set_xlabel("aika (µs)")
+        akselit[2, sarake].set_xlim(0, 20)
+    akselit[0, 0].set_ylabel("u(sw) (V)")
+    akselit[1, 0].set_ylabel("kelan virta (mA)")
+    akselit[2, 0].set_ylabel("lähdön\nrippeli (mV)")
+    fig.tight_layout()
+    fig.savefig(kohde / "buck-aallot.png")
+    plt.close(fig)
+
+
 def main() -> None:
     kohde = Path(sys.argv[1] if len(sys.argv) > 1 else "kuvat")
     kohde.mkdir(exist_ok=True)
@@ -955,7 +1203,9 @@ def main() -> None:
                      vertailija_kaavio, vertailija, kvantisointi, r2r,
                      r2r_virheet, sar_haku, naytteenotto, asettuminen,
                      sigmadelta, kohina, paatokset, heijastus,
-                     ohitus_aallot):
+                     ohitus_aallot, saadin_kaavio, saadin_pudotus,
+                     saadin_vaihevara, saadin_askel, saadin_hairiot,
+                     buck_kaavio, buck_aallot):
         piirtaja(kohde)
         print("piirretty:", piirtaja.__name__)
 

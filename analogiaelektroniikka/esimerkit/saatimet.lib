@@ -1,0 +1,18 @@
+* Jännitteensäädinten virhevahvistin (luku 8).
+*
+* VIRHEVAHV on transkonduktanssivahvistin: lähtövirta GM * (u+ - u-)
+* kulkee lähtösolmun resistanssiin RA, joten tasavahvistus on GM * RA.
+* Lähtö on suuri-impedanssinen, ja sitä kuormittava kapasitanssi
+* (päästötransistorin hila) määrää hallitsevan navan. FP2 on vahvistimen
+* sisäinen toinen napa. Lähtövirta rajoittuu arvoon IMAX, ja lähtö
+* pysyy maan ja syötön vcc välissä. Rajoitus on itse lähtösolmussa,
+* joten vahvistin toipuu ääriasennosta heti. Tulosuodattimen vastuksen
+* R1 terminen kohina (4 nV/sqrt(Hz)) toimii vahvistimen tulokohinana.
+.subckt VIRHEVAHV inp inn out vcc params: GM=2m RA=500k FP2=500k IMAX=200u
+E1 x 0 inp inn 1
+R1 x y 1k
+C1 y 0 {1/(6.283185307*1k*FP2)}
+B1 0 out I = {IMAX}*tanh({GM}*v(y)/{IMAX})
+R2 out 0 {RA}
+B2 out 0 I = 10m*(max(v(out)-v(vcc), 0) + min(v(out), 0))
+.ends
