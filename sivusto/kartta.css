@@ -32,6 +32,7 @@
   --alue-10: #b9d873;
   --alue-11: #f0a77a;
   --alue-12: #8fd0d6;
+  --alue-13: #d58ad5;
   --varjo: rgba(0, 0, 0, 0.45);
   --f-otsikko: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
   --f-teksti: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -68,8 +69,8 @@
     --alue-9: #a14b7c;
     --alue-10: #5b7a14;
     --alue-11: #a4501c;
-  --alue-12: #1d6f80;
     --alue-12: #1d6f80;
+    --alue-13: #8c2f8c;
     --varjo: rgba(20, 35, 29, 0.16);
     color-scheme: light;
   }
@@ -103,6 +104,8 @@
   --alue-9: #a14b7c;
   --alue-10: #5b7a14;
   --alue-11: #a4501c;
+  --alue-12: #1d6f80;
+  --alue-13: #8c2f8c;
   --varjo: rgba(20, 35, 29, 0.16);
   color-scheme: light;
 }

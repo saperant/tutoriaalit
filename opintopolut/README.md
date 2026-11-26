@@ -5,7 +5,7 @@
 
 Tutoriaalit muodostavat taitopuun: jokainen tutoriaali on yksi taito, ja taidot rakentuvat toistensa päälle. Roolit ovat ammattiprofiileja, joiden polku kulkee puun läpi.
 
-Taitoja on 108, yhteensä noin 481 op. Valmis PDF: [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf). Taitopuun lähdetiedosto: [taitopuu.toml](taitopuu.toml).
+Taitoja on 113, yhteensä noin 506 op. Valmis PDF: [opintopolut.pdf](https://saperant.github.io/tutoriaalit/materiaalit/opintopolut.pdf). Taitopuun lähdetiedosto: [taitopuu.toml](taitopuu.toml).
 
 ## Roolit
 
@@ -28,6 +28,8 @@ Taitoja on 108, yhteensä noin 481 op. Valmis PDF: [opintopolut.pdf](https://sap
 | Sovellusturvallisuuden asiantuntija | Palveluarkkitehtuurin tietoturva, Tietoturva kehitystyössä, Web-sovellusten tietoturva | 20 | 85 |
 | Elektroniikkasuunnittelija | Analogiaelektroniikka, FPGA-toteutus, Mikrokontrollerit ja bare-metal-ohjelmointi | 17 | 81 |
 | Tekninen vetäjä | Jatkuva integraatio ja toimitus, Tekninen dokumentaatio, Tiimit ja organisaatiomallit | 12 | 52 |
+| Tekoäly- ja koneoppimiskehittäjä | Neuroverkot ja syväoppiminen, Tekoälyn perusteet: haku, päättely ja päätöksenteko | 13 | 61 |
+| Mittaus- ja säätötekniikan kehittäjä | Mittaustekniikka, Säätötekniikka | 15 | 71 |
 
 ## Taitopuu
 
@@ -98,6 +100,8 @@ flowchart LR
     dsp["✓ Digitaalinen signaalinkäsittely"]
     tiedonsiirto["✓ Digitaalinen tiedonsiirto"]
     sdr["✓ Ohjelmistoradio"]
+    mittaustekniikka["Mittaustekniikka"]
+    saatotekniikka["Säätötekniikka"]
   end
   subgraph sulautetut["Sulautetut järjestelmät"]
     mikrokontrollerit["✓ Mikrokontrollerit ja bare-metal-ohjelmointi"]
@@ -168,6 +172,11 @@ flowchart LR
     tekninen_dokumentaatio["✓ Tekninen dokumentaatio"]
     projektinhallinta["✓ Ohjelmistoprojektin hallinta"]
     tiimit_ja_organisaatiot["✓ Tiimit ja organisaatiomallit"]
+  end
+  subgraph tekoaly["Tekoäly ja koneoppiminen"]
+    tekoalyn_perusteet["Tekoälyn perusteet: haku, päättely ja päätöksenteko"]
+    koneoppiminen["Koneoppiminen"]
+    neuroverkot["Neuroverkot ja syväoppiminen"]
   end
   komentorivi --> versionhallinta
   ohjelmoinnin_perusteet --> c_kieli
@@ -248,6 +257,10 @@ flowchart LR
   dsp --> tiedonsiirto
   todennakoisyys --> tiedonsiirto
   tiedonsiirto --> sdr
+  elektroniikan_perusteet --> mittaustekniikka
+  todennakoisyys --> mittaustekniikka
+  differentiaaliyhtalot --> saatotekniikka
+  signaalit_ja_jarjestelmat --> saatotekniikka
   tietokonearkkitehtuuri --> mikrokontrollerit
   binaarit_ja_linkitys --> mikrokontrollerit
   mikrokontrollerit --> oheislaitevaylat
@@ -350,6 +363,11 @@ flowchart LR
   versionhallinta --> tekninen_dokumentaatio
   versionhallinta --> projektinhallinta
   projektinhallinta --> tiimit_ja_organisaatiot
+  algoritmit --> tekoalyn_perusteet
+  todennakoisyys --> tekoalyn_perusteet
+  todennakoisyys --> koneoppiminen
+  analyysi --> koneoppiminen
+  koneoppiminen --> neuroverkot
 ```
 
 ## Taidot alueittain
@@ -431,8 +449,10 @@ flowchart LR
 
 | Taito | op | Edellyttää | Tila |
 |-------|---:|------------|------|
+| Mittaustekniikka | 5 | Elektroniikan perusteet ja SPICE, Todennäköisyys ja tilastot | suunniteltu |
 | Signaalit ja järjestelmät | 5 | Kompleksiluvut ja Fourier-analyysi, Python työkaluohjelmointiin | [valmis](../signaalit-ja-jarjestelmat/) |
 | Digitaalinen signaalinkäsittely | 5 | C-kieli, Signaalit ja järjestelmät | [valmis](../dsp/) |
+| Säätötekniikka | 5 | Differentiaaliyhtälöt ja Laplace-muunnos, Signaalit ja järjestelmät | suunniteltu |
 | Digitaalinen tiedonsiirto | 5 | Digitaalinen signaalinkäsittely, Todennäköisyys ja tilastot | [valmis](../tiedonsiirto/) |
 | Ohjelmistoradio | 5 | Digitaalinen tiedonsiirto | [valmis](../sdr/) |
 
@@ -526,3 +546,11 @@ flowchart LR
 | Testivetoinen kehitys ja testisuunnittelu | 5 | Python työkaluohjelmointiin, Versionhallinta (Git) | [valmis](../testivetoinen-kehitys/) |
 | Tiimit ja organisaatiomallit | 3 | Ohjelmistoprojektin hallinta | [valmis](../tiimit-ja-organisaatiot/) |
 | Jatkuva integraatio ja toimitus | 5 | Kontit ja pilvi-infrastruktuuri, Testivetoinen kehitys ja testisuunnittelu | [valmis](../jatkuva-toimitus/) |
+
+### Tekoäly ja koneoppiminen
+
+| Taito | op | Edellyttää | Tila |
+|-------|---:|------------|------|
+| Koneoppiminen | 5 | Differentiaali- ja integraalilaskenta, Todennäköisyys ja tilastot | suunniteltu |
+| Neuroverkot ja syväoppiminen | 5 | Koneoppiminen | suunniteltu |
+| Tekoälyn perusteet: haku, päättely ja päätöksenteko | 5 | Algoritmit, Todennäköisyys ja tilastot | suunniteltu |

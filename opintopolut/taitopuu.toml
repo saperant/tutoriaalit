@@ -104,6 +104,11 @@ id = "tyotavat"
 nimi = "Työtavat ja ohjelmistotuotanto"
 kuvaus = "Miten ohjelmistoa tehdään yhdessä: kehityskäytännöt, toimitus, dokumentointi, projektit ja organisaatiot."
 
+[[alue]]
+id = "tekoaly"
+nimi = "Tekoäly ja koneoppiminen"
+kuvaus = "Menetelmät, joilla ohjelma etsii, päättelee ja oppii datasta: haku ja päättely, tilastollinen oppiminen ja neuroverkot."
+
 # ---------------------------------------------------------------------
 # Perusta
 # ---------------------------------------------------------------------
@@ -1129,6 +1134,47 @@ tutoriaali = "sdr"
 # ---------------------------------------------------------------------
 # Sulautetut järjestelmät
 # ---------------------------------------------------------------------
+
+[[taito]]
+id = "mittaustekniikka"
+nimi = "Mittaustekniikka"
+alue = "signaalit"
+kuvaus = "Luotettavan mittauksen perusteet: anturit, mittausketju, mittausepävarmuus ja kalibrointi."
+edellyttaa = ["elektroniikan-perusteet", "todennakoisyys"]
+aiheet = [
+  "suureet, yksiköt ja jäljitettävyys",
+  "mittausepävarmuus: tyypit A ja B, yhdistäminen ja ilmoittaminen",
+  "anturit ja muuntimet",
+  "signaalin muokkaus: sillat, vahvistus ja suodatus",
+  "AD-muunnos mittausketjussa: resoluutio, kohina ja laskostuminen",
+  "kalibrointi ja linearisointi",
+  "häiriöt, maadoitus ja suojaus",
+  "datankeruu ja tulosten esittäminen",
+]
+laajuus = 5
+testaus = "Python ja NumPy, ngspice mittausketjuille, epävarmuuslaskelmat verrataan Monte Carlo -simulointiin"
+roadmap = []
+amk = "Mittaustekniikka"
+
+[[taito]]
+id = "saatotekniikka"
+nimi = "Säätötekniikka"
+alue = "signaalit"
+kuvaus = "Takaisinkytketyn järjestelmän suunnittelu: prosessimallit, PID-säätö, stabiilisuus ja säätimen toteutus ohjelmistona."
+edellyttaa = ["differentiaaliyhtalot", "signaalit-ja-jarjestelmat"]
+aiheet = [
+  "takaisinkytkentä ja säätöpiirin rakenne",
+  "prosessimallit ja tunnistus askelvasteesta",
+  "PID-säädin ja viritys",
+  "stabiilisuus: navat, Bode, Nyquist, vaihe- ja vahvistusvara",
+  "tilaesitys, tilasäätö ja havaitsija",
+  "diskreetti säätö ja toteutus: näytteistys, kyllästys ja anti-windup",
+  "häiriöt, myötäkytkentä ja kaskadisäätö",
+]
+laajuus = 5
+testaus = "Python, NumPy ja SciPy sekä python-control; simuloidut prosessit, vasteiden tunnusluvut tarkistetaan"
+roadmap = []
+amk = "Säätötekniikka"
 
 [[taito]]
 id = "mikrokontrollerit"
@@ -2435,6 +2481,67 @@ tutoriaali = "tiimit-ja-organisaatiot"
 # Roolit
 # ---------------------------------------------------------------------
 
+[[taito]]
+id = "tekoalyn-perusteet"
+nimi = "Tekoälyn perusteet: haku, päättely ja päätöksenteko"
+alue = "tekoaly"
+kuvaus = "Klassiset tekoälymenetelmät: ongelman esittäminen hakuna, päättely epävarmuudessa ja peräkkäinen päätöksenteko."
+edellyttaa = ["algoritmit", "todennakoisyys"]
+aiheet = [
+  "ongelman esittäminen: tilat, toiminnot ja tavoitteet",
+  "tilahaku ja heuristiikat",
+  "pelipuut: minimax, alfa–beeta-karsinta ja Monte Carlo -puuhaku",
+  "rajoitteiden tyydyttäminen",
+  "logiikka ja automaattinen päättely",
+  "päättely epävarmuudessa: Bayes-verkot",
+  "Markovin päätösprosessit ja vahvistusoppimisen perusteet",
+]
+laajuus = 5
+testaus = "Python, deterministiset haut ja simulaatiot (kiinteä satunnaissiemen), tulosteiden vertailu"
+roadmap = []
+amk = "Tekoälyn perusteet"
+
+[[taito]]
+id = "koneoppiminen"
+nimi = "Koneoppiminen"
+alue = "tekoaly"
+kuvaus = "Datasta oppivat mallit ja niiden teoria: häviöfunktiot, optimointi, yleistäminen ja mallin arviointi."
+edellyttaa = ["todennakoisyys", "analyysi"]
+aiheet = [
+  "ohjattu oppiminen, häviöfunktio ja yleistäminen",
+  "lineaarinen ja logistinen regressio",
+  "gradienttimenetelmä ja regularisointi",
+  "harha, varianssi ja mallin valinta ristiinvalidoinnilla",
+  "lähimmät naapurit, päätöspuut ja metsät, tukivektorikone",
+  "ohjaamaton oppiminen: klusterointi ja pääkomponenttianalyysi",
+  "arviointi: mittarit, datavuodot ja jakauman muutos",
+]
+laajuus = 5
+testaus = "NumPy-toteutukset ja scikit-learn, kiinteä satunnaissiemen, tulosteiden vertailu"
+roadmap = []
+amk = "Koneoppiminen"
+
+[[taito]]
+id = "neuroverkot"
+nimi = "Neuroverkot ja syväoppiminen"
+alue = "tekoaly"
+kuvaus = "Neuroverkkojen toiminta ja koulutus alusta asti: takaisinlevitys, optimointi ja verkkoarkkitehtuurit kielimalleihin asti yleisellä tasolla."
+edellyttaa = ["koneoppiminen"]
+aiheet = [
+  "perseptronista monikerrosverkkoon",
+  "takaisinlevitys ja automaattinen derivointi",
+  "optimointi: SGD, momentti, Adam, alustus ja normalisointi",
+  "konvoluutioverkot",
+  "jonomallit ja huomiomekanismi",
+  "transformer ja suuret kielimallit yleisellä tasolla",
+  "yleistäminen, regularisointi ja arviointi",
+  "rajoitukset ja vastuullinen käyttö",
+]
+laajuus = 5
+testaus = "NumPy: oma automaattinen derivointi ja pienet verkot, gradientit tarkistetaan numeerisesti"
+roadmap = []
+amk = "Syväoppiminen"
+
 [[rooli]]
 id = "laitteistoarkkitehti"
 nimi = "Laitteistoarkkitehti"
@@ -2553,3 +2660,17 @@ nimi = "Tekninen vetäjä"
 kuvaus = "Johtaa ohjelmistotiimin teknistä työtä: toimitusputki, laatu, dokumentaatio, suunnittelu ja tiimin tapa toimia."
 tavoitteet = ["jatkuva-toimitus", "tiimit-ja-organisaatiot", "tekninen-dokumentaatio"]
 valinnaiset = ["turvallinen-kehitys", "integraatiotestaus", "palveluarkkitehtuurit", "jarjestelmasuunnittelu"]
+
+[[rooli]]
+id = "tekoalykehittaja"
+nimi = "Tekoäly- ja koneoppimiskehittäjä"
+kuvaus = "Rakentaa datasta oppivia ja päätteleviä järjestelmiä ja ymmärtää niiden matematiikan, rajat ja arvioinnin."
+tavoitteet = ["neuroverkot", "tekoalyn-perusteet"]
+valinnaiset = ["konenako", "gpu-laskenta", "python-c-integraatio", "sql"]
+
+[[rooli]]
+id = "saatoinsinoori"
+nimi = "Mittaus- ja säätötekniikan kehittäjä"
+kuvaus = "Suunnittelee mittausketjuja ja säätöjärjestelmiä ja toteuttaa ne sulautettuna ohjelmistona."
+tavoitteet = ["saatotekniikka", "mittaustekniikka"]
+valinnaiset = ["mikrokontrollerit", "rtos", "dsp", "kiintea-pilkku"]
