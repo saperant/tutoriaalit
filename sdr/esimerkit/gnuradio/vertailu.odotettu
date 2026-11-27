@@ -1,0 +1,9 @@
+                      oma    GNU Radio
+kesto (s)            1.20     1.20
+savel  700 Hz       0.225    0.225
+savel 1900 Hz       0.179    0.179
+kohina 3-14 kHz, oma        -76 dB
+kohina 3-14 kHz, GNU Radio  -75 dB
+GNU Radion viive omaan nahden -38 naytetta (-0.79 ms)
+jaannos kohdistuksen jalkeen -34 dB
+kanavan taso: oma -12.4 dBFS, tehomittarilohko -12.4 dBFS (120 arvoa)

@@ -116,7 +116,7 @@ bitin näytteillä dynamiikka-alue riittää tähän (luku 2).
 | 6 | Stereo, pilotin vaihelukko ja RDS-tyyppinen data |
 | 7 | GFSK-pakettivastaanotin: haku, taajuusvirhe, ajoitus ja CRC |
 | 8 | Reaaliaikainen lohkokäsittely C++:lla ja vertailu Pythoniin |
-| 9 | GNU Radio: lohkokaaviot ja omat lohkot |
+| 9 | GNU Radio: sama FM-vastaanotin lohkokaaviona, vertailu ja oma lohko |
 | 10 | Laitteet, herkkyys ja radiolupasäännöt |
 
 Esitietoina oletetaan taito *Digitaalinen tiedonsiirto*, jossa
@@ -139,4 +139,7 @@ ajetaan testeissä kiinteällä satunnaissiemenellä, ja tulostetta
 verrataan tallennettuun. Hakemistojen `fm/` ja `paketti/` ohjelmilla
 on lisäksi pytest-testit. Yksittäinen esimerkki ajetaan komennolla
 `python3 esimerkit/01-spektri.py` ja hakemistoesimerkki komennolla
-`python3 esimerkit/fm/main.py`.
+`python3 esimerkit/fm/main.py`. Luvun 9 lohkokaavio tarvitsee lisäksi
+GNU Radion; luku kertoo asennuksen ja sen, miten GNU Radion ohjelmat
+ajetaan. Muut testit voi ajaa ilman sitä komennolla
+`GNURADIO=ohita make testaa`.

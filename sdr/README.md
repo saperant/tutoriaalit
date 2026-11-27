@@ -6,8 +6,9 @@ epäideaalisuuksien korjaus (tasakomponentti, IQ-epätasapaino, AGC,
 kiteen virhe), NCO ja kanavan valinta monivaiheisella desimoinnilla ja
 polyfaasipankilla, FM-stereovastaanotin pilotin vaihelukolla ja
 RDS-tyyppisellä datalla, GFSK-pakettivastaanotin sekä lohkoittainen
-reaaliaikakäsittely C++:lla. Lopuksi esitellään GNU Radio, laitteet,
-herkkyyslaskelmat ja radiolupasäännöt. Kaikki tallenteet ovat
+reaaliaikakäsittely C++:lla. Sama FM-vastaanotin kootaan myös GNU
+Radion lohkokaaviona ja sitä verrataan omaan toteutukseen. Lopuksi
+esitellään laitteet, herkkyyslaskelmat ja radiolupasäännöt. Kaikki tallenteet ovat
 synteettisiä ja toistettavia. Valmiit dokumentit:
 [sdr.pdf](https://saperant.github.io/tutoriaalit/materiaalit/sdr.pdf)
 ja pikaopas
@@ -26,7 +27,8 @@ ja pikaopas
 7. Digitaalinen pakettivastaanotin – GFSK, haku, taajuusvirhe, CRC
 8. Reaaliaikainen lohkokäsittely C++:lla – tila, itsetesti, putki,
    vertailu Python-viitteeseen
-9. GNU Radio – lohkokaaviot, lohkon sopimus, testattava logiikka
+9. GNU Radio – lohkot ja ajastin, FM-vastaanotin lohkokaaviona,
+   vertailu omaan vastaanottimeen, oma lohko ja sen yksikkötesti
 10. Laitteet ja radiolupasäännöt – RTL-SDR, HackRF, Pluto,
     herkkyys, väylä, Traficom
 11. Lopuksi – nyrkkisäännöt, lähteet
@@ -35,7 +37,8 @@ ja pikaopas
 
 ```text
 make testaa   # rakenne, ruff, mypy --strict, C++ (GCC, Clang,
-              # sanitoijat), esimerkkien ajot ja pytest
+              # sanitoijat), esimerkkien ajot, pytest ja GNU Radio
+GNURADIO=ohita make testaa   # sama ilman luvun 9 GNU Radio -ajoja
 make pdf      # sdr.pdf ja pikaopas
 make kuvat    # piirtää kuvat/-hakemiston kuvat uudelleen (matplotlib)
 make -C esimerkit mittaa   # C++-ketjun läpäisy (ei testi)
@@ -43,7 +46,10 @@ make -C esimerkit mittaa   # C++-ketjun läpäisy (ei testi)
 
 Esimerkit toimivat Python 3.12:lla ja uudemmilla (NumPy, SciPy) sekä
 C++23-kääntäjällä (GCC 14 tai Clang 20). Tarkistukseen tarvitaan ruff,
-mypy, scipy-stubs ja pytest (kehityskontissa valmiina).
+mypy, scipy-stubs ja pytest (kehityskontissa valmiina). Luvun 9
+lohkokaavio tarvitsee GNU Radion (Ubuntussa `sudo apt-get install
+gnuradio`, noin 300 Mt); se ajetaan jakelun omalla Pythonilla
+käynnistimellä `esimerkit/gnuradio/gr-python`.
 
 Esimerkkien avaaminen kehityskontissa ja ajaminen: ks.
 [Kehitysympäristöt ja Dev Containers](../kehitysymparistot/), luku 2.

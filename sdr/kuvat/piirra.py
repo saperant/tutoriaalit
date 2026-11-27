@@ -220,6 +220,59 @@ def kynnys(polku: Path) -> None:
     fig.savefig(polku)
 
 
+def gnuradio(polku: Path) -> None:
+    """Luvun 9 vertailu: sama tallenne omalla vastaanottimella ja
+    GNU Radion lohkokaaviolla (samat ohjelmat kuin esimerkkien testissa).
+    Vaatii GNU Radion; ajetaan gnuradio/gr-python-kaynnistimella."""
+    import subprocess
+    import tempfile
+
+    gr = ESIMERKIT / "gnuradio"
+    sys.path.insert(0, str(gr / "oma"))
+    import vertaa
+    sys.path.pop(0)
+    with tempfile.TemporaryDirectory() as tyo:
+        subprocess.run([sys.executable, str(gr / "oma" / "valmistele.py")],
+                       cwd=tyo, check=True)
+        subprocess.run([str(gr / "gr-python"),
+                        str(gr / "lohkokaavio" / "fm_mono.py"),
+                        "asema.cu8", "gr.f32", "taso.f32"], cwd=tyo,
+                       check=True, capture_output=True)
+        oma = vertaa.lue(str(Path(tyo) / "viite.f32"))
+        kaavio = vertaa.lue(str(Path(tyo) / "gr.f32"))
+    viive, _ = vertaa.kohdista(oma, kaavio)
+    fs = 48_000.0
+    fig = Figure(figsize=(7.2, 2.6), dpi=200, layout="constrained")
+    ax1, ax2 = fig.subplots(1, 2, width_ratios=[1.25, 1.0])
+    for x, vari, nimi, lw in ((oma, HARMAA, "oma vastaanotin", 2.2),
+                              (kaavio, KOROSTUS, "GNU Radio", 0.9)):
+        f, p = signal.welch(x[len(x) // 4:], fs, nperseg=4096,
+                            scaling="spectrum")
+        ax1.plot(f / 1e3, 10 * np.log10(p), color=vari, lw=lw, label=nimi)
+    ax1.set_xlim(0, 24)
+    ax1.set_ylim(-125, -5)
+    ax1.set_xlabel("taajuus (kHz)")
+    ax1.set_ylabel("taso (dBFS)")
+    ax1.annotate("testiäänet 700 Hz\nja 1,9 kHz", (2.0, -40), (3.6, -62),
+                 fontsize=8,
+                 arrowprops={"arrowstyle": "-", "color": HARMAA, "lw": 0.6})
+    ax1.annotate("pilotin jäännös\n19 kHz", (19.0, -100), (20.4, -72),
+                 fontsize=8, ha="center",
+                 arrowprops={"arrowstyle": "-", "color": HARMAA, "lw": 0.6})
+    ax1.legend(frameon=False, loc="upper right")
+    alku = len(oma) // 2
+    n = np.arange(240)
+    ax2.plot(1e3 * n / fs, oma[alku + n], color=HARMAA, lw=2.2,
+             label="oma")
+    ax2.plot(1e3 * n / fs, kaavio[alku + viive + n], color=KOROSTUS,
+             lw=0.9, label=f"GNU Radio, siirretty {-viive} näytettä")
+    ax2.set_xlabel("aika (ms)")
+    ax2.set_ylabel("ääni")
+    ax2.set_ylim(-0.5, 0.62)
+    ax2.legend(frameon=False, loc="upper right", fontsize=8)
+    fig.savefig(polku)
+
+
 if __name__ == "__main__":
     kohde = Path(sys.argv[1])
     kaista(kohde / "kaista.png")
@@ -227,3 +280,4 @@ if __name__ == "__main__":
     kynnys(kohde / "kynnys.png")
     epaideaalisuudet(kohde / "epaideaalisuudet.png")
     paketit(kohde / "vesiputous.png", kohde / "ilmaisin.png")
+    gnuradio(kohde / "gnuradio.png")

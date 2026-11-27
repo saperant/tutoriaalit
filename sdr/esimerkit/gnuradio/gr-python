@@ -1,0 +1,38 @@
+#!/bin/sh
+# Ajaa Python-ohjelman GNU Radion omalla Pythonilla.
+#
+# Jakelun GNU Radio on kaannetty jakelun Pythonia ja NumPya vasten
+# (Ubuntu 24.04: Python 3.12 ja NumPy 1.26). Jos pip on asentanut
+# uudemman NumPyn, gnuradio-moduulin lataus epaonnistuu. Siksi ohjelma
+# ajetaan jakelun Pythonilla niin, etta polulla ovat vain jakelun paketit
+# (-S ohittaa pip-asennukset) ja ohjelman oma hakemisto.
+#
+#   gr-python --tarkista         tulostaa version tai paattyy virheeseen
+#   gr-python ohjelma.py ...     ajaa ohjelman
+set -eu
+paketit=/usr/lib/python3/dist-packages
+kirjasto=
+for ehdokas in "$paketit"/gnuradio/gr/gr_python.cpython-*.so; do
+    [ -e "$ehdokas" ] && kirjasto=$ehdokas && break
+done
+if [ -z "$kirjasto" ]; then
+    echo "GNU Radio puuttuu: sudo apt-get install gnuradio" >&2
+    exit 3
+fi
+tunnus=${kirjasto##*cpython-}            # esim. 312-x86_64-linux-gnu.so
+tunnus=${tunnus%%-*}                     # 312
+python=/usr/bin/python${tunnus%"${tunnus#?}"}.${tunnus#?}
+if [ "${1:-}" = "--tarkista" ]; then
+    exec "$python" -S -c "
+import sys
+sys.path.append('$paketit')
+from gnuradio import gr
+print('GNU Radio', gr.version())"
+fi
+exec "$python" -S -c "
+import os, runpy, sys
+sys.path.append('$paketit')
+sys.argv = sys.argv[1:]
+sys.path.insert(0, os.path.dirname(os.path.abspath(sys.argv[0])))
+runpy.run_path(sys.argv[0], run_name='__main__')
+" "$@"

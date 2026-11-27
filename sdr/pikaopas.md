@@ -72,6 +72,7 @@ subtitle: Pikaopas · muodot, korjaukset, kanavan valinta ja vastaanottimet
 | CRC-16/CCITT | poly 0x1021, alku 0xFFFF; "123456789" → 0x29B1 |
 | ei-koherentti FSK | BER $\frac12 e^{-E_b/2N_0}$ |
 | lohkot | tila säilyy, testaa lohkoittain = kerralla |
+| GNU Radio | jakelun Python (`gr-python`); vertaa suureita, ei tavuja |
 | herkkyys | $-174 + 10\log_{10}B + \text{NF} + \text{SNR}$ dBm |
 | lähetys | radiolupa tai luvasta vapaan käytön ehdot (Traficom) |
 
