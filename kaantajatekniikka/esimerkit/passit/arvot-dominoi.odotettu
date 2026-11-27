@@ -1,0 +1,12 @@
+fn f(a, b)
+L0:
+    t = mul a, b
+    $10 = 10
+    %2 = gt t, $10
+    br %2, L1, L2
+L1:                      ; edeltäjät: L0
+    %5 = add t, $10
+    ret %5
+L2:                      ; edeltäjät: L0
+    %7 = sub t, a
+    ret %7

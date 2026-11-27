@@ -1,0 +1,6 @@
+fn f(a, b)
+L0:
+    y = b
+    b = add b, a
+    z = add y, b
+    ret z

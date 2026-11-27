@@ -1,0 +1,91 @@
+digraph {
+  ranksep=0.22; nodesep=0.1; margin=0;
+  node [shape=box, fontname="DejaVu Sans Mono",
+        fontsize=7.5, margin="0.09,0.05"];
+  edge [fontsize=7];
+  subgraph cluster_a {
+    label="-O1: paikalliset passit"; color="#D9E0E3"; margin=5;
+    aL0 [label="L0:\l" +
+        " askel = 1\l" +
+        " kierroksia = 0\l" +
+        " summa = 0\l" +
+        " i = 0\l" +
+        " jmp L1\l"];
+    aL1 [label="L1:\l" +
+        " %5 = lt i, n\l" +
+        " br %5, L2, L8\l"];
+    aL2 [label="L2:\l" +
+        " %6 = 1\l" +
+        " %7 = ne askel, %6\l" +
+        " br %7, L3, L4\l"];
+    aL3 [label="L3:\l" +
+        " askel = 2\l" +
+        " jmp L4\l"];
+    aL4 [label="L4:\l" +
+        " %9 = mul n, k\l" +
+        " %10 = 100\l" +
+        " %11 = gt %9, %10\l" +
+        " br %11, L5, L6\l"];
+    aL5 [label="L5:\l" +
+        " %12 = mul n, k\l" +
+        " summa = add summa, %12\l" +
+        " jmp L7\l"];
+    aL6 [label="L6:\l" +
+        " %14 = mul askel, i\l" +
+        " summa = add summa, %14\l" +
+        " jmp L7\l"];
+    aL7 [label="L7:\l" +
+        " %16 = 1\l" +
+        " kierroksia = add kierroksia, %16\l" +
+        " i = add askel, i\l" +
+        " jmp L1\l"];
+    aL8 [label="L8:\l" +
+        " ret summa\l"];
+    aL0 -> aL1;
+    aL1 -> aL2 [label="tosi"];
+    aL1 -> aL8 [label="epätosi"];
+    aL2 -> aL3 [label="tosi"];
+    aL2 -> aL4 [label="epätosi"];
+    aL3 -> aL4;
+    aL4 -> aL5 [label="tosi"];
+    aL4 -> aL6 [label="epätosi"];
+    aL5 -> aL7;
+    aL6 -> aL7;
+    aL7 -> aL1;
+  }
+  subgraph cluster_b {
+    label="-O2: optimoitu SSA-muodossa"; color="#D9E0E3"; margin=5;
+    bL0 [label="L0:\l" +
+        " $1 = 1\l" +
+        " i.1 = 0\l" +
+        " summa.1 = 0\l" +
+        " jmp L1\l"];
+    bL1 [label="L1:\l" +
+        " %5 = lt i.1, n.0\l" +
+        " br %5, L2, L6\l"];
+    bL2 [label="L2:\l" +
+        " %9 = mul n.0, k.0\l" +
+        " $100 = 100\l" +
+        " %11 = gt %9, $100\l" +
+        " br %11, L3, L4\l"];
+    bL3 [label="L3:\l" +
+        " summa.1 = add summa.1, %9\l" +
+        " jmp L5\l"];
+    bL4 [label="L4:\l" +
+        " summa.1 = add i.1, summa.1\l" +
+        " jmp L5\l"];
+    bL5 [label="L5:\l" +
+        " i.1 = add $1, i.1\l" +
+        " jmp L1\l"];
+    bL6 [label="L6:\l" +
+        " ret summa.1\l"];
+    bL0 -> bL1;
+    bL1 -> bL2 [label="tosi"];
+    bL1 -> bL6 [label="epätosi"];
+    bL2 -> bL3 [label="tosi"];
+    bL2 -> bL4 [label="epätosi"];
+    bL3 -> bL5;
+    bL4 -> bL5;
+    bL5 -> bL1;
+  }
+}

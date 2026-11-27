@@ -1,0 +1,6 @@
+fn f(a)
+L0:
+    %1 = call g(a)
+    %2 = add a, a
+    print %2
+    ret a

@@ -1,0 +1,18 @@
+fn f(a, b, p)
+L0:
+    br p, L1, L2
+L1:                      ; edeltäjät: L0
+    x = mul a, b
+    print x
+    jmp L3
+L2:                      ; edeltäjät: L0
+    y = mul a, b
+    print y
+    jmp L3
+L3:                      ; edeltäjät: L1 L2
+    z = mul a, b
+    %1 = call g(a)
+    %2 = call g(a)
+    %3 = add %1, %2
+    %4 = add z, %3
+    ret %4

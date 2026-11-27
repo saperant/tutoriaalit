@@ -111,7 +111,7 @@ Raja on 200 tasoa. Clang ja GCC käyttävät samaa ajatusta (Clangin
   toimii kaikissa työkaluissa ilman lisätyötä.
 - **Älä kaadu syötteeseen.** Rekursion syvyys, tiedoston koko ja
   virheiden määrä rajataan. Sumeutus (*fuzzing*) satunnaisilla
-  syötteillä löytää kääntäjän kaatumiset tehokkaasti (luku 15).
+  syötteillä löytää kääntäjän kaatumiset tehokkaasti (luku 17).
 - **Testaa virheilmoitukset.** Virheohjelmat ja niiden odotetut
   tulosteet ovat osa testisarjaa, kuten tässä tutoriaalissa.
 

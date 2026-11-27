@@ -143,7 +143,11 @@ monta kertaa (LLVM:n `-O2`-putkessa on satoja passeja).
 
 ## Mitä Kidestä puuttuu
 
-Tärkeimmät optimoinnit, joita Kide ei tee:
+Tämän luvun passit ovat tason `-O1` sisältö, ja niiden arvonumerointi
+toimii lohko kerrallaan. Koko funktion yli toimivat vakioiden
+eteneminen, arvonumerointi ja kuolleen koodin poisto tehdään
+SSA-muodossa tasolla `-O2` (luvut 13 ja 14).
+Tärkeimmät optimoinnit, joita Kide ei tee millään tasolla:
 
 | Optimointi | Ajatus |
 |------------|--------|
@@ -152,10 +156,10 @@ Tärkeimmät optimoinnit, joita Kide ei tee:
 | induktiomuuttujat ja voiman vähennys | `i * 8` silmukassa muuttuu yhteenlaskuksi |
 | häntärekursion poisto | rekursiivinen kutsu viimeisenä muuttuu hypyksi |
 | silmukoiden avaus ja vektorointi | useampi kierros kerralla, SIMD-käskyt |
-| globaali arvonumerointi | yhteiset alilausekkeet lohkojen yli (SSA-muodossa, luku 12) |
+| osittaisen redundanssin poisto | lauseke, joka on laskettu vain osalla poluista, lasketaan muillakin ja käytetään uudelleen |
 
 Upottaminen on niistä tärkein: se poistaa kutsun kustannuksen ja tuo
-kutsujan ja kutsutun koodin saman optimoinnin piiriin. Luvussa 16
+kutsujan ja kutsutun koodin saman optimoinnin piiriin. Luvussa 18
 nähdään GCC:n muuttavan kertomafunktion rekursion silmukaksi.
 
 ## Käytännössä

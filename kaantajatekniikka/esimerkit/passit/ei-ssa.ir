@@ -1,0 +1,6 @@
+; passit: arvot
+fn f(a)
+L0:
+    x = add a, a
+    x = add x, a
+    ret x

@@ -1,0 +1,14 @@
+fn f(n)
+L0:
+    i.0 = 0
+    jmp L1
+L1:                      ; edeltäjät: L0 L2
+    i.1 = phi [i.0, L0], [i.2, L2]
+    %1 = lt i.1, n
+    br %1, L2, L3
+L2:                      ; edeltäjät: L1
+    %2 = 1
+    i.2 = add i.1, %2
+    jmp L1
+L3:                      ; edeltäjät: L1
+    ret i.1

@@ -13,7 +13,7 @@ muotoilijat ja kielipalvelimet.
 Tässä tutoriaalissa rakennetaan kokonainen kääntäjä pienelle
 **Kide**-kielelle. Kääntäjä on kirjoitettu C++23:lla, ja se tuottaa
 RISC-V-assemblyä (RV64IM), joka kootaan ristikääntäjällä ja ajetaan
-QEMU-emulaattorissa. Kääntäjässä on noin 3000 riviä, joten sen voi
+QEMU-emulaattorissa. Kääntäjässä on noin 4500 riviä, joten sen voi
 lukea kokonaan; jokainen luku esittelee yhden vaiheen ja sen koodin.
 
 ## Esitiedot ja rajaus
@@ -25,15 +25,15 @@ tietotyypit ja hahmonsovitus, joita syntaksipuun käsittely muistuttaa)
 ja *Moderni C++*, jolla kääntäjä on kirjoitettu: `std::variant`,
 `std::unique_ptr`, lambdat ja designoidut alustajat.
 
-Kääntäjä on pidetty noin 3000 rivissä, joten osa aiheista on rajattu
+Kääntäjä on pidetty noin 4500 rivissä, joten osa aiheista on rajattu
 pois. Kide-kielessä on vain kokonaislukuja ja funktioita, joten
 ajonaikainen ympäristö jää pinokehykseen: taulukot, keko ja
-muistinhallinta eivät ole mukana (taulukot ovat luvun 17
-harjoituksena). SSA-muoto rakennetaan, mutta optimoinnit tehdään
-tavallisella välikielellä, eikä takaosassa ole käskyjen valinnan
-viimeistelyä (kurkistusoptimointia). Jäsenningeneraattorit ja
-LR-jäsennys esitellään vain vertailuna. Luku 16 näyttää, mitä
-tuotantokääntäjä tekee toisin.
+muistinhallinta eivät ole mukana (taulukot ovat luvun 19
+harjoituksena). SSA-muodossa tehdään kolme perusoptimointia, mutta
+silmukkaoptimoinnit ja upottaminen jäävät pois, eikä takaosassa ole
+käskyjen valinnan viimeistelyä (kurkistusoptimointia).
+Jäsenningeneraattorit ja LR-jäsennys esitellään vain vertailuna. Luku
+18 näyttää, mitä tuotantokääntäjä tekee toisin.
 
 Läheisiä taitoja ovat *Suorituskyvyn analyysi ja optimointi*,
 *Takaisinmallinnus* ja *Korkean tason synteesi*, joissa kääntäjän
@@ -49,9 +49,9 @@ Kääntäjä jaetaan perinteisesti kolmeen osaan:
 | | jäsennys | tokenit | syntaksipuu | 4–6 |
 | | semanttinen analyysi | syntaksipuu | tarkistettu puu | 7 |
 | Keskiosa | alentaminen | puu | välikieli | 9 |
-| | analyysit ja optimoinnit | välikieli | välikieli | 10–12 |
-| Takaosa | koodingenerointi | välikieli | assembly | 13 |
-| | rekisterien varaus | välikieli | rekisterit | 14 |
+| | analyysit ja optimoinnit | välikieli | välikieli | 10–14 |
+| Takaosa | koodingenerointi | välikieli | assembly | 15 |
+| | rekisterien varaus | välikieli | rekisterit | 16 |
 
 ```{.dot otsikko="Kide-kääntäjän vaiheet ja niiden väliesitykset"}
 digraph {
@@ -161,8 +161,10 @@ näyttää käännettynä tältä:
 
 Koodi on oikeaa mutta ei vielä hyvää: vertailu `n <= 1` lasketaan
 kolmella käskyllä ennen haaraa, ja vakio 1 ladataan rekisteriin
-moneen kertaan. Luvussa 16 sitä verrataan GCC:n tuottamaan koodiin, ja
-erot kertovat, mitä tuotantokääntäjät tekevät lisää.
+moneen kertaan. Tämä on oletustason `-O1` tulos; luvussa 14 nähdään,
+mitä `-O2` tekee samalle funktiolle ja mitä se maksaa. Luvussa 18
+koodia verrataan GCC:n tuottamaan, ja erot kertovat, mitä
+tuotantokääntäjät tekevät lisää.
 
 Kääntäjän pääohjelma (`kide/main.cpp`) on koko kääntäjän
 sisällysluettelo: se ajaa vaiheet peräkkäin, ja kukin ajetaan vain, jos
@@ -170,6 +172,7 @@ edelliset onnistuivat. Siinä näkyy kolme kääntäjien yleistä
 suunnitteluperiaatetta. Ensinnäkin jokaisella vaiheella on oma, tulostettava tietorakenne, joten
 vian voi paikantaa vaiheeseen katsomalla välitulosteita. Toiseksi
 optimoinnit ovat valinnaisia: `-O0` tuottaa suoraviivaisen koodin, jota
-on helppo verrata lähdekoodiin. Kolmanneksi takaosa on vaihdettavissa:
+on helppo verrata lähdekoodiin, `-O1` ajaa paikalliset optimoinnit ja
+`-O2` lisäksi SSA-muodon optimoinnit. Kolmanneksi takaosa on vaihdettavissa:
 rekisterien varauksesta on kaksi toteutusta, ja niiden on tuotettava
-samoin toimiva ohjelma. Testit (luku 15) nojaavat kaikkiin kolmeen.
+samoin toimiva ohjelma. Testit (luku 17) nojaavat kaikkiin kolmeen.

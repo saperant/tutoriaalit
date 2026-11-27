@@ -7,6 +7,11 @@
 #   virheet/NIMI.kide    virheellinen ohjelma; virhetuloste verrataan
 #                        tiedostoon NIMI.virhe (ajo_*: tulkin ajovirhe)
 #   naytteet/            tekstissä näytetyt kääntäjän välitulosteet
+#   passit/NIMI.ir       yhden passin testi välikielenä: ensimmäinen rivi
+#                        nimeää passit, tulos verrataan tiedostoon
+#                        NIMI.odotettu ja ajon tuloste tiedostoon
+#                        NIMI.tuloste (jos on); NIMI.virhe on odotettu
+#                        virheilmoitus
 #   vertailu/            GCC:n tuottama assembly vertailuksi
 #
 # Lopuksi satunnaiset ohjelmat (satunnainen.py) ajetaan tulkilla ja
@@ -52,6 +57,7 @@ kaanna_ja_aja() {
 
 # Kääntäjän tulosteet, jotka näytetään tekstissä: nimi|valinnat|lähde.
 SUMMA=naytteet/summa.kide
+LASKE=naytteet/laske.kide
 NAYTTEET=(
     "tokenit|--vaihe=tokenit|naytteet/pieni.kide"
     "ast-kertoma|--vaihe=ast|ohjelmat/kertoma.kide"
@@ -70,6 +76,12 @@ NAYTTEET=(
     "asm-pino|-O0 --varaus=pino --funktio=nelioiden_summa|naytteet/nelio.kide"
     "asm-lineaarinen|-O1 --funktio=nelioiden_summa|naytteet/nelio.kide"
     "asm-kertoma|-O1 --funktio=kertoma|ohjelmat/kertoma.kide"
+    "ir-laske|--vaihe=ir --funktio=laske|naytteet/laske.kide"
+    "ssa-laske|--vaihe=ssa --funktio=laske|naytteet/laske.kide"
+    "ssa-laske-O2|--vaihe=ssa -O2 --funktio=laske|naytteet/laske.kide"
+    "ssapassit-laske|--vaihe=ssapassit -O2 --funktio=laske|$LASKE"
+    "ir-laske-O2|--vaihe=ir -O2 --funktio=laske|naytteet/laske.kide"
+    "asm-kertoma-O2|-O2 --funktio=kertoma|ohjelmat/kertoma.kide"
 )
 
 # GCC:n tuloste ilman ymmärtämisen kannalta turhia direktiivejä.
@@ -86,6 +98,53 @@ gcc_naytteet() { # HAKEMISTO
     done
 }
 
+# @alku passitesti
+# passitesti TIEDOSTO.ir HAKEMISTO: ajaa tiedoston ensimmäisellä rivillä
+# nimetyt passit ja kirjoittaa tulokset hakemistoon: välikieli (.odotettu),
+# virheilmoitus (.virhe) ja käännetyn ohjelman tuloste (.tuloste), jos
+# tiedostossa on main-funktio.
+passitesti() {
+    local t=$1 nimi passit
+    nimi=$(basename "$t" .ir)
+    passit=$(sed -n '1s/^; passit: //p' "$t")
+    if ! (cd passit && "../$GCC_KIDE" --vaihe=ir --passit="$passit" \
+            "$nimi.ir") > "$2/$nimi.odotettu" 2> "$2/$nimi.virhe"; then
+        rm "$2/$nimi.odotettu"
+        return
+    fi
+    rm "$2/$nimi.virhe"
+    if grep -q '^fn main' "$t"; then
+        kaanna_ja_aja "$GCC_KIDE" "$t" "$TYO/passi-$nimi" \
+            --passit="$passit" > "$2/$nimi.tuloste"
+    fi
+}
+# @loppu passitesti
+
+# @alku mittaus
+# kaskyja TASO LÄHDE: käskyjen määrä koodissa ja suoritettujen käskyjen
+# määrä. Valinnalla --laske käännetty ohjelma laskee käskynsä itse.
+kaskyja() {
+    local koodissa suoritettu
+    koodissa=$("$GCC_KIDE" "$1" "$2" | grep -c '^    [a-z]')
+    suoritettu=$(kaanna_ja_aja "$GCC_KIDE" "$2" "$TYO/mittaus" "$1" --laske \
+        2>&1 > /dev/null | sed 's/[^0-9]//g')
+    echo "$koodissa $suoritettu"
+}
+
+mittaa() {
+    echo "ohjelma      koodissa  koodissa   suoritettu   suoritettu  muutos"
+    echo "                  -O1       -O2          -O1          -O2"
+    for p in ohjelmat/*.kide naytteet/summa.kide naytteet/laske.kide; do
+        read -r k1 s1 <<< "$(kaskyja -O1 "$p")"
+        read -r k2 s2 <<< "$(kaskyja -O2 "$p")"
+        awk -v n="$(basename "$p" .kide)" -v k1="$k1" -v k2="$k2" \
+            -v s1="$s1" -v s2="$s2" 'BEGIN {
+                printf "%-12s %8d  %8d  %11d  %11d  %+5.1f %%\n",
+                       n, k1, k2, s1, s2, (s2 - s1) * 100 / s1 }'
+    done
+}
+# @loppu mittaus
+
 if [[ ${1:-} == --naytteet ]]; then
     for n in "${NAYTTEET[@]}"; do
         IFS='|' read -r nimi valinnat lahde <<< "$n"
@@ -95,6 +154,9 @@ if [[ ${1:-} == --naytteet ]]; then
     for p in ohjelmat/*.kide; do
         "$GCC_KIDE" --vaihe=aja "$p" > "${p%.kide}.odotettu"
     done
+    rm -f passit/*.odotettu passit/*.virhe passit/*.tuloste
+    for t in passit/*.ir; do passitesti "$t" passit; done
+    mittaa > naytteet/mittaus.txt
     gcc_naytteet vertailu
     echo "Näytteet kirjoitettu."
     exit 0
@@ -103,7 +165,8 @@ fi
 # 1. Oikeat ohjelmat: tulkki ja käännetty ohjelma eri valinnoin.
 # @alku valinnat
 VALINNAT=("-O0 --varaus=pino" "-O1 --varaus=pino" "-O0" "-O1"
-          "-O1 --rekistereita=2" "-O1 --rekistereita=1")
+          "-O1 --rekistereita=2" "-O1 --rekistereita=1"
+          "-O2" "-O2 --varaus=pino" "-O2 --rekistereita=2")
 # @loppu valinnat
 ohjelmia=0
 for p in ohjelmat/*.kide; do
@@ -120,8 +183,10 @@ for p in ohjelmat/*.kide; do
             virhe "$nimi ($v): käännetty ohjelma päättyi virheeseen"
         vertaa "$nimi ($v)" "$odotettu" "$TYO/$nimi.ajo"
     done
-    kaanna_ja_aja "$CLANG_KIDE" "$p" "$TYO/$nimi" > "$TYO/$nimi.ajo"
-    vertaa "$nimi (clang)" "$odotettu" "$TYO/$nimi.ajo"
+    for v in -O1 -O2; do
+        kaanna_ja_aja "$CLANG_KIDE" "$p" "$TYO/$nimi" $v > "$TYO/$nimi.ajo"
+        vertaa "$nimi (clang, $v)" "$odotettu" "$TYO/$nimi.ajo"
+    done
     ohjelmia=$((ohjelmia + 1))
 done
 
@@ -159,14 +224,36 @@ done
 kaanna_ja_aja "$GCC_KIDE" naytteet/summa.kide "$TYO/summa" > "$TYO/summa.ajo"
 echo 18 | vertaa "summa" - "$TYO/summa.ajo"
 
+# 4. Passien yksikkötestit välikielitiedostoista ja -O2:n mittaus.
+passitesteja=0
+mkdir -p "$TYO/passit"
+rm -f "$TYO"/passit/*
+for t in passit/*.ir; do
+    passitesti "$t" "$TYO/passit"
+    passitesteja=$((passitesteja + 1))
+done
+for o in passit/*.odotettu passit/*.virhe passit/*.tuloste; do
+    if [[ -f $TYO/$o ]]; then
+        vertaa "passi $(basename "$o")" "$o" "$TYO/$o"
+    else
+        virhe "passi $(basename "$o"): tulosta ei syntynyt"
+    fi
+done
+[[ $(find "$TYO/passit" -type f ! -name '*.diff' | wc -l) == \
+   $(find passit -type f ! -name '*.ir' | wc -l) ]] ||
+    virhe "passit/: testi tuotti tiedoston, jota ei odotettu"
+mittaa > "$TYO/mittaus.txt"
+vertaa "mittaus" naytteet/mittaus.txt "$TYO/mittaus.txt"
+
 # @alku satunnaiset
-# 4. Differentiaalitestaus: tulkki on viitetoteutus, ja käännetyn
+# 5. Differentiaalitestaus: tulkki on viitetoteutus, ja käännetyn
 #    ohjelman on tulostettava täsmälleen sama.
 for siemen in $(seq 1 "$SATUNNAISIA"); do
     s=$TYO/satunnainen-$siemen
     python3 satunnainen.py "$siemen" > "$s.kide"
     "$GCC_KIDE" --vaihe=aja "$s.kide" > "$s.tulkki"
-    for v in "-O0 --varaus=pino" "-O1" "-O1 --rekistereita=2"; do
+    for v in "-O0 --varaus=pino" "-O1" "-O1 --rekistereita=2" \
+             "-O2" "-O2 --rekistereita=2"; do
         # shellcheck disable=SC2086
         kaanna_ja_aja "$GCC_KIDE" "$s.kide" "$s" $v > "$s.ajo" ||
             virhe "siemen $siemen ($v): ajo päättyi virheeseen"
@@ -176,7 +263,7 @@ for siemen in $(seq 1 "$SATUNNAISIA"); do
 done
 # @loppu satunnaiset
 
-# 5. Testien teho: rikotun kääntäjän (<= käännetään kuten <) virheen on
+# 6. Testien teho: rikotun kääntäjän (<= käännetään kuten <) virheen on
 #    näyttävä samoista satunnaisohjelmista.
 loydetty=0 ensimmainen=
 for siemen in $(seq 1 "$SATUNNAISIA"); do
@@ -198,6 +285,6 @@ if [[ $virheita -gt 0 ]]; then
     echo "VIRHEITÄ: $virheita" >&2
     exit 1
 fi
-echo "OK: $ohjelmia ohjelmaa ${#VALINNAT[@]}+3 tavalla," \
+echo "OK: $ohjelmia ohjelmaa ${#VALINNAT[@]}+4 tavalla," \
      "$virheohjelmia virheohjelmaa, ${#NAYTTEET[@]} näytettä," \
-     "$SATUNNAISIA satunnaisohjelmaa."
+     "$passitesteja passitestiä, $SATUNNAISIA satunnaisohjelmaa."

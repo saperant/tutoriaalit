@@ -45,8 +45,6 @@ bool poista_saavuttamattomat(IrFunktio& f) {
 }
 // @loppu saavuttamattomat
 
-namespace {
-
 namespace s = semantiikka;
 
 // @alku laskostus
@@ -75,6 +73,8 @@ std::optional<std::int64_t> laskosta(Op op, std::int64_t a, std::int64_t b) {
 bool vaihdannainen(Op op) {
     return op == Op::Add || op == Op::Mul || op == Op::Eq || op == Op::Ne;
 }
+
+namespace {
 
 // @alku numerointi
 // Paikallinen arvonumerointi yhden peruslohkon sisällä. Pidetään kirjaa

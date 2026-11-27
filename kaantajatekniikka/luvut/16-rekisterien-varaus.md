@@ -83,7 +83,7 @@ sisällä käytetty arvo on silloin kallis viedä pinoon.
 
 Rekisterien vaikutus näkyy samasta funktiosta kahdella varauksella.
 Funktio `nelioiden_summa` vei kaikki pinoon -varauksella 13 käskyä
-rungossaan (luku 13); lineaarisella pyyhkäisyllä optimoituna:
+rungossaan (luku 15); lineaarisella pyyhkäisyllä optimoituna:
 
 ```{.gnuassembler tiedosto="esimerkit/naytteet/asm-lineaarinen.txt"}
 ```

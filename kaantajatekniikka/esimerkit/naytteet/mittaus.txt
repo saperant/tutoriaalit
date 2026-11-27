@@ -1,0 +1,15 @@
+ohjelma      koodissa  koodissa   suoritettu   suoritettu  muutos
+                  -O1       -O2          -O1          -O2
+alkuluvut          86        88        98672        98678   +0.0 %
+collatz            84        89     14246253     11747266  -17.5 %
+fibonacci         118       124      1242091      1218873   -1.9 %
+kertoma            58        60         1531         1579   +3.1 %
+nakyvyys           42        43           67           66   -1.5 %
+oikosulku         101        96          210          205   -2.4 %
+paine             102       104          177          168   -5.1 %
+parametrit        161       151          277          267   -3.6 %
+potenssi           92        91          769          692  -10.0 %
+semantiikka        44        43           44           43   -2.3 %
+syt               109       111         1732         1715   -1.0 %
+summa              57        59          170          154   -9.4 %
+laske              85        72          432          285  -34.0 %

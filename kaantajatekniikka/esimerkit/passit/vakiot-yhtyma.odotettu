@@ -1,0 +1,27 @@
+fn f(p)
+L0:
+    br p, L1, L2
+L1:                      ; edeltäjät: L0
+    a = 1
+    jmp L3
+L2:                      ; edeltäjät: L0
+    b = 2
+    jmp L3
+L3:                      ; edeltäjät: L1 L2
+    x = phi [a, L1], [b, L2]
+    y = add x, x
+    ret y
+
+fn g(p)
+L0:
+    br p, L1, L2
+L1:                      ; edeltäjät: L0
+    a = 1
+    jmp L3
+L2:                      ; edeltäjät: L0
+    b = 1
+    jmp L3
+L3:                      ; edeltäjät: L1 L2
+    x = 1
+    y = 2
+    ret y

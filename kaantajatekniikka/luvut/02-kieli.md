@@ -111,8 +111,8 @@ C++20:stä lähtien määritelty kahden komplementin mukaan.
 Kidessä ei ole taulukoita, osoittimia, merkkijonoja, tietueita,
 globaaleja muuttujia eikä syötettä. Ne eivät tuo uusia vaiheita
 kääntäjään vaan lisää samoja asioita: taulukko tarvitsee muistin
-varauksen ja osoitelaskentaa (luku 13), tietue tyyppijärjestelmän
-laajennuksen (luku 7). Luvussa 17 on ehdotuksia laajennuksiksi.
+varauksen ja osoitelaskentaa (luku 15), tietue tyyppijärjestelmän
+laajennuksen (luku 7). Luvussa 19 on ehdotuksia laajennuksiksi.
 
 ## Käytännössä
 

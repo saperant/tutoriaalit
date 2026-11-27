@@ -3,7 +3,7 @@
 Takaosa muuntaa välikielen kohdekoneen assemblyksi. Siinä on kolme
 tehtävää: **käskyjen valinta** (mikä käsky tai käskyjono toteuttaa
 kunkin välikielen operaation), **rekisterien varaus** (missä kukin
-virtuaalirekisteri on, luku 14) ja **kutsukonvention noudattaminen**
+virtuaalirekisteri on, luku 16) ja **kutsukonvention noudattaminen**
 (miten argumentit, paluuarvo ja tallennettavat rekisterit kulkevat
 funktioiden välillä). Kide tuottaa RV64IM-koodia: RISC-V:n 64-bittinen
 peruskäskykanta ja kerto- ja jakolaskulaajennus.
@@ -81,7 +81,7 @@ näytti tämän x86-64:llä).
 
 Jokaisella virtuaalirekisterillä on **paikka**, jossa sen arvo on
 funktion ajan: jokin kutsun yli säilyvistä `s`-rekistereistä tai
-kehyksen pinopaikka. Paikat päättää rekisterien varaus (luku 14);
+kehyksen pinopaikka. Paikat päättää rekisterien varaus (luku 16);
 tässä luvussa riittää, että ne on annettu, ja luvun lopussa käytetään
 yksinkertaisinta varausta, jossa kaikki on pinossa. Koodingeneraattori kysyy
 operandin rekisteriä; pinossa oleva arvo ladataan apurekisteriin, ja
@@ -102,7 +102,7 @@ lasketaan erotuksen nollatestinä:
 
 Makro `KIDE_VIKA` rakentaa kääntäjästä tarkoituksella rikotun version,
 jossa `<=` käännetään kuten `<`. Testisarja käyttää sitä mittaamaan,
-löytävätkö testit tällaisen vian (luku 15).
+löytävätkö testit tällaisen vian (luku 17).
 
 Ehdollinen haara tuottaa `bnez`- tai `beqz`-käskyn ja jättää hypyn
 pois, kun kohde on heti seuraava lohko:
@@ -140,7 +140,7 @@ silloin tältä (`-O0 --varaus=pino`):
 
 Koodi on pitkää ja muistiliikenteen kuormittamaa, mutta se on helppo
 saada oikeaksi, ja sitä käytetään testeissä vertailukohtana
-varaajalle. GCC:n `-O0` tekee lähes saman (luku 16): jokainen muuttuja
+varaajalle. GCC:n `-O0` tekee lähes saman (luku 18): jokainen muuttuja
 asuu pinossa, jotta debuggeri voi lukea ja muuttaa sitä milloin tahansa.
 
 ## Käytännössä

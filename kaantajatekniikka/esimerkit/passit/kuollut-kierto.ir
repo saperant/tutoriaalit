@@ -1,0 +1,19 @@
+; passit: kuollut
+; k:ta luetaan vain sen omassa kasvatuksessa.
+fn f(n)
+L0:
+    i.0 = 0
+    k.0 = 0
+    jmp L1
+L1:
+    i.1 = phi [i.0, L0], [i.2, L2]
+    k.1 = phi [k.0, L0], [k.2, L2]
+    %1 = lt i.1, n
+    br %1, L2, L3
+L2:
+    %2 = 1
+    i.2 = add i.1, %2
+    k.2 = add k.1, %2
+    jmp L1
+L3:
+    ret i.1

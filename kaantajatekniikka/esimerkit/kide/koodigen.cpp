@@ -1,6 +1,8 @@
 #include "koodigen.hpp"
 
+#include <algorithm>
 #include <ostream>
+#include <sstream>
 #include <string>
 
 namespace kide {
@@ -9,8 +11,9 @@ namespace {
 
 class Generaattori {
 public:
-    Generaattori(const IrFunktio& f, const Varaus& v, std::ostream& u)
-        : f_(f), v_(v), u_(u) {}
+    Generaattori(const IrFunktio& f, const Varaus& v, std::ostream& ulos,
+                 bool laske)
+        : f_(f), v_(v), ulos_(ulos), laske_(laske) {}
     void funktio();
 
 private:
@@ -35,10 +38,14 @@ private:
     void prologi();
     void epilogi();
     void ir_kasky(const Kasky& k, int lohko);
+    std::string ota();           // tähän asti tuotettu teksti
+    void laskuri(int kaskyja);
 
     const IrFunktio& f_;
     const Varaus& v_;
-    std::ostream& u_;
+    std::ostream& ulos_;
+    std::ostringstream u_;       // osa kerrallaan, jotta käskyt voi laskea
+    bool laske_;
 };
 
 // @alku kehys
@@ -256,22 +263,65 @@ void Generaattori::ir_kasky(const Kasky& k, int lohko) {
 }
 // @loppu vertailut
 
+std::string Generaattori::ota() {
+    std::string teksti = u_.str();
+    u_.str("");
+    return teksti;
+}
+
+// Käskyrivit alkavat sisennyksellä; nimiöt ja direktiivit eivät ole
+// käskyjä.
+int kaskyja(const std::string& teksti) {
+    std::istringstream rivit(teksti);
+    int n = 0;
+    for (std::string rivi; std::getline(rivit, rivi);) {
+        n += rivi.starts_with("    ") && rivi[4] != '.';
+    }
+    return n;
+}
+
+// @alku laskuri
+// Valinnalla --laske jokaisen lohkon alkuun tulee laskuri, joka kasvaa
+// lohkon käskyjen määrällä. Ohjelman lopussa laskurissa on suoritettujen
+// käskyjen määrä ilman laskurin omia käskyjä.
+void Generaattori::laskuri(int n) {
+    if (!laske_) return;
+    ulos_ << "    la      t6, kide_kaskyja\n"
+          << "    ld      t5, 0(t6)\n";
+    for (; n > 0; n -= std::min(n, 2047)) {      // addi: 12-bittinen vakio
+        ulos_ << "    addi    t5, t5, " << std::min(n, 2047) << "\n";
+    }
+    ulos_ << "    sd      t5, 0(t6)\n";
+}
+// @loppu laskuri
+
 void Generaattori::funktio() {
     prologi();
+    std::string alku = ota();
+    epilogi();
+    std::string loppu = ota();
+    ulos_ << alku;
     for (std::size_t b = 0; b < f_.lohkot.size(); ++b) {
-        u_ << nimio(static_cast<int>(b)) << ":\n";
         for (const Kasky& k : f_.lohkot[b].kaskyt) {
             ir_kasky(k, static_cast<int>(b));
         }
+        std::string runko = ota();
+        ulos_ << nimio(static_cast<int>(b)) << ":\n";
+        // Prologi ja epilogi suoritetaan kerran kutsua kohden, joten ne
+        // lasketaan alkulohkon mukaan.
+        laskuri(kaskyja(runko)
+                + (b == 0 ? kaskyja(alku) + kaskyja(loppu) : 0));
+        ulos_ << runko;
     }
-    epilogi();
-    u_ << "    .size   k_" << f_.nimi << ", .-k_" << f_.nimi << "\n";
+    ulos_ << loppu << "    .size   k_" << f_.nimi << ", .-k_" << f_.nimi
+          << "\n";
 }
 
 }  // namespace
 
-void generoi(const IrFunktio& f, const Varaus& v, std::ostream& u) {
-    Generaattori(f, v, u).funktio();
+void generoi(const IrFunktio& f, const Varaus& v, std::ostream& u,
+             bool laske) {
+    Generaattori(f, v, u, laske).funktio();
 }
 
 }  // namespace kide

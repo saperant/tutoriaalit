@@ -5,7 +5,7 @@ tulkki** (*tree-walking interpreter*) käy puun läpi ja laskee jokaisen
 solmun arvon. Se on hidas verrattuna käännettyyn koodiin, mutta se on
 lyhyt ja selkeä, ja siksi se on paras mahdollinen **viitetoteutus**:
 kun kääntäjä ja tulkki tulostavat samalle ohjelmalle eri tuloksen,
-virhe on lähes aina kääntäjässä. Luvun 15 differentiaalitestaus
+virhe on lähes aina kääntäjässä. Luvun 17 differentiaalitestaus
 perustuu tähän.
 
 ## Kehykset

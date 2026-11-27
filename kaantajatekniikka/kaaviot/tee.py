@@ -68,10 +68,11 @@ def ast() -> str:
 
 # --- Ohjausvuograafi välikielestä -------------------------------------
 
-def cfg() -> str:
+def lue_lohkot(nayte: str) -> dict[str, list[str]]:
+    """Välikielitulosteen lohkot: nimi -> käskyt (ilman kommentteja)."""
     lohkot: dict[str, list[str]] = {}
     nykyinen = ""
-    for rivi in (NAYTTEET / "ir-summa.txt").read_text("utf-8").splitlines():
+    for rivi in (NAYTTEET / nayte).read_text("utf-8").splitlines():
         if rivi.startswith("fn") or not rivi.strip():
             continue
         if not rivi.startswith(" "):
@@ -79,22 +80,53 @@ def cfg() -> str:
             lohkot[nykyinen] = []
         else:
             lohkot[nykyinen].append(rivi.strip())
-    rivit = ["digraph {", "  ranksep=0.3;",
-             "  node [shape=box, fontname=\"DejaVu Sans Mono\",",
-             "        fontsize=8];"]
+    return lohkot
+
+
+def cfg_rivit(lohkot: dict[str, list[str]], etuliite: str = "",
+              sisennys: str = "  ", kaskyn_sisennys: str = "  ") -> list[str]:
+    """Lohkot solmuiksi ja päättävät käskyt kaariksi."""
+    rivit = []
     for nimi, kaskyt in lohkot.items():
         # Jokainen käsky omaksi merkkijonokseen (+ yhdistää), jotta rivit
         # pysyvät lyhyinä.
         osat = [f'"{lainaa(r)}\\l"' for r in
-                [nimi + ":"] + ["  " + k for k in kaskyt]]
-        rivit.append(f"  {nimi} [label=" + " +\n      ".join(osat) + "];")
+                [nimi + ":"] + [kaskyn_sisennys + k for k in kaskyt]]
+        rivit.append(f"{sisennys}{etuliite}{nimi} [label="
+                     + f" +\n{sisennys}    ".join(osat) + "];")
     for nimi, kaskyt in lohkot.items():
         viimeinen = kaskyt[-1].replace(",", "").split()
+        mista = f"{sisennys}{etuliite}{nimi} -> {etuliite}"
         if viimeinen[0] == "jmp":
-            rivit.append(f"  {nimi} -> {viimeinen[1]};")
+            rivit.append(f"{mista}{viimeinen[1]};")
         elif viimeinen[0] == "br":
-            rivit.append(f'  {nimi} -> {viimeinen[2]} [label="tosi"];')
-            rivit.append(f'  {nimi} -> {viimeinen[3]} [label="epätosi"];')
+            rivit.append(f'{mista}{viimeinen[2]} [label="tosi"];')
+            rivit.append(f'{mista}{viimeinen[3]} [label="epätosi"];')
+    return rivit
+
+
+def cfg() -> str:
+    rivit = ["digraph {", "  ranksep=0.3;",
+             "  node [shape=box, fontname=\"DejaVu Sans Mono\",",
+             "        fontsize=8];"]
+    rivit += cfg_rivit(lue_lohkot("ir-summa.txt"))
+    rivit.append("}")
+    return "\n".join(rivit) + "\n"
+
+
+def cfg_laske() -> str:
+    """Funktion laske ohjausvuograafi ennen SSA-optimointeja ja jälkeen."""
+    rivit = ["digraph {", "  ranksep=0.22; nodesep=0.1; margin=0;",
+             "  node [shape=box, fontname=\"DejaVu Sans Mono\",",
+             "        fontsize=7.5, margin=\"0.09,0.05\"];",
+             "  edge [fontsize=7];"]
+    for etuliite, nayte, otsikko in (
+            ("a", "ir-laske.txt", "-O1: paikalliset passit"),
+            ("b", "ir-laske-O2.txt", "-O2: optimoitu SSA-muodossa")):
+        rivit += [f"  subgraph cluster_{etuliite} {{",
+                  f'    label="{otsikko}"; color="#D9E0E3"; margin=5;']
+        rivit += cfg_rivit(lue_lohkot(nayte), etuliite, "    ", " ")
+        rivit.append("  }")
     rivit.append("}")
     return "\n".join(rivit) + "\n"
 
@@ -172,6 +204,7 @@ def elinvalit() -> str:
 
 
 KAAVIOT = {"ast-presedenssi.dot": ast, "cfg-summa.dot": cfg,
+           "cfg-laske.dot": cfg_laske,
            "elavyys-summa.dot": elavyys,
            "dominanssi-summa.dot": dominanssi,
            "valit-summa.json": elinvalit}

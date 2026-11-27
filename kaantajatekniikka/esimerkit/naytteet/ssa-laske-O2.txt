@@ -1,0 +1,29 @@
+fn laske(n.0, k.0)
+L0:
+    $1 = 1
+    $0 = 0
+    jmp L1
+L1:                      ; edeltäjät: L0 L6
+    i.1 = phi [$0, L0], [i.2, L6]
+    summa.1 = phi [$0, L0], [summa.4, L6]
+    %5 = lt i.1, n.0
+    br %5, L2, L7
+L2:                      ; edeltäjät: L1
+    jmp L3
+L3:                      ; edeltäjät: L2
+    %9 = mul n.0, k.0
+    $100 = 100
+    %11 = gt %9, $100
+    br %11, L4, L5
+L4:                      ; edeltäjät: L3
+    summa.2 = add summa.1, %9
+    jmp L6
+L5:                      ; edeltäjät: L3
+    summa.3 = add i.1, summa.1
+    jmp L6
+L6:                      ; edeltäjät: L4 L5
+    summa.4 = phi [summa.2, L4], [summa.3, L5]
+    i.2 = add $1, i.1
+    jmp L1
+L7:                      ; edeltäjät: L1
+    ret summa.1

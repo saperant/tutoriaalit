@@ -1,0 +1,25 @@
+fn laske(n: int, k: int) -> int {
+    var askel = 1;
+    var kierroksia = 0;
+    var summa = 0;
+    var i = 0;
+    while i < n {
+        if askel != 1 {
+            askel = 2;
+        }
+        if n * k > 100 {
+            summa = summa + n * k;
+        } else {
+            summa = summa + i * askel;
+        }
+        kierroksia = kierroksia + 1;
+        i = i + askel;
+    }
+    return summa;
+}
+
+fn main() -> int {
+    print(laske(10, 3));
+    print(laske(10, 30));
+    return 0;
+}

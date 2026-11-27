@@ -12,7 +12,8 @@ subtitle: Pikaopas · vaiheet, jäsennys, välikieli, SSA, optimoinnit ja RISC-V
 | semanttinen analyysi | sidottu, tyypitetty puu | virheet |
 | tulkki | ohjelman tuloste | `--vaihe=aja` |
 | alentaminen | välikieli | `--vaihe=ir -O0` |
-| optimoinnit | välikieli | `--vaihe=passit` |
+| optimoinnit (`-O1`) | välikieli | `--vaihe=passit` |
+| SSA-optimoinnit (`-O2`) | välikieli | `--vaihe=ssapassit` |
 | analyysit | elävyys, dominanssi, SSA | `--vaihe=elavyys` ... |
 | rekisterien varaus | elinvälit | `--vaihe=valit` |
 | koodingenerointi | RISC-V-assembly | oletus |
@@ -51,8 +52,15 @@ Tyypit `int` (64-bittinen, kiertävä) ja `bool`. Ehto on aina `bool`.
 - **SSA**: jokainen rekisteri kirjoitetaan kerran; phi
   yhtymäkohdissa, iteroidulle dominanssirajalle; karsittu SSA vain
   eläville.
-- **Pois SSA:sta**: kopiot edeltäjiin; jaa kriittiset kaaret, phit
-  rinnakkain.
+- **Pois SSA:sta**: kopiot edeltäjiin; jaa kriittiset kaaret
+  (kadonnut kopio), järjestä phien kopiot rinnakkaisina (vaihto),
+  sulauta kopiot, jos kohde ja lähde eivät häiritse toisiaan.
+
+| SSA-passi | Idea | Ei saa |
+|-----------|------|--------|
+| vakioiden eteneminen | hila ylä → vakio → ala; vain suoritettavat kaaret | phi eri vakioista |
+| arvonumerointi | taulu dominaattoripuuta pitkin | laskenta ei dominoi; kutsu |
+| kuollut koodi | merkitse vaikutuksista, lakaise loput | kutsu, tulostus, haara |
 
 # Datavuoanalyysi
 

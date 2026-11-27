@@ -1,0 +1,37 @@
+fn laske(n, k)
+L0:
+    askel = 1
+    kierroksia = 0
+    summa = 0
+    i = 0
+    jmp L1
+L1:                      ; edeltäjät: L0 L7
+    %5 = lt i, n
+    br %5, L2, L8
+L2:                      ; edeltäjät: L1
+    %6 = 1
+    %7 = ne askel, %6
+    br %7, L3, L4
+L3:                      ; edeltäjät: L2
+    askel = 2
+    jmp L4
+L4:                      ; edeltäjät: L2 L3
+    %9 = mul n, k
+    %10 = 100
+    %11 = gt %9, %10
+    br %11, L5, L6
+L5:                      ; edeltäjät: L4
+    %12 = mul n, k
+    summa = add summa, %12
+    jmp L7
+L6:                      ; edeltäjät: L4
+    %14 = mul askel, i
+    summa = add summa, %14
+    jmp L7
+L7:                      ; edeltäjät: L5 L6
+    %16 = 1
+    kierroksia = add kierroksia, %16
+    i = add askel, i
+    jmp L1
+L8:                      ; edeltäjät: L1
+    ret summa

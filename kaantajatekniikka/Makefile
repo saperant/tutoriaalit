@@ -9,3 +9,9 @@ testaa: tarkista-kaaviot
 .PHONY: tarkista-kaaviot
 tarkista-kaaviot:
 	@python3 kaaviot/tee.py --tarkista
+
+# Mittauskuva piirretään testatusta taulukosta esimerkit/naytteet/mittaus.txt
+# skriptillä kuvat/piirra.py; kuva commitoidaan.
+.PHONY: kuvat
+kuvat:
+	python3 kuvat/piirra.py kuvat

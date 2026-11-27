@@ -1,0 +1,30 @@
+; passit: vakiot
+; f: x on 1 tai 2 sen mukaan, kumpaa reittiä tullaan, joten se ei ole
+; vakio. g: molemmat reitit tuovat saman arvon.
+fn f(p)
+L0:
+    br p, L1, L2
+L1:
+    a = 1
+    jmp L3
+L2:
+    b = 2
+    jmp L3
+L3:
+    x = phi [a, L1], [b, L2]
+    y = add x, x
+    ret y
+
+fn g(p)
+L0:
+    br p, L1, L2
+L1:
+    a = 1
+    jmp L3
+L2:
+    b = 1
+    jmp L3
+L3:
+    x = phi [a, L1], [b, L2]
+    y = add x, x
+    ret y

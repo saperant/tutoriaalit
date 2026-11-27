@@ -1,0 +1,21 @@
+; passit: arvot
+; L1 ja L2 eivät dominoi lohkoa L3, joten niiden tuloa ei voi käyttää
+; siellä. Kutsuja ei yhdistetä, koska kutsulla voi olla sivuvaikutus.
+fn f(a, b, p)
+L0:
+    br p, L1, L2
+L1:
+    x = mul a, b
+    print x
+    jmp L3
+L2:
+    y = mul a, b
+    print y
+    jmp L3
+L3:
+    z = mul a, b
+    %1 = call g(a)
+    %2 = call g(a)
+    %3 = add %1, %2
+    %4 = add z, %3
+    ret %4

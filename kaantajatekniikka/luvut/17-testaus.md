@@ -40,7 +40,7 @@ kääntäjän eri osia:
 | `paine` | 12 yhtä aikaa elävää arvoa, pinoon vienti |
 
 Jokainen ohjelma ajetaan tulkilla molemmilla kääntäjillä ja käännettynä
-kuudella valintayhdistelmällä sekä Clangilla käännetyllä kääntäjällä:
+yhdeksällä valintayhdistelmällä sekä Clangilla käännetyllä kääntäjällä:
 
 ```{.bash tiedosto="esimerkit/testaa.sh" osa="valinnat"}
 ```
@@ -49,7 +49,10 @@ Valinnat on valittu niin, että jokainen takaosan polku tulee
 suoritetuksi: ilman optimointeja ja niiden kanssa, kaikki pinoon ja
 lineaarinen varaus, sekä varaus yhdellä ja kahdella rekisterillä, jolloin
 pinoon vienti on jatkuvaa. Tavallisella rekisterimäärällä
-`paine`-ohjelma on ainoa, joka vie arvoja pinoon.
+`paine`-ohjelma on ainoa, joka vie arvoja pinoon. Tason `-O2`
+SSA-putki ajetaan samoilla kolmella varauksella. Koska jokaisen
+yhdistelmän on tuotettava sama tuloste, optimointitasot testaavat
+toisiaan: SSA-passin virhe näkyy erona tasojen `-O1` ja `-O2` välillä.
 
 Virheohjelmilla (luvut 3, 6 ja 7) on odotettu virhetuloste, ja
 tekstissä näytetyt välitulosteet (`naytteet/`) ovat myös kultaisia
@@ -57,6 +60,13 @@ tiedostoja: jos jäsennin tai optimointi muuttuu, tutoriaalin tekstin
 tulosteet eivät voi jäädä vanhoiksi. Kultaisten tulosteiden heikkous on
 ylläpito: kun tuloste muuttuu tarkoituksella, `make naytteet` kirjoittaa
 ne uudelleen, ja muutos tarkistetaan versionhallinnan erotuksesta.
+
+Samaan ryhmään kuuluvat luvun 13 passitestit (`passit/`), joissa
+syöte on välikieltä ja odotettu tulos välikieltä tai käännetyn
+ohjelman tuloste, sekä luvun 14 mittaustaulukko. Suoritettujen
+käskyjen määrä on deterministinen, joten sekin on kultainen tiedosto:
+jos muutos kääntäjässä lisää jonkin testiohjelman käskyjä, testi
+epäonnistuu ja muutos on hyväksyttävä erikseen.
 
 ## Differentiaalitestaus
 
@@ -87,8 +97,9 @@ toistettavissa siemenen numerolla. Testiajuri:
 ```
 
 Kun tätä tutoriaalia kirjoitettiin, 200 satunnaisohjelmaa ajettiin
-kolmella valintayhdistelmällä ennen kuin testisarja rajattiin 40:een
-(ajoaika). Csmith löysi vuosina 2008–2011 GCC:stä ja LLVM:stä yli 325
+kolmella valintayhdistelmällä ja SSA-putken valmistuttua 1500 ohjelmaa
+tason `-O2` kolmella yhdistelmällä ennen kuin testisarja rajattiin
+40:een (ajoaika). Csmith löysi vuosina 2008–2011 GCC:stä ja LLVM:stä yli 325
 virhettä samalla periaatteella (Yang ym. 2011), ja nykyään
 tuotantokääntäjiä sumeutetaan jatkuvasti.
 
@@ -139,6 +150,9 @@ tietorakenteet*.
   kertoo aukon testisarjassa.
 - **Testaa jokainen takaosan polku.** Rekisteripula, suuret siirtymät ja
   harvinaiset käskymuodot suoritetaan vain, jos testit pakottavat ne.
+- **Tee deterministisestä mittarista testi.** Suoritettujen käskyjen
+  määrä kultaisena tiedostona paljastaa suorituskyvyn heikkenemisen
+  samalla tavalla kuin väärän tulosteen.
 
 ## Itsearviointi
 

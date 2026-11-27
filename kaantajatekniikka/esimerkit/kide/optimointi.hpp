@@ -1,11 +1,17 @@
 // Välikielen optimoinnit.
 #pragma once
 
+#include <cstdint>
 #include <iosfwd>
+#include <optional>
 
 #include "ir.hpp"
 
 namespace kide {
+
+// Laskee operaation käännösaikana; nullopt, jos op ei ole laskutoimitus.
+std::optional<std::int64_t> laskosta(Op op, std::int64_t a, std::int64_t b);
+bool vaihdannainen(Op op);       // a op b == b op a
 
 // Kukin passi palauttaa true, jos se muutti funktiota.
 bool poista_saavuttamattomat(IrFunktio& f);

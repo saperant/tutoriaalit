@@ -1,0 +1,10 @@
+; passit: sulauta
+; x ja a voivat jakaa rekisterin. y ja b eivät: b saa uuden arvon, kun
+; y:n arvoa vielä tarvitaan.
+fn f(a, b)
+L0:
+    x = a
+    y = b
+    b = add b, x
+    z = add y, b
+    ret z

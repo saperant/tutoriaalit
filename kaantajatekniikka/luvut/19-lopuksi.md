@@ -2,8 +2,8 @@
 
 Tutoriaalissa rakennettiin kääntäjä, joka kulkee lähdetekstistä
 ajettavaan RISC-V-ohjelmaan: selaaja, jäsennin, semanttinen analyysi,
-tulkki, välikieli, datavuoanalyysi, optimoinnit, SSA-muoto,
-koodingenerointi ja rekisterien varaus. Jokainen vaihe on lyhyt, ja
+tulkki, välikieli, datavuoanalyysi, optimoinnit, SSA-muoto ja sen
+optimoinnit, koodingenerointi ja rekisterien varaus. Jokainen vaihe on lyhyt, ja
 jokaisella on oma tulostettava tietorakenteensa ja omat testinsä.
 
 ## Nyrkkisäännöt
@@ -26,18 +26,23 @@ jokaisella on oma tulostettava tietorakenteensa ja omat testinsä.
    käytetä.
 7. **Analyysit ovat konservatiivisia.** Epätarkka tulos on sallittu,
    väärä ei.
-8. **Noudata kutsukonventiota tarkasti.** Se on ainoa rajapinta
+8. **Tarkista välikielen invariantit jokaisen passin jälkeen.**
+   Rikkoutunut SSA-muoto paikantuu silloin passiin eikä käännetyn
+   ohjelman väärään tulokseen.
+9. **Noudata kutsukonventiota tarkasti.** Se on ainoa rajapinta
    muuhun maailmaan.
-9. **Tulkki on oraakkeli.** Differentiaalitestaus viitetulkkia vastaan
-   löytää virheet, joita kukaan ei osannut kirjoittaa testiksi.
-10. **Mittaa testien teho.** Istutettu vika, joka jää löytymättä,
-    kertoo aukon.
+10. **Tulkki on oraakkeli.** Differentiaalitestaus viitetulkkia vastaan
+    löytää virheet, joita kukaan ei osannut kirjoittaa testiksi.
+11. **Mittaa testien teho ja optimointien hyöty.** Istutettu vika,
+    joka jää löytymättä, kertoo aukon; optimointi, joka ei vähennä
+    suoritettuja käskyjä, on pelkkää monimutkaisuutta.
 
 ## Harjoituksia ja laajennuksia
 
 - **Välittömät vakiot.** Tuota `addi` ja `slti`, kun toinen operandi
   on pieni vakio, ja yhdistä vertailu ja haara (`blt`, `bge`).
-  Differentiaalitestit kertovat, menikö jotain rikki.
+  Differentiaalitestit kertovat, menikö jotain rikki, ja luvun 14
+  mittaus, katoaako `kertoma`-ohjelman hidastuminen tasolla `-O2`.
 - **Taulukot.** Lisää kiinteän kokoiset paikalliset taulukot:
   tyyppijärjestelmään taulukkotyyppi, välikieleen lataus ja tallennus,
   pinokehykseen tilaa ja indeksin rajatarkistus ajonaikaiseen
@@ -46,10 +51,13 @@ jokaisella on oma tulostettava tietorakenteensa ja omat testinsä.
   funktion alkuun, kun `f` on funktio itse.
 - **Upottaminen.** Korvaa pienen funktion kutsu sen rungolla
   välikielessä ja katso, mitä laskostus tekee jäljelle jääneelle.
-- **SSA-optimoinnit.** Tee vakioiden eteneminen tai globaali
-  arvonumerointi SSA-muodossa (luku 12) ja poistu SSA:sta kopioilla;
-  vertaa tulosta paikalliseen arvonumerointiin esimerkillä, jossa
-  yhteinen alilauseke on eri lohkoissa.
+- **Silmukasta riippumaton koodi.** Siirrä SSA-muodossa silmukan
+  eteen puhtaat käskyt, joiden operandit on määritelty silmukan
+  ulkopuolella: tunnista silmukka paluukaaresta, jonka kohde dominoi
+  lähdettä (luku 12), ja lisää otsakkeen eteen lohko siirrettäville
+  käskyille. Luvun 14 esimerkin `laske` tulo `n * k` on tällainen;
+  kirjoita passille testit hakemistoon `passit/` ja mittaa muutos
+  valinnalla `--laske`.
 - **Viennin hinta.** Painota lineaarisen pyyhkäisyn valintaa
   silmukoiden syvyydellä ja mittaa pinolatausten määrä
   `summa`-esimerkissä kahdella rekisterillä.
@@ -96,6 +104,13 @@ Artikkelit:
   TOPLAS 13(4), 1991.
 - Cooper, Harvey, Kennedy: A Simple, Fast Dominance Algorithm.
   Software Practice and Experience, 2001.
+- Wegman, Zadeck: Constant Propagation with Conditional Branches.
+  TOPLAS 13(2), 1991.
+- Briggs, Cooper, Simpson: Value Numbering. Software Practice and
+  Experience 27(6), 1997.
+- Briggs, Cooper, Harvey, Simpson: Practical Improvements to the
+  Construction and Destruction of Static Single Assignment Form.
+  Software Practice and Experience 28(8), 1998.
 - Kildall: A Unified Approach to Global Program Optimization. POPL 1973.
 - Poletto, Sarkar: Linear Scan Register Allocation. TOPLAS 21(5), 1999.
 - Chaitin: Register Allocation & Spilling via Graph Coloring. SIGPLAN

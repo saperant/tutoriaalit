@@ -1,0 +1,20 @@
+fn f(n)
+L0:
+    askel.0 = 1
+    i.0 = 0
+    jmp L1
+L1:                      ; edeltäjät: L0 L3
+    i.1 = phi [i.0, L0], [i.2, L3]
+    askel.1 = 1
+    %1 = lt i.1, n
+    br %1, L2, L4
+L2:                      ; edeltäjät: L1
+    %2 = 1
+    %3 = 0
+    jmp L3
+L3:                      ; edeltäjät: L2
+    askel.3 = 1
+    i.2 = add i.1, askel.3
+    jmp L1
+L4:                      ; edeltäjät: L1
+    ret i.1

@@ -1,0 +1,9 @@
+; passit: kuollut
+; Kutsun tulosta ei käytetä, mutta kutsu jää: g voi tulostaa.
+fn f(a)
+L0:
+    %1 = call g(a)
+    %2 = add a, a
+    print %2
+    %3 = mul a, a
+    ret a

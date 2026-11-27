@@ -112,41 +112,27 @@ pinoista poistetaan tässä lohkossa lisätyt versiot:
 ```{.cpp tiedosto="esimerkit/kide/ssa.cpp" osa="nimea"}
 ```
 
-## SSA:sta pois
-
-Suoritin ei tunne phi-funktioita, joten ennen koodingenerointia ne
-korvataan kopioilla: `x.1 = phi [a, L0], [b, L4]` muuttuu kopioiksi
-`x.1 = a` lohkon L0 loppuun ja `x.1 = b` lohkon L4 loppuun. Muunnoksessa
-on kaksi tunnettua sudenkuoppaa. Jos edeltäjällä on useita seuraajia,
-kopio lisättäisiin myös toiselle polulle, joten tällainen *kriittinen
-kaari* jaetaan ensin uudella lohkolla. Lisäksi saman lohkon phit on
-suoritettava *rinnakkain*: jos phit vaihtavat kaksi arvoa keskenään,
-peräkkäiset kopiot hävittäisivät toisen (*swap problem*).
-
 ## Mitä SSA-muodolla tehdään
 
 SSA-muodossa rekisterin nimi yksilöi sen määrittelyn, joten moni
 koko funktion analyysi muuttuu taulukkohauksi:
 
+- **Vakioiden eteneminen.** Jos `x.1` on vakio, jokainen `x.1`:n käyttö
+  on sama vakio. Tieto tallennetaan kerran nimeä kohden eikä erikseen
+  jokaiseen lohkoon.
 - **Globaali arvonumerointi.** Luvun 11 arvonumerointi unohti taulunsa
   lohkon lopussa, koska rekisteri saattoi muuttua toisessa lohkossa.
   SSA-muodossa se ei voi muuttua, joten dominoivassa lohkossa laskettu
-  lauseke on voimassa kaikissa sen dominoimissa lohkoissa. Taulu
-  kuljetetaan dominaattoripuuta pitkin.
-- **Vakioiden eteneminen.** Jos `x.1` on vakio, jokainen `x.1`:n käyttö
-  on sama vakio; mitään kiintopisteiteraatiota ei tarvita.
+  lauseke on voimassa kaikissa sen dominoimissa lohkoissa.
 - **Kuolleen koodin poisto.** Määrittely, jolla ei ole käyttöjä, on
   kuollut. Käytöt löytyvät määrittely–käyttö-ketjusta ilman
   elävyysanalyysiä.
 
-Kide rakentaa SSA-muodon (`--vaihe=ssa`) mutta ei optimoi sitä: sen
-optimoinnit (luku 11) toimivat tavallisella välikielellä ja nojaavat
-datavuoanalyysiin. Tämä on klassinen, 1970-luvun optimoivien
-kääntäjien tapa, ja se pitää kääntäjän pienenä. SSA-pohjaisessa
-kääntäjässä samat optimoinnit olisivat lyhyempiä ja tehokkaampia,
-mutta SSA-muodon ylläpito jokaisen muunnoksen jälkeen ja siitä
-poistuminen ovat oma työnsä. Luvun 17 harjoitus ehdottaa globaalin
-arvonumeroinnin lisäämistä tämän luvun rakenteiden päälle.
+Kide tekee nämä kolme optimointia valinnalla `-O2`, ja luku 13 käy ne
+läpi. Suoritin ei tunne phi-funktioita, joten optimoinnin jälkeen
+SSA-muodosta on palattava tavalliseen välikieleen; se on luvun 14 aihe.
+Oletustasolla `-O1` SSA-muotoa ei käytetä käännöksessä, ja
+`--vaihe=ssa` vain näyttää sen.
 
 ## Käytännössä
 
@@ -160,9 +146,9 @@ arvonumeroinnin lisäämistä tämän luvun rakenteiden päälle.
 - **Dominanssi on hyödyllinen muuallakin.** Silmukat tunnistetaan
   paluukaarista, joiden kohde dominoi lähdettä; silmukasta riippumaton
   koodi siirretään lohkoon, joka dominoi silmukkaa.
-- **SSA:sta poistuminen on oma vaiheensa.** Kriittiset kaaret ja
-  rinnakkaiset kopiot on käsiteltävä oikein, tai ohjelma laskee
-  harvoin ja vaikeasti löydettävästi väärin.
+- **Rakenna SSA valmiista osista.** Dominoijat, dominanssiraja ja
+  elävyys ovat erillisiä, testattavia analyysejä; SSA-muunnos on
+  niiden yhdistelmä.
 
 ## Itsearviointi
 
@@ -172,5 +158,5 @@ arvonumeroinnin lisäämistä tämän luvun rakenteiden päälle.
   dominanssirajan ja laskea ne pienestä ohjausvuograafista.
 - Osaat selittää, miksi phit sijoitetaan iteroidulle
   dominanssirajalle ja mitä karsittu SSA karsii.
-- Osaat kuvata SSA:sta poistumisen sekä kriittisten kaarten ja
-  rinnakkaisten kopioiden ongelmat.
+- Osaat selittää, miksi vakioiden eteneminen, arvonumerointi ja
+  kuolleen koodin poisto yksinkertaistuvat SSA-muodossa.

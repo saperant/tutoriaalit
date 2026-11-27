@@ -10,7 +10,9 @@ namespace kide {
 
 // Kirjoittaa funktion GNU-kokoajan syntaksilla. Kide-funktio f on
 // symboli k_f, ja print kutsuu ajonaikaisen kirjaston funktiota
-// kide_tulosta.
-void generoi(const IrFunktio& f, const Varaus& v, std::ostream& u);
+// kide_tulosta. Jos laske on tosi, koodi laskee suoritetut käskynsä
+// muuttujaan kide_kaskyja.
+void generoi(const IrFunktio& f, const Varaus& v, std::ostream& u,
+             bool laske = false);
 
 }  // namespace kide

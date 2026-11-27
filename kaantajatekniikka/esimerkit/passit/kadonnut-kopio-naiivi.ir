@@ -1,0 +1,17 @@
+; passit: pura
+; Silmukan ehto on rungon lopussa, ja i.1 luetaan vielä silmukan jälkeen.
+fn main()
+L0:
+    i.0 = 1
+    jmp L1
+L1:
+    i.1 = phi [i.0, L0], [i.2, L1]
+    %1 = 1
+    i.2 = add i.1, %1
+    %2 = 5
+    %3 = lt i.2, %2
+    br %3, L1, L2
+L2:
+    print i.1
+    %4 = 0
+    ret %4

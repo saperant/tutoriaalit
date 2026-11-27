@@ -10,7 +10,7 @@ tuotettua koodia, jotta näkee, mitä isot kääntäjät tekevät lisää.
 |-------|------|-----|---------------|
 | syntaksipuu | `Lauseke`, `Lause` | GENERIC | Clangin AST |
 | korkean tason IR | – | GIMPLE (kolmiosoitekoodi) | Clangin CFG analyyseille |
-| SSA-muoto | näytteenä | GIMPLE SSA | LLVM IR (aina SSA) |
+| SSA-muoto | tason `-O2` passit | GIMPLE SSA | LLVM IR (aina SSA) |
 | matalan tason IR | välikieli | RTL | SelectionDAG, MachineIR |
 | käskyjen valinta | makrolaajennus | konekuvaukset (`.md`) | TableGen-mallit |
 | rekisterien varaus | lineaarinen pyyhkäisy | IRA ja LRA | *greedy* |
@@ -75,6 +75,8 @@ koska funktio ei enää kutsu mitään.
 
 Kiden `-O1` on näiden välissä: rekisterit ovat käytössä, mutta
 rekursio, pinokehys ja kolmen käskyn vertailu ovat jäljellä (luku 1).
+Kiden `-O2` ei muuta tilannetta, koska sen SSA-passit eivät koske
+kutsuihin eivätkä käskyjen valintaan (luku 14).
 
 ## Mitä tuotantokääntäjä tekee lisää
 
@@ -82,13 +84,14 @@ Ero Kiden ja GCC:n välillä syntyy muutamasta tekniikasta, joista
 jokainen on tässä tutoriaalissa esitellyn jatke:
 
 - **Käskyjen valinta malleilla** yhdistää vertailun ja haaran sekä
-  käyttää välittömiä vakioita (luku 13).
+  käyttää välittömiä vakioita (luku 15).
 - **Rekisterien varaus kustannuksilla** pitää silmukan arvot
   rekistereissä ja käyttää kutsun tuhoamia rekistereitä
-  lehtifunktioissa (luku 14).
-- **Kokonaiset SSA-optimoinnit** (globaali arvonumerointi, vakioiden
-  harva eteneminen, silmukkaoptimoinnit) toimivat koko funktion yli
-  (luvut 11 ja 12).
+  lehtifunktioissa (luku 16).
+- **Silmukkaoptimoinnit SSA-muodossa** (silmukasta riippumattoman
+  koodin siirto, induktiomuuttujat, osittaisen redundanssin poisto)
+  jatkavat siitä, mihin Kiden kolme SSA-passia jäävät (luvut 11 ja
+  13).
 - **Upottaminen ja funktioiden väliset analyysit** tuovat kutsutun
   koodin kutsujan optimoinnin piiriin, ja linkitysaikainen optimointi
   (LTO) tekee saman käännösyksiköiden yli.

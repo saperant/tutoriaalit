@@ -1,0 +1,17 @@
+; passit: arvot
+; L0 dominoi lohkoja L1 ja L2, joten siinä laskettu tulo on niissä valmiina.
+fn f(a, b)
+L0:
+    t = mul a, b
+    %1 = 10
+    %2 = gt t, %1
+    br %2, L1, L2
+L1:
+    %3 = mul b, a
+    %4 = 10
+    %5 = add %3, %4
+    ret %5
+L2:
+    %6 = mul a, b
+    %7 = sub %6, a
+    ret %7
