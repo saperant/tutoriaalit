@@ -27,7 +27,9 @@ SC_MODULE(Prosessori) {
     }
     // @loppu liitanta
 
-private:
+    // Tila ja apufunktiot ovat aliluokan käytettävissä: esimerkin
+    // 15-keskeytykset prosessori laajentaa tätä mallia.
+protected:
     // @alku muistiliikenne
     // Lukee tai kirjoittaa 1-4 tavua. DMI:tä käytetään, jos osoite on
     // voimassa olevan alueen sisällä; muuten tehdään transaktio, ja jos
@@ -154,15 +156,22 @@ private:
             tulos = pc_ + 4;
             seuraava = (a + imm_i(k)) & ~1u;
             break;
-        case 0x73:                                               // ecall
-            paluuarvo = x_[10];
-            return false;
+        case 0x73:                                               // SYSTEM
+            return jarjestelma(k);
         default:
             return tuntematon(k);
         }
         if (kirjoita && rd != 0) x_[rd] = tulos;  // x0 on aina nolla
         pc_ = seuraava;
         return true;
+    }
+
+    // SYSTEM-käskyistä tämä malli tuntee vain ecallin, joka lopettaa
+    // ohjelman. Aliluokka voi lisätä muut (CSR-käskyt, mret, wfi).
+    virtual bool jarjestelma(std::uint32_t k) {
+        if (k != 0x73) return tuntematon(k);
+        paluuarvo = x_[10];
+        return false;
     }
 
     bool tuntematon(std::uint32_t k) {
@@ -174,7 +183,7 @@ private:
     // @loppu suoritus
 
     // @alku aja
-    void aja() {
+    virtual void aja() {
         const sc_core::sc_time jakso(10, sc_core::SC_NS);  // 100 MHz
         qk_.reset();
         bool kaynnissa = true;

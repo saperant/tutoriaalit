@@ -59,19 +59,21 @@ tutkia virhetilanteita, joita oikeassa laitteessa on vaikea tuottaa.
 | 9 | Ajallinen irrottaminen ja DMI | kvantti, suora muistiväylä | `11-kvantti`, `12-dmi` |
 | 10 | AT-mallinnus | neljä vaihetta, liukuhihna | `13-at` |
 | 11 | Virtuaaliprototyyppi | RISC-V-ISS ajaa ohjelmaa | `14-prototyyppi` |
-| 12 | Mallin ja RTL:n vastaavuus | Verilator ja SystemC yhdessä | `15-vastaavuus` |
-| 13 | Lopuksi | nyrkkisäännöt, vianetsintä, lähteet | |
+| 12 | Keskeytykset | keskeytyslinja, CSR:t, `wfi`, kvantin vaikutus | `15-keskeytykset` |
+| 13 | Mallin ja RTL:n vastaavuus | Verilator ja SystemC yhdessä | `16-vastaavuus` |
+| 14 | Lopuksi | nyrkkisäännöt, vianetsintä, lähteet | |
 
 Esimerkkihakemistot on numeroitu juoksevasti, ei luvun mukaan; taulukon
 viimeinen sarake kertoo, mitkä hakemistot kuuluvat mihinkin lukuun.
 
 Luvut 2–6 käsittelevät SystemC:tä signaalitasolla: miten malli
 rakennetaan ja miten simulaattori sen ajaa. Luvun 6 tietotyyppejä
-tarvitaan seuraavan kerran vasta luvussa 12, joten sen voi lukea myös
+tarvitaan seuraavan kerran vasta luvussa 13, joten sen voi lukea myös
 juuri ennen sitä. Luvut 7–10 nostavat
 abstraktiotasoa transaktioihin, luku 11 kokoaa osat
-virtuaaliprototyypiksi ja luku 12 palaa RTL:ään: miten varmistetaan,
-että toteutus tekee saman kuin malli.
+virtuaaliprototyypiksi ja luku 12 lisää siihen keskeytykset. Luku 13
+palaa RTL:ään: miten varmistetaan, että toteutus tekee saman kuin
+malli.
 
 ## Esitiedot ja rajaus
 
@@ -89,8 +91,9 @@ SystemC:n delta-syklit ovat samat kuin VHDL:n ja Verilogin.
 Tutoriaali ei käsittele SystemC:n syntetisoitavaa osajoukkoa (taito
 *Korkean tason synteesi*), analogia- ja sekasignaalilaajennusta
 SystemC AMS eikä UVM-SystemC:tä. Virtuaaliprototyypin prosessori on
-pieni opetusmalli ilman keskeytyksiä ja etuoikeustasoja; oheislaitteita
-kysellään. Malleilla tehtävät suorituskykyanalyysit ja
+pieni opetusmalli: se ottaa keskeytykset konetilassa, mutta
+etuoikeustasot, synkroniset poikkeukset ja keskeytysohjain puuttuvat.
+Malleilla tehtävät suorituskykyanalyysit ja
 laitteisto–ohjelmisto-jako ovat taidossa *Arkkitehtuurin mallinnus ja
 suunnittelutilan tutkiminen*, väylät ja osoitekartat oikeassa piirissä
 taidossa *SoC-integraatio* ja referenssimallit testipenkeissä taidossa

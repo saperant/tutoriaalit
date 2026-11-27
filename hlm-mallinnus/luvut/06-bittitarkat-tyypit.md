@@ -5,9 +5,9 @@ rekisteri voi olla 4, 12 tai 35 bittiä. Algoritmin liukulukumalli kertoo,
 toimiiko algoritmi, mutta ei sitä, toimiiko se 16-bittisellä
 datapolulla. *Bittitarkka* (*bit-accurate*) malli laskee täsmälleen
 samat bitit kuin tuleva laitteisto, ja siksi sitä voi käyttää RTL:n
-referenssinä (luku 12). Tämä luku päättää signaalitason osuuden:
+referenssinä (luku 13). Tämä luku päättää signaalitason osuuden:
 tyypit kuuluvat SystemC:n ytimeen kuten kanavatkin, mutta niitä
-käytetään seuraavan kerran vasta, kun malli luvussa 12 asetetaan RTL:n
+käytetään seuraavan kerran vasta, kun malli luvussa 13 asetetaan RTL:n
 rinnalle. Luvun 5 lopussa esitelty socket jatkuu luvussa 7. SystemC:n
 tietotyypit ovat nimiavaruudessa `sc_dt`.
 
@@ -161,7 +161,7 @@ tavallisella signaalilla.
 - **Nopeus.** `sc_fixed` laskee mielivaltaisella tarkkuudella ja on
   hidas. Suurissa simuloinneissa käytetään `sc_fixed_fast`-tyyppiä
   (enintään 53 bitin tarkkuus, toteutettu liukuluvulla) tai lasketaan
-  kokonaisluvuilla ja siirroilla, kuten luvun 12 RTL tekee. Myös
+  kokonaisluvuilla ja siirroilla, kuten luvun 13 RTL tekee. Myös
   HLS-työkalujen omat tyypit, kuten `ac_fixed` ja `ap_fixed`, ovat
   nopeampia ja syntetisoituvia.
 

@@ -14,6 +14,7 @@
 #include "../mallit/muisti.hpp"
 #include "../mallit/uart.hpp"
 #include "../mallit/vayla.hpp"
+#include "lataaja.hpp"
 #include "prosessori.hpp"
 #include "rv32.hpp"
 
@@ -99,35 +100,6 @@ std::vector<unsigned char> ohjelma() {
     return k.valmis();
 }
 // @loppu ohjelma
-
-// @alku lataaja
-// Lataa ohjelman muistiin debug-kirjoituksilla, kuten debuggeri tai
-// käynnistyslataajan malli tekisi: ei simulaatioaikaa, ei tilastoja.
-// start_of_simulation() ajetaan elaboroinnin jälkeen mutta ennen kuin
-// yksikään prosessi (myöskään prosessori) käynnistyy.
-class Lataaja : public sc_module {
-public:
-    tlm_utils::simple_initiator_socket<Lataaja> socket{"socket"};
-
-    Lataaja(sc_module_name nimi, std::vector<unsigned char> kuva)
-        : sc_module(nimi), kuva_(std::move(kuva)) {}
-
-private:
-    void start_of_simulation() override {
-        tlm::tlm_generic_payload gp;
-        gp.set_command(tlm::TLM_WRITE_COMMAND);
-        gp.set_address(0);
-        gp.set_data_ptr(kuva_.data());
-        gp.set_data_length(static_cast<unsigned>(kuva_.size()));
-        gp.set_streaming_width(static_cast<unsigned>(kuva_.size()));
-        if (socket->transport_dbg(gp) != kuva_.size()) {
-            SC_REPORT_FATAL(name(), "ohjelma ei mahdu muistiin");
-        }
-    }
-
-    std::vector<unsigned char> kuva_;
-};
-// @loppu lataaja
 
 int sc_main(int, char*[]) {
     // @alku jarjestelma

@@ -143,6 +143,18 @@ log₂ N vartijabittiä.
 
 Kohde, jonka vastaus riippuu ajasta, käyttää `sc_time_stamp() + viive`.
 
+# Keskeytykset LT-mallissa
+
+| Osa | Sääntö |
+|-----|--------|
+| linja | `sc_out<bool>` → `sc_signal<bool>` → `sc_in<bool>`, tasoherkkä |
+| laite | reuna ajastetaan: `e.notify(aika - sc_time_stamp())` |
+| laite | yksi prosessi ajaa linjaa |
+| prosessori | tarkistus käskyjen välissä: `mip & mie` ja `mstatus.MIE` |
+| `wfi` | `sync()`, sitten `wait(linja.posedge_event())` |
+| `mret` | `sync()` ennen kuin kuitattu linja luetaan uudelleen |
+| kvantti | alle lyhimmän keskeytysjakson, ellei ohjelmisto nuku |
+
 # AT: neljä vaihetta
 
 | Vaihe | Suunta | Sääntö |

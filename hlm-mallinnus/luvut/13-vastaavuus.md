@@ -30,7 +30,7 @@ hyväksymällä C++:n osajoukolla.
 Suodin on SystemVerilogia (taito *RTL-suunnittelu SystemVerilogilla*). Se ottaa vastaan
 yhden näytteen kellojaksossa ja antaa tuloksen jakson viiveellä:
 
-```{.systemverilog tiedosto="esimerkit/15-vastaavuus/fir.sv" osa="rtl"}
+```{.systemverilog tiedosto="esimerkit/16-vastaavuus/fir.sv" osa="rtl"}
 ```
 
 Kiinteän pilkun aritmetiikka on kirjoitettu kokonaisluvuilla: Q1.15-
@@ -56,7 +56,7 @@ Herätemoduuli syöttää näytteet laskevalla reunalla, kuten luvun 2
 testipenkki, ja laskee jokaiselle näytteelle odotetun tuloksen mallilla
 heti, kun näyte syötetään:
 
-```{.cpp tiedosto="esimerkit/15-vastaavuus/testipenkki.cpp" osa="herate"}
+```{.cpp tiedosto="esimerkit/16-vastaavuus/testipenkki.cpp" osa="herate"}
 ```
 
 Herätteet ovat kolmea lajia. Impulssi tuottaa ulostuloon kertoimet
@@ -72,7 +72,7 @@ odotettujen jonon kärkeen. Jono tekee vertailusta riippumattoman RTL:n
 viiveestä: vertailija ei tiedä, montako jaksoa RTL tarvitsee, vain sen,
 että tulokset tulevat samassa järjestyksessä.
 
-```{.cpp tiedosto="esimerkit/15-vastaavuus/testipenkki.cpp" osa="vertailija"}
+```{.cpp tiedosto="esimerkit/16-vastaavuus/testipenkki.cpp" osa="vertailija"}
 ```
 
 Pääohjelma kytkee Verilatorin moduulin `Vfir` porteistaan signaaleihin
@@ -81,7 +81,7 @@ antaa niille saman jonon. Simuloinnin jälkeen kutsutaan `dut.final()`,
 joka ajaa RTL:n `final`-lohkot, ja paluuarvo kertoo, löytyikö eroja.
 Ajoskripti kääntää kaksi versiota, oikean ja virheellisen:
 
-```{.bash tiedosto="esimerkit/15-vastaavuus/aja.sh"}
+```{.bash tiedosto="esimerkit/16-vastaavuus/aja.sh"}
 ```
 
 `--exe --build` kääntää RTL:n, testipenkin ja Verilatorin
@@ -91,7 +91,7 @@ myös kiinteän pilkun tyypit. `-Wall` tekee Verilatorin varoituksista
 virheitä: esimerkiksi parametrin leveysvaroitus pysäyttää käännöksen,
 mikä on oikein, koska leveysvirheet ovat RTL:n yleisimpiä vikoja.
 
-```{.tuloste tiedosto="esimerkit/15-vastaavuus/odotettu"}
+```{.tuloste tiedosto="esimerkit/16-vastaavuus/odotettu"}
 ```
 
 Oikea versio vastaa mallia kaikissa 2025 näytteessä. Virheellinen versio

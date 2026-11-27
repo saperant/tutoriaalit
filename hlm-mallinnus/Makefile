@@ -5,7 +5,8 @@ RAKENNE := taito
 include ../yhteiset/paketti.mk
 
 # Kuvat tuotetaan skriptillä kuvat/piirra.py esimerkin 11-kvantti
-# jäljestä; kuvat commitoidaan.
+# jäljestä ja esimerkin 15-keskeytykset testatusta tulosteesta; kuvat
+# commitoidaan.
 .PHONY: kuvat
 kuvat:
 	esimerkit/testaa.sh 11-kvantti

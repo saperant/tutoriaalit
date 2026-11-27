@@ -25,7 +25,11 @@
 9. **DMI muistille, debug-liikenne työkaluille.** DMI:n viiveet lisätään
    aloittajan aikaan; debug-liikenteellä ei ole aikaa eikä
    sivuvaikutuksia.
-10. **Vertaa RTL:ää malliin bitti bitiltä.** Jono viiveen yli,
+10. **Keskeytys on signaali, ja sen lukija synkronoi.** Laite ajoittaa
+    linjan reunat annotoidun ajan mukaan. Prosessori synkronoi
+    odottaessaan (`wfi`) ja ennen kuin lukee linjan, jonka se on juuri
+    kuitannut; kvantti pidetään lyhintä keskeytysjaksoa pienempänä.
+11. **Vertaa RTL:ää malliin bitti bitiltä.** Jono viiveen yli,
     suunnatut ja satunnaiset herätteet kiinteällä siemenellä.
 
 ## Vianetsintä oireen mukaan
@@ -44,6 +48,8 @@
 | viive katoaa pieneksi | aikatarkkuus liian karkea | `sc_set_time_resolution` ensimmäisenä |
 | ajastin tai tila näyttää väärää aikaa | kohde käyttää pelkkää `sc_time_stamp()`ia | annotoitu aika |
 | ohjelmisto toimii vain pienellä kvantilla | odotussilmukka tai ajoitusoletus | synkronointi ennen jaettua tilaa |
+| sama keskeytys käsitellään kahdesti | linja luetaan ennen kuin kuittaus on ehtinyt simulaatioaikaan | synkronointi käsittelijästä palatessa |
+| ohjelmiston kello jätättää suurella kvantilla | tikkejä katoaa: kvantti ylittää keskeytysjakson | pienempi kvantti tai `wfi` |
 | AT-malli liian nopea | poissulkemissääntö rikki | protokollatarkistin |
 | muisti sotkeutuu satunnaisesti | vanhentunut DMI-osoitin | mitätöinti ja aluetarkistus |
 | RTL ja malli eroavat yhdellä LSB:llä | pyöristys- tai kerroinero | impulssivaste ja määrittely |
@@ -55,8 +61,8 @@ Tyypillisessä piiriprojektissa mallit syntyvät tässä järjestyksessä:
 1. Algoritmimalli (C++, Python tai MATLAB) todentaa toiminnon.
 2. Bittitarkka malli kiinnittää leveydet ja toimii myöhemmin RTL:n
    referenssinä.
-3. LT-virtuaaliprototyyppi kootaan valmiista ISS:stä ja oheislaitemalleista;
-   ohjelmistokehitys alkaa.
+3. LT-virtuaaliprototyyppi kootaan valmiista ISS:stä ja oheislaitemalleista
+   keskeytyslinjoineen; ohjelmistokehitys alkaa.
 4. AT-mallit tutkivat väylän, muistiohjaimen ja kiihdyttimien
    suorituskyvyn ja mitoittavat puskurit.
 5. RTL toteutetaan käsin tai HLS:llä mallista, ja sitä verrataan
@@ -73,7 +79,10 @@ Tyypillisessä piiriprojektissa mallit syntyvät tässä järjestyksessä:
   silmukoiden liukuhihnoitus ja muistirajapinnat; bittitarkat tyypit ja
   `SC_CTHREAD`-tyyli ovat HLS-työkalujen syötettä.
 - *SoC-integraatio*: oikeat väylät (AXI, AHB, APB), osoitekartat ja
-  niiden generointi yhdestä lähteestä.
+  niiden generointi yhdestä lähteestä sekä keskeytysten viive
+  kellojakson tarkkuudella RTL:stä mitattuna.
+- *Mikrokontrollerit ja bare-metal-ohjelmointi*: keskeytykset,
+  käsittelijät ja kriittiset osiot ohjelmoijan näkökulmasta.
 - *Laitteiston verifiointi*: referenssimallit UVM- ja cocotb-testipenkeissä,
   kattavuus ja satunnaistettu heräte.
 
@@ -90,8 +99,10 @@ Standardit ja referenssitoteutus:
 - Accellera: *SystemC Configuration, Control and Inspection (CCI)*.
   Mallien parametrointi ja tarkastelu.
   <https://www.accellera.org/downloads/standards/systemc>.
-- *The RISC-V Instruction Set Manual, Volume I: Unprivileged ISA*.
-  Käskymuodot ja RV32I. <https://riscv.org/specifications/>.
+- *The RISC-V Instruction Set Manual, Volume I: Unprivileged ISA* ja
+  *Volume II: Privileged Architecture*. Käskymuodot ja RV32I sekä
+  konetilan rekisterit, keskeytykset, `mret` ja `wfi`.
+  <https://riscv.org/specifications/>.
 - Verilator, käyttöopas, erityisesti luku *Connecting to SystemC*.
   <https://verilator.org/guide/latest/>.
 

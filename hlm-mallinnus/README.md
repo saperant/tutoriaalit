@@ -4,8 +4,8 @@ Tiivis suomenkielinen tutoriaali laitteiston toiminnallisesta ja
 ajoitetusta mallintamisesta C++:lla ennen RTL-toteutusta: SystemC:n
 moduulit, prosessit ja simulaatioydin, bittitarkat tietotyypit, TLM-2.0:n
 transaktiot ja ajoitustyylit, virtuaaliprototyyppi, jossa RISC-V-ISS
-ajaa ohjelmaa, sekä mallin ja RTL:n vastaavuuden tarkistus
-Verilatorilla. Valmis dokumentti:
+ajaa ohjelmaa ja ottaa keskeytyksiä, sekä mallin ja RTL:n vastaavuuden
+tarkistus Verilatorilla. Valmis dokumentti:
 [hlm-mallinnus.pdf](https://saperant.github.io/tutoriaalit/materiaalit/hlm-mallinnus.pdf),
 pikaopas
 [hlm-mallinnus-pikaopas.pdf](https://saperant.github.io/tutoriaalit/materiaalit/hlm-mallinnus-pikaopas.pdf).
@@ -31,9 +31,11 @@ pikaopas
 10. AT-mallinnus – neljä vaihetta, PEQ, muistinhallinta, liukuhihna
 11. Virtuaaliprototyyppi – RV32I-osajoukon ISS, ohjelma, lataaja,
     tilastot
-12. Mallin ja RTL:n vastaavuus – Verilator ja SystemC, vertailija,
+12. Keskeytykset – keskeytyslinja signaalina, konetilan rekisterit,
+    `mret` ja `wfi`, kvantin vaikutus keskeytysviiveeseen
+13. Mallin ja RTL:n vastaavuus – Verilator ja SystemC, vertailija,
     transaktorit
-13. Lopuksi – nyrkkisäännöt, vianetsintä, työnkulku, lähteet
+14. Lopuksi – nyrkkisäännöt, vianetsintä, työnkulku, lähteet
 
 ## Rakentaminen
 

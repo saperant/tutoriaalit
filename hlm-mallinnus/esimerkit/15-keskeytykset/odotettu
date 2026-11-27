@@ -1,0 +1,69 @@
+== loki: kvantti 1000 ns, wfi, pääte päällä
+[uart 75430 ns] ok
+aika (ns)  tapahtuma
+    17570  ajastin: linja ylös
+    17580  prosessori: keskeytys 7, viive 10 ns
+    17975  ajastin: kuitattu, linja alas
+    18435  prosessori: paluu (mret)
+    30000  uart: merkki saapui, linja ylös
+    30010  prosessori: keskeytys 11, viive 10 ns
+    30370  uart: luettu, linja alas
+    30640  prosessori: paluu (mret)
+    34900  ajastin: linja ylös
+    34910  prosessori: keskeytys 7, viive 10 ns
+    35305  ajastin: kuitattu, linja alas
+    35765  prosessori: paluu (mret)
+    52000  uart: merkki saapui, linja ylös
+    52010  prosessori: keskeytys 11, viive 10 ns
+    52230  ajastin: linja ylös
+    52370  uart: luettu, linja alas
+    52640  prosessori: paluu (mret)
+    52650  prosessori: keskeytys 7, viive 420 ns
+    53045  ajastin: kuitattu, linja alas
+    53505  prosessori: paluu (mret)
+    69560  ajastin: linja ylös
+    69570  prosessori: keskeytys 7, viive 10 ns
+    69965  ajastin: kuitattu, linja alas
+    70425  prosessori: paluu (mret)
+    75000  uart: merkki saapui, linja ylös
+    75010  prosessori: keskeytys 11, viive 10 ns
+    75370  uart: luettu, linja alas
+    75640  prosessori: paluu (mret)
+    86890  ajastin: linja ylös
+    86900  prosessori: keskeytys 7, viive 10 ns
+    87295  ajastin: kuitattu, linja alas
+    87755  prosessori: paluu (mret)
+   104220  ajastin: linja ylös
+   104230  prosessori: keskeytys 7, viive 10 ns
+   104625  ajastin: kuitattu, linja alas
+   105085  prosessori: paluu (mret)
+   121550  ajastin: linja ylös
+   121560  prosessori: keskeytys 7, viive 10 ns
+   121955  ajastin: kuitattu, linja alas
+   122415  prosessori: paluu (mret)
+   138880  ajastin: linja ylös
+   138890  prosessori: keskeytys 7, viive 10 ns
+   139285  ajastin: kuitattu, linja alas
+   139745  prosessori: paluu (mret)
+   156210  ajastin: linja ylös
+   156220  prosessori: keskeytys 7, viive 10 ns
+   156615  ajastin: kuitattu, linja alas
+   157075  prosessori: paluu (mret)
+   173540  ajastin: linja ylös
+   173550  prosessori: keskeytys 7, viive 10 ns
+   173945  ajastin: kuitattu, linja alas
+   174405  prosessori: paluu (mret)
+ohjelma laski 10 tikkiä, käskyjä 329, nukuttu 160755 ns / 174700 ns
+== kvantin ja odotustavan vaikutus
+kvantti  tila     tikit  menetetyt      viive ns  käskyjä  synkr.  aika us
+      0  kysely      10          0         5..45     4355    4365      174
+      0  wfi         10          0        10..10      275     295      174
+   1000  kysely      10          0      105..815     4365     185      175
+   1000  wfi         10          0        10..10      275      30      174
+  10000  kysely      10          0     470..8475     4515      28      181
+  10000  wfi         10          0        10..10      275      21      174
+  50000  kysely      10         16     70..47775    11285      19      452
+  50000  wfi         10          0        10..10      275      20      174
+== koe: kvantti 1000 ns, kysely
+ilman synkronointia: ohjelma laski 10 tikkiä, ajastin antoi 5
+aiheettomia keskeytyksiä 5, aika 89005 ns

@@ -56,8 +56,8 @@ jonka DMI-vihjeen perusteella prosessori pyytää osoittimen:
 ```
 
 Väylävirhe on prosessorille kohtalokas: oikea prosessori ottaisi
-poikkeuksen, mutta tämä malli ei toteuta poikkeuksia, joten se
-pysäyttää simuloinnin ja kertoo osoitteen ja ohjelmalaskurin. Ohjelman
+poikkeuksen, mutta tämä malli ei toteuta synkronisia poikkeuksia,
+joten se pysäyttää simuloinnin ja kertoo osoitteen ja ohjelmalaskurin. Ohjelman
 virhe näkyy näin heti eikä vasta oudosti käyttäytyvänä tulosteena.
 
 ## Käskyjen suoritus
@@ -69,7 +69,9 @@ takaisin ja laajentavat etumerkin siirtämällä etumerkillistä lukua
 oikealle.
 Suoritus on yksi `switch` operaatiokoodin mukaan. Malli toteuttaa vain
 ne 14 käskyä, joita esimerkkiohjelma käyttää; täysi RV32I on 40 käskyä,
-ja tuntematon käsky pysäyttää simuloinnin:
+ja tuntematon käsky pysäyttää simuloinnin. SYSTEM-käskyt on erotettu
+virtuaaliseen funktioon `jarjestelma`, jonka luvun 12 malli korvaa
+omallaan:
 
 ```{.cpp tiedosto="esimerkit/14-prototyyppi/prosessori.hpp" osa="suoritus"}
 ```
@@ -83,8 +85,9 @@ harvoina:
 ```{.cpp tiedosto="esimerkit/14-prototyyppi/prosessori.hpp" osa="aja"}
 ```
 
-Ohjelma päättyy käskyyn `ecall`, jonka argumentti `a0` on ohjelman
-paluuarvo. Oikea prosessori siirtyisi käyttöjärjestelmän
+Myös `aja` on virtuaalinen, jotta luvun 12 prosessori voi lisätä
+silmukkaan keskeytysten tarkistuksen. Ohjelma päättyy käskyyn `ecall`,
+jonka argumentti `a0` on ohjelman paluuarvo. Oikea prosessori siirtyisi käyttöjärjestelmän
 järjestelmäkutsuun; prototyypeissä vastaavaa *semihosting*-mekanismia
 käytetään yleisesti testien lopettamiseen ja tulostukseen.
 
@@ -104,7 +107,8 @@ Aliohjelma `tulosta` on pieni sarjaporttiajuri: se odottaa, että
 lähettimen tilabitti on 1, ja kirjoittaa merkin datarekisteriin.
 `tulosta_hex` muuttaa luvun heksadesimaaleiksi taulukon avulla. Ohjelma
 ja data ovat samassa muistissa, kuten tavallisessa
-mikro-ohjainohjelmassa.
+mikro-ohjainohjelmassa. Ajuri kyselee laitetta silmukassa; luku 12
+korvaa kyselyn keskeytyksillä.
 
 ## Lataus ja järjestelmä
 
@@ -114,7 +118,7 @@ moduulin elinkaaren takaisinkutsuista: se ajetaan elaboroinnin
 jälkeen, kun kaikki kytkennät ovat valmiit, mutta ennen ensimmäistäkään
 prosessia.
 
-```{.cpp tiedosto="esimerkit/14-prototyyppi/main.cpp" osa="lataaja"}
+```{.cpp tiedosto="esimerkit/14-prototyyppi/lataaja.hpp" osa="lataaja"}
 ```
 
 ```{.cpp tiedosto="esimerkit/14-prototyyppi/main.cpp" osa="jarjestelma"}

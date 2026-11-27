@@ -104,7 +104,7 @@ ja testi tarkistaa, että kuva vastaa simulaatiota.
 Viimeinen rivi `Info:` on
 simulaattorin oma ilmoitus `sc_stop`-kutsusta. Ilmoitukset kulkevat
 raportointijärjestelmän `sc_report_handler` kautta, ja niiden toiminnon
-voi vaihtaa (luku 12 vaimentaa tämän).
+voi vaihtaa (luku 13 vaimentaa tämän).
 
 Signaaleja voi tarkastella myös aaltomuotoina. `sc_create_vcd_trace_file`
 avaa VCD-tiedoston, `sc_trace(tiedosto, signaali, "nimi")` lisää siihen
@@ -117,7 +117,7 @@ lokeja ja tilastoja, kuten tämän tutoriaalin esimerkeissä.
 - **Rakenne kuin RTL:ssä, toteutus kuin ohjelmassa.** Moduulijako
   kannattaa tehdä samoista lohkoista kuin tulevassa piirissä, koska
   malli toimii myöhemmin RTL:n referenssinä ja osat voi vaihtaa
-  toteutukseen yksi kerrallaan (luku 12). Moduulin sisällä käytetään
+  toteutukseen yksi kerrallaan (luku 13). Moduulin sisällä käytetään
   tavallista C++:aa: kokoelmia, algoritmeja ja apuluokkia.
 - **Nimeä kaikki.** Moduulit, portit ja kanavat saavat nimen
   rakentimessa. Hierarkkinen nimi (`laskuri.arvo`) näkyy

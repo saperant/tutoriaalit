@@ -115,6 +115,9 @@ virhe näkyy. Käytäntöjä on kolme:
    Prosessorimallit tunnistavat odotuskäskyn (`wfi`, `wfe`) tai
    silmukan ja synkronoivat heti.
 
+Luku 12 mittaa nämä keskeytyksillä: kuinka paljon kvantti viivästää
+keskeytystä, milloin tikkejä katoaa ja mitä `wfi` muuttaa.
+
 ## DMI: suora muistiväylä
 
 Jokainen `b_transport` kulkee väylän dekooderin läpi. Muistille se on
